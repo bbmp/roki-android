@@ -1,0 +1,43 @@
+ninja: Entering directory `E:\Robam\roki_app\roki_3.1\smartconfig\.cxx\cmake\release\x86'
+[1/7] Building CXX object CMakeFiles/SmartConfig.dir/src/main/cpp/Thread.cpp.o
+[2/7] Building CXX object CMakeFiles/SmartConfig.dir/src/main/cpp/Message.cpp.o
+../../../../src/main/cpp/Message.cpp:1:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]
+#include "Message.h"
+         ^
+../../../../src/main/cpp/Message.h:13:9: note: previous '#pragma pack' directive that modifies alignment is here
+#pragma pack(1)
+        ^
+1 warning generated.
+[3/7] Building CXX object CMakeFiles/SmartConfig.dir/src/main/cpp/BroadcastMessage.cpp.o
+In file included from ../../../../src/main/cpp/BroadcastMessage.cpp:1:
+../../../../src/main/cpp/BroadcastMessage.h:4:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]
+#include "Message.h"
+         ^
+../../../../src/main/cpp/Message.h:13:9: note: previous '#pragma pack' directive that modifies alignment is here
+#pragma pack(1)
+        ^
+../../../../src/main/cpp/BroadcastMessage.cpp:1:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]
+#include "BroadcastMessage.h"
+         ^
+../../../../src/main/cpp/Message.h:13:9: note: previous '#pragma pack' directive that modifies alignment is here
+#pragma pack(1)
+        ^
+2 warnings generated.
+[4/7] Building CXX object CMakeFiles/SmartConfig.dir/src/main/cpp/BroadcastManager.cpp.o
+In file included from ../../../../src/main/cpp/BroadcastManager.cpp:6:
+../../../../src/main/cpp/BroadcastMessage.h:4:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]
+#include "Message.h"
+         ^
+../../../../src/main/cpp/Message.h:13:9: note: previous '#pragma pack' directive that modifies alignment is here
+#pragma pack(1)
+        ^
+../../../../src/main/cpp/BroadcastManager.cpp:6:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]
+#include "BroadcastMessage.h"
+         ^
+../../../../src/main/cpp/Message.h:13:9: note: previous '#pragma pack' directive that modifies alignment is here
+#pragma pack(1)
+        ^
+2 warnings generated.
+[5/7] Building CXX object CMakeFiles/SmartConfig.dir/src/main/cpp/SmartConfig.cpp.o
+[6/7] Building CXX object CMakeFiles/SmartConfig.dir/src/main/cpp/ConfigManager.cpp.o
+[7/7] Linking CXX shared library ..\..\..\..\build\intermediates\cmake\release\obj\x86\libSmartConfig.so

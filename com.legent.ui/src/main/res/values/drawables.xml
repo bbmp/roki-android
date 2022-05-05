@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="default_background" type="drawable">@color/default_background</item>
+    <item name="default_background_title" type="drawable">@color/default_background_title</item>
+
+</resources>

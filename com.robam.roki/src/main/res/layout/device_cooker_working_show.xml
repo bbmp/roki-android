@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <FrameLayout
+        android:id="@+id/fl_run_and_stop"
+        android:layout_width="265dp"
+        android:layout_height="265dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp">
+
+        <RelativeLayout
+            android:id="@+id/ll_run_animation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/co_run_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/img_run_animation_down"/>
+
+            <ImageView
+                android:id="@+id/co_run_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/img_run_animation_up"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/tv_work_state_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="75dp"
+                    android:text="--"
+                    android:textColor="#B3ffffff"
+                    android:textSize="18sp"/>
+
+
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/tv_work_dec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--"
+                    android:textColor="#ffffff"
+                    android:textSize="36sp"/>
+
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:src="@mipmap/img_run_round_white"/>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/co_tip"
+            android:textSize="12sp"
+            android:textColor="#ffffff"
+            android:layout_gravity="center_vertical"
+            />
+
+        <TextView
+            android:id="@+id/co_work_time"
+            android:layout_marginLeft="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="36sp"
+            android:text="--:--:--"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <RelativeLayout
+            android:id="@+id/co_tempture_just"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="28dp"
+            >
+            <ImageView
+                android:id="@+id/tempture_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <TextView
+                android:id="@+id/co_work_tempture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cooker_tempture_just"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="12sp"
+                android:textColor="#ffffff"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/co_gear"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="28dp"
+            >
+            <ImageView
+                android:id="@+id/fire_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <TextView
+                android:id="@+id/co_work_huoli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cooker_huoli"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="12sp"
+                android:textColor="#ffffff"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/co_timer"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="28dp"
+            >
+            <ImageView
+                android:id="@+id/timer_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_cooker_timer_white"
+                />
+
+            <TextView
+                android:id="@+id/co_work_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="定时关机"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="12sp"
+                android:textColor="#ffffff"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            />
+        <RelativeLayout
+            android:id="@+id/co_finish"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="28dp"
+            >
+            <ImageView
+                android:id="@+id/cofinish"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/img_run_stop"
+                />
+
+            <TextView
+                android:id="@+id/cofinishName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/close"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="12sp"
+                android:textColor="#ffffff"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

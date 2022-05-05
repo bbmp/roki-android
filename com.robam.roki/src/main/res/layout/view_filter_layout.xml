@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="@string/origin"
+                android:textColor="@color/filtergroupcolor"
+                />
+
+            <com.robam.roki.ui.view.recipeclassify.GridFilterView
+                android:id="@+id/origincontent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:numColumns="3"
+                android:verticalSpacing="2dp"
+                >
+            </com.robam.roki.ui.view.recipeclassify.GridFilterView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#808080"/>
+
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="@string/electrickitchen"
+                android:textColor="@color/filtergroupcolor" />
+
+            <com.robam.roki.ui.view.recipeclassify.GridFilterView
+                android:id="@+id/electrickitchencontent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numColumns="3"
+                android:verticalSpacing="2dp">
+
+            </com.robam.roki.ui.view.recipeclassify.GridFilterView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#808080"/>
+
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="@string/flavor"
+                android:textColor="@color/filtergroupcolor" />
+
+            <com.robam.roki.ui.view.recipeclassify.GridFilterView
+                android:id="@+id/flavorcontent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numColumns="4"
+                android:verticalSpacing="2dp">
+
+            </com.robam.roki.ui.view.recipeclassify.GridFilterView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/transparent" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fbc8be"
+            android:text="@string/reset"
+            android:textColor="#f85c3d" />
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#f85c3d"
+            android:text="确定"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+</RelativeLayout>
+

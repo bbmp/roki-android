@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 有标题，有文本内容，两个按钮   -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/common_dialog_root_bg_layout_style">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="139dp"
+        android:background="@drawable/common_dialog_bg_with_rounded_rectangle"
+        android:layout_marginRight="68dp"
+        android:layout_marginLeft="68dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#1E1D1D"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            tools:text="更新失败" />
+
+
+        <TextView
+            android:id="@+id/tv_content_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="38.5dp"
+            android:layout_marginRight="38.5dp"
+            android:minHeight="66dp"
+            android:gravity="center"
+            android:textColor="#1E1D1D"
+            android:text="请检查网络后重新尝试更新"
+            android:textSize="14sp"/>
+        <View
+            style="@style/common_dialog_btn_top_divider_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_cancel_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:gravity="center"
+                tools:text="关闭" />
+
+            <View
+                android:id="@+id/common_dialog_btn_middle_divider"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#ffe5e5e5"/>
+
+            <TextView
+                android:id="@+id/tv_ok_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textColor="#E9A60F"
+                tools:text="再试一次" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</FrameLayout>

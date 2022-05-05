@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/selector_rika_item_bg"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24"/>
+
+            <TextView
+                android:id="@+id/tv_device_model_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text=""
+                android:textColor="@color/c41"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:id="@+id/iv_device_more"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="11dp"
+                android:background="@drawable/selector_rika_item_bg"
+                android:src="@mipmap/icon_device_more"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/txt_disconnect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="产品已离线，请检查网络"
+            android:textColor="@color/gray"
+            android:textSize="15sp"
+            android:visibility="gone"
+            />
+
+        <FrameLayout
+            android:id="@+id/fl_run_and_stop"
+            android:layout_width="265dp"
+            android:layout_height="265dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp">
+
+            <RelativeLayout
+                android:id="@+id/ll_run_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_run_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_gas_run_down"/>
+
+                <ImageView
+                    android:id="@+id/iv_run_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_gas_run_up"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_work_state_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="77dp"
+                        android:text="--"
+                        android:textColor="@color/white"
+                        android:textSize="50sp"/>
+
+
+                    <TextView
+                        android:layout_marginTop="19dp"
+                        android:id="@+id/tv_work_dec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textColor="#B3ffffff"
+                        android:textSize="18sp"/>
+
+
+                    <TextView
+                        android:id="@+id/gas_con"
+                        android:layout_marginTop="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gas_normal_tips"
+                        android:textColor="#B3286e0c"
+                        android:textSize="11sp"/>
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@mipmap/img_run_round_white"/>
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/addview_cu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.robam.roki.ui.view.GasItemDisplayView
+                android:id="@+id/gas_item_show"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <com.robam.roki.ui.page.device.gassensor.GasAlarmSensorView
+                android:layout_marginTop="20dp"
+                android:id="@+id/gas_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                />
+
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>

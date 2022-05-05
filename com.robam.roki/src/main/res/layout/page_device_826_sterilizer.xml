@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:test="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/img_micro526_return" />
+
+        <ImageView
+            android:id="@+id/iv_dft"
+            android:layout_width="60dp"
+            android:layout_height="64dp"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="10dp"
+            android:src="@mipmap/img_sterilizer" />
+
+        <TextView
+            android:id="@+id/tv_dft_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_dft"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/iv_dft"
+            android:text="@string/device_sterilizer_name"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_dft_name"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="6dp"
+            android:layout_toLeftOf="@+id/iv_dft"
+            android:text="Sterilizer"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/tv_intelligent_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="16dp"
+            android:text="@string/device_intelligent_setting"
+            android:textColor="@color/c11"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/view_device_disconnect_hint" />
+
+    <LinearLayout
+        android:id="@+id/fl_sterilizer_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
+        android:background="#343434"
+        android:orientation="vertical">
+
+
+        <!--四类静态图-->
+        <LinearLayout
+            android:id="@+id/ll_empty"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+
+                <include layout="@layout/page_animation_temperature" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+
+                <include layout="@layout/page_animation_humidity" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+
+                <include layout="@layout/page_animation_germ" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+
+                <include layout="@layout/page_animation_ozone" />
+            </RelativeLayout>
+        </LinearLayout>
+        <!--四类动态图-->
+        <LinearLayout
+            android:id="@+id/ll_animation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rl_tem"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"></RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_hum"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"></RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_germ"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"></RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_ozone"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"></RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#424242" />
+        <!--温度时间单位显示图-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_steri_tem"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@mipmap/img_temperature"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:text="---"
+                android:textColor="#acacac"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/tv_steri_hum"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="1"
+                android:background="@mipmap/img_humidity"
+                android:paddingLeft="6dp"
+                android:paddingTop="10dp"
+                android:text="---"
+                android:textColor="#acacac"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/tv_steri_germ"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@mipmap/img_germ"
+                android:paddingLeft="8dp"
+                android:paddingTop="10dp"
+                android:text="---"
+                android:textColor="#acacac"
+                android:textSize="15dp" />
+
+
+            <TextView
+                android:id="@+id/tv_steri_ozone"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@mipmap/img_ozone"
+                android:paddingLeft="12dp"
+                android:paddingTop="10dp"
+                android:text="---"
+                android:textColor="#acacac"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_switch"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.2"
+            android:visibility="visible">
+
+
+            <RelativeLayout
+                android:id="@+id/rl_all_model"
+                android:layout_width="match_parent"
+                android:layout_height="270dp">
+
+                <RelativeLayout
+                    android:id="@+id/rl_reaction_sterilize"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp">
+
+                    <!--感应杀菌-->
+                    <ImageView
+                        android:id="@+id/iv_reaction_sterilize"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/img_sterictr_min_circle_grey" />
+
+                    <TextView
+                        android:id="@+id/tv_reaction_sterilize"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="40dp"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/device_sterilizer_Induction_sterilization"
+                        android:textColor="#575757"
+                        android:textSize="30sp" />
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="46dp"
+                    android:orientation="horizontal">
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_sterilize"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginRight="70dp">
+
+                        <!--消毒-->
+                        <TextView
+                            android:id="@+id/tv_sterilize"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="40dp"
+                            android:gravity="center"
+                            android:text="@string/device_sterilizer"
+                            android:textColor="#575757"
+                            android:textSize="32sp" />
+
+                        <ImageView
+                            android:id="@+id/iv_sterilize"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:src="@mipmap/img_sterictr_min_circle_grey" />
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_warm_dish"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginLeft="70dp">
+
+                        <!--暖碟-->
+                        <TextView
+                            android:id="@+id/tv_warm_dish"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="40dp"
+                            android:gravity="center"
+                            android:text="@string/device_sterilizer_warm_dish_text"
+                            android:textColor="#575757"
+                            android:textSize="32sp" />
+
+
+                        <ImageView
+                            android:id="@+id/iv_warm_dish"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:src="@mipmap/img_sterictr_min_circle_grey" />
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal"
+                    android:paddingTop="60dp">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_rapid_sterilize"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp">
+
+                        <!--快速杀菌-->
+                        <ImageView
+                            android:id="@+id/iv_rapid_sterilize"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="13dp"
+                            android:src="@mipmap/img_sterictr_min_circle_grey" />
+
+                        <TextView
+                            android:id="@+id/tv_rapid_sterilize"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:lines="2"
+                            android:text="@string/device_sterilizer_rapid_sterilize_text"
+                            android:textColor="#575757"
+                            android:textSize="32sp" />
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_tv_stoving"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp">
+
+                        <!--烘干-->
+                        <ImageView
+                            android:id="@+id/iv_stoving"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="13dp"
+                            android:src="@mipmap/img_sterictr_min_circle_grey" />
+
+                        <TextView
+                            android:id="@+id/tv_stoving"
+                            android:layout_width="72dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:text="@string/device_sterilizer_stoving"
+                            android:textColor="#575757"
+                            android:textSize="32sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_lock_or_time_view"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:visibility="visible">
+
+
+                <TextView
+                    android:id="@+id/tv_open_Intelligent_detection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
+                    android:text=""
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/tv_model"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="40dp"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tv_time_hour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="1dp"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_time_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:text=":"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_time_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="70dp"
+                    android:layout_height="230dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:paddingTop="30dp">
+
+                    <com.robam.roki.ui.view.SlideUnlockView
+                        android:id="@+id/roki_lock_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        test:slideUnlockBackgroundResource="@mipmap/lock_bg"
+                        test:slideUnlockBlockResource="@mipmap/jiesuo" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_child_lock"
+                android:layout_width="60dp"
+                android:layout_height="70dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_child_lock"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@mipmap/ic_child_lock_grey" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/sterilizer_switch_run"
+                android:layout_width="80dp"
+                android:layout_height="88dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="14dp"
+                android:background="@mipmap/img_sterilizer_switch_ope"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/sterilize_switch"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="14dp"
+                android:button="@null"
+                android:clickable="true"
+                android:src="@mipmap/img_sterilizer_826_switch_off" />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_running"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:visibility="gone">
+
+                <FrameLayout
+                    android:id="@+id/fl_running"
+                    android:layout_width="190dp"
+                    android:layout_height="190dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="6dp">
+
+
+                    <ImageView
+                        android:id="@+id/iv_running"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/img_order_run" />
+
+
+                    <TextView
+                        android:id="@+id/tv_steri_time_hour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="18dp"
+                        android:layout_marginRight="28dp"
+                        android:text="02"
+                        android:textColor="#ffffff"
+                        android:textSize="38sp" />
+
+                    <TextView
+                        android:id="@+id/tv_steri_time_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:text=":"
+                        android:textColor="#ffffff"
+                        android:textSize="38sp" />
+
+                    <TextView
+                        android:id="@+id/tv_steri_time_minute"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="18dp"
+                        android:layout_marginLeft="28dp"
+                        android:text="02"
+                        android:textColor="#ffffff"
+                        android:textSize="38sp" />
+
+                    <TextView
+                        android:id="@+id/tv_steri"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="28dp"
+                        android:text=""
+                        android:textColor="#ffffff"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_done"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="18dp"
+                        android:text="@string/device_sterilizer_finished"
+                        android:textColor="@color/c02"
+                        android:textSize="26sp" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_open_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/device_sterilizer_open"
+                        android:textColor="@color/White"
+                        android:textSize="20sp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_center_model"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text=""
+                        android:textColor="@color/White"
+                        android:textSize="20sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#424242" />
+
+
+    </LinearLayout>
+</LinearLayout>

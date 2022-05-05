@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#F5F5F5">
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white" />
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:barStyle="transparent"
+        android:background="#ffffff"
+        app:title="多段"
+        app:titleColor="@color/mine_text_color"
+        app:leftIcon="@drawable/ic_arrow_back"
+        app:rightSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_bg_white_999dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/ic_recipe_search"/>
+
+        <EditText
+            android:id="@+id/recipe_name"
+            android:paddingStart="15dp"
+            android:textSize="15sp"
+            android:gravity="center_vertical"
+            android:background="#ffffff"
+            android:hint="搜索"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:imeOptions="actionSearch"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_610_recipe"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_automatic"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="#FFFFFF"
+        android:text="启动" />
+</LinearLayout>

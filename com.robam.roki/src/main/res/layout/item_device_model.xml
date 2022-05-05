@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/itemView"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:background="@drawable/selector_rika_item_bg">
+
+        <ImageView
+            android:id="@+id/iv_model"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_rika_yingyang_steam"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_model_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="营养蒸"
+        android:textColor="@color/c41"
+        android:textSize="16sp"/>
+
+</LinearLayout>

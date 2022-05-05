@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Black"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/dialog_recipe_photocooking"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1.1"
+        android:background="@color/c02"
+        android:gravity="center"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="晒厨艺"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/dialog_recipe_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1.1"
+        android:text="退出菜谱"
+        android:textColor="@color/c02"
+        android:textSize="30sp" />
+</LinearLayout>

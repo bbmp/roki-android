@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--标题部分-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgreturn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:src="@mipmap/img_micro526_return" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/micro_cantrol"
+            android:textColor="#929292"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/c03">
+        <!--开启/关闭-->
+        <RelativeLayout
+            android:id="@+id/mic_nw_linSwitch"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="23dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/ic_device_finish_pic"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/mic_nw_txtSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="结束工作"
+                android:textColor="#e9a60f"
+                android:textSize="17sp" />
+
+        </RelativeLayout>
+        <!--中间图标-->
+        <ImageView
+            android:id="@+id/mic_nw_rotate_img"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="36dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/img_order_run" />
+
+        <!--中间圆圈部分-->
+        <LinearLayout
+            android:id="@+id/mic_nw_middle_ll"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mic_nw_middle_ll_worktype1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="35dp"
+                android:text="--"
+                android:textColor="#ffffff"
+                android:textSize="26sp"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/mic_nw_middle_ll_img"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-25dp"
+                android:scaleType="centerInside"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/mic_nw_middle_ll_worktype2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="130dp"
+                android:gravity="center"
+                android:text="已完成"
+                android:textColor="#e9a60f"
+                android:textSize="26sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!--份量时间下-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mic_nw_linTem"
+            android:layout_marginBottom="0dp">
+            <!--份量数值-->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/mic_nw_txtCurrentWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="--"
+                    android:textColor="#ffffff"
+                    android:textSize="45sp" />
+
+
+                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignBottom="@+id/mic_nw_txtCurrentWeight"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/Transparent"
+                    android:paddingLeft="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/img_oven_reset_button_yellow"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/framework_line" />
+
+            </RelativeLayout>
+            <!--时间数值-->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/mic_nw_txtCurrentTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="--"
+                    android:textColor="#ffffff"
+                    android:textSize="45sp" />
+
+                <ImageButton
+                    android:id="@+id/mic_nw_imgTimeReset"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignBottom="@+id/mic_nw_txtCurrentTime"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/Transparent"
+                    android:paddingLeft="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/img_oven_reset_button_yellow"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/framework_line" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+        <!-- 份量时间上-->
+        <LinearLayout
+            android:id="@+id/mic_nw_linTem"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp">
+            <!--份量-->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/mic_nw_txtTem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="重量"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/topleft_img"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toLeftOf="@id/mic_nw_txtTem"
+                    android:src="@mipmap/ic_device_microwave_normal_working_weighit_white" />
+
+                <TextView
+                    android:id="@+id/topleft_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/mic_nw_txtTem"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginTop="1dp"
+                    android:text="g"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="-8dp"
+                    android:layout_toLeftOf="@id/mic_nw_txtTem"
+                    android:src="@mipmap/img_oven_setting_leanline_white" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/framework_line" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/framework_line" />
+
+            </RelativeLayout>
+
+            <!--时间单位图标显示-->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/mic_nw_txtTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="时间"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/mic_nw_txtTime"
+                    android:layout_marginRight="33dp"
+                    android:layout_marginTop="1dp"
+                    android:text="min"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="-8dp"
+                    android:layout_toLeftOf="@id/mic_nw_txtTime"
+                    android:src="@mipmap/img_oven_setting_leanline_white" />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toLeftOf="@id/mic_nw_txtTime"
+                    android:src="@mipmap/ic_device_microwave_normal_working_clock_white" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/framework_line" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/framework_line" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

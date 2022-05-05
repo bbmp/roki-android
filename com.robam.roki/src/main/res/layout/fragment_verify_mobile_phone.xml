@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.page.VerifyMobilePhonePage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_cancel_settting_back"
+            android:layout_width="45dp"
+            android:layout_height="31dp"
+            android:paddingStart="20dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:src="@drawable/ic_return_selector_01" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingRight="45dp"
+            android:text="@string/my_verify_phone"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_edit_height"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_phone_number"
+            style="@style/user_text_style"
+            android:text="15057182808"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="请输入手机"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/txt_unregister_getcode"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@color/c02"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="获取验证码"
+            android:textColor="@color/c05" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edt_unregister_code"
+        style="@style/common_edit"
+        android:layout_width="match_parent"
+        android:layout_marginTop="7dp"
+        android:inputType="number"
+        android:hint="请输入验证码"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/txt_unregister_confirm"
+        android:layout_height="@dimen/common_button_height"
+        android:layout_width="match_parent"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/common_button_background_selector"
+        android:layout_marginTop="18dp" />
+
+</LinearLayout>

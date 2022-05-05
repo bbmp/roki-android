@@ -1,0 +1,34 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+    sourceSets.main {
+        jniLibs.srcDir 'src/main/libs'  //set .so files location to libs
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':com.legent')
+    api 'io.fogcloud.sdk:easylinkv3:0.1.5'
+    api files('src/main/libs/regulation-lib-1.0-SNAPSHOT.jar')
+    implementation project(':com.robam.mqtt')
+
+}
+
+

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FBFAF8">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--油网清洁状况-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--标题部分-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <ImageView
+                        android:id="@+id/fanoil_oil_return"
+                        android:layout_width="45dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitStart"
+                        android:src="@mipmap/img_micro526_return" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="油网清洗"
+                        android:textColor="@color/c17"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+                <!--中间油网图片-->
+                <ImageView
+                    android:id="@+id/fanoil_oil_circleimg"
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="80dp"
+                    android:src="@mipmap/img_fan8700oill_oilcircle_black" />
+                <!--烟机油网需要清洁-->
+                <TextView
+                    android:id="@+id/fanoil_oil_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fanoil_oil_circleimg"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:text="烟机油网目前已经干净"
+                    android:textColor="@color/c17"
+                    android:textSize="18sp" />
+                <!--烟机油网需要清洁-->
+                <TextView
+                    android:id="@+id/fanoil_oil_buy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fanoil_oil_status"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/fan8700_oil_purchase"
+                    android:textColor="@color/c06"
+                    android:textSize="22sp"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/fanoil_oil_btn_clean"
+                    android:layout_width="250dp"
+                    android:layout_height="45dp"
+                    android:layout_below="@+id/fanoil_oil_buy"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"
+                    android:background="#E8A50C"
+                    android:gravity="center"
+                    android:text="油网清洁干净了"
+                    android:textColor="@color/c03"
+                    android:textSize="26sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+            <!--油网安装拆卸-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="45dp"
+                android:orientation="vertical">
+                <!--标题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1"
+                        android:background="#E9A60F" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:gravity="center"
+                        android:text="油网安装/拆卸"
+                        android:textColor="@color/Black_65"
+                        android:textSize="23sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight="1"
+                        android:background="#E9A60F" />
+                </LinearLayout>
+                <!--倒三角-->
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/layerlist_invertedtriangle" />
+                <!--步骤一图片-->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/fan_29_30_clean" />
+                <!--步骤一文字-->
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingLeft="14sp"
+                    android:paddingRight="14sp"
+                    android:text="1.双手托住取下油杯"
+                    android:textColor="@color/Black_65"
+                    android:textSize="16sp" />
+                <!--步骤二图片-->
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/fan_29_30_clean_step2" />
+                <!--步骤二文字-->
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingLeft="14sp"
+                    android:paddingRight="14sp"
+                    android:text="2.用手托住集油槽后侧，另一只手拉住集油槽上的把手，稍用力向下拉，使集油槽脱离卡扣，然后取出集油槽。"
+                    android:textColor="@color/Black_65"
+                    android:textSize="16sp" />
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/fan_29_30_clean_step3" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingLeft="14sp"
+                    android:paddingRight="14sp"
+                    android:text="3.用十字螺丝刀对准螺丝孔，逆时针旋转90度左右，同时另一只手托住网罩，待网罩脱离集烟罩后，往斜下方取出网罩。"
+                    android:textColor="@color/Black_65"
+                    android:textSize="16sp" />
+
+                <!--维护与保养-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1"
+                        android:background="#E9A60F" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:gravity="center"
+                        android:text="维护与保养"
+                        android:textColor="@color/Black_65"
+                        android:textSize="23sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight="1"
+                        android:background="#E9A60F" />
+                </LinearLayout>
+                <!--倒三角-->
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/layerlist_invertedtriangle" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:text="●"
+                        android:textColor="#E9A60F"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="14dp"
+                        android:text="集烟罩和机体外壳在每次烹饪后都进行擦拭。"
+                        android:textColor="@color/Black_65"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:text="●"
+                        android:textColor="#E9A60F"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="14dp"
+                        android:text="为保证油烟顺畅排出，滤网视使用情况经常用温水加清洗剂清洗，洗时请小心，以免损坏。"
+                        android:textColor="@color/Black_65"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/oilclean_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="注意:"
+                        android:textColor="@color/red"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/oilclean_12"
+                        android:text=" 清洗保养工作必须在断电情况下进行。电器元件，如电机、开关、接插件请勿沾水，以免发生意外。"
+                        android:textColor="@color/Black_65"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="35dp"
+                    android:gravity="center"
+                    android:text="清洁套餐即将上线"
+                    android:textColor="@color/Black_65"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

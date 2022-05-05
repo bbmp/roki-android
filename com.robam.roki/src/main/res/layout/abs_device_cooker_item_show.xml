@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <GridView
+            android:layout_marginTop="310dp"
+            android:id="@+id/gv_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="auto_fit"
+            android:fadeScrollbars="false"
+            >
+
+        </GridView>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="auto_fit"
+            android:fadeScrollbars="false">
+
+        </GridView>
+
+
+        <com.robam.roki.ui.page.device.cook.CookItemDisplayView
+            android:id="@+id/item_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+
+
+</FrameLayout>

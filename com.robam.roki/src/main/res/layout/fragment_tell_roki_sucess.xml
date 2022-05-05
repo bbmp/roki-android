@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ui.page.TellRokiSucessPage">
+
+    <ImageView
+        android:id="@+id/iv_tell_roki_sucess"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:scaleType="fitCenter"
+        android:gravity="center"
+        android:src="@mipmap/icon_tell_roki_complete"
+        android:textColor="@color/roki_important_text_color"
+ />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"
+        android:textColor="#000000"
+        android:text="提交成功"
+        app:layout_constraintTop_toBottomOf="@+id/iv_tell_roki_sucess" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ROKI已查收，感谢您的反馈"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_back_home"
+        android:layout_width="230dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_round_selector"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:text="返回首页"
+     />
+</LinearLayout>

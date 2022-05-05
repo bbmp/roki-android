@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1e222d</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="expandablelistview_background">#1e222d</color>
+    <color name="expandablelistview_switch_background">#80D8D8D8</color>
+    <!--override-->
+    <color name="theme_orange">#f9bf42</color>
+    <color name="main_background">#ffececec</color>
+    <color name="home_bg">#e9a60f</color>
+    <color name="text_color_gray_3">#999999</color>
+    <color name="transparent">#00000000</color>
+    <!-- button -->
+
+    <color name="common_button_text">@color/White</color>
+    <color name="common_button_text_enabled">@color/common_button_text</color>
+
+    <!--define-->
+    <color name="gray_text">#c2c2c2</color>
+    <color name="c01">#acacac</color>
+    <color name="c001">#2ac3ee</color>
+    <color name="c002">#1c1c1c</color>
+    <color name="c02">#e9a60f</color>
+    <color name="c03">#343434</color>
+    <color name="c04">#6586b1</color>
+    <color name="c05">#1b2046</color>
+    <color name="c06">#db4545</color>
+    <color name="c07">#f41f1f</color>
+    <color name="c08">#6486b0</color>
+    <color name="c09">#f6f9fe</color>
+    <color name="c10">#82a0c7</color>
+    <color name="c11">#e9a60f</color>
+    <color name="c12">#3b495a</color>
+    <color name="c13">#dadada</color>
+    <color name="c14">#ffffff</color>
+    <color name="c15">#fff1f2ed</color>
+    <color name="c16">#929292</color>
+    <color name="c17">#98989a</color>
+    <color name="c19">#575757</color>
+    <color name="c20">#202020</color>
+    <color name="c25">#99000000</color>
+    <color name="c26">#dd808080</color>
+    <color name="c27">#EAEAEA</color>
+    <color name="c28">#999999</color>
+    <color name="c29">#666666</color>
+    <color name="c30">#222222</color>
+    <color name="c31">#e9a60f</color>
+    <color name="c32">#999999</color>
+    <color name="c33">#F9BF42</color>
+    <color name="c34">#FF6E16</color>
+    <color name="c37">#FFF3F6FA</color>
+    <color name="c38">#FFF1F2F4</color>
+    <color name="c39">#cdcdcd</color>
+    <color name="c41">#1D1D1D</color>
+    <color name="c42">#9d9d9d</color>
+    <color name="c43">#9b9b9b</color>
+    <color name="c44">#5d5d5d</color>
+    <color name="c45">#171717</color>
+    <color name="c46">#6f6f6f</color>
+    <color name="c47">#88e1cc19</color>
+    <color name="c48">#88E61A1A</color>
+    <color name="c49">#881AE61A</color>
+    <color name="c50">#efbb1d</color>
+    <color name="c51">#1058e9</color>
+    <color name="c52">#5d5d5d</color>
+    <color name="c54">#f2f2f2</color>
+    <color name="c55">#1E1E1E</color>
+    <color name="c56">#e5e5e5</color>
+    <color name="c57">#e4007F</color>
+    <color name="c58">#dedede</color>
+    <color name="c59">#e3e3e3</color>
+    <color name="c60">#a2a2a2</color>
+    <color name="c61">#363636</color>
+    <color name="c62">#b9baba</color>
+    <color name="c63">#ffd16d</color>
+    <color name="c64">#888888</color>
+    <color name="c65">#66202020</color>
+    <color name="c66">#ff6613</color>
+    <color name="c67">#0cc3ff</color>
+    <color name="c68">#e8e8e8</color>
+    <color name="Black_65">#a6000000</color>
+    <color name="Black_80">#cd000000</color>
+    <color name="White_90">#e5ffffff</color>
+    <color name="White_60">#99ffffff</color>
+    <color name="Gray_57">#575757</color>
+    <color name="yellow_oven">#f5c91a</color>
+    <color name="gray_oven">#bbbbbb</color>
+    <color name="framework_line">#817f79</color>
+    <color name="dialog_button">#3ba5ff</color>
+    <!--device-->
+    <color name="device_board_bg">@color/c03</color>
+    <color name="device_board_translucent">#52e9a60f</color>
+    <color name="device_board_text_invalid">#424242</color>
+    <color name="device_board_text_valid">#f8bf40</color>
+    <color name="device_oven_gray">#818181</color>
+    <!--橘色1-->
+    <color name="orange_light2">#E9A60F</color>
+    <!--recipeBook-->
+    <color name="recipe_banner_text">#342d2a</color>
+    <!-- common -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="water_lv">#a0c2ff</color>
+    <color name="white_01">#FFFFFFFF</color>
+    <color name="white_02">#00FFFFFF</color>
+    <color name="yellow_use">#e9a60f</color>
+    <!-- 白色  -->
+    <!-- 象牙色  -->
+    <!-- 亮黄色 -->
+    <color name="yellow">#FFFF00</color>
+    <!-- 黄色  -->
+    <!-- 雪白色  -->
+    <!-- 花白色  -->
+    <!-- 柠檬绸色  -->
+    <!-- 米绸色  -->
+    <!-- 海贝色  -->
+    <!-- 淡紫红  -->
+    <!-- 番木色  -->
+    <!-- 白杏色  -->
+    <!-- 浅玫瑰色  -->
+    <!-- 桔黄色  -->
+    <!-- 鹿皮色  -->
+    <color name="navajowhite">#FFDEAD</color>
+    <!-- 纳瓦白  -->
+    <!-- 桃色  -->
+    <color name="gold">#FFD700</color>
+    <!-- 金色  -->
+    <!-- 粉红色  -->
+    <!-- 亮粉红色 -->
+    <color name="orange">#FFA500</color>
+    <!-- 橙色  -->
+    <!-- 亮肉色  -->
+    <!-- 暗桔黄色  -->
+    <!-- 珊瑚色  -->
+    <!-- 热粉红色  -->
+    <!-- 西红柿色  -->
+    <!-- 红橙色  -->
+    <!-- 深粉红色  -->
+    <!-- 紫红色  -->
+    <!-- 红紫色  -->
+    <color name="red">#FF0000</color>
+    <color name="red_01">#ec6267</color>
+    <!-- 红色  -->
+    <!-- 老花色  -->
+    <!-- 亮金黄色  -->
+    <!-- 亚麻色  -->
+    <!-- 古董白  -->
+    <!-- 鲜肉色  -->
+    <!-- 幽灵白  -->
+    <!-- 薄荷色  -->
+    <color name="whitesmoke">#F5F5F5</color>
+    <!-- 烟白色  -->
+    <!-- 米色  -->
+    <!-- 浅黄色  -->
+    <!-- 沙褐色 -->
+    <!-- 天蓝色  -->
+    <!-- 蜜色  -->
+    <!-- 艾利斯兰  -->
+    <!-- 黄褐色  -->
+    <!-- 亮珊瑚色  -->
+    <!-- 苍麒麟色  -->
+    <!-- 紫罗兰色  -->
+    <!-- 暗肉色  -->
+    <!-- 淡紫色  -->
+    <!-- 亮青色  -->
+    <!-- 实木色  -->
+    <!-- 洋李色  -->
+    <!-- 淡灰色  -->
+    <!-- 暗深红色  -->
+    <!-- 苍紫罗兰色  -->
+    <!-- 金麒麟色  -->
+    <!-- 淡紫色  -->
+    <!-- 蓟色  -->
+    <!-- 亮灰色  -->
+    <!-- 亮灰色  -->
+    <!-- 茶色  -->
+    <!-- 巧可力色  -->
+    <!-- 秘鲁色  -->
+    <!-- 印第安红  -->
+    <!-- 中紫罗兰色  -->
+    <!-- 银色  -->
+    <!-- 暗黄褐色  -->
+    <!-- 褐玫瑰红  -->
+    <!-- 中粉紫色  -->
+    <!-- 暗金黄色  -->
+    <!-- 火砖色  -->
+    <!-- 粉蓝色  -->
+    <!-- 亮钢兰色  -->
+    <!-- 苍宝石绿  -->
+    <!-- 黄绿色  -->
+    <!-- 亮蓝色  -->
+    <color name="darkgray">#A9A9A9</color>
+    <!-- 暗灰色  -->
+    <!-- 暗灰色  -->
+    <!-- 褐色  -->
+    <!-- 赭色  -->
+    <!-- 暗紫色 -->
+    <!-- 苍绿色  -->
+    <!-- 暗紫罗兰色  -->
+    <!-- 中紫色  -->
+    <!-- 亮绿色  -->
+    <!-- 暗海兰色  -->
+    <!-- 重褐色  -->
+    <!-- 暗洋红  -->
+    <!-- 暗红色  -->
+    <!-- 紫罗兰蓝色  -->
+    <!-- 亮天蓝色  -->
+    <!-- 天蓝色  -->
+    <color name="gray">#808080</color>
+    <!-- 灰色  -->
+    <color name="grey">#808080</color>
+    <!-- 灰色  -->
+    <!-- 橄榄色  -->
+    <!-- 紫色  -->
+    <!-- 粟色  -->
+    <!-- 碧绿色 -->
+    <!-- 黄绿色  -->
+    <!-- 草绿色  -->
+    <!-- 中暗蓝色  -->
+    <!-- 亮蓝灰  -->
+    <!-- 亮蓝灰  -->
+    <!-- 灰石色  -->
+    <!-- 灰石色  -->
+    <!-- 深绿褐色  -->
+    <!-- 石蓝色  -->
+    <color name="dimgray">#696969</color>
+    <!-- 暗灰色  -->
+    <!-- 暗灰色  -->
+    <!-- 中绿色  -->
+    <!-- 菊兰色  -->
+    <!-- 军兰色  -->
+    <!-- 暗橄榄绿   -->
+    <!-- 靛青色  -->
+    <!-- 中绿宝石  -->
+    <!-- 暗灰蓝色  -->
+    <!-- 钢兰色  -->
+    <!-- 皇家蓝  -->
+    <!-- 青绿色  -->
+    <!-- 中海蓝  -->
+    <!-- 橙绿色  -->
+    <!-- 暗瓦灰色  -->
+    <!-- 暗瓦灰色  -->
+    <!-- 海绿色  -->
+    <!-- 森林绿  -->
+    <!-- 亮海蓝色  -->
+    <!-- 闪兰色  -->
+    <!-- 中灰兰色  -->
+    <!-- 浅绿色  -->
+    <!-- 青色  -->
+    <!-- 春绿色 -->
+    <!-- 酸橙色  -->
+    <!-- 中春绿色  -->
+    <!-- 暗宝石绿  -->
+    <!-- 深天蓝色  -->
+    <!-- 暗青色  -->
+    <!-- 水鸭色  -->
+    <!-- 绿色  -->
+    <!-- 暗绿色  -->
+    <!-- 蓝色  -->
+    <!-- 中兰色  -->
+    <!-- 暗蓝色  -->
+    <!-- 海军色  -->
+    <color name="black">#000000</color>
+    <!-- 黑色  -->
+
+    <!-- expandableListView分割线  -->
+    <color name="expandabledivider">#e9a60f</color>
+    <color name="filtercolor">#e5ddd3</color>
+    <color name="filtergroupcolor">#6c6c6c</color>
+
+
+    <!-- common dialog -->
+    <color name="common_dialog_text_light_black">#ff3A3A3A</color>
+    <color name="common_dialog_btn_press_bg_color1">#dcdbdb</color>
+    <color name="common_dialog_title_bg_risk_yellow">#e9a60f</color>
+    <color name="common_dialog_btn_top_divider_color">#ffe5e5e5</color>
+
+    <!-- Roki 3.1 UI 新规范颜色 -->
+    <!-- 主颜色 -->
+    <color name="roki_main_color">#EFCE17</color>
+
+    <!-- 辅助色 -->
+    <color name="roki_sub_color">#FB7432</color>
+    <!-- 主要文字颜色 顶部导航栏文字,列表标题文字 -->
+    <color name="roki_main_text_color">#262626</color>
+    <!-- 重要文字 -->
+    <color name="roki_important_text_color">#333333</color>
+    <!-- 一般文字 -->
+    <color name="roki_general_text_color">#666666</color>
+    <!--提示性文字 -->
+    <color name="roki_tips_text_color">#999999</color>
+    <!-- 分割线 -->
+    <!-- 背景色 -->
+    <color name="roki_background_color">#f5f5f8</color>
+
+    <color name="roki_background_color2">#fffafafa</color>
+
+    <!-- 分割线 -->
+    <!-- 白色 图片以及文字背景 图片背景的文字颜色 -->
+    <color name="roki_background_white">#FFFFFF</color>
+    <color name="gray_400">#FFBDBDBD</color>
+
+    <color name="colorGray">#bbbbbb</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorPurple">#6F0AEE</color>
+
+    <color name="progress">#ff68c067</color>
+    <!-- login -->
+    <color name="login_background">#ffffff</color>
+    <color name="login_text_color">#333333</color>
+    <!-- mine -->
+    <color name="mine_background">#f5f5f8</color>
+    <color name="mine_text_color">#262626</color>
+    <color name="mine_text_color2">#666666</color>
+    <color name="mine_text_color3">#999999</color>
+
+    <!-- App 样式中引用的颜色 -->
+    <color name="common_accent_color">#EFCE17</color>
+    <color name="common_accent_text_color">#EFAA17</color>
+    <color name="common_accent_color2">#33efce17</color>
+    <color name="common_text_color">#333333</color>
+    <color name="common_text_hint_color">@color/panda</color>
+
+    <!-- 按钮按压时的颜色 -->
+    <color name="common_button_pressed_color">#e9a60f</color>
+    <!-- 按钮禁用时的颜色 -->
+    <color name="common_button_disable_color">#BBBBBB</color>
+    <!-- 分割线的颜色 -->
+    <color name="common_line_color">#999999</color>
+    <!-- 矢量图标的颜色 -->
+    <color name="common_icon_color">#7C7C7C</color>
+
+    <!-- 对话框确认按钮的文本颜色 -->
+    <color name="common_confirm_text_color">#007AFF</color>
+    <!-- 对话框取消按钮的文本颜色 -->
+    <color name="common_cancel_text_color">#F44336</color>
+    <!-- 熊猫色（黑白背景通吃） -->
+    <color name="panda">#FF757575</color>
+
+    <!-- 白色 -->
+    <color name="white60">#99FFFFFF</color>
+    <color name="white35">#59FFFFFF</color>
+    <color name="white25">#40FFFFFF</color>
+
+    <!-- 黑色 -->
+    <color name="black85">#D9000000</color>
+    <color name="black80">#CC000000</color>
+    <color name="black60">#99000000</color>
+    <color name="black50">#80000000</color>
+    <color name="black5">#0D000000</color>
+
+    <color name="line_chart_easy">#FED8CF</color>
+    <color name="line_chart_deep">#FD4419</color>
+
+</resources>

@@ -1,0 +1,292 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'
+apply plugin:'kotlin-android-extensions'
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+
+
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 3260
+        versionName "3.2.6"
+        multiDexEnabled true
+        applicationId "com.robam.roki"
+        vectorDrawables.useSupportLibrary = true
+        ndk {
+            abiFilter "armeabi"
+            abiFilter "x86"
+            abiFilter "armeabi-v7a"
+            abiFilter "arm64-v8a"
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+    }
+    sourceSets.main.jniLibs.srcDirs = ['src/main/jniLibs']
+    // 支持 Java JDK 8
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+    repositories {
+        flatDir {
+            dirs '../com.robam.player/libs'; dirs 'libs'  // 申明本地库
+
+        }
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+
+    /* dexOptions {
+         incremental true
+         javaMaxHeapSize "4g"
+     }*/
+    //752d7bc299cfba0c2f5ee31ec39bf66b
+    signingConfigs {
+        releaseConfig {
+            keyAlias 'rokimob'
+            keyPassword '123456'
+            storeFile file('./rokimob.keystore')
+            storePassword '123456'
+        }
+
+        debugConfig {
+            keyAlias 'rokimob'
+            keyPassword '123456'
+            storeFile file('./rokimob.keystore')
+            storePassword '123456'
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.releaseConfig
+        }
+        debug{
+            debuggable true
+            signingConfig signingConfigs.releaseConfig
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+    sourceSets.main.jniLibs.srcDirs = ['src/main/jniLibs']
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                outputFileName = "RokiMoble_${buildType.name}_${defaultConfig.versionName}V_${releaseTime()}.apk"
+            }
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyyyMM_dd_hh_mm", TimeZone.getTimeZone("Asia/Shanghai"))
+}
+
+dependencies {
+//    implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.0.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':com.robam.common')
+    implementation project(':com.legent.utils.speech')
+    implementation project(':com.legent.ui')
+    implementation project(':com.legent')
+//    implementation project(':com.robam.player')
+    implementation project(':com.robam.push')
+    implementation project(':softap')
+    implementation project(':MPChartLib')
+    implementation project(':com.legent.utils.qrcode')
+    api project(':com.robam.tabstrip')
+    implementation(name: 'com.handmark.pulltorefresh-2.1.1', ext: 'aar')
+    implementation(name: 'com.etsy.android.grid-1.0.3', ext: 'aar')
+    implementation(name: 'quick_login_android_5.8.1', ext: 'aar')
+//    implementation(name: 'base-preview', ext: 'aar')
+//    implementation(name: 'widget-release', ext: 'aar')
+    implementation(name: 'lib-dds-1.2.19.1-release', ext: 'aar')  /* 思必驰*/
+//    implementation 'com.baoyz.swipemenulistview:library:1.1.0'
+    // google analycis   by  liyuebiao
+//    implementation 'com.google.android.gms:play-services-analytics:9.2.0'
+//    implementation 'com.google.android.gms:play-services-appindexing:9.2.0'
+//    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+//    implementation project(':com.robam.banner')
+    implementation 'io.github.youth5201314:banner:2.2.2'
+//    implementation 'com.google.zxing:core:3.2.1'
+//    implementation 'com.journeyapps:zxing-android-embedded:3.3.0'
+//    implementation files('libs/tbs_sdk_2.6.1405.jar')  //tencent x5 core
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.3.1'
+    implementation 'com.hyman:flowlayout-lib:1.1.2'
+//    implementation 'com.squareup.picasso:picasso:2.5.2'
+//    implementation 'com.github.open-android:ViewPager:0.1.0'
+    implementation 'com.jwenfeng.pulltorefresh:library:1.0.3'
+    implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
+    implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
+    implementation 'me.yatoooon:screenadaptation:1.1.1'
+    //implementation project(':smartconfig')
+
+    implementation deps.glide
+    implementation 'androidx.annotation:annotation:1.1.0'
+    annotationProcessor deps.glidecompiler
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'   //图片变换
+//    implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
+//    implementation 'com.github.Cutta:GifView:1.1'
+//    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'am.widget:wraplayout:1.2.1'
+    implementation deps.app_compat
+    implementation deps.cardview
+    implementation deps.multidex
+    implementation deps.material
+    implementation deps.zxing_core
+//    implementation 'com.blankj:utilcodex:1.30.6'
+    implementation 'com.zzhoujay.richtext:richtext:3.0.8'
+//    implementation 'com.zzhoujay:html:1.0.2'
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+//    implementation('com.alibaba.android:vlayout:1.2.12@aar') {
+//        transitive = true
+//    }
+    implementation 'com.hjq:titlebar:8.5'
+//    implementation 'com.hjq:toast:8.8'
+    // 沉浸式框架：https://github.com/gyf-dev/ImmersionBar
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+    implementation 'com.airbnb.android:lottie:3.6.1'
+    implementation 'com.tencent.bugly:crashreport:3.3.92'
+    //litepal
+    implementation 'org.litepal.guolindev:core:3.2.0'
+    implementation 'com.github.yhaolpz:FloatWindow:1.0.9'
+//    implementation 'com.github.dynckathline:ijkplayerlib:1.0.4'
+    implementation 'cn.jzvd:jiaozivideoplayer:7.7.0'
+//    implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.0.0'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+    implementation deps.gson
+    implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+//
+//
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.8'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
+}
+
+MobSDK {
+    appKey "575676805aa2"
+    appSecret "b89d2427a3bc7ad1aea1e1e8c1d36bf3"
+
+    ShareSDK {
+        //平台配置信息
+        devInfo {
+            SinaWeibo {
+                id 1
+                sortId 1
+                appKey "dingdn3cxe6jzmtsfgof"
+                appSecret "958ffee109dff96a167db4a6290ead72"
+                callbackUri "http://www.sharesdk.cn"
+                shareByAppClient true
+                enable true
+            }
+
+            /* Wechat微信和WechatMoments微信朋友圈的appid是一样的；
+      注意：开发者不能用我们这两个平台的appid,否则分享不了
+      微信测试的时候，微信测试需要先签名打包出apk,
+      sample测试微信，要先签名打包，keystore在sample项目中，密码123456
+
+      BypassApproval是绕过审核的标记，设置为true后AppId将被忽略，故不经过
+      审核的应用也可以执行分享，但是仅限于分享文字和图片，不能分享其他类型，
+      默认值为false。此外，微信收藏不支持此字段。wx4868b35061f87885
+      <!--要分享微信小应用程序时用userName,path-->*/
+            Wechat {
+                id 4
+                sortId 4
+                appId "wx77973859a88a8921"
+                appSecret "0a94c0b763f440ddc5514552594e3ab3"
+                userName "gh_be1f78aea5cd"
+                path "pages/index/index.html?id=1"
+                withShareTicket true
+                miniprogramType 0
+                bypassApproval false
+                enable true
+            }
+            Dingding {
+                id 8
+                sortId 8
+                bypassApproval false
+                enable true
+                appId "dingdn3cxe6jzmtsfgof"
+                appSecret "KDRKHQoqv6o_gDOHqcqtvKo4ibzHKCE2dlDT1FSSXxnJNymmcMPh8tL1xwiA8fSl"
+                callbackUri "https://mob.com/"
+            }
+
+            WechatMoments {
+                id 5
+                sortId 5
+                appId "wx77973859a88a8921"
+                appSecret "0a94c0b763f440ddc5514552594e3ab3"
+                bypassApproval false
+                enable true
+            }
+
+            QQ {
+                Id = "7"
+                SortId = "7"
+                AppId = "1104298027"
+                AppKey = "kjHmmlv4hn1Vzw8M"
+                ShareByAppClient = "true"
+                Enable = "true"
+            }
+
+
+        }
+    }
+
+
+    //解决RecyclerView 单条刷新报错
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '26.0.1'
+                }
+            }
+        }
+        resolutionStrategy {
+            force 'com.google.guava:guava:18.0'
+        }
+    }
+
+}

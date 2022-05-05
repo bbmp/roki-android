@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:src="@drawable/ic_return_selector"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingRight="42dp"
+            android:text="@string/wifi_comm"
+            android:textColor="#313131"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/img_top_bg"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/connect_confirm" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_top_bg"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/wifi_network_toast"
+                android:textColor="@color/c34"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_connect_ing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/softap_not"
+                android:textColor="#333030"/>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="72.5dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50.5dp">
+
+            <TextView
+                android:id="@+id/btn_connect"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/shape_wifi_btn_bg"
+                android:gravity="center"
+                android:text="@string/wifi_common_ok"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="visible" />
+            <ProgressBar
+                android:id="@+id/myprogressbar"
+                style="@style/style_myprogressbar"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:background="@drawable/shape_pb_bg"
+                android:max="100"
+                android:progress="0"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tv_connect_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/device_softap_link_text"
+                android:layout_centerInParent="true"
+                android:textColor="#333030"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</LinearLayout>

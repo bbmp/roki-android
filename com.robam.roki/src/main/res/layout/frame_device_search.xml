@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lin_search"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/White"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/layoutSearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_recipe_search_edit_bg"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="10dp"
+                android:contentDescription="@null"
+                android:src="@mipmap/ic_recipe_search" />
+
+            <EditText
+                android:id="@+id/edtSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:ems="10"
+                android:focusable="true"
+                android:hint="请输入产品型号"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textColor="@color/c05"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="@string/cancel"
+            android:textColor="@color/c05"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <com.robam.roki.ui.view.networkoptimization.DeviceGridView
+        android:id="@+id/recipeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lin_search"
+        android:layout_centerHorizontal="true"
+        android:numColumns="4"
+        app:column_count="4"
+        app:grid_paddingBottom="4dp"
+        app:grid_paddingLeft="4dp"
+        app:grid_paddingRight="4dp"
+        app:grid_paddingTop="4dp"
+        app:item_margin="6dp" />
+
+
+    <TextView
+        android:id="@+id/txt_cantfinddevice1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
+        android:text="@string/cantfinddevice"
+        android:textColor="#3a3a3a"
+        android:visibility="gone"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/lin_cantfinddevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/cantfinddevice2"
+            android:textColor="#3a3a3a"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+</RelativeLayout>

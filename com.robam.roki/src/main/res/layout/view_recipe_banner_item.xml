@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/imgRecipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:id="@+id/divMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White_60"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_recipe_banner_title_bg"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="香菇菜心"
+            android:textColor="@color/recipe_banner_text"
+            android:textSize="36sp" />
+
+
+        <TextView
+            android:id="@+id/txtDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="45dp"
+            android:paddingRight="45dp"
+            android:text="香菇菜心清新可口，可去油腻，有吃肉的口感，加上爽口脆生生的菜心。此菜清新可口，对补气血、降血脂，抗癌有一定的帮助。"
+            android:textColor="@color/recipe_banner_text"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="难度"
+            android:textColor="@color/c02"
+            android:textSize="12sp" />
+
+
+        <com.robam.roki.ui.view.RecipeDifficultyView
+            android:id="@+id/difficultyView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <com.robam.roki.ui.view.DividerDotView
+            android:layout_width="180dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="6dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="食材"
+            android:textColor="@color/c02"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txtMainMaterial"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:singleLine="false"
+            android:text="大蒜3瓣"
+            android:textColor="@color/recipe_banner_text"
+            android:textSize="12sp" />
+
+
+        <com.robam.roki.ui.view.DividerDotView
+            android:layout_width="180dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="佐料"
+            android:textColor="@color/c02"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txtSlaveMaterial"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:singleLine="false"
+            android:text="大蒜3瓣"
+            android:textColor="@color/recipe_banner_text"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/divMain"
+        android:background="@mipmap/img_translucent_wave_60" />
+
+
+    <TextView
+        android:id="@+id/txtDetail"
+        android:layout_width="72dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/ic_recipe_banner_detail"
+        android:gravity="center"
+        android:text="详情"
+        android:textColor="@color/title_text_color_selector"
+        android:textSize="16sp" />
+
+</RelativeLayout>

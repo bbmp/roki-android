@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--步骤-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <!--当前步骤-->
+        <TextView
+            android:id="@+id/recipe_step_tv_currentstep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingTop="5dp"
+            android:text="0"
+            android:textColor="#6685B3"
+            android:textSize="40sp" />
+        <!--斜线-->
+        <ImageView
+            android:id="@+id/recipe_step_img_slide"
+            android:layout_width="15dp"
+            android:layout_height="25dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/recipe_step_tv_currentstep"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_recipe_slide" />
+        <!--总步骤-->
+        <TextView
+            android:id="@+id/recipe_step_tv_totalstep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/recipe_step_img_slide"
+            android:gravity="bottom"
+            android:text="0"
+            android:textColor="@color/c01"
+            android:textSize="23sp" />
+    </RelativeLayout>
+    <!--详情描述-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5">
+        <!--每一步骤介绍-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!--详情文字-->
+                <TextView
+                    android:id="@+id/recipe_step_tv_stepdetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="3dp"
+                    android:ellipsize="end"
+                    android:textColor="@color/Black_65"
+                    android:textSize="16sp" />
+                <!--完成提示-->
+                <LinearLayout
+                    android:id="@+id/recipe_step_linear_complete"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="28dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_recipe_complete" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="完成啦"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+        <!--语音图片-->
+        <ImageView
+            android:id="@+id/recipe_step_img_speak"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_recipe_speak" />
+
+    </RelativeLayout>
+    <!--下半部分包括  模式显示和背景图片-->
+    <RelativeLayout
+        android:id="@+id/recipe_step_relative"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7">
+        <!--背景图片-->
+        <ImageView
+            android:id="@+id/recipe_step_img_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@mipmap/img_default" />
+        <!--模式框-->
+        <LinearLayout
+            android:id="@+id/recipe_step_linear_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_recipe_step_modelbg"
+            android:paddingBottom="5dp"
+            android:paddingTop="10dp">
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/c02" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
+
+

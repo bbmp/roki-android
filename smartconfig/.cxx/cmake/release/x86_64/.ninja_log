@@ -1,0 +1,8 @@
+# ninja log v5
+6	1183	642506739	CMakeFiles/SmartConfig.dir/src/main/cpp/Thread.cpp.o	43db6ac3c9c3fd84
+11	1573	642506739	CMakeFiles/SmartConfig.dir/src/main/cpp/Message.cpp.o	9af1d9c7db7b29cc
+13	1586	642506739	CMakeFiles/SmartConfig.dir/src/main/cpp/BroadcastMessage.cpp.o	1f8550560d327e1
+1	1643	642506739	CMakeFiles/SmartConfig.dir/src/main/cpp/SmartConfig.cpp.o	26207777f1d47732
+8	1881	642506740	CMakeFiles/SmartConfig.dir/src/main/cpp/BroadcastManager.cpp.o	e7ee289ce1425c38
+4	1914	642506740	CMakeFiles/SmartConfig.dir/src/main/cpp/ConfigManager.cpp.o	9955858faf1c5ae1
+1914	2058	642506740	../../../../build/intermediates/cmake/release/obj/x86_64/libSmartConfig.so	f5fbbd01d81ad7fe

@@ -1,0 +1,37 @@
+[
+{
+  "directory": "E:/Robam/roki_app/roki_3.1/smartconfig/.cxx/cmake/debug/x86_64",
+  "command": "E:\\ndk-bundle\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -DSmartConfig_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\SmartConfig.dir\\src\\main\\cpp\\SmartConfig.cpp.o -c E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\SmartConfig.cpp",
+  "file": "E:/Robam/roki_app/roki_3.1/smartconfig/src/main/cpp/SmartConfig.cpp"
+},
+
+{
+  "directory": "E:/Robam/roki_app/roki_3.1/smartconfig/.cxx/cmake/debug/x86_64",
+  "command": "E:\\ndk-bundle\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -DSmartConfig_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\SmartConfig.dir\\src\\main\\cpp\\ConfigManager.cpp.o -c E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\ConfigManager.cpp",
+  "file": "E:/Robam/roki_app/roki_3.1/smartconfig/src/main/cpp/ConfigManager.cpp"
+},
+
+{
+  "directory": "E:/Robam/roki_app/roki_3.1/smartconfig/.cxx/cmake/debug/x86_64",
+  "command": "E:\\ndk-bundle\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -DSmartConfig_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\SmartConfig.dir\\src\\main\\cpp\\Thread.cpp.o -c E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\Thread.cpp",
+  "file": "E:/Robam/roki_app/roki_3.1/smartconfig/src/main/cpp/Thread.cpp"
+},
+
+{
+  "directory": "E:/Robam/roki_app/roki_3.1/smartconfig/.cxx/cmake/debug/x86_64",
+  "command": "E:\\ndk-bundle\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -DSmartConfig_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\SmartConfig.dir\\src\\main\\cpp\\BroadcastManager.cpp.o -c E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\BroadcastManager.cpp",
+  "file": "E:/Robam/roki_app/roki_3.1/smartconfig/src/main/cpp/BroadcastManager.cpp"
+},
+
+{
+  "directory": "E:/Robam/roki_app/roki_3.1/smartconfig/.cxx/cmake/debug/x86_64",
+  "command": "E:\\ndk-bundle\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -DSmartConfig_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\SmartConfig.dir\\src\\main\\cpp\\BroadcastMessage.cpp.o -c E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\BroadcastMessage.cpp",
+  "file": "E:/Robam/roki_app/roki_3.1/smartconfig/src/main/cpp/BroadcastMessage.cpp"
+},
+
+{
+  "directory": "E:/Robam/roki_app/roki_3.1/smartconfig/.cxx/cmake/debug/x86_64",
+  "command": "E:\\ndk-bundle\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -DSmartConfig_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\SmartConfig.dir\\src\\main\\cpp\\Message.cpp.o -c E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\Message.cpp",
+  "file": "E:/Robam/roki_app/roki_3.1/smartconfig/src/main/cpp/Message.cpp"
+}
+]

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+        <ImageView
+            android:id="@+id/iv_dft"
+            android:layout_width="60dp"
+            android:layout_height="64dp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/img_sterilizer" />
+
+        <TextView
+            android:id="@+id/tv_dft_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_dft"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/iv_dft"
+            android:text="消毒柜"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_dft_name"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="6dp"
+            android:layout_toLeftOf="@+id/iv_dft"
+            android:text="Sterilizer"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <include layout="@layout/view_device_disconnect_hint" />
+
+    <FrameLayout
+        android:id="@+id/fl_sterilizer_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#343434"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp" />
+</LinearLayout>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/layout_bg"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"/>
+
+    <ImageView
+        android:id="@+id/iv_lock_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/shape_fan_lock_bg"
+        android:visibility="gone"/>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_lock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:visibility="gone">
+
+        <com.robam.roki.ui.view.SlideLockView
+            android:id="@+id/slv_lock"
+            android:layout_width="62dp"
+            android:layout_height="256dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_slide_lock_bg"
+            android:gravity="center"
+            app:lock_drawable="@mipmap/lock_icon"
+            app:lock_radius="30dp"/>
+
+        <TextView
+            android:id="@+id/tv_child_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:ems="1"
+            android:gravity="center_vertical"
+            android:text="@string/device_slide_lock_text"
+            android:textColor="#888888"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/selector_rika_item_bg"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24"/>
+
+            <TextView
+                android:id="@+id/tv_device_model_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text=""
+                android:textColor="@color/c41"
+                android:textSize="20sp"/>
+
+
+            <ImageView
+                android:id="@+id/iv_device_more"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/selector_rika_item_bg"
+                android:src="@mipmap/icon_device_more"/>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="18dp">
+
+            <TextView
+                android:id="@+id/tv_off_line_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/device_new_connected"
+                android:textColor="@color/c64"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_filter_element_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/c41"
+                android:text="净化前自来水水质："/>
+
+            <TextView
+                android:id="@+id/rv_filter_element_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/c41"
+                android:text="差"/>
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp">
+
+            <RelativeLayout
+                android:id="@+id/fr_filter_element_show"
+                android:layout_width="60dp"
+                android:layout_height="70dp"
+                android:visibility="gone"
+                android:layout_marginLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_filter_element_show"
+                    android:layout_width="60dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:id="@+id/tv_filter_element_show"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:textColor="@color/c66"
+                    android:textSize="16sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/fr_filter_about_element_show"
+                android:layout_width="60dp"
+                android:layout_height="70dp"
+                android:visibility="gone"
+                android:layout_marginLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_filter_about_element_show"
+                    android:layout_width="60dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:id="@+id/tv_filter_about_element_show"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:textColor="@color/c66"
+                    android:textSize="15sp"/>
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/iv_water_orange"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_water_orange"/>
+
+                <ImageView
+                    android:id="@+id/iv_water_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_water_green"/>
+
+                <ImageView
+                    android:id="@+id/iv_water_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_water_blue"/>
+
+
+                <ImageView
+                    android:id="@+id/iv_water_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_water_gray"
+                    android:visibility="gone"/>
+
+                <ImageView
+                    android:id="@+id/iv_water_circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_water_circle"/>
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_water_state"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="拧开水龙头会自动出水"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_water_dec"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="预估剩余时间"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_ppm"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom|right"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginBottom="60dp"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:text="ppm"/>
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <com.robam.roki.ui.view.IOSScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.9"
+                    android:overScrollMode="never"/>
+
+            </LinearLayout>
+
+        </com.robam.roki.ui.view.IOSScrollView>
+    </LinearLayout>
+
+</FrameLayout>

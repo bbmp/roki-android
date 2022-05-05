@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:gravity="center_horizontal"
+    android:paddingBottom="100dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="自动设置成功"
+        android:layout_marginTop="45dp"
+        android:textSize="30sp"
+        android:textColor="#e9a60f"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="*食材放入电烤箱后点击“开始”或\n在电烤箱上按“开启键”开始工作"
+        android:textColor="#e9a60f"
+        android:textSize="15sp"/>
+
+</LinearLayout>

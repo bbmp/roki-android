@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10px"
+        android:layout_marginTop="40px"
+        android:text="选取附近的WLAN"
+        android:textSize="20px" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="13px"
+        android:background="#efefef" />
+
+    <ListView
+        android:id="@+id/wifiList"
+        style="@style/common_wifi_listview"
+        android:listSelector="@drawable/course_list_selector"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#efefef"
+        android:scrollbars="none" />
+
+</LinearLayout>
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingBottom="2dp"
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
+    android:paddingTop="8dp"
+    android:background="@color/white_02">
+
+    <com.robam.roki.ui.view.HomeTabItemView
+        android:id="@+id/tab1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:imgSource="@drawable/ic_home_tab_device"
+        app:title="@string/home_tab_device"/>
+
+    <com.robam.roki.ui.view.HomeTabItemView
+        android:id="@+id/tab2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:imgSource="@drawable/ic_home_tab_recipe"
+        app:title="@string/home_tab_recipe"/>
+
+    <com.robam.roki.ui.view.HomeTabItemView
+        android:id="@+id/tab3"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:imgSource="@drawable/ic_home_tab_ip"
+        app:title="@string/home_tab_ip"/>
+
+        <com.robam.roki.ui.view.HomeTabItemView
+            android:id="@+id/tab4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:imgSource="@drawable/ic_home_tab_personal"
+            app:title="@string/home_tab_personal"/>
+
+</LinearLayout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <GridView
+        android:id="@+id/gv_show"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fadeScrollbars="false"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="4">
+
+    </GridView>
+
+    <LinearLayout
+        android:id="@+id/more_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <RelativeLayout
+            android:layout_width="75dp"
+            android:layout_height="75dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/oven_more" />
+
+            <ImageView
+                android:id="@+id/v_more_up"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:rotation="180"
+                android:src="@mipmap/oven_more_jiantou"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/v_more_down"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/oven_more_jiantou" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:text="@string/device_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:textColor="#dddddd"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

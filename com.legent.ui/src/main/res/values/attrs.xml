@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="title" format="string|reference" />
+    <attr name="showSplit" format="boolean" />
+    <attr name="clickable" format="boolean" />
+    <attr name="editable" format="boolean" />
+    <attr name="checked" format="boolean" />
+    <attr name="isPassword" format="boolean" />
+    <attr name="isMiltiLine" format="boolean" />
+    <attr name="isDisible" format="boolean" />
+    <attr name="label" format="string|reference" />
+    <attr name="lineTitle" format="string|reference" />
+    <attr name="text" format="string|reference" />
+    <attr name="linkText" format="string|reference" />
+    <attr name="buttonText" format="string|reference" />
+    <attr name="hint" format="string|reference" />
+    <attr name="titleMaxWidth" format="dimension" />
+    <attr name="textMaxLength" format="integer" />
+    <attr name="integerValue" format="integer" />
+    <attr name="minLines" format="integer" />
+    <attr name="floatValue" format="float" />
+    <attr name="imgSource" format="reference" />
+    <attr name="imgBackgroud" format="reference|color" />
+    <attr name="btnBackground" format="reference" />
+
+    <declare-styleable name="LineView">
+        <attr name="lineTitle" />
+        <attr name="titleMaxWidth" />
+        <attr name="showSplit" />
+        <attr name="isDisible" />
+    </declare-styleable>
+    <declare-styleable name="TextLine">
+        <attr name="lineTitle" />
+        <attr name="titleMaxWidth" />
+        <attr name="showSplit" />
+        <attr name="text" />
+        <attr name="clickable" />
+    </declare-styleable>
+    <declare-styleable name="LinkLine">
+        <attr name="lineTitle" />
+        <attr name="titleMaxWidth" />
+        <attr name="showSplit" />
+        <attr name="text" />
+        <attr name="linkText" />
+    </declare-styleable>
+    <declare-styleable name="EditLine">
+        <attr name="lineTitle" />
+        <attr name="titleMaxWidth" />
+        <attr name="showSplit" />
+        <attr name="isPassword" />
+        <attr name="text" />
+        <attr name="hint" />
+        <attr name="editable" />
+        <attr name="textMaxLength" />
+        <attr name="isMiltiLine" />
+        <attr name="minLines" />
+    </declare-styleable>
+    <declare-styleable name="CheckLine">
+        <attr name="lineTitle" />
+        <attr name="titleMaxWidth" />
+        <attr name="showSplit" />
+        <attr name="checked" />
+        <attr name="btnBackground" />
+    </declare-styleable>
+    <declare-styleable name="RadioLine">
+        <attr name="lineTitle" />
+        <attr name="titleMaxWidth" />
+        <attr name="showSplit" />
+    </declare-styleable>
+    <declare-styleable name="ButtonLine">
+        <attr name="lineTitle" />
+        <attr name="titleMaxWidth" />
+        <attr name="showSplit" />
+        <attr name="text" />
+        <attr name="buttonText" />
+    </declare-styleable>
+
+    <!-- Defines the custom XML attributes supported for a HorizontalListView -->
+    <declare-styleable name="HorizontalListView">
+        <attr name="dividerWidth" format="dimension" />
+        <attr name="android:divider" />
+        <attr name="android:requiresFadingEdge" />
+        <attr name="android:fadingEdgeLength" />
+    </declare-styleable>
+
+
+    <declare-styleable name="WheelView">
+        <attr name="normalTextColor" format="color" />
+        <attr name="normalTextSize" format="dimension" />
+        <attr name="selectedTextColor" format="color" />
+        <attr name="selectedTextSize" format="dimension" />
+        <attr name="unitHight" format="dimension" />
+        <attr name="itemNumber" format="integer" />
+        <attr name="lineColor" format="color" />
+        <attr name="lineHeight" format="dimension" />
+        <attr name="maskHight" format="dimension" />
+        <attr name="noEmpty" format="boolean" />
+        <attr name="isEnable" format="boolean" />
+        <attr name="unit" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="riv_corner_radius" format="dimension" />
+        <attr name="riv_left_top_corner_radius" format="dimension" />
+        <attr name="riv_right_top_corner_radius" format="dimension" />
+        <attr name="riv_left_bottom_corner_radius" format="dimension" />
+        <attr name="riv_right_bottom_corner_radius" format="dimension" />
+        <attr name="riv_border_width" format="dimension" />
+        <attr name="riv_border_color" format="color" />
+        <attr name="riv_oval" format="boolean" />
+        <attr name="android:scaleType" />
+    </declare-styleable>
+
+    <declare-styleable name="roundImageView">
+        <attr name="type" format="enum">
+            <enum name="circle" value="1"/>
+            <enum name="round" value="2"/>
+        </attr>
+        <attr name="radiu" format="dimension"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="DotLineView">
+        <attr name="dot_line_color" format="color" />
+        <attr name="dot_line_dot_radius" format="dimension" />
+        <attr name="android:dashGap" />
+        <attr name="android:orientation" />
+    </declare-styleable>
+
+
+    <declare-styleable name="DashedLineView">
+        <attr name="android:dashWidth" />
+        <attr name="android:dashGap" />
+        <attr name="android:orientation" />
+        <attr name="dashed_line_color" format="color" />
+
+    </declare-styleable>
+
+
+</resources>

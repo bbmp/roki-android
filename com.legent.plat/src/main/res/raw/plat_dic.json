@@ -1,0 +1,117 @@
+{
+  "deviceTypes": [],
+  "resultCodes": [
+    {
+      "id": "-1",
+      "name": "@string/ec__1"
+    },
+    {
+      "id": "-2",
+      "name": "@string/ec__2"
+    },
+    {
+      "id": "-3",
+      "name": "@string/ec__3"
+    },
+    {
+      "id": "-4",
+      "name": "@string/ec__4"
+    },
+    {
+      "id": "0",
+      "name": "@string/rc_0"
+    },
+    {
+      "id": "1",
+      "name": "@string/rc_1"
+    },
+    {
+      "id": "2",
+      "name": "@string/rc_2"
+    },
+    {
+      "id": "1001",
+      "name": "@string/rc_1001"
+    },
+    {
+      "id": "1002",
+      "name": "@string/rc_1002"
+    },
+    {
+      "id": "1003",
+      "name": "@string/rc_1003"
+    },
+    {
+      "id": "1004",
+      "name": "@string/rc_1004"
+    },
+    {
+      "id": "1005",
+      "name": "@string/rc_1005"
+    },
+    {
+      "id": "1006",
+      "name": "@string/rc_1006"
+    },
+    {
+      "id": "1007",
+      "name": "@string/rc_1007"
+    },
+    {
+      "id": "1008",
+      "name": "@string/rc_1008"
+    },
+    {
+      "id": "1009",
+      "name": "@string/rc_1009"
+    },
+    {
+      "id": "1010",
+      "name": "@string/rc_1010"
+    },
+    {
+      "id": "1011",
+      "name": "@string/rc_1011"
+    },
+    {
+      "id": "1012",
+      "name": "@string/rc_1012"
+    },
+    {
+      "id": "1013",
+      "name": "@string/rc_1013"
+    },
+    {
+      "id": "1014",
+      "name": "@string/rc_1014"
+    },
+    {
+      "id": "1015",
+      "name": "@string/rc_1015"
+    },
+    {
+      "id": "1016",
+      "name": "@string/rc_1016"
+    },
+    {
+      "id": "1017",
+      "name": "@string/rc_1017"
+    },
+    {
+      "id": "2001",
+      "name": "@string/rc_2001"
+    },
+    {
+      "id": "2002",
+      "name": "@string/rc_2002"
+    },
+    {
+      "id": "2003",
+      "name": "@string/rc_2003"
+    },
+    {
+      "id": "2004",
+      "name": "@string/rc_2004"
+    }
+  ]
+}

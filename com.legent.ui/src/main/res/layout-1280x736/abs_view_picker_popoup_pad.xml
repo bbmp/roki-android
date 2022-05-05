@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:alpha="0.9">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="54dp"
+            android:layout_marginLeft="46dp"
+            android:text="设置"
+            android:textSize="36sp"
+            android:textColor="#232323"/>
+
+        <LinearLayout
+            android:layout_centerHorizontal="true"
+            android:layout_width="440dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="440dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/img_steam_setting_mode"/>
+
+                <ImageView
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/img_steam_setting_time"/>
+
+                <ImageView
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/img_steam_setting_temp"/>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="5dp"
+                android:id="@+id/divMain"
+                android:layout_width="440dp"
+                android:layout_height="wrap_content">
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消"
+            android:textSize="36sp"
+            android:paddingLeft="46dp"
+            android:textColor="#232323"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:text="请确认水箱加满水"
+            android:drawableLeft="@mipmap/ic_setting_water"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textColor="#f41f1f"/>
+
+
+        <TextView
+            android:id="@+id/txtConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="48dp"
+            android:text="确定"
+            android:gravity="right"
+            android:textColor="#232323"
+            android:textSize="36sp"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

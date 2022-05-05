@@ -1,0 +1,7 @@
+Executable : D:\Android\SDK\cmake\3.10.2.4988404\bin\ninja.exe
+arguments : 
+-C
+E:\Robam\roki_app\roki_3.1\smartconfig\.cxx\cmake\debug\armeabi-v7a
+SmartConfig
+jvmArgs : 
+

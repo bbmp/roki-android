@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/param"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sterilizer_param_bg"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_title_wd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="温度/℃"
+                android:textColor="#1d1d1d"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/txt_wd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="--"
+                android:textColor="#1d1d1d"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_title_sd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="湿度/%rh"
+                android:textColor="#1d1d1d"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/txt_sd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="--"
+                android:textColor="#1d1d1d"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_title_o"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="臭氧/mg/l"
+                android:textColor="#1d1d1d"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/txt_o"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="--"
+                android:textColor="#1d1d1d"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_title_xj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="细菌/%"
+                android:textColor="#1d1d1d"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/txt_xj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="--"
+                android:textColor="#1d1d1d"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/param"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="数据仅供参考"
+            android:textColor="#bbbbbb"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

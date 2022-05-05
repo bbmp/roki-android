@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp"
+    >
+
+    <ImageView
+        android:id="@+id/step_pro"
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/cooker_pro"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/txt_step"
+        android:layout_marginLeft="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.空锅加热至无水汽"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        />
+
+
+</LinearLayout>

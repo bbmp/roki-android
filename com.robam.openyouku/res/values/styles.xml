@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 全应用字号大小标准 -->
+
+    <style name="FontD">
+        <item name="android:textSize">@dimen/text_size_d</item>
+    </style>
+
+    <style name="FontE">
+        <item name="android:textSize">@dimen/text_size_e</item>
+    </style>
+
+    <style name="FontF">
+        <item name="android:textSize">@dimen/text_size_f</item>
+    </style>
+
+
+    <style name="NotificationText">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="NotificationTitle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <!-- remote -->
+
+    <!-- remote -->
+
+
+    <!-- filter textApperance -->
+
+
+    <!-- 详情页  start -->
+
+
+    <!-- detail page type -->
+    <style name="detail_play_load" parent="FontE">
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+
+    <style name="detail_play_load_name" parent="FontD">
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+
+    <style name="detail_replay" parent="FontF">
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+
+    <!-- detail indicator -->
+
+
+    <!-- 详情页 end -->
+    
+    <!-- dialog message -->
+
+
+    <!-- login -->
+
+    <!-- 播放选集 -->
+
+    <!-- toast -->
+
+    <!-- youku dialog style -->
+
+</resources>

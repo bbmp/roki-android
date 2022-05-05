@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "120580628145",
+    "firebase_url": "https://robam-roki.firebaseio.com",
+    "project_id": "robam-roki",
+    "storage_bucket": "robam-roki.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120580628145:android:ac572dfcda9d40de",
+        "android_client_info": {
+          "package_name": "com.robam.roki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120580628145-arv61fllfofjc79bad132si2ukidppkn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCMi82bDINxCN2tUwAoyms2etJmxUs66A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120580628145-arv61fllfofjc79bad132si2ukidppkn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "120580628145-gnj42vldocm500q346nfnlqrg8snm5km.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.robam.roki"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120580628145:android:23bf01ab276b185c",
+        "android_client_info": {
+          "package_name": "com.robam.rokipad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120580628145-arv61fllfofjc79bad132si2ukidppkn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCMi82bDINxCN2tUwAoyms2etJmxUs66A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120580628145-arv61fllfofjc79bad132si2ukidppkn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "120580628145-gnj42vldocm500q346nfnlqrg8snm5km.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.robam.roki"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

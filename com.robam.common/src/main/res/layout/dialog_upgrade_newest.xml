@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/White"
+    android:padding="20dp" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#262626"
+        android:textSize="22sp"
+        android:text="@string/update_confirm"
+        android:layout_marginBottom="20dp"/>
+
+    <include layout="@layout/view_horizontal_divide" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="#262626"
+        android:visibility="gone"
+        android:text="@string/update_confirm" />
+
+    <TextView
+        style="@style/text_small"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/update_newVerDesc"
+        android:textColor="#333333" />
+
+    <include layout="@layout/view_horizontal_divide"
+        android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/txtVerDesc"
+            style="@style/text_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="@string/update_newVerDesc"
+            android:textColor="#333333" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/bt_cancel"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:textColor="#333333"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/button_round_2"
+            android:text="取消"
+            />
+
+        <Button
+            android:id="@+id/bt_confirm"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:textColor="#333333"
+            android:background="@drawable/button_round"
+            android:text="确定"
+            />
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>

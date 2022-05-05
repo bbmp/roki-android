@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="device_polling_task_id" type="id" />
+    <item name="apk_polling_task_id" type="id" />
+
+</resources>

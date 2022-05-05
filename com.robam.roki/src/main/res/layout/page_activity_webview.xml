@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:background="@color/white" />
+    <RelativeLayout
+        android:id="@+id/title_item"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00000000"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imgreturn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_left_recipe" />
+
+        <TextView
+            android:id="@+id/tv_cook_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@color/roki_main_text_color"
+            android:textSize="18sp"
+            android:layout_toRightOf="@id/imgreturn"
+            android:layout_toLeftOf="@id/ll_title_right"
+            android:maxLines="1"
+            android:text="标题"
+            android:ellipsize="end"
+            android:visibility="visible"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_title_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgFavority"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_recipe_favority_black_shape"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/imgShare"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_recipe_detail_share"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+        <com.legent.ui.ext.views.ExtWebView
+            android:id="@+id/ev_act_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+
+    <FrameLayout
+        android:id="@+id/fl_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+    </FrameLayout>
+</LinearLayout>

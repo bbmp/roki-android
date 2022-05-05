@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical"
+    android:paddingBottom="13dp"
+    android:gravity="center_horizontal">
+
+    <ImageView
+        android:id="@+id/imgIcon"
+        android:layout_marginTop="5dp"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/img_steamoven_start_clean" />
+
+    <TextView
+        android:id="@+id/txtOne"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:gravity="center_horizontal"
+        android:text="请保持水箱水量，并在凹状加热盘内滴些食醋"
+        android:lines="2"
+        android:lineSpacingExtra="6dp"
+        android:textSize="28sp"
+        android:textColor="@color/c11"/>
+
+    <TextView
+        android:id="@+id/txtTwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="*工作45分钟后即可轻松去除水垢"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="7dp"
+        android:textColor="#f22f15"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/start"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="开始工作"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:background="@color/c11" />
+
+</LinearLayout>

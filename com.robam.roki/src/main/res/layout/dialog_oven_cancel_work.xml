@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C0000000"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:id="@+id/txtOne"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:gravity="center_horizontal"
+        android:lines="1"
+        android:text="结束电烤箱工作"
+        android:textColor="@color/c11"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/start"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/c11"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="#ffffff"
+        android:textSize="30sp" />
+
+</LinearLayout>

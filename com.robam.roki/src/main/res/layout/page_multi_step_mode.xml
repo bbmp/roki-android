@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/selector_rika_item_bg"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/c41"
+            android:textSize="20sp"
+            tools:text="虚拟场景模式" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="第一段" />
+
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <com.robam.roki.ui.wheel.WheelView
+            android:id="@+id/wv1_mode_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            app:dividerColor="@color/c31"
+            app:selectedTextColor="#000000"
+            app:wheelDividerSize="32dp"
+            app:wheelGravity="center"
+            app:wheelItemCount="2"
+            app:wheelItemSize="40dp" />
+
+
+        <com.robam.roki.ui.wheel.WheelView
+            android:id="@+id/wv1_temp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:dividerColor="#55000000"
+            app:wheelDividerSize="32dp"
+            app:wheelGravity="center"
+            app:wheelItemCount="2"
+            app:wheelItemSize="40dp" />
+
+
+        <com.robam.roki.ui.wheel.WheelView
+            android:id="@+id/wv1_minute"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:dividerColor="#55000000"
+            app:wheelDividerSize="32dp"
+            app:wheelGravity="center"
+            app:wheelItemCount="2"
+            app:wheelItemSize="40dp" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="第二段" />
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/ll_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <com.robam.roki.ui.wheel.WheelView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            app:dividerColor="@color/c31"
+            app:selectedTextColor="#000000"
+            app:wheelDividerSize="32dp"
+            app:wheelGravity="center"
+            app:wheelItemCount="2"
+            app:wheelItemSize="40dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/add_two" />
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="点击添加第二段" />
+
+        </LinearLayout>
+
+
+        <com.robam.roki.ui.wheel.WheelView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            app:dividerColor="#55000000"
+            app:wheelDividerSize="32dp"
+            app:wheelGravity="center"
+            app:wheelItemCount="2"
+            app:wheelItemSize="40dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/ll_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+
+        <com.robam.roki.ui.wheel.WheelView
+            android:id="@+id/wv2_mode_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            app:dividerColor="@color/c31"
+            app:selectedTextColor="#000000"
+            app:wheelDividerSize="32dp"
+            app:wheelGravity="center"
+            app:wheelItemCount="2"
+            app:wheelItemSize="40dp" />
+
+
+        <com.robam.roki.ui.wheel.WheelView
+            android:id="@+id/wv2_temp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:dividerColor="#55000000"
+            app:wheelDividerSize="32dp"
+            app:wheelGravity="center"
+            app:wheelItemCount="2"
+            app:wheelItemSize="40dp" />
+
+
+        <com.robam.roki.ui.wheel.WheelView
+            android:id="@+id/wv2_minute"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:dividerColor="#55000000"
+            app:wheelDividerSize="32dp"
+            app:wheelGravity="center"
+            app:wheelItemCount="2"
+            app:wheelItemSize="40dp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_begin_work"
+            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_button"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="开始工作" />
+
+    </RelativeLayout>
+
+</LinearLayout>

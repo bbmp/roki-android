@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    def fastjson = "1.1.67.android"
+    def googleCodeGson = "2.2.+"
+//    implementation 'androidx.appcompat:appcompat:1.1.0'
+//    implementation 'com.google.android.material:material:1.1.0'
+//    implementation "com.alibaba:fastjson:$fastjson"
+//    implementation "com.google.code.gson:gson:$googleCodeGson"
+//    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
+//    implementation 'com.hwangjr.rxbus:rxbus:1.0.6'
+//    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    api deps.permissions
+    api deps.gson
+    api deps.rxjava2
+    api deps.rx_android
+    implementation 'commons-codec:commons-codec:1.15'
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.45'
+}

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_background">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:id="@+id/tv_device_model_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/device_content"
+            android:textColor="@color/c41"
+            android:textSize="20sp" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_content_center" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_device_add_succeed_and_failed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/device_link_possible_router_text"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_device_transfer_succeed_and_failed"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/iv_device_transfer_succeed_and_failed"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="74dp"
+            android:src="@mipmap/ic_content_succ" />
+
+        <TextView
+            android:id="@+id/tv_device_transfer_succeed_and_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:gravity="center"
+            android:text="@string/device_transmit_succeed_text" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_device_link_network_succeed_and_failed"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/iv_device_link_network_succeed_and_failed"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="74dp"
+            android:src="@mipmap/ic_content_succ" />
+
+        <TextView
+            android:id="@+id/tv_device_link_network_succeed_and_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:gravity="center"
+            android:text="@string/device_link_network_text" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_device_bind_account_succeed_and_failed"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/iv_device_bind_account_succeed_and_failed"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="74dp"
+            android:src="@mipmap/ic_content_succ" />
+
+        <TextView
+            android:id="@+id/tv_device_bind_account_succeed_and_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:gravity="center"
+            android:text="@string/device_account_bind_succeed_text" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

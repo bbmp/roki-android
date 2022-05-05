@@ -1,0 +1,150 @@
+/**
+ * Shared file between builds so that they can all use the same dependencies and
+ * maven repositories.
+ **/
+ext.deps = [:]
+
+def versions = [:]
+versions.android_gradle_plugin = '3.4.3'
+versions.google_gms = "4.2.0"
+versions.kotlin = "1.3.10"
+versions.multidex = "2.0.1"
+versions.material = "1.1.0"
+versions.constraint_layout = "1.1.3"
+versions.appcompat = "1.0.2"
+versions.cardview = "1.0.0"
+versions.recyclerview="1.2.0-beta01"
+versions.dagger = "2.11"
+versions.glide = "4.11.0"
+versions.glidecompiler = "4.11.0"
+versions.rxjava2 = "2.1.7"
+versions.rx_android = "2.0.1"
+versions.retrofit = "1.9.0"
+versions.event_bus = "3.1.1"
+versions.photo_view = "2.0.0"
+versions.persistent_cookie = "v1.0.1"
+versions.gson = "2.8.2"
+versions.qmui = "1.0.4"
+versions.flow_layout = "1.0.3"
+versions.swipe_recycler = "1.1.3"
+versions.easy_recycler = "4.4.2"
+versions.permission = "1.1.2"
+versions.utils = "1.10.0"
+versions.top_snackbar = "1.1.1"
+versions.ormlite = "4.48"
+versions.toasty = "1.1.3"
+versions.logger = "1.15"
+versions.material_dialog = "0.9.6.0"
+versions.google_guava = "18.0"
+
+
+//Arouter
+versions.arouter_compiler = "1.1.4"
+versions.arouter_api = "1.3.1"
+versions.universal_imageloader="1.9.5"
+versions.okhttp="2.2.0"
+versions.jackson_annotations="2.5.1"
+versions.jackson_core="2.5.1"
+versions.jackson_databind="2.5.1"
+versions.client_mqttv="1.0.2"
+versions.andfix="0.4.0@aar"
+versions.zxing_core="3.2.0"
+versions.butterknife="6.1.0"
+versions.daimajia_swipelayout="1.1.8@aar"
+//versions.picasso="2.5.1"
+versions.play_services_analytics="9.2.0"
+versions.play_services_appindexing="9.2.0"
+versions.gradle_bintray_plugin="1.2"
+versions.maven_gradle_plugin="1.4.1"
+
+
+def retrofit = [:]
+retrofit.runtime = "com.squareup.retrofit:retrofit:$versions.retrofit"
+retrofit.adapter = "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofi"
+retrofit.converter= "com.squareup.retrofit:converter-jackson:$versions.retrofit"
+deps.retrofit = retrofit
+
+
+def dagger = [:]
+dagger.runtime = "com.google.dagger:dagger:$versions.dagger"
+dagger.android = "com.google.dagger:dagger-android:$versions.dagger"
+dagger.android_support = "com.google.dagger:dagger-android-support:$versions.dagger"
+dagger.implementationr = "com.google.dagger:dagger-compiler:$versions.dagger"
+dagger.android_support_compiler = "com.google.dagger:dagger-android-processor:$versions.dagger"
+deps.dagger = dagger
+
+
+def kotlin = [:]
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+kotlin.test = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
+kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+deps.kotlin = kotlin
+
+
+deps.qmui = "com.qmuiteam:qmui:$versions.qmui"
+deps.flow_layout = "com.zhy:flowlayout-lib:$versions.flow_layout"
+deps.swipe_recycler = "com.yanzhenjie:recyclerview-swipe:$versions.swipe_recycler"
+deps.easy_recycler = "com.jude:easyrecyclerview:$versions.easy_recycler"
+deps.photo_view = "com.github.chrisbanes:PhotoView:$versions.photo_view"
+deps.material_dialog = "com.afollestad.material-dialogs:core:$versions.material_dialog"
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+deps.gradle_bintray_plugin = "com.jfrog.bintray.gradle:gradle-bintray-plugin:$versions.gradle_bintray_plugin"
+deps.maven_gradle_plugin = "com.github.dcendents:android-maven-gradle-plugin:$versions.maven_gradle_plugin"
+deps.google_gms = "com.google.gms:google-services:$versions.google_gms"
+deps.play_services_analytics="com.google.android.gms:play-services-analytics:$versions.play_services_analytics"
+deps.play_services_appindexing="com.google.android.gms:play-services-appindexing:$versions.play_services_appindexing"
+deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
+deps.rx_android = "io.reactivex.rxjava2:rxandroid:$versions.rx_android"
+//other
+deps.glide = "com.github.bumptech.glide:glide:$versions.glide"
+deps.glidecompiler = "com.github.bumptech.glide:compiler:$versions.glidecompiler"
+deps.event_bus = "org.greenrobot:eventbus:$versions.event_bus"
+deps.persistent_cookie = "com.github.franmontiel:PersistentCookieJar:$versions.persistent_cookie"
+deps.gson = "com.google.code.gson:gson:$versions.gson"
+deps.permission = "com.yanzhenjie:permission:$versions.permission"
+deps.permissions = "com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar"
+deps.utils = "com.blankj:utilcode:$versions.utils"
+deps.top_snackbar = "com.androidadvance:topsnackbar:$versions.top_snackbar"
+deps.toasty = "com.github.GrenderG:Toasty:$versions.toasty"
+deps.logger = "com.orhanobut:logger:$versions.logger"
+deps.arouter_api = "com.alibaba:arouter-api:$versions.arouter_api"
+deps.arouter_compiler = "com.alibaba:arouter-compiler:$versions.arouter_compiler"
+deps.ormlite = "com.j256.ormlite:ormlite-android:$versions.ormlite"
+deps.google_guava = "com.google.guava:guava:$versions.google_guava"
+deps.universal_imageloader="com.nostra13.universalimageloader:universal-image-loader:$versions.universal_imageloader"
+deps.okhttp="com.squareup.okhttp:okhttp:$versions.okhttp"
+deps.jackson_annotations="com.fasterxml.jackson.core:jackson-annotations:$versions.jackson_annotations"
+deps.jackson_core="com.fasterxml.jackson.core:jackson-core:$versions.jackson_core"
+deps.jackson_databind="com.fasterxml.jackson.core:jackson-databind:$versions.jackson_databind"
+deps.client_mqttv="org.eclipse.paho:org.eclipse.paho.client.mqttv3:$versions.client_mqttv"
+deps.andfix="com.alipay.euler:andfix:$versions.andfix"
+deps.zxing_core="com.google.zxing:core:$versions.zxing_core"
+deps.butterknife="com.jakewharton:butterknife:$versions.butterknife"
+deps.daimajia_swipelayout="com.daimajia.swipelayout:library:$versions.daimajia_swipelayout"
+//deps.picasso="com.squareup.picasso:picasso:$versions.picasso"
+deps.material = "com.google.android.material:material:$versions.material"
+deps.app_compat = "androidx.appcompat:appcompat:$versions.appcompat"
+deps.recyclerview = "androidx.recyclerview:recyclerview:$versions.recyclerview"
+deps.multidex="androidx.multidex:multidex:$versions.multidex"
+deps.cardview = "androidx.cardview:cardview:$versions.cardview"
+
+
+ext.deps = deps
+
+def build_versions = [:]
+build_versions.min_sdk = 21
+build_versions.target_sdk = 29
+build_versions.build_tools = '29.0.3'
+ext.build_versions = build_versions
+
+
+def addRepos(RepositoryHandler handler) {
+    handler.mavenCentral()
+    handler.google()
+    handler.jcenter()
+    //Add the JitPack repository
+    handler.maven { url "https://jitpack.io" }
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+}
+
+ext.addRepos = this.&addRepos

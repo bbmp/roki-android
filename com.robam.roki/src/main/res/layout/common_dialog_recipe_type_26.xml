@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 有标题，有文本内容，两个按钮   -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/common_dialog_root_bg_layout_style">
+    <LinearLayout
+        android:background="@drawable/shape_diglog_bg_splash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:paddingTop="30dp"
+                android:text="@string/is_delete_toast"
+                android:textColor="@color/roki_important_text_color"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/common_dialog_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="@string/user_Whether_not_login"
+                android:textColor="@color/roki_important_text_color"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:minHeight="60dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/common_dialog_cancel_btn"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:textSize="16sp"
+                android:textColor="#B3B3B3"
+                android:background="@drawable/countdown_selector_3"
+                android:text="取消" />
+           <TextView
+               android:layout_width="10dp"
+               android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/common_dialog_ok_btn"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:textColor="@color/black"
+                android:background="@drawable/button_round_selector"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:textSize="16sp"
+                android:text="确定" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

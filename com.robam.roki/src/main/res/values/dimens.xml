@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="common_button_height">55dp</dimen>
+    <dimen name="common_edit_height">44dp</dimen>
+    <dimen name="common_button_text_size">15sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="popupwindow_content_width">140dp</dimen>
+    <dimen name="popupwindow_menu_item_height">142dp</dimen>
+    <!--<dimen name="popupwindow_menu_item_divider_height">1px</dimen>-->
+
+
+    <!-- 对话框相关尺寸 -->
+    <dimen name="common_dialog_left_space">15dp</dimen>
+    <dimen name="common_dialog_right_space">6dp</dimen>
+    <dimen name="common_dialog_title_top_space">10dp</dimen>
+    <dimen name="common_dialog_title_bottom_small_space">10dp</dimen>
+    <dimen name="common_dialog_content_bottom_space">20dp</dimen>
+    <dimen name="common_dialog_btn_height">40dp</dimen>
+    <dimen name="common_dialog_btn_height_new">38dp</dimen>
+    <dimen name="common_dialog_btn_textSize">16dp</dimen>
+    <dimen name="common_dialog_title_textSize">18dp</dimen>
+    <dimen name="common_dialog_content_textSize">18dp</dimen>
+    <dimen name="common_dialog_btn_corners_radius">2dp</dimen>
+    <dimen name="common_dialog_btn_top_divider_height">1px</dimen>
+    <dimen name="common_dialog_title_bottom_divider_height">2px</dimen>
+    <dimen name="common_dialog_window_corners_radius">10dp</dimen>
+
+    <dimen name="text_saie_20">20sp</dimen>
+
+    <dimen name="margin12">12dp</dimen>
+    <dimen name="margin4">4dp</dimen>
+
+
+    <!-- 默认分割线大小 -->
+    <dimen name="line_size">1px</dimen>
+
+    <!-- 默认按钮的圆角大小 -->
+    <dimen name="button_round_size">999dp</dimen>
+
+    <!-- 通用对话框圆角大小 -->
+    <dimen name="dialog_ui_round_size">15dp</dimen>
+
+</resources>

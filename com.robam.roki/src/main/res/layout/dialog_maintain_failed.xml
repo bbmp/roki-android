@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Black_65"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White_90"
+        android:orientation="vertical"
+        android:paddingLeft="27dp"
+        android:paddingRight="27dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:text="您的预约，好像有点问题…"
+            android:textColor="#626262"
+            android:textSize="22sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:lineSpacingMultiplier="1.3"
+            android:text="1.请确认您是否为老板油烟机的用户；\n2.请输入您或您家人购买老板油烟机时预留的手机号"
+            android:textColor="#e6a169"
+            android:textSize="10sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_edit_height"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_send_content_edit_bg">
+
+                <EditText
+                    android:id="@+id/edtPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="请输入预留手机号"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="#969696"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:id="@+id/imgClear"
+                    android:layout_width="@dimen/common_edit_height"
+                    android:layout_height="@dimen/common_edit_height"
+                    android:layout_alignParentRight="true"
+                    android:padding="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_edit_clear" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtCheck"
+                style="@style/common_button"
+                android:layout_height="match_parent"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="验证" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtOK"
+            style="@style/common_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_button_height"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="31dp"
+            android:text="预约服务" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@mipmap/img_translucent_wave_90" />
+
+</LinearLayout>

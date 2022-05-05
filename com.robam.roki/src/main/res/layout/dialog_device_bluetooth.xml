@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="326dp"
+    android:layout_gravity="center_horizontal|bottom"
+    android:background="@drawable/shape_diglog_bg_top_radius"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="right"
+        >
+
+        <TextView
+            android:id="@+id/tv_not_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="#666666"
+            android:gravity="center"
+            android:text="不再提示"/>
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="23dp"
+            android:layout_toRightOf="@+id/tv_not_tips"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_close_device_bluetooth"/>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:textColor="@color/common_text_color"
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp"
+        android:text="请选择要添加的设备"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_device"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
+

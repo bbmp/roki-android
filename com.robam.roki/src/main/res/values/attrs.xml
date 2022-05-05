@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DashboardView">
+        <attr name="radiuss" format="dimension"/>     <!--扇形半径-->
+        <attr name="startAngle" format="integer"/> <!-- 起始角度-->
+        <attr name="sweepAngle" format="integer"/>  <!--绘制角度-->
+        <attr name="bigSliceCount" format="integer"/> <!-- 长刻度条数-->
+        <attr name="sliceCountInOneBigSlice" format="integer"/> <!-- 长刻度条数-->
+        <attr name="arcColor" format="color"/> <!--弧度颜色-->
+        <attr name="measureTextSize" format="dimension"/> <!--刻度字体大小-->
+        <attr name="textColor" format="color"/> <!--字体颜色-->
+        <attr name="headerTitle" format="string"/> <!--表头-->
+        <attr name="headerTextSize" format="string"/> <!--表头字体大小-->
+        <attr name="headerRadius" format="dimension"/> <!--表头半径-->
+        <attr name="pointerRadius" format="dimension"/> <!--指针半径-->
+        <attr name="circleRadius" format="dimension"/> <!--中心圆半径-->
+        <attr name="minValue" format="integer"/> <!--最小值-->
+        <attr name="maxValue" format="integer"/> <!--最大值-->
+        <attr name="realTimeValue" format="float"/> <!--实时值-->
+        <attr name="stripeWidths" format="dimension"/> <!--色带宽度-->
+        <attr name="stripeMode" > <!--色条显示位置-->
+            <enum name="normal" value="0"/>
+            <enum name="inner" value="1"/>
+            <enum name="outer" value="2"/>
+        </attr>
+        <attr name="bgColor" format="color"/> <!--背景颜色-->
+    </declare-styleable>
+
+    <attr name="description" format="string|reference" />
+    <attr name="title_title_text" format="string|reference" />
+    <attr name="title_left_text" format="string|reference" />
+    <attr name="title_right_text" format="string|reference" />
+    <attr name="gender" format="boolean" />
+
+    <declare-styleable name="HomeTitle">
+        <attr name="title_title_text" />
+        <attr name="title_left_text" />
+        <attr name="title_right_text" />
+    </declare-styleable>
+
+    <declare-styleable name="SwipyRefreshLayout">
+        <attr name="srl_direction">
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+            <enum name="both" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="HomeTabItem">
+        <attr name="title" />
+        <attr name="imgSource" />
+    </declare-styleable>
+    <declare-styleable name="HomeUnlistedDeviceItem">
+        <attr name="title" />
+        <attr name="description" />
+        <attr name="imgSource" />
+    </declare-styleable>
+    <declare-styleable name="DeviceFanGear">
+        <attr name="title" />
+        <attr name="description" />
+    </declare-styleable>
+    <declare-styleable name="UserVerifyCodeHint">
+        <attr name="integerValue" />
+        <attr name="title" />
+    </declare-styleable>
+    <declare-styleable name="RecipeSearchOption">
+        <attr name="title" />
+    </declare-styleable>
+    <declare-styleable name="UserGender">
+        <attr name="gender" />
+    </declare-styleable>
+    <declare-styleable name="EmojiEmpty">
+        <attr name="description" />
+    </declare-styleable>
+    <declare-styleable name="DeviceOvenNormalItem">
+        <attr name="title"></attr>
+        <attr name="imgSource"></attr>
+    </declare-styleable>
+
+    <attr name="indicatorColor" format="color" />
+    <attr name="dividerColor" format="color" />
+    <attr name="bottomLineColor" format="color" />
+    <attr name="dividerMargin" format="dimension" />
+    <attr name="indicatorHeight" format="dimension" />
+    <attr name="bottomLineHeight" format="dimension" />
+    <attr name="dividerWidth" format="dimension" />
+    <declare-styleable name="SlidingTabLayout">
+        <attr name="indicatorColor" />
+        <attr name="dividerColor" />
+        <attr name="bottomLineColor" />
+        <attr name="dividerMargin" />
+        <attr name="indicatorHeight" />
+        <attr name="bottomLineHeight" />
+        <attr name="dividerWidth" />
+
+    </declare-styleable>
+
+    <declare-styleable name="WheelView">
+        <!-- 中间分割线外的item数量,整个滑动数量就为 wheelItemCount * 2 + 1  -->
+        <attr name="wheelItemCount" format="integer" />
+        <!-- 滑轮item高度 -->
+        <attr name="wheelItemSize" format="dimension" />
+        <!-- 分割线颜色 -->
+        <attr name="dividerColor2" format="color" />
+        <attr name="selectColor" format="color" />
+        <!-- 布局方向 -->
+        <attr name="wheelOrientation">
+            <enum name="vertical" value="1" />
+            <enum name="horizontal" value="0" />
+        </attr>
+        <!-- 水平布局时不考虑只参数,  当垂直布局时的左右靠齐立体效果 -->
+        <attr name="wheelGravity">
+            <enum name="left" value="1" />
+            <enum name="center" value="2" />
+            <enum name="right" value="3" />
+        </attr>
+
+        <!-- 两根分割线的距离 -->
+        <attr name="wheelDividerSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="rokiWheelView">
+        <attr name="rwv_textsize" format="integer" />
+        <attr name="rwv_lineSpace" format="float" />
+        <attr name="rwv_centerTextColor" format="integer" />
+        <attr name="rwv_outerTextColor" format="integer" />
+        <attr name="rwv_dividerTextColor" format="integer" />
+        <attr name="rwv_itemsVisibleCount" format="integer" />
+        <attr name="rwv_isLoop" format="boolean" />
+        <attr name="rwv_initialPosition" format="integer" />
+        <attr name="rwv_scaleX" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="RokiGifImageView">
+        <attr name="auto_play" format="boolean"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="SlideUnlockButton">
+
+        <!-- 开关背景图片的属性, 引用的是R.mipmap.xx. -->
+        <attr name="slideUnlockBackgroundResource" format="reference" />
+
+        <!-- 开关滑动块图片的属性, 引用的是R.mipmap.xx. -->
+        <attr name="slideUnlockBlockResource" format="reference" />
+
+        <!-- 开关当前的状态的属性, true 打开, false 关闭 -->
+        <attr name="unLockState" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SlideLockView">
+        <attr name="lock_drawable" format="reference" />
+        <attr name="lock_radius" format="dimension|reference" />
+    </declare-styleable>
+
+
+    <declare-styleable name="CirclePercentView">
+        <attr name="radius" format="dimension" />
+        <attr name="stripeWidth" format="dimension" /><!--色带宽度-->
+        <attr name="percent" format="integer" /><!--百分比 最大值为100-->
+        <attr name="smallColor" format="color" /><!--色带宽度-->
+        <!--外圈颜色-->
+        <attr name="bigColor" format="color" />
+
+        <!--中间字体颜色-->
+        <attr name="centerTextSize" format="dimension" />
+        <!--色带宽度-->
+    </declare-styleable>
+
+    <declare-styleable name="SportProgressView">
+        <attr name="startColor" format="reference|color" />
+        <attr name="centerColor" format="reference|color" />
+        <attr name="endColor" format="reference|color" />
+        <attr name="emptyColor" format="reference|color" />
+        <attr name="stepTextSize" format="reference|dimension" />
+        <attr name="progressWidth" format="reference|dimension" />
+    </declare-styleable>
+
+    <!-- RTextView -->
+    <declare-styleable name="RTextView">
+
+        <!--四周圆角度、左上、右上、左下、右下-->
+        <attr name="corner_radius" format="dimension" />
+        <attr name="corner_radius_top_left" format="dimension" />
+        <attr name="corner_radius_top_right" format="dimension" />
+        <attr name="corner_radius_bottom_left" format="dimension" />
+        <attr name="corner_radius_bottom_right" format="dimension" />
+
+        <!--虚线边框宽度/间隔-->
+        <attr name="border_dash_width" format="dimension" />
+        <attr name="border_dash_gap" format="dimension" />
+
+        <!--边框宽度-->
+        <attr name="border_width_normal" format="dimension" />
+        <attr name="border_width_pressed" format="dimension" />
+        <attr name="border_width_unable" format="dimension" />
+
+        <!--边框颜色-->
+        <attr name="border_color_normal" format="color" />
+        <attr name="border_color_pressed" format="color" />
+        <attr name="border_color_unable" format="color" />
+
+        <!--背景颜色-->
+        <attr name="background_normal" format="color" />
+        <attr name="background_pressed" format="color" />
+        <attr name="background_unable" format="color" />
+
+        <!--文本颜色-->
+        <attr name="text_color_normal" format="color" />
+        <attr name="text_color_pressed" format="color" />
+        <attr name="text_color_unable" format="color" />
+
+        <!--图标资源-->
+        <attr name="icon_src_normal" format="reference" />
+        <attr name="icon_src_pressed" format="reference" />
+        <attr name="icon_src_unable" format="reference" />
+
+        <!--图标、大小、位置-->
+        <attr name="icon_height" format="dimension" />
+        <attr name="icon_width" format="dimension" />
+        <attr name="icon_direction">
+            <enum name="left" value="1" />
+            <enum name="top" value="2" />
+            <enum name="right" value="3" />
+            <enum name="bottom" value="4" />
+        </attr>
+
+        <!--字体样式-->
+        <attr name="text_typeface" format="string" />
+
+    </declare-styleable>
+    <declare-styleable name="BubbleLayout">
+        <attr name="lookAt">
+            <enum name="left" value="1" />
+            <enum name="top" value="2" />
+            <enum name="right" value="3" />
+            <enum name="bottom" value="4" />
+        </attr>
+
+        <attr name="lookPosition" format="dimension" />
+        <attr name="lookWidth" format="dimension" />
+        <attr name="lookLength" format="dimension" />
+        <attr name="bubbleColor" format="color" />
+        <attr name="bubbleRadius" format="dimension" />
+        <attr name="bubblePadding" format="dimension" />
+        <attr name="shadowRadius" format="dimension" />
+        <attr name="shadowX" format="dimension" />
+        <attr name="shadowY" format="dimension" />
+        <attr name="shadowColor" format="color" />
+    </declare-styleable>
+
+    <!-- 新 3.6 -->
+
+
+    <!-- 仿 ios 开关按钮 -->
+    <declare-styleable name="SwitchButton">
+        <!-- 是否选中 -->
+        <attr name="android:checked" />
+        <!-- 是否禁用 -->
+        <attr name="android:enabled" />
+    </declare-styleable>
+
+    <!-- 正则表达式编辑框 -->
+    <declare-styleable name="RegexEditText">
+        <!-- 正则输入限制 -->
+        <attr name="inputRegex" format="string" />
+        <!-- 常用正则类型 -->
+        <attr name="regexType">
+            <!-- 手机号（只能以 1 开头） -->
+            <enum name="mobile" value="0x01" />
+            <!-- 中文（普通的中文字符） -->
+            <enum name="chinese" value="0x02" />
+            <!-- 英文（大写和小写的英文） -->
+            <enum name="english" value="0x03" />
+            <!-- 整数（非 0 开头的数字） -->
+            <enum name="count" value="0x04" />
+            <!-- 用户名（中文、英文、数字） -->
+            <enum name="name" value="0x05" />
+            <!-- 非空格字符 -->
+            <enum name="nonnull" value="0x06" />
+        </attr>
+    </declare-styleable>
+
+    <!-- 设置栏 -->
+    <declare-styleable name="SettingBar">
+        <!-- 左边 -->
+        <attr name="bar_leftText" format="string" />
+        <attr name="bar_leftHint" format="string" />
+        <attr name="bar_leftIcon" format="reference" />
+        <attr name="bar_leftColor" format="color" />
+        <attr name="bar_leftSize" format="dimension" />
+        <!-- 右边 -->
+        <attr name="bar_rightText" format="string" />
+        <attr name="bar_rightHint" format="string" />
+        <attr name="bar_rightIcon" format="reference" />
+        <attr name="bar_rightColor" format="color" />
+        <attr name="bar_rightSize" format="dimension" />
+        <!-- 分割线 -->
+        <attr name="bar_lineVisible" format="boolean" />
+        <attr name="bar_lineColor" format="reference|color" />
+        <attr name="bar_lineSize" format="dimension" />
+        <attr name="bar_lineMargin" format="dimension" />
+    </declare-styleable>
+
+    <!-- 带提交动画按钮 -->
+    <declare-styleable name="SubmitButton">
+        <!-- 进度按钮颜色 -->
+        <attr name="progressColor" format="color" />
+        <!-- 成功按钮颜色 -->
+        <attr name="succeedColor" format="color" />
+        <!-- 出错按钮颜色 -->
+        <attr name="errorColor" format="color" />
+        <!-- 进度条样式 -->
+        <attr name="progressStyle" format="enum">
+            <!-- 无进度 -->
+            <enum name="loading" value="0x00" />
+            <!-- 带进度 -->
+            <enum name="progress" value="0x01" />
+        </attr>
+    </declare-styleable>
+
+    <!-- 倾斜的 TextView -->
+    <declare-styleable name="SlantedTextView">
+        <attr name="android:text" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="android:textStyle" />
+        <attr name="android:gravity" />
+        <attr name="android:colorBackground" />
+        <attr name="android:paddingVertical" />
+        <attr name="android:paddingHorizontal" />
+        <!-- 显示成三角形 -->
+        <attr name="triangle" format="boolean" />
+    </declare-styleable>
+
+    <!-- 自定义 ViewStub -->
+    <declare-styleable name="CustomViewStub">
+        <!-- 布局 id -->
+        <attr name="android:layout" />
+    </declare-styleable>
+
+    <!-- 缩放的 ImageView -->
+    <declare-styleable name="ScaleImageView">
+        <!-- 缩放比例 -->
+        <attr name="scaleRatio" format="float" />
+    </declare-styleable>
+
+    <!-- 按照比例显示的 FrameLayout -->
+    <declare-styleable name="RatioFrameLayout">
+        <!-- 宽高比例 -->
+        <attr name="sizeRatio" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="RecordButton">
+        <attr name="recordTime" format="float" />
+        <attr name="minRecordTime" format="float" />
+        <attr name="touchDelay" format="float" />
+    </declare-styleable>
+
+    <!-- JzvdStdRound -->
+    <declare-styleable name="JzvdStdRound">
+        <attr name="radius_jz" format="dimension" />
+        <attr name="left_top_radius" format="dimension" />
+        <attr name="right_top_radius" format="dimension" />
+        <attr name="right_bottom_radius" format="dimension" />
+        <attr name="left_bottom_radius" format="dimension" />
+    </declare-styleable>
+
+</resources>
+

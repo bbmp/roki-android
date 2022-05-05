@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llOvenPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F8F3"
+    android:orientation="vertical"
+    android:paddingTop="2dp">
+
+    <!--标题部分-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <ImageView
+            android:id="@+id/oven026_return"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="3dp"
+            android:paddingTop="2dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/oven026_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/device_oven026_name"
+            android:textColor="#5D5D5D"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/oven026_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:text=". . ."
+            android:textColor="#5D5D5D"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    <!--control控制模块-->
+    <RelativeLayout
+        android:id="@+id/oven026_normal_ctrl"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="3dp"
+        android:layout_weight="1">
+
+    </RelativeLayout>
+
+    <com.robam.roki.ui.view.DeviceCtrlRecipeView
+        android:id="@+id/oven026_recipe_listview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:background="@color/white"
+        android:cacheColorHint="#00000000"
+        android:listSelector="#00000000">
+
+    </com.robam.roki.ui.view.DeviceCtrlRecipeView>
+</LinearLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="13dp"
+    android:paddingRight="13dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="联动步骤"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:id="@+id/mic_linksetting_ll1"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/mic_linksetting_include1"
+            layout="@layout/page_device_microwave_linksetting_notset"></include>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mic_linksetting_ll2"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/mic_linksetting_include2"
+            layout="@layout/page_device_microwave_linksetting_notset"></include>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mic_linksetting_ll3"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/mic_linksetting_include3"
+            layout="@layout/page_device_microwave_linksetting_notset"></include>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="10dp"
+        android:text="*此功能可以使您连续设定三段火力烹调程序"
+        android:textColor="@color/red"
+        android:textSize="13sp" />
+<!--开始烹饪按钮-->
+    <Button
+        android:id="@+id/mic_linksetting_btn"
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="36dp"
+        android:background="@color/c02"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="开始烹饪"
+        android:textColor="@color/white"
+        android:textSize="22sp" />
+
+</LinearLayout>

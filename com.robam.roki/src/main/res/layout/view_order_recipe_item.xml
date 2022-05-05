@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/c09"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="5dp"
+    android:paddingLeft="46dp"
+    android:paddingRight="10dp"
+    android:paddingTop="5dp">
+
+
+    <ImageView
+        android:id="@+id/imgRecipe"
+        android:layout_width="67dp"
+        android:layout_height="67dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtRecipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="小鸡炖蘑菇"
+            android:textColor="@color/c05"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtDesc"
+            android:layout_below="@+id/txtRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="土豆 排骨"
+            android:textColor="#6a73b8"
+            android:textSize="12sp" />
+
+
+        <TextView
+            android:id="@+id/txtNumber"
+            android:layout_marginTop="13dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X 1 份"
+            android:textColor="#b8bdbd"
+            android:textSize="10sp" />
+
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,1759 @@
+{
+  "main": "MainForm",
+  "forms": [
+    {
+      "id": "WelcomeForm",
+      "homePage": "Welcome",
+      "loader": "com.robam.common.ui.RokiLoader"
+    },
+    {
+      "id": "WizardForm",
+      "homePage": "Wizard",
+      "loader": "com.robam.common.ui.RokiLoader"
+    },
+    {
+      "id": "UserForm",
+      "homePage": "LoginPageBase",
+      "loader": "com.robam.common.ui.RokiLoader"
+    },
+    {
+      "id": "MainForm",
+      "homePage": "Home",
+      "loader": "com.robam.common.ui.RokiLoader"
+    },
+    {
+      "id": "RecipeCookForm",
+      "homePage": "RecipeCook",
+      "loader": "com.robam.common.ui.RokiLoader"
+    },
+    {
+      "id": "RecipeCookNoDevice",
+      "homePage": "RecipeCookNoDevicePage",
+      "loader": "com.robam.common.ui.RokiLoader"
+    },
+    {
+      "id": "RecipeRRQZForm",
+      "homePage": "RecipeRRQZ",
+      "loader": "com.robam.common.ui.RokiLoader"
+    },
+    {
+      "id": "RecipePotForm",
+      "homePage": "AutoRecipePot",
+      "loader": "com.robam.common.ui.RokiLoader"
+    },
+    {
+      "id": "CountDownForm",
+      "homePage": "CountDown",
+      "loader": "com.robam.common.ui.RokiLoader"
+    },
+    {
+      "id": "TopWeekForm",
+      "homePage": "TopWeek",
+      "loader": "com.robam.common.ui.RokiLoader"
+    },
+    {
+      "id": "WaterPurifierFilterStateForm",
+      "homePage": "WaterPurifierFilterState",
+      "loader": "com.robam.common.ui.RokiLoader"
+    }
+  ],
+  "menus": [],
+  "pages": [
+    {
+      "id": "Home",
+      "clazz": "com.robam.roki.ui.page.HomePage"
+    },
+    {
+      "id": "Welcome",
+      "clazz": "com.robam.roki.ui.page.WelcomePage"
+    },
+    {
+      "id": "Wizard",
+      "clazz": "com.robam.roki.ui.page.WizardPage"
+    },
+    {
+      "id": "RecipeCook",
+      "clazz": "com.robam.roki.ui.page.RecipeCookPage"
+    },
+    {
+      "id": "RecipeCookNoDevicePage",
+      "clazz": "com.robam.roki.ui.page.RecipeCookNoDevicePage"
+    },
+    {
+      "id": "RecipeRRQZ",
+      "clazz": "com.robam.roki.ui.page.RecipeRRQZPage"
+    },
+    {
+      "id": "DeviceGasSensor",
+      "clazz": "com.robam.roki.ui.page.device.gassensor.DeviceGasSensorPage"
+    },
+    {
+      "id": "AutoRecipePot",
+      "clazz": "com.robam.roki.ui.page.AutoRecipePotPage"
+    },
+    {
+      "id": "WebClient",
+      "name": "ROKI智能烹饪",
+      "clazz": "com.robam.roki.ui.page.WebClientPage"
+    },
+    {
+      "id": "WebClientNew",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.WebClientNewPage"
+    },
+    {
+      "id": "WebAdvert",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.WebAdvertPage"
+    },
+    {
+      "id": "WebclientConsulist",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.WebclientConsulistPage"
+    },
+    {
+      "id": "WebClientNavigation",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.WebClientNavigationPage"
+    },
+    {
+      "id": "WebPlay",
+      "name": "ROKI智能烹饪",
+      "clazz": "com.robam.roki.ui.page.WebPlayPage"
+    },
+    {
+      "id": "SaleService",
+      "name": "售后服务",
+      "clazz": "com.robam.roki.ui.page.SaleServicePage"
+    },
+    {
+      "id": "Setting",
+      "name": "设置",
+      "clazz": "com.robam.roki.ui.page.SettingPage"
+    },
+    {
+      "id": "AccountSafe",
+      "name": "账户与安全",
+      "clazz": "com.robam.roki.ui.page.AccountSafePage"
+    },
+    {
+      "id": "UserCancelAccount",
+      "name": "注销账号",
+      "clazz": "com.robam.roki.ui.page.UserCancelAccountPage"
+    },
+    {
+      "id": "VerifyMobilePhone",
+      "name": "验证手机",
+      "clazz": "com.robam.roki.ui.page.VerifyMobilePhonePage"
+    },
+    {
+      "id": "Chat",
+      "name": "在线咨询",
+      "clazz": "com.robam.roki.ui.page.ChatPage"
+    },
+    {
+      "id": "OnLineChat",
+      "name": "反馈建议",
+      "clazz": "com.robam.roki.ui.page.OnLineChat"
+    },
+    {
+      "id": "MessageConsulting",
+      "name": "留言咨询",
+      "clazz": "com.robam.roki.ui.page.MessageConsulting"
+    },
+    {
+      "id": "SmartParams",
+      "name": "智能设定",
+      "clazz": "com.robam.roki.ui.page.SmartParamsPage"
+    },
+    {
+      "id": "About",
+      "name": "关于ROKI",
+      "clazz": "com.robam.roki.ui.page.AboutPage"
+    },
+    {
+      "id": "Test",
+      "name": "测试",
+      "clazz": "com.robam.roki.ui.page.TestPage"
+    },
+    {
+      "id": "GasSelfCheck",
+      "name": "测试",
+      "clazz": "com.robam.roki.ui.page.device.gassensor.GasSelfCheckPage"
+    },
+    {
+      "id": "GasAlarmDeal",
+      "name": "测试",
+      "clazz": "com.robam.roki.ui.page.device.gassensor.GasAlarmDealPage"
+    },
+    {
+      "id": "CookerUpdateDevice",
+      "name": "测试",
+      "clazz": "com.robam.roki.ui.page.device.cook.CookerUpdateDevicePage"
+    },
+    {
+      "id": "ScanCode",
+      "name": "分享控制权",
+      "clazz": "com.robam.roki.ui.page.device.cook.ScanCodePage"
+    },
+    {
+      "id": "OrderYiGuoDetail",
+      "name": "订单详情",
+      "clazz": "com.robam.roki.ui.page.OrderYiGuoDetailPage"
+    },
+    {
+      "id": "DeviceManager",
+      "name": "厨电管理",
+      "clazz": "com.robam.roki.ui.page.DeviceManagerPage"
+    },
+    {
+      "id": "DeviceDetail",
+      "clazz": "com.robam.roki.ui.page.DeviceDetailPage"
+    },
+    {
+      "id": "DeviceAddByEasylink",
+      "name": "添加设备",
+      "clazz": "com.robam.roki.ui.page.DeviceAddByEasylinkPage"
+    },
+    {
+      "id": "DeviceSteamOven",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.DeviceSteamOvenPage"
+    },
+    {
+      "id": "DeviceSteamWorking",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.DeviceSteamWorkingPage"
+    },
+    {
+      "id": "DeviceSteamOvenSetting",
+      "name": "设置",
+      "clazz": "com.robam.roki.ui.page.DeviceSteamOvenSettingPage"
+    },
+    {
+      "id": "SteamSub",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steam.SteamSubPage"
+    },
+    {
+      "id": "AbsSteamMode",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steam.AbsSteamModePage"
+    },
+    {
+      "id": "DeviceSteamOvenWorking",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.DeviceSteamOvenWorkingPage"
+    },
+    {
+      "id": "DeviceSteam226",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.DeviceSteam226Page"
+    },
+    {
+      "id": "DeviceSteam228",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.DeviceSteam228Page"
+    },
+    {
+      "id": "DeviceSteam226Main",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.DeviceSteam226MainPage"
+    },
+    {
+      "id": "DeviceSteam228Main",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.DeviceSteam228MainPage"
+    },
+    {
+      "id": "DeviceSteam226ProfessionalSetting",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.DeviceSteam226ProfessionalSettingPage"
+    },
+    {
+      "id": "DeviceSteam275ProfessionalSetting",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.DeviceSteam275ProfessionnalSettingPage"
+    },
+    {
+      "id": "DeviceSteam228ProfessionalSetting",
+      "name": "蒸",
+      "clazz": "com.robam.roki.ui.page.DeviceSteam228professionalSettingPage"
+    },
+    {
+      "id": "DeviceSteam228assistSetting",
+      "name": "辅助",
+      "clazz": "com.robam.roki.ui.page.DeviceSteam228assistSettingPage"
+    },
+    {
+      "id": "DeviceSteam226Working",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.DeviceSteam226WorkingPage"
+    },
+    {
+      "id": "AbsOvenWorking",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenWorkingPage"
+    },
+    {
+      "id": "DeviceSteam228Working",
+      "name": "电蒸箱",
+      "clazz": "com.robam.roki.ui.page.DeviceSteam228WorkingPage"
+    },
+    {
+      "id": "DeviceFan",
+      "clazz": "com.robam.roki.ui.page.DeviceFanPage"
+    },
+    {
+      "id": "DeviceSideFan",
+      "clazz": "com.robam.roki.ui.page.DeviceSideFanPage"
+    },
+    {
+      "id": "DeviceStove",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.stove.AbsDeviceStovePage"
+    },
+    {
+      "id": "Device9B37",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.stove.Device9B37Page"
+    },
+    {
+      "id": "Device9B39",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.stove.Device9B39Page"
+    },
+    {
+      "id": "Device9B30C",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.stove.Device9B30CPage"
+    },
+    {
+      "id": "DeviceStoveQuicklyOffHeat",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.stove.DeviceStoveQuicklyOffHeatPage"
+    },
+    {
+      "id": "DeviceStoveTimingOffHeat",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.stove.DeviceStoveTimingOffHeatPage"
+    },
+    {
+      "id": "StoveBurnWithoutWater",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.stove.StoveBurnWithoutWaterPage"
+    },
+    {
+      "id": "AbsCookerHelper",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.cook.AbsCookerHelperPage"
+    },
+    {
+      "id": "DeviceDetailCooker",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.cook.DeviceDetailCookerPage"
+    },
+    {
+      "id": "DeviceMoreCook",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.cook.DeviceMoreCookPage"
+    },
+    {
+      "id": "DeviceCookerRecipe",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.cook.DeviceCookerRecipePage"
+    },
+    {
+      "id": "DeviceSubCooker",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.cook.DeviceSubCookerPage"
+    },
+    {
+      "id": "DevicePot",
+      "name": "温控锅",
+      "clazz": "com.robam.roki.ui.page.DevicePotPage"
+    },
+    {
+      "id": "DeviceOven",
+      "name": "电烤箱",
+      "clazz": "com.robam.roki.ui.page.DeviceOvenPage"
+    },
+    {
+      "id": "AbsOven",
+      "name": "电烤箱",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenPage"
+    },
+    {
+      "id": "AbsOvenCookMode",
+      "name": "电烤箱",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenCookModePage"
+    },
+    {
+      "id": "AbsOvenMode",
+      "name": "电烤箱",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenModePage"
+    },
+    {
+      "id": "AbsOvenMore",
+      "name": "电烤箱",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenMorePage"
+    },
+    {
+      "id": "AbsOvenZoning",
+      "name": "烤箱",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenZoningBasePage"
+    },
+    {
+      "id": "AbsOvenLocalRecipe",
+      "name": "烤箱",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenLocalRecipePage"
+    },
+    {
+      "id": "AbsSteamOvenMore",
+      "name": "一体机",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.AbsSteamOvenMorePage"
+    },
+    {
+      "id": "SteamOvenModelSelected",
+      "name": "一体机模式选择",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.SteamOvenModelSelectedPage"
+    },
+    {
+      "id": "SteamOven610ModelSelectedPage",
+      "name": "一体机模式选择",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.SteamOven610ModelSelectedPage"
+    },
+    {
+      "id": "DeviceOven026",
+      "name": "电烤箱",
+      "clazz": "com.robam.roki.ui.page.DeviceOven026Page"
+    },
+    {
+      "id": "DeviceOven028",
+      "name": "电烤箱",
+      "clazz": "com.robam.roki.ui.page.DeviceOven028Page"
+    },
+    {
+      "id": "DeviceOven026Main",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.DeviceOven026MainPage"
+    },
+    {
+      "id": "DeviceOven028Main",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.DeviceOven028MainPage"
+    },
+    {
+      "id": "DeviceOven026AutoSetting",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.DeviceOven026AutoSettingPage"
+    },
+    {
+      "id": "DeviceOven026Working",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.DeviceOven026WorkingPage"
+    },
+    {
+      "id": "DeviceOven028Working",
+      "name": "远程遥控",
+      "clazz": "com.robam.roki.ui.page.DeviceOven028WorkingPage"
+    },
+    {
+      "id": "DeviceOvenProfessionalSetting",
+      "name": "专业模式设置",
+      "clazz": "com.robam.roki.ui.page.DeviceOvenProfessionalSettingPage"
+    },
+    {
+      "id": "DeviceOven026ProfessionalSetting",
+      "name": "专业模式设置",
+      "clazz": "com.robam.roki.ui.page.DeviceOven026ProfessionalSettingPage"
+    },
+    {
+      "id": "DeviceOven075ProfessionalSetting",
+      "name": "专业模式",
+      "clazz": "com.robam.roki.ui.page.DeviceOven075ProfessionSettingPage"
+    },
+    {
+      "id": "DeviceOven028Assist",
+      "name": "辅助",
+      "clazz": "com.robam.roki.ui.page.DeviceOven028AssistPage"
+    },
+    {
+      "id": "DeviceOven028ProfessionalSetting",
+      "name": "专业模式",
+      "clazz": "com.robam.roki.ui.page.DeviceOven028ProfessionSettingPage"
+    },
+    {
+      "id": "DeviceOven026ExpSetting",
+      "name": "专家模式",
+      "clazz": "com.robam.roki.ui.page.DeviceOven026ExpSettingPage"
+    },
+    {
+      "id": "DeviceOvenWorking",
+      "name": "电烤箱工作",
+      "clazz": "com.robam.roki.ui.page.DeviceOvenWorkingPage"
+    },
+    {
+      "id": "CookWithoutDevice",
+      "clazz": "com.robam.roki.ui.page.CookWithoutDevicePage"
+    },
+    {
+      "id": "TrolleyThirdPlat",
+      "name": "第三方合作配送",
+      "clazz": "com.robam.roki.ui.page.TrolleyThirdPlatPage"
+    },
+    {
+      "id": "OrderList",
+      "name": "订单",
+      "clazz": "com.robam.roki.ui.page.OrderListPage"
+    },
+    {
+      "id": "OrderDetail",
+      "name": "订单详情",
+      "clazz": "com.robam.roki.ui.page.OrderDetailPage"
+    },
+    {
+      "id": "OrderContacterEdit",
+      "clazz": "com.robam.roki.ui.page.OrderContacterEditPage"
+    },
+    {
+      "id": "RecipeBanner",
+      "clazz": "com.robam.roki.ui.page.RecipeBannerPage"
+    },
+    {
+      "id": "RecipeDetail",
+      "animInRes": "@anim/fragment_slide_bottom_in",
+      "clazz": "com.robam.roki.ui.page.recipedetail.RecipeDetailPage"
+    },
+    {
+      "id": "RecipeDetailLoop",
+      "animInRes": "@anim/fragment_slide_bottom_in",
+      "clazz": "com.robam.roki.ui.page.recipedetail.RecipeDetailLoopPage"
+    },
+    {
+      "id": "RecipeDetail3",
+      "animInRes": "@anim/fragment_slide_bottom_in",
+      "clazz": "com.robam.roki.ui.page.RecipeDetailPage"
+    },
+    {
+      "id": "MoreCook",
+      "clazz": "com.robam.roki.ui.page.MoreCookPage"
+    },
+    {
+      "id": "RecipeDetail3rd",
+      "clazz": "com.robam.roki.ui.page.RecipeDetail3rdPage"
+    },
+    {
+      "id": "RecipeSearch",
+      "name": "搜索菜谱",
+      "clazz": "com.robam.roki.ui.page.RecipeSearchPage"
+    },
+    {
+      "id": "RecipeSearchNew",
+      "name": "搜索菜谱",
+      "clazz": "com.robam.roki.ui.page.RecipeSearchNewPage"
+    },
+    {
+      "id": "RecipeSearch2",
+      "name": "搜索菜谱",
+      "clazz": "com.robam.roki.ui.page.RecipeSearch2Page"
+    },
+    {
+      "id": "RecipeFavority",
+      "name": "我的收藏",
+      "clazz": "com.robam.roki.ui.page.RecipeFavorityPage"
+    },
+    {
+      "id": "RecipeShow",
+      "name": "晒厨艺",
+      "clazz": "com.robam.roki.ui.page.RecipeShowPage"
+    },
+    {
+      "id": "RecipeCookMoments",
+      "name": "晒过的厨艺",
+      "clazz": "com.robam.roki.ui.page.RecipeCookMomentsPage"
+    },
+    {
+      "id": "RecipeCooking",
+      "clazz": "com.robam.roki.ui.page.RecipeCookingPage"
+    },
+    {
+      "id": "RecipeSeasoning",
+      "name": "调味料",
+      "clazz": "com.robam.roki.ui.page.RecipeSeasoningPage"
+    },
+    {
+      "id": "RecipeHistory",
+      "name": "更多菜谱",
+      "clazz": "com.robam.roki.ui.page.RecipeHistoryPage"
+    },
+    {
+      "id": "MaintainRequest",
+      "name": "预约服务",
+      "clazz": "com.robam.roki.ui.page.MaintainRequestPage"
+    },
+    {
+      "id": "MaintainInfo",
+      "name": "预约服务",
+      "clazz": "com.robam.roki.ui.page.MaintainInfoPage"
+    },
+    {
+      "id": "UserRegist",
+      "name": "注册",
+      "clazz": "com.robam.roki.ui.page.UserRegistPage"
+    },
+    {
+      "id": "UserLogin",
+      "name": "登录",
+      "clazz": "com.robam.roki.ui.page.UserLoginPage"
+    },
+    {
+      "id": "LoginOther",
+      "name": "其他登录",
+      "clazz": "com.robam.roki.ui.page.login.LoginPageBase"
+    },
+    {
+      "id": "LoginPageBase",
+      "name": "登录3.6",
+      "clazz": "com.robam.roki.ui.page.login.LoginPageBase"
+    },
+    {
+      "id": "LoginBindPhone",
+      "name": "绑定手机号",
+      "clazz": "com.robam.roki.ui.page.login.LoginBindPhonePage"
+    },
+    {
+      "id": "LoginSetPassword",
+      "name": "设置密码",
+      "clazz": "com.robam.roki.ui.page.login.LoginSetPasswordPage"
+    },
+    {
+      "id": "UserExpressLogin",
+      "name": "快捷登录",
+      "clazz": "com.robam.roki.ui.page.UserExpressLoginPage"
+    },
+    {
+      "id": "UserLoginThird",
+      "name": "手机绑定",
+      "clazz": "com.robam.roki.ui.page.UserLoginThirdPage"
+    },
+    {
+      "id": "UserRecoverPwd",
+      "name": "手机找回密码",
+      "clazz": "com.robam.roki.ui.page.UserRecoverPwdPage"
+    },
+    {
+      "id": "UserInfo",
+      "clazz": "com.robam.roki.ui.page.UserInfoPage"
+    },
+    {
+      "id": "UserModifyName",
+      "name": "修改昵称",
+      "clazz": "com.robam.roki.ui.page.UserModifyNamePage"
+    },
+    {
+      "id": "UserModifyPhone",
+      "name": "修改手机",
+      "clazz": "com.robam.roki.ui.page.UserModifyPhonePage"
+    },
+    {
+      "id": "UserModifyEmail",
+      "name": "修改邮箱",
+      "clazz": "com.robam.roki.ui.page.UserModifyEmailPage"
+    },
+    {
+      "id": "UserModifyPwd",
+      "name": "修改密码",
+      "clazz": "com.robam.roki.ui.page.UserModifyPwdPage"
+    },
+    {
+      "id": "DeviceSterilizer",
+      "name": "消毒柜",
+      "clazz": "com.robam.roki.ui.page.device.sterilizer.SterilizerSubPage"
+    },
+    {
+      "id": "DeviceOrderSer",
+      "name": "消毒柜",
+      "clazz": "com.robam.roki.ui.page.device.sterilizer.OrderSterilizerPage"
+    },
+    {
+      "id": "DeviceSterilizer826",
+      "name": "消毒柜",
+      "clazz": "com.robam.roki.ui.page.DeviceSterilizer826Page"
+    },
+    {
+      "id": "CountDown",
+      "name": "开始倒计时",
+      "clazz": "com.robam.roki.ui.page.CountDownPage"
+    },
+    {
+      "id": "SteriSmartParams",
+      "name": "消毒柜智能设定",
+      "clazz": "com.robam.roki.ui.page.SteriSmartParamsPage"
+    },
+    {
+      "id": "SteriSmart826Params",
+      "name": "智能设定",
+      "clazz": "com.robam.roki.ui.page.SteriSmart826ParamsPage"
+    },
+    {
+      "id": "DeviceWaterPurifier312",
+      "name": "净水器",
+      "clazz": "com.robam.roki.ui.page.DeviceWaterPurifier312Page"
+    },
+    {
+      "id": "SmartWaterPurifierParams",
+      "name": "智能设定",
+      "clazz": "com.robam.roki.ui.page.SmartWaterPurifierParamsPage"
+    },
+    {
+      "id": "DeviceWaterPurifier321",
+      "name": "净水器",
+      "clazz": "com.robam.roki.ui.page.DeviceWaterPurifier321Page"
+    },
+    {
+      "id": "DeviceWaterPurifier320",
+      "name": "净水器",
+      "clazz": "com.robam.roki.ui.page.DeviceWaterPurifier320Page"
+    },
+    {
+      "id": "DeviceWaterPurifiy",
+      "name": "净水器",
+      "clazz": "com.robam.roki.ui.page.DeviceWaterPurifiyPage"
+    },
+    {
+      "id": "DeviceWaterPurifiyControl",
+      "name": "净水器控制页面",
+      "clazz": "com.robam.roki.ui.page.DeviceWaterPurifiyControlPage"
+    },
+    {
+      "id": "DeviceWaterPurifiyFilterShow",
+      "name": "滤芯状态",
+      "clazz": "com.robam.roki.ui.page.DeviceWaterPurifiyFilterShowPage"
+    },
+    {
+      "id": "DeviceWaterPurifiyInstall",
+      "name": "净水器滤芯更多页面",
+      "clazz": "com.robam.roki.ui.page.DeviceWaterPurifiyInstall"
+    },
+    {
+      "id": "DeviceWaterPurifierDetail",
+      "name": "净水器滤芯详情页面",
+      "clazz": "com.robam.roki.ui.page.DeviceWaterPurifierDetailPage"
+    },
+    {
+      "id": "DeviceMicrowave",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.DeviceMicrowavePage"
+    },
+    {
+      "id": "DeviceMicrowave526",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.DeviceMicrowave526Page"
+    },
+    {
+      "id": "DeviceMicrowave526Main",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.DeviceMicrowave526MainPage"
+    },
+    {
+      "id": "DeviceMicrowaveNormalWorking",
+      "name": "微波炉",
+      "clazz": "com.robam.roki.ui.page.DeviceMicrowaveNormalWorkingPage"
+    },
+    {
+      "id": "StoveSetting",
+      "name": "微波炉",
+      "clazz": "com.robam.roki.ui.page.StoveSettingPage"
+    },
+    {
+      "id": "DeviceMicrowave526NormalWorking",
+      "name": "微波炉",
+      "clazz": "com.robam.roki.ui.page.DeviceMicrowave526NormalWorkingPage"
+    },
+    {
+      "id": "DeviceMicrowaveLinkageSetting",
+      "name": "联动料理",
+      "clazz": "com.robam.roki.ui.page.DeviceMicrowaveLinkageSettingPage"
+    },
+    {
+      "id": "DeviceMicrowaveLinkageWorking",
+      "name": "微波炉",
+      "clazz": "com.robam.roki.ui.page.DeviceMicrowaveLinkageWorkingPage"
+    },
+    {
+      "id": "DeviceMicrowave526LinkageWorking",
+      "name": "微波炉",
+      "clazz": "com.robam.roki.ui.page.DeviceMicrowave526LinkageWorking"
+    },
+    {
+      "id": "DeviceFan8700",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan8700Page"
+    },
+    {
+      "id": "DeviceFan9700",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan9700Page"
+    },
+    {
+      "id": "DeviceFan8230",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan8230Page"
+    },
+    {
+      "id": "DeviceFan8230c",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan8230CPage"
+    },
+    {
+      "id": "DeviceFan8230s",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan8230sPage"
+    },
+    {
+      "id": "DeviceFan8231s",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan8231sPage"
+    },
+    {
+      "id": "DeviceFan66A2",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan66A2Page"
+    },
+    {
+      "id": "DeviceFan66A2H",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan66A2HPage"
+    },
+    {
+      "id": "DeviceFan8229",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan8229Page"
+    },
+    {
+      "id": "DeviceFan5610",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan5610Page"
+    },
+    {
+      "id": "DeviceFan5910",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan5910Page"
+    },
+    {
+      "id": "DeviceFanOther",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanOtherPage"
+    },
+    {
+      "id": "DeviceSteameOvenC906Home",
+      "clazz": "com.robam.roki.ui.page.DeviceSteameOvenC906HomePage"
+    },
+    {
+      "id": "DeviceSteameOvenC906Oven",
+      "clazz": "com.robam.roki.ui.page.DeviceSteameOvenC906OvenPage"
+    },
+    {
+      "id": "DeviceOvenC906Working",
+      "clazz": "com.robam.roki.ui.page.DeviceOvenC906WorkingPage"
+    },
+    {
+      "id": "DeviceSteameOvenC906Steame",
+      "clazz": "com.robam.roki.ui.page.DeviceSteameOvenC906SteamePage"
+    },
+    {
+      "id": "DeviceSteameC906Working",
+      "clazz": "com.robam.roki.ui.page.DeviceSteameC906WorkingPage"
+    },
+    {
+      "id": "DeviceSteameOvenC906Assist",
+      "clazz": "com.robam.roki.ui.page.DeviceSteameOvenC906AssistPage"
+    },
+    {
+      "id": "DeviceAssistC906Working",
+      "clazz": "com.robam.roki.ui.page.DeviceAssistC906WorkingPage"
+    },
+    {
+      "id": "DeviceOtherC906Working",
+      "clazz": "com.robam.roki.ui.page.DeviceOtherC906WorkingPage"
+    },
+    {
+      "id": "DeviceSteameOvenC906ExpWorking",
+      "clazz": "com.robam.roki.ui.page.DeviceSteameOvenC906ExpWorkingPage"
+    },
+    {
+      "id": "DeviceFan5910S",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFan5910SPage"
+    },
+    {
+      "id": "DeviceFanOilClean",
+      "clazz": "com.robam.roki.ui.page.DeviceFanOilCleanPage"
+    },
+    {
+      "id": "DeviceFanOilCleanNew",
+      "clazz": "com.robam.roki.ui.page.DeviceFanOilCleanNewPage"
+    },
+    {
+      "id": "DeviceFanOilClean2",
+      "clazz": "com.robam.roki.ui.page.DeviceFanOilClean2Page"
+    },
+    {
+      "id": "DeviceFan8700Oli",
+      "clazz": "com.robam.roki.ui.page.DeviceFan8700OilPage"
+    },
+    {
+      "id": "RecipeStep",
+      "name": "菜谱每步骤",
+      "clazz": "com.robam.roki.ui.page.RecipeStepPage"
+    },
+    {
+      "id": "RecipeLiveList",
+      "name": "视频",
+      "clazz": "com.robam.roki.ui.page.RecipeLiveListPage"
+    },
+    {
+      "id": "RecipeLiveListNew",
+      "name": "视频",
+      "clazz": "com.robam.roki.ui.page.RecipeLiveListNewPage"
+    },
+    {
+      "id": "RecipeCategoryList",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.RecipeCategoryListPage"
+    },
+    {
+      "id": "RecipeDynamicShow",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.RecipeDynamicShowPage"
+    },
+    {
+      "id": "RecipeThemeDetail",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.RecipeThemeDetailPage"
+    },
+    {
+      "id": "RecipeThemePushDetail",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.RecipeThemePushDetailPage"
+    },
+    {
+      "id": "MoreThomePage",
+      "name": "更多主题",
+      "clazz": "com.robam.roki.ui.page.MoreThomePage"
+    },
+    {
+      "id": "SelectThemeDetailPage",
+      "name": "主题详情页面",
+      "clazz": "com.robam.roki.ui.page.SelectThemeDetailPage"
+    },
+    {
+      "id": "SelectThemeDetailPage1",
+      "name": "主题详情页面",
+      "clazz": "com.robam.roki.ui.page.SelectThemeDetailPage1"
+    },
+    {
+      "id": "ThemeRecipeListPage",
+      "name": "主题详情页面",
+      "clazz": "com.robam.roki.ui.page.ThemeRecipeListPage"
+    },
+    {
+      "id": "TopWeekPage",
+      "name": "上周TOP榜单",
+      "clazz": "com.robam.roki.ui.page.TopWeekPage"
+    },
+    {
+      "id": "ClassifyTagRecipe",
+      "name": "标签菜谱",
+      "clazz": "com.robam.roki.ui.page.ClassifyTagRecipePage"
+    },
+    {
+      "id": "SpeechRecipePage",
+      "name": "语音菜谱搜索",
+      "clazz": "com.robam.roki.ui.page.SpeechRecipePage"
+    },
+    {
+      "id": "VodPlayer",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.VodPlayerPage"
+    },
+    {
+      "id": "AbsThemeRecipeListGrid",
+      "name": "我的收藏",
+      "clazz": "com.robam.roki.ui.page.AbsThemeRecipeListGridPage"
+    },
+    {
+      "id": "DeviceAdd",
+      "name": "添加设备",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.DeviceAddPage"
+    },
+    {
+      "id": "DeviceScan",
+      "name": "添加设备",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.DeviceScanPage"
+    },
+    {
+      "id": "DeviceWifiConnect",
+      "name": "添加设备",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.DeviceWifiConnectPage"
+    },
+    {
+      "id": "DeviceZJWifiConnect",
+      "name": "添加",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.DeviceZJWifiConnectPage"
+    },
+    {
+      "id": "WifiConnect",
+      "name": "连接Wi-Fi",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.WifiConnectPage"
+    },
+    {
+      "id": "SoftAPConnectConfirm",
+      "name": "连接Wi-Fi",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.SoftAPConnectConfirmPage"
+    },
+    {
+      "id": "WifiSoftapConnect",
+      "name": "连接Wi-Fi",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.SoftAPConnectPage"
+    },
+    {
+      "id": "WIFIConnectFailPage",
+      "name": "连接失败",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.WIFIConnectFailPage"
+    },
+    {
+      "id": "DeviceSearch",
+      "name": "搜索",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.DeviceSearchPage"
+    },
+    {
+      "id": "CantfindDevice",
+      "name": "无法找到型号",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.CantfindDevicePage"
+    },
+    {
+      "id": "SettingWifi",
+      "name": "无法找到WIFI",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.SettingWifiPage"
+    },
+    {
+      "id": "CantFinish",
+      "name": "无法完成",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.CantFinishPage"
+    },
+    {
+      "id": "ZJCantFinish",
+      "name": "无法完成",
+      "clazz": "com.robam.roki.ui.view.networkoptimization.ZJCantFinishPage"
+    },
+    {
+      "id": "RecipeClassify",
+      "name": "分类",
+      "clazz": "com.robam.roki.ui.view.recipeclassify.RecipeClassifyPage"
+    },
+    {
+      "id": "RecipeClassifySearch",
+      "name": "内容",
+      "clazz": "com.robam.roki.ui.view.recipeclassify.RecipeClassifySearchPage"
+    },
+    {
+      "id": "kitchenKnowledge",
+      "name": "厨房知识",
+      "clazz": "com.robam.roki.ui.page.kitchenKnowledgepage"
+    },
+    {
+      "id": "KitchenSourceAct",
+      "name": "厨源活动",
+      "clazz": "com.robam.roki.ui.page.KitchenSourceActiviryPage"
+    },
+    {
+      "id": "ActivityWebViewPage",
+      "name": "活动",
+      "clazz": "com.robam.roki.ui.activity3.ActivityWebViewPage"
+    },
+    {
+      "id": "DeviceAddNew",
+      "name": "添加设备",
+      "clazz": "com.robam.roki.ui.page.DeviceAddNewPage"
+    },
+    {
+      "id": "Web",
+      "name": "有赞活动",
+      "clazz": "com.robam.roki.ui.page.WebPage"
+    },
+    {
+      "id": "RecipeUnderKitchen",
+      "name": "下厨房",
+      "clazz": "com.robam.roki.ui.page.RecipeUnderKitchenPage"
+    },
+    {
+      "id": "RecipeDouGuo",
+      "name": "豆果",
+      "clazz": "com.robam.roki.ui.page.RecipeDouGuoPage"
+    },
+    {
+      "id": "RecipeDynamic",
+      "name": "动态H5",
+      "clazz": "com.robam.roki.ui.page.RecipeDynamicPage"
+    },
+    {
+      "id": "AbsDeviceFan",
+      "name": "油烟机",
+      "clazz": "com.robam.roki.ui.page.AbsDeviceFanPage"
+    },
+    {
+      "id": "AbsDeviceRika",
+      "name": "RIKA",
+      "clazz": "com.robam.roki.ui.page.device.rika.AbsDeviceRikaPage"
+    },
+    {
+      "id": "DeviceRikaFanAirVolume",
+      "name": "RIKA烟机风量",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaFanAirVolumePage"
+    },
+    {
+      "id": "DeviceRikaModeSelect",
+      "name": "蒸烤模式",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaModeSelectPage"
+    },
+    {
+      "id": "DeviceRikaMode2Select",
+      "name": "清洁辅助",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaMode2SelectPage"
+    },
+    {
+      "id": "AbsDeviceRika",
+      "name": "RIKA",
+      "clazz": "com.robam.roki.ui.page.device.rika.AbsDeviceRikaPage"
+    },
+    {
+      "id": "DeviceModelSelected",
+      "name": "设备模式选择页面",
+      "clazz": "com.robam.roki.ui.page.DeviceModelSelectedPage"
+    },
+    {
+      "id": "DeviceRikaWork",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaWorkPage"
+    },
+    {
+      "id": "DeviceRikaXWork",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaXWorkPage"
+    },
+    {
+      "id": "DeviceRikaYWork",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaYWorkPage"
+    },
+    {
+      "id": "DeviceRikaOilDetection",
+      "name": "RIKA油网检测",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaOilDetectionPage"
+    },
+    {
+      "id": "DeviceRikaFanStoveLinkage",
+      "name": "RIKA智能联动",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaFanStoveLinkagePage"
+    },
+    {
+      "id": "DeviceRikaFanStoveSterilizerLinkage",
+      "name": "RIKA智能联动",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaFanStoveSterilizerLinkagePage"
+    },
+    {
+      "id": "FanDeviceMore",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.fan.FanDeviceMorePage"
+    },
+    {
+      "id": "StoveDeviceMore",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.stove.StoveDeviceMorePage"
+    },
+    {
+      "id": "RikaDeviceMore",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.rika.RikaDeviceMorePage"
+    },
+    {
+      "id": "DeviceMoreGasInfo",
+      "name": "更多页面",
+      "clazz": "com.robam.roki.ui.page.device.gassensor.DeviceMoreGasInfoPage"
+    },
+    {
+      "id": "HidKitDeviceMore",
+      "name": "更多页面",
+      "clazz": "com.robam.roki.ui.page.device.hidkit.HidKitDeviceMorePage"
+    },
+    {
+      "id": "DeviceInformation",
+      "name": "产品信息",
+      "clazz": "com.robam.roki.ui.page.DeviceInformationPage"
+    },
+    {
+      "id": "DeviceElectronicInstruction",
+      "name": "电子说明书",
+      "clazz": "com.robam.roki.ui.page.DeviceElectronicInstructionPage"
+    },
+    {
+      "id": "DeviceRikaOilClean",
+      "name": "油网拆卸",
+      "clazz": "com.robam.roki.ui.page.DeviceRikaOilCleanPage"
+    },
+    {
+      "id": "KitchenKnowledgeArticle",
+      "name": "文章",
+      "clazz": "com.robam.roki.ui.page.KitchenKnowledgeArticlePage"
+    },
+    {
+      "id": "DeviceFanVentilation",
+      "name": "通风换气",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanVentilationPage"
+    },
+    {
+      "id": "DeviceFanStoveLinkage",
+      "name": "烟灶联动",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanStoveLinkagePage"
+    },
+    {
+      "id": "DeviceFanOilDetail",
+      "name": "油网拆卸",
+      "clazz": "com.robam.roki.ui.page.DeviceFanOilDetailPage"
+    },
+    {
+      "id": "DeviceFanHotOil",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanHotOilPage"
+    },
+    {
+      "id": "DeviceFanDryCleaning",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanDryCleaningPage"
+    },
+    {
+      "id": "DeviceFanHotOil",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanHotOilPage"
+    },
+    {
+      "id": "DeviceFanDryCleaning",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanDryCleaningPage"
+    },
+    {
+      "id": "DeviceFanOilDetection",
+      "name": "油网检测",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanOilDetectionPage"
+    },
+    {
+      "id": "DeviceFanOilCup",
+      "name": "油杯状态",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanOilCupPage"
+    },
+    {
+      "id": "Device90B8Z",
+      "name": "90B8Z",
+      "clazz": "com.robam.roki.ui.page.device.rika.Device90B8ZPage"
+    },
+    {
+      "id": "DeviceRikaAppointmentElimination",
+      "name": "预约消毒",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaAppointmentEliminationPage"
+    },
+    {
+      "id": "SeriesInfoDetail",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.SeriesInfoDetailPage"
+    },
+    {
+      "id": "AbsDeviceSteamOvenOne",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.AbsDeviceSteamOvenOnePage"
+    },
+    {
+      "id": "AbsDeviceWaterPurifier",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.water.AbsDeviceWaterPurifierPage"
+    },
+    {
+      "id": "WaterPurifierFilterCoreState",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.water.WaterPurifierFilterCoreStatePage"
+    },
+    {
+      "id": "HouseholdDrinkingWaterStatistics",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.water.HouseholdDrinkingWaterStatisticsPage"
+    },
+    {
+      "id": "WaterPurifierMoreData",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.water.WaterPurifierMoreDataPage"
+    },
+    {
+      "id": "WaterPurifierDeviceMore",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.water.WaterPurifierDeviceMorePage"
+    },
+    {
+      "id": "WaterPurifierFilterReplacement",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.water.WaterPurifierFilterReplacementPage"
+    },
+    {
+      "id": "WaterPurifierFilterAboutExpire",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.water.WaterPurifierFilterAboutExpirePage"
+    },
+    {
+      "id": "AbsDeviceMicroWave",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.microwave.AbsDeviceMicroWavePage"
+    },
+    {
+      "id": "AbsMicroWaveMore",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.microwave.AbsMicroWaveMorePage"
+    },
+    {
+      "id": "MicroWaveModelSelected",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.microwave.MicroWaveModelSelectedPage"
+    },
+    {
+      "id": "SpeechSwitchPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.SpeechSwitchPage"
+    },
+    {
+      "id": "AbsDevicePot",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.pot.AbsDevicePotPage"
+    },
+    {
+      "id": "PotDeviceMore",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.pot.PotDeviceMorePage"
+    },
+    {
+      "id": "DevicePotFanLink",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.pot.DevicePotFanLinkPage"
+    },
+    {
+      "id": "DevicePotFanDry",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.pot.DevicePotFanDryPage"
+    },
+    {
+      "id": "AbsDishWasher",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.dishWasher.AbsDishWasherBasePage"
+    },
+    {
+      "id": "DishWash",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.dishWasher.DishWasherPage"
+    },
+    {
+      "id": "SpecialState",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.dishWasher.SpecialStatePage"
+    },
+    {
+      "id": "ConsumablesBuy",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.dishWasher.ConsumablesBuyPage"
+    },
+    {
+      "id": "DishWasherMore",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.dishWasher.DishWasherMorePage"
+    },
+    {
+      "id": "QuickGuide",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.dishWasher.QuickGuidePage"
+    },
+    {
+      "id": "AbsOvenFanLinkage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenFanLinkagePage"
+    },
+    {
+      "id": "AbsOvenBakeDiyList",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenBakeDiyListPage"
+    },
+    {
+      "id": "AbsOvenBakeEdit",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenBakeEditPage"
+    },
+    {
+      "id": "AbsOvenZoneSet",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenZoneSetPage"
+    },
+    {
+      "id": "AbsOvenBakeDiyDetail",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.oven.AbsOvenBakeDiyDetailPage"
+    },
+    {
+      "id": "DeviceFanOTP",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanOTPPage"
+    },
+    {
+      "id": "SteamProMode",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steam.SteamProModePage"
+    },
+    {
+      "id": "SteamLocalRecipe",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steam.SteamLocalRecipePage"
+    },
+    {
+      "id": "SteamDiyList",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steam.SteamDiyListPage"
+    },
+    {
+      "id": "SteamDiyDetail",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steam.SteamDiyDetailPage"
+    },
+    {
+      "id": "SteamDiyEdit",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steam.SteamDiyEditPage"
+    },
+    {
+      "id": "SteamFanLinkage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steam.SteamFanLinkagePage"
+    },
+    {
+      "id": "SterilizerOrder",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.sterilizer.SterilizerOrderPage"
+    },
+    {
+      "id": "SterilizerIntelligenceCleaning",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.sterilizer.SterilizerIntelligenceCleaningPage"
+    },
+    {
+      "id": "AbsSterilizerMore",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.sterilizer.AbsSterilizerMorePage"
+    },
+    {
+      "id": "DeviceFanGestureControlPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanGestureControlPage"
+    },
+    {
+      "id": "DeviceFanStoveLinkage2",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanStoveLinkage2Page"
+    },
+    {
+      "id": "DeviceFanVentilation2",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.fan.DeviceFanVentilation2Page"
+    },
+    {
+      "id": "Instructions",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.InstructionsPage"
+    },
+    {
+      "id": "SteamOvenProMode",
+      "name": "蒸烤一体机专业模式",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.SteamOvenProModePage"
+    },
+    {
+      "id": "SteamOven926ProMode",
+      "name": "蒸烤一体机专业模式",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.SteamOven926ProModePage"
+    },
+    {
+      "id": "DiyCookbookList",
+      "name": "蒸烤一体机diy菜谱",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.DiyCookbookListPage"
+    },
+    {
+      "id": "FanLinkage",
+      "name": "蒸烤一体机烟机联动",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.FanLinkagePage"
+    },
+    {
+      "id": "LocalCookbook",
+      "name": "蒸烤一体机本地菜谱",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.LocalCookbookPage"
+    },
+    {
+      "id": "MultiStepMode",
+      "name": "蒸烤一体机多段模式",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.MultiStepModePage"
+    },
+    {
+      "id": "SteamOvenDiyDetail",
+      "name": "蒸烤一体机烹饪diy详情页",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.SteamOvenDiyDetailPage"
+    },
+    {
+      "id": "SteamOvenEdit",
+      "name": "蒸烤一体机烹饪diy编辑页",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.SteamOvenEditPage"
+    },
+    {
+      "id": "SteamOvenFanLinkage",
+      "name": "蒸烤一体机烟机联动",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.SteamOvenFanLinkagePage"
+    },
+    {
+      "id": "SterilizerIntelligenceCleaning",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.sterilizer.SterilizerIntelligenceCleaningPage"
+    },
+    {
+      "id": "AbsSterilizerMore",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.sterilizer.AbsSterilizerMorePage"
+    },
+    {
+      "id": "RandomRecipe",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.RandomRecipePage"
+    },
+    {
+      "id": "TellRoki",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.TellRokiPage"
+    },
+    {
+      "id": "TellRokiSucess",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.TellRokiSucessPage"
+    },
+    {
+      "id": "LocalCookbook",
+      "name": "蒸烤一体机本地菜谱",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.LocalCookbookPage"
+    },
+    {
+      "id": "Local610Cookbook",
+      "name": "蒸烤一体机610本地菜谱",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.Local610CookbookPage"
+    },
+    {
+      "id": "Local610CookbookDetailPage",
+      "name": "蒸烤一体机610本地菜谱详情",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.Local610CookbookDetailPage"
+    },
+    {
+      "id": "MultiStepMode",
+      "name": "蒸烤一体机多段模式",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.MultiStepModePage"
+    },
+    {
+      "id": "SteamOvenDiyDetail",
+      "name": "蒸烤一体机烹饪diy详情页",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.SteamOvenDiyDetailPage"
+    },
+    {
+      "id": "SteamOvenEdit",
+      "name": "蒸烤一体机烹饪diy编辑页",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.SteamOvenEditPage"
+    },
+    {
+      "id": "SteamOvenFanLinkage",
+      "name": "蒸烤一体机烟机联动",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.SteamOvenFanLinkagePage"
+    },
+    {
+      "id": "MultiStepC908Mode",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.MultiStepC908ModePage"
+    },
+    {
+      "id": "MultiStepC908Mode",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.MultiStepC908ModePage"
+    },
+    {
+      "id": "SteamOvenProMode",
+      "name": "蒸烤一体机专业模式",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.SteamOvenProModePage"
+    },
+    {
+      "id": "DiyCookbookList",
+      "name": "蒸烤一体机diy菜谱",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.DiyCookbookListPage"
+    },
+    {
+      "id": "DeviceRikaSteamOvenWork",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaSteamOvenWorkPage"
+    },
+    {
+      "id": "AbsRikaLocalRecipe",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.rika.AbsRikaLocalRecipePage"
+    },
+    {
+      "id": "DeviceRikaFanSteamOvenLinkage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.rika.DeviceRikaFanSteamOvenLinkagePage"
+    },
+    {
+      "id": "MineSettingPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineSettingPage"
+    },
+    {
+      "id": "MineEditInfoPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineEditInfoPage"
+    },
+    {
+      "id": "MineAccAndSecPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineAccAndSecPage"
+    },
+    {
+      "id": "MineChangePasswordPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineChangePasswordPage"
+    },
+    {
+      "id": "MineForgetPasswordPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineForgetPasswordPage"
+    },
+    {
+      "id": "MineSettingPasswordPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineSettingPasswordPage"
+    },
+    {
+      "id": "MineBindPhonePage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineBindPhonePage"
+    },
+    {
+      "id": "MineBindPhonePage2",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineBindPhonePage2"
+    },
+    {
+      "id": "MineCancelAccountPage2",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineCancelAccountPage2"
+    },
+    {
+      "id": "MineCancelAccountPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineCancelAccountPage"
+    },
+    {
+      "id": "MineEditUserNamePage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineEditUserNamePage"
+    },
+    {
+      "id": "MineAboutPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.mine.MineAboutPage"
+    },
+    {
+      "id": "AbsHidKitDevicePage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.hidkit.AbsHidKitDevicePage"
+    },
+    {
+      "id": "SmartHome",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.hidkit.SmartHomePage"
+    },
+    {
+      "id": "HidKitHomeOther",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.hidkit.HidKitHomeOtherPage"
+    },
+    {
+      "id": "DeviceUdpContent",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.DeviceUdpContentPage"
+    },
+    {
+      "id": "DeviceUdpHidKitContent",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.DeviceUdpHidKitContentPage"
+    },
+    {
+      "id": "Multi610EditDetailPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.Multi610EditDetailPage"
+    },
+    {
+      "id": "Multi610RecipePage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.Multi610RecipePage"
+    },
+    {
+      "id": "MultiListRecipePage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.MultiListRecipePage"
+    },
+    {
+      "id": "MultiAddEditDetailPage",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.steamovenone.MultiAddEditDetailPage"
+    },
+    {
+      "id": "CurveCookbooks",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.cook.CurveCookbooksPage"
+    },
+    {
+      "id": "CurveCookbooksUser",
+      "name": "",
+      "clazz": "com.robam.roki.ui.page.device.cook.CurveCookbooksUserPage"
+    },
+    {
+      "id": "AbsIntegratedStovePage",
+      "name": "RJCZ",
+      "clazz": "com.robam.roki.ui.page.device.integratedStove.AbsIntegratedStovePage"
+    },
+    {
+      "id": "IntegratedStoveModelPage",
+      "name": "集成灶模式选择",
+      "clazz": "com.robam.roki.ui.page.device.integratedStove.IntegratedStoveModelPage"
+    },
+    {
+      "id": "DeviceIntegStoveLinkagePage",
+      "name": "集成灶烟灶蒸联动",
+      "clazz": "com.robam.roki.ui.page.device.integratedStove.DeviceIntegStoveLinkagePage"
+    },
+    {
+      "id": "AbsIntegratedStoveLocalRecipePage",
+      "name": "集成灶本地自动菜谱",
+      "clazz": "com.robam.roki.ui.page.device.integratedStove.AbsIntegratedStoveLocalRecipePage"
+    },
+    {
+      "id": "MultiRecipePage",
+      "name": "集成灶多段模式",
+      "clazz": "com.robam.roki.ui.page.device.integratedStove.MultiRecipePage"
+    },
+    {
+      "id": "MultiEditDetailPage",
+      "name": "集成灶多段菜谱编辑",
+      "clazz": "com.robam.roki.ui.page.device.integratedStove.MultiEditDetailPage"
+    },
+    {
+      "id": "IntegratedStoveAirVolumePage",
+      "name": "集成灶风量调节",
+      "clazz": "com.robam.roki.ui.page.device.integratedStove.IntegratedStoveAirVolumePage"
+    },
+    {
+      "id": "IntegratedStoveWorkPage",
+      "name": "集成灶工作界面",
+      "clazz": "com.robam.roki.ui.page.device.integratedStove.IntegratedStoveWorkPage"
+    },{
+      "id": "IntegratedStoveMorePage",
+      "name": "集成灶更多界面",
+      "clazz": "com.robam.roki.ui.page.device.integratedStove.IntegratedStoveMorePage"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dcdcdc"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="预约开始时间"
+            android:textColor="#A5A5A5"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.robam.roki.ui.view.DeviceNumWheel
+            android:id="@+id/oven026_ordertime_hour"
+            style="@style/wheel_MicrowaveWeight_view_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.robam.roki.ui.view.DeviceNumWheel
+            android:id="@+id/oven026_ordertime_min"
+            style="@style/wheel_MicrowaveWeight_view_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <Button
+            android:id="@+id/oven026_order_close"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/c02"
+            android:gravity="center"
+            android:text="关闭预约"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="7dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/oven026_order_start"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/c02"
+            android:gravity="center"
+            android:text="开启预约"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>

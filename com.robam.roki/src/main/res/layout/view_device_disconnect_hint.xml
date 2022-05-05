@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/disconnectHintView"
+    android:layout_width="match_parent"
+    android:layout_height="22dp"
+    android:layout_marginBottom="2dp"
+    android:background="@color/c02"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="5dp"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_device_disconnect_warm_hint" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设备与手机断开连接，请检查设备"
+        android:textColor="#fff"
+        android:textSize="10sp" />
+
+</LinearLayout>

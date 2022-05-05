@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="141dp"
+        android:src="@mipmap/icon_search_emtiy"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="尚未检测到关联的智能设备"
+        android:textSize="12sp"
+        android:textColor="#999999"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_device"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="35dp"
+        android:text="关联设备，自动烹饪" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_not_device"
+        style="@style/ButtonStyle5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="20dp"
+        android:text="不使用设备，直接进入自动烹饪导航" />
+
+</LinearLayout>

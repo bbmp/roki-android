@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#f5f5f5">
+
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/can_btn"
+                android:textColor="@color/c30"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/confirm"
+                android:textColor="@color/c30"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="第一段"
+                android:id="@+id/text_mode1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="#111111"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.robam.roki.ui.wheel.WheelView
+                    android:id="@+id/wv1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:dividerColor="@color/c31"
+                    app:selectedTextColor="#000000"
+                    app:wheelDividerSize="32dp"
+                    app:wheelGravity="center"
+                    app:wheelItemCount="2"
+                    app:wheelItemSize="40dp" />
+
+                <com.robam.roki.ui.wheel.WheelView
+                    android:id="@+id/wv2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:dividerColor="#55000000"
+                    app:wheelDividerSize="32dp"
+                    app:wheelGravity="center"
+                    app:wheelItemCount="2"
+                    app:wheelItemSize="40dp" />
+
+                <com.robam.roki.ui.wheel.WheelView
+                    android:id="@+id/wv3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:dividerColor="#55000000"
+                    app:wheelDividerSize="32dp"
+                    app:wheelGravity="center"
+                    app:wheelItemCount="2"
+                    app:wheelItemSize="40dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/c33" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="第二段"
+                android:id="@+id/text_mode2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="#111111"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <com.robam.roki.ui.wheel.WheelView
+                    android:id="@+id/wv4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:dividerColor="@color/c31"
+                    app:selectedTextColor="#000000"
+                    app:wheelDividerSize="32dp"
+                    app:wheelGravity="center"
+                    app:wheelItemCount="2"
+                    app:wheelItemSize="40dp" />
+
+
+                <com.robam.roki.ui.wheel.WheelView
+                    android:id="@+id/wv5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:dividerColor="#55000000"
+                    app:wheelDividerSize="32dp"
+                    app:wheelGravity="center"
+                    app:wheelItemCount="2"
+                    app:wheelItemSize="40dp" />
+
+
+                <com.robam.roki.ui.wheel.WheelView
+                    android:id="@+id/wv6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:dividerColor="#55000000"
+                    app:wheelDividerSize="32dp"
+                    app:wheelGravity="center"
+                    app:wheelItemCount="2"
+                    app:wheelItemSize="40dp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,67 @@
+{
+  "stringTable": {
+    "0": "E:/Robam/roki_app/roki_3.1/smartconfig/.cxx/cmake/release/arm64-v8a",
+    "1": "--target=aarch64-none-linux-android21 --gcc-toolchain=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=E:/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot -DSmartConfig_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -O2 -DNDEBUG -fPIC"
+  },
+  "buildFiles": [
+    "E:\\ndk-bundle\\build\\cmake\\platforms.cmake",
+    "E:\\ndk-bundle\\build\\cmake\\android.toolchain.cmake",
+    "E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "D:\\Android\\SDK\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\.cxx\\cmake\\release\\arm64-v8a\" clean"
+  ],
+  "buildTargetsCommand": "D:\\Android\\SDK\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\.cxx\\cmake\\release\\arm64-v8a\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "SmartConfig-Release-arm64-v8a": {
+      "buildCommand": "D:\\Android\\SDK\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\.cxx\\cmake\\release\\arm64-v8a\" SmartConfig",
+      "buildType": "release",
+      "toolchain": "1704490392",
+      "abi": "arm64-v8a",
+      "artifactName": "SmartConfig",
+      "files": [
+        {
+          "src": "E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\SmartConfig.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\ConfigManager.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\Thread.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\BroadcastManager.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\BroadcastMessage.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\src\\main\\cpp\\Message.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        }
+      ],
+      "headers": [],
+      "output": "E:\\Robam\\roki_app\\roki_3.1\\smartconfig\\build\\intermediates\\cmake\\release\\obj\\arm64-v8a\\libSmartConfig.so"
+    }
+  },
+  "toolchains": {
+    "1704490392": {
+      "cppCompilerExecutable": "E:\\ndk-bundle\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

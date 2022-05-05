@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- play area -->
+
+    <dimen name="detail_play_title_height">30dp</dimen>
+
+    <!-- 详情页播放器底部控制区 -->
+    <dimen name="detail_play_progress_margin_left">8dp</dimen>
+    <!-- pop up middle -->
+
+
+    <!-- 全屏播放 剧集选择 -->
+
+    <!-- normal dialog -->
+
+    <!-- pause ad Size -->
+
+    <!-- Text Size -->
+
+    <dimen name="text_size_d">14sp</dimen>
+    <dimen name="text_size_e">18sp</dimen>
+    <dimen name="text_size_f">22sp</dimen>
+
+    <!-- 播放广告 -->
+
+    <!-- 播放广告 youku -->
+    <!-- <dimen name="player_ad_skip_width_youku">72dp</dimen> -->
+    <!-- youku dialog -->
+
+    <!-- youku investigate ad -->
+
+    <!-- tudou encrypt dialog -->
+    <dimen name="tudou_dialog_height">175dp</dimen>
+    <dimen name="tudou_dialog_width">300dp</dimen>
+
+    <!-- 清晰度按钮 -->
+    <dimen name="vq_width">38dp</dimen>
+    <dimen name="vq_height">20dp</dimen>
+    <dimen name="wm_width">50dp</dimen>
+
+</resources>

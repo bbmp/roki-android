@@ -1,0 +1,52 @@
+<resources>
+
+    <string name="app_name">PlayerUI</string>
+    
+    	<string name="tips_not_responding">网络不给力，请稍后再试。</string>
+    
+      <string name="player_error_native">本地文件已损坏</string> <!-- 返回 -->
+    <string name="Player_error_timeout">网络不太给力哦,如需观看,请重试。</string> <!-- 重新加载 / 返回 -->
+    <!-- （其它错误） 返回 -->
+    <!-- 去联网 / 返回 -->
+    <string name="detail_music">音乐</string>
+    <string name="detail_ugc">ugc</string>
+    <string name="detail_tv">电视剧</string>
+    <string name="detail_movie">电影</string>
+    <string name="detail_variety">综艺</string>
+    <string name="detail_cartoon">动漫</string>
+    <string name="detail_memory">纪录片</string>
+    <string name="detail_education">教育</string>
+    <string name="detail_special">专辑</string> <!-- 详情页结束 --> <!-- 播放历史页 -->
+    <string name="replay">重播</string>
+    <string name="play_next">下集</string>
+    <string name="player_tip_loading">即将为您播放</string>
+    <string name="playersdk_ad_descrip_youku">了解详情</string>
+
+    <string name="player_error_dialog_password_required">请输入视频密码</string>
+    <string name="alert_dialog_ok">确定</string>
+    <string name="alert_dialog_cancel">取消</string>
+    <string name="player_tips_use_3g">当前使用2G/3G/4G网络</string>
+    <string name="player_tips_no_network">当前无网络连接</string>
+
+    <string name="tudou_dialog_title">"该视频已加密"</string>
+    <string name="tudou_dialog_sub_title">"请输入密码观看"</string>
+
+    <!-- 缓存页 v3.0—————————————————————————————————————————————————————————————— -->
+
+    <string name="download_exist_not_finished">该视频已在您的缓存列表中</string>
+    <string name="download_exist_finished">该视频已缓存完成</string>
+    <string name="download_add_success">添加缓存成功</string>
+    <string name="download_no_sdcard">木有发现存储设备，请插入SD卡试试</string>
+    <string name="download_no_space">空间不足，请删除些内容再缓存</string>
+    <string name="download_timeout">网络不给力，正在缓存的视频已暂停。</string>
+	<string name="download_no_network">网络已断开，正在缓存的视频将在网络连接恢复后续传。</string>
+    <string name="download_unknown_error">该视频暂不支持缓存</string>
+    <string name="download_write_fail">储存本地视频信息失败</string>
+    <string name="download_many_fail">S个正缓存，F个暂无缓存版权</string>
+    <string name="download_many_fail_timeout">S个正缓存，F个因断网添加失败</string>
+    <string name="download_many_fail_no_space">S个正缓存，空间不足F个未缓存，请删些内容</string>
+    <string name="download_many_fail_unknown_error">S个正缓存，F个不明原因失败</string>
+    <string name="download_cannot_ues_3g">已设置为2G/3G/4G下不允许缓存视频</string>
+
+
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 有标题，有文本内容，两个按钮   -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/common_dialog_root_bg_layout_style">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginEnd="52dp"
+        android:background="@drawable/shape_diglog_bg_splash"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="30dp"
+            android:text="菜谱播报过程中，无法识别语音指令，请在播报结束后，再使用语音指令。"
+            android:textColor="#2A2A2A"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/common_dialog_title_text"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:text="当前支持的语音指令：\n1.“下一步”/“上一步”\n2.“退出烹饪”\n3.“暂停工作”（仅蒸、烤、微产品支持）\n4.“再说一遍”"
+            android:lineSpacingExtra ="11dp"
+            android:textColor="@color/roki_important_text_color"
+            android:textSize="14sp" />
+
+
+        <Button
+            android:id="@+id/common_dialog_ok_btn"
+            android:layout_width="125dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="22dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/shape_bg_yellow_999dp"
+            android:text="知道了"
+            android:textColor="#2A2A2A"
+            android:textSize="14sp" />
+    </LinearLayout>
+</FrameLayout>

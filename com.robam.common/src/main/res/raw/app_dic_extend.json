@@ -1,0 +1,399 @@
+{
+  "deviceTypes": [
+    {
+      "id": "R8700",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "R9700",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "R8229",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "R66A2",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "66A2H",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "R5610",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "R5910",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "5910S",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "R8230",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "8230C",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "8230S",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "8231S",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "R68A0",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "68A0S",
+      "name": "油烟机",
+      "tag": "Cooker Hood"
+    },
+    {
+      "id": "R9W70",
+      "name": "灶具",
+      "tag": "Induction Hob"
+    },
+    {
+      "id": "HI704",
+      "name": "灶具",
+      "tag": "Induction Hob"
+    },
+    {
+      "id": "R9B39",
+      "name": "灶具",
+      "tag": "Gas Stove"
+    },
+    {
+      "id": "R9B37",
+      "name": "灶具",
+      "tag": "Gas Stove"
+    },
+    {
+      "id": "9B30C",
+      "name": "灶具",
+      "tag": "Gas Stove"
+    },
+    {
+      "id": "RR829",
+      "name": "消毒柜",
+      "tag": "Sterilizer"
+    },
+    {
+      "id": "RR826",
+      "name": "消毒柜",
+      "tag": "Sterilizer"
+    },
+    {
+      "id": "R826L",
+      "name": "消毒柜",
+      "tag": "Sterilizer"
+    },
+    {
+      "id": "RR039",
+      "name": "电烤箱",
+      "tag": "Oven"
+    },
+    {
+      "id": "RR075",
+      "name": "电烤箱",
+      "tag": "Oven"
+    },
+    {
+      "id": "RR026",
+      "name": "电烤箱",
+      "tag": "Oven"
+    },
+    {
+      "id": "RR016",
+      "name": "电烤箱",
+      "tag": "Oven"
+    },
+    {
+      "id": "HK906",
+      "name": "电烤箱",
+      "tag": "Oven"
+    },
+
+    {
+      "id": "RR028",
+      "name": "电烤箱",
+      "tag": "Oven"
+    },
+    {
+      "id": "RM509",
+      "name": "微波炉",
+      "tag": "Microwave"
+    },
+    {
+      "id": "RM526",
+      "name": "微波炉",
+      "tag": "Microwave"
+    },
+    {
+      "id": "RS209",
+      "name": "电蒸箱",
+      "tag": "SteamOven"
+    },
+    {
+      "id": "RS226",
+      "name": "电蒸箱",
+      "tag": "SteamOven"
+    },
+    {
+      "id": "HS906",
+      "name": "电蒸箱",
+      "tag": "SteamOven"
+    },
+    {
+      "id": "RS275",
+      "name": "电蒸箱",
+      "tag": "SteamOven"
+    },
+
+    {
+      "id": "RS228",
+      "name": "电蒸箱",
+      "tag": "SteamOven"
+    },
+    {
+      "id": "RJ312",
+      "name": "净水机",
+      "tag": "WaterPurifiy"
+    },
+    {
+      "id": "RJ321",
+      "name": "净水机",
+      "tag": "WaterPurifiy"
+    },
+    {
+      "id": "RJ320",
+      "name": "净水机",
+      "tag": "WaterPurifiy"
+    },
+    {
+      "id": "R0001",
+      "name": "温控锅",
+      "tag": "Pot"
+    },
+    {
+      "id": "R0003",
+      "name": "燃气卫士",
+      "tag": "GasSensor"
+    },
+    {
+      "id": "RC906",
+      "name": "蒸烤一体机",
+      "tag": "Combi-steamOven"
+    },
+    {
+      "id": "90B8X",
+      "name": "集成灶",
+      "tag": ""
+    },
+    {
+      "id": "90B8Z",
+      "name": "集成灶",
+      "tag": ""
+    },
+    {
+      "id": "KDC01",
+      "name": "电磁炉",
+      "tag": ""
+    },
+    {
+      "id": "KC306",
+      "name": "藏宝盒",
+      "tag": "treasure box"
+    }
+  ],
+  "resultCodes": [
+    {
+      "id": "64",
+      "name": "@string/rc_64"
+    },
+    {
+      "id": "65",
+      "name": "@string/rc_65"
+    },
+    {
+      "id": "5001",
+      "name": "@string/rc_5001"
+    },
+    {
+      "id": "5002",
+      "name": "@string/rc_5002"
+    },
+    {
+      "id": "5003",
+      "name": "@string/rc_5003"
+    },
+    {
+      "id": "5004",
+      "name": "@string/rc_5004"
+    },
+    {
+      "id": "5005",
+      "name": "@string/rc_5005"
+    },
+    {
+      "id": "5006",
+      "name": "@string/rc_5006"
+    },
+    {
+      "id": "5007",
+      "name": "@string/rc_5007"
+    },
+    {
+      "id": "5008",
+      "name": "@string/rc_5008"
+    },
+    {
+      "id": "5009",
+      "name": "@string/rc_5009"
+    },
+    {
+      "id": "5010",
+      "name": "@string/rc_5010"
+    },
+    {
+      "id": "5011",
+      "name": "@string/rc_5011"
+    },
+    {
+      "id": "5012",
+      "name": "@string/rc_5012"
+    },
+    {
+      "id": "5101",
+      "name": "@string/rc_5101"
+    },
+    {
+      "id": "5102",
+      "name": "@string/rc_5102"
+    },
+    {
+      "id": "5103",
+      "name": "@string/rc_5103"
+    },
+    {
+      "id": "5104",
+      "name": "@string/rc_5104"
+    },
+    {
+      "id": "5105",
+      "name": "@string/rc_5105"
+    },
+    {
+      "id": "5200",
+      "name": "@string/rc_5200"
+    },
+    {
+      "id": "5201",
+      "name": "@string/rc_5201"
+    },
+    {
+      "id": "5202",
+      "name": "@string/rc_5202"
+    },
+    {
+      "id": "5203",
+      "name": "@string/rc_5203"
+    },
+    {
+      "id": "5204",
+      "name": "@string/rc_5204"
+    }
+  ],
+  "stoveAlarms": [
+    {
+      "id": "255",
+      "name": "@string/stove_warm_none"
+    },
+    {
+      "id": "0",
+      "name": "@string/stove_warm_0"
+    },
+    {
+      "id": "1",
+      "name": "@string/stove_warm_1"
+    },
+    {
+      "id": "2",
+      "name": "@string/stove_warm_2"
+    },
+    {
+      "id": "3",
+      "name": "@string/stove_warm_3"
+    },
+    {
+      "id": "4",
+      "name": "@string/stove_warm_4"
+    },
+    {
+      "id": "5",
+      "name": "@string/stove_warm_5"
+    },
+    {
+      "id": "6",
+      "name": "@string/stove_warm_6"
+    },
+    {
+      "id": "7",
+      "name": "@string/stove_warm_7"
+    },
+    {
+      "id": "8",
+      "name": "@string/stove_warm_8"
+    },
+    {
+      "id": "9",
+      "name": "@string/stove_warm_8"
+    },
+    {
+      "id": "10",
+      "name": "@string/stove_warm_10"
+    },
+    {
+      "id": "11",
+      "name": "@string/stove_warm_11"
+    },
+    {
+      "id": "12",
+      "name": "@string/stove_warm_12"
+    },
+    {
+      "id": "13",
+      "name": "@string/stove_warm_13"
+    },
+    {
+      "id": "14",
+      "name": "@string/stove_warm_14"
+    },
+    {
+      "id": "15",
+      "name": "@string/stove_warm_15"
+    }
+  ]
+}

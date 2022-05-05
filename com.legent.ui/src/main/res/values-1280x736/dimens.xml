@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingDefaultResource">
+    <!-- popWindown -->
+    <dimen name="common_popWindown_height">600px</dimen>
+    <dimen name="common_popWindown_width">1285px</dimen>
+    <!-- 微波炉 -->
+    <dimen name="common_microwava_popWindown_height">400px</dimen>
+    <dimen name="common_stove_popWindown_height">600px</dimen>
+
+</resources>

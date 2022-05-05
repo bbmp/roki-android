@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@android:color/transparent"
+    android:layout_marginTop="282dp"
+    android:layout_marginBottom="266dp"
+    >
+
+    <TextView
+        android:id="@+id/txtNotice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请开启下方的"
+        android:textColor="#e9a90f"
+        android:textSize="18sp"
+        android:layout_marginLeft="90dp"
+        />
+    <ImageButton
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:src="@mipmap/ic_device_oven_started"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:paddingLeft="4dp"
+        />
+</LinearLayout>

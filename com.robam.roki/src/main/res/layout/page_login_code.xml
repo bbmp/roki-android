@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.robam.roki.ui.widget.view.ClearEditText
+            android:id="@+id/et_login_phone"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/common_phone_input_hint"
+            android:inputType="textVisiblePassword"
+            android:singleLine="true"
+            app:regexType="mobile" />
+
+        <View
+            style="@style/HorizontalLineStyle"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="40dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <com.robam.roki.ui.widget.view.ClearEditText
+                android:id="@+id/et_phone_code"
+                style="@style/EditTextStyle"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:hint="@string/common_code_input_hint"
+                android:inputType="textVisiblePassword"
+                android:singleLine="true"
+                />
+            <com.robam.roki.ui.widget.view.CountdownView
+                android:id="@+id/cv_find_countdown"
+                style="@style/CountdownViewStyle_Login"
+                android:layout_height="30dp"/>
+        </LinearLayout>
+
+        <View
+            style="@style/HorizontalLineStyle"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="40dp" />
+
+        <!--        <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_login_forget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="60dp"
+                    android:text="@string/login_forget"
+                    android:textColor="@color/common_accent_color" />-->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_login_commit"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/login_text" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/edtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="盐"
+            android:textColor="@color/c05"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtHot"
+            android:visibility="gone"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/edtName"
+            android:background="@mipmap/ic_recipe_seasoning_hot"
+            android:gravity="center"
+            android:text="热度"
+            android:textColor="#fff"
+            android:textSize="9sp" />
+    </RelativeLayout>
+
+    <com.robam.roki.ui.view.RecipeSeasoningFrequencyView
+        android:id="@+id/frequencyView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

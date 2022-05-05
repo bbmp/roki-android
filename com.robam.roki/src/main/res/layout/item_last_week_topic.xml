@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/shape_eee_bg10"
+    android:layout_margin="8dp"
+    android:paddingBottom="16dp">
+    <ImageView
+        android:id="@+id/iv_item_topic_img"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toTopOf="@id/tv_recipe_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitXY"/>
+    <ImageView
+        android:id="@+id/iv_week_topic_ranking"
+        android:layout_marginStart="14dp"
+        android:layout_width="28dp"
+        android:layout_height="33dp"
+        app:srcCompat="@mipmap/icon_week_top1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_item_topic_img" />
+
+    <TextView
+        android:id="@+id/tv_recipe_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="15dp"
+        android:text="蜜汁烤鸡翅速度快过来看什么"
+        android:textStyle="bold"
+        style="@style/RokiMainText"
+        app:layout_constraintTop_toBottomOf="@+id/iv_item_topic_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.10"
+        app:layout_constraintStart_toStartOf="parent"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:maxEms="7"/>
+
+    <TextView
+        android:layout_marginTop="9dp"
+        android:id="@+id/tv_recipe_read_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="56.8w"
+        android:textSize="10sp"
+        android:textColor="@color/roki_sub_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintStart_toEndOf="@+id/iv_topic_icon"
+        app:layout_constraintTop_toBottomOf="@+id/tv_recipe_name" />
+
+    <ImageView
+        android:layout_marginTop="9dp"
+        android:id="@+id/iv_topic_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/icon_hot"
+        app:layout_constraintHorizontal_bias="0.10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_recipe_read_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_recipe_name"
+        android:layout_marginStart="8dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

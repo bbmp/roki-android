@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/param_one"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mode"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="模式"
+                android:textSize="16sp"
+                android:textColor="#ffffff"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/recipe_circle_show"
+                />
+
+            <TextView
+                android:id="@+id/mode_show"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="模式"
+                android:textSize="16sp"
+                android:textColor="#bbbbbb"
+                android:layout_gravity="center_horizontal"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/param_two"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tempture"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="180"
+                android:textSize="16sp"
+                android:textColor="#ffffff"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/recipe_circle_show"
+                />
+
+            <TextView
+                android:id="@+id/tempture_show"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="温度"
+                android:textSize="16sp"
+                android:textColor="#bbbbbb"
+                android:layout_gravity="center_horizontal"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/param_three"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="120"
+                android:textSize="16sp"
+                android:textColor="#ffffff"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/recipe_circle_show"
+                />
+
+            <TextView
+                android:id="@+id/time_show"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="时间"
+                android:textSize="16sp"
+                android:textColor="#bbbbbb"
+                android:layout_gravity="center_horizontal"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/param_four"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/power"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="120"
+                android:textSize="16sp"
+                android:textColor="#ffffff"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/recipe_circle_show"
+                />
+
+            <TextView
+                android:id="@+id/power_show"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="时间"
+                android:textSize="16sp"
+                android:textColor="#bbbbbb"
+                android:layout_gravity="center_horizontal"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

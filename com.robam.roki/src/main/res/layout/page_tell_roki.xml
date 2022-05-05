@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#F5F5F8"
+    android:orientation="vertical">
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:minHeight="50dp">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignLeft="@+id/tv_theme_recipe_title"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/home_tell_roki"
+            android:textColor="@color/roki_important_text_color"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="16sp"
+            android:layout_marginStart="14dp"
+            android:text="问题或意见"
+            android:gravity="center_vertical"
+            android:textColor="#666666"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="13dp"
+
+            android:padding="5dp"
+            android:background="@drawable/shape_white_round">
+            <EditText
+                android:id="@+id/et_say_sth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_white_round"
+                android:gravity="top"
+                android:hint="@string/home_tell_roki_desc"
+                android:textSize="14sp"
+                android:minHeight="200dp"
+                android:padding="5dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_tell_roki_image"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:scrollbars="horizontal"
+                android:layout_alignParentBottom="true"
+                tools:listitem="@layout/item_tell_roki_image" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="16sp"
+            android:layout_marginStart="14dp"
+            android:text="联系电话"
+            android:gravity="center_vertical"
+            android:textColor="#666666"
+            />
+
+        <EditText
+            android:id="@+id/et_cellphone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_white_round"
+            android:hint="@string/home_tell_roki_your_cellphone"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="13dp"
+            android:textSize="14sp"
+            android:paddingStart="20dp" />
+
+        <TextView
+            android:id="@+id/btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="13dp"
+            android:background="@drawable/button_round_selector"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/roki_important_text_color"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true" android:color="@color/device_board_text_valid"/>
+    <item android:state_selected="false" android:color="@color/device_board_text_invalid"/>
+    <item android:color="@color/device_board_text_invalid"/>
+
+</selector>

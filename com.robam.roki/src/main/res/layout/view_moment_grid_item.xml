@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_recipe_grid_item_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imgAlbum"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp">
+
+        <TextView
+            android:id="@+id/txtDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="2"
+            android:text="诱人的色泽，很好吃~"
+            android:textColor="@color/c16"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/edtName"
+            android:layout_below="@+id/txtDesc"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="红烧排骨"
+            android:textColor="@color/c01"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/txtPraiseCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtName"
+            android:layout_marginTop="14dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="点赞(15)"
+            android:textColor="@color/c01"
+            android:textSize="10sp" />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/imgSrcLogo"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignBottom="@+id/txtPraiseCount"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/common_view_background_selector"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_recipe_provider_xcf" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

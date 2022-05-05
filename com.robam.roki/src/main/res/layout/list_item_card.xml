@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/shape_recipe_item_bg"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    >
+
+    <ImageView
+        android:id="@+id/iv_tag_recipe"
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+
+
+        android:id="@+id/tv_recipe_name"
+        style="@style/RokiMainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_tag_recipe"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:text="红烧肉"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_tag_recipe" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_icon_device"-->
+<!--        android:layout_width="11dp"-->
+<!--        android:layout_height="11dp"-->
+<!--        android:src="@drawable/ic_rqz"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tv_recipe_name"-->
+<!--        >-->
+
+<!--    </ImageView>-->
+    <ImageView
+
+        android:id="@+id/img_collection_number"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_below="@+id/tv_recipe_name"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/hot" />
+
+    <TextView
+        android:id="@+id/tv_collection_number"
+        style="@style/RokiTipsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_recipe_name"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="16dp"
+
+        android:layout_toRightOf="@+id/img_collection_number"
+        android:gravity="top"
+        android:text="11111111"
+        android:textColor="#999999"
+        android:textSize="12sp"
+
+        />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="4dp"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        android:src="@mipmap/ic_collection_recipe"
+        app:layout_constraintEnd_toStartOf="@+id/tv_collection_number"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/tv_recipe_name" />
+
+    <ImageView
+        android:id="@+id/img_recipe_read_number"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_below="@+id/tv_recipe_name"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/tv_collection_number"
+        android:src="@drawable/hot" />
+
+    <TextView
+        android:id="@+id/tv_recipe_read_number"
+        style="@style/RokiTipsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_recipe_name"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/img_recipe_read_number"
+
+        android:gravity="center"
+        android:textColor="#999999"
+        android:textSize="12sp"
+
+        tools:text="96.5w" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+

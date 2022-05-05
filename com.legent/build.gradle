@@ -1,0 +1,42 @@
+apply plugin: 'com.android.library'
+
+android {
+
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+    useLibrary 'org.apache.http.legacy'
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.appcompat:appcompat:1.2.0'
+    api 'androidx.viewpager:viewpager:1.0.0'
+    api deps.ormlite
+    api deps.retrofit.runtime
+    //okhttp 2.2.0 可以避免 post without body 的异常
+    api deps.google_guava
+    api deps.okhttp
+    api deps.jackson_core
+    api deps.jackson_annotations
+    api deps.jackson_databind
+//    api deps.universal_imageloader
+    api deps.glide
+    api deps.retrofit.converter
+
+}
+

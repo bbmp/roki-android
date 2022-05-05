@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical"
+    android:paddingTop="62dp"
+    android:paddingBottom="62dp"
+    android:gravity="center_horizontal"
+    android:alpha="1"
+    >
+
+    <TextView
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开启自洁"
+        android:textSize="24dp"
+        android:textColor="@color/White"
+         />
+
+    <TextView
+        android:id="@+id/txtOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:gravity="center_horizontal"
+        android:text="此功能持续90分钟高温,"
+        android:lineSpacingExtra="7dp"
+        android:textSize="10sp"
+        android:textColor="#e9a60f"/>
+
+    <TextView
+        android:id="@+id/txtTwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="可将内腔表面的残留油脂碳化，便于打理；"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:textColor="#e9a60f"
+        android:lineSpacingExtra="7dp"
+        android:textSize="10sp"/>
+
+    <TextView
+        android:id="@+id/txtThree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="7dp"
+        android:text="请确认电烤箱内没有食材。"
+        android:textColor="#e9a60f"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/txtConfirmButton"
+        android:layout_width="180dp"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:layout_marginTop="19dp"
+        android:text="确定"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:background="#e9a60f" />
+
+</LinearLayout>

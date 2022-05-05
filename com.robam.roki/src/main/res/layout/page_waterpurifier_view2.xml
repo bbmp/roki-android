@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        >
+
+        <!-- 圆圈数字 -->
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="53dp"
+            android:background="@drawable/shape_white_circular"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="#3DB3D0"
+            android:textSize="16sp" />
+        <!-- 铝棒名称 -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="CTO+PP"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <!-- 铝棒简介 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="2dp"
+        android:lines="3"
+        android:paddingLeft="51dp"
+        android:paddingRight="51dp"
+        android:text="能有效滤除水中的肉眼可见物（泥沙、铁锈、悬浮物等），吸附水中的余氯、异色、异味等。"
+        android:textColor="#ffffff"
+        android:textSize="15sp" />
+
+</LinearLayout>

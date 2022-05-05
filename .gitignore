@@ -1,0 +1,14 @@
+*.iml
+*.iws
+*.ipr
+.idea/
+.gradle/
+local.properties
+*/build/
+build/
+captures/
+*~
+*.swp
+*/dex-cache/*
+.externalNativeBuild/
+com.robam.roki/release/

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mine_background"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/img_topbg"
+        android:gravity="center_vertical">
+        <RelativeLayout
+            android:id="@+id/rl_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="20dp"
+            tools:ignore="RtlSymmetry">
+            <ImageView
+                android:id="@+id/iv_photo"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="30dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/headportrait_wdl" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@+id/iv_photo"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/not_login"
+                    android:textColor="@color/mine_text_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_user_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_or_register"
+                    android:textColor="@color/mine_text_color2"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_edit_info"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/countdown_selector_login"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/edit_info"
+                android:textColor="@drawable/countdown_color_selector" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <com.robam.roki.ui.widget.layout.SettingBar2
+        android:id="@+id/stb_collection"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:bar_leftText="@string/my_collect"
+        app:bar_rightIcon="@drawable/icon_more">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/icon_collection2" />
+    </com.robam.roki.ui.widget.layout.SettingBar2>
+    >
+
+    <com.robam.roki.ui.widget.layout.SettingBar2
+        android:id="@+id/stb_work"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:bar_leftText="@string/my_cook_moments"
+        app:bar_rightIcon="@drawable/icon_more">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/icon_work" />
+    </com.robam.roki.ui.widget.layout.SettingBar2>
+    <com.robam.roki.ui.widget.layout.SettingBar2
+        android:id="@+id/stb_cook_line"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:bar_leftText="@string/my_cook_line"
+        android:visibility="gone"
+        app:bar_rightIcon="@drawable/icon_more" >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/icon_cook_line" />
+    </com.robam.roki.ui.widget.layout.SettingBar2>
+    <com.robam.roki.ui.widget.layout.SettingBar2
+        android:id="@+id/stb_device"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:bar_leftText="@string/my_device"
+        app:bar_rightIcon="@drawable/icon_more" >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/icon_work_1" />
+    </com.robam.roki.ui.widget.layout.SettingBar2>
+
+    <com.robam.roki.ui.widget.layout.SettingBar2
+        android:id="@+id/stb_sale_service"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        app:bar_leftText="@string/my_sale_service"
+        app:bar_rightIcon="@drawable/icon_more" >
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/icon_serve" />
+</com.robam.roki.ui.widget.layout.SettingBar2>
+    <com.robam.roki.ui.widget.layout.SettingBar2
+        android:id="@+id/stb_about"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:bar_leftText="@string/my_about"
+        app:bar_rightIcon="@drawable/icon_more" >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/icon_aboutroki" />
+    </com.robam.roki.ui.widget.layout.SettingBar2>
+    <com.robam.roki.ui.widget.layout.SettingBar2
+        android:id="@+id/stb_setting"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:bar_leftText="@string/my_setting"
+        app:bar_rightIcon="@drawable/icon_more" >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/icon_set" />
+    </com.robam.roki.ui.widget.layout.SettingBar2>
+
+</LinearLayout>

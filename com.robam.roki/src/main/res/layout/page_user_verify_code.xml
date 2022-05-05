@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/hint1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1  输入手机号  >"
+            android:textColor="@color/user_verify_code_hint_text_color_selector"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/hint2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="2  输入验证码  >"
+            android:textColor="@color/user_verify_code_hint_text_color_selector"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/hint3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="3  设置密码"
+            android:textColor="@color/user_verify_code_hint_text_color_selector"
+            android:textSize="13sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/divStep1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/edtPhone"
+                style="@style/common_edit"
+                android:layout_width="match_parent"
+                android:hint="请输入手机" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/divStep2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="验证码短信已发送到"
+                    android:textColor="@color/c01"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="150****2808"
+                    android:textColor="@color/c01"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtCode"
+                style="@style/common_edit"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:hint="请输入短信验证码" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/divStep3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/edtPwd"
+                style="@style/common_edit"
+                android:layout_width="match_parent"
+                android:hint="请输入新密码"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/edtPwd2"
+                style="@style/common_edit"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:hint="再次输入新密码"
+                android:inputType="textPassword" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtConfirm"
+        style="@style/common_button"
+        android:layout_width="match_parent"
+        android:layout_marginTop="18dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:paddingTop="10dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_accept_roki_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/cb_bg_privacy"
+            android:gravity="center"
+            android:padding="5dp"
+            android:scaleX="0.6"
+            android:scaleY="0.6" />
+
+        <TextView
+            android:id="@+id/user_verify_login_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="@string/roki_priviacy_agreement_title" />
+    </LinearLayout>
+
+</LinearLayout>

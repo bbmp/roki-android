@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/oven026_normal_ctrl_view2_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="35dp"
+        android:text="@string/device_steamOvenOne_order_start_time"
+        android:textColor="@color/framework_line"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/oven026_normal_ctrl_view2_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@id/oven026_normal_ctrl_view2_tv"
+        android:text=""
+        android:textColor="@color/Black_65"
+        android:textSize="25sp"/>
+
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scaleType="centerInside"
+        android:src="@mipmap/img_waterpurifiy_filterright_red"
+        />
+
+</RelativeLayout>

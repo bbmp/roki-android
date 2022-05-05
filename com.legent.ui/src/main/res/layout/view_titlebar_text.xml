@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/titlebar_text_style"
+    android:layout_width="wrap_content"
+    android:layout_height="?android:actionBarSize"
+    android:layout_gravity="center"
+    android:text="text" />

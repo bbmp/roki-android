@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="80dp"
+    android:layout_height="80dp">
+    <ImageView
+        android:id="@+id/iv_tell_roki_camera"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_tell_roki_camera" />
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_close"/>
+x
+</RelativeLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/mine_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white" />
+    <com.hjq.bar.TitleBar app:drawableSize="25dp"
+        android:id="@+id/tb_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:barStyle="transparent"
+        android:background="#ffffff"
+        app:titleColor="@color/mine_text_color"
+        app:leftIcon="@mipmap/icon_back_black"
+        app:rightSize="18sp" />
+
+    <ImageView
+        android:id="@+id/ic_about_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerInside"
+        android:layout_marginTop="40dp"
+        android:src="@mipmap/logo_roki" />
+
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="V 1.0"
+        android:textColor="@color/mine_text_color"
+        android:textSize="15sp" />
+    <com.robam.roki.ui.widget.layout.SettingBar
+        android:id="@+id/stb_about_web"
+        android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_height="60dp"
+        app:bar_leftText="@string/robam_web"
+        app:bar_rightText="www.robam.com"
+        />
+    <com.robam.roki.ui.widget.layout.SettingBar
+        android:id="@+id/stb_about_agreement"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:bar_leftText="用户协议"
+        app:bar_rightIcon="@drawable/icon_more"
+       />
+    <com.robam.roki.ui.widget.layout.SettingBar
+        android:id="@+id/stb_about_privacy"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:bar_leftText="隐私政策"
+        app:bar_rightIcon="@drawable/icon_more"
+        />
+    <com.robam.roki.ui.widget.layout.SettingBar
+        android:id="@+id/stb_upload"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:bar_leftText="检查更新"
+        app:bar_rightIcon="@drawable/icon_more"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_about_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:textColor="@color/mine_text_color3"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:text="杭州老板电器股份有限公司\nCopyright by 2011-2021 Roki.All Right Reserved"
+        />
+</LinearLayout>

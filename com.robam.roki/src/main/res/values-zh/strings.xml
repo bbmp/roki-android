@@ -1,0 +1,930 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
+    <string name="app_name">ROKI智能烹饪</string>
+    <string name="roik_automatic_cooking">自动烹饪</string>
+    <string name="home_tab_personal">我</string>
+    <string name="home_tab_ip">达人</string>
+    <string name="home_tab_recipe">美食</string>
+    <string name="home_tab_device_kitchen">我的厨房</string>
+    <string name="home_tab_device">智能</string>
+    <string name="exit_the_program">再按一次返回键退出程序</string>
+    <string name="home_user_login_text">请登录</string>
+    <string name="device_detail_user">已连接的用户</string>
+
+
+    <!--我页面 -->
+    <string name="my_order">我的订单</string>
+
+    <string name="my_trolley_bus">我的购物车</string>
+    <string name="my_food_shopping">食材商城</string>
+    <string name="my_collect">我的收藏</string>
+    <string name="my_cook_moments">我的作品</string>
+    <string name="my_device">厨电管理</string>
+    <string name="my_cook_line">烹饪曲线</string>
+    <string name="my_ip">达人</string>
+    <string name="my_series_detail_title">栏目详情</string>
+    <string name="my_device_detail">厨电详情</string>
+    <string name="my_sale_service">售后服务</string>
+    <string name="my_about">关于ROKI</string>
+    <string name="my_setting">设置</string>
+    <string name="my_account_safe">账号与安全</string>
+    <string name="my_device_kitchen_appliance">已有厨电</string>
+    <string name="my_device_not_purchase_kitchen_appliance">您还没有购买我们的智能厨电</string>
+    <string name="user_login_name">用户名</string>
+    <string name="user_login_pwd">请输入密码</string>
+    <string name="wifi_comm">连接WiFi</string>
+    <string name="wifi_comm_fail">连接失败</string>
+
+
+    <!--左上角分类-->
+    <string name="recipe_class_hot">热门</string>
+    <!--我的收藏 -->
+    <!--晒过的厨艺 -->
+    <!--厨电管理 -->
+    <string name="my_device_delete">删除</string>
+    <string name="my_device_model_number">型号</string>
+    <string name="my_device_numbering">编号</string>
+    <string name="device_num">号</string>
+    <string name="my_device_firmware_version">固件版本</string>
+
+
+    <!--售后服务-->
+    <string name="after_reminding" formatted="true">您可通过下面两种方式</string>
+    <string name="after_remindin_01" formatted="true">享受老板电器会员的专属服务哦~</string>
+    <string name="my_sale_consulting">留言咨询</string>
+    <string name="my_sale_one_key">一键售后</string>
+    <string name="my_sale_one_key_call">一键售后未开通地区可拨打</string>
+    <string name="my_sale_problem">有问题，找小R</string>
+    <string name="my_sale_send">发送</string>
+
+
+    <!--关于ROKI-->
+    <string name="my_about_user_protocol">ROKI用户协议</string>
+    <string name="my_about_roki_user_protocol">ROKI用户协议</string>
+
+
+    <!--美食页面-->
+    <string name="home_stove_recipe_text">灶具菜谱</string>
+    <string name="home_oven_recipe_text">电烤箱菜谱</string>
+    <string name="home_steam_recipe_text">电蒸箱菜谱</string>
+    <string name="home_microwave_recipe_text">微波炉菜谱</string>
+    <string name="home_steam_ovenone_recipe_text">一体机菜谱</string>
+    <string name="home_pot_recipe_text">无人锅菜谱</string>
+    <string name="home_more_recipe">更多菜谱</string>
+
+    <string name="add_device_failure">添加完成</string>
+    <string name="device_finish">完成</string>
+    <string name="device_yi_finish">已完成</string>
+    <string name="device_door_off">门未关，工作暂停</string>
+    <!--device-->
+    <string name="roki_error_no_wifi">无可用WiFi网络，请检查WiFi网络</string>
+    <string name="roki_wifi_pwd_hint">请输入WiFi密码</string>
+    <string name="steam_invalid_error">蒸汽炉已离线</string>
+    <string name="fan_invalid_error">油烟机已离线</string>
+    <string name="steri_invalid_error">消毒柜已离线</string>
+    <string name="steam_oven_invalid_error" tools:ignore="ExtraTranslation">蒸烤一体机已离线</string>
+    <string name="oven_invalid_error">烤箱已离线</string>
+    <string name="stove_invalid_error">电磁灶已离线</string>
+    <string name="stove_off_hint">请手动打开电磁灶</string>
+    <string name="device_Throwable_error">下发指令失败</string>
+    <string name="model">模式</string>
+    <string name="majors">专业</string>
+    <string name="temp">温度</string>
+    <string name="time">时间</string>
+    <string name="minute">分钟</string>
+    <string name="hour_later">小时之后</string>
+    <string name="water">水量</string>
+    <string name="temp_2">双温</string>
+    <string name="control_2">双控</string>
+    <string name="order">预约</string>
+    <string name="one">一</string>
+    <string name="celsius">℃</string>
+    <string name="detail">详情</string>
+    <string name="appointment_time_text">预约时间</string>
+    <string name="start_appointment_text">开始预约</string>
+    <string name="work_time_text">工作时长</string>
+
+    <!--关注动态-->
+    <string name="dynamic_cancel_thumb_up">取消点赞</string>
+    <string name="dynamic_thumb_up">已赞</string>
+    <string name="maternal_and_child_series">母婴系列</string>
+
+    <string name="steamOvenOneRecipe">一体机菜谱</string>
+    <string name="steamOvenOne_name">一体机</string>
+    <string name="child_lock">童锁</string>
+    <string name="remove_child_lock">请先解除童锁</string>
+
+    <!--steamoven-->
+    <string name="steam_oven_chinese">蒸汽炉</string>
+    <!--fan-->
+    <string name="hood_stopworking_hint1">烟机已经停止工作</string>
+    <string name="hood_stopworking_hint2">将挡风板卸下</string>
+    <string name="hood_stopworking_hint3">将里面的油网拿出来清洗</string>
+    <string name="hood_stopworking_hint4">*烟机端长按"照明键"3s恢复正常工作</string>
+    <string name="hood_stopworking_delay">1min后关机</string>
+    <string name="fan8700_oil_purchase">油网小帮手即将上市</string>
+
+    <string name="cannotfinishperform">无法完成上述操作？</string>
+    <string name="redcircleflicker">红圈闪烁中</string>
+    <string name="loading">加载中</string>
+
+
+    <string name="wificonnecttip1">1.首先需要将手机连接到您家里的WIFI热点。</string>
+    <string name="wificonnecttip2">2.若不是你想要的网络，请在手机设置中切换。</string>
+    <string name="wificonnecttip3">3.如果您家里Wi-Fi不需要密码，请不用输入密码，直接确认即可。</string>
+    <string name="wificonnecttip4">4.设备不支持5GWiFi，请关闭路由器5G频段。</string>
+
+    <string name="scandesc">扫描产品上的二维码,以获得控制权。</string>
+    <string name="activeproduct">激活产品需要您的手机连接至WIFI环境。</string>
+    <string name="gotosetting">去设置</string>
+    <string name="search">搜索</string>
+    <string name="search_device">搜索产品</string>
+    <string name="cantfinddevice">搜不到您要的型号</string>
+    <string name="cantfinddevice2"><u>搜不到您要的型号？</u></string>
+
+    <!--菜谱分类-->
+    <string name="origin">来源</string>
+    <string name="electrickitchen">厨电</string>
+    <string name="flavor">口味</string>
+    <string name="reset">重置</string>
+    <string name="next_recipe_time">没有更早期啦</string>
+    <string name="up_recipe_time">已是最新期</string>
+    <string name="waterpurifier_people">设置家庭人数</string>
+    <string name="waterpurifier_text_desc">原水水质:</string>
+    <string name="water_discont_hint">滤芯净化已失效，为了您的饮水健康，请及时购买更换滤芯</string>
+    <string name="water_discont_hint_new">滤芯净化已失效，为了您的饮水健康，请及时购买更换滤芯。</string>
+    <string name="water_purifiy_install_title">滤芯换装及复位</string>
+    <string name="water_purifier_install_text1">当您购买的反渗透净水机使用一段时间，需要换反渗透膜时，
+        请您与销售商，特约维修点或直接与我们的售后服务中心联系，由专业服务人员为您更换。如您要自行更换，
+        请严格按照以下步骤操作：
+    </string>
+    <string name="water_purifiy_install_text2">1.此过程中通常会有水溢出，请预备好水盆或毛巾等
+    清洁用具。
+    </string>
+    <string name="water_purifiy_install_text3">2.密封圈不能损坏或丢失，否则会严重漏水。同时在旋紧滤芯
+         时尽量避免密封圈移位或者变形。
+    </string>
+    <string name="water_purifiy_install_text4">3.更换过程中，应尽量避免拉扯到其他管线，以免漏水。
+    </string>
+    <string name="water_purifiy_install_text5">4.安装新的滤芯之后的冲洗是为了清洗滤芯和管路，此过程中
+         ，出水会呈灰黑色或气泡状，这是正常现象。
+    </string>
+    <!--安装第二个界面-->
+    <string name="waterpurifier_install_text1">1.关闭电源，让主机停水2分钟之后，双手拿住主机前面板左右两边，
+        向外取出主机前面板；
+    </string>
+    <string name="waterpurifier_install_text2">2.按对应提示，将需要更换的滤芯拉斜至45度位置；
+    </string>
+    <string name="waterpurifier_install_text3">3.逆时针旋转，将滤芯拆除，并倒清余水；
+    </string>
+    <string name="waterpurifier_install_text4">4.将对应的新滤芯插入，并顺时针旋紧，直至小三角标志对应
+        为止，并将安装好的滤芯推至原位；
+    </string>
+    <string name="waterpurifier_install_text5">5.装上主机前面板；
+    </string>
+    <string name="waterpurifier_install_text6">6.长按“复位”键，对应滤芯指示灯由红色恢复为蓝色，表示
+        滤芯已复位；
+    </string>
+    <string name="waterpurifier_install_text7">7.复位完后，按“冲洗”键，对新滤芯进行安装冲洗。
+    </string>
+    <string name="waterpurifier_install_text8">8.冲洗结束后，请打开净水龙头对整机水路进行清洗，此过程
+        约10—15min;待净水龙头出水清澈为止；至此，换芯完成。
+    </string>
+    <string name="RO1">过滤精度达0.0001um,能将水中所含的杂质如农药、细菌、病毒、无机盐、重金属（砷、铅、镉等）、有机物（三氯甲烷、四氯化碳）等有害物质几乎全部截留排除。</string>
+    <string name="waterpurifiy_filter_timeout">滤芯即将到期，为了您的饮水健康，请尽快购买滤芯。</string>
+    <string name="ro_3_4">* RO双核反渗透滤芯(3.4)须成对购买更换</string>
+    <string name="micro_cantrol">远程遥控</string>
+
+    <string name="add_buy">已经加入到购物车!</string>
+    <string name="cancel_buy">已经从购物车中移除!</string>
+
+
+    <!--烤，蒸，微，开始烹饪-->
+    <string name="device_Throwable_text">下发指令失败，请检查设备</string>
+    <string name="device_exp_model">039烤箱不支持EXP模式</string>
+    <string name="device_Failure_text">指令下发失败</string>
+    <string name="device_communication_Failure_text">设备通讯异常</string>
+    <string name="device_oven_control">进入远程操控</string>
+    <string name="device_disconnect_tip">与设备断开连接</string>
+    <string name="device_oven_error">烤箱故障</string>
+    <string name="device_steam_error">蒸汽炉故障</string>
+    <string name="device_door_error">门未关好</string>
+    <string name="device_lack">水箱缺水</string>
+    <string name="device_oven_assist">辅助</string>
+    <string name="device_oven_expert">专家\n模式</string>
+    <string name="share_copy_url">链接已复制</string>
+    <string name="confirm">确定</string>
+    <string name="healthy_cooking">健康烹饪</string>
+    <string name="over_heated">过热</string>
+    <string name="dry_cleaning">干烧预警</string>
+    <string name="pot_disconnect_hint1">温控锅已断开连接</string>
+    <string name="pot_disconnect_hint2">连接后才可检测温度</string>
+    <!--厨源-->
+    <!--烤箱的模式-->
+    <!--蒸箱228-->
+    <string name="nomode">--</string>
+    <string name="freshsteam">鲜嫩蒸</string>
+    <string name="nutritive">营养蒸</string>
+    <string name="strongsteam">强力蒸</string>
+    <string name="fast_steam_slow_steam">快蒸慢炖</string>
+    <string name="keeptempture">保温</string>
+    <string name="unfreeze">解冻</string>
+    <string name="ferment">发酵</string>
+    <string name="sterilization">杀菌</string>
+    <string name="clean">除垢</string>
+    <string name="dry">干燥</string>
+    <string name="installtank">请装好水箱</string>
+    <string name="networkwrong">设备已离线</string>
+    <string name="opentanksuccess">水箱已弹出</string>
+    <string name="freshsteam_tip">适宜一些鲜嫩食材，比如海鲜类(虾、鱼)、水蒸蛋等；</string>
+    <string name="nutritive_tip">适宜大部分食材，比如大部分肉类、鱼类、鸡肉、胡萝卜、土豆等</string>
+    <string name="strongsteam_tip">适宜一些较厚、难以成熟的食材，比如蹄髈、腊肉、排骨、鸭肉等</string>
+    <string name="faststeam_tip">适宜快速蒸制或者慢速炖煮汤类食物，隔气蒸炖美味鲜。请使用标配的陶瓷器皿，放置于蒸发皿正上方。</string>
+    <string name="keeptemture_tip">可防止烹饪出的菜肴或糕点冷掉，建议保温不超过一个半小时以免影响口感。</string>
+    <string name="unfreeze_tip">适合对冷冻的鱼类、肉类、禽类进行解冻。</string>
+    <string name="fermentsteam_tip">盛面团的容器盖上保鲜膜放入蒸盘，盘底放200ml清水或热水。</string>
+    <string name="sterilization_tip">针对器皿如奶瓶，杀菌模式，请保持水箱水量足够。</string>
+
+    <!--设备公共-->
+    <string name="device_alarm_E0">E0</string>
+    <string name="device_alarm_E1">E1</string>
+    <string name="device_alarm_E2">E2</string>
+    <string name="device_alarm_E3">E3</string>
+    <string name="device_alarm_E4">E4</string>
+    <string name="device_alarm_E5">E5</string>
+    <string name="device_alarm_E6">E6</string>
+    <string name="device_alarm_E7">E7</string>
+    <string name="device_alarm_E8">E8</string>
+    <string name="device_alarm_E9">E9</string>
+    <string name="device_alarm_ED">ED</string>
+    <string name="device_alarm">报警</string>
+    <string name="device_alarm_status">请先解除报警</string>
+    <string name="device_start">开始</string>
+    <string name="device_more">更多</string>
+    <string name="device_alarm_E9_code">废水箱水满</string>
+    <string name="device_electronic_instruction">电子说明书</string>
+    <string name="device_c906_alarm">请先解除警报</string>
+    <string name="device_preheating">预热中</string>
+    <string name="device_power_saving_mode">省电模式</string>
+    <string name="device_not_offline_text">设备与手机断开连接，请检查设备</string>
+    <string name="device_remote_control">远程遥控</string>
+    <string name="device_smart_throttling">智能节流</string>
+    <string name="device_close">已关闭</string>
+    <string name="device_open">已开启</string>
+    <string name="open">开启</string>
+    <string name="device_open_below">请开启下方的</string>
+    <string name="device_start_cooking">开始烹饪</string>
+    <string name="device_preheat">预热</string>
+    <string name="device_mode_kuaire">快热模式</string>
+    <string name="device_mode_fengpeikao">风焙烤模式</string>
+    <string name="device_mode_peikao">焙烤模式</string>
+    <string name="device_mode_dijiare">底加热模式</string>
+    <string name="device_mode_jiedong">解冻模式</string>
+    <string name="device_mode_fengshankao">风扇烤模式</string>
+    <string name="device_connected_user_account">已连接用户</string>
+    <string name="device_firmware_version">固件版本</string>
+    <string name="device_coding">编码</string>
+    <string name="device_model">型号</string>
+    <string name="device_dc">品类</string>
+    <string name="device_rika_oil_clean">油网拆卸</string>
+    <string name="device_rika_oil_Installation_disassembly">油网安装/拆卸</string>
+    <string name="device_rika_oil_maintenance_and_maintenance">维修与保养</string>
+    <string name="device_slide_lock_text">滑动解锁</string>
+    <string name="device_close_text">已关机</string>
+    <string name="device_lock_text">已锁定</string>
+    <string name="device_off">关机</string>
+    <string name="device_off_desc">关机会结束当前工作</string>
+    <string name="fan_dc_name">油烟机</string>
+    <string name="stove_dc_name">灶具</string>
+    <string name="gas_dc_name">燃气传感器</string>
+    <string name="steam_dc_name">蒸汽炉</string>
+    <string name="microwave_dc_name">微波炉</string>
+    <string name="oven_dc_name">电烤箱</string>
+    <string name="steamOvenOne_dc_name">蒸烤一体机</string>
+    <string name="waterPurifier_dc_name">净水机</string>
+    <string name="rika_zh_name">集成灶</string>
+    <string name="sterilizer_dc_name">消毒柜</string>
+    <string name="dishWash_dc_name">洗碗机</string>
+    <string name="pot_dc_name">温控锅</string>
+
+
+    <string name="delete_fali">删除失败</string>
+    <string name="ok_btn">确定</string>
+    <string name="i_know">我知道了</string>
+    <string name="ok_btn_in">确定进入</string>
+    <string name="can_btn">取消</string>
+    <string name="finish_btn">结束</string>
+    <string name="ok_sale_service">拨打售后</string>
+    <string name="can_good">好</string>
+    <string name="title_dele_device">确定删除此设备？</string>
+    <string name="close_work">结束工作</string>
+    <string name="stove_not_open_fire">该炉头未开火</string>
+    <string name="close">结束</string>
+    <string name="device_rikax_close">正在强制消毒，无法操控设备~~</string>
+    <string name="is_close_work">确定结束当前工作？</string>
+    <string name="is_close_work_content_15">为了消除工作中产生的臭氧，将继续工作15分钟，保障您的健康安全！~</string>
+    <string name="bask_in_cooking">晒厨艺</string>
+    <string name="refused_to">拒绝</string>
+    <string name="cooking_finish">烹饪完成</string>
+    <string name="cooking_complete_content">烹饪完成,晒厨艺给大伙瞧瞧？</string>
+    <string name="device_alarm_ststus">报警状态禁止运行</string>
+    <string name="open_device">请先开启设备</string>
+    <string name="device_connected">产品已离线</string>
+    <string name="not_set">不能设置该项</string>
+    <string name="device_new_connected">产品已离线，请检查网络</string>
+    <string name="device_water_good">请装好水箱</string>
+    <string name="is_delete_title">删除</string>
+    <string name="is_delete_content">确定删除？</string>
+    <string name="add_fan">请先添加油烟机</string>
+    <string name="wifi_network_toast">温馨提示：</string>
+    <string name="is_delete_toast">提示</string>
+    <string name="device_stop">暂停中</string>
+    <string name="device_recipe_not_line">我的专属菜谱暂未上线</string>
+    <string name="device_in_remote_control">进入远程操控</string>
+    <string name="device_disconnect">与设备断开连接</string>
+    <string name="my_exclusive">我的专属</string>
+    <string name="collect_recipes">收藏菜谱</string>
+    <string name="for_rest_time">剩余时间</string>
+    <string name="water_shortage_alarm">缺水警报</string>
+    <string name="not_more_recipes">无更多菜谱</string>
+    <string name="not_name">无名称</string>
+    <string name="num">数量</string>
+    <string name="please_look_forward_opening">即将开放，敬请期待</string>
+    <string name="device_command_success">指令下发成功</string>
+    <string name="device_setting_success">指令设置成功</string>
+    <string name="device_setting_failed">指令设置失败</string>
+    <string name="device_without_setting_failed">设定失败</string>
+    <string name="device_without_setting_colo">关闭设定</string>
+    <string name="device_without_setting_open">开启设定</string>
+    <string name="device_oil_detection_reset">重置油网</string>
+    <string name="oil_cup_reset">重置油杯</string>
+    <string name="device_oil_detection_reset_desc">请确认油网已经更换或被清洗，确定后将重置油网洁净度。</string>
+    <string name="device_oil_cup_reset_desc">请确认油杯已经更换或被清洗，确定后将重置油杯洁净度。</string>
+    <string name="device_is_lock">设备已锁，请先解锁</string>
+    <string name="device_content">设备连接</string>
+
+    <!--煲汤提醒-->
+    <string name="fan_Know">知道了</string>
+
+    <!--计时提醒-->
+    <string name="device_time_remind_desc">计时提醒时间已到，请到灶具前查看并关火</string>
+
+    <!--电烤箱-->
+
+    <string name="device_oven026_name">烤箱026</string>
+    <string name="device_oven_failure">烤箱故障E</string>
+    <string name="device_oven_model_niupai">牛排</string>
+    <string name="device_oven_model_mianbao">面包</string>
+    <string name="device_oven_model_binggan">饼干</string>
+    <string name="device_oven_model_jichi">鸡翅</string>
+    <string name="device_oven_model_dangao">蛋糕</string>
+    <string name="device_oven_model_pisa">披萨</string>
+    <string name="device_oven_model_xia">虾</string>
+    <string name="device_oven_model_yu">鱼</string>
+    <string name="device_oven_model_hongshu">红薯</string>
+    <string name="device_oven_model_yumi">玉米</string>
+    <string name="device_oven_model_wuhuarou">五花肉</string>
+    <string name="device_oven_model_haixian">海鲜</string>
+    <string name="device_oven_model_experts">专家模式</string>
+    <string name="device_oven_name_recipe">电烤箱菜谱</string>
+
+
+    <!--电烤箱报警-->
+    <string name="device_oven_name">电烤箱</string>
+    <string name="device_oven_name2">电烤箱</string>
+    <string name="device_alarm_oven039_E1_content">传感器短路，请关闭电烤箱并申请售后服务。</string>
+    <string name="device_alarm_oven039_E2_content">传感器开路，请关闭电烤箱并申请售后服务。</string>
+    <string name="device_alarm_oven039_E3_content">加热故障，请关闭电烤箱并申请售后服务。</string>
+    <string name="device_alarm_oven026_E3_content">加热故障，请关闭电烤箱并申请售后服务。</string>
+    <string name="device_alarm_oven026_E5_content">传感器故障，请关闭电烤箱并申请售后服务。</string>
+    <string name="device_alarm_oven026_E6_content">通讯故障，请关闭电烤箱并申请售后服务。</string>
+    <string name="device_alarm_oven028_fan_content">风机故障，请关闭电烤箱并申请售后服务！</string>
+    <!--净水机报警-->
+    <string name="device_water_name">净水机</string>
+    <string name="device_water_tds">净水TDS值</string>
+    <string name="device_water_filter_life">滤芯寿命</string>
+    <string name="device_water_drinking_water_today">今日饮水量</string>
+    <string name="device_water_view_all_the_data">查看所有的数据</string>
+    <string name="device_water_keep_healthy_and_drink_water">为了保证健康，每人每天至少应饮水1500ml</string>
+    <string name="device_water_data_is_for_reference_only">数据仅供参考</string>
+    <string name="device_water_saving_mode_content">开启省电模式后，当净水机30分钟不工作，系统将自动关机；当识别到水龙头打开用水时，系统会自动开机制水</string>
+    <string name="device_water_saving_smart_throttling">当连续制纯水达到设定的时间后，设备将启动智能节流，自动停止制水，并提示故障。</string>
+    <string name="device_water_reinstate_content">如需恢复制水，请短按复位键“ </string>
+    <string name="device_alarm_filter_due">滤芯即将到期</string>
+    <string name="device_alarm_water_E1_content">未检测到水源，请检查是否开启净水机进水阀。</string>
+    <string name="device_alarm_water_E2_content">检测到净水机附近有漏水，已启动漏水保护。</string>
+    <string name="device_alarm_water_E3_content">检测到水龙头超长时间出水，已启动智能节流。短按复位键恢复制水。</string>
+    <string name="device_alarm_water_filter_due_content">滤芯寿命还剩10%，为了您的饮水健康，请提前购买滤芯。</string>
+    <!--微波炉报警-->
+    <string name="device_microwave_name">微波炉</string>
+    <string name="device_alarm_microwave_err_content">变频器故障，请关闭微波炉并申请售后服务。</string>
+    <!--微波炉-->
+    <string name="device_microwave_to_taste">去味</string>
+    <string name="device_microwave_recently_used">最近使用</string>
+    <string name="device_microwave_other_features">其他功能</string>
+    <string name="device_microwave_rapid_heating">快速加热</string>
+    <string name="device_microwave_heijiaoniupai">黑椒牛排</string>
+    <string name="device_microwave_xiangkaoquanji">香烤全鸡</string>
+    <string name="device_microwave_fengweirouchuan">风味肉串</string>
+    <string name="device_microwave_how_to_cook">煮饭</string>
+    <string name="device_microwave_cook_porridge">煮粥</string>
+    <string name="device_microwave_soup">煲汤</string>
+    <string name="device_microwave_zaocanmianbao">早餐面包</string>
+    <string name="device_microwave_chaoshishu">炒时蔬</string>
+    <string name="device_microwave_steamed_fish">蒸鱼</string>
+    <!--消毒柜报警-->
+    <string name="device_sterilizer_name">消毒柜</string>
+    <string name="device_steri_alarm_sensor_content">传感器故障，请关闭消毒柜并申请售后服务。</string>
+    <string name="device_steri_alarm_fault_content">通讯故障，请关闭消毒柜并申请售后服务。</string>
+
+    <string name="device_alarm_ultraviolet_E2">温度传感器故障，请关闭消毒柜并申请售后服务。</string>
+
+
+    <!--蒸汽炉-->
+    <string name="device_steam_30min_high_temp">即将开启30分钟的高温蒸汽杀菌模式</string>
+    <string name="device_steam075_name">鱼</string>
+    <string name="device_steam_model_yulei">鱼类</string>
+    <string name="device_steam_model_danlei">蛋类</string>
+    <string name="device_steam_model_tijin">蹄筋</string>
+    <string name="device_steam_model_shucai">蔬菜</string>
+    <string name="device_steam_model_roulei">肉类</string>
+    <string name="device_steam_model_mianshi">面食</string>
+    <string name="device_steam_model_suzheng">速蒸</string>
+    <string name="device_steam_model_mifan">米饭</string>
+    <string name="device_steam_model_shajun">杀菌</string>
+    <string name="device_steam_model_gaodian">糕点</string>
+    <string name="device_steam_model_miantiao">面条</string>
+    <string name="device_steam_model_shuizhengdan">水蒸蛋</string>
+    <string name="device_steam_model_qianglizheng">强力蒸</string>
+    <string name="device_steam_model_zidingyi">自定义</string>
+    <string name="device_working_not_open_door_prevent_burns">工作中不能打开门，以防蒸汽烫伤</string>
+    <string name="device_steam_failure">蒸箱故障</string>
+    <string name="device_steam_self_cleaning">自洁</string>
+
+
+    <!--蒸汽炉报警-->
+    <string name="device_steam_name">蒸汽炉</string>
+    <string name="device_alarm_water_shortage">缺水</string>
+    <string name="device_alarm_water_out">水箱已弹出</string>
+    <string name="device_alarm_water_open">水箱已开启</string>
+    <string name="device_alarm_water_shortage_content">水箱缺水,请加水</string>
+    <string name="device_alarm_heat_content">加热故障,请关闭蒸汽炉并申请售后服务。</string>
+    <string name="device_alarm_sensor_content">传感器故障,请关闭蒸汽炉并申请售后服务。</string>
+    <string name="device_alarm_fault_content">通信故障,请关闭蒸汽炉并申请售后服务。</string>
+    <string name="device_alarm_gating_content">门未关，请关好机门。</string>
+    <string name="device_alarm_close_content">请先解除报警</string>
+    <string name="device_water">水箱</string>
+    <string name="device_alarm_fengji_content">风机故障,请关闭蒸汽炉并申请售后服务。</string>
+    <string name="device_alarm_heat228_content">识别到温度异常，已启动温度保护，请尝试先关机再开机。</string>
+
+    <!--灶具报警-->
+    <string name="device_stove_name">灶具</string>
+    <string name="device_alarm_stove_9w70_E0_content">内部错误，请关闭灶具并申请售后服务。</string>
+    <string name="device_alarm_stove_9w70_E2_content">IGBT过热保护，请关闭灶具并稍后使用。</string>
+    <string name="device_alarm_stove_9w70_E3_content">过电压保护，请关闭灶具并稍后使用。</string>
+    <string name="device_alarm_stove_9w70_E4_content">低电压保护，请关闭灶具并稍后使用。</string>
+    <string name="device_alarm_stove_9w70_E5_content">炉面传感器开路或短路保护，请关闭灶具并稍后使用。</string>
+    <string name="device_alarm_stove_9w70_E6_content">IGBT传感器开路或短路保护，请关闭灶具并稍后使用。</string>
+    <string name="device_alarm_stove_9w70_E7_content">炉面传感器失效保护，请关闭灶具并稍后使用。</string>
+    <string name="device_alarm_stove_9w70_ED_content">通讯故障，请关闭灶具并申请售后服务。</string>
+
+    <string name="device_alarm_stove_9b39_E1_content">点火异常，请检查气源并重新点火。</string>
+    <string name="device_alarm_stove_9b39_E2_content">意外熄火，请检查气源并重新点火。</string>
+    <string name="device_alarm_stove_9b39_E3_content">调节阀故障，请关闭灶具并申请售后服务。</string>
+    <string name="device_alarm_stove_9b39_E4_content">热电偶故障，请关闭灶具并申请售后服务。</string>
+    <string name="device_alarm_stove_9b39_E7_content">电磁阀故障，请关闭灶具并申请售后服务。</string>
+    <string name="device_alarm_stove_9b39_E8_content">调节阀和电磁阀同时故障，请关闭灶具并申请售后服务。</string>
+
+    <string name="device_alarm_stove_9b37_E2_content">意外熄火，请检查气源并重新点火。</string>
+    <string name="device_alarm_stove_9b37_E3_content">主熄火电路故障，请关闭灶具并申请售后服务。</string>
+    <string name="device_alarm_stove_9b37_E4_content">热电偶故障，请关闭灶具并申请售后服务。</string>
+    <string name="device_alarm_stove_9b37_E5_content">副线圈故障，请关闭灶具并申请售后服务。</string>
+
+    <!--C906蒸烤一体机-->
+
+
+    <string name="device_steamOvenOne_time_text">时间</string>
+    <string name="device_steamOvenOne_temp_text">温度</string>
+    <string name="device_steamOvenOne_up_temp_text">上温度</string>
+    <string name="device_steamOvenOne_down_temp_text">下温度</string>
+    <string name="device_steamOvenOne_model_text">模式</string>
+    <string name="device_steamOvenOne_water_filled_with_water">请确认水箱加满水</string>
+    <string name="device_steamOvenOne_order_start_time">预约开始时间</string>
+
+
+    <!--辅助-->
+    <!--<string name="device_steamOvenOne_model_name">辅助</string>-->
+    <string name="device_steamOvenOne_name_fuzhu">辅助</string>
+    <string name="device_steamOvenOne_name_jiedong">解冻</string>
+    <string name="device_steamOvenOne_name_shajun">蒸汽杀菌</string>
+    <string name="device_steamOvenOne_describe_jiedong">尤其适合禽类和肉类的解冻。</string>
+    <string name="device_steamOvenOne_describe_shajun">针对耐高温器皿进行高温杀菌</string>
+    <!--蒸-->
+    <string name="device_steamOvenOne_zheng">蒸</string>
+    <string name="device_steamOvenOne_name_faXiao">发酵</string>
+    <string name="device_steamOvenOne_name_yingYangZheng">营养蒸</string>
+    <string name="device_steamOvenOne_name_xianNenZheng">鲜嫩蒸</string>
+    <string name="device_steamOvenOne_name_gaoWenZhen">高温蒸</string>
+    <string name="device_steamOvenOne_name_qiangLiZheng">强力蒸</string>
+
+    <string name="device_steamOvenOne_describe_faXiao">适用于面团的发酵</string>
+    <string name="device_steamOvenOne_describe_yingYangZheng">用于对日常蔬菜、鱼类等食材进行蒸制，较好的保留营养。</string>
+    <string name="device_steamOvenOne_describe_xianNenZheng">适宜一些鲜嫩食材，比如海鲜类（虾，鱼）水蒸蛋等。</string>
+    <string name="device_steamOvenOne_describe_gaoWenZhen">尤其对蹄筋、蹄膀等较厚食物有较好的效果。</string>
+    <!--烤-->
+    <string name="device_steamOvenOne_kao">烤</string>
+    <string name="device_steamOvenOne_name_kuaisuyure">快速预热</string>
+    <string name="device_steamOvenOne_name_kuaire">快热</string>
+    <string name="device_steamOvenOne_name_fengpeikao">风焙烤</string>
+    <string name="device_steamOvenOne_name_peikao">焙烤</string>
+    <string name="device_steamOvenOne_name_fengshankao">风扇烤</string>
+    <string name="device_steamOvenOne_name_kaoshao">烤烧</string>
+    <string name="device_steamOvenOne_name_qiangshaokao">强烤烧</string>
+    <string name="device_steamOvenOne_name_jiankao">煎烤</string>
+    <string name="device_steamOvenOne_name_dijiare">底加热</string>
+    <string name="device_steamOvenOne_name_exp">双温双控</string>
+    <string name="device_steamOvenOne_name_guoshuhonggan">果蔬烘干</string>
+    <string name="device_steamOvenOne_name_baowen">保温</string>
+
+    <string name="device_steamOvenOne_describe_kuaisuyure">适用于烘焙糕点前的预热，速度较快。</string>
+    <string name="device_steamOvenOne_describe_kuaire">快热模式适合烤蛋挞、玉米、葱油饼。</string>
+    <string name="device_steamOvenOne_describe_fengpeikao">风焙烤模式适合烤一些成品食物，如：肉串、薯条。</string>
+    <string name="device_steamOvenOne_describe_peikao">焙烤模式特别适合烘焙，主要烤蛋糕、饼干、奶黄包。</string>
+    <string name="device_steamOvenOne_describe_fengshankao">风扇烤适合烤鸭，烤鸡，也适合烤牛排、猪排、五花肉、培根、翅中、鸡腿。</string>
+    <string name="device_steamOvenOne_describe_kaoshao">烤烧模式适合烤猪排、肉串、香肠、翅根。</string>
+    <string name="device_steamOvenOne_describe_qiangshaokao">强烤烧功能强大，适合烤：牛排、香肠、培根、鸡肉、翅中、翅根、鸡腿、肉串、烤鱼。</string>
+    <string name="device_steamOvenOne_describe_jiankao">用于烹饪需要从下方大量加热的披萨或菜式，会使底部焦脆，外表松软。</string>
+    <string name="device_steamOvenOne_describe_dijiare">适合加热餐点、燉干汤汁、制作果酱，也适合烘烤浅色糕点。</string>
+    <string name="device_steamOvenOne_describe_exp">该功能可自行控制上下层加热温度，满足客户多样化烘烤及口感。</string>
+    <string name="device_steamOvenOne_describe_guoshuhonggan">适合将切片果蔬中的水分烘干。</string>
+    <string name="device_steamOvenOne_describe_baowen">可防止烹饪出的菜肴或糕点冷掉，建议保温不超过一个半小时以免影响口感。</string>
+    <!--其他-->
+
+    <string name="device_steamOvenOne_name_chugou">除垢</string>
+    <string name="device_steamOvenOne_name_model_not_content">此模式不允许操作</string>
+    <string name="device_steamOvenOne_name_ganzao">干燥</string>
+    <string name="device_steamOvenOne_name_clean">清洁</string>
+
+
+    <string name="c906_other_step_one">1</string>
+    <string name="c906_other_step_two">2</string>
+    <string name="c906_other_step_there">3</string>
+
+    <string name="c906_other_working">正在工作中</string>
+    <string name="device_c906_model_stop_not">不允许操作</string>
+    <!--烤蒸一体机报警部分-->
+    <string name="device_steamOvenOne_name">一体机</string>
+    <string name="device_steamOvenOne_warm_tips">提示</string>
+    <string name="device_alarm_c906_temp_sensor_content">温度传感器故障，请关闭一体机并申请售后服务</string>
+    <string name="device_alarm_c906_heat_elimination_fan_content">风机故障，请关闭一体机并申请售后服务。</string>
+    <string name="device_alarm_c906_temp_unusual_content">当前温度过高，请打开门冷却后再开始。</string>
+    <string name="device_alarm_c906_content">无法开始工作，请移至产品端进行操作。</string>
+    <string name="device_c906_yiyi">- -</string>
+
+
+    <string name="title_leave_factory">恢复出厂设置</string>
+    <string name="device_default_leave_factory_setting">恢复默认设置</string>
+    <string name="regain_leave_factory_setting">确认恢复默认设置</string>
+    <string name="is_stop_cook_recipe_out">结束烹饪</string>
+    <string name="recipe_finish_work_context">结束自动烹饪将会关闭所有的产品哦</string>
+    <string name="user_out_app">确定退出当前帐户？</string>
+    <string name="user_Whether_not_login">您还未登录，快去登录吧~</string>
+
+    <!--消毒柜826-->
+    <string name="device_sterilizer_text">消毒中</string>
+    <string name="device_sterilizer_clean_keeping_text">保洁中</string>
+    <string name="device_sterilizer_rapid_sterilize_text">快洁</string>
+    <string name="device_sterilizer_rapid_sterilize_center_text">快洁中</string>
+    <string name="device_sterilizer_stoving">烘干</string>
+    <string name="device_sterilizer_stoving_text">烘干中</string>
+    <string name="device_sterilizer_warm_dish_text">暖碟</string>
+    <string name="device_sterilizer_warm_dish_center_text">暖碟中...</string>
+    <string name="device_sterilizer">消毒</string>
+    <string name="device_sterilizer_yuyue">预约计时中</string>
+    <string name="device_sterilizer_open_Intelligent_detection">已开启智能监测...</string>
+    <string name="device_sterilizer_Intelligent_detection">智能监测...</string>
+    <string name="device_sterilizer_open">已开启</string>
+    <string name="device_sterilizer_Induction_sterilization">感应杀菌</string>
+    <string name="device_sterilizer_Induction_center_sterilization">感应杀菌中</string>
+    <string name="device_sterilizer_fast_clean">快洁中</string>
+    <string name="device_intelligent_setting">智能设定</string>
+    <string name="device_sterilizer_finished">已结束</string>
+    <string name="device_sterilizer_succeed">设置成功</string>
+    <string name="device_sterilizer_recover_succeed">恢复成功</string>
+    <string name="device_sterilizer_slide_to_unlock">滑动解锁</string>
+    <string name="fan_oil_cup">油杯状态</string>
+    <string name="device_off_content">关机会结束当前工作。</string>
+
+    <!--RIKA-->
+    <string name="rika_fan_air_volume">烟机风量</string>
+    <string name="rika_oil_detection">油网检测</string>
+    <string name="rika_oil_hot_oil">健康热油</string>
+    <string name="rika_dry_cleaning">防干烧</string>
+    <string name="rika_fan_stove_staem_linkage">烟灶蒸联动</string>
+    <string name="rika_fan_stove_steri_linkage">烟灶联动</string>
+    <string name="rika_appointment_steri">预约消毒</string>
+    <string name="rika_finish_work">后完成工作</string>
+    <string name="rika_off_work">关闭RIKA</string>
+    <string name="off_device">关机</string>
+    <string name="rika_off_work_steam_desc">确定关闭RIKA烟机和电蒸箱部分？灶具无法远程关火，请至厨房自行关闭。</string>
+    <string name="rika_off_work_sterilizer_desc">确定关闭RIKA烟机和消毒柜部分？灶具无法远程关火，请至厨房自行关闭。</string>
+    <string name="rika_off_work_steam_oven_one_desc">确定关闭RIKA烟机和蒸烤一体机部分？灶具无法远程关火，请至厨房自行关闭。</string>
+    <string name="rika_fan_stove_staem_oven_linkage">烟蒸烤联动</string>
+    <string name="model_gao_wen_zheng">高温蒸</string>
+    <string name="model_bei_pei_kao">风焙烤</string>
+    <string name="model_jia_shi_kao">加湿烤</string>
+    <string name="model_gan_zao">干燥</string>
+
+    <string name="on_sunday">周日</string>
+    <string name="on_saturday">周六</string>
+    <string name="on_fridays">周五</string>
+    <string name="on_thursdays">周四</string>
+    <string name="on_wednesday">周三</string>
+    <string name="on_tuesday">周二</string>
+    <string name="on_monday">周一</string>
+
+    <string name="recipe_auto_cook_finish">烹饪完成</string>
+    <string name="recipe_auto_cook_finish_txt"> 退出自动烹饪，开始享受美食吧。</string>
+    <string name="recipe_auto_fire_tips">请在灶具上开火</string>
+    <string name="recipe_auto_fire_tips_content_left">继续烹饪，请开启左边炉头火力</string>
+    <string name="recipe_auto_fire_tips_content_right">继续烹饪，请开启右边炉头火力</string>
+
+
+    <string name="recipe_auto_steptonext">切换步骤</string>
+    <string name="recipe_auto_steptonext_context">切换后当前步骤将提前结束可能会影响烹饪的效果哦</string>
+    <string name="recipe_auto_enter">确定进入</string>
+    <string name="recipe_auto_cannel">取消</string>
+    <!--厨电页面-->
+    <!--搜索页面-->
+    <string name="home_search_title_recipe">菜谱</string>
+
+    <string name="device_recipe_name">菜谱名称</string>
+    <string name="device_multi_step">多段步骤</string>
+    <string name="device_add_multi_step">添加多段步骤 +</string>
+
+    <!--联网失败页面提示语-->
+    <string name="page_wifi_connect_fail_1">1.请确保您输入的Wi-Fi密码是正确的;</string>
+    <string name="page_wifi_connect_fail_2">2.可能是路由器信号不佳，查看手机是否可在此Wi-Fi环境下上网;</string>
+    <string name="page_wifi_connect_fail_3">3.若以上均无问题，可能是您的路由器型号暂不支持本产品的连接，请联系我们的售后;</string>
+    <string name="page_wifi_connect_fail_4">4.若已扫描二维码但无法连接，可能是网络问题，请保持网络顺畅重新扫描。</string>
+    <string name="page_wifi_connect_fail_5">5.连接了5G频段WI-FI，请关闭路由器5G频段;</string>
+    <string name="hint_pwd">请输入您的WiFi密码</string>
+
+    <!--登录及微信-->
+    <string name="weixin_login_dy_pwd">动态密码</string>
+    <string name="weixin_login_verification_code">验证码</string>
+    <string name="weixin_login_regain">重获</string>
+    <string name="weixin_login_send_msg">已发送，请及时查收</string>
+    <string name="weixin_login_phone_num_not_null">手机号码不能为空</string>
+    <string name="weixin_login_mismatch">不匹配</string>
+    <string name="weixin_login_not_phone_num">无效的手机号码</string>
+    <string name="weixin_login_please_enter">请输入</string>
+    <string name="weixin_login_acquiring">获取</string>
+    <string name="weixin_login_not_installed_client">您还未安装微信客户端</string>
+    <string name="login_unsupported_phone_format">不支持的手机格式</string>
+    <string name="login_pwd_is_null">未填写密码</string>
+    <string name="roki_cooking">ROKI智能烹饪</string>
+    <!--我-->
+    <string name="robam_web">公司官网</string>
+
+    <string name="fan_remind_timing">计时提醒</string>
+    <string name="fan_kitchen_knowledge">厨房知识</string>
+    <string name="device_intellectual_products">智能产品</string>
+
+    <string name="fan_dialog_setting_product_information">产品信息</string>
+    <string name="fan_dialog_setting_sales_service">售后服务</string>
+    <string name="fan_dialog_setting_feed_backs_and_suggestions">反馈建议</string>
+    <string name="fan_dialog_setting_feed_opinion">反馈意见</string>
+    <string name="fan_dialog_setting_message_consulting">留言咨询</string>
+    <string name="fan_dialog_setting_check_for_updates">检查更新</string>
+    <string name="fan_dialog_setting_a_key_after_sale">一键售后</string>
+    <string name="after_sale_phone">95105855</string>
+    <string name="delete_device_success">删除成功</string>
+
+    <!--烟机提醒文案-->
+    <string name="fan_time_remind_hour">小时</string>
+    <string name="fan_time_remind_hour2">时</string>
+    <string name="fan_oil_detection_clean_not_reset">油网清洁无需重置</string>
+    <string name="fan_oil_cup_clean_not_reset">油杯清洁无需重置</string>
+    <string name="fan_oil_cup_clean_reset_succeed">油杯重置成功</string>
+    <string name="fan_oil_detection_clean_reset_succeed">油网重置成功</string>
+
+    <!--弹框公共部分-->
+    <string name="device_close_work">确定取消当前工作</string>
+    <string name="dialog_minutes_text">分钟</string>
+    <string name="dialog_degree_text">度</string>
+    <string name="dialog_toast_text">让冬日里的碗盘与菜肴一样温暖</string>
+    <string name="toast_problems_text">设置失败</string>
+    <string name="mac_error">产品故障了，无法操控</string>
+    <string name="show_wifi_name">请在手机的“设置”里切换WLAN网络</string>
+    <string name="water_conmon_loushui">漏水</string>
+    <string name="water_common_all_water">长时间制水</string>
+    <string name="water_common_queshui">缺水</string>
+    <string name="water_pp_cto">能有效滤除水中的肉眼可见物（泥沙、铁锈、悬浮物等），吸附水中的余氯、异色、异味等。</string>
+    <string name="recipe_device_no_connect">已离线，连接后才可自动烹饪</string>
+    <string name="recipe_device_occupy">被占用中，解除占用才可进行自动烹饪</string>
+    <string name="device_oil_clean_lock_text">清洗锁定</string>
+    <string name="device_oil_clean_lock_desc">烟机处于清洗锁定状态，请先在烟机上关闭清洗锁定功能！</string>
+
+    <!--RIKA -->
+    <string name="device_rika_name">RIKA</string>
+    <string name="device_alarm_rika_E3_content">加热故障，请关闭蒸汽炉并申请售后服务。</string>
+    <string name="device_alarm_rika_E5_content">温度传感器故障，请关闭蒸汽炉并申请售后服务。</string>
+    <string name="device_alarm_rika_E6_content">通讯故障，请关闭蒸汽炉并申请售后服务。</string>
+    <string name="device_alarm_rika_E7_content">抽水回路故障，请关闭蒸汽炉并申请售后服务。</string>
+    <string name="device_alarm_rika_E8_content">排风扇故障，请关闭蒸汽炉并申请售后服务。</string>
+    <string name="device_alarm_rika_E9_content">废水箱水已满，请倒出废水。</string>
+    <string name="device_alarm_rika_E1">门未关好，请检查并确认关好门。</string>
+
+    <string name="no_model">无模式</string>
+    <string name="model_rou_cooking">肉类</string>
+    <string name="model_yu_cooking">鱼类</string>
+    <string name="model_dan_cooking">蛋类</string>
+    <string name="model_gaodian_cooking">糕点</string>
+    <string name="model_tijin_cooking">蹄筋</string>
+    <string name="model_shucai_cooking">蔬菜</string>
+    <string name="model_mianshi_cooking">面食</string>
+    <string name="model_jiedong_cooking">解冻</string>
+    <string name="model_wuhuarou_cooking">五花肉</string>
+    <string name="model_mantou_cooking">馒头</string>
+    <string name="model_mifan_cooking">米饭</string>
+    <string name="model_qiangli">强力蒸</string>
+    <string name="model_shajun">杀菌</string>
+    <string name="model_kuaimain">快蒸慢炖</string>
+    <string name="model_yingyang">营养蒸</string>
+    <string name="model_xiannen">鲜嫩蒸</string>
+    <string name="model_fajiao">发酵</string>
+    <string name="model_baowen">保温</string>
+    <string name="model_chugou">除垢</string>
+
+    <string name="work_remaining_time">工作剩余时间</string>
+    <string name="oil_remaining">剩余</string>
+    <string name="fan_run_open">烟机已开启</string>
+    <string name="rika_clean_ozone">为了消除工作中产生的臭氧，将继续工作15分钟。</string>
+
+    <string name="rika_steam_work_stop_center">暂停中剩余</string>
+    <string name="rika_oil_Testing_for_you">正在为您检测是否需要净化...</string>
+    <string name="rika_oil_net_50">您的油网还很干净呢</string>
+    <string name="rika_oil_net_20">您的油网状态良好</string>
+    <string name="rika_oil_net_max05">您的油网状态不佳，可考虑清洗哦</string>
+    <string name="rika_oil_net_min05">请及时清洗或更换油网，保持油烟机最佳性能哦。</string>
+    <string name="fan_complete_timing">后完成计时提醒</string>
+    <string name="fan_complete_clean">后完成</string>
+    <string name="fan_day">天</string>
+    <string name="fan_oil_detection_desc_good">干净</string>
+    <string name="fan_oil_detection_desc_bad">不干净</string>
+    <string name="fan_oil_detection_text_bad">请及时清洗或更换油网.保持油烟机最佳性能哦。</string>
+    <string name="fan_oil_cup_text_bad">请及时清洗或更换油杯.保持油烟机最佳性能哦。</string>
+    <string name="fan_oil_detection_text_good">您的油网还很干净呢。</string>
+    <string name="fan_oil_cup_text_good">您的油杯还很干净呢。</string>
+    <string name="fan_oil_detection_text">正在为您检测是否需要净化...</string>
+    <string name="fan_oil_dismantling_text">如何拆卸油网？</string>
+    <string name="fan_oil_dismantling_title">油网拆卸</string>
+    <string name="connected_to_the_internet_again">重新联网</string>
+    <string name="device_oil_reset">重置油网</string>
+    <string name="device_oil_cup_reset">重置油杯</string>
+    <string name="sterilizer_complete_disinfect">后完成消毒</string>
+    <string name="sterilizer_complete_clean">后完成保洁</string>
+    <string name="sterilizer_complete_drying">后完成烘干</string>
+    <string name="sterilizer_complete_pre">后完成预约</string>
+    <string name="sterilizer_complete_pre_dis">后完成预约消毒</string>
+    <string name="sterilizer_complete_pre_dry">后完成预约烘干</string>
+    <string name="sterilizer_complete_pre_clean">后完成预约快速保洁</string>
+    <string name="sterilizer_complete_degerming">后完成快速保洁</string>
+    <string name="sterilizer_complete_coer_disidfect">后完成强制消毒</string>
+    <string name="sterilize_clean_text">快洁</string>
+    <string name="sterilize_drying_text">烘干</string>
+    <string name="sterilize_pre_text">预约消毒</string>
+    <string name="sterilize_pre_drying_text">预约烘干</string>
+    <string name="sterilize_degerming_text">快速保洁</string>
+    <string name="sterilize_pre_degerming_text">预约快速保洁</string>
+    <string name="sterilize_intelligent_detection_text">智能检测</string>
+    <string name="sterilize_induction_sterilization_text">感应杀菌</string>
+    <string name="sterilize_warm_dish_text">暖碟</string>
+    <string name="sterilize_core_dish_text">强制消毒</string>
+
+    <!--灶具模块化-->
+
+    <string name="device_stove_off_not_lock">关机时不允许操作童锁</string>
+    <string name="device_stove_isLock">为了安全,请先在灶具上开火</string>
+    <string name="device_stove_off_heat">快速关火</string>
+    <string name="device_stove_off_timing">取消定时</string>
+    <string name="device_stove_countDown_timing">倒计时已设置</string>
+    <string name="device_stove_off_desc">确定取消倒计时？</string>
+    <string name="device_stove_off_gear">关闭当前炉头档位？</string>
+    <string name="device_stove_off_right_burner">之后关闭右炉头</string>
+    <string name="device_stove_off_left_burner">之后关闭左炉头</string>
+    <string name="device_stove_burn_title">防干烧设定</string>
+    <string name="device_stove_not">无智能灶，连接后才可自动烹饪</string>
+
+    <string name="gas_check_tip1">1.燃气卫士发出报警：红灯闪烁，并伴有报警声鸣。</string>
+    <string name="gas_check_tip2">2.智能烟机自动开启工作。</string>
+    <string name="gas_check_tip3">3.收到煤气泄漏短信通知（短信可能有延迟）。</string>
+    <string name="gas_bottom_tip1">上述3条全部符合，则报警机制正常。</string>
+    <string name="gas_bottom_tip2">上述任1条未符合，则报警机制出现问题，可再试一次或联系售后服务；</string>
+    <string name="gas_normal_tips">正常范围值：0~3500mg/m3</string>
+    <string name="gas_deal_tip1">1.立即截断气源，关闭燃气管道和燃具的阀门；</string>
+    <string name="gas_deal_tip2">2.迅速打开门窗，让空气流通，将泄漏气体排除室外；</string>
+    <string name="gas_deal_tip3">3.到室外打电话联系煤气公司。</string>
+    <string name="co_tip">已经\n工作</string>
+    <string name="cooker_tempture_just">温度调整</string>
+    <string name="cooker_huoli">火力调整</string>
+    <string name="co_current_fire">当前火力</string>
+    <string name="co_all_tempture">恒温工作</string>
+    <string name="co_action_mode">智能模式</string>
+    <string name="co_finish">结束工作</string>
+    <string name="stove_weishi">燃气卫士</string>
+    <string name="stove_tip_for">防干烧功能是为了防止空锅干烧，保护厨房安全，每个火力档位的默认工作时间是专业的实验测试结果， 当定时关火开启时，优先执行定时关火设定的时间。</string>
+    <string name="oven_common_off">已关机</string>
+    <string name="work_start">开始工作</string>
+    <string name="oven_module_order">预约模式不可操作</string>
+    <string name="oven_dis_con">设备已离线</string>
+    <string name="close_new">关机</string>
+    <string name="oven_off_tip">关机会结束当前工作</string>
+    <string name="micro_to_taste">请切开一个柠檬放入微波炉中开始工作清洁腔体内的异味</string>
+    <string name="micro_to_taste_btn">已放入柠檬</string>
+    <string name="is_login_pad">确定登录烟机屏幕端</string>
+    <string name="login_suc">登录成功</string>
+
+    <string name="device_water_filter_expire_text">尽快更换滤芯以保证您的用水健康</string>
+    <string name="device_water_filter_wash_text">冲洗中</string>
+    <string name="device_water_time_remaining_wash_text">预估剩余时间</string>
+    <string name="device_water_pure_water_text">纯水制水中</string>
+    <string name="device_water_clean_water_text">净水出水中</string>
+    <string name="device_water_open_faucet_text">拧开水龙头会自动出水</string>
+    <string name="device_water_purification_water_quality_text">净化后纯水水质</string>
+
+    <string name="step_switcher">步骤切换</string>
+    <string name="step_switcher_content">切换后当前步骤将提前结束可能会影响烹饪的效果哦</string>
+    <string name="save_recipe">保存菜谱</string>
+    <string name="please_input_recipe_name">请输入菜品名称</string>
+    <string name="add_recipe_content">请在这里添加文字描述，如烹饪步骤，提醒内容等~</string>
+    <string name="parameters_set">参数设置</string>
+    <string name="dialog_oil_cleaning_text">你的油杯可能需要清洁了~不要忘记哦！</string>
+
+    <string name="agree_privacy_policy_note">您需要同意后才能\n继续使用我们的服务哦！</string>
+    <string name="privacy_policy_content">感谢您对老板电器的长期信任，我们非常重视您的个人信息和隐私保护，为了更好地保证您的个人权益，在您使用我们产品前，请务必仔细阅读
+        《ROKI用户协议》和《隐私政策》 内的所有条款。\n 其中隐私政策将向您说明：\n
+        1.为了向您提供发布服务，我们可能会申请手机存储、相册访问/存储权限、摄像头权限、麦克风权限；\n
+        2.为了给您提供注册登录服务，我们可能会申请获取手机号信息；\n
+        3.为了基于您所在的位置远程操控设备、向您推荐内容，我们可能会申请您的位置权限；\n
+        4.为了提供信息推送和账号安全服务，我们会申请系统设备权限、手机设备信息、日志信息；\n
+        5.未经您同意，我们不会从第三方处获取、共享或对外提供您的信息；\n
+        6.您还可以访问、更正、删除您的个人信息，我们也提供注销和意见反馈功能。\n</string>
+    <string name="roki_priviacy_agreement_title">已阅读并同意《ROKI用户协议》和《隐私政策》</string>
+    <string name="login_and_register">登录/注册</string>
+    <string name="accept_user_privacy_policy"> 请阅读并同意协议及隐私政策</string>
+    <string name="device_hid_kit_said_to_it">你可以对智能语音魔盒说：</string>
+    <string name="device_hid_kit_supported_model">智能语音魔盒支持的型号</string>
+    <string name="device_hid_kit_local_recipes">支持的本地菜谱</string>
+
+    <string name="device_link_succeed_result_text">设备添加成功</string>
+    <string name="device_link_possible_router_text">请将设备尽量靠近路由器</string>
+    <string name="device_link_failed_result_text">设备添加失败</string>
+    <string name="device_transmit_succeed_text">向设备传输信息成功</string>
+    <string name="device_transmit_msg_text">向设备传输信息中</string>
+    <string name="device_transmit_failed_text">向设备传输信息失败</string>
+    <string name="device_link_network_text">设备连接网络中...</string>
+    <string name="device_link_network_succeed_text">设备连接网络成功</string>
+    <string name="device_account_bind_succeed_text">设备绑定账号成功</string>
+    <string name="device_account_bind_failed_text">设备绑定账号失败</string>
+    <string name="device_link_text">设备连接中</string>
+    <string name="dialog_discover_new_version">发现新版本</string>
+    <string name="dialog_update_text">更新</string>
+    <string name="dialog_ignore_text">忽略</string>
+    <string name="dialog_close_text">关闭</string>
+    <string name="dialog_try_again_text">再试一次</string>
+    <string name="dialog_affirm_text">确认</string>
+    <string name="dialog_update_failed">更新失败</string>
+    <string name="dialog_update_content_failed">请检查网络后重新尝试更新</string>
+    <string name="dialog_update_completion">更新完成</string>
+    <string name="dialog_newest_version">当前已是最新版本</string>
+    <string name="device_volume_fader">音量已调节</string>
+    <string name="device_volume_fader_failed">音量调节失败</string>
+
+    <!-- 3.6 -->
+    <string name="common_phone_input_hint">请输入手机号(新号码自动注册)</string>
+    <string name="common_phone_input_hint2">请输入手机号</string>
+    <string name="common_password_input_error">请输入密码</string>
+    <string name="common_password_input_error2">请再次输入密码</string>
+    <string name="common_password_input_unlike">两次密码输入不一致，请重新输入</string>
+    <string name="common_code_input_hint">请输入验证码</string>
+    <string name="common_code_send">发送验证码</string>
+    <string name="common_code_send_hint">验证码已发送，请注意查收</string>
+    <string name="common_code_error_hint">验证码错误，请检查输入</string>
+    <string name="login_text">登录</string>
+    <string name="login_other_phone_code">其他手机号码登录</string>
+    <string name="login_other">其他登录方式</string>
+    <string name="login_code">验证码登录</string>
+    <string name="login_password">密码登录</string>
+    <string name="login_authentication">已阅读并同意《ROKI用户协议》和《隐私政策》</string>
+    <string name="login_code_mismatch">验证码不匹配</string>
+    <string name="login_bind_phone">绑定手机号</string>
+    <string name="login_bind">绑定</string>
+    <string name="login_set_complete">完成</string>
+    <string name="common_loading">加载中&#8230;</string>
+    <string name="net_not">如果您当前网络环境可正常使用其它APP，但ROKI无法正常使用，请检查您的网络设置</string>
+    <string name="softap_not">您的设备已发出Wi-Fi信号，请在手机Wi-Fi设置界面选择Wi-Fi\n名称：ROKI-OHOS-xxxxxxxxxxxx（12位数字/字母）\n密码：roki123456\n\n连接成功后返回此页面</string>
+    <string name="device_softap_link_text">配网中...</string>
+    <string name="device_softap_link_text_ing">正在配网，请耐心等待...</string>
+    <string name="device_softap_link_fail_text">请尝试以下操作并重新配网：\n1.检查设备是否接通电源\n2.检查网络是否正常\n3.请长按联网键当联网图标由闪烁变为常亮\n4.默认密码为：roki123456.</string>
+</resources>

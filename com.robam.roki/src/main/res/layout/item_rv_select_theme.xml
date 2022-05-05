@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/csl_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_top_week_2">
+
+        <TextView
+            android:id="@+id/tv_read_theme_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="25dp"
+            android:text="阅读 23.8w"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_collect_theme_number"
+            android:text="收藏 22"
+            android:textColor="#999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_toRightOf="@id/tv_read_theme_number"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"/>
+
+        <TextView
+            android:id="@+id/tv_theme_recipe_number"
+            android:text="5道菜谱"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/roki_background_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button_shape_bg"
+            android:layout_toRightOf="@id/tv_collect_theme_number"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp" />
+
+        <TextView
+            android:id="@+id/tv_theme_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="13dp"
+            android:paddingBottom="14dp"
+            android:lineSpacingExtra="3dp"
+            android:text="春天万物复苏，处处绿绿葱葱，阳光明媚的日子，携家人出门踏青，顺便采点野菜。吃腻了大鱼大肉，春天吃一点时令的新鲜野菜，既解腻又可以获得很好的保健作用。比较常见的野菜有荠菜、苋菜、榆钱、香椿、槐花、马兰头，不仅吃法多样，而且口味独特。下面看看这些野菜的做法吧！"
+            android:textColor="@color/roki_general_text_color"
+            android:layout_below="@id/tv_theme_recipe_number" />
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="7dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="260dp">
+
+            <ImageView
+                android:id="@+id/iv_top_week_img"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/img_default" />
+
+            <ImageView
+                android:id="@+id/iv_topic_ranking"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="15dp"
+                app:srcCompat="@mipmap/icon_week_top1" />
+
+            <TextView
+                android:id="@+id/tv_recipe_name"
+                style="@style/RokiImportantText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_top_week_img"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="10dp"
+                android:text="蜜汁烤鸡翅" />
+            <!--        <TextView-->
+            <!--            android:id="@+id/tv_recipe_read_number"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_below="@id/tv_recipe_name"-->
+            <!--            android:layout_marginStart="3dp"-->
+            <!--            android:layout_marginTop="5dp"-->
+            <!--            android:layout_toEndOf="@+id/img_recipe_read_number"-->
+            <!--            android:layout_toRightOf="@+id/img_recipe_read_number"-->
+            <!--            android:singleLine="true"-->
+            <!--            android:text="收藏 56.8w"-->
+            <!--            android:textSize="12sp" />-->
+            <TextView
+                android:id="@+id/tv_recipe_read_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_recipe_name"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/img_recipe_read_number"
+                android:layout_toRightOf="@+id/img_recipe_read_number"
+                android:singleLine="true"
+                android:text="收藏 56.8w"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/img_recipe_collect_number_icon"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_below="@id/tv_recipe_name"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/hot" />
+
+            <TextView
+
+                android:id="@+id/tv_recipe_collect_number"
+                style="@style/RokiTipsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_recipe_name"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/img_recipe_collect_number_icon"
+                android:singleLine="true"
+                android:text="阅读 10.1w"
+                android:textSize="12sp" />
+
+
+            <ImageView
+                android:id="@+id/img_recipe_read_number"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_below="@id/tv_recipe_name"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/tv_recipe_collect_number"
+                android:src="@drawable/hot" />
+            <ImageView
+
+                android:id="@+id/iv_love_recipe"
+                android:layout_width="20dp"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp"
+                app:srcCompat="@drawable/ic_baseline_favorite_24" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
+

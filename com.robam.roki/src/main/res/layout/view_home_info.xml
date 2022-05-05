@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:orientation="vertical">
+
+    <!--图片和图标-->
+    <ImageView
+        android:id="@+id/home_info"
+        android:layout_width="match_parent"
+        android:layout_height="231dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/img_default" />
+
+    <!--文字描述和收藏-->
+    <LinearLayout
+        android:id="@+id/txt_desc_cook"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_info"
+        android:orientation="horizontal">
+        <!--菜名-->
+        <TextView
+            android:id="@+id/home_info_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_name"
+            android:maxEms="9"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <!--收藏-->
+
+        <TextView
+            android:id="@+id/home_info_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20180131"
+            android:textColor="@color/text_color_gray_3"
+            android:textSize="15sp"
+            android:gravity="bottom"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/desc_txt"
+        android:layout_below="@id/txt_desc_cook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textSize="18sp"
+        android:textColor="#a4a4a4"
+        android:text=""
+        />
+
+    <View
+        android:id="@+id/line"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/desc_txt"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#dddddd"
+        android:layout_marginBottom="10dp"
+        />
+
+</RelativeLayout>

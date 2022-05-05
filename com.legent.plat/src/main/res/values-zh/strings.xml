@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ===========================================ErrorCode代码 =========================================== -->
+
+    <!-- ===========================================DeviceIO RC代码 =========================================== -->
+    <!-- RC代码-base -->
+
+    <!-- RC代码-ARM 0~63-->
+    <!-- ===========================================Restful RC代码 =========================================== -->
+
+    <!-- RC代码-common模块 -->
+    <!-- RC代码-account模块 -->
+
+    <!-- RC代码-device模块 -->
+
+    <!--&lt;!&ndash; ===========================================App common=========================================== &ndash;&gt;-->
+    <!--&lt;!&ndash; discover service &ndash;&gt;-->
+    <!--<string name="dicover_searching">正在搜索设备,请稍候&#8230;</string>-->
+    <!--<string name="dicover_not_found">搜索失败，没有发现设备。</string>-->
+
+    <!--&lt;!&ndash; app update service &ndash;&gt;-->
+    <!--<string name="update_title">版本更新</string>-->
+    <!--<string name="update_description">发现新版本，正在更新</string>-->
+    <!--<string name="update_newest">当前已是最新版</string>-->
+    <!--<string name="update_confirm">发现新版本，是否更新？</string>-->
+    <!--<string name="update_check_failure">检查更新失败</string>-->
+    <!--<string name="update_downloading">开始下载新版本，下载完成后将会自动安装新版本</string>-->
+    <!--<string name="update_newVerDesc">新版更新说明:</string>-->
+
+    <!--&lt;!&ndash; ===========================================App=========================================== &ndash;&gt;-->
+    <!--<string name="app_name">小乐乐温控</string>-->
+
+</resources>

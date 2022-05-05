@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">com.legent.utils.qrcode</string>
+    <string name="scan_title">二维码扫描</string>
+    <string name="scan_text">将二维码放入扫描框内, 即可自动扫描</string>
+</resources>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white" />
+    <com.hjq.bar.TitleBar app:drawableSize="25dp"
+        android:id="@+id/tb_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:barStyle="transparent"
+        app:leftIcon="@mipmap/icon_back_black"
+        app:rightSize="16sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/login_text_color"
+        android:textSize="25sp"
+        android:text="@string/login_bind_phone"
+        android:singleLine="true"
+        />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="9dp"
+        android:gravity="center_horizontal"
+        android:textSize="14sp"
+        android:textColor="@color/common_text_hint_color"
+        android:text="开启智慧生活"
+        android:singleLine="true"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.robam.roki.ui.widget.view.ClearEditText
+            android:id="@+id/et_login_phone"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="40dp"
+            android:hint="@string/common_phone_input_hint2"
+            android:inputType="textVisiblePassword"
+            android:singleLine="true"
+            app:regexType="mobile" />
+
+        <View
+            style="@style/HorizontalLineStyle"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="40dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <com.robam.roki.ui.widget.view.ClearEditText
+                android:id="@+id/et_phone_code"
+                style="@style/EditTextStyle"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:hint="@string/common_code_input_hint"
+                android:inputType="textVisiblePassword"
+                android:singleLine="true"
+                />
+            <com.robam.roki.ui.widget.view.CountdownView
+                android:id="@+id/cv_find_countdown"
+                style="@style/CountdownViewStyle_Login"
+                android:layout_height="30dp"/>
+        </LinearLayout>
+
+        <View
+            style="@style/HorizontalLineStyle"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="40dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cb_accept_roki_privacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:gravity="center"
+                android:scaleX="0.7"
+                android:scaleY="0.7" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/user_login_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/roki_priviacy_agreement_title"
+                android:textColor="@color/login_text_color"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_bind"
+            style="@style/ButtonStyle"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:text="@string/login_bind" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

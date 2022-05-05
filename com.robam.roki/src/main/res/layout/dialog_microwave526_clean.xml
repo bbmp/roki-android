@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgreturn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:src="@mipmap/img_micro526_return" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="去味儿"
+            android:textColor="#929292"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_weight="1"
+        android:background="#E6343434"
+        >
+        <ImageView
+            android:id="@+id/clean"
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:src="@mipmap/img_526microwave_clean"
+            />
+
+            <TextView
+                android:layout_below="@id/clean"
+                android:layout_marginTop="20dp"
+                android:id="@+id/bottom_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请切开一个柠檬"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+
+                />
+            <TextView
+                android:id="@+id/bottom_desc2"
+                android:layout_below="@+id/bottom_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="放入微波炉中开始工作"
+                android:layout_centerHorizontal="true"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                />
+
+        <TextView
+            android:layout_below="@+id/bottom_desc2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清洁腔体内的异味儿"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="10dp"
+        >
+
+        <Button
+            android:id="@+id/start_cook"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:background="#e9a60f"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="已放入柠檬"
+            android:textColor="#ffffff"
+            android:textSize="32sp" />
+    </LinearLayout>
+
+</LinearLayout>

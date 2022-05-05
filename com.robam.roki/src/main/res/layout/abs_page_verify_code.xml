@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="30dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_edit_height"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edtPhone"
+            style="@style/common_edit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:hint="请输入手机" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@color/c02"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="获取验证码"
+            android:textColor="@color/c05"
+            android:id="@+id/txtGetCode" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edtCode"
+        style="@style/common_edit"
+        android:layout_width="match_parent"
+        android:layout_marginTop="7dp"
+        android:singleLine="true"
+        android:hint="请输入验证码" />
+
+    <TextView
+        android:id="@+id/txtConfirm"
+        style="@style/common_button"
+        android:layout_width="match_parent"
+        android:layout_marginTop="18dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:paddingTop="10dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_accpet_roki_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/cb_bg_privacy"
+            android:gravity="center"
+            android:padding="5dp"
+            android:scaleX="0.6"
+            android:scaleY="0.6" />
+
+        <TextView
+            android:id="@+id/verify_user_login_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="@string/roki_priviacy_agreement_title" />
+    </LinearLayout>
+
+</LinearLayout>

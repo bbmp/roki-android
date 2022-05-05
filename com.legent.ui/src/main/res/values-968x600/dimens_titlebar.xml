@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--titlebar-->
+    <dimen name="titlebar_padding_left">5dp</dimen>
+    <dimen name="titlebar_padding_right">5dp</dimen>
+
+    <!--divider-->
+    <dimen name="titlebar_divider_height">1dp</dimen>
+
+    <!--icon-->
+    <dimen name="titlebar_icon_padding_top">10dp</dimen>
+    <dimen name="titlebar_icon_padding_bottom">10dp</dimen>
+    <dimen name="titlebar_icon_padding_left">10dp</dimen>
+    <dimen name="titlebar_icon_padding_right">10dp</dimen>
+
+    <!--text-->
+    <dimen name="titlebar_text_padding_left">10dp</dimen>
+    <dimen name="titlebar_text_padding_right">10dp</dimen>
+    <dimen name="titlebar_text_text_size">14sp</dimen>
+
+    <!--title-->
+    <dimen name="titlebar_title_text_size">18sp</dimen>
+
+</resources>

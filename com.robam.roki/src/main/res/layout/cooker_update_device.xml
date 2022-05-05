@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24"/>
+
+        <TextView
+            android:id="@+id/tv_device_model_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="固件版本"
+            android:textColor="@color/c41"
+            android:textSize="20sp"/>
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/cooker_circle"
+            android:layout_marginTop="98dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@mipmap/cooker_update_amni_circle"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/img_update"
+            android:layout_marginTop="98dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@mipmap/cooker_update_1"
+            />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/current_status"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        >
+
+        <ImageView
+            android:id="@+id/update_finish"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/cooker_update_check"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@id/update_finish"
+            android:id="@+id/version_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前版本号:"
+            android:gravity="center_vertical"
+            android:textColor="#2c2c2c"
+            android:textSize="18sp"
+            />
+
+    </RelativeLayout>
+
+
+
+    <FrameLayout
+        android:id="@+id/update_step"
+        android:layout_marginTop="47dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+
+       <include
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           layout="@layout/cooker_update_item_show"
+           />
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/update_tip"
+        android:layout_marginTop="58dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:id="@+id/update_txt"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="检测到最新版本，是否升级到最新固件版本？"
+                android:textColor="#2c2c2c"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/concal"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#e9a60f"
+                android:textSize="24sp"
+                android:text="取消"
+                />
+
+            <TextView
+                android:id="@+id/confirm"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#e9a60f"
+                android:textSize="24sp"
+                android:text="确认升级"
+                />
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

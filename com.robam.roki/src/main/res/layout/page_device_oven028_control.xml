@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llOvenPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="2dp">
+    <!--标题部分-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <ImageView
+            android:id="@+id/oven028_return"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="3dp"
+            android:paddingTop="2dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/oven026_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textColor="#5D5D5D"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/oven026_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:text=""
+            android:textColor="#5D5D5D"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
+
+        <ImageView
+            android:id="@+id/imgHead"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_device_oven_logo_gray" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imgHead"
+            android:layout_marginRight="7dp"
+            android:layout_toLeftOf="@+id/imgHead"
+            android:gravity="right"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="电烤箱"
+                android:textColor="@color/c03"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Oven"
+                android:textColor="@color/c03"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtRecipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/imgHead"
+            android:gravity="center"
+            android:maxEms="3"
+            android:text=""
+            android:textColor="@color/home_bg"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/disconnectHintView"
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/c02"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginRight="5dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_device_disconnect_warm_hint" />
+
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="设备与手机断开连接，请检查设备"
+            android:textColor="#fff"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#343434"
+        android:layout_marginBottom="20dp"
+        >
+        <Button
+            android:id="@+id/oven028_btn"
+            android:layout_width="85dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:text="最近使用"
+            android:textColor="#818181"
+            android:textSize="16sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/img_common_recently_use_gray"
+            />
+
+        <RelativeLayout
+            android:id="@+id/oven028_profession"
+            android:layout_marginTop="50dp"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/img_device_oven028_main_professtion_circle_gray"
+            >
+            <TextView
+                android:id="@+id/oven028_profession_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="专业模式"
+                android:layout_centerHorizontal="true"
+                android:textSize="20sp"
+                android:textColor="#818181"
+                android:layout_marginTop="28dp"
+                />
+            <ImageView
+                android:id="@+id/ovn028_profession_img"
+                android:layout_marginTop="70dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/img_device_oven028_main_professtion_gray"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/oven028_expert"
+            android:layout_below="@id/oven028_profession"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="40dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@mipmap/img_device_oven028_circle_gray"
+            >
+
+            <TextView
+                android:id="@+id/oven028_expert_txt"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/device_oven_expert"
+                android:textSize="20sp"
+                android:textColor="#818181"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/oven028_assist"
+            android:layout_below="@id/oven028_profession"
+            android:layout_marginTop="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@mipmap/img_device_oven028_circle_gray"
+            >
+
+            <TextView
+                android:id="@+id/oven028_assist_txt"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/device_oven_assist"
+                android:textSize="20sp"
+                android:textColor="#818181"
+                />
+
+        </RelativeLayout>
+
+
+        <FrameLayout
+            android:id="@+id/oven028_main_fram_switch"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/oven028_main_ll_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/oven028_main_img_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/btn_power" />
+
+            </LinearLayout>
+        </FrameLayout>
+    <!--   <Button
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试按钮"
+            />-->
+    </RelativeLayout>
+</LinearLayout>

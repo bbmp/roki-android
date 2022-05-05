@@ -1,0 +1,27 @@
+{
+  "main": "MainForm",
+  "forms": [
+    {
+      "id": "WelcomeForm",
+      "homePage": "Welcome",
+      "loader": "com.legent.ui.ext.loaders.SimpleLoader"
+    }
+  ],
+  "menus": [
+    {
+      "id": "",
+      "name": "",
+      "iconRes": "",
+      "clazz": "",
+      "valid": true
+    }
+  ],
+  "pages": [
+    {
+      "id": "",
+      "name": "",
+      "iconRes": "",
+      "clazz": ""
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tip1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/cantfindmodeldesc3"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/tip2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tip1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.长按"
+            android:textColor="@color/black" />
+
+
+        <ImageView
+            android:id="@+id/img_btn1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/onekeyconnect" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="要保证2秒以上，并听到“滴”"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tip3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tip2"
+        android:layout_marginLeft="20dp"
+        android:text="一声后松开手；"
+        android:textColor="@color/black" />
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/tip4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tip3"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3.如果无法找到"
+            android:textColor="@color/black" />
+
+
+        <ImageView
+            android:id="@+id/img_btn2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/onekeyconnect" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请按电源键开机来点亮屏幕"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/call"
+        style="@style/common_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="拨打服务电话" />
+</RelativeLayout>

@@ -1,0 +1,17 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
+    <string name="app_title">string</string>
+    <string name="search_hint">搜索菜谱、食材</string>
+    <!-- Common -->
+    <string name="common_ok">确定</string>
+    <string name="wifi_common_ok">确认连接</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_yes">是</string>
+    <string name="common_no">否</string>
+    <string name="count_close">关闭计时</string>
+    <string name="count_setting">计时设置</string>
+    <string name="loadingPleaseWait">正在加载,请稍候...</string>
+    <string name="try_one_more_time">再试一次</string>
+    <string name="call_service">拨打服务电话</string>
+
+
+</resources>

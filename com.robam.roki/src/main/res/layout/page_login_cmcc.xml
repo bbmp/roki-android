@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar app:drawableSize="25dp"
+        android:id="@+id/tb_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:barStyle="transparent"
+        app:rightColor="@color/login_text_color"
+        app:leftIcon="@mipmap/icon_back_black"
+        app:rightTitle="@string/login_password"
+        app:rightSize="16sp" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginVertical="30dp"
+        android:src="@mipmap/logo_roki" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        >
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_login_other_phone"
+            android:layout_alignParentBottom="true"
+            style="@style/ButtonStyle2"
+            android:layout_width="510dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/login_other_phone_code" />
+    </RelativeLayout>>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="5" />
+
+    <LinearLayout
+        android:id="@+id/ll_login_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            style="@style/HorizontalLineStyle"
+            android:layout_width="60dp"
+            android:layout_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:text="@string/login_other"
+            android:textColor="@color/black50" />
+
+        <View
+            style="@style/HorizontalLineStyle"
+            android:layout_width="60dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.robam.roki.ui.widget.view.ScaleImageView
+            android:id="@+id/iv_login_wechat"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="20dp"
+            app:srcCompat="@mipmap/logo_wechat" />
+    </LinearLayout>
+</LinearLayout>

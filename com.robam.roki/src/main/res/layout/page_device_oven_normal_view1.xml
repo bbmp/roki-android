@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_oven">
+
+    <TextView
+        android:id="@+id/oven_normal_ctrl_waitoff_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="与设备断开连接"
+        android:textColor="@color/Gray_57"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/oven_normal_ctrl_waitoff_img"
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_device_oven_control" />
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tag_weekly_ventilation_date_hour" type="id" />
+    <item name="tag_weekly_ventilation_date_minute" type="id" />
+    <item name="tag_fan_other_func_key" type="id" />
+    <item name="tag_hid_kit_other_func_key" type="id" />
+    <item name="tag_pot_other_func_key" type="id" />
+    <item name="tag_stove_other_func_key" type="id" />
+    <item name="tag_stove_quickly_btn_right" type="id" />
+    <item name="tag_stove_quickly_btn_left" type="id" />
+    <item name="tag_fan_main_func_key" type="id" />
+    <item name="tag_fan_other_func_key_pos" type="id" />
+
+    <item name="tag_stove_timing_btn_left" type="id" />
+    <item name="tag_stove_timing_btn_right" type="id" />
+    <item name="tag_recipe_bg" type="id" />
+    <item name="tag_recipe_collected" type="id" />
+    <item name="tag_recipe_collected_select" type="id" />
+    <item name="tag_recipe_collected_holder" type="id" />
+
+</resources>

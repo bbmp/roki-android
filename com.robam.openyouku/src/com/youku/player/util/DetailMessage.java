@@ -1,0 +1,60 @@
+package com.youku.player.util;
+
+public interface DetailMessage {
+    int LOAD_NEXT_PAGE_SUCCESS = 100;
+    int LOAD_NEXT_PAGE_FAILED = 101;
+
+    int REFRESH_SUCCESS = 102;
+    int REFRESH_FAILED = 103;
+
+    int GET_SERIES_SUCCESS = 104;
+    int GET_VARIETY_SERIES_SUCCESS = 1040;
+    int TITLE_RQC_CACHE_LOGIN = 105;
+    int LAYOUT_INIT_FINISH = 106;
+    int WAIT = 107;
+    int MSG_UP_SUCCESS = 10;
+    int MSG_UP_FAIL = 11;
+    int MSG_DOWN_SUCCESS = 20;
+    int MSG_DOWN_FAIL = 21;
+
+    int MSG_RQC_FAV_LOG = 201;
+    int MSG_FAV_SUCCESS = 202;
+    int MSG_FAV_FAIL = 203;
+
+    int MSG_RQC_CACHE_LOGIN = 204;
+    int MSG_RQC_CACHE_LOCAL_BACK = 2041;
+
+    int GET_LAYOUT_DATA_FAIL = 206;
+    int DETAIL_PLAY_TASK = 207;
+
+    int SERIES_ITEM_TO_PLAY = 301;
+    int SHOW_CURRENT_PLAY = 302;
+    int SHOW_CACHED_ITEM = 401;
+    int SEEK_TO_POINT = 501;
+    int CACHE_START_DOWNLAOD = 502;
+    int GO_CACHED_LIST = 503;
+    int GO_RELATED_VIDEO = 504;
+    int WEAK_NETWORK = 506;
+    int SHOW_NETWORK_ERROR_DIALOG = 507;
+    int CACHED_ALREADY = 508;
+    int GET_CACHED_LIST = 509;
+    int DOWN_lOAD_SUCCESS = 610;
+    int DOWN_lOAD_FAILED = 611;
+    int GET_HIS_FINISH = 612;
+    int MSG_GET_PLAY_INFO_SUCCESS = 6130;
+    int MSG_GET_PLAY_INFO_FAIL = 6131;
+    int MSG_UPDATE_COMMENT = 6132;
+    int MSG_CANNOT_CACHE = 20120;
+    int MSG_CANNOT_CACHE_VARIETY = 20121;
+    int MSG_VIDEO_PLAY_CHANGE = 2013;// 播放视频更改
+    int UPDATE_CACHE_ITEM = 201304;
+
+    //用在刷新插件上
+    int PLUGIN_SHOW_AD_PLAY = 1;
+    int PLUGIN_SHOW_SMALL_PLAYER = 2;
+    int PLUGIN_SHOW_FULLSCREEN_PLAYER = 3;
+    int PLUGIN_SHOW_FULLSCREEN_ENDPAGE = 4;
+    int PLUGIN_SHOW_IMAGE_AD = 5;
+    int PLUGIN_SHOW_INVESTIGATE = 6;
+    int PLUGIN_SHOW_NOT_SET = 7;
+}

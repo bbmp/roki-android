@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/device_board_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtClock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="计时"
+                android:textColor="@color/device_switch_text_color_selector"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingBottom="40dp"
+                android:paddingTop="40dp">
+
+                <TextView
+                    android:id="@+id/txtLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="P8"
+                    android:textColor="@color/device_switch_text_color_selector"
+                    android:textSize="36sp" />
+
+                <ImageView
+                    android:id="@+id/imgUp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@null"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_device_stove_level_up" />
+
+                <ImageView
+                    android:id="@+id/imgDown"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@null"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_device_stove_level_down" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/divTransparent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/device_board_translucent">
+
+            <ImageView
+                android:id="@+id/imgCornerLeft"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:padding="2dp"
+                android:src="@mipmap/ic_device_stove_corner_3" />
+
+            <ImageView
+                android:id="@+id/imgCornerRight"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:padding="2dp"
+                android:src="@mipmap/ic_device_stove_corner_4" />
+        </RelativeLayout>
+    </FrameLayout>
+
+
+    <com.robam.roki.ui.view.DeviceSwitchView
+        android:id="@+id/switchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp" />
+
+</LinearLayout>

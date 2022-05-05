@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
+        android:id="@+id/titleBar"
+        style="@style/titlebar_style">
+
+        <ImageView
+            android:id="@+id/imgReturn"
+            style="@style/titlebar_icon_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        <TextView
+            style="@style/titlebar_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="?android:actionBarSize"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="@string/device_oven_name2"
+            android:textColor="@color/Black" />
+
+        <TextView
+            android:id="@+id/txtRecipe"
+            style="@style/titlebar_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="?android:actionBarSize"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:text="@string/home_search_title_recipe" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/titleBar"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/c03">
+<!--开启/关闭-->
+        <RelativeLayout
+            android:id="@+id/linSwitch"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="23dp"
+            android:layout_marginRight="22dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/ic_device_oven_leanline_yellow" />
+
+            <TextView
+                android:id="@+id/txtSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/close_work"
+                android:textColor="#e9a60f"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imgSwitch"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_above="@id/txtSwitch"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/ic_device_finish_pic_circle" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imgSpinCircle"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="145dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/img_oven_working_circle_yellow" />
+
+        <ImageView
+            android:id="@+id/imgContent"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="150dp"
+             />
+
+        <ImageView
+            android:id="@+id/imgPause"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="145dp"
+            android:src="@mipmap/img_oven_pause"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/imgDone"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="145dp"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:src="@mipmap/img_oven_finish"
+            />
+
+        <TextView
+            android:id="@+id/workType1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imgSpinCircle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="30sp" />
+<!--烧烤已完成-->
+        <TextView
+            android:id="@+id/workType2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imgDone"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="52dp"
+            android:text="@string/device_yi_finish"
+            android:textColor="#e9a60f"
+            android:visibility="gone"
+            android:textSize="30sp"
+            />
+<!--旋转轴-->
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:id="@+id/imgRotate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/img_device_oven_rotate_close" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rlLight"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="22dp"
+            android:background="@mipmap/img_oven_working_circle_yellow">
+
+            <ImageView
+                android:id="@+id/imgLight"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_device_fan_light_selected"
+
+                />
+
+        </RelativeLayout>
+
+        <!--温度 分钟大-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_below="@+id/linTem">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/txtCurrentTem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="--"
+                    android:textColor="#ffffff"
+                    android:textSize="45sp" />
+
+                <TextView
+                    android:id="@+id/txtTempUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/txtCurrentTem"
+                    android:layout_toRightOf="@+id/txtCurrentTem"
+                    android:text="°C"
+                    android:textColor="#ffffff"
+                    android:textSize="25sp" />
+
+                <ImageButton
+                    android:id="@+id/imgTempReset"
+                    android:layout_width="25dp"
+                    android:paddingLeft="5dp"
+                    android:layout_height="25dp"
+                    android:layout_alignBottom="@+id/txtCurrentTem"
+                    android:layout_toRightOf="@id/txtTempUnit"
+                    android:background="@color/Transparent"
+                    android:scaleType="fitXY"
+                    android:visibility="gone"
+                    android:layout_marginBottom="15dp"
+                    android:src="@mipmap/img_oven_reset_button_yellow"
+                    />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/framework_line" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/txtCurrentTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:text="--"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="80dp"
+                    android:textColor="#ffffff"
+                    android:textSize="45sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/txtCurrentTime"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:text="min"
+                    android:textColor="#ffffff"
+                    android:textSize="25sp" />
+
+                <ImageButton
+                    android:id="@+id/imgTimeReset"
+                    android:layout_width="25dp"
+                    android:paddingLeft="10dp"
+                    android:layout_height="25dp"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/Transparent"
+                    android:layout_marginBottom="15dp"
+                    android:visibility="gone"
+                    android:layout_alignBottom="@+id/txtCurrentTime"
+                    android:src="@mipmap/img_oven_reset_button_yellow"
+                    />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/framework_line" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+        <!-- 温度分钟小-->
+        <LinearLayout
+            android:id="@+id/linTem"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/txtTem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/temp"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtTemSet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toLeftOf="@id/txtTem"
+                    android:text=""
+                    android:textColor="#ffffff"
+                    android:textSize="29sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/txtTem"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginTop="1dp"
+                    android:text="°C"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="-8dp"
+                    android:layout_toLeftOf="@id/txtTem"
+                    android:src="@mipmap/img_oven_setting_leanline_white" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/framework_line" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/framework_line" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/txtTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/time"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/txtTime"
+                    android:layout_marginRight="63dp"
+                    android:layout_marginTop="1dp"
+                    android:text="min"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="-8dp"
+                    android:layout_toLeftOf="@id/txtTime"
+                    android:src="@mipmap/img_oven_setting_leanline_white" />
+
+                <TextView
+                    android:id="@+id/txtTimeSet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toLeftOf="@id/txtTime"
+                    android:text=""
+                    android:textColor="#ffffff"
+                    android:textSize="29sp" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/framework_line" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/framework_line" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

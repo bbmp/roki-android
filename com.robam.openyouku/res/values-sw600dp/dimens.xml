@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- youku dialog -->
+
+    <!-- youku investigate ad -->
+
+    <!-- 播放广告 youku -->
+    <!-- 清晰度按钮 -->
+    <dimen name="vq_width">42dp</dimen>
+    <dimen name="vq_height">24dp</dimen>
+    <dimen name="wm_width">65dp</dimen>
+
+</resources>

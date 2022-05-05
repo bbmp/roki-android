@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/titleBar"
+        style="@style/titlebar_style">
+<!--返回图标-->
+        <ImageView
+            android:id="@+id/imgReturn"
+            style="@style/titlebar_icon_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_baseline_arrow_back_24"/>
+<!--蒸汽炉-->
+        <TextView
+            style="@style/titlebar_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="?android:actionBarSize"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:textColor="@color/Black"
+            android:text="@string/device_steam_name" />
+<!--菜谱-->
+        <TextView
+            android:id="@+id/txtRecipe"
+            style="@style/titlebar_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="?android:actionBarSize"
+            android:layout_gravity="center"
+            android:layout_alignParentRight="true"
+            android:text="@string/home_search_title_recipe" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/titleBar"
+        android:background="@color/c03"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp">
+<!--开门警告-->
+        <TextView
+            android:id="@+id/txtWarning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="25dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center_vertical"
+            android:drawablePadding="6dp"
+            android:drawableLeft="@mipmap/img_steamoven_noopen_door"
+            android:text="@string/device_working_not_open_door_prevent_burns"
+            android:textColor="#ffffff"
+            android:textSize="10sp"/>
+<!--开关-->
+        <RelativeLayout
+            android:id="@+id/linSwitch"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="22dp"
+            android:layout_marginBottom="25dp"
+            android:orientation="vertical" >
+<!--斜线-->
+            <ImageView
+                android:id="@+id/imgSwitch1"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_alignParentBottom="true"
+                android:src="@mipmap/img_steamoven_leanline_yellow"
+                android:layout_marginLeft="30dp"/>
+<!--开关 文字-->
+            <TextView
+                android:id="@+id/txtSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:text="@string/close_work"
+                android:textColor="#e9a60f"
+                android:textSize="18sp"/>
+<!--开关图标-->
+            <ImageView
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/imgSwitch"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_above="@id/txtSwitch"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/ic_device_finish_pic_circle"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="110dp"
+            android:layout_marginLeft="35dp">
+<!--中间圆圈-->
+            <ImageView
+                android:id="@+id/imgSpinCircle"
+                android:layout_width="260dp"
+                android:layout_height="260dp"
+                android:src="@mipmap/img_steamoven_circle_yellow"/>
+            <!--中间整箱图标-->
+            <ImageView
+                android:id="@+id/imgContent"
+                android:layout_width="260dp"
+                android:layout_height="260dp"
+                android:src="@mipmap/img_steamoven_content"/>
+<!--暂停-->
+            <ImageView
+                android:id="@+id/imgPause"
+                android:layout_width="260dp"
+                android:layout_height="260dp"
+                android:src="@mipmap/img_steamoven_pause"
+                android:visibility="gone"/>
+<!--完成图标-->
+            <ImageView
+                android:id="@+id/imgDone"
+                android:layout_width="260dp"
+                android:layout_height="260dp"
+                android:src="@mipmap/img_steamoven_finish"
+                android:visibility="gone"/>
+<!--“蒸”字-->
+            <TextView
+                android:id="@+id/workType1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:text="@string/device_steamOvenOne_zheng"
+                android:textColor="#e9a60f"
+                android:textSize="32sp"/>
+            <!--“自洁” “杀毒” “已完成” 三种文字-->
+            <TextView
+                android:id="@+id/workType2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="185dp"
+                android:layout_centerHorizontal="true"
+                android:text="@string/device_steamOvenOne_zheng"
+                android:textColor="#e9a60f"
+                android:textSize="32sp"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linTem"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="10">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3" >
+<!--预定温度设置-->
+                <TextView
+                    android:id="@+id/txtTemSet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="12dp"
+                    android:text="--"
+                    android:textSize="18sp"
+                    android:textColor="#ffffff"/>
+
+                <TextView
+                    android:id="@+id/txtTem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="17dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/temp"
+                    android:textSize="14sp"
+                    android:textColor="#ffffff"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_below="@id/txtTem"
+                    android:text="°C"
+                    android:textSize="14sp"
+                    android:textColor="#ffffff"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="-8dp"
+                    android:src="@mipmap/img_steamoven_work_leanline"
+                    android:layout_toLeftOf="@id/txtTem"/>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:background="@color/c19"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/c19" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4">
+
+                <TextView
+                    android:id="@+id/txtTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="45dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/time"
+                    android:textSize="14sp"
+                    android:textColor="#ffffff" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTime"
+                    android:layout_marginRight="45dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_alignParentRight="true"
+                    android:text="min"
+                    android:textSize="14sp"
+                    android:textColor="#ffffff"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="-8dp"
+                    android:src="@mipmap/img_steamoven_work_leanline"
+                    android:layout_toLeftOf="@id/txtTime"/>
+<!--预定时间设置-->
+                <TextView
+                    android:id="@+id/txtTimeSet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/txtTime"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="8dp"
+                    android:text="--"
+                    android:textSize="18sp"
+                    android:textColor="#ffffff"/>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:background="@color/c19"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/c19" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3">
+<!--水量文字-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="17dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/water"
+                    android:textSize="14sp"
+                    android:textColor="#ffffff"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/c19" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="10"
+            android:layout_below="@id/linTem" >
+<!--实时温度-->
+            <RelativeLayout
+                android:id="@+id/relCurTem"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="3">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true">
+                    <!--实时温度文字-->
+                    <TextView
+                        android:id="@+id/txtCurrentTem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:gravity="right|center_vertical"
+                        android:text="--"
+                        android:textSize="32sp"
+                        android:textColor="#ffffff"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:text="°C"
+                        android:textSize="24sp"
+                        android:textColor="#ffffff"
+                        android:visibility="gone"
+                        android:layout_toRightOf="@id/txtCurrentTem"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgCurTem"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/img_steamoven_reset"
+                    android:visibility="gone"/>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:background="@color/c19"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relCurTime"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true">
+<!--实时时间-->
+                    <TextView
+                        android:id="@+id/txtCurrentTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:gravity="right|center_vertical"
+                        android:text="--"
+                        android:textSize="32sp"
+                        android:textColor="#ffffff"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:text="min"
+                        android:visibility="gone"
+                        android:textSize="24sp"
+                        android:textColor="#ffffff"
+                        android:layout_toRightOf="@id/txtCurrentTime"/>
+
+                </LinearLayout>
+<!--时间设置-->
+                <ImageView
+                    android:id="@+id/imgCurTime"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/img_steamoven_reset"
+                    android:visibility="gone"/>
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40dp"
+                    android:background="@color/c19"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imgCurVolumn"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:src="@mipmap/img_steam_oven_volumn_has"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

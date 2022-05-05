@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <TextView
+        android:id="@+id/tv_stop_work"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:text="结束消毒"
+        android:textColor="#f8bf40"
+        android:textSize="38sp" />
+
+    <Button
+        android:id="@+id/btn_stop_work"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="#f8bf40"
+        android:text="确定"
+        android:textColor="#ffffff"
+        android:textSize="30sp" />
+
+</FrameLayout>

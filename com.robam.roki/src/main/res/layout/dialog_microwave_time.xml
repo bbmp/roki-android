@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#a5a5a5"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_device_microwave_normal_heatingic_white" />
+
+        <TextView
+            android:id="@+id/txtProMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="5dp"
+            android:text="快速加热"
+            android:textColor="@color/Gray_57"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#818181"
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp" />
+
+<!--    <com.robam.roki.ui.view.DeviceOvenTimeWheel
+        android:id="@+id/mic_quickheating_time"
+        style="@style/wheel_Mic_view_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />-->
+</LinearLayout>

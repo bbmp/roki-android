@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:background="#F5F5F5">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="215.5dp"
+        android:background="#FFFFFF">
+
+
+        <FrameLayout
+            android:layout_width="86.5dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp">
+
+
+            <ImageView
+                android:layout_width="86.5dp"
+                android:layout_height="28dp"
+                android:src="@mipmap/ic_hid_kit_other_bg" />
+
+            <TextView
+                android:id="@+id/tv_tag"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="dddd"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/tv_tag_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="114.5dp"
+            android:layout_marginTop="20dp"
+            android:text="dddd"
+            android:textColor="#826021"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="63dp"
+            android:background="#6F6F6F" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="78.5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="left"
+            android:textColor="#5D5D5D"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+</FrameLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <EditText
+        android:id="@+id/edtOldPwd"
+        style="@style/common_edit"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:hint="请输入原密码"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/edtNewPwd1"
+        style="@style/common_edit"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:hint="请输入新密码"
+        android:singleLine="true"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/edtNewPwd2"
+        style="@style/common_edit"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:hint="请再次输入新密码"
+        android:singleLine="true"
+        android:inputType="textPassword" />
+
+
+    <TextView
+        android:id="@+id/txtConfirm"
+        style="@style/common_button"
+        android:layout_width="match_parent"
+        android:layout_marginTop="45dp" />
+
+</LinearLayout>

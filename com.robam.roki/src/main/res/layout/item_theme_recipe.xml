@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@drawable/shape_recipe_item_bg"
+    android:layout_margin="10dp"
+    android:layout_height="260dp">
+
+    <ImageView
+        android:id="@+id/iv_theme_item_img"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@mipmap/img_default"
+        android:scaleType="centerCrop"
+         />
+    <TextView
+        android:id="@+id/tv_theme_recipe_number"
+        android:text="5道菜谱"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/roki_background_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/iv_theme_item_img"
+        android:layout_alignBottom="@+id/iv_theme_item_img"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="15dp"
+        android:textSize="14sp"
+        android:background="@drawable/round_button_shape_bg_2"
+  />
+    <TextView
+        android:id="@+id/tv_theme_recipe_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="11dp"
+        android:layout_below="@id/iv_theme_item_img"
+        android:text="蜜汁烤鸡翅"
+        style="@style/RokiImportantText"
+ />
+
+    <TextView
+        android:id="@+id/tv_theme_recipe_desc"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="11dp"
+        android:layout_below="@id/tv_theme_recipe_name"
+        android:singleLine="true"
+        android:text="阅读 10.1w"
+        style="@style/RokiTipsText"
+ />
+
+    <ImageView
+        android:id="@+id/iv_love_theme"
+        android:layout_width="20dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        app:srcCompat="@drawable/ic_baseline_favorite_24" />
+
+</RelativeLayout>

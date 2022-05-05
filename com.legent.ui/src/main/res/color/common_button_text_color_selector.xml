@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:color="@color/common_button_text_selected" android:state_selected="true" />
+    <item android:color="@color/common_button_text_pressed" android:state_pressed="true" />
+    <item android:color="@color/common_button_text_checked" android:state_checked="true" />
+    <item android:color="@color/common_button_text_enabled" android:state_enabled="true" />
+    <item android:color="@color/common_button_text_disabled" android:state_enabled="false" />
+    <item android:color="@color/common_button_text" />
+
+</selector>

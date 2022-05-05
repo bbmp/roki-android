@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="rokidata" />
+    <version value="4" />
+    <list>
+        <mapping class="com.robam.roki.db.model.CookingStepsModel" />
+        <mapping class="com.robam.roki.db.model.RecipeBean" />
+        <mapping class="com.robam.roki.db.model.RecipeStepBean" />
+    </list>
+    <storage value="android/data/com.robam.roki/files"/>
+</litepal>

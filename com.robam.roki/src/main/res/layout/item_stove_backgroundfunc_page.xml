@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="130dp"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/itemView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:id="@+id/iv_model_img"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:src="@mipmap/ic_rika_fan_grar"/>
+
+        <TextView
+            android:id="@+id/tv_model_name"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:text="档位"
+            android:textColor="#090303"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_model_time"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:text="--"
+            android:textColor="#090303"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

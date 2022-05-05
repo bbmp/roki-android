@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Black_65"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/White_90"
+            android:layout_height="230dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="33dp"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                android:text="未检测到灶具"
+                android:textColor="@color/Black_80"
+                android:textSize="22sp" />
+
+
+            <TextView
+                android:id="@+id/tv_cooking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="17dp"
+                android:layout_marginTop="33dp"
+                android:padding="10dp"
+                android:text="继续烹饪"
+                android:textColor="@color/c11"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:id="@+id/tv_can_go"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="17dp"
+                android:layout_marginTop="33dp"
+                android:padding="10dp"
+                android:text="进去看看"
+                android:textColor="@color/c11"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.robam.roki.ui.view.networkoptimization.GridChildView
+        android:id="@+id/gridChildView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:textSize="20sp" />
+    <View
+        android:layout_below="@+id/gridChildView"
+        android:background="@color/expandablelistview_background"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+</RelativeLayout>

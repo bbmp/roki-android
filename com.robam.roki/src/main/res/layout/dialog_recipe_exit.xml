@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="退出菜谱"
+        android:textSize="30sp"
+        android:textColor="#e9a60f"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/showCook"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="晒厨艺"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:background="@color/c11" />
+
+    <TextView
+        android:id="@+id/txtExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="确认退出"
+        android:textSize="22sp"
+        android:textColor="#969696"/>
+
+</LinearLayout>

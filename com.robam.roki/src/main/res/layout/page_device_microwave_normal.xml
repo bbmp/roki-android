@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+        <!--头部微波炉logo-->
+        <ImageView
+            android:id="@+id/mic_imgHead"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_device_microwave_home_black" />
+        <!--头部左侧-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/mic_imgHead"
+            android:layout_marginRight="7dp"
+            android:layout_toLeftOf="@+id/mic_imgHead"
+            android:gravity="right"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="微波炉"
+                android:textColor="@color/c03"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Microwave"
+                android:textColor="@color/c03"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+        <!--微波炉菜谱-->
+        <LinearLayout
+            android:id="@+id/mic_txtRecipe"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mic_imgHead"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="微波炉"
+                android:textColor="@color/home_bg"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="菜谱"
+                android:textColor="@color/home_bg"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+    <!--断网设置-->
+    <include
+        android:id="@+id/disconnectHintView"
+        layout="@layout/view_device_disconnect_hint" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:background="@color/device_board_bg"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="5dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="35dp"
+            android:paddingTop="15dp"
+            android:stretchColumns="*">
+            <!--快热模式-->
+            <LinearLayout
+                android:id="@+id/mic_llProMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/mic_imgProMode"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_device_microwave_normal_quickheating_yellow" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp">
+
+                    <ImageView
+                        android:id="@+id/mic_quickheat_img"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="2dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_device_microwave_normal_heatingic_white" />
+
+                    <TextView
+                        android:id="@+id/txtProMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="2dp"
+                        android:text="快速加热"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--第一行-->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1.45"
+                android:paddingBottom="18dp">
+                <!--肉-->
+                <LinearLayout
+                    android:id="@+id/mic_catalog_meat_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/mic_catalog_meat_img"
+                        android:layout_width="47dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_device_microwave_normal_meat" />
+
+                    <TextView
+                        android:id="@+id/mic_catalog_meat_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="牛肉"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--鸡-->
+                <LinearLayout
+                    android:id="@+id/mic_catalog_chicken_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/mic_catalog_chicken_img"
+                        android:layout_width="47dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_device_microwave_normal_checken" />
+
+                    <TextView
+                        android:id="@+id/mic_catalog_chicken_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="烤全鸡"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--肉串-->
+                <LinearLayout
+                    android:id="@+id/mic_catalog_kebab_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/mic_catalog_kebab_img"
+                        android:layout_width="47dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_device_microwave_normal_kebab" />
+
+                    <TextView
+                        android:id="@+id/mic_catalog_kebab_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="肉串"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </TableRow>
+            <!--第二行-->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.65"
+                android:paddingBottom="18dp"
+                android:paddingTop="10dp">
+                <!--米饭-->
+                <LinearLayout
+                    android:id="@+id/mic_catalog_rice_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/mic_catalog_rice_img"
+                        android:layout_width="47dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_device_microwave_normal_rice" />
+
+                    <TextView
+                        android:id="@+id/mic_catalog_rice_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="煮饭"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--粥-->
+                <LinearLayout
+                    android:id="@+id/mic_catalog_porridge_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/mic_catalog_porridge_img"
+                        android:layout_width="47dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_device_microwave_normal_porridge" />
+
+                    <TextView
+                        android:id="@+id/mic_catalog_porridge_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="煮粥"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--牛奶-->
+                <LinearLayout
+                    android:id="@+id/mic_catalog_milk_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/mic_catalog_milk_img"
+                        android:layout_width="47dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_device_microwave_normal_baotang" />
+
+                    <TextView
+                        android:id="@+id/mic_catalog_milk_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="煲汤"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </TableRow>
+            <!--第三行-->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.65"
+                android:paddingBottom="15dp"
+                android:paddingTop="10dp">
+                <!--面包-->
+                <LinearLayout
+                    android:id="@+id/mic_catalog_bread_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/mic_catalog_bread_img"
+                        android:layout_width="47dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_device_microwave_normal_bread" />
+
+                    <TextView
+                        android:id="@+id/mic_catalog_bread_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="面包"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--蔬菜-->
+                <LinearLayout
+                    android:id="@+id/mic_catalog_vegetables_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/mic_catalog_vegetables_img"
+                        android:layout_width="47dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_device_microwave_normal_vegetables" />
+
+                    <TextView
+                        android:id="@+id/mic_catalog_vegetables_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="蔬菜"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--鱼-->
+                <LinearLayout
+                    android:id="@+id/mic_catalog_fish_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/mic_catalog_fish_img"
+                        android:layout_width="47dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_device_microwave_normal_fish" />
+
+                    <TextView
+                        android:id="@+id/mic_catalog_fish_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="鱼"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </TableRow>
+            <!--专业模式-->
+            <LinearLayout
+                android:id="@+id/mic_catalog_profession_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="0dp">
+
+                <ImageView
+                    android:id="@+id/mic_catalog_profession_img"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_device_microwave_normal_profession" />
+
+                <TextView
+                    android:id="@+id/mic_catalog_profession_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="专业模式"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </TableLayout>
+
+    </RelativeLayout>
+</LinearLayout>

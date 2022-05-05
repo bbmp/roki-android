@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="37dp"
+        android:paddingRight="37dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="1"
+                android:textColor="@color/c01"
+                android:textSize="70sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:text="请长按厨电上"
+                android:textColor="@color/c05"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_device_add_by_easylink_wifi" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="请在WIFI状态下进行此操作"
+            android:textColor="@color/c07"
+            android:textSize="9sp" />
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="15dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_device_add_by_easylink_down_arrow" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/imgFlash"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/shape_device_add_by_easylink_wifi_flash" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgFlash"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="该图标闪烁，并会听到哔一声。"
+                    android:textColor="@color/c01"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom"
+                android:text="2"
+                android:textColor="@color/c01"
+                android:textSize="70sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtWifi"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_edit_height"
+            android:layout_marginTop="25dp"
+            android:background="#fff7e2"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="wifi"
+            android:textColor="@color/c05"
+            android:textSize="12sp" />
+
+
+        <EditText
+            android:id="@+id/edtPwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_edit_height"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/shape_device_add_by_easylink_pwd_bg"
+            android:gravity="center"
+            android:hint="请告诉厨电您家的WIFI密码"
+            android:singleLine="true"
+            android:textColor="@color/c05"
+            android:textColorHint="@color/c01"
+            android:textSize="12sp" />
+
+
+        <ToggleButton
+            android:id="@+id/chkShowPwd"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/common_switch_selector"
+            android:checked="true"
+            android:textOff=""
+            android:textOn="" />
+
+
+        <TextView
+            android:id="@+id/txtConnect"
+            style="@style/common_button"
+            android:layout_width="match_parent"
+            android:layout_marginTop="17dp"
+            android:text="确认连接" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="21dp"
+            android:text="温馨提醒：一键连接开启后，其它已连接手机暂时无法操作厨电，完成连接后，所有连接手机均可正常使用。"
+            android:textColor="@color/c06"
+            android:textSize="10sp" />
+    </LinearLayout>
+</ScrollView>

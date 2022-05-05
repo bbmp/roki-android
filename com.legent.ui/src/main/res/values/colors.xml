@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- base -->
+    <color name="main_background">#fff0f0f0</color>
+    <color name="default_background">@color/main_background</color>
+    <color name="default_background_title">@color/main_background</color>
+
+    <!-- divider -->
+    <color name="common_divide_background">#d2d2d2</color>
+    <!-- view -->
+    <color name="common_view_background">@color/Transparent</color>
+    <color name="common_view_background_pressed">#1A000000</color>
+    <!-- divider -->
+    <!-- divider -->
+    <!-- divider -->
+    <color name="common_setting_divide_background">#fdf6e7</color>
+    <!-- button -->
+    <color name="common_button_background">@color/DarkGray</color>
+    <color name="common_button_background_disabled">@color/Gray</color>
+    <color name="common_button_background_pressed">@color/common_view_background_pressed</color>
+    <color name="common_button_background_selected">@color/Yellow</color>
+    <color name="common_button_text">@color/White</color>
+    <color name="common_button_text_disabled">@color/Gray</color>
+    <color name="common_button_text_enabled">@color/common_button_text</color>
+    <color name="common_button_text_pressed">@color/DarkBlue</color>
+    <color name="common_button_text_selected">@color/common_button_text_pressed</color>
+    <color name="common_button_text_checked">@color/common_button_text_pressed</color>
+
+
+    <!-- text -->
+    <color name="common_text">@color/Black</color>
+    <color name="common_text_disabled">#a8a8a8</color>
+    <color name="common_text_enabled">@color/common_text</color>
+    <color name="common_text_pressed">@color/common_text</color>
+    <color name="common_text_selected">@color/common_text</color>
+    <color name="common_text_focused">@color/common_text</color>
+    <color name="common_text_checked">@color/common_text</color>
+    <!--净水器报警对话框-->
+    <color name="waterpurifier_alarm">#E6072a48</color>
+
+    <!-- 颜色列表 -->
+    <color name="Transparent">#00000000</color>
+    <color name="Black">#000</color>
+    <color name="Blue">#0000FF</color>
+    <color name="DarkBlue">#00008B</color>
+    <color name="DarkGray">#A9A9A9</color>
+    <color name="GhostWhite">#F8F8FF</color>
+    <color name="Gray">#808080</color>
+    <color name="Orange">#FFA500</color>
+    <color name="Red">#FF0000</color>
+    <color name="White">#FFFFFF</color>
+    <color name="Yellow">#FFFF00</color>
+</resources>

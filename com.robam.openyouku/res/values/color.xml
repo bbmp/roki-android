@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="transparent">#00000000</color>
+
+    <!-- 播放器控制 -->
+    <color name="player_controller_background">#bf000000</color>
+
+    <!-- 通用默认颜色 -->
+
+    <!-- youku dialog cancel button -->
+
+    <!-- tudou dialog color -->
+	<color name="tudou_dialog_title">#3c3c3c</color>
+    <color name="tudou_dialog_sub_title">#898989</color>
+    <color name="tudou_dialog_line">#d9d9d9</color>
+    <color name="tudou_dialog_button">#ff6600</color>
+
+    <!-- youku ad icon background color -->
+
+</resources>

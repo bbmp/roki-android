@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llOvenPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+            android:id="@+id/imgHead"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_device_oven_logo_gray" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imgHead"
+            android:layout_marginRight="7dp"
+            android:layout_toLeftOf="@+id/imgHead"
+            android:gravity="right"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/device_oven_name"
+                android:textColor="@color/c03"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Oven"
+                android:textColor="@color/c03"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/txtRecipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imgHead"
+            android:layout_centerVertical="true"
+            android:maxEms="3"
+            android:gravity="center"
+            android:text="@string/device_oven_name_recipe"
+            android:textColor="@color/home_bg"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/disconnectHintView"
+        layout="@layout/view_device_disconnect_hint" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:background="@color/device_board_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="150dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/device_open_below"
+                android:textColor="@color/c11"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:src="@mipmap/ic_device_oven_started" />
+
+        </LinearLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="35dp"
+            android:paddingTop="23dp"
+            android:stretchColumns="*">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="18dp">
+
+                <LinearLayout
+                    android:id="@+id/chickenWingItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgChickenWing"
+                        android:layout_width="47dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/ic_device_oven_chicken_wing_unworking" />
+
+                    <TextView
+                        android:id="@+id/titleChickenWing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_jichi"
+                        android:textColor="@color/Gray_57"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+
+                <LinearLayout
+                    android:id="@+id/cakeItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgCake"
+                        android:layout_width="47dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/ic_device_oven_cake_unworking" />
+
+                    <TextView
+                        android:id="@+id/titleCake"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_dangao"
+                        android:textColor="@color/Gray_57"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+
+                <LinearLayout
+                    android:id="@+id/breadItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgBread"
+                        android:layout_width="47dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/ic_device_oven_bread_unworking" />
+
+                    <TextView
+                        android:id="@+id/titleBread"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_mianbao"
+                        android:textColor="@color/Gray_57"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="18dp">
+
+                <LinearLayout
+                    android:id="@+id/streakyPorkItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgStreakPork"
+                        android:layout_width="47dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/ic_device_oven_streaky_pork_unworking" />
+
+                    <TextView
+                        android:id="@+id/titleStreakPork"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_wuhuarou"
+                        android:textColor="@color/Gray_57"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+
+                <LinearLayout
+                    android:id="@+id/steakItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgSteak"
+                        android:layout_width="47dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/ic_device_oven_steak_unworking" />
+
+                    <TextView
+                        android:id="@+id/titleSteak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_niupai"
+                        android:textColor="@color/Gray_57"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+
+                <LinearLayout
+                    android:id="@+id/pisaItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgPisa"
+                        android:layout_width="47dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/ic_device_oven_pisa_unworking" />
+
+                    <TextView
+                        android:id="@+id/titlePisa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_pisa"
+                        android:textColor="@color/Gray_57"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
+
+                <LinearLayout
+                    android:id="@+id/seafoodItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgSeafood"
+                        android:layout_width="47dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/ic_device_oven_seafood_unworking" />
+
+                    <TextView
+                        android:id="@+id/titleSeafood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_haixian"
+                        android:textColor="@color/Gray_57"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+
+                <LinearLayout
+                    android:id="@+id/cookieItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgCookie"
+                        android:layout_width="47dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/ic_device_oven_cookie_unworking" />
+
+                    <TextView
+                        android:id="@+id/titleCookie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_binggan"
+                        android:textColor="@color/Gray_57"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="43dp"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+
+                <LinearLayout
+                    android:id="@+id/vegetableItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgVegetable"
+                        android:layout_width="47dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/ic_device_oven_vegetable_unworking" />
+
+                    <TextView
+                        android:id="@+id/titleVegetable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_steam_model_shucai"
+                        android:textColor="@color/Gray_57"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:id="@+id/llProMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tableLayout"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgProMode"
+                android:layout_width="47dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/ic_device_oven_normal_unworking" />
+
+            <TextView
+                android:id="@+id/txtProMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="2dp"
+                android:text="@string/device_oven_model_experts"
+                android:textColor="@color/Gray_57"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/llProMode"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="21dp">
+
+            <include
+                android:id="@+id/selfCleaningButton"
+                layout="@layout/view_device_oven_self_cleaning_button"></include>
+
+
+            <RelativeLayout
+                android:id="@+id/relSwitch"
+                android:layout_width="130dp"
+                android:layout_height="110dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="22dp">
+
+                <ImageView
+                    android:id="@+id/imgSwitchLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="28dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_device_oven_leanline_white" />
+
+                <TextView
+                    android:id="@+id/txtSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/device_close"
+                    android:textColor="@color/c14"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/imgSwitch"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/txtSwitch"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="8dp"
+                    android:src="@mipmap/ic_device_oven_start_white" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

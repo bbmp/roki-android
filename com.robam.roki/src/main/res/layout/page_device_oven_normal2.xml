@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llOvenPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="2dp">
+    <!--标题部分-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <ImageView
+            android:id="@+id/oven026_return"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="3dp"
+            android:paddingTop="2dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/oven026_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textColor="#5D5D5D"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/oven026_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:text=""
+            android:textColor="#5D5D5D"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+            android:id="@+id/imgHead"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_device_oven_logo_gray" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imgHead"
+            android:layout_marginRight="7dp"
+            android:layout_toLeftOf="@+id/imgHead"
+            android:gravity="right"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/device_oven_name"
+                android:textColor="@color/c03"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Oven"
+                android:textColor="@color/c03"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtRecipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/imgHead"
+            android:gravity="center"
+            android:maxEms="4"
+            android:text="最近使用"
+            android:textColor="@color/home_bg"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/disconnectHintView"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/c02"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_device_disconnect_warm_hint" />
+
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/device_not_offline_text"
+                android:textColor="#fff"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/oven026_main_panel"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="22dp"
+            android:layout_weight="5"
+            android:background="#343434"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp">
+                <!--牛肉-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_beef"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_beef"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_beef_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_beef"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_niupai"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="match_parent"
+                    android:rotation="-13"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--面包-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_bread"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_bread"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_bread_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_bread"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_mianbao"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="match_parent"
+                    android:rotation="-13"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--饼干-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_biscuits"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_biscuits"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_biscuits_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_biscuits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_binggan"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp">
+                <!--鸡翅-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_chicken"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_chicken"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_chicken_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_chicken"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_jichi"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="match_parent"
+                    android:rotation="-13"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--蛋糕-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_cake"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_cake"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_cake_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_cake"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_dangao"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="match_parent"
+                    android:rotation="-13"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--披萨-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_pizza"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_pizza"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_pizza_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_pizza"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_pisa"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp">
+                <!--虾-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_shrimp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_shrimp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_shrimp_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_shrimp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_xia"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="match_parent"
+                    android:rotation="-13"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--鱼-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_fish"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_fish"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_fish_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_fish"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_yu"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="match_parent"
+                    android:rotation="-13"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--红薯-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_sweetpotato"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_sweetpotato"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_sweetpotato_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_sweetpotato"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_hongshu"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp">
+                <!--玉米-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_corn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_corn"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_corn_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_corn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_yumi"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="match_parent"
+                    android:rotation="-13"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--五花肉-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_wuhuarou"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_wuhuarou"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_wuhuarou_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_wuhuarou"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_oven_model_wuhuarou"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="match_parent"
+                    android:rotation="-13"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_device_oven_leanline_gray" />
+                <!--蔬菜-->
+                <LinearLayout
+                    android:id="@+id/oven026_main_ll_vegetables"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/oven026_main_img_vegetables"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_026ovenmain_vegetables_white" />
+
+                    <TextView
+                        android:id="@+id/oven026_main_tv_vegetables"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/device_steam_model_shucai"
+                        android:textColor="@color/c02"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.3"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="15dp">
+
+                    <FrameLayout
+                        android:id="@+id/oven026_main_fram_switch"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@mipmap/ic_device_oven_leanline_gray">
+
+                        <LinearLayout
+                            android:id="@+id/oven026_main_ll_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|right"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/oven026_main_img_switch"
+                                android:layout_width="28dp"
+                                android:layout_height="30dp"
+                                android:scaleType="centerInside"
+                                android:src="@mipmap/ic_device_oven_start_white" />
+
+                            <TextView
+                                android:id="@+id/oven026_main_tv_switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/device_close"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:id="@+id/oven026_main_ll_profession"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/oven026_main_img_profession"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:scaleType="centerInside"
+                            android:src="@mipmap/ic_026ovenmain_profession_white" />
+
+                        <TextView
+                            android:id="@+id/oven026_main_tv1_profession"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/majors"
+                            android:textColor="@color/c02"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/oven026_main_tv2_profession"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/model"
+                            android:textColor="@color/c02"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/oven026_main_ll_exp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/oven026_main_img_exp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:scaleType="centerInside"
+                            android:src="@mipmap/ic_026ovenmain_exp_white" />
+
+                        <TextView
+                            android:id="@+id/oven026_main_tv1_exp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/temp_2"
+                            android:textColor="@color/c02"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/oven026_main_tv2_exp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/control_2"
+                            android:textColor="@color/c02"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

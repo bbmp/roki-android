@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+
+        <ImageView
+            android:id="@+id/mode_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/selector_rika_item_bg"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/c41"
+            android:textSize="20sp"
+            tools:text="虚拟场景模式" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_full_ventilation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#f9bf42"
+                android:textSize="24sp"
+                tools:text="全程换气" />
+
+            <com.legent.ui.ext.views.CheckBoxView
+                android:id="@+id/tv_full_ventilation_cb"
+                style="@style/device_check_box_style"
+                android:layout_alignParentRight="true"
+                android:checked="true"
+                android:gravity="center_vertical" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_full_ventilation_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="#c2c2c2"
+            android:textSize="16sp"
+            tools:text="烤箱排气" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_open_door_ventilation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#f9bf42"
+                android:textSize="24sp"
+                tools:text="开门换气" />
+
+            <com.legent.ui.ext.views.CheckBoxView
+                android:id="@+id/cb_open_door_ventilation_cb"
+                style="@style/device_check_box_style"
+                android:layout_alignParentRight="true"
+                android:checked="true"
+                android:gravity="center_vertical" />
+
+        </RelativeLayout>
+
+        <am.widget.wraplayout.WrapLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:horizontalSpacing="10dp"
+            android:orientation="horizontal"
+            app:wlyGravity="center">
+
+            <TextView
+                android:id="@+id/tv_content_pre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#c2c2c2"
+                android:textSize="16sp"
+                tools:text="烤箱排气的同时烟机换气" />
+
+            <TextView
+                android:id="@+id/tv_content_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_line_gray"
+                android:gravity="bottom"
+                android:textColor="@color/c11"
+                android:textSize="16sp"
+                tools:text="5" />
+
+            <TextView
+                android:id="@+id/tv_content_behind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#c2c2c2"
+                android:textSize="16sp"
+                tools:text="后关闭" />
+        </am.widget.wraplayout.WrapLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

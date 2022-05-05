@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24"/>
+
+        <TextView
+            android:id="@+id/tv_device_model_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/device_more"
+            android:textColor="@color/c41"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="34dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <FrameLayout
+            android:id="@+id/item1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:foreground="@drawable/sel_common_bg_press"
+            android:background="@drawable/shape_recyclerview_item_white_bg">
+
+            <ImageView
+                android:id="@+id/iv1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/img_message_consulting"/>
+
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="37dp"
+                android:gravity="center"
+                android:text="留言咨询"
+                android:textColor="@color/c41"
+                android:textSize="18sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@mipmap/img_more_arrow"/>
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/item2"
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:foreground="@drawable/sel_common_bg_press"
+            android:background="@drawable/shape_recyclerview_item_white_bg">
+
+            <ImageView
+                android:id="@+id/iv2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/img_after_sales"/>
+
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="37dp"
+                android:gravity="center"
+                android:text="一键售后"
+                android:textColor="@color/c41"
+                android:textSize="18sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@mipmap/img_more_arrow"/>
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/item3"
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:foreground="@drawable/sel_common_bg_press"
+            android:background="@drawable/shape_recyclerview_item_white_bg">
+
+            <ImageView
+                android:id="@+id/iv3"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/ic_share_common"/>
+
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="37dp"
+                android:gravity="center"
+                android:text="分享控制权"
+                android:textColor="@color/c41"
+                android:textSize="18sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@mipmap/img_more_arrow"/>
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/item4"
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:foreground="@drawable/sel_common_bg_press"
+            android:background="@drawable/shape_recyclerview_item_white_bg">
+
+            <ImageView
+                android:id="@+id/iv4"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/ic_voice_common"/>
+
+
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="37dp"
+                android:gravity="center"
+                android:text="语音设置"
+                android:textColor="@color/c41"
+                android:textSize="18sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:id="@+id/t1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="默认"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
+                    />
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@mipmap/img_more_arrow"/>
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/item5"
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:foreground="@drawable/sel_common_bg_press"
+            android:background="@drawable/shape_recyclerview_item_white_bg">
+
+            <ImageView
+                android:id="@+id/iv5"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/ic_voice_control_common"/>
+
+
+            <TextView
+                android:id="@+id/tv5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="37dp"
+                android:gravity="center"
+                android:text="音量设置"
+                android:textColor="@color/c41"
+                android:textSize="18sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:id="@+id/t2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="默认"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
+                    />
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@mipmap/img_more_arrow"/>
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/item6"
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:foreground="@drawable/sel_common_bg_press"
+            android:background="@drawable/shape_recyclerview_item_white_bg">
+
+            <ImageView
+                android:id="@+id/iv6"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/img_product_information"/>
+
+
+            <TextView
+                android:id="@+id/tv6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="37dp"
+                android:gravity="center"
+                android:text="产品信息"
+                android:textColor="@color/c41"
+                android:textSize="18sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@mipmap/img_more_arrow"/>
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/item7"
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:foreground="@drawable/sel_common_bg_press"
+            android:background="@drawable/shape_recyclerview_item_white_bg">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/cooker_update"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="37dp"
+                android:gravity="center"
+                android:text="检查固件升级"
+                android:textColor="@color/c41"
+                android:textSize="18sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@mipmap/img_more_arrow"/>
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

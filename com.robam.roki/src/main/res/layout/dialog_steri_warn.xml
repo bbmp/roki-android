@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_above="@+id/tv_title"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp"
+        android:src="@mipmap/img_steri_wran_door" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="无法显示消毒状况"
+        android:textColor="#f8bf40"
+        android:textSize="30sp" />
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="*温度传感器出现问题"
+        android:textColor="#f22f15"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_sale"
+        android:layout_width="160dp"
+        android:layout_height="70dp"
+        android:background="#f8bf40"
+        android:layout_below="@+id/tv_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="一键售后"
+        android:textColor="#ffffff"
+        android:textSize="30sp" />
+</RelativeLayout>

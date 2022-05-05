@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/img_user_info_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="45dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="590"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/White_90"
+                android:gravity="bottom"
+                android:paddingBottom="10dp"
+                android:paddingLeft="40dp">
+
+                <com.robam.roki.ui.view.UserGenderView
+                    android:id="@+id/genderBoyView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:gender="false" />
+
+                <com.robam.roki.ui.view.UserGenderView
+                    android:id="@+id/genderGirlView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    app:gender="true" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/imgFigure"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="13dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_user_default_figure" />
+
+        <TextView
+            android:id="@+id/edtName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@+id/imgFigure"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/imgFigure"
+            android:background="@drawable/common_view_background_selector"
+            android:gravity="center_vertical|left"
+            android:hint="请输入昵称"
+            android:textColor="#232323"
+            android:textSize="15sp"
+            android:singleLine="true"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="500"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White_90"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtPhone"
+                style="@style/user_text_style"
+                android:text="15057182808"
+                android:singleLine="true"
+                />
+
+
+            <TextView
+                android:id="@+id/txtEmail"
+                style="@style/user_text_style"
+                android:layout_marginTop="2dp"
+                android:text="abc@126.com"
+                android:singleLine="true"
+                />
+
+            <TextView
+                android:id="@+id/txtPwd"
+                style="@style/user_text_style"
+                android:layout_marginTop="2dp"
+                android:visibility="gone"
+                android:text="修改密码"
+                android:singleLine="true"
+                />
+
+
+            <TextView
+                android:id="@+id/txtLogout"
+                style="@style/common_button"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="#33f41f1f"
+                android:text="退出登录" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

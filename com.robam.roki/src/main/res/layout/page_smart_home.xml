@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:roki="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/White">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="#171717"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/selector_rika_item_bg"
+            android:src="@mipmap/icon_device_more" />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_smart_bg"
+        android:layout_width="match_parent"
+        android:layout_height="195dp"
+        android:scaleType="fitXY" />
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/id_tab"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        roki:pstsIndicatorColor="#F9BF42"
+        roki:pstsTabTextSize="17sp"
+        roki:pstsTabTextColor="#999999"
+        roki:pstsSelectedTabTextColor="#222222"
+        roki:pstsSelectedTabTextSize="16sp"/>
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
+
+
+
+</LinearLayout>

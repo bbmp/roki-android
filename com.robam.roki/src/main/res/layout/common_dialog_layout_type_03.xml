@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:background="@drawable/common_dialog_bottom_bg_with"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:textColor="@color/c30"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_centerVertical="true"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="确定"
+                android:textColor="@color/c30"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_centerVertical="true"
+                android:textSize="18sp"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/c31"/>
+
+        <com.robam.roki.ui.view.wheelview.LoopView
+            android:id="@+id/wheel_view"
+            android:layout_width="130dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            android:layout_height="155dp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:layout_marginTop="10dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        >
+
+        <ImageView
+            android:id="@+id/check_show1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/cooker_update_dot_gray"
+            />
+
+        <TextView
+            android:id="@+id/step_show1"
+            android:layout_marginLeft="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="下载升级文件"
+            android:textSize="18sp"
+            android:textColor="#a1a1a1"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="15dp"
+        >
+
+        <ImageView
+            android:id="@+id/check_show2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/cooker_update_dot_gray"
+            />
+
+        <TextView
+            android:id="@+id/step_show2"
+            android:layout_marginLeft="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正在升级"
+            android:textSize="18sp"
+            android:textColor="#a1a1a1"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="15dp"
+        >
+
+        <ImageView
+            android:id="@+id/check_show3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/cooker_update_dot_gray"
+            />
+
+        <TextView
+            android:id="@+id/step_show3"
+            android:layout_marginLeft="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="升级成功"
+            android:textSize="18sp"
+            android:textColor="#a1a1a1"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

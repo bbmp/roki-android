@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    >
+
+    <ImageView
+        android:id="@+id/water_purifiy_install_return2"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="27dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/img_waterpurifiy_install_return"
+        />
+    <TextView
+        android:gravity="center_horizontal"
+        android:layout_marginTop="56dp"
+        android:id="@+id/water_purifiy_install_text"
+        android:layout_below="@id/water_purifiy_install_return2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/water_purifiy_install_title"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        />
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/water_purifiy_install_text"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/img_waterpurifiy_install_line"
+        />
+
+    <!--文字设置-->
+    <LinearLayout
+        android:id="@+id/waterpurifiy_install_ll"
+        android:layout_below="@id/water_purifiy_install_text"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_below="@id/waterpurifiy_install_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#880000"
+            android:text="换装步骤："
+            android:textSize="15sp"
+            android:layout_marginLeft="35dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:lines="3"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="@string/waterpurifier_install_text1"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:lines="2"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="@string/waterpurifier_install_text2"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:lines="1"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="@string/waterpurifier_install_text3"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:lines="3"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="@string/waterpurifier_install_text4"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:lines="1"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="@string/waterpurifier_install_text5"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:lines="2"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="@string/waterpurifier_install_text6"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:lines="2"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="@string/waterpurifier_install_text7"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:lines="3"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="@string/waterpurifier_install_text8"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/waterpurifiy_install_lead2"
+            />
+
+        <ImageView
+            android:layout_marginLeft="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/waterpurifiy_install_lead1"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

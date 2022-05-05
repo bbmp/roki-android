@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_kitchen"
+              android:layout_width="match_parent"
+              android:layout_height="35dp"
+              android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="2.5dp"
+        android:background="@drawable/selector_kitchen_bg">
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/img_intelligence_knowledge_text"/>
+
+        <TextView
+            android:id="@+id/tv_dec"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="44.5dp"
+            android:gravity="left|center"
+            android:lines="1"
+            android:text=""
+            android:textColor="@color/c61"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="2.5dp"
+            android:src="@mipmap/img_intelligence_knowledge_arrow"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

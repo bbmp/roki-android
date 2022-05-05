@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity">
+    <View
+        android:id="@+id/v1"
+        android:layout_width="6dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:background="#36fcfa" />
+    <View
+        android:id="@+id/v2"
+        android:layout_width="6dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/v1"
+        android:layout_marginLeft="2dp"
+        android:background="#36fcfa" />
+    <View
+        android:id="@+id/v3"
+        android:layout_width="6dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/v2"
+        android:layout_marginLeft="2dp"
+        android:background="#36fcfa" />
+    <View
+        android:id="@+id/v4"
+        android:layout_width="6dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/v3"
+        android:layout_marginLeft="2dp"
+        android:background="#36fcfa" />
+    <View
+        android:id="@+id/v5"
+        android:layout_width="6dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/v4"
+        android:layout_marginLeft="2dp"
+        android:background="#36fcfa" />
+    <View
+        android:id="@+id/v6"
+        android:layout_width="6dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/v5"
+        android:layout_marginLeft="2dp"
+        android:background="#36fcfa" />
+    <View
+        android:id="@+id/v7"
+        android:layout_width="6dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/v6"
+        android:layout_marginLeft="2dp"
+        android:background="#36fcfa" />
+    <View
+        android:id="@+id/v8"
+        android:layout_width="6dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/v7"
+        android:layout_marginLeft="2dp"
+        android:background="#36fcfa" />
+
+</RelativeLayout>

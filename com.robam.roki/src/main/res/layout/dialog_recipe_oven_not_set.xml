@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:gravity="center_horizontal"
+    android:paddingBottom="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="电烤箱正在工作中"
+        android:layout_marginTop="45dp"
+        android:textSize="30sp"
+        android:textColor="#e9a60f"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="须结束工作才能自动设置电烤箱"
+        android:textColor="#e9a60f"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/txtIknow"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="知道了"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:background="@color/c11" />
+
+</LinearLayout>

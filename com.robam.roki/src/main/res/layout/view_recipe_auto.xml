@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:paddingTop="15dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rl_image_video"
+        android:layout_width="match_parent"
+        android:layout_height="350dp">
+
+        <com.robam.roki.ui.view.MyViewPager
+            android:id="@+id/viewpage_show_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/mode_show"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_foot_week"
+            >
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:padding="10dp"-->
+<!--        android:orientation="vertical"-->
+<!--        >-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/speak_show"-->
+<!--            android:layout_width="35dp"-->
+<!--            android:layout_height="35dp"-->
+<!--            android:src="@mipmap/recipe_speaker"-->
+<!--            android:visibility="invisible"-->
+<!--            />-->
+
+        <com.robam.roki.ui.widget.view.TListView
+            android:id="@+id/recipe_step_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:choiceMode="singleChoice"
+            android:divider="@color/transparent"
+            android:listSelector="#00000000"
+            />
+
+<!--    </LinearLayout>-->
+
+</LinearLayout>

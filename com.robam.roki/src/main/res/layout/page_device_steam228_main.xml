@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="2dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <ImageView
+            android:id="@+id/oven026_return"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="3dp"
+            android:paddingTop="2dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/oven026_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textColor="#5D5D5D"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/oven026_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:text=" "
+            android:textColor="#5D5D5D"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+        <!--头部微波炉logo-->
+        <ImageView
+            android:id="@+id/mic_imgHead"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_steamoven" />
+        <!--头部左侧-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/mic_imgHead"
+            android:layout_marginRight="7dp"
+            android:layout_toLeftOf="@+id/mic_imgHead"
+            android:gravity="right"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="蒸汽炉"
+                android:textColor="@color/c03"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="SteamOven"
+                android:textColor="@color/c03"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+        <!--微波炉菜谱-->
+        <LinearLayout
+            android:id="@+id/mic_txtRecipe"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mic_imgHead"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="蒸汽炉"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="菜谱"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/disconnectHintView"
+        layout="@layout/view_device_disconnect_hint" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:background="@color/device_board_bg"
+        >
+
+        <LinearLayout
+            android:id="@+id/steam228_main_waternotice"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:paddingTop="10dp"
+            >
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_steam226_water_lightblue" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dp"
+                android:text="请确认水箱加满水"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/steam228_btn"
+            android:layout_width="85dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:text="最近使用"
+            android:textColor="#818181"
+            android:textSize="16sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/img_common_recently_use_gray"
+            />
+
+        <RelativeLayout
+            android:id="@+id/steam228_steam"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="45dp"
+            android:layout_centerHorizontal="true"
+            >
+
+            <ImageView
+                android:id="@+id/steam_main_imgContent"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/img_common_big_circle_gray" />
+
+            <ImageView
+                android:id="@+id/steam228_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/img_device_steam028_steam_gray"
+                />
+
+            <TextView
+                android:id="@+id/steam228_txt"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="蒸"
+                android:textColor="#575757"
+                android:textSize="30sp"
+                />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/steam228_open_watertank"
+            android:layout_below="@id/steam228_steam"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="110dp"
+            android:src="@mipmap/img_steam228_watertank_white"
+            />
+
+        <RelativeLayout
+            android:id="@+id/steam228_assist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            >
+
+            <ImageView
+                android:id="@+id/steam228_assist_child"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/img_common_circle_gray"
+                />
+
+            <TextView
+                android:id="@+id/steam228_assit_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="辅助"
+                android:layout_centerInParent="true"
+                android:textSize="25sp"
+                android:textColor="#575757"
+                />
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/steam_switch"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/steam228_main_ll_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/steam228_main_img_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/btn_power_open" />
+
+
+            </LinearLayout>
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

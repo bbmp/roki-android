@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/roki_main_text_color"
+    android:fitsSystemWindows="false"
+    tools:context=".ui.page.SpeechRecipePage">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp">
+
+        <ImageView
+            android:id="@+id/iv_back_speak_recipe"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_round_arrow_back_ios_white" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:paddingTop="10dp"
+        android:paddingStart="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="告诉ROKI\n你想做什么好吃的？"
+            android:textSize="22sp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/roki_background_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_speak_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/iv_recipe_speaking"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:layout_height="50dp" />
+        <TextView
+            android:id="@+id/tv_press_speak_note"
+            android:text="按住说话"
+            android:textSize="16sp"
+            android:textColor="@color/roki_background_white"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="50dp" />
+    </RelativeLayout>
+
+
+    <com.robam.roki.ui.view.RecordButton
+        android:id="@+id/btn_record"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="71dp"
+        android:layout_height="71dp"
+        android:layout_marginBottom="40dp" />
+</LinearLayout>

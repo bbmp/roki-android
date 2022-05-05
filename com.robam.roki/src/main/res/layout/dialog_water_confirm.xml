@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#051D33"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="80dp"
+        android:scaleType="centerInside"
+        android:src="@mipmap/page_device_waterpurifiy_kettel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="远程制水时,请确认"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="纯水壶内所剩水量,"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="以防止水时溢出。"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="51dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/dialog_water_confirm_neg"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="14dp"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:background="#576f83"
+            android:text="取消"/>
+
+        <Button
+            android:id="@+id/dialog_water_confirm_pos"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="14dp"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:background="#e9a60f"
+            android:text="确定"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#343434"
+    android:orientation="vertical">
+    <!--四类静态图-->
+    <LinearLayout
+        android:id="@+id/ll_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="2dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+            <include layout="@layout/page_animation_temperature" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+            <include layout="@layout/page_animation_humidity" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+            <include layout="@layout/page_animation_germ" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+            <include layout="@layout/page_animation_ozone" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!--四类动态图-->
+    <LinearLayout
+        android:id="@+id/ll_animation"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="2dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_tem"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"></RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_hum"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"></RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_germ"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_ozone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"></RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#424242" />
+    <!--温度时间单位显示图-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_steri_tem"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@mipmap/img_temperature"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="---"
+            android:textColor="#acacac"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tv_steri_hum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_weight="1"
+            android:background="@mipmap/img_humidity"
+            android:paddingLeft="6dp"
+            android:paddingTop="10dp"
+            android:text="---"
+            android:textColor="#acacac"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tv_steri_germ"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@mipmap/img_germ"
+            android:paddingLeft="8dp"
+            android:paddingTop="10dp"
+            android:text="---"
+            android:textColor="#acacac"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tv_steri_ozone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+            android:background="@mipmap/img_ozone"
+            android:paddingLeft="12dp"
+            android:paddingTop="10dp"
+            android:text="---"
+            android:textColor="#acacac"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#424242" />
+
+    <RelativeLayout
+        android:id="@+id/rl_switch"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:visibility="gone">
+        <!--预约-->
+        <TextView
+            android:id="@+id/tv_order_btn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/selector_sterilizer_order" />
+        <!--暖烘-->
+        <TextView
+            android:id="@+id/tv_stoving_btn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignLeft="@+id/sterilizer_switch"
+            android:layout_alignTop="@+id/tv_sterilizer_btn"
+            android:background="@drawable/selector_sterilizer_stoving" />
+        <!--快洁-->
+        <TextView
+            android:id="@+id/tv_clean_btn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignBottom="@+id/sterilizer_switch"
+            android:layout_toLeftOf="@+id/tv_order_btn"
+            android:background="@drawable/selector_sterilizer_clean" />
+        <!--消毒-->
+        <TextView
+            android:id="@+id/tv_sterilizer_btn"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_sterilizer"
+            android:gravity="center_horizontal"
+            android:paddingTop="68dp"
+            android:textColor="#575757"
+            android:textSize="26sp" />
+        <!--开关-->
+
+        <CheckBox
+            android:id="@+id/sterilizer_switch"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_sterilizer_switch"
+            android:button="@null"
+            android:padding="26dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_running"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <FrameLayout
+            android:id="@+id/fl_running"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_toLeftOf="@+id/sterilizer_switch_run"
+            android:background="@mipmap/img_order_run">
+
+            <TextView
+                android:id="@+id/tv_steri_time_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="18dp"
+                android:layout_marginRight="28dp"
+                android:text="02"
+                android:textColor="#ffffff"
+                android:textSize="38sp" />
+
+            <TextView
+                android:id="@+id/tv_steri_time_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:text=":"
+                android:textColor="#ffffff"
+                android:textSize="38sp" />
+
+            <TextView
+                android:id="@+id/tv_steri_time_minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="18dp"
+                android:layout_marginLeft="28dp"
+                android:text="02"
+                android:textColor="#ffffff"
+                android:textSize="38sp" />
+
+            <TextView
+                android:id="@+id/tv_steri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="28dp"
+                android:text="预约计时中"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:text="已结束"
+                android:textColor="@color/c02"
+                android:textSize="26sp" />
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/sterilizer_switch_run"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@mipmap/img_sterilizer_switch_ope" />
+    </RelativeLayout>
+</LinearLayout>
+

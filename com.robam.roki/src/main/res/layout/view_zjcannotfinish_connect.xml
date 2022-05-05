@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tip1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:text="1.请确保产品已通电;"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/tip2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tip1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.长按"
+            android:textSize="17dp"
+            android:textColor="@color/black" />
+
+
+        <ImageView
+            android:id="@+id/img_btn1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/onekeyconnect" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="要保证2秒以上，并听到“滴”"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tip3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tip2"
+        android:layout_marginLeft="20dp"
+        android:text="一声后松开手；"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/tip4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tip3"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3.如果无法找到"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            />
+
+
+        <ImageView
+            android:id="@+id/img_btn2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/onekeyconnect" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="键，请先按电源键开机"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tip9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tip4"
+        android:text="来点亮屏幕。"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tip9"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="4.带屏幕的油烟机请在屏幕上添加产品；"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
+
+        <TextView
+            android:id="@+id/try_again"
+            style="@style/common_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="3dp"
+            android:text="再试一次"
+            android:textSize="17dp"
+            />
+
+        <TextView
+            android:id="@+id/call"
+            style="@style/common_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="20dp"
+            android:text="拨打服务电话"
+            android:textSize="17dp"
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>

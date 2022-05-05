@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/waterpurifier"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.robam.roki.ui.view.WaterPurifierScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:fillViewport="true"
+            android:scrollbars="none">
+            <LinearLayout
+                android:id="@+id/waterpurifier_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!-- 标题栏 -->
+                <RelativeLayout
+                    android:id="@+id/water_title_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <ImageView
+                        android:id="@+id/img_retrun"
+                        android:layout_width="35dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/img_waterpurifiy_return" />
+
+                    <TextView
+                        android:id="@+id/water_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical"
+                        android:text="@string/device_water_name"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/water_more"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="13dp"
+                        android:gravity="center_vertical"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/img_waterpurifiy_more_button" />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <!--设备与手机断开连接，请检查设备-->
+                <include
+                    android:id="@+id/water_disconnectHintView"
+                    layout="@layout/view_device_disconnect_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp" />
+
+                <View
+                    android:id="@+id/water_none"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:visibility="gone" />
+                <!-- 中间部分 -->
+                <RelativeLayout
+                    android:layout_below="@id/water_disconnectHintView"
+                    android:id="@+id/waterpurifier_belowtitle_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/water_btn_people"
+                        android:layout_width="95dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="19dp"
+                        android:layout_marginTop="7dp"
+                        android:gravity="center"
+                        android:text="@string/waterpurifier_people"
+                        android:textColor="#f6c709"
+                        android:textSize="12sp" />
+
+                    <!--15天和滤芯状态-->
+                    <include
+                        android:id="@+id/water_lvxin_use_time"
+                        layout="@layout/view_device_waterpurifer_lvxin_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/water_standard_ml"
+                        layout="@layout/view_device_waterpurifier_text_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="67dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/content"
+                        android:layout_width="240dp"
+                        android:layout_height="240dp"
+                        android:layout_below="@id/water_standard_ml"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="12dp"
+                       >
+
+                        <!-- 水波 -->
+
+                        <com.robam.roki.ui.view.WaveView
+                            android:id="@+id/content_wave"
+                            android:layout_width="235dp"
+                            android:layout_height="235dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="3dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp" />
+                        <!-- 圆圈部分 -->
+
+                        <ImageView
+                            android:id="@+id/content_circle"
+                            android:layout_width="240dp"
+                            android:layout_height="240dp"
+                            android:layout_gravity="center"
+                            android:scaleType="centerInside"
+                            android:src="@mipmap/img_waterpurifiy_circle1" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="35dp"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/content_text_pre"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="@string/device_water_tds"
+                                android:textColor="#ffffff"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/content_text_level"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="-"
+                                android:textColor="#ffffff"
+                                android:textSize="100sp"
+
+                                />
+
+                            <ImageView
+                                android:id="@+id/waterpurifier_pic_wash"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="30dp"
+                                android:src="@mipmap/img_waterpurifier_wash"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/water_quality_ml"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginBottom="55dp"
+                            android:layout_marginRight="33dp"
+                            android:text="ppm"
+                            android:textColor="#ffffff"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/water_discont_text"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:lineSpacingExtra="3dp"
+                            android:lines="4"
+                            android:text="@string/water_discont_hint"
+                            android:textColor="#ffffff"
+                            android:textSize="15sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/water_cankao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/device_water_data_is_for_reference_only"
+                            android:layout_alignParentBottom="true"
+                            android:textColor="#99ffffff"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="20dp"
+                            />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+                <!--当前水质-->
+                <LinearLayout
+                    android:layout_below="@id/waterpurifier_belowtitle_background"
+                    android:id="@+id/water_set_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+                    <include
+                        layout="@layout/view_device_waterpurifier_water_quality"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <include
+                        layout="@layout/view_waterpurifier_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        />
+                </LinearLayout>
+
+                    <com.robam.roki.ui.view.WaterPurifierBubbleView
+                        android:id="@+id/water_bubble"
+                        android:layout_height="430dp"
+                        android:layout_width="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="410dp"
+                    android:background="@mipmap/waterpurifier_background1"
+                    android:orientation="vertical">
+                    <!-- 向上滑按钮 -->
+                    <ImageView
+                        android:id="@+id/bottom_mark"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="110dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/img_waterpurifiy_mark"
+                        />
+                    <!-- 滤芯显示文字 -->
+
+                    <!-- 滤芯显示 布局 -->
+                    <LinearLayout
+                        android:id="@+id/waterpurifiy_lvxin_use"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/bottom_mark"
+                        android:layout_marginTop="28dp"
+                        android:onClick="true"
+                        android:orientation="vertical">
+
+                        <!-- 滤芯显示 布局 第一行 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="19dp"
+                            android:text="@string/device_water_filter_life"
+                            android:textColor="#dadada"
+                            android:textSize="15sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:orientation="horizontal">
+
+                            <!-- 滤芯显示 布局 第一行 第一列 -->
+
+                            <LinearLayout
+                                android:id="@+id/filter_pp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/filter_number_1"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="14dp"
+                                    android:background="@drawable/shape_white_circular"
+                                    android:gravity="center"
+                                    android:text="1"
+                                    android:textColor="#3DB3D0"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/water_text_hao1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="@string/device_num"
+                                    android:textColor="#ffffff"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/filter_pp_num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="15dp"
+                                    android:text="-"
+                                    android:textColor="#ffffff"
+                                    android:textSize="32sp" />
+
+                                <TextView
+                                    android:id="@+id/filter_pp_sign"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="%"
+                                    android:textColor="#ffffff"
+                                    android:textSize="15sp" />
+
+                                <ImageView
+                                    android:id="@+id/filter_pp_pic"
+                                    android:layout_width="0dp"
+                                    android:layout_height="15dp"
+                                    android:layout_marginLeft="28dp"
+                                    android:layout_marginRight="7dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_weight="1"
+                                    android:scaleType="centerInside"
+                                    android:src="@mipmap/img_waterpurifiy_filterright_white" />
+                                <!-- 圆圈数字 -->
+
+                            </LinearLayout>
+                            <!-- 第一行 第一列与第二列分割线 -->
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="#8AE4F1" />
+                            <!-- 滤芯显示 布局 第一行 第二列 -->
+
+                            <LinearLayout
+                                android:id="@+id/filter_cto"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/filter_number_2"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="14dp"
+                                    android:background="@drawable/shape_white_circular"
+                                    android:gravity="center"
+                                    android:text="2"
+                                    android:textColor="#3DB3D0"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/water_text_hao2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="@string/device_num"
+                                    android:textColor="#ffffff"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/filter_cto_num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="15dp"
+                                    android:text="-"
+                                    android:textColor="#ffffff"
+                                    android:textSize="32sp" />
+
+                                <TextView
+                                    android:id="@+id/filter_cto_sign"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="%"
+                                    android:textColor="#ffffff"
+                                    android:textSize="15sp" />
+
+                                <ImageView
+                                    android:id="@+id/filter_cto_pic"
+                                    android:layout_width="0dp"
+                                    android:layout_height="15dp"
+                                    android:layout_marginLeft="28dp"
+                                    android:layout_marginRight="7dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_weight="1"
+                                    android:scaleType="centerInside"
+                                    android:src="@mipmap/img_waterpurifiy_filterright_white" />
+                                <!-- 圆圈数字 -->
+
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!-- 第一行与第二行分割线 -->
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#8AE4F1" />
+                        <!-- 滤芯显示 布局 第二行 -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <!-- 滤芯显示 布局 第二行 第一列 -->
+
+                            <LinearLayout
+                                android:id="@+id/filter_ro1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/filter_number_3"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="14dp"
+                                    android:background="@drawable/shape_white_circular"
+                                    android:gravity="center"
+                                    android:text="3"
+                                    android:textColor="#3DB3D0"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/water_text_hao3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="@string/device_num"
+                                    android:textColor="#ffffff"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/filter_ro1_num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="15dp"
+                                    android:text="-"
+                                    android:textColor="#ffffff"
+                                    android:textSize="32sp" />
+
+                                <TextView
+                                    android:id="@+id/filter_ro1_sign"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="%"
+                                    android:textColor="#ffffff"
+                                    android:textSize="15sp" />
+
+                                <ImageView
+                                    android:id="@+id/filter_ro1_pic"
+                                    android:layout_width="0dp"
+                                    android:layout_height="15dp"
+                                    android:layout_marginLeft="28dp"
+                                    android:layout_marginRight="7dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_weight="1"
+                                    android:scaleType="centerInside"
+                                    android:src="@mipmap/img_waterpurifiy_filterright_white" />
+                                <!-- 圆圈数字 -->
+
+                            </LinearLayout>
+
+                            <!-- 第二行 第一列与第二列分割线 -->
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="#8AE4F1" />
+
+                            <!-- 滤芯显示 布局 第二行 第二列 -->
+
+
+                            <LinearLayout
+                                android:id="@+id/filter_ro2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/filter_number_4"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="14dp"
+                                    android:background="@drawable/shape_white_circular"
+                                    android:gravity="center"
+                                    android:text="4"
+                                    android:textColor="#3DB3D0"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/water_text_hao4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="号"
+                                    android:textColor="#ffffff"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/filter_ro2_num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="15dp"
+                                    android:text="-"
+                                    android:textColor="#ffffff"
+                                    android:textSize="32sp" />
+
+                                <TextView
+                                    android:id="@+id/filter_ro2_sign"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="%"
+                                    android:textColor="#ffffff"
+                                    android:textSize="15sp" />
+
+                                <ImageView
+                                    android:id="@+id/filter_ro2_pic"
+                                    android:layout_width="0dp"
+                                    android:layout_height="15dp"
+                                    android:layout_marginLeft="28dp"
+                                    android:layout_marginRight="7dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_weight="1"
+                                    android:scaleType="centerInside"
+                                    android:src="@mipmap/img_waterpurifiy_filterright_white" />
+                                <!-- 圆圈数字 -->
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <!-- 饮水量显示 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="430dp"
+                    android:background="@mipmap/img_water_drink_today1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19dp"
+                        android:layout_marginTop="16dp"
+                        android:text="饮水量详情"
+                        android:textColor="#A6ffffff"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/water_family_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19dp"
+                        android:layout_marginTop="7dp"
+                        android:text=""
+                        android:textColor="#A6ff3e18"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="7dp">
+                        <!-- 今日饮水量 数值 -->
+                        <!-- 日周月 -->
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <!-- 日 -->
+
+                            <TextView
+                                android:id="@+id/date"
+                                android:layout_width="67dp"
+                                android:layout_height="22dp"
+                                android:background="#ff3e18"
+                                android:gravity="center"
+                                android:text="日"
+                                android:textColor="#ffffff"
+                                android:textSize="14sp" />
+                            <!-- 周 -->
+
+                            <TextView
+                                android:id="@+id/week"
+                                android:layout_width="67dp"
+                                android:layout_height="22dp"
+                                android:layout_marginLeft="1dp"
+                                android:background="#64DBF7"
+                                android:gravity="center"
+                                android:text="周"
+                                android:textColor="#ffffff"
+                                android:textSize="14sp" />
+                            <!-- 月 -->
+
+                            <TextView
+                                android:id="@+id/month"
+                                android:layout_width="67dp"
+                                android:layout_height="22dp"
+                                android:layout_marginLeft="1dp"
+                                android:background="#64DBF7"
+                                android:gravity="center"
+                                android:text="月"
+                                android:textColor="#ffffff"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/water_share"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="20dp"
+                                android:text="分享"
+                                android:textColor="#ff3e18"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <!-- 柱状图 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:orientation="horizontal">
+
+                        <com.robam.roki.ui.view.WaterPurifiyHistogramView
+                            android:id="@+id/waterPurifiy_history_view"
+                            android:layout_width="0dp"
+                            android:layout_height="200dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp">
+
+                            <TextView
+                                android:id="@+id/water_standard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="95dp"
+                                android:text="4500ml"
+                                android:textColor="#ff3e18"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="13dp"
+                                android:text="0ml"
+                                android:textColor="#ffffff"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/water_alarm_people"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="@string/device_water_keep_healthy_and_drink_water"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#5797fa"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="25dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="34dp"
+                            android:text="@string/device_water_drinking_water_today"
+                            android:textColor="#dadada"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="8dp"
+                            android:src="@mipmap/water_purifiy_img" />
+
+                        <TextView
+                            android:id="@+id/water_intake"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="21dp"
+                            android:text="-"
+                            android:textColor="#dadada"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="ml"
+                            android:textColor="#dadada"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.robam.roki.ui.view.ScrollviewMegListView
+                            android:id="@+id/water_drink_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:divider="#9757fa"
+                            />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/waterpurifiy_drink_check"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#fb7b1d"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/device_water_view_all_the_data"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.robam.roki.ui.view.WaterPurifierScrollView>
+
+    </RelativeLayout>
+</FrameLayout>

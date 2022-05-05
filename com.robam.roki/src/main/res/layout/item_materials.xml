@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <TextView
+        android:id="@+id/tv_materials_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_centerVertical="true"
+        android:textSize="15sp"
+        android:textColor="@color/roki_important_text_color"
+        tools:text="食材"/>
+    <ImageView
+        android:id="@+id/iv_down"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_down_material"
+        android:layout_toStartOf="@+id/ll_num"
+        android:layout_marginEnd="10dp"
+        android:layout_centerVertical="true"/>
+
+    <LinearLayout
+        android:id="@+id/ll_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="2dp"
+        android:layout_toStartOf="@+id/iv_add"
+        android:background="@drawable/edit_materials_bg">
+        <requestFocus />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/tv_materials_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_materials_bg"
+            android:digits="0123456789"
+            android:maxLength="5"
+            android:textColor="@color/roki_important_text_color"
+            android:textSize="15sp"
+            tools:text="60g" />
+
+        <TextView
+            android:id="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_add"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>

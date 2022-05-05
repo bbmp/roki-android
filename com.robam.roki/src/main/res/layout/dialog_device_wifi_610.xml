@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="326dp"
+    android:layout_gravity="center_horizontal|bottom"
+    android:background="@drawable/shape_diglog_bg_top_radius"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/common_text_color"
+            android:textSize="20sp"
+            android:layout_marginBottom="24dp"
+            android:text="发现附近有以下设备"/>
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_margin="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_close"/>
+    </LinearLayout>
+
+        <ImageView
+            android:layout_width="142dp"
+            android:layout_height="142dp"
+            android:src="@drawable/ic_device_610"/>
+
+        <TextView
+            android:id="@+id/tv_device_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:text="大厨多功能蒸烤一体机DB610"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_device"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="#FFFFFF"
+        android:text="添加" />
+</LinearLayout>
+

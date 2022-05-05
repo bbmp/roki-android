@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- text -->
+    <dimen name="common_text_size_medium">15sp</dimen>
+    <dimen name="common_text_size_small">12sp</dimen>
+
+    <!-- button -->
+    <dimen name="common_edit_height">40dp</dimen>
+    <dimen name="common_button_height">40dp</dimen>
+    <dimen name="common_button_text_size">14sp</dimen>
+</resources>

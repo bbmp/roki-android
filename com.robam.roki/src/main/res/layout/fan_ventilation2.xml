@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:id="@+id/tv_device_model_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textColor="@color/c41"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/quick_fry_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/tv_quick_fry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#4d4d4d"
+            android:textSize="16sp"
+            tools:text="延长变频爆炒时间" />
+
+        <TextView
+            android:id="@+id/tv_quick_fry_min"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/shape_line_gray"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/c11"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_quick_fry_end"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:textColor="#4d4d4d"
+            android:textSize="16sp"
+            tools:text="分钟" />
+
+        <com.legent.ui.ext.views.CheckBoxView
+            android:id="@+id/cb_quick_fry"
+            style="@style/device_check_box_style"
+            android:layout_marginRight="10dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/whitesmoke" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_day"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_line_gray"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/c11"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_auto_air"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:textColor="#4d4d4d"
+            android:textSize="16sp"
+            tools:text="两天未使用烟机，自动开启换气" />
+
+
+        <com.legent.ui.ext.views.CheckBoxView
+            android:id="@+id/cb_auto_air"
+            style="@style/device_check_box_style"
+            android:layout_marginRight="10dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/whitesmoke" />
+
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_timing_air"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4d4d4d"
+                    android:textSize="16sp"
+                    tools:text="每周固定" />
+
+                <TextView
+                    android:id="@+id/tv_week"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_line_gray"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/c11"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/shape_line_gray"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/c11"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_timing_air_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4d4d4d"
+                    android:textSize="16sp"
+                    tools:text="开启烟机3" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_timing_air_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#4d4d4d"
+                android:textSize="16sp"
+                tools:text="分钟自动换气" />
+
+
+        </LinearLayout>
+
+        <com.legent.ui.ext.views.CheckBoxView
+            android:id="@+id/cb_timing_ar"
+            style="@style/device_check_box_style"
+            android:layout_marginRight="10dp" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/whitesmoke" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_recovery"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_restore_setiing"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/device_default_leave_factory_setting" />
+    </RelativeLayout>
+
+
+</LinearLayout>

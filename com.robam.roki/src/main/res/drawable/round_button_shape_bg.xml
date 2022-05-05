@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/roki_sub_color" />
+    <corners
+        android:topRightRadius="60dp"
+        android:topLeftRadius="100dp"
+        android:bottomRightRadius="60dp" />
+    <padding
+        android:left="50dp"
+        android:right="30dp" />
+</shape>
