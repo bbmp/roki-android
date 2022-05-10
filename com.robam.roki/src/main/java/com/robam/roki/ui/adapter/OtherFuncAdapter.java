@@ -51,7 +51,7 @@ import com.robam.roki.model.helper.HelperRikaData;
 import com.robam.roki.ui.dialog.RikaFanTimeRemindDialog;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.TestDatas;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import java.util.List;
 import java.util.Timer;
@@ -145,7 +145,7 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
     public OtherFuncViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
         View view = mInflater.inflate(R.layout.item_otherfunc_page, parent, false);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         OtherFuncViewHolder otherFuncViewHolder = new OtherFuncViewHolder(mContext, view);
         otherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override

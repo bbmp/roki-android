@@ -130,7 +130,6 @@ import com.robam.roki.ui.view.networkoptimization.NetWorkStateUtils;
 import com.robam.roki.utils.LoginUtil;
 import com.robam.roki.utils.PermissionsUtils;
 import com.robam.roki.utils.ToolUtils;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.json.JSONException;
 
@@ -341,7 +340,7 @@ public class HomeDeviceView extends FrameLayout implements UIListeners.IRefresh 
 
         View view = LayoutInflater.from(cx).inflate(R.layout.view_home_device, this, true);
         if (!view.isInEditMode()) {
-            ScreenAdapterTools.getInstance().loadView(view);
+
             ButterKnife.inject(this, view);
             initData();
             mGif.setScaleType(ImageView.ScaleType.FIT_XY);

@@ -33,7 +33,7 @@ import com.robam.roki.R;
 import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.utils.DialogUtil;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -164,7 +164,7 @@ public class AbsSteamOvenWorking906View extends FrameLayout {
 
     public void initView() {
         View view = LayoutInflater.from(cx).inflate(R.layout.abs_steamoven_906_working_page, this, true);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         if (!view.isInEditMode()) {
             ButterKnife.inject(this, view);
         }

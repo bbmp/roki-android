@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class HidKitOtherFuncAdapter extends RecyclerView.Adapter<HidKitOtherFunc
     public HidKitOtherFuncViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
         View view = mInflater.inflate(R.layout.item_otherfunc_hidkit_page, parent, false);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         HidKitOtherFuncViewHolder hidKitOtherFuncViewHolder = new HidKitOtherFuncViewHolder(view);
         hidKitOtherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override

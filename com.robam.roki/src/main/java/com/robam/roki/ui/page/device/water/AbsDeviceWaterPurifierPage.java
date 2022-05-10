@@ -44,7 +44,7 @@ import com.robam.roki.ui.page.device.DeviceCatchFilePage;
 import com.robam.roki.ui.view.SlideLockView;
 import com.robam.roki.utils.AlarmDataUtils;
 import com.robam.roki.utils.DialogUtil;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import java.io.Serializable;
 import java.util.List;
@@ -670,7 +670,7 @@ public class AbsDeviceWaterPurifierPage<WaterPurifier extends AbsWaterPurifier> 
         @Override
         public WaterPurifierOtherFuncViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = mInflater.inflate(R.layout.item_otherfunc_page, parent, false);
-            ScreenAdapterTools.getInstance().loadView(view);
+
             WaterPurifierOtherFuncViewHolder otherFuncViewHolder = new WaterPurifierOtherFuncViewHolder(view);
             otherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override

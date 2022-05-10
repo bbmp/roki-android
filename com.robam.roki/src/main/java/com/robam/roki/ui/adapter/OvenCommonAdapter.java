@@ -27,7 +27,7 @@ import com.robam.common.pojos.device.Oven.AbsOven;
 import com.robam.common.pojos.device.dishWasher.AbsDishWasher;
 import com.robam.roki.R;
 import com.robam.roki.ui.page.device.oven.MyGridView;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import java.util.List;
 
@@ -303,7 +303,7 @@ public class OvenCommonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     if (convertView == null) {
                         //没缓存
                         convertView = mLayoutInflater.inflate(R.layout.oven_item_show, null);
-                        ScreenAdapterTools.getInstance().loadView(convertView);
+
                         holder = new ViewHolderI();
                         holder.iv = convertView.findViewById(R.id.iv_channel);
                         holder.tv = convertView.findViewById(R.id.tv_channel);
@@ -384,7 +384,7 @@ public class OvenCommonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View view = mLayoutInflater.inflate(R.layout.item_otherfunc_page, null);
-                ScreenAdapterTools.getInstance().loadView(view);
+
                 return new ItemViewHolder(view);
             }
 

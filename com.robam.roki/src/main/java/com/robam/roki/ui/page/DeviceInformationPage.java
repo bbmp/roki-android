@@ -27,7 +27,6 @@ import com.robam.common.pojos.device.gassensor.GasSensor;
 import com.robam.roki.MobApp;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
@@ -127,7 +126,7 @@ public class DeviceInformationPage extends BasePage {
             if (inflater == null)
                 return;
             View view = inflater.inflate(R.layout.item_information_device_page, null, false);
-            ScreenAdapterTools.getInstance().loadView(view);
+
             TextView tvDcName = view.findViewById(R.id.tv_dc_name);
             TextView tvModel = view.findViewById(R.id.tv_model);
             TextView tvCoding = view.findViewById(R.id.tv_coding);
@@ -154,7 +153,7 @@ public class DeviceInformationPage extends BasePage {
                     if (inflater == null)
                         return;
                     View view = inflater.inflate(R.layout.item_information_user_page, null, false);
-                    ScreenAdapterTools.getInstance().loadView(view);
+
                     TextView tvName = view.findViewById(R.id.tv_user_name);
                     TextView tvDesc = view.findViewById(R.id.tv_user_desc);
                     tvName.setText(user.name);

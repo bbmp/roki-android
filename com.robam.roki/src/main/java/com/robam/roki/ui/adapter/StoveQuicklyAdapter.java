@@ -28,7 +28,7 @@ import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.JsonUtils;
 import com.robam.roki.utils.ToolUtils;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import java.util.List;
 
@@ -72,7 +72,7 @@ public class StoveQuicklyAdapter extends RecyclerView.Adapter<StoveQuicklyViewHo
     @Override
     public StoveQuicklyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_stove_quickly_page, parent, false);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         StoveQuicklyViewHolder stoveQuicklyViewHolder = new StoveQuicklyViewHolder(view);
         stoveQuicklyViewHolder.iv_stove_button_right.setOnClickListener(new View.OnClickListener() {
             @Override

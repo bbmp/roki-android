@@ -65,7 +65,7 @@ import com.robam.roki.ui.page.device.DeviceCatchFilePage;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.TestDatas;
 import com.robam.roki.utils.ToolUtils;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -407,7 +407,7 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_device_steamovenone925, container, false);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         ButterKnife.inject(this, view);
         initData();
         return view;

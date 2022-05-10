@@ -26,7 +26,7 @@ import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.model.bean.StoveBackgroundFunParams;
 import com.robam.roki.utils.DeviceJsonToBeanUtils;
 import com.robam.roki.utils.StoveLevelUtils;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class StoveBackgroundFuncAdapter extends RecyclerView.Adapter<StoveBackgr
     @Override
     public StoveBackgroundFuncViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_stove_backgroundfunc_page, parent, false);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         StoveBackgroundFuncViewHolder stoveBackgroundFuncViewHolder = new StoveBackgroundFuncViewHolder(mContext, view);
         //快速关火 的监听
         stoveBackgroundFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {

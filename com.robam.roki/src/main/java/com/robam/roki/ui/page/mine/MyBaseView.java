@@ -17,7 +17,7 @@ import com.legent.utils.EventUtils;
 import com.robam.roki.R;
 import com.robam.roki.ui.UIListeners;
 import com.robam.roki.ui.page.login.action.ClickAction;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import butterknife.ButterKnife;
 
@@ -67,7 +67,7 @@ public abstract class MyBaseView extends FrameLayout implements UIListeners.IRef
         }
         mRootView = LayoutInflater.from(cx).inflate(getLayoutId(), this, true);
         if (!mRootView.isInEditMode()) {
-            ScreenAdapterTools.getInstance().loadView(mRootView);
+
             ButterKnife.inject(this, mRootView);
             initView();
             initData();

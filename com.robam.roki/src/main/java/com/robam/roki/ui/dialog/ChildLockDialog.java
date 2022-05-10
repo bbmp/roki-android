@@ -14,7 +14,6 @@ import com.robam.common.pojos.device.rika.AbsRika;
 import com.robam.common.pojos.device.rika.RikaStatus;
 import com.robam.roki.R;
 import com.robam.roki.ui.view.SlideLockView;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import static android.content.Context.VIBRATOR_SERVICE;
 
@@ -51,7 +50,7 @@ public class ChildLockDialog extends Dialog {
                 .inflate(res, null, false);
         tv_child_lock = contentView.findViewById(R.id.tv_child_lock);
         slideLockView = contentView.findViewById(R.id.slideLockView);
-        ScreenAdapterTools.getInstance().loadView(contentView);
+
         setContentView(contentView);
         setListener();
     }

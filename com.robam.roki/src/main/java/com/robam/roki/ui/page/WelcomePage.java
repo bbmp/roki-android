@@ -37,7 +37,6 @@ import com.robam.roki.ui.form.WizardActivity;
 import com.robam.roki.ui.page.login.MyBasePage;
 import com.robam.roki.ui.widget.view.CountdownView2;
 import com.robam.roki.utils.DialogUtil;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 

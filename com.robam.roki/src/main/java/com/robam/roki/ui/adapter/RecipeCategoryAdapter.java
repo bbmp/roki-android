@@ -38,7 +38,7 @@ import com.robam.roki.ui.page.login.helper.CmccLoginHelper;
 import com.robam.roki.ui.view.RoundTransformation;
 import com.robam.roki.utils.ListUtils;
 import com.robam.roki.utils.UiUtils;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -80,7 +80,7 @@ public class RecipeCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         if (OTHER_VIEW == viewType) {
             View view = mInflater.inflate(R.layout.view_home_recommandrecipe, parent, false);
-            ScreenAdapterTools.getInstance().loadView(view);
+
             RecipeCategoryViewHolder recipeCategoryViewHolder = new RecipeCategoryViewHolder(view);
             recipeCategoryViewHolder.imgView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,7 +124,7 @@ public class RecipeCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return recipeCategoryViewHolder;
         } else if (MAIN_VIEW == viewType) {
             View view = mInflater.inflate(R.layout.view_home_recommand_recipe, parent, false);
-            ScreenAdapterTools.getInstance().loadView(view);
+
             RecipeCategoryTitleViewHolder titleViewHolder = new RecipeCategoryTitleViewHolder(view);
             return titleViewHolder;
         }

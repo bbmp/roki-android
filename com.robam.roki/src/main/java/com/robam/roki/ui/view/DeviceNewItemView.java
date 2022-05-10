@@ -58,7 +58,6 @@ import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.page.device.integratedStove.SteamOvenHelper;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
@@ -195,7 +194,7 @@ public class DeviceNewItemView extends FrameLayout {
         View view = LayoutInflater.from(cx).inflate(R.layout.view_device_item,
                 this, true);
         if (!view.isInEditMode()) {
-            ScreenAdapterTools.getInstance().loadView(view);
+
             ButterKnife.inject(this, view);
         }
     }

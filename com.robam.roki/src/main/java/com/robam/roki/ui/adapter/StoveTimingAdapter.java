@@ -40,7 +40,7 @@ import com.robam.roki.utils.JsonUtils;
 import com.robam.roki.utils.RemoveManOrsymbolUtil;
 import com.robam.roki.utils.StringConstantsUtil;
 import com.robam.roki.utils.ToolUtils;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import java.util.List;
 
@@ -112,7 +112,7 @@ public class StoveTimingAdapter extends RecyclerView.Adapter<StoveTimingViewHold
     @Override
     public StoveTimingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_stove_quickly_page, parent, false);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         StoveTimingViewHolder stoveTimingViewHolder = new StoveTimingViewHolder(view);
         stoveTimingViewHolder.iv_stove_button_right.setOnClickListener(new View.OnClickListener() {
             @Override

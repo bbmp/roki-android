@@ -17,7 +17,6 @@ import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.listener.OnRecyclerViewItemLongClickListener;
 import com.robam.roki.model.bean.DeviceOvenDiyParams;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class SteamOvenDiyListAdapter extends RecyclerView.Adapter<SteamOvenDiyVi
     @Override
     public SteamOvenDiyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_oven_bake_diy_list, parent, false);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         return new SteamOvenDiyViewHolder(view);
     }
 

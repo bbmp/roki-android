@@ -29,7 +29,7 @@ import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -81,7 +81,7 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         if (OTHER_VIEW == viewType) {
             View view = mInflater.inflate(R.layout.item_otherfunc_page, parent, false);
-            ScreenAdapterTools.getInstance().loadView(view);
+
             StoveOtherFuncViewHolder stoveOtherFuncViewHolder = new StoveOtherFuncViewHolder(mContext, view);
             //灶具下面的监听
             stoveOtherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +93,7 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return stoveOtherFuncViewHolder;
         } else if (MAIN_VIEW == viewType) {
             View view = mInflater.inflate(R.layout.item_stove_mainfunc_page, parent, false);
-            ScreenAdapterTools.getInstance().loadView(view);
+
             final StoveMainFuncViewHolder stoveMainFuncViewHolder = new StoveMainFuncViewHolder(view);
             //童锁的监听
             stoveMainFuncViewHolder.mIvModelImg.setOnClickListener(new View.OnClickListener() {

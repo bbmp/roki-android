@@ -20,7 +20,7 @@ import com.robam.common.pojos.device.Pot.Pot;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.ui.PageArgumentKey;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class PotOtherFuncAdapter extends RecyclerView.Adapter<PotOtherFuncViewHo
     public PotOtherFuncViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
         View view = mInflater.inflate(R.layout.item_pot_otherfunc_page, parent, false);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         PotOtherFuncViewHolder otherFuncViewHolder = new PotOtherFuncViewHolder(view);
         otherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -32,7 +32,6 @@ import com.robam.common.pojos.device.rika.RikaStatus;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.ui.extension.GlideApp;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,7 +98,6 @@ public class BackgroundFuncAdapter extends RecyclerView.Adapter<BackgroundFuncVi
     @Override
     public BackgroundFuncViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_backgroundfunc_page, parent, false);
-        ScreenAdapterTools.getInstance().loadView(view);
         BackgroundFuncViewHolder backgroundFuncViewHolder = new BackgroundFuncViewHolder(view);
         backgroundFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override

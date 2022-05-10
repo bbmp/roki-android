@@ -34,7 +34,7 @@ import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.RemoveManOrsymbolUtil;
 import com.robam.roki.utils.StringConstantsUtil;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +123,7 @@ public class DeviceFanVentilationPage extends BasePage {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fan_ventilation, container, false);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         Bundle bd = getArguments();
         mDates = bd == null ? null : (List<DeviceConfigurationFunctions>) bd.getSerializable(PageArgumentKey.List);
         fan = bd == null ? null : (AbsFan) bd.getSerializable(PageArgumentKey.Bean);

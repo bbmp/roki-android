@@ -52,7 +52,6 @@ import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.RemoveManOrsymbolUtil;
 import com.robam.roki.utils.StringConstantsUtil;
 import com.robam.roki.utils.ToolUtils;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -216,7 +215,7 @@ public class AbsDeviceMicroWavePage<MicroWave extends AbsMicroWave>
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_device_microwave, container, false);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         ButterKnife.inject(this, view);
         initData();
         return view;

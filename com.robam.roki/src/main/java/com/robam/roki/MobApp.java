@@ -54,7 +54,6 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.api.UPushRegisterCallback;
 import com.umeng.message.entity.UMessage;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.android.agoo.huawei.HuaWeiRegister;
 import org.android.agoo.xiaomi.MiPushRegistar;
@@ -117,7 +116,6 @@ public class MobApp extends RobamApp {
         super.onCreate();
         //初始化有赞
 //        YouzanSDK.init(this, "a9263a4f294b175f63");//正式版
-        ScreenAdapterTools.init(this);
         registToWX();
 //        MiPushRegistar.register(context, XIAOMI_ID, XIAOMI_KEY, false);
         //友盟推送

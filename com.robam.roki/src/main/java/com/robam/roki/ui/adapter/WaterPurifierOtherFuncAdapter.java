@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
-import com.yatoooon.screenadaptation.ScreenAdapterTools;
+
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class WaterPurifierOtherFuncAdapter extends RecyclerView.Adapter<WaterPur
     @Override
     public WaterPurifierOtherFuncViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_otherfunc_page, parent, false);
-        ScreenAdapterTools.getInstance().loadView(view);
+
         WaterPurifierOtherFuncViewHolder otherFuncViewHolder = new WaterPurifierOtherFuncViewHolder(view);
         otherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override

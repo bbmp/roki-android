@@ -152,7 +152,7 @@ dependencies {
 //    implementation 'com.jwenfeng.pulltorefresh:library:1.0.3'
     implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
     implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
-    implementation 'me.yatoooon:screenadaptation:1.1.1'
+//    implementation 'me.yatoooon:screenadaptation:1.1.1'
     //implementation project(':smartconfig')
 
     implementation deps.glide
