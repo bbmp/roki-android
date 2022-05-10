@@ -49,7 +49,7 @@ import com.robam.roki.ui.Helper;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.dialog.OvenBrokenDialog;
-import com.robam.roki.ui.view.HomeRecipeView;
+import com.robam.roki.ui.view.HomeRecipeView32;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.RemoveManOrsymbolUtil;
 import com.robam.roki.utils.StringConstantsUtil;
@@ -252,7 +252,7 @@ public class DeviceOvenPage extends HeadPage {
     public void onClickRecipe() {
         //ToastUtils.show(R.string.please_look_forward_opening, Toast.LENGTH_SHORT);
         getActivity().onBackPressed();
-        HomeRecipeView.recipeCategoryClick(DeviceType.RDKX);
+        HomeRecipeView32.recipeCategoryClick(DeviceType.RDKX);
 
     }
 

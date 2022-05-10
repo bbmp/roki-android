@@ -42,7 +42,7 @@ import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.dialog.BlackPromptDialog;
 import com.robam.roki.ui.dialog.BlackPromptDialog526;
 import com.robam.roki.ui.dialog.Microwave526ProfessionalDialog;
-import com.robam.roki.ui.view.HomeRecipeView;
+import com.robam.roki.ui.view.HomeRecipeView32;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.RemoveManOrsymbolUtil;
 import com.robam.roki.utils.StringConstantsUtil;
@@ -315,7 +315,7 @@ public class DeviceMicrowave526MainPage extends HeadPage {
             return;
         }
         UIService.getInstance().popBack().popBack();
-        HomeRecipeView.recipeCategoryClick(DeviceType.RWBL);
+        HomeRecipeView32.recipeCategoryClick(DeviceType.RWBL);
        // ToastUtils.show(R.string.please_look_forward_opening, Toast.LENGTH_SHORT);
     }
 

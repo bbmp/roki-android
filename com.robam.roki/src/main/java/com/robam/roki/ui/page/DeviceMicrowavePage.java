@@ -42,7 +42,7 @@ import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.dialog.BlackPromptDialog;
 import com.robam.roki.ui.dialog.MicrowaveProfessionalDialog;
-import com.robam.roki.ui.view.HomeRecipeView;
+import com.robam.roki.ui.view.HomeRecipeView32;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.RemoveManOrsymbolUtil;
 import com.robam.roki.utils.StringConstantsUtil;
@@ -249,7 +249,7 @@ public class DeviceMicrowavePage extends HeadPage {
     @OnClick(R.id.mic_txtRecipe)
     public void OnMicroRecipeClick() {
         getActivity().onBackPressed();
-        HomeRecipeView.recipeCategoryClick(DeviceType.RWBL);
+        HomeRecipeView32.recipeCategoryClick(DeviceType.RWBL);
         //ToastUtils.show(new String("即将开放，敬请期待"), Toast.LENGTH_SHORT);
     }
 

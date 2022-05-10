@@ -149,7 +149,7 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
 //    implementation 'com.squareup.picasso:picasso:2.5.2'
 //    implementation 'com.github.open-android:ViewPager:0.1.0'
-    implementation 'com.jwenfeng.pulltorefresh:library:1.0.3'
+//    implementation 'com.jwenfeng.pulltorefresh:library:1.0.3'
     implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
     implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
     implementation 'me.yatoooon:screenadaptation:1.1.1'

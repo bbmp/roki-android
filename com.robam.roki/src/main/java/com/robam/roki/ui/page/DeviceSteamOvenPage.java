@@ -41,7 +41,7 @@ import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.dialog.SteamOvenSensorBrokeDialog;
 import com.robam.roki.ui.dialog.SteamOvenStartWorkDialog;
 import com.robam.roki.ui.dialog.SteamOvenWarningDialog;
-import com.robam.roki.ui.view.HomeRecipeView;
+import com.robam.roki.ui.view.HomeRecipeView32;
 import com.robam.roki.utils.DialogUtil;
 
 import butterknife.ButterKnife;
@@ -230,7 +230,7 @@ public class DeviceSteamOvenPage extends HeadPage {
     @OnClick(R.id.txtRecipe)
     public void onClickRecipe() {
         getActivity().onBackPressed();
-        HomeRecipeView.recipeCategoryClick(DeviceType.RZQL);
+        HomeRecipeView32.recipeCategoryClick(DeviceType.RZQL);
         //ToastUtils.show(new String("即将开放，敬请期待"), Toast.LENGTH_SHORT);
     }
 

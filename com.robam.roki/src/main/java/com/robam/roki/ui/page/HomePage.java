@@ -113,7 +113,6 @@ import com.robam.roki.ui.form.RecipePotActivity;
 import com.robam.roki.ui.form.RecipeRRQZActivity;
 import com.robam.roki.ui.view.HomeDeviceView;
 import com.robam.roki.ui.page.mine.HomeMineView;
-import com.robam.roki.ui.view.HomeRecipeView;
 import com.robam.roki.ui.view.HomeRecipeView32;
 import com.robam.roki.ui.view.HomeTabView;
 import com.robam.roki.ui.view.networkoptimization.BleConnectActivity;

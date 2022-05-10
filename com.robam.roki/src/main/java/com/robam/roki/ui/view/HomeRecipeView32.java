@@ -31,6 +31,7 @@ import com.legent.ui.UIService;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.TimeUtils;
+import com.legent.utils.api.NetworkUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.DeviceType;
@@ -40,6 +41,7 @@ import com.robam.common.pojos.RecipeTheme;
 import com.robam.common.services.CookbookManager;
 import com.robam.common.services.StoreService;
 import com.robam.common.util.StatusBarUtils;
+import com.robam.roki.MobApp;
 import com.robam.roki.R;
 import com.robam.roki.model.bean.ThemeRecipeMultipleItem;
 import com.robam.roki.model.bean.TopicMultipleItem;
@@ -297,7 +299,12 @@ public class HomeRecipeView32 extends MyBaseView {
     /**
      * 设备菜谱点击调用(可提供外部调用)
      */
-    public void recipeCategoryClick(String category) {
+    public static void recipeCategoryClick(String category) {
+        boolean connect = NetworkUtils.isConnect(MobApp.getInstance());
+        if (!connect){
+            ToastUtils.showLong("当前网络不可用，请检查网络连接");
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putString(PageArgumentKey.RecipeId, category);
         UIService.getInstance().postPage(PageKey.RecipeCategoryList, bundle);
