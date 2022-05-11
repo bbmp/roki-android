@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.legent.Callback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.utils.LogUtils;
@@ -43,6 +42,9 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by sylar on 15/6/4.
@@ -121,34 +123,37 @@ public class WelcomePage extends MyBasePage<WelcomeActivity> {
             }
         });
         StoreService.getInstance().getAppAdvertImg(new Callback<Reponses.AppAdvertImgResponses>() {
+
             @Override
-            public void onSuccess(Reponses.AppAdvertImgResponses appAdvertImgResponses) {
-                List<Advert> images = appAdvertImgResponses.images;
-                for (Advert advert : images) {
-                    String imgUrl = advert.imgUrl;
-                    mContent = advert.content;
-                    mType = advert.type;
-                    if (imgUrl != null){
-                        if (getContext()!=null) {
-                            GlideApp.with(getContext())
-                                    .load(imgUrl)
-                                    .into(mImgAdvert);
-                        }
+            public void onResponse(Call<Reponses.AppAdvertImgResponses> call, Response<Reponses.AppAdvertImgResponses> response) {
+                Reponses.AppAdvertImgResponses appAdvertImgResponses = response.body();
+                if (null != appAdvertImgResponses) {
+                    List<Advert> images = appAdvertImgResponses.images;
+                    for (Advert advert : images) {
+                        String imgUrl = advert.imgUrl;
+                        mContent = advert.content;
+                        mType = advert.type;
+                        if (imgUrl != null){
+                            if (getContext()!=null) {
+                                GlideApp.with(getContext())
+                                        .load(imgUrl)
+                                        .into(mImgAdvert);
+                            }
 //                        ImageUtils.displayImage(imgUrl, mImgAdvert);
+                        }
                     }
+                    cv_ring.setVisibility(View.VISIBLE);
+                    cv_ring.start(new CountdownView2.StopLinstener() {
+                        @Override
+                        public void stop() {
+                            startNext();
+                        }
+                    });
                 }
-                cv_ring.setVisibility(View.VISIBLE);
-                cv_ring.start(new CountdownView2.StopLinstener() {
-                    @Override
-                    public void stop() {
-                        startNext();
-                    }
-                });
             }
 
             @Override
-            public void onFailure(Throwable t) {
-//                initAdvertData();
+            public void onFailure(Call<Reponses.AppAdvertImgResponses> call, Throwable throwable) {
                 if (cv_ring != null){
                     cv_ring.setVisibility(View.VISIBLE);
                     cv_ring.start(new CountdownView2.StopLinstener() {
@@ -160,7 +165,6 @@ public class WelcomePage extends MyBasePage<WelcomeActivity> {
                 }
             }
         });
-
     }
 
 

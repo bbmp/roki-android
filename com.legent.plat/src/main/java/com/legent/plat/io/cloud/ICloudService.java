@@ -89,6 +89,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Map;
 
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.Field;
@@ -98,11 +100,13 @@ import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.Headers;
 
 /**
  * Created by sylar on 15/7/23.
  */
-public interface ICloudService {
+public interface ICloudService<T extends RCReponse> {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
             Locale.getDefault());
@@ -225,12 +229,12 @@ public interface ICloudService {
     @POST(getReportCode)
     void getReportCode(@Body ReportCodeRequest reqBody, Callback<GetReportResponse> callback);
 
-    @POST(getAppId)
-    GetAppIdReponse getAppId(@Body GetAppIdRequest reqBody);
+//    @POST(getAppId)
+//    GetAppIdReponse getAppId(@Body GetAppIdRequest reqBody);
 
-    @POST(getAppId)
-    void getAppId(@Body GetAppIdRequest reqBody,
-                  Callback<GetAppIdReponse> callback);
+    @retrofit2.http.POST(getAppId)
+    @Headers("Content-Type: application/json")
+    Call<RCReponse> getAppId(@retrofit2.http.Body RequestBody reqBody);
 
     @POST(bindAppGuidAndUser)
     void bindAppGuidAndUser(@Body AppUserGuidRequest reqBody,
@@ -415,9 +419,9 @@ public interface ICloudService {
     void getDeviceByParams(@Body DeviceByParamsRequest reqBody,
                            Callback<DeviceResponse> callback);
 
-    @POST(getAllDeviceType)
-    void getAllDeviceType(@Body DeviceTypeRequest reBody,
-                          Callback<DeviceTypeResponse> callback);
+    @retrofit2.http.POST(getAllDeviceType)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getAllDeviceType(@retrofit2.http.Body RequestBody body);
 
     @POST(getAllDeviceErrorInfo)
     void getAllDeviceErrorInfo(Callback<ErrorInfoResponse> callback);

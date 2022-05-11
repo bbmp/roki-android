@@ -5,8 +5,10 @@ import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.AppVersionInfo;
 import com.legent.plat.pojos.ChatMsg;
+import com.legent.plat.pojos.RCReponse;
 import com.legent.services.AbsService;
 import com.legent.utils.LogUtils;
 
@@ -18,15 +20,6 @@ import java.util.List;
  */
 abstract public class AbsCommonCloudService extends AbsService {
 
-
-    public String getAppGuid(String appType, String token,String phoneToken,String versionName) {
-        return CloudHelper.getAppGuid(appType, token,phoneToken,versionName);
-    }
-
-    public void getAppGuid(String appType, String token,String phoneToken,String versionName,
-                           Callback<String> callback) {
-        CloudHelper.getAppGuid(appType, token,phoneToken,versionName, callback);
-    }
 
     public void bindAppGuidAndUser(String appGuid, long userId,
                                    VoidCallback callback) {

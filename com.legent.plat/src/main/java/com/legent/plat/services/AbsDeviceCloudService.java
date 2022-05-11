@@ -108,9 +108,6 @@ abstract public class AbsDeviceCloudService extends AbsService{
         CloudHelper.getDeviceByParams(userId, deviceType, deviceCategory, callback);
     }
 
-    public void getAllDeviceType(Callback<Reponses.DeviceTypeResponse> callback) {
-        CloudHelper.getAllDeviceType(callback);
-    }
 
     public void getAllDeviceErrorInfo(Callback<Reponses.ErrorInfoResponse> callback) {
         CloudHelper.getAllDeviceErrorInfo(callback);

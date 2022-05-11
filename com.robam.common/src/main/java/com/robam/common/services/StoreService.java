@@ -80,25 +80,25 @@ public class StoreService extends AbsService {
     public void init(Context cx, Object... params) {
         super.init(cx, params);
         daoService.init(cx, params);
-        initSync();
+
     }
 
     @Subscribe
     public void onEvent(UserLoginEvent event) {
         daoService.switchUser();
-        initSync();
+
     }
 
     @Subscribe
     public void onEvent(UserLogoutEvent event) {
         daoService.switchUser();
-        initSync();
+
     }
 
     @Subscribe
     public void onEvent(WifiChangeEvent event) {
         daoService.switchUser();
-        initSync();
+
     }
 
     // -------------------------------------------------------------------------------
@@ -106,23 +106,6 @@ public class StoreService extends AbsService {
     // -------------------------------------------------------------------------------
 
 
-    public void isNewest(final Callback<Boolean> callback) {
-        RokiRestHelper.getStoreVersion(new Callback<Integer>() {
-
-            @Override
-            public void onSuccess(Integer version) {
-                cloudVersion = version;
-                int localVer = getLocalVersion();
-                boolean isNewest = localVer >= cloudVersion;
-                Helper.onSuccess(callback, isNewest);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onSuccess(callback, true);
-            }
-        });
-    }
 
     public void getStoreCategory(final Callback<List<Group>> callback) {
 
@@ -490,32 +473,12 @@ public class StoreService extends AbsService {
 
     //App启动图片接口
     public void getAppStartImages(String appType,
-                               final Callback<Reponses.AppStartImgResponses>callback){
-        RokiRestHelper.getAppStartImages(appType,
-                new Callback<Reponses.AppStartImgResponses>() {
-                    @Override
-                    public void onSuccess(Reponses.AppStartImgResponses result) {
-                        Helper.onSuccess(callback,result);
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                    }
-                });
+                               final retrofit2.Callback<Reponses.AppStartImgResponses> callback){
+        RokiRestHelper.getAppStartImages(appType, callback);
     }
     //App启动广告图片接口
-    public void getAppAdvertImg(final Callback<Reponses.AppAdvertImgResponses> callback){
-        RokiRestHelper.getAppAdvertImg(new Callback<Reponses.AppAdvertImgResponses>() {
-                    @Override
-                    public void onSuccess(Reponses.AppAdvertImgResponses result) {
-                        Helper.onSuccess(callback,result);
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                        Helper.onFailure(callback,t);
-                    }
-                });
+    public void getAppAdvertImg(final retrofit2.Callback<Reponses.AppAdvertImgResponses> callback){
+        RokiRestHelper.getAppAdvertImg(callback);
     }
 
     //获取厨房知识列表
@@ -1596,49 +1559,6 @@ public class StoreService extends AbsService {
     // -------------------------------------------------------------------------------
     // 同步表态数据
     // -------------------------------------------------------------------------------
-
-    /**
-     * 初始化时同步
-     */
-    private void initSync() {
-        boolean isMob = Utils.isMobApp();
-        if (IAppType.RKDRD.equals(Plat.appType)) {
-//            getHomeAdvertsForMob(null);
-//            getCookbookProviders(null);
-//            getStoreCategory(null);
-        } else {
-            // getHomeAdvertsForPad(null);
-            // getRecommendImagesForPad(null);
-            // getFavorityImagesForPad(null);
-            // getAllBookImagesForPad(null);
-            isNewest(new Callback<Boolean>() {
-
-                @Override
-                public void onSuccess(Boolean result) {
-
-                    if (result) {
-                        Log.d("dao", "store 已是最新版，无需更新");
-                    } else {
-//                        getCookbookProviders(null);
-//                        getStoreCategory(null);
-                    }
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                    onThrowable(t);
-                }
-            });
-        }
-
-//        getRecommendCookbooks(null);
-
-        long userId = getUserId();
-        if (userId > 0) {
-            // getTodayCookbooks(null);
-            //  getFavorityCookbooks(null);
-        }
-    }
 
     // -------------------------------------------------------------------------------
     // private

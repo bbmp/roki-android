@@ -12,7 +12,11 @@ import com.legent.plat.events.AppGuidGettedEvent;
 import com.legent.plat.events.DeviceTokenEvent;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.events.UserLogoutEvent;
+import com.legent.plat.io.cloud.CloudHelper;
+import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.AppVersionInfo;
+import com.legent.plat.pojos.RCReponse;
 import com.legent.plat.pojos.device.DeviceGuid;
 import com.legent.services.CrashLogService;
 import com.legent.utils.LogUtils;
@@ -23,6 +27,9 @@ import com.legent.utils.api.PreferenceUtils;
 import static com.legent.ContextIniter.context;
 import static com.legent.plat.Plat.appGuid;
 import static com.legent.plat.Plat.appType;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class CommonService extends AbsCommonCloudService {
 
@@ -94,16 +101,19 @@ public class CommonService extends AbsCommonCloudService {
             String packageName = context.getPackageName();
             String versionName = context.getPackageManager().getPackageInfo(packageName, 0).versionName;
             String token = ApiUtils.getNewClientId(Plat.app);
-            getAppGuid(Plat.appType, token, phone, versionName, new Callback<String>() {
+            CloudHelper.getAppGuid(Plat.appType, token, phone, versionName, new RetrofitCallback<Reponses.GetAppIdReponse>() {
                 @Override
-                public void onSuccess(String guid) {
-                    LogUtils.i("20171219", "success:" + guid);
-                    setAppId(guid);
-                    callback.onCompleted(guid);
+                public void onSuccess(Reponses.GetAppIdReponse getAppIdReponse) {
+                    if (null != getAppIdReponse) {
+                        String guid = getAppIdReponse.appGuid;
+                        LogUtils.i("20171219", "success:" + guid);
+                        setAppId(guid);
+                        callback.onCompleted(guid);
+                    }
                 }
 
                 @Override
-                public void onFailure(Throwable t) {
+                public void onFaild(String err) {
                     callback.onCompleted(DeviceGuid.ZeroGuid);
                 }
             });
@@ -128,21 +138,23 @@ public class CommonService extends AbsCommonCloudService {
            // String token = ApiUtils.getClientId(Plat.app);
             String token = ApiUtils.getNewClientId(Plat.app);
             LogUtils.i("20181119","appTYtpe::"+appType+"token::"+token+"phone::"+phone+"versonName:"+versionName);
-            getAppGuid(appType, token, phone, versionName, new Callback<String>() {
+            CloudHelper.getAppGuid(appType, token, phone, versionName, new RetrofitCallback<Reponses.GetAppIdReponse>() {
                 @Override
-                public void onSuccess(String guid) {
-                    LogUtils.i("20170926", "success:" + guid);
-                    setAppId(guid);
-                    callback.onCompleted(guid);
+                public void onSuccess(Reponses.GetAppIdReponse getAppIdReponse) {
+                    if (null != getAppIdReponse) {
+                        String guid = getAppIdReponse.appGuid;
+                        LogUtils.i("20170926", "success:" + guid);
+                        setAppId(guid);
+                        callback.onCompleted(guid);
+                    }
                 }
 
                 @Override
-                public void onFailure(Throwable t) {
-                    LogUtils.i("20170926", "onFailure:" + t);
+                public void onFaild(String err) {
+                    LogUtils.i("20170926", "onFailure:" + err);
                     callback.onCompleted(DeviceGuid.ZeroGuid);
                 }
             });
-
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

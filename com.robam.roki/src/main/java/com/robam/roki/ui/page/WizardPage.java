@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-import com.legent.Callback;
 import com.legent.plat.constant.IAppType;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.adapters.ExtPageAdapter;
@@ -28,6 +27,9 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WizardPage extends MyBasePage<WizardActivity> {
 
@@ -128,17 +130,23 @@ public class WizardPage extends MyBasePage<WizardActivity> {
 
     private void inidData() {
         StoreService.getInstance().getAppStartImages(IAppType.RKDRD, new Callback<Reponses.AppStartImgResponses>() {
+
             @Override
-            public void onSuccess(Reponses.AppStartImgResponses appStartImgResponses) {
-                images = appStartImgResponses.images;
-                List<View> views = buildViews(images);
-                ExtPageAdapter adapter = new ExtPageAdapter();
-                pager.setAdapter(adapter);
-                indicator.setViewPager(pager);
-                adapter.loadViews(views);
+            public void onResponse(Call<Reponses.AppStartImgResponses> call, Response<Reponses.AppStartImgResponses> response) {
+                Reponses.AppStartImgResponses appStartImgResponses = response.body();
+                if (null != appStartImgResponses && null != appStartImgResponses.images) {
+                    images = appStartImgResponses.images;
+                    List<View> views = buildViews(images);
+                    ExtPageAdapter adapter = new ExtPageAdapter();
+                    pager.setAdapter(adapter);
+                    indicator.setViewPager(pager);
+                    adapter.loadViews(views);
+                }
             }
+
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<Reponses.AppStartImgResponses> call, Throwable throwable) {
+
             }
         });
     }

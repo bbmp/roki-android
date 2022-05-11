@@ -96,24 +96,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MediaType;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.http.PUT;
+import retrofit2.Call;
 
 public class RokiRestHelper {
 
     private static final String TAG = "RokiRestHelper";
     static IRokiRestService svr = Plat.getCustomApi(IRokiRestService.class);
 
-    static public void getStoreVersion(final Callback<Integer> callback) {
-        svr.getStoreVersion(new StoreRequest("roki"),
-                new RCRetrofitCallback<StoreVersionResponse>(callback) {
-                    @Override
-                    protected void afterSuccess(StoreVersionResponse result) {
-                        callback.onSuccess(result.version);
-                    }
-                });
-    }
 
     //用户登陆时会触发
     static public void getStoreCategory(final Callback<List<Group>> callback) {
@@ -893,30 +886,24 @@ public class RokiRestHelper {
     /**
      * App启动时图片
      */
-    static public void getAppStartImages(String appType, final Callback<Reponses.AppStartImgResponses> callback) {
-        svr.getAppStartImages(new Requests.GetAppStartImg(appType),
-                new RCRetrofitCallback<Reponses.AppStartImgResponses>(callback) {
-
-                    @Override
-                    protected void afterSuccess(Reponses.AppStartImgResponses result) {
-                        callback.onSuccess(result);
-                    }
-
-                });
+    static public void getAppStartImages(String appType, final retrofit2.Callback<Reponses.AppStartImgResponses> callback) {
+        String json = new Requests.GetAppStartImg(appType).toString();
+        okhttp3.RequestBody requestBody =
+                okhttp3.RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
+        Call<Reponses.AppStartImgResponses> call = svr.getAppStartImages(requestBody);
+        call.enqueue(callback);
     }
 
     /**
      * App启动时广告图片
      */
-    static public void getAppAdvertImg(final Callback<Reponses.AppAdvertImgResponses> callback) {
-        svr.getAppAdvertImg(new RCRetrofitCallback<Reponses.AppAdvertImgResponses>(callback) {
+    static public void getAppAdvertImg(final retrofit2.Callback<Reponses.AppAdvertImgResponses> callback) {
+        String json = new Reponses.AppAdvertImgResponses().toString();
+        okhttp3.RequestBody requestBody =
+                okhttp3.RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
+        Call<Reponses.AppAdvertImgResponses> call = svr.getAppAdvertImg(requestBody);
+        call.enqueue(callback);
 
-            @Override
-            protected void afterSuccess(Reponses.AppAdvertImgResponses result) {
-                callback.onSuccess(result);
-            }
-
-        });
     }
 
     //获取厨房知识列表

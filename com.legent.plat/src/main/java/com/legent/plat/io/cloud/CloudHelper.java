@@ -82,9 +82,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
 import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import static com.legent.ContextIniter.context;
 
@@ -102,21 +106,32 @@ public class CloudHelper {
 
     // ==========================================================Common Start==========================================================
 
-    static public String getAppGuid(String appType, String token, String phoneToken, String versionName) {
-        GetAppIdReponse res = svr.getAppId(new GetAppIdRequest(appType, token, phoneToken, versionName));
-        return res != null ? res.appGuid : null;
+    public static <T extends RCReponse> void getAppGuid(String appType, String token, String phoneToken, String versionName,
+                                                        final RetrofitCallback<T> callback) {
+        String json = new GetAppIdRequest(appType, token, phoneToken, versionName).toString();
+        RequestBody requestBody =
+                RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
+        Call<RCReponse> call = svr.getAppId(requestBody);
+        enqueue(call, callback);
     }
+    //统一处理回调
+    private static <T extends RCReponse> void enqueue(Call<RCReponse> call, final RetrofitCallback<T> callback) {
+        call.enqueue(new retrofit2.Callback<RCReponse>() {
+            @Override
+            public void onResponse(Call<RCReponse> call, Response<RCReponse> response) {
+                RCReponse rcReponse = response.body();
+                if (null != rcReponse && rcReponse.rc == 0) {
+                    if (null != callback)
+                        callback.onSuccess((T) rcReponse);
+                }
+            }
 
-    static public void getAppGuid(String appType, String token, String phoneToken, String versionName,
-                                  final Callback<String> callback) {
-        svr.getAppId(new GetAppIdRequest(appType, token, phoneToken, versionName),
-                new RCRetrofitCallback<GetAppIdReponse>(callback) {
-                    @Override
-                    protected void afterSuccess(GetAppIdReponse result) {
-                        LogUtils.i("20170926", "result" + result);
-                        callback.onSuccess(result.appGuid);
-                    }
-                });
+            @Override
+            public void onFailure(Call<RCReponse> call, Throwable throwable) {
+                if (null != callback)
+                    callback.onFaild(throwable.toString());
+            }
+        });
     }
 
     static public void bindAppGuidAndUser(String appGuid, long userId,
@@ -919,20 +934,26 @@ public class CloudHelper {
     }
 
 
-    static public void getAllDeviceType(final Callback callback) {
-        svr.getAllDeviceType(new Requests.DeviceTypeRequest(),
-                new RCRetrofitCallback<Reponses.DeviceTypeResponse>(callback) {
+    public static <T extends RCReponse> void getAllDeviceType(final RetrofitCallback<T> callback) {
+        String json = new Requests.DeviceTypeRequest().toString();
+        final RequestBody requestBody =
+                RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
+        Call<ResponseBody> call = svr.getAllDeviceType(requestBody);
+//        enqueue(call, callback);
+        call.enqueue(new retrofit2.Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String body = response.body().toString();
+                Gson gson = new Gson();
+                RCReponse rcReponse = gson.fromJson(body, T);
+            }
 
-                    @Override
-                    protected void afterSuccess(Reponses.DeviceTypeResponse result) {
-                        callback.onSuccess(result);
-                    }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
 
-                    @Override
-                    public void failure(RetrofitError e) {
-                        LogUtils.i("20180612", "e:" + e);
-                    }
-                });
+            }
+        });
+
     }
 
     static public void getAllDeviceErrorInfo(final Callback callback) {

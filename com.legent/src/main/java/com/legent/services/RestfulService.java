@@ -38,6 +38,8 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.converter.JacksonConverter;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestfulService extends AbsService {
 
@@ -55,6 +57,7 @@ public class RestfulService extends AbsService {
     String defaultHost;
     OkHttpClient client;
     boolean isSsl;
+    private Retrofit retrofit;
     Map<String, RestAdapter> map = Maps.newHashMap();
 
     private RestfulService() {
@@ -78,6 +81,10 @@ public class RestfulService extends AbsService {
         Log.v(TAG, host);
         defaultHost = host;
         getAdapter(host);
+        retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(defaultHost)
+                .build();
     }
 
     public OkHttpClient getClient() {
@@ -85,7 +92,8 @@ public class RestfulService extends AbsService {
     }
 
     public <T> T createApi(Class<T> clazz) {
-        return createApi(defaultHost, clazz);
+        return retrofit.create(clazz);
+//        return createApi(defaultHost, clazz);
     }
 
     public <T> T createApi(String host, Class<T> clazz) {

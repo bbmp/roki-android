@@ -77,6 +77,9 @@ import retrofit.http.Part;
 import retrofit.http.PartMap;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.HEAD;
+import retrofit2.http.Headers;
 
 public interface IRokiRestService {
 
@@ -528,11 +531,13 @@ public interface IRokiRestService {
     void getMallManagement(@Body Requests.MallManagementRequest reqBody, Callback<Reponses.MallManagementResponse> callback);
 
 
-    @POST(getAppStartImages)
-    void getAppStartImages(@Body Requests.GetAppStartImg reqBody, Callback<Reponses.AppStartImgResponses> callback);
+    @retrofit2.http.POST(getAppStartImages)
+    @Headers("Content-Type: application/json")
+    Call<Reponses.AppStartImgResponses> getAppStartImages(@retrofit2.http.Body okhttp3.RequestBody body);
 
-    @POST(getAppAdvertImg)
-    void getAppAdvertImg(Callback<Reponses.AppAdvertImgResponses> callback);
+    @retrofit2.http.POST(getAppAdvertImg)
+    @Headers("Content-Type: application/json")
+    Call<Reponses.AppAdvertImgResponses> getAppAdvertImg(@retrofit2.http.Body okhttp3.RequestBody body);
 
     @POST(getYiGuo)
     void getYiGuoUrl(Callback<Reponses.GetYiGuoUrlResponse> callback);
