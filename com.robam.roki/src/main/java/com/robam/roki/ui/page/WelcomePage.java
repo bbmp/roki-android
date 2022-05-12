@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.utils.LogUtils;
@@ -19,6 +20,7 @@ import com.legent.utils.api.PreferenceUtils;
 import com.legent.utils.graphic.ImageUtils;
 import com.robam.common.events.WxCodeEvent;
 import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.Advert;
 import com.robam.common.services.StoreService;
 import com.robam.common.util.RecipeRequestIdentification;
@@ -122,11 +124,10 @@ public class WelcomePage extends MyBasePage<WelcomeActivity> {
                 startNext();
             }
         });
-        StoreService.getInstance().getAppAdvertImg(new Callback<Reponses.AppAdvertImgResponses>() {
+        RokiRestHelper.getAppAdvertImg(Reponses.AppAdvertImgResponses.class, new RetrofitCallback<Reponses.AppAdvertImgResponses>() {
 
             @Override
-            public void onResponse(Call<Reponses.AppAdvertImgResponses> call, Response<Reponses.AppAdvertImgResponses> response) {
-                Reponses.AppAdvertImgResponses appAdvertImgResponses = response.body();
+            public void onSuccess(Reponses.AppAdvertImgResponses appAdvertImgResponses) {
                 if (null != appAdvertImgResponses) {
                     List<Advert> images = appAdvertImgResponses.images;
                     for (Advert advert : images) {
@@ -153,7 +154,7 @@ public class WelcomePage extends MyBasePage<WelcomeActivity> {
             }
 
             @Override
-            public void onFailure(Call<Reponses.AppAdvertImgResponses> call, Throwable throwable) {
+            public void onFaild(String err) {
                 if (cv_ring != null){
                     cv_ring.setVisibility(View.VISIBLE);
                     cv_ring.start(new CountdownView2.StopLinstener() {

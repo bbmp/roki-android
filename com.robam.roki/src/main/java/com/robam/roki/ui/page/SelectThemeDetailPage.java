@@ -31,12 +31,14 @@ import com.legent.events.ConnectionModeChangedEvent;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.events.UserLoginEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.AbsRecipe;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.pojos.RecipeTheme;
@@ -389,35 +391,35 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
      */
     private void getThemeRecipeDetail(long themeId) {
         LogUtils.i(TAG, "getThemeRecipeDetail themeId:" + themeId);
-        CookbookManager.getInstance().getThemeRecipeDetail(themeId, new Callback<Reponses.ThemeRecipeDetailResponse>() {
+        RokiRestHelper.getThemeRecipeDetail(themeId, Reponses.ThemeRecipeDetailResponse.class, new RetrofitCallback<Reponses.ThemeRecipeDetailResponse>() {
             @Override
             public void onSuccess(Reponses.ThemeRecipeDetailResponse themeRecipeDetailResponse) {
-                if (themeRecipeDetailResponse != null && themeRecipeDetailResponse.themeRecipeDetail != null) {
+                if (themeRecipeDetailResponse != null && themeRecipeDetailResponse.theme != null) {
 
                     if (theme==null){
-                        theme=themeRecipeDetailResponse.themeRecipeDetail;
+                        theme=themeRecipeDetailResponse.theme;
                     }
                     if (theme.isCollect){
-                        theme = themeRecipeDetailResponse.themeRecipeDetail ;
+                        theme = themeRecipeDetailResponse.theme ;
                         theme.isCollect = true ;
                     }else {
-                        theme = themeRecipeDetailResponse.themeRecipeDetail ;
+                        theme = themeRecipeDetailResponse.theme ;
                     }
 
-                    LogUtils.i(TAG, "onSuccess theme viewCount:" + themeRecipeDetailResponse.themeRecipeDetail.viewCount + " theme collectCount:" + themeRecipeDetailResponse.themeRecipeDetail.collectCount);
+                    LogUtils.i(TAG, "onSuccess theme viewCount:" + themeRecipeDetailResponse.theme.viewCount + " theme collectCount:" + themeRecipeDetailResponse.theme.collectCount);
 //                    if (tvReadThemeNumber == null) {
 //                        return;
 //                    }
                     GlideApp.with(getActivity())
-                            .load(themeRecipeDetailResponse.themeRecipeDetail.imageUrl)
+                            .load(themeRecipeDetailResponse.theme.imageUrl)
                             .into(ivSelectThemeTitleBg);
-                    tvSelectThemeToolBarTitle.setText(themeRecipeDetailResponse.themeRecipeDetail.name);
+                    tvSelectThemeToolBarTitle.setText(themeRecipeDetailResponse.theme.name);
 //                    tvThemeDesc.setText(themeRecipeDetailResponse.themeRecipeDetail.description);
 //
 //                    tvReadThemeNumber.setText("阅读 " + NumberUtil.converString(themeRecipeDetailResponse.themeRecipeDetail.viewCount));
 //                    tvCollectThemeNumber.setText("收藏 " + NumberUtil.converString(themeRecipeDetailResponse.themeRecipeDetail.collectCount));
-                   if (themeRecipeDetailResponse.themeRecipeDetail.recipeList!=null) {
-                       recipeList.addAll(themeRecipeDetailResponse.themeRecipeDetail.recipeList);
+                   if (themeRecipeDetailResponse.theme.cookbookSet != null) {
+                       recipeList.addAll(themeRecipeDetailResponse.theme.cookbookSet);
 //                       tvThemeRecipeNumber.setText(themeRecipeDetailResponse.themeRecipeDetail.recipeList.size() + "道菜谱");
                    }
                     rvSelectThemeAdapter.setThemeRecipeDetailResponse(themeRecipeDetailResponse);
@@ -435,10 +437,11 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                LogUtils.i(TAG, "onFail:" + t.toString());
+            public void onFaild(String err) {
+                LogUtils.i(TAG, "onFail:" + err);
                 srl_theme.setRefreshing(false);
             }
+
         });
     }
 

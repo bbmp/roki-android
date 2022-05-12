@@ -109,9 +109,9 @@ abstract public class AbsDeviceCloudService extends AbsService{
     }
 
 
-    public void getAllDeviceErrorInfo(Callback<Reponses.ErrorInfoResponse> callback) {
-        CloudHelper.getAllDeviceErrorInfo(callback);
-    }
+//    public void getAllDeviceErrorInfo(Callback<Reponses.ErrorInfoResponse> callback) {
+//        CloudHelper.getAllDeviceErrorInfo(callback);
+//    }
 
     // -------------------------------------------------------------------------------
     // restful service end

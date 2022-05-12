@@ -27,12 +27,14 @@ import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.TimeUtils;
 import com.legent.utils.api.NetworkUtils;
 import com.legent.utils.api.ToastUtils;
+import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.DeviceType;
 import com.robam.common.pojos.Recipe;
@@ -413,18 +415,21 @@ public class HomeRecipeView32 extends MyBaseView {
      * 获取某个标签或推荐或周上新的主题
      */
     public void getByTagOtherThemes() {
-        RokiRestHelper.getByTagOtherThemes(null, false, pageNo, 10, -1, new Callback<List<RecipeTheme>>() {
-            @Override
-            public void onSuccess(List<RecipeTheme> recipeThemes) {
-                recipeThemeList.addAll(recipeThemes) ;
-                loadRecipeData();
-            }
+        RokiRestHelper.getByTagOtherThemes(null, false, pageNo, 10, -1,
+                Reponses.RecipeThemeResponse.class, new RetrofitCallback<Reponses.RecipeThemeResponse>() {
+                    @Override
+                    public void onSuccess(Reponses.RecipeThemeResponse recipeThemeResponse) {
+                        if (null != recipeThemeResponse && null != recipeThemeResponse.items) {
+                            recipeThemeList.addAll(recipeThemeResponse.items) ;
+                            loadRecipeData();
+                        }
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
-                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
-                srlHome.setRefreshing(false);
-            }
+                    @Override
+                    public void onFaild(String err) {
+                        rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
+                        srlHome.setRefreshing(false);
+                    }
         });
     }
 
@@ -436,28 +441,32 @@ public class HomeRecipeView32 extends MyBaseView {
             rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
             return;
         }
-        RokiRestHelper.getbyTagOtherCooks(null , true, pageNo, 10, -1 , getIds(recipeDatas), new Callback<List<Recipe>>() {
-            @Override
-            public void onSuccess(List<Recipe> recipes) {
-                if (recipes == null || recipes.size() == 0 ) {
-                    LogUtils.i(TAG, " recipes isEmpty!");
-                    rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
-                }else {
-                    recipeDatas.addAll(recipes);
-                    List<ThemeRecipeMultipleItem> themeRecipeMultipleItemList = new ArrayList<>();
-                    for (Recipe recipe : recipes) {
-                        themeRecipeMultipleItemList.add(new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_RECIPE_MSG_TEXT, recipe));
+        RokiRestHelper.getbyTagOtherCooks(null , true, pageNo, 10, -1 , getIds(recipeDatas),
+                Reponses.PersonalizedRecipeResponse.class, new RetrofitCallback<Reponses.PersonalizedRecipeResponse>() {
+                    @Override
+                    public void onSuccess(Reponses.PersonalizedRecipeResponse personalizedRecipeResponse) {
+                        if (null != personalizedRecipeResponse) {
+                            List<Recipe> recipes = personalizedRecipeResponse.cookbooks;
+                            if (recipes == null || recipes.size() == 0 ) {
+                                LogUtils.i(TAG, " recipes isEmpty!");
+                                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
+                            }else {
+                                recipeDatas.addAll(recipes);
+                                List<ThemeRecipeMultipleItem> themeRecipeMultipleItemList = new ArrayList<>();
+                                for (Recipe recipe : recipes) {
+                                    themeRecipeMultipleItemList.add(new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_RECIPE_MSG_TEXT, recipe));
+                                }
+                                settingData(themeRecipeMultipleItemList);
+                            }
+                            srlHome.setRefreshing(false);
+                        }
                     }
-                    settingData(themeRecipeMultipleItemList);
-                }
-                srlHome.setRefreshing(false);
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
-                srlHome.setRefreshing(false);
-            }
+                    @Override
+                    public void onFaild(String err) {
+                        rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
+                        srlHome.setRefreshing(false);
+                    }
         });
     }
 
@@ -489,39 +498,37 @@ public class HomeRecipeView32 extends MyBaseView {
     private void getWeekRecipeTops() {
         String weekTime = TimeUtils.getlastWeekTime();
         LogUtils.i(TAG, "weekTime:" + weekTime);
-        RokiRestHelper.getWeekTops(weekTime, 0, 5, new Callback<List<Recipe>>() {
+        RokiRestHelper.getWeekTops(weekTime, 0, 5, Reponses.WeekTopsResponse.class, new RetrofitCallback<Reponses.WeekTopsResponse>() {
             @Override
-            public void onSuccess(final List<Recipe> recipes) {
-                LogUtils.i(TAG, "getWeekTops onSuccess");
-//                if (recipes.isEmpty()) {
-//                    rlLastWeekTopList.setVisibility(GONE);
-//                    return;
-//                }
+            public void onSuccess(Reponses.WeekTopsResponse weekTopsResponse) {
+                if (null != weekTopsResponse && null != weekTopsResponse.payload) {
+                    LogUtils.i(TAG, "getWeekTops onSuccess");
+                    List<Recipe> recipes = weekTopsResponse.payload;
 
-                for (Recipe recipe : recipes) {
-                    LogUtils.i(TAG, "imgLarge:" + recipe.imgLarge);
-                    recipe.setItemType(Recipe.IMG);
-                }
-                recipes.add(new Recipe(Recipe.TEXT));
-                mRecipeTopicAdapter = new RecipeTopicAdapter(recipes);
-                rvWeekTopics.setAdapter(mRecipeTopicAdapter);
-                mRecipeTopicAdapter.setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                        LogUtils.i(TAG, "recipes.size:" + recipes.size() + " position:" + position);
-                        if (recipes.size() == position + 1) {
-                            UIService.getInstance().postPage(PageKey.TopWeekPage);
-                        } else {
-                            RecipeDetailPage.show(recipes.get(position).id, recipes.get(position).sourceType);
-                        }
+                    for (Recipe recipe : recipes) {
+                        LogUtils.i(TAG, "imgLarge:" + recipe.imgLarge);
+                        recipe.setItemType(Recipe.IMG);
                     }
-                });
-
+                    recipes.add(new Recipe(Recipe.TEXT));
+                    mRecipeTopicAdapter = new RecipeTopicAdapter(recipes);
+                    rvWeekTopics.setAdapter(mRecipeTopicAdapter);
+                    mRecipeTopicAdapter.setOnItemClickListener(new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                            LogUtils.i(TAG, "recipes.size:" + recipes.size() + " position:" + position);
+                            if (recipes.size() == position + 1) {
+                                UIService.getInstance().postPage(PageKey.TopWeekPage);
+                            } else {
+                                RecipeDetailPage.show(recipes.get(position).id, recipes.get(position).sourceType);
+                            }
+                        }
+                    });
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                LogUtils.i(TAG, "onFailure " + t.toString());
+            public void onFaild(String err) {
+                LogUtils.i(TAG, "onFailure " + err);
             }
         });
     }
@@ -530,22 +537,21 @@ public class HomeRecipeView32 extends MyBaseView {
      * 精选专题列表
      */
     private void getThemeHttpData() {
-        CookbookManager.getInstance().getThemeRecipes(new Callback<List<RecipeTheme>>() {
+        RokiRestHelper.getThemeRecipeList(Reponses.RecipeThemeResponse.class, new RetrofitCallback<Reponses.RecipeThemeResponse>() {
             @Override
-            public void onSuccess(final List<RecipeTheme> recipeThemes) {
-//                final ArrayList<String> timeDataList = new ArrayList<>();
-                if (Plat.accountService.isLogon()) {
-                    getThemeCollection(recipeThemes);
-                    return;
+            public void onSuccess(Reponses.RecipeThemeResponse recipeThemeResponse) {
+                if (null != recipeThemeResponse) {
+                    if (Plat.accountService.isLogon()) {
+                        getThemeCollection(recipeThemeResponse.items);
+                        return;
+                    }
+                    //设置精选专题
+                    setTheme(recipeThemeResponse.items);
                 }
-                //设置精选专题
-                setTheme(recipeThemes);
-
             }
 
             @Override
-            public void onFailure(Throwable t) {
-//                viewHomeRecipeRefresh.onRefreshComplete();
+            public void onFaild(String err) {
 
             }
         });

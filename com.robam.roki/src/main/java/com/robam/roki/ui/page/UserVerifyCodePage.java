@@ -24,6 +24,9 @@ import com.google.common.base.Strings;
 import com.legent.Callback;
 import com.legent.VoidCallback2;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
+import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.HeadPage;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -187,25 +190,26 @@ abstract public class UserVerifyCodePage extends HeadPage {
         this.phone = phone;
 
         ProgressDialogHelper.setRunning(cx, true);
-        Plat.accountService.getVerifyCode(phone, new Callback<String>() {
+        CloudHelper.getVerifyCode(phone, Reponses.GetVerifyCodeReponse.class, new RetrofitCallback<Reponses.GetVerifyCodeReponse>() {
             @Override
-            public void onSuccess(String s) {
-                code = s;
-                String strPhone = phone.substring(0, 3) + "****" + phone.substring(7);
-                txtPhone.setText(strPhone);
+            public void onSuccess(Reponses.GetVerifyCodeReponse getVerifyCodeReponse) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.showShort("短信验证码已发送，请及时查收");
+                if (null != getVerifyCodeReponse) {
+                    code = getVerifyCodeReponse.verifyCode;
+                    String strPhone = phone.substring(0, 3) + "****" + phone.substring(7);
+                    txtPhone.setText(strPhone);
+                    ToastUtils.showShort("短信验证码已发送，请及时查收");
 
-                if (callback != null) {
-                    callback.onCompleted();
+                    if (callback != null) {
+                        callback.onCompleted();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 ProgressDialogHelper.setRunning(cx, false);
-                LogUtils.i("20171223", "t::" + t);
-                ToastUtils.showThrowable(t);
+                ToastUtils.show(err);
             }
         });
 

@@ -66,6 +66,7 @@ import org.eclipse.jetty.util.MultiPartInputStream;
 import java.io.File;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
@@ -408,8 +409,9 @@ public interface IRokiRestService {
     /**
      * 判断菜谱是否收藏过接口
      */
-    @POST(getIsCollect)
-    void getIsCollectBook(@Body Requests.IsCollectRequest reqbody, Callback<Reponses.IsCollectBookResponse> callback);
+    @retrofit2.http.POST(getIsCollect)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getIsCollectBook(@retrofit2.http.Body okhttp3.RequestBody body);
 
 
     @GET(getKuFRecipe)
@@ -429,16 +431,16 @@ public interface IRokiRestService {
     /**
      * 获取所有上架菜谱的随机某个菜
      */
-    @POST(getRandomCookbook)
-    void getRamdomCookBook(@Body Requests.RamdomCookBookRequest reqBody,
-                           Callback<Reponses.ThumbCookbookResponse> callback);
+    @retrofit2.http.POST(getRandomCookbook)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getRamdomCookBook(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 菜谱周排名
      */
-    @POST(getWeekTops)
-    void getWeekTops(@Body Requests.WeekTopsRequest reqBody,
-                     Callback<Reponses.WeekTopsResponse> callback);
+    @retrofit2.http.POST(getWeekTops)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getWeekTops(@retrofit2.http.Body okhttp3.RequestBody body);
 
     @POST(suggestApply)
     void submitSuggestApply(@Body Requests.SuggestApplyRequest reqBody, Callback<Reponses.SuggestApplyReponse> callback);
@@ -446,19 +448,18 @@ public interface IRokiRestService {
     /**
      * 获取某个标签或推荐或周上新的分页菜谱
      */
-    @POST(getbyTagOtherCooks)
-    void getbyTagOtherCooks(@Body Requests.TagOtherCooksRequest reqBody,
-
-                            Callback<Reponses.PersonalizedRecipeResponse> callback);
+    @retrofit2.http.POST(getbyTagOtherCooks)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getbyTagOtherCooks(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 获取菜谱分类下面菜谱
      * @param reqBody
      * @param callback
      */
-    @POST(getCookbookByTag)
-    void getCookbookByTag(@Body Requests.TagCooksRequest reqBody,
-                            Callback<Reponses.PersonalizedRecipeResponse> callback);
+    @retrofit2.http.POST(getCookbookByTag)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getCookbookByTag(@retrofit2.http.Body okhttp3.RequestBody body);
     /**
      * 查询用户关联多段菜谱列表
      */
@@ -496,9 +497,9 @@ public interface IRokiRestService {
     /**
      * 获取某个标签或推荐或周上新的主题
      */
-    @POST(getByTagOtherThemes)
-    void getByTagOtherThemes(@Body Requests.TagOtherThemesRequest reqBody,
-                             Callback<Reponses.RecipeThemeResponse> callback);
+    @retrofit2.http.POST(getByTagOtherThemes)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getByTagOtherThemes(@retrofit2.http.Body okhttp3.RequestBody body);
 
 
     /**
@@ -507,9 +508,9 @@ public interface IRokiRestService {
      * @param reqBody
      * @param callback
      */
-    @POST(getCookbookbythemeId)
-    void getCookBookBythemeId(@Body Requests.CookbookbythemeIdRequest reqBody,
-                              Callback<Reponses.PersonalizedRecipeResponse> callback);
+    @retrofit2.http.POST(getCookbookbythemeId)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getCookBookBythemeId(@retrofit2.http.Body okhttp3.RequestBody body);
 
 
     /**
@@ -537,7 +538,7 @@ public interface IRokiRestService {
 
     @retrofit2.http.POST(getAppAdvertImg)
     @Headers("Content-Type: application/json")
-    Call<Reponses.AppAdvertImgResponses> getAppAdvertImg(@retrofit2.http.Body okhttp3.RequestBody body);
+    Call<ResponseBody> getAppAdvertImg(@retrofit2.http.Body okhttp3.RequestBody body);
 
     @POST(getYiGuo)
     void getYiGuoUrl(Callback<Reponses.GetYiGuoUrlResponse> callback);
@@ -564,9 +565,9 @@ public interface IRokiRestService {
     /**
      * 获取厨房知识列表
      */
-    @POST(getCookingKnowledge)
-    void getCookingKnowledge(@Body Requests.CookingKnowledgeRequest rewBody,
-                             Callback<Reponses.CookingKnowledgeResponse> callback);
+    @retrofit2.http.POST(getCookingKnowledge)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getCookingKnowledge(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 联网优化
@@ -583,8 +584,9 @@ public interface IRokiRestService {
     /**
      * 获取分类
      */
-    @POST(getStoreCategory)
-    void getStoreCategory(Callback<StoreCategoryResponse> callback);
+    @retrofit2.http.POST(getStoreCategory)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getStoreCategory(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 获取所有菜谱供应商
@@ -637,9 +639,9 @@ public interface IRokiRestService {
      * 根据设备种类获取所有菜谱
      * 201600711周定钧
      */
-    @POST(getGroundingRecipesByDevice)
-    void getGroundingRecipesByDevice(@Body getGroundingRecipesByDeviceRequest reqBody,
-                                     Callback<ThumbCookbookResponse> callback);
+    @retrofit2.http.POST(getGroundingRecipesByDevice)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getGroundingRecipesByDevice(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 根据设备种类获取今日菜谱
@@ -681,9 +683,9 @@ public interface IRokiRestService {
     /**
      * 获取菜谱详情
      */
-    @POST(getCookbookById)
-    void getCookbookById(@Body UserBookRequest reqBody,
-                         Callback<CookbookResponse> callback);
+    @retrofit2.http.POST(getCookbookById)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getCookbookById(@retrofit2.http.Body okhttp3.RequestBody body);
 
     //获取烹饪步骤信息
     @POST(getCookbookSteps)
@@ -693,9 +695,9 @@ public interface IRokiRestService {
     /**
      * 获取菜谱详情新接口
      */
-    @POST(getNewCookbookById)
-    void getNewCookbookById(@Body UserBookRequest reqBody,
-                            Callback<CookbookResponse> callback);
+    @retrofit2.http.POST(getNewCookbookById)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getNewCookbookById(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 获取老菜谱详情
@@ -797,14 +799,17 @@ public interface IRokiRestService {
     /**
      * 获取主题列表精选专题
      */
-    @POST(getThemeRecipeList)
-    void setGetThemeRecipeList(Callback<Reponses.RecipeThemeResponse> callback);
+    @retrofit2.http.POST(getThemeRecipeList)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> setGetThemeRecipeList(@retrofit2.http.Body okhttp3.RequestBody body);
 
     @POST(getThemeRecipeList_new)
+    @Headers("Content-Type: application/json")
     void setGetThemeRecipeList_new(Callback<Reponses.RecipeThemeResponse> callback);
 
-    @POST(getThemeRecipeDetail)
-    void getThemeRecipeDetail(@Body Requests.ThemeRecipeDetailRequest request, Callback<Reponses.ThemeRecipeDetailResponse> callback);
+    @retrofit2.http.POST(getThemeRecipeDetail)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getThemeRecipeDetail(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 获取动态封面
@@ -860,8 +865,9 @@ public interface IRokiRestService {
     /**
      * 获取设备菜谱封面
      */
-    @POST(getDeviceRecipeImg)
-    void getDeviceRecipeImg(@Body Requests.CategoryRecipeImgRequest request, Callback<Reponses.CategoryRecipeImgRespone> callback);
+    @retrofit2.http.POST(getDeviceRecipeImg)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getDeviceRecipeImg(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 获取已收藏主题
@@ -1135,9 +1141,9 @@ public interface IRokiRestService {
      * 获取设备联网说明列表
      * 20161212周定钧
      */
-    @POST(getNetworkDeviceInfoRequest)
-    void getNetworkDeviceInfo(@Body Requests.GetNetworkDeviceInfoRequest reqBody,
-                              Callback<Reponses.NetworkDeviceInfoResponse> callback);
+    @retrofit2.http.POST(getNetworkDeviceInfoRequest)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getNetworkDeviceInfo(@retrofit2.http.Body okhttp3.RequestBody body);
 
 
     @POST(getRecipeTop4)

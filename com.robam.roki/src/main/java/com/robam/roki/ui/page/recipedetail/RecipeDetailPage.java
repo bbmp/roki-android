@@ -42,6 +42,7 @@ import com.legent.events.AppVisibleEvent;
 import com.legent.plat.Plat;
 import com.legent.plat.events.FloatHelperEvent;
 import com.legent.plat.events.PageBackEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -548,53 +549,56 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
     private void getCookDetail(long recipeid) {
 
         ProgressDialogHelper.setRunning(cx, true);
-        StoreService.getInstance().getCookbookById(recipeid, "1", "1", new Callback<Recipe>() {
+        RokiRestHelper.getCookbookById(recipeid, "1", "1", Reponses.CookbookResponse.class, new RetrofitCallback<Reponses.CookbookResponse>() {
 
             @Override
-            public void onSuccess(Recipe recipe) {
-
-                cookbook = recipe;
-                imgFavority.setSelected(cookbook.collected);
-                boolean isLogin = Plat.accountService.isLogon();
-                if (!isLogin) {
-                    setData();
-                } else {
-                    setData();
-                    StoreService.getInstance().getIsCollectBookId(Plat.accountService.getCurrentUserId(), recipeid, new Callback<Reponses.IsCollectBookResponse>() {
-                        @Override
-                        public void onSuccess(Reponses.IsCollectBookResponse isCollectBookResponse) {
-                            try {
-                                if (isCollectBookResponse != null) {
-                                    boolean isCollect = isCollectBookResponse.isCollect;
-                                    if (isCollect) {
-                                        imgFavority.setSelected(true);
-                                        if (recipe.id == recipeid) {
-                                            cookbook.collected = true;
-                                            imgFavority.setImageResource(R.drawable.ic_recipe_favority_black_shape);
+            public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
+                if (null != cookbookResponse) {
+                    cookbook = cookbookResponse.cookbook;
+                    imgFavority.setSelected(cookbook.collected);
+                    boolean isLogin = Plat.accountService.isLogon();
+                    if (!isLogin) {
+                        setData();
+                    } else {
+                        setData();
+                        RokiRestHelper.getIsCollectBook(Plat.accountService.getCurrentUserId(), recipeid, Reponses.IsCollectBookResponse.class,
+                                new RetrofitCallback<Reponses.IsCollectBookResponse>() {
+                            @Override
+                            public void onSuccess(Reponses.IsCollectBookResponse isCollectBookResponse) {
+                                try {
+                                    if (isCollectBookResponse != null) {
+                                        boolean isCollect = isCollectBookResponse.isCollect;
+                                        if (isCollect) {
+                                            imgFavority.setSelected(true);
+                                            if (cookbook.id == recipeid) {
+                                                cookbook.collected = true;
+                                                imgFavority.setImageResource(R.drawable.ic_recipe_favority_black_shape);
+                                            }
+                                        } else {
+                                            imgFavority.setSelected(false);
+                                            if (cookbook.id == recipeid) {
+                                                cookbook.collected = false;
+                                                imgFavority.setImageResource(R.drawable.ic_recipe_favority_black_shape);
+                                            }
                                         }
-                                    } else {
-                                        imgFavority.setSelected(false);
-                                        if (recipe.id == recipeid) {
-                                            cookbook.collected = false;
-                                            imgFavority.setImageResource(R.drawable.ic_recipe_favority_black_shape);
-                                        }
+                                        imgFavority.setSelected(cookbook.collected);
                                     }
-                                    imgFavority.setSelected(cookbook.collected);
+                                } catch (Exception e) {
+
                                 }
-                            } catch (Exception e) {
+                            }
+
+                            @Override
+                            public void onFaild(String err) {
 
                             }
-                        }
-
-                        @Override
-                        public void onFailure(Throwable t) {
-                        }
-                    });
+                        });
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
 
             }
         });
@@ -681,27 +685,31 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
      * 获取大家都在做菜谱数据
      */
     private void loadRecipeData() {
-        RokiRestHelper.getbyTagOtherCooks(null, true, 0, 5, -1, new Callback<List<Recipe>>() {
-            @Override
-            public void onSuccess(List<Recipe> recipes) {
-                if (recipes != null && recipes.size() != 0) {
-                    rvRecipeDetailAdapter.addData(new RecipeDetailItem(recipes));
-                    rvRecipeDetailAdapter.addOnFootItemClickListener(new RvRecipeDetailAdapter.OnFootItemClickListener() {
-                        @Override
-                        public void onItemClick(int position) {
-                            ID = recipes.get(position).id;
-                            getCookDetail(ID);
-                            idTemp.add(ID);
-//                            RecipeDetailLoopPage.show(ID, recipes.get(position).sourceType);
-                        }
-                    });
-                }
-            }
+        RokiRestHelper.getbyTagOtherCooks(null, true, 0, 5, -1, null,
+                Reponses.PersonalizedRecipeResponse.class, new RetrofitCallback<Reponses.PersonalizedRecipeResponse>() {
+                    @Override
+                    public void onSuccess(Reponses.PersonalizedRecipeResponse personalizedRecipeResponse) {
+                        if (null != personalizedRecipeResponse) {
+                            List<Recipe> recipes = personalizedRecipeResponse.cookbooks;
+                            if (recipes != null && recipes.size() != 0) {
+                                rvRecipeDetailAdapter.addData(new RecipeDetailItem(recipes));
+                                rvRecipeDetailAdapter.addOnFootItemClickListener(new RvRecipeDetailAdapter.OnFootItemClickListener() {
+                                    @Override
+                                    public void onItemClick(int position) {
+                                        ID = recipes.get(position).id;
+                                        getCookDetail(ID);
+                                        idTemp.add(ID);
 
-            @Override
-            public void onFailure(Throwable t) {
-                ToastUtils.show(t.getMessage());
-            }
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFaild(String err) {
+                        ToastUtils.show(err);
+                    }
         });
     }
 

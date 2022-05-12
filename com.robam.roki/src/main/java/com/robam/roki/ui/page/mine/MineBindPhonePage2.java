@@ -9,6 +9,9 @@ import com.google.common.base.Strings;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
+import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -168,19 +171,21 @@ public class MineBindPhonePage2 extends MyBasePage<MainActivity> {
         }
 
         ProgressDialogHelper.setRunning(cx, true);
-        Plat.accountService.getVerifyCode(phone, new Callback<String>() {
+        CloudHelper.getVerifyCode(phone, Reponses.GetVerifyCodeReponse.class, new RetrofitCallback<Reponses.GetVerifyCodeReponse>() {
             @Override
-            public void onSuccess(String s) {
-                cvFindCountdown.start();
-                code = s;
+            public void onSuccess(Reponses.GetVerifyCodeReponse getVerifyCodeReponse) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(R.string.common_code_send_hint);
+                if (null != getVerifyCodeReponse) {
+                    cvFindCountdown.start();
+                    code = getVerifyCodeReponse.verifyCode;
+                    ToastUtils.show(R.string.common_code_send_hint);
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(t.getMessage());
+                ToastUtils.show(err);
             }
         });
 

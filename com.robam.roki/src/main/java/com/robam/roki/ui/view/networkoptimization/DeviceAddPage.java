@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.device.DeviceInfo;
 import com.legent.plat.services.DeviceTypeManager;
 import com.legent.ui.UIService;
@@ -21,6 +22,7 @@ import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.DeviceEasylinkCompletedEvent;
+import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.DeviceGroupList;
 import com.robam.common.pojos.DeviceItemList;
@@ -50,33 +52,36 @@ public class DeviceAddPage extends HeadPage {
     private int form;
 
     public void setGroupListAndDeviceList() {
-        RokiRestHelper.getNetworkDeviceInfoRequest("roki", null, null, new Callback<List<DeviceGroupList>>() {
-            @Override
-            public void onSuccess(List<DeviceGroupList> deviceGroupLists) {
+        RokiRestHelper.getNetworkDeviceInfoRequest("roki", null, null, Reponses.NetworkDeviceInfoResponse.class, new RetrofitCallback<Reponses.NetworkDeviceInfoResponse>() {
 
-                for (int i = 0; i < deviceGroupLists.size(); i++) {
-                    LogUtils.i("20170214", "deviceGroupLists" + deviceGroupLists.get(i).getDc());
+            @Override
+            public void onSuccess(Reponses.NetworkDeviceInfoResponse networkDeviceInfoResponse) {
+                if (null != networkDeviceInfoResponse && null != networkDeviceInfoResponse.deviceGroupList) {
+                    List<DeviceGroupList> deviceGroupLists = networkDeviceInfoResponse.deviceGroupList;
+                    for (int i = 0; i < deviceGroupLists.size(); i++) {
+                        LogUtils.i("20170214", "deviceGroupLists" + deviceGroupLists.get(i).getDc());
+                    }
+                    groupList.clear();
+                    deviceList.clear();
+                    for (int i = 0; i < deviceGroupLists.size(); i++) {
+                        deviceGroupLists.get(i).save2db();
+                    }
+                    for (int i = 0; i < deviceGroupLists.size(); i++) {
+                        DeviceGroupList groupListBean = deviceGroupLists.get(i);
+                        addGroupListBean(groupListBean, deviceGroupLists, i, i, R.mipmap.youyanji, groupListBean.name, groupListBean.englishName);
+                    }
+                    Comparator comp = new SortComparatorGroupListBean();
+                    Collections.sort(groupList, comp);
+                    for (int i = 0; i < groupList.size(); i++) {
+                        LogUtils.i("20170214", "groupList:" + groupList.get(i).getDeviceItemLists());
+                        deviceList.add(groupList.get(i).getDeviceItemLists());
+                    }
+                    setExpandableListAdapter();
                 }
-                groupList.clear();
-                deviceList.clear();
-                for (int i = 0; i < deviceGroupLists.size(); i++) {
-                    deviceGroupLists.get(i).save2db();
-                }
-                for (int i = 0; i < deviceGroupLists.size(); i++) {
-                    DeviceGroupList groupListBean = deviceGroupLists.get(i);
-                    addGroupListBean(groupListBean, deviceGroupLists, i, i, R.mipmap.youyanji, groupListBean.name, groupListBean.englishName);
-                }
-                Comparator comp = new SortComparatorGroupListBean();
-                Collections.sort(groupList, comp);
-                for (int i = 0; i < groupList.size(); i++) {
-                    LogUtils.i("20170214", "groupList:" + groupList.get(i).getDeviceItemLists());
-                    deviceList.add(groupList.get(i).getDeviceItemLists());
-                }
-                setExpandableListAdapter();
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
 
             }
         });

@@ -6,8 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.legent.Callback;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
+import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.services.CookbookManager;
 import com.robam.roki.R;
@@ -32,14 +35,15 @@ public class CookWithoutDevicePage extends BasePage {
         ButterKnife.inject(this, view);
 
         long bookId = getArguments().getLong(PageArgumentKey.BookId);
-        CookbookManager.getInstance().getCookbookById(bookId, new Callback<Recipe>() {
+        RokiRestHelper.getCookbookById(bookId, Reponses.CookbookResponse.class, new RetrofitCallback<Reponses.CookbookResponse>() {
             @Override
-            public void onSuccess(Recipe cookbook) {
-                book = cookbook;
+            public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
+                if (null != cookbookResponse)
+                    book = cookbookResponse.cookbook;
             }
 
             @Override
-            public void onFailure(Throwable throwable) {
+            public void onFaild(String err) {
 
             }
         });

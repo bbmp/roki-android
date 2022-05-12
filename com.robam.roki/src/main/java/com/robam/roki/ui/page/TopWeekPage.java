@@ -27,6 +27,7 @@ import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.events.UserLoginEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.LogUtils;
@@ -220,20 +221,23 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
     private void getWeekRecipeTops() {
         String weekTime = TimeUtils.getlastWeekTime();
         LogUtils.i(TAG, "weekTime:" + weekTime);
-        RokiRestHelper.getWeekTops(weekTime, pageNo, pageSize, new Callback<List<Recipe>>() {
+        RokiRestHelper.getWeekTops(weekTime, pageNo, pageSize, Reponses.WeekTopsResponse.class, new RetrofitCallback<Reponses.WeekTopsResponse>() {
             @Override
-            public void onSuccess(final List<Recipe> recipes) {
+            public void onSuccess(Reponses.WeekTopsResponse weekTopsResponse) {
                 LogUtils.i(TAG, "getWeekTops onSuccess");
-                if (recipes == null || recipes.size() == 0) {
-                    rvTopWeekAdapter.getLoadMoreModule().loadMoreEnd();
-                    return;
+                if (null != weekTopsResponse) {
+                    List<Recipe> recipes = weekTopsResponse.payload;
+                    if (recipes == null || recipes.size() == 0) {
+                        rvTopWeekAdapter.getLoadMoreModule().loadMoreEnd();
+                        return;
+                    }
+                    collectData(recipes, absRecipes);
                 }
-                collectData(recipes, absRecipes);
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                LogUtils.i(TAG, "onFailure " + t.toString());
+            public void onFaild(String err) {
+                LogUtils.i(TAG, "onFailure " + err);
             }
         });
 

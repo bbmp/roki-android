@@ -26,11 +26,14 @@ import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.events.UserLoginEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
+import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.RecipeTheme;
 import com.robam.common.services.CookbookManager;
 import com.robam.common.services.StoreService;
@@ -204,23 +207,26 @@ public class ThemeRecipeListPage extends MyBasePage<MainActivity> {
      */
     private void getThemeRecipeList() {
         ProgressDialogHelper.setRunning(cx, true);
-        CookbookManager.getInstance().getThemeRecipes(new Callback<List<RecipeTheme>>() {
+        RokiRestHelper.getThemeRecipeList(Reponses.RecipeThemeResponse.class, new RetrofitCallback<Reponses.RecipeThemeResponse>() {
             @Override
-            public void onSuccess(List<RecipeTheme> themes) {
-                if (themes == null || themes.size() == 0) {
-                    themeRecipeAdapter.setEmptyView(emptyView);
-                    tvDesc.setText("没有获取到专题数据");
-                    return;
+            public void onSuccess(Reponses.RecipeThemeResponse recipeThemeResponse) {
+                if (null != recipeThemeResponse) {
+                    List<RecipeTheme> themes = recipeThemeResponse.items;
+                    if (themes == null || themes.size() == 0) {
+                        themeRecipeAdapter.setEmptyView(emptyView);
+                        tvDesc.setText("没有获取到专题数据");
+                        return;
+                    }
+                    //获取被收藏的专题
+                    getThemeCollection(themes);
+                    ProgressDialogHelper.setRunning(cx, false);
                 }
-                //获取被收藏的专题
-                getThemeCollection(themes);
-                ProgressDialogHelper.setRunning(cx, false);
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 themeRecipeAdapter.setEmptyView(emptyView);
-                tvDesc.setText(t.getMessage());
+                tvDesc.setText(err);
                 ProgressDialogHelper.setRunning(cx, false);
             }
         });

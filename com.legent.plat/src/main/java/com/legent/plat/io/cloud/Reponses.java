@@ -257,7 +257,12 @@ public interface Reponses {
         public String msg;
 
         @JsonProperty("map")
-        public Map deviceTypes;
+        public Map<String, DeviceInfo> map;
+
+        class DeviceInfo {
+            String dp;
+            String dc;
+        }
     }
 
     class ErrorInfoResponse extends RCReponse{

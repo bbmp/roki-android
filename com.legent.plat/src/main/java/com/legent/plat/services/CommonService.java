@@ -101,7 +101,7 @@ public class CommonService extends AbsCommonCloudService {
             String packageName = context.getPackageName();
             String versionName = context.getPackageManager().getPackageInfo(packageName, 0).versionName;
             String token = ApiUtils.getNewClientId(Plat.app);
-            CloudHelper.getAppGuid(Plat.appType, token, phone, versionName, new RetrofitCallback<Reponses.GetAppIdReponse>() {
+            CloudHelper.getAppGuid(Plat.appType, token, phone, versionName, Reponses.GetAppIdReponse.class, new RetrofitCallback<Reponses.GetAppIdReponse>() {
                 @Override
                 public void onSuccess(Reponses.GetAppIdReponse getAppIdReponse) {
                     if (null != getAppIdReponse) {
@@ -138,7 +138,7 @@ public class CommonService extends AbsCommonCloudService {
            // String token = ApiUtils.getClientId(Plat.app);
             String token = ApiUtils.getNewClientId(Plat.app);
             LogUtils.i("20181119","appTYtpe::"+appType+"token::"+token+"phone::"+phone+"versonName:"+versionName);
-            CloudHelper.getAppGuid(appType, token, phone, versionName, new RetrofitCallback<Reponses.GetAppIdReponse>() {
+            CloudHelper.getAppGuid(appType, token, phone, versionName, Reponses.GetAppIdReponse.class, new RetrofitCallback<Reponses.GetAppIdReponse>() {
                 @Override
                 public void onSuccess(Reponses.GetAppIdReponse getAppIdReponse) {
                     if (null != getAppIdReponse) {

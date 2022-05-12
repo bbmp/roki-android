@@ -41,10 +41,10 @@ public class UserExpressLoginPage extends AbsVerifyCodePage {
             MainActivity.start(activity);
     }
 
-    @Override
-    void getVerifyCode(String phone, Callback<String> callback) {
-        Plat.accountService.getDynamicPwd(phone, callback);
-    }
+//    @Override
+//    void getVerifyCode(String phone, Callback<String> callback) {
+//        Plat.accountService.getDynamicPwd(phone, callback);
+//    }
 
     @Override
     String getCodeDesc() {

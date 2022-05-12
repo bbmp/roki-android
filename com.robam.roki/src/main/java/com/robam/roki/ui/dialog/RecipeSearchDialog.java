@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.common.base.Strings;
 import com.legent.Callback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.AbsDialog;
 import com.legent.utils.LogUtils;
@@ -160,45 +161,49 @@ public class RecipeSearchDialog extends AbsDialog {
                     }
                 });
 
-        RokiRestHelper.getStoreCategory(new Callback<List<Group>>() {
+        RokiRestHelper.getStoreCategory(Reponses.StoreCategoryResponse.class, new RetrofitCallback<Reponses.StoreCategoryResponse>() {
             @Override
-            public void onSuccess(List<Group> result) {
-                if (result == null || result.size() == 0) {
-                    return;
-                }
-                for (int i = 0; i < result.size(); i++) {
-                    if (cx.getString(R.string.maternal_and_child_series).equals
-                            (result.get(i).getName())) {
-                        List<Tag> tags = result.get(i).getTags();
-                        int pageNo=0;
-                        int pageSize =20;
-                        for (Tag tag : tags) {
-                            RokiRestHelper.getCookbooksByTag(tag.getID(),pageNo,pageSize, new Callback<Reponses.CookbooksResponse>() {
+            public void onSuccess(Reponses.StoreCategoryResponse storeCategoryResponse) {
+                if (null != storeCategoryResponse) {
+                    List<Group> result = storeCategoryResponse.cookbookTagGroups;
+                    if (result == null || result.size() == 0) {
+                        return;
+                    }
+                    for (int i = 0; i < result.size(); i++) {
+                        if (cx.getString(R.string.maternal_and_child_series).equals
+                                (result.get(i).getName())) {
+                            List<Tag> tags = result.get(i).getTags();
+                            int pageNo=0;
+                            int pageSize =20;
+                            for (Tag tag : tags) {
+                                RokiRestHelper.getCookbooksByTag(tag.getID(),pageNo,pageSize, new Callback<Reponses.CookbooksResponse>() {
 
-                                @Override
-                                public void onSuccess(Reponses.CookbooksResponse cookbooksResponse) {
-                                    List<Recipe> cookbooks = cookbooksResponse.cookbooks;
-                                    if (cookbooks != null && cookbooks.size() > 0) {
-                                        for (int i = 0; i < cookbooks.size(); i++) {
-                                            mRecipeNames.add(cookbooks.get(i));
+                                    @Override
+                                    public void onSuccess(Reponses.CookbooksResponse cookbooksResponse) {
+                                        List<Recipe> cookbooks = cookbooksResponse.cookbooks;
+                                        if (cookbooks != null && cookbooks.size() > 0) {
+                                            for (int i = 0; i < cookbooks.size(); i++) {
+                                                mRecipeNames.add(cookbooks.get(i));
+                                            }
+                                            addData(mRecipeNames);
                                         }
-                                        addData(mRecipeNames);
                                     }
-                                }
 
-                                @Override
-                                public void onFailure(Throwable t) {
+                                    @Override
+                                    public void onFailure(Throwable t) {
 
-                                    ToastUtils.showThrowable(t);
-                                }
-                            });
+                                        ToastUtils.showThrowable(t);
+                                    }
+                                });
+                            }
                         }
                     }
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
+
             }
         });
 

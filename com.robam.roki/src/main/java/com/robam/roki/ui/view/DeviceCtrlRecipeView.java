@@ -21,9 +21,12 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.legent.Callback;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.utils.StringUtils;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.graphic.ImageUtils;
+import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.Dc;
 import com.robam.common.pojos.DeviceType;
 import com.robam.common.pojos.Recipe;
@@ -166,26 +169,31 @@ public class DeviceCtrlRecipeView extends PullToRefreshListView implements PullT
      */
     public void getRecipeByDcFromHttp() {
         //获取设备菜谱
-        CookbookManager.getInstance().getGroundingRecipesByDevice(type, "all", start, num, devicePlat, new Callback<List<Recipe>>() {
-            @Override
-            public void onSuccess(List<Recipe> recipe) {
-                if (recipe == null || recipe.size() <= 0) {
-                    recipe = Lists.newArrayList();
-                    if (start > 0)
-                        ToastUtils.show(R.string.not_more_recipes, Toast.LENGTH_SHORT);
-                }
-                if (start == 0) {
-                    dataList.clear();
-                }
-                dataList.addAll(recipe);
-                adapter.notifyDataSetChanged();
-                onRefreshComplete();
-            }
+        RokiRestHelper.getGroundingRecipesByDevice(type, "all", start, num,
+                Reponses.ThumbCookbookResponse.class, new RetrofitCallback<Reponses.ThumbCookbookResponse>() {
+                    @Override
+                    public void onSuccess(Reponses.ThumbCookbookResponse thumbCookbookResponse) {
+                        if (null != thumbCookbookResponse) {
+                            List<Recipe> recipes = thumbCookbookResponse.cookbooks;
+                            if (recipes == null || recipes.size() <= 0) {
+                                recipes = Lists.newArrayList();
+                                if (start > 0)
+                                    ToastUtils.show(R.string.not_more_recipes, Toast.LENGTH_SHORT);
+                            }
+                            if (start == 0) {
+                                dataList.clear();
+                            }
+                            dataList.addAll(recipes);
+                            adapter.notifyDataSetChanged();
+                            onRefreshComplete();
+                        }
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
-                onRefreshComplete();
-            }
+                    @Override
+                    public void onFaild(String err) {
+                        onRefreshComplete();
+                    }
+
         });
     }
 

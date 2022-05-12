@@ -18,9 +18,9 @@ abstract public class AbsAccountCloudService extends AbsService {
         CloudHelper.isExisted(account, callback);
     }
 
-    public void getVerifyCode(String phone, Callback<String> callback) {
-        CloudHelper.getVerifyCode(phone, callback);
-    }
+//    public void getVerifyCode(String phone, Callback<String> callback) {
+//        CloudHelper.getVerifyCode(phone, callback);
+//    }
 
     public void getDynamicPwd(String phone, Callback<String> callback) {
         CloudHelper.getDynamicPwd(phone, callback);

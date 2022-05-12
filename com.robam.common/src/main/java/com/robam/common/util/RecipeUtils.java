@@ -145,35 +145,6 @@ public class RecipeUtils {
         return list != null && list.size() > 0;
     }
 
-    public static void getRecipeDetailFromDBOrNET(long id, final VoidCallback3 callback3) throws Exception {
-        if (id == 0)
-            throw new NullPointerException();
-        Recipe recipe = null;
-        try {
-            recipe = DaoHelper.getById(Recipe.class, id);
-        } catch (Exception e) {
-        } finally {
-            if (recipe != null && recipe.hasDetail && ifRecipeContainStep(recipe)) {
-                callback3.onCompleted(recipe);
-            } else {
-                ProgressDialogHelper.setRunning(context, true);
-                StoreService.getInstance().getCookbookById(id, new Callback<Recipe>() {
-                    @Override
-                    public void onSuccess(Recipe recipe) {
-                        callback3.onCompleted(recipe);
-                        ProgressDialogHelper.setRunning(context, false);
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                        callback3.onCompleted(null);
-                        ProgressDialogHelper.setRunning(context, false);
-                    }
-                });
-            }
-        }
-
-    }
 
 
 }

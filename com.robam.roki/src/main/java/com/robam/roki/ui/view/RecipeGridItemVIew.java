@@ -19,6 +19,7 @@ import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
 import com.legent.VoidCallback2;
 import com.legent.plat.events.ClickRecipeEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.DialogHelper;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -26,6 +27,8 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.api.DisplayUtils;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.graphic.ImageUtils;
+import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.AbsRecipe;
 import com.robam.common.pojos.Dc;
 import com.robam.common.pojos.Recipe;
@@ -242,22 +245,26 @@ public class RecipeGridItemVIew extends FrameLayout {
 
             LogUtils.i("20180830"," recipe.id:" + recipe.id);
 
-            CookbookManager.getInstance().getCookbookById(recipe.id, new Callback<Recipe>() {
+            RokiRestHelper.getCookbookById(recipe.id, Reponses.CookbookResponse.class, new RetrofitCallback<Reponses.CookbookResponse>() {
                 @Override
-                public void onSuccess(Recipe recipe) {
-                    ProgressDialogHelper.setRunning(cx, false);
-                    if (modelType == RecipeGridView.Model_Favority){
-                        RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_FAVORITY);
-                    }else if (modelType == RecipeGridView.Model_Search){
-                        RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_SEARCE);
-                    }else if(modelType == RecipeGridView.Model_History){
-                        RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_ALL);
-                    }else {
-                        RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_SORTED);
+                public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
+                    if (null != cookbookResponse) {
+                        ProgressDialogHelper.setRunning(cx, false);
+                        Recipe recipe = cookbookResponse.cookbook;
+                        if (modelType == RecipeGridView.Model_Favority){
+                            RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_FAVORITY);
+                        }else if (modelType == RecipeGridView.Model_Search){
+                            RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_SEARCE);
+                        }else if(modelType == RecipeGridView.Model_History){
+                            RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_ALL);
+                        }else {
+                            RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_SORTED);
+                        }
                     }
                 }
+
                 @Override
-                public void onFailure(Throwable t) {
+                public void onFaild(String err) {
                     ProgressDialogHelper.setRunning(cx, false);
                     ToastUtils.showShort("菜谱不存在或已下架");
                 }

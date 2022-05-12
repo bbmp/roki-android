@@ -12,7 +12,9 @@ import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.services.RestfulService;
 import com.legent.utils.FileUtils;
 import com.legent.utils.LogUtils;
@@ -656,7 +658,7 @@ public class AlarmDataUtils {
     private static void downloadJson() {
 
         final String url = PreferenceUtils.getString("downloadUrl", "");
-        Plat.deviceService.getAllDeviceErrorInfo(new Callback<Reponses.ErrorInfoResponse>() {
+        CloudHelper.getAllDeviceErrorInfo(Reponses.ErrorInfoResponse.class, new RetrofitCallback<Reponses.ErrorInfoResponse>() {
             @Override
             public void onSuccess(Reponses.ErrorInfoResponse errorInfoResponse) {
                 String downloadUrl = errorInfoResponse.url;
@@ -682,7 +684,7 @@ public class AlarmDataUtils {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 downloadCount++;
                 if (downloadCount <= 3) {
                     downloadJson();

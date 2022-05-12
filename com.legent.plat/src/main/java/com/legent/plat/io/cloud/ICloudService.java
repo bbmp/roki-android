@@ -234,7 +234,7 @@ public interface ICloudService<T extends RCReponse> {
 
     @retrofit2.http.POST(getAppId)
     @Headers("Content-Type: application/json")
-    Call<RCReponse> getAppId(@retrofit2.http.Body RequestBody reqBody);
+    Call<ResponseBody> getAppId(@retrofit2.http.Body RequestBody reqBody);
 
     @POST(bindAppGuidAndUser)
     void bindAppGuidAndUser(@Body AppUserGuidRequest reqBody,
@@ -321,9 +321,9 @@ public interface ICloudService<T extends RCReponse> {
     void updateFigure(@Body UpdateFigureRequest reqBody,
                       Callback<UpdateFigureReponse> callback);
 
-    @POST(getVerifyCode)
-    void getVerifyCode(@Body GetVerifyCodeRequest reqBody,
-                       Callback<GetVerifyCodeReponse> callback);
+    @retrofit2.http.POST(getVerifyCode)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getVerifyCode(@retrofit2.http.Body RequestBody body);
 
     @POST(getDynamicPwd)
     void getDynamicPwd(@Body GetVerifyCodeRequest reqBody,
@@ -423,8 +423,9 @@ public interface ICloudService<T extends RCReponse> {
     @Headers("Content-Type: application/json")
     Call<ResponseBody> getAllDeviceType(@retrofit2.http.Body RequestBody body);
 
-    @POST(getAllDeviceErrorInfo)
-    void getAllDeviceErrorInfo(Callback<ErrorInfoResponse> callback);
+    @retrofit2.http.POST(getAllDeviceErrorInfo)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getAllDeviceErrorInfo(@retrofit2.http.Body RequestBody body);
 
     @POST(getConsumablesList)
     void getConsumablesListInfo(@Body DeviceByParamsConsumables deviceByParamsConsumables,

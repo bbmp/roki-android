@@ -68,7 +68,7 @@ public interface Reponses {
 
     class StoreCategoryResponse extends RCReponse {
         @JsonProperty("cookbookTagGroups")
-        public List<Group> groups;
+        public List<Group> cookbookTagGroups;
     }
 
     class GetYiGuoUrlResponse extends RCReponse {
@@ -299,7 +299,7 @@ public interface Reponses {
 
     class RecipeThemeResponse extends RCReponse {
         @JsonProperty("items")
-        public List<RecipeTheme> recipeThemes;
+        public List<RecipeTheme> items;
     }
 
     class ThemeRecipeDetailResponse extends RCReponse {
@@ -308,7 +308,7 @@ public interface Reponses {
         public String mgs;
 
         @JsonProperty("theme")
-        public RecipeTheme themeRecipeDetail;
+        public RecipeTheme theme;
     }
 
     class RecipeThemeResponse2 extends RCReponse {

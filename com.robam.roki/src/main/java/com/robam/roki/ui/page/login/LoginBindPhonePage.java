@@ -19,6 +19,9 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.google.common.base.Strings;
 import com.legent.Callback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
+import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -172,26 +175,25 @@ public class LoginBindPhonePage extends MyBasePage<UserActivity> {
      */
     private void getCode(String phone) {
         ProgressDialogHelper.setRunning(cx, true);
-        getVerifyCode(phone, new Callback<String>() {
+        CloudHelper.getVerifyCode(phone, Reponses.GetVerifyCodeReponse.class, new RetrofitCallback<Reponses.GetVerifyCodeReponse>() {
             @Override
-            public void onSuccess(String s) {
+            public void onSuccess(Reponses.GetVerifyCodeReponse getVerifyCodeReponse) {
                 ProgressDialogHelper.setRunning(cx, false);
-                code = s;
-                ToastUtils.show(R.string.weixin_login_send_msg);
-                cv_find_countdown.start();
+                if (null != getVerifyCodeReponse) {
+                    code = getVerifyCodeReponse.verifyCode;
+                    ToastUtils.show(R.string.weixin_login_send_msg);
+                    cv_find_countdown.start();
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.showThrowable(t);
+                ToastUtils.show(err);
             }
         });
     }
 
-    private void getVerifyCode(String phone, Callback<String> callback) {
-        Plat.accountService.getVerifyCode(phone, callback);
-    }
 
 
     /**

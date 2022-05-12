@@ -30,12 +30,14 @@ import com.legent.plat.Plat;
 import com.legent.plat.constant.IDeviceType;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.events.UserLoginEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.HomeRecipeViewEvent;
 import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.DeviceType;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.services.CookbookManager;
@@ -230,7 +232,7 @@ public class RecipeCategoryListPage extends MyBasePage<MainActivity> {
             recipeType = "all";
         }
         //获取设备菜谱封面
-        StoreService.getInstance().getDeviceRecipeImg(type, new Callback<Reponses.CategoryRecipeImgRespone>() {
+        RokiRestHelper.getDeviceRecipeImg(type, Reponses.CategoryRecipeImgRespone.class, new RetrofitCallback<Reponses.CategoryRecipeImgRespone>() {
             @Override
             public void onSuccess(Reponses.CategoryRecipeImgRespone rc) {
                 if (rc !=null){
@@ -242,7 +244,7 @@ public class RecipeCategoryListPage extends MyBasePage<MainActivity> {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
 
             }
         });
@@ -294,49 +296,47 @@ public class RecipeCategoryListPage extends MyBasePage<MainActivity> {
         LogUtils.i("2020060901","start:::"+start);
         LogUtils.i("2020060901","num:::"+num);
         LogUtils.i("2020060901","platformCode:::"+platformCode);
-        CookbookManager.getInstance().getGroundingRecipesByDc(mUserId, type, recipeType, start, num, platformCode, new Callback<List<Recipe>>() {
-            @Override
-            public void onSuccess(List<Recipe> list) {
-                try {
-                    LogUtils.i("2020060802","list::"+list);
+        RokiRestHelper.getGroundingRecipesByDc(mUserId, type, recipeType, start, num, platformCode,
+                Reponses.ThumbCookbookResponse.class, new RetrofitCallback<Reponses.ThumbCookbookResponse>() {
+                    @Override
+                    public void onSuccess(Reponses.ThumbCookbookResponse thumbCookbookResponse) {
+                        if (null != thumbCookbookResponse) {
+                            List<Recipe> list = thumbCookbookResponse.cookbooks;
+                            try {
+                                LogUtils.i("2020060802","list::"+list);
 
-                    if (list == null || list.size() <= 0) {
-                        list = Lists.newArrayList();
-                        if (start > 0) {
-                            mRv.setNoMore(true);
-                            ToastUtils.show(new String("无更多菜谱"), Toast.LENGTH_SHORT);
+                                if (list == null || list.size() <= 0) {
+                                    list = Lists.newArrayList();
+                                    if (start > 0) {
+                                        mRv.setNoMore(true);
+                                        ToastUtils.show(new String("无更多菜谱"), Toast.LENGTH_SHORT);
+                                    }
+                                }
+
+                                mRecipeList.addAll(list);
+
+                                mRecipeCategoryAdapter.addData(list);
+
+                                if(mRecipeList != null && mRecipeList.size() != 0 && mRecipeCategoryAdapter != null){
+                                    mRecipeCategoryAdapter.updateData(mRecipeList);
+                                    if (mRv != null) {
+                                        //更新完成
+                                        mRv.refreshComplete();
+                                        //加载完成
+                                        mRv.loadMoreComplete();
+                                    }
+                                }
+                            } catch (Exception e) {
+                                Log.e("RecipeCategory", "error:" + e.getMessage());
+                            }
                         }
                     }
 
-//                    if (start == 0) {
-//                        mRecipeList.clear();
-//                    }
-                    mRecipeList.addAll(list);
-//                    mRecipeCategoryAdapter.updateData(mRecipeList);
-                    mRecipeCategoryAdapter.addData(list);
-//                    mHandler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            mHandler.sendEmptyMessage(UPDATE_DATA);
-//                        }
-//                    }, 1000);
-                    if(mRecipeList != null && mRecipeList.size() != 0 && mRecipeCategoryAdapter != null){
-                        mRecipeCategoryAdapter.updateData(mRecipeList);
-                        if (mRv != null) {
-                            //更新完成
-                            mRv.refreshComplete();
-                            //加载完成
-                            mRv.loadMoreComplete();
-                        }
-                    }
-                } catch (Exception e) {
-                    Log.e("RecipeCategory", "error:" + e.getMessage());
-                }
-            }
+                    @Override
+                    public void onFaild(String err) {
 
-            @Override
-            public void onFailure(Throwable t) {
-            }
+                    }
+
         });
 
 

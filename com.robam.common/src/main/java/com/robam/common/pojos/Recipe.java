@@ -267,10 +267,6 @@ public class Recipe extends AbsRecipe implements Serializable, MultiItemEntity {
         return Calendar.getInstance().getTimeInMillis() - lastUpgradeTime <= CookbookManager.UpdatePeriod;
     }
 
-    public void getDetail(Callback<Recipe> callback) {
-        CookbookManager.getInstance().getCookbookById(id, callback);
-    }
-
 
     public void setIsCollected(boolean value) {
 //        if (DaoHelper.isExists(getClass(), id)) {

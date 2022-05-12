@@ -12,12 +12,15 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.legent.Callback;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.adapters.ExtPageAdapter;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.graphic.ImageUtils;
+import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.AbsRecipe;
 import com.robam.common.pojos.Material;
 import com.robam.common.pojos.Recipe;
@@ -165,17 +168,19 @@ public class RecipeBannerPage extends BasePage {
                 showData(recipe);
             } else {
                 ProgressDialogHelper.setRunning(cx, true);
-                CookbookManager.getInstance().getCookbookById(recipe.id, new Callback<Recipe>() {
+                RokiRestHelper.getCookbookById(recipe.id, Reponses.CookbookResponse.class, new RetrofitCallback<Reponses.CookbookResponse>() {
                     @Override
-                    public void onSuccess(Recipe book) {
-                        ProgressDialogHelper.setRunning(cx, false);
-                        showData(book);
+                    public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
+                        if (null != cookbookResponse) {
+                            ProgressDialogHelper.setRunning(cx, false);
+                            showData(cookbookResponse.cookbook);
+                        }
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFaild(String err) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.showThrowable(t);
+                        ToastUtils.showShort(err);
                     }
                 });
             }

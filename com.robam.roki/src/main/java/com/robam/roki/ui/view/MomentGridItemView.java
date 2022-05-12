@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.legent.Callback;
 import com.legent.VoidCallback;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.ext.dialogs.DialogHelper;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.EventUtils;
@@ -18,6 +19,8 @@ import com.legent.utils.api.DisplayUtils;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.graphic.ImageUtils;
 import com.robam.common.events.HomeRecipeViewEvent;
+import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.CookAlbum;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.services.CookbookManager;
@@ -88,14 +91,18 @@ public class MomentGridItemView extends FrameLayout {
         imgAlbum.setImageDrawable(null);
         ImageUtils.displayImage(cx, album.imgUrl, imgAlbum);
 
-        CookbookManager.getInstance().getCookbookById(album.bookId, new Callback<Recipe>() {
+        RokiRestHelper.getCookbookById(album.bookId, Reponses.CookbookResponse.class, new RetrofitCallback<Reponses.CookbookResponse>() {
             @Override
-            public void onSuccess(Recipe cookbook) {
-                txtName.setText(cookbook.name);
+            public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
+                if (null != cookbookResponse) {
+                    Recipe recipe = cookbookResponse.cookbook;
+                    if (null != recipe)
+                        txtName.setText(recipe.name);
+                }
             }
 
             @Override
-            public void onFailure(Throwable throwable) {
+            public void onFaild(String err) {
 
             }
         });

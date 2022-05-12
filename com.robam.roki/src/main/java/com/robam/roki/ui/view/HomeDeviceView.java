@@ -50,6 +50,7 @@ import com.legent.plat.events.DeviceLoadCompletedEvent;
 import com.legent.plat.events.DeviceSelectedEvent;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.events.UserLogoutEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.plat.services.DeviceService;
 import com.legent.ui.UIService;
@@ -69,6 +70,7 @@ import com.robam.common.events.NewBieGuideEvent;
 import com.robam.common.events.QueryResultApiEvent;
 import com.robam.common.events.ReturnDeviceViewEvent;
 import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.io.device.MsgKeys;
 import com.robam.common.pojos.CookingKnowledge;
 import com.robam.common.pojos.device.Oven.AbsOven;
@@ -434,19 +436,22 @@ public class HomeDeviceView extends FrameLayout implements UIListeners.IRefresh 
             llEmpty.setVisibility(VISIBLE);
             DialogHelper.notNetDialog(getContext());
         }
-        StoreService.getInstance().getCookingKnowledge("cookingSkill", 1, null, 0, 3, new Callback<List<CookingKnowledge>>() {
-            @Override
-            public void onSuccess(List<CookingKnowledge> cookingKnowledges) {
-                mCookingKnowledges = cookingKnowledges;
-                if (mIntellkitchenAdapter != null) {
-                    mIntellkitchenAdapter.notifyDataSetChanged();
-                }
-            }
+        RokiRestHelper.getCookingKnowledge("cookingSkill", 1, null, 0, 3,
+                Reponses.CookingKnowledgeResponse.class, new RetrofitCallback<Reponses.CookingKnowledgeResponse>() {
+                    @Override
+                    public void onSuccess(Reponses.CookingKnowledgeResponse cookingKnowledgeResponse) {
+                        if (null != cookingKnowledgeResponse && null != cookingKnowledgeResponse.cookingKnowledges) {
+                            mCookingKnowledges = cookingKnowledgeResponse.cookingKnowledges;
+                            if (mIntellkitchenAdapter != null) {
+                                mIntellkitchenAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
+                    @Override
+                    public void onFaild(String err) {
 
-            }
+                    }
         });
     }
 

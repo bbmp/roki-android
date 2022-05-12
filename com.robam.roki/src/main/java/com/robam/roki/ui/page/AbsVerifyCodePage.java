@@ -23,6 +23,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.legent.Callback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
+import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.HeadPage;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -130,20 +133,23 @@ abstract public class AbsVerifyCodePage extends HeadPage {
     void getCode(final String phone) {
         this.phone = phone;
         ProgressDialogHelper.setRunning(cx, true);
-        getVerifyCode(phone, new Callback<String>() {
+        CloudHelper.getVerifyCode(phone, Reponses.GetVerifyCodeReponse.class, new RetrofitCallback<Reponses.GetVerifyCodeReponse>() {
             @Override
-            public void onSuccess(String s) {
-                txtGetCode.setBackgroundColor(getResources().getColor(R.color.c01));
-                code = s;
+            public void onSuccess(Reponses.GetVerifyCodeReponse getVerifyCodeReponse) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.showShort(getCodeDesc() + cx.getString(R.string.weixin_login_send_msg));
-                startCountdown();
+                if (null != getVerifyCodeReponse) {
+
+                    txtGetCode.setBackgroundColor(getResources().getColor(R.color.c01));
+                    code = getVerifyCodeReponse.verifyCode;;
+                    ToastUtils.showShort(getCodeDesc() + cx.getString(R.string.weixin_login_send_msg));
+                    startCountdown();
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.showThrowable(t);
+                ToastUtils.showShort(err);
             }
         });
 
@@ -188,9 +194,7 @@ abstract public class AbsVerifyCodePage extends HeadPage {
         }
     }
 
-    void getVerifyCode(String phone, Callback<String> callback) {
-        Plat.accountService.getVerifyCode(phone, callback);
-    }
+
 
     String getCodeDesc() {
         return cx.getString(R.string.weixin_login_verification_code);

@@ -18,7 +18,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.legent.Callback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
@@ -118,34 +120,32 @@ public class VerifyMobilePhonePage extends BasePage implements View.OnClickListe
         this.phone = phone;
         LogUtils.i(TAG, "phone:" + phone);
         ProgressDialogHelper.setRunning(cx, true);
-        getVerifyCode(phone, new Callback<String>() {
+        CloudHelper.getVerifyCode(phone, Reponses.GetVerifyCodeReponse.class, new RetrofitCallback<Reponses.GetVerifyCodeReponse>() {
             @Override
-            public void onSuccess(String result) {
-                mTxtUnregisterGetcode.setBackgroundColor(getResources().getColor(R.color.c01));
-                verifyCode = result;
-                LogUtils.i(TAG, "verifyCode:" + verifyCode);
+            public void onSuccess(Reponses.GetVerifyCodeReponse getVerifyCodeReponse) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.showShort(getCodeDesc() + cx.getString(R.string.weixin_login_send_msg));
-                startCountdown();
+                if (null != getVerifyCodeReponse) {
+                    mTxtUnregisterGetcode.setBackgroundColor(getResources().getColor(R.color.c01));
+                    verifyCode = getVerifyCodeReponse.verifyCode;
+                    LogUtils.i(TAG, "verifyCode:" + verifyCode);
+                    ProgressDialogHelper.setRunning(cx, false);
+                    ToastUtils.showShort(getCodeDesc() + cx.getString(R.string.weixin_login_send_msg));
+                    startCountdown();
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 ProgressDialogHelper.setRunning(cx, false);
-                LogUtils.i(TAG, "onFailure:" + t.toString());
-                ToastUtils.showThrowable(t);
+                ToastUtils.show(err);
             }
         });
-
     }
 
     private String getCodeDesc() {
         return cx.getString(R.string.weixin_login_verification_code);
     }
 
-    private void getVerifyCode(String phone, Callback<String> callback) {
-        Plat.accountService.getVerifyCode(phone, callback);
-    }
 
     private void startCountdown() {
         stopCountdown();

@@ -60,10 +60,10 @@ public class RvSelectThemeAdapter extends BaseQuickAdapter<Recipe, BaseViewHolde
             if (holder.getLayoutPosition() == 0) {
                 csl_item.setVisibility(View.VISIBLE);
                 if (themeRecipeDetailResponse != null) {
-                    holder.setText(R.id.tv_read_theme_number, "阅读 " + NumberUtil.converString(themeRecipeDetailResponse.themeRecipeDetail.viewCount))
-                            .setText(R.id.tv_collect_theme_number, "收藏 " + NumberUtil.converString(themeRecipeDetailResponse.themeRecipeDetail.collectCount)).
-                            setText(R.id.tv_theme_recipe_number, themeRecipeDetailResponse.themeRecipeDetail.recipeList.size() + "道菜谱")
-                            .setText(R.id.tv_theme_desc, themeRecipeDetailResponse.themeRecipeDetail.description);
+                    holder.setText(R.id.tv_read_theme_number, "阅读 " + NumberUtil.converString(themeRecipeDetailResponse.theme.viewCount))
+                            .setText(R.id.tv_collect_theme_number, "收藏 " + NumberUtil.converString(themeRecipeDetailResponse.theme.collectCount)).
+                            setText(R.id.tv_theme_recipe_number, themeRecipeDetailResponse.theme.cookbookSet.size() + "道菜谱")
+                            .setText(R.id.tv_theme_desc, themeRecipeDetailResponse.theme.description);
                 }
 
             } else {

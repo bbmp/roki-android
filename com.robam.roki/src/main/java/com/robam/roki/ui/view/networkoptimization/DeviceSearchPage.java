@@ -12,11 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.legent.Callback;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.HeadPage;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.StringUtils;
 import com.legent.utils.api.ToastUtils;
+import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.DeviceGroupList;
 import com.robam.common.pojos.DeviceItemList;
@@ -52,17 +54,19 @@ public class DeviceSearchPage extends HeadPage {
     protected View onCreateContentView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         View view = layoutInflater.inflate(R.layout.frame_device_search, viewGroup, false);
         ButterKnife.inject(this, view);
-        RokiRestHelper.getNetworkDeviceInfoRequest("roki", null, null, new Callback<List<DeviceGroupList>>() {
+        RokiRestHelper.getNetworkDeviceInfoRequest("roki", null, null, Reponses.NetworkDeviceInfoResponse.class, new RetrofitCallback<Reponses.NetworkDeviceInfoResponse>() {
             @Override
-            public void onSuccess(List<DeviceGroupList> deviceGroupLists) {
-                sumGroupList = deviceGroupLists;
-                for (int i = 0; i < sumGroupList.size(); i++) {
-                    sumDeviceList.add(sumGroupList.get(i).getDeviceItemLists());
+            public void onSuccess(Reponses.NetworkDeviceInfoResponse networkDeviceInfoResponse) {
+                if (null != networkDeviceInfoResponse && null != networkDeviceInfoResponse.deviceGroupList) {
+                    sumGroupList = networkDeviceInfoResponse.deviceGroupList;
+                    for (int i = 0; i < sumGroupList.size(); i++) {
+                        sumDeviceList.add(sumGroupList.get(i).getDeviceItemLists());
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
 
             }
         });

@@ -54,12 +54,12 @@ public class AppExtendDic implements IJsonPojo {
         Preconditions.checkNotNull(dic, "加载 app dic 失败");
 
         final AppExtendDic finalDic = dic;
-        CloudHelper.getAllDeviceType(new RetrofitCallback<Reponses.DeviceTypeResponse>() {
+        CloudHelper.getAllDeviceType(Reponses.DeviceTypeResponse.class, new RetrofitCallback<Reponses.DeviceTypeResponse>() {
             @Override
             public void onSuccess(Reponses.DeviceTypeResponse deviceTypeResponse) {
-                if (null != deviceTypeResponse && null != deviceTypeResponse.deviceTypes){
+                if (null != deviceTypeResponse && null != deviceTypeResponse.map){
                     LogUtils.i("20180716", "sponce:::" + deviceTypeResponse.toString());
-                    Map types = deviceTypeResponse.deviceTypes;
+                    Map types = deviceTypeResponse.map;
                     // 获取所有键值对对象的集合
                     Set<Map.Entry<String, LinkedHashMap<String, String>>> set = types.entrySet();
                     // 遍历键值对对象的集合，得到每一个键值对对象

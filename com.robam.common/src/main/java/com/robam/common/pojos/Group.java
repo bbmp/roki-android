@@ -39,7 +39,7 @@ public class Group extends AbsStorePojo<Long> {
     private ForeignCollection<Tag> db_tags;
 
     @JsonProperty("cookbookTags")
-    private List<Tag> js_tags;
+    private List<Tag> cookbookTags;
 
   /*  @DatabaseField(foreign = true, columnName = COLUMN_recipeCook)
     public Recipe cookbook;
@@ -57,12 +57,12 @@ public class Group extends AbsStorePojo<Long> {
 		}
 		return list;*/
         if (db_tags != null && db_tags.size() > 0) {
-            js_tags = Lists.newArrayList(db_tags);
+            cookbookTags = Lists.newArrayList(db_tags);
         }
-        if (js_tags == null) {
-            js_tags = Lists.newArrayList();
+        if (cookbookTags == null) {
+            cookbookTags = Lists.newArrayList();
         }
-        return js_tags;
+        return cookbookTags;
     }
 
     @Override
@@ -84,8 +84,8 @@ public class Group extends AbsStorePojo<Long> {
     public void save2db() {
         super.save2db();
 
-        if (js_tags != null) {
-            for (Tag tag : js_tags) {
+        if (cookbookTags != null) {
+            for (Tag tag : cookbookTags) {
                 tag.group = this;
                 tag.save2db();
             }

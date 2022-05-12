@@ -36,6 +36,7 @@ import com.legent.dao.DaoHelper;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.events.UserLoginEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
@@ -52,6 +53,7 @@ import com.robam.common.events.RecipeCookFinishEven;
 import com.robam.common.events.ShareRecipePictureEvent;
 import com.robam.common.events.UMPushRecipeEvent;
 import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.CookStep;
 import com.robam.common.pojos.CookbookPlatforms;
 import com.robam.common.pojos.Dc;
@@ -440,75 +442,76 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> {
     void init(final long recipeid, String entranceCode) {
         final long userId = Plat.accountService.getCurrentUserId();
 
-        ss.getCookbookById(recipeid, entranceCode, "0", new Callback<Recipe>() {
+        RokiRestHelper.getCookbookById(recipeid, entranceCode, "0", Reponses.CookbookResponse.class, new RetrofitCallback<Reponses.CookbookResponse>() {
             @Override
-            public void onSuccess(final Recipe recipe) {
-                if (recipe == null) {
-                    ToastUtils.show("没有这道菜");
-                    UIService.getInstance().popBack();
-                    return;
-                }
-                ss.getIsCollectBookId(userId, recipeid, new Callback<Reponses.IsCollectBookResponse>() {
-                    @Override
-                    public void onSuccess(Reponses.IsCollectBookResponse isCollectBookResponse) {
-                        try {
-                            if (isCollectBookResponse != null) {
-                                isCollect = isCollectBookResponse.isCollect;
-                                if (isCollect) {
-                                    imgFavority.setSelected(true);
-                                    if (recipe.id == recipeid) {
-                                        recipe.setIsCollected(isCollect);
+            public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
+                if (null != cookbookResponse) {
+                    recipe = cookbookResponse.cookbook;
+                    if (recipe == null) {
+                        ToastUtils.show("没有这道菜");
+                        UIService.getInstance().popBack();
+                        return;
+                    }
+                    RokiRestHelper.getIsCollectBook(userId, recipeid, Reponses.IsCollectBookResponse.class, new RetrofitCallback<Reponses.IsCollectBookResponse>() {
+                        @Override
+                        public void onSuccess(Reponses.IsCollectBookResponse isCollectBookResponse) {
+                            try {
+                                if (isCollectBookResponse != null) {
+                                    isCollect = isCollectBookResponse.isCollect;
+                                    if (isCollect) {
+                                        imgFavority.setSelected(true);
+                                        if (recipe.id == recipeid) {
+                                            recipe.setIsCollected(isCollect);
+                                        }
+                                    } else {
+                                        imgFavority.setSelected(false);
+                                        if (recipe.id == recipeid) {
+                                            recipe.setIsCollected(isCollect);
+                                        }
                                     }
-                                } else {
-                                    imgFavority.setSelected(false);
-                                    if (recipe.id == recipeid) {
-                                        recipe.setIsCollected(isCollect);
-                                    }
-                                }
-                                book = recipe;
-                                if (book.getJs_dcs().size() == 0) {
-                                    isRQZ = true;
-                                } else {
-                                    for (Dc dc : book.getJs_dcs()) {
-                                        if (DeviceType.RRQZ.equals(dc.getDc())) {
-                                            isRQZ = true;
-                                            break;
-                                        } else if (DeviceType.RZQL.equals(dc.getDc())) {
+                                    book = recipe;
+                                    if (book.getJs_dcs().size() == 0) {
+                                        isRQZ = true;
+                                    } else {
+                                        for (Dc dc : book.getJs_dcs()) {
+                                            if (DeviceType.RRQZ.equals(dc.getDc())) {
+                                                isRQZ = true;
+                                                break;
+                                            } else if (DeviceType.RZQL.equals(dc.getDc())) {
 
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            List<CookbookPlatforms> cookbookPlatformsList = book.cookbookPlatformsList;
+                                List<CookbookPlatforms> cookbookPlatformsList = book.cookbookPlatformsList;
 
-                            if (platformCodeList != null) {
-                                platformCodeList.clear();
-                            }
-                            if (cookbookPlatformsList != null) {
-                                for (int i = 0; i < cookbookPlatformsList.size(); i++) {
-                                    String platformCode = cookbookPlatformsList.get(i).platformCode;
-                                    platformCodeList.add(platformCode);
-                                    LogUtils.i("2020060504", "platformCode:::" + platformCode);
+                                if (platformCodeList != null) {
+                                    platformCodeList.clear();
                                 }
+                                if (cookbookPlatformsList != null) {
+                                    for (int i = 0; i < cookbookPlatformsList.size(); i++) {
+                                        String platformCode = cookbookPlatformsList.get(i).platformCode;
+                                        platformCodeList.add(platformCode);
+                                        LogUtils.i("2020060504", "platformCode:::" + platformCode);
+                                    }
+                                }
+                            } catch (Exception e) {
+
                             }
-                        } catch (Exception e) {
 
                         }
 
+                        @Override
+                        public void onFaild(String err) {
 
-
-
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                    }
-                });
+                        }
+                    });
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
-//                ToastUtils.showShort(t.getMessage());
+            public void onFaild(String err) {
+
             }
 
         });
@@ -1488,7 +1491,7 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> {
         if (!Plat.accountService.isLogon()) {
             return;
         }
-        ss.getIsCollectBookId(Plat.accountService.getCurrentUserId(), ID, new Callback<Reponses.IsCollectBookResponse>() {
+        RokiRestHelper.getIsCollectBook(Plat.accountService.getCurrentUserId(), ID, Reponses.IsCollectBookResponse.class, new RetrofitCallback<Reponses.IsCollectBookResponse>() {
             @Override
             public void onSuccess(Reponses.IsCollectBookResponse isCollectBookResponse) {
                 if (isCollectBookResponse != null) {
@@ -1502,9 +1505,10 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> {
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                ToastUtils.show(t.getMessage());
+            public void onFaild(String err) {
+                ToastUtils.show(err);
             }
+
         });
     }
     @Subscribe

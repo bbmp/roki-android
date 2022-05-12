@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.legent.plat.io.cloud.RetrofitCallback;
+import com.robam.common.io.cloud.Reponses;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.page.ClassifyTagRecipePage;
@@ -108,41 +110,43 @@ public class RecipeClassifyPage extends MyBasePage<MainActivity> {
 
     //获取菜谱分类数据
     private void getRecipeClassifyData() {
-        RokiRestHelper.getStoreCategory(new Callback<List<Group>>() {
+        RokiRestHelper.getStoreCategory(Reponses.StoreCategoryResponse.class, new RetrofitCallback<Reponses.StoreCategoryResponse>() {
             @Override
-            public void onSuccess(List<Group> result) {
-                LogUtils.i(TAG, "result:" + result.toString());
-                groups.clear();
-                groups = result;
-                recipeTagGroupItemList = new ArrayList<>();
-                if (result != null) {
-                    for (Group group : result) {
-                        group.save2db();
-                        RecipeTagGroupItem recipeTagGroupItem = new RecipeTagGroupItem(true, group.name.substring(0, 2));
-                        recipeTagGroupItem.isHeader = true;
-                        recipeTagGroupItem.header = group.name.substring(0, 2);
-                        recipeTagGroupItemList.add(recipeTagGroupItem);
-                        LogUtils.i(TAG, "group name:" + group.name + " type:" + group.type + " group toString :" + group.toString());
-                        for (Tag recipeTag : group.getTags()) {
-                            RecipeTagGroupItem.ItemInfo itemInfo = new RecipeTagGroupItem.ItemInfo(group.name.substring(0, 2), group.name.substring(0, 2), recipeTag.id, recipeTag.imageUrl, recipeTag.name);
-                            itemInfo.setTitle(group.name.substring(0, 2));
-                            itemInfo.setGroup(group.name.substring(0, 2));
-                            itemInfo.setName(recipeTag.name);
-                            itemInfo.setId(recipeTag.id);
-                            itemInfo.setType(group.type);
-                            RecipeTagGroupItem recipeTagGroupItem1 = new RecipeTagGroupItem(itemInfo);
-                            recipeTagGroupItem1.isHeader = false;
-                            recipeTagGroupItemList.add(recipeTagGroupItem1);
+            public void onSuccess(Reponses.StoreCategoryResponse storeCategoryResponse) {
+                if (null != storeCategoryResponse) {
+                    List<Group> result = storeCategoryResponse.cookbookTagGroups;
+                    LogUtils.i(TAG, "result:" + result.toString());
+                    groups.clear();
+                    groups = result;
+                    recipeTagGroupItemList = new ArrayList<>();
+                    if (result != null) {
+                        for (Group group : result) {
+                            group.save2db();
+                            RecipeTagGroupItem recipeTagGroupItem = new RecipeTagGroupItem(true, group.name.substring(0, 2));
+                            recipeTagGroupItem.isHeader = true;
+                            recipeTagGroupItem.header = group.name.substring(0, 2);
+                            recipeTagGroupItemList.add(recipeTagGroupItem);
+                            LogUtils.i(TAG, "group name:" + group.name + " type:" + group.type + " group toString :" + group.toString());
+                            for (Tag recipeTag : group.getTags()) {
+                                RecipeTagGroupItem.ItemInfo itemInfo = new RecipeTagGroupItem.ItemInfo(group.name.substring(0, 2), group.name.substring(0, 2), recipeTag.id, recipeTag.imageUrl, recipeTag.name);
+                                itemInfo.setTitle(group.name.substring(0, 2));
+                                itemInfo.setGroup(group.name.substring(0, 2));
+                                itemInfo.setName(recipeTag.name);
+                                itemInfo.setId(recipeTag.id);
+                                itemInfo.setType(group.type);
+                                RecipeTagGroupItem recipeTagGroupItem1 = new RecipeTagGroupItem(itemInfo);
+                                recipeTagGroupItem1.isHeader = false;
+                                recipeTagGroupItemList.add(recipeTagGroupItem1);
+                            }
                         }
                     }
+                    linkageRecyclerView.init(recipeTagGroupItemList, new ElemeLinkagePrimaryAdapterConfig(), new ElemeLinkageSecondaryAdapterConfig());
+                    linkageRecyclerView.setGridMode(true);
                 }
-                linkageRecyclerView.init(recipeTagGroupItemList, new ElemeLinkagePrimaryAdapterConfig(), new ElemeLinkageSecondaryAdapterConfig());
-                linkageRecyclerView.setGridMode(true);
-
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
 
             }
         });

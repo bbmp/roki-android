@@ -23,6 +23,8 @@ import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.legent.Callback;
 import com.legent.plat.constant.IDeviceType;
+import com.legent.plat.io.cloud.RetrofitCallback;
+import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.Dc;
 import com.robam.common.pojos.Recipe;
@@ -141,24 +143,27 @@ public class RvRecipeThemeAdapter extends BaseMultiItemQuickAdapter<ThemeRecipeM
      */
     private void getBygetCookbookBythemeId(String lang, long limit, final int start, final RecipeTheme recipeTheme, RecyclerView recyclerView) {
 
-        RokiRestHelper.getCookBookBythemeId(lang, limit, start, recipeTheme.id.intValue(), new Callback<List<Recipe>>() {
-            @Override
-            public void onSuccess(List<Recipe> recipes) {
-                RvThemePicAdapter rvThemePicAdapter = new RvThemePicAdapter();
-                recyclerView.setAdapter(rvThemePicAdapter);
-                rvThemePicAdapter.setList(recipes);
-                rvThemePicAdapter.setOnItemClickListener(new OnItemClickListener() {
+        RokiRestHelper.getCookBookBythemeId(lang, limit, start, recipeTheme.id.intValue(),
+                Reponses.PersonalizedRecipeResponse.class, new RetrofitCallback<Reponses.PersonalizedRecipeResponse>() {
                     @Override
-                    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                        SelectThemeDetailPage.show(recipeTheme, SelectThemeDetailPage.TYPE_THEME_RECIPE);
+                    public void onSuccess(Reponses.PersonalizedRecipeResponse personalizedRecipeResponse) {
+                        if (null != personalizedRecipeResponse && null != personalizedRecipeResponse.cookbooks) {
+                            RvThemePicAdapter rvThemePicAdapter = new RvThemePicAdapter();
+                            recyclerView.setAdapter(rvThemePicAdapter);
+                            rvThemePicAdapter.setList(personalizedRecipeResponse.cookbooks);
+                            rvThemePicAdapter.setOnItemClickListener(new OnItemClickListener() {
+                                @Override
+                                public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                                    SelectThemeDetailPage.show(recipeTheme, SelectThemeDetailPage.TYPE_THEME_RECIPE);
+                                }
+                            });
+                        }
                     }
-                });
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
+                    @Override
+                    public void onFaild(String err) {
 
-            }
+                    }
         });
     }
 

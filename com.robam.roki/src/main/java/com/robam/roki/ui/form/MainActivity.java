@@ -35,7 +35,7 @@ import com.legent.plat.Plat;
 import com.legent.plat.events.FloatHelperEvent;
 import com.legent.plat.events.UserLogoutEvent;
 import com.legent.plat.io.cloud.CloudHelper;
-import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.plat.pojos.device.DeviceInfo;
 import com.legent.ui.AbsActivity;
@@ -61,6 +61,7 @@ import com.robam.common.events.SteamAlarmEvent;
 import com.robam.common.events.SteriAlarmEvent;
 import com.robam.common.events.StoveAlarmEvent;
 import com.robam.common.events.WaterPurifiyAlarmEvent;
+import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.io.device.RokiDeviceFactory;
 import com.robam.common.io.device.RokiMsgMarshaller;
@@ -310,17 +311,19 @@ public class MainActivity extends AbsActivity {
         PreferenceUtils.setBool(
                 PageArgumentKey.IsFirst, false);
         PreferenceUtils.setBool(PageArgumentKey.IsFirst, false);
-        RokiRestHelper.getNetworkDeviceInfoRequest("roki", null, null, new Callback<List<DeviceGroupList>>() {
+        RokiRestHelper.getNetworkDeviceInfoRequest("roki", null, null, Reponses.NetworkDeviceInfoResponse.class, new RetrofitCallback<Reponses.NetworkDeviceInfoResponse>() {
             @Override
-            public void onSuccess(List<DeviceGroupList> deviceGroupLists) {
-                groupList = deviceGroupLists;
-                for (int i = 0; i < groupList.size(); i++) {
-                    deviceList.add(groupList.get(i).getDeviceItemLists());
+            public void onSuccess(Reponses.NetworkDeviceInfoResponse networkDeviceInfoResponse) {
+                if (null != networkDeviceInfoResponse && null != networkDeviceInfoResponse.deviceGroupList) {
+                    groupList = networkDeviceInfoResponse.deviceGroupList;
+                    for (int i = 0; i < groupList.size(); i++) {
+                        deviceList.add(groupList.get(i).getDeviceItemLists());
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
 
             }
         });
@@ -592,9 +595,9 @@ public class MainActivity extends AbsActivity {
             boolean logu = PreferenceUtils.getBool("logout", false);
             if (logu) {
                 String token = PreferenceUtils.getString("token", null);
-                CloudHelper.otherLogin("wx", "RKDRD", null, token, new Callback<Reponses.OtherLoginResponse>() {
+                CloudHelper.otherLogin("wx", "RKDRD", null, token, new Callback<com.legent.plat.io.cloud.Reponses.OtherLoginResponse>() {
                     @Override
-                    public void onSuccess(Reponses.OtherLoginResponse user3In) {
+                    public void onSuccess(com.legent.plat.io.cloud.Reponses.OtherLoginResponse user3In) {
                         if (!user3In.user.binded) {
                             Bundle bundle = new Bundle();
                             bundle.putString("openId", user3In.user.thirdInfos.openId);

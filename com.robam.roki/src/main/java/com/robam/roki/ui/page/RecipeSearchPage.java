@@ -35,6 +35,7 @@ import com.google.common.base.Strings;
 import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
 import com.legent.plat.events.PageBackEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -355,31 +356,33 @@ public class RecipeSearchPage extends MyBasePage<MainActivity> {
      */
     private void loadRecipeData() {
         LogUtils.i(TAG, "pageNo:" + pageNo + " pageSize:" + pageSize);
-        RokiRestHelper.getbyTagOtherCooks(null, true, pageNo, pageSize, -1, new Callback<List<Recipe>>() {
-            @Override
-            public void onSuccess(List<Recipe> recipes) {
+        RokiRestHelper.getbyTagOtherCooks(null, true, pageNo, pageSize, -1, null,
+                Reponses.PersonalizedRecipeResponse.class, new RetrofitCallback<Reponses.PersonalizedRecipeResponse>() {
+                    @Override
+                    public void onSuccess(Reponses.PersonalizedRecipeResponse personalizedRecipeResponse) {
+                        if (null != personalizedRecipeResponse) {
+                            List<Recipe> recipes = personalizedRecipeResponse.cookbooks;
+                            if (recipes.isEmpty() || recipes.size() == 0 ) {
+                                LogUtils.i(TAG, " recipes isEmpty!");
+                                if(pageNo == 0){
 
-
-                if (recipes.isEmpty() || recipes.size() == 0 ) {
-                    LogUtils.i(TAG, " recipes isEmpty!");
-                    if(pageNo == 0){
-
-                    }else {
-                        rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
+                                }else {
+                                    rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
+                                }
+                            }else {
+                                themeRecipeMultipleItemList.clear();
+                                for (Recipe recipe : recipes) {
+                                    themeRecipeMultipleItemList.add(new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_RECIPE_MSG_TEXT, recipe));
+                                }
+                                getByTagOtherThemes();
+                            }
+                        }
                     }
-                }else {
-                    themeRecipeMultipleItemList.clear();
-                    for (Recipe recipe : recipes) {
-                        themeRecipeMultipleItemList.add(new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_RECIPE_MSG_TEXT, recipe));
-                    }
-                    getByTagOtherThemes();
-                }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                ToastUtils.show("请求数据失败", Toast.LENGTH_LONG);
-            }
+                    @Override
+                    public void onFaild(String err) {
+                        ToastUtils.show("请求数据失败", Toast.LENGTH_LONG);
+                    }
         });
     }
 
@@ -387,28 +390,31 @@ public class RecipeSearchPage extends MyBasePage<MainActivity> {
      */
     private void getByTagOtherThemes() {
 //        Long cookBookTagId = tagRecipe.getCookbookTagId() == null ? null : (Long) (tagRecipe.getCookbookTagId());
-        RokiRestHelper.getByTagOtherThemes(null, false, pageNo, 1, -1, new Callback<List<RecipeTheme>>() {
-            @Override
-            public void onSuccess(List<RecipeTheme> recipeThemes) {
-                recipeThemeList.addAll(recipeThemes) ;
-                pageNo ++ ;
-                if (recipeThemeList.isEmpty() || recipeThemeList.size() == 0) {
-                    rvRecipeThemeAdapter.addData(themeRecipeMultipleItemList);
-                }else {
-                    int i1 = (int)((10 +Math.random()*(12-10 +1)) );
-                            if (i1 < themeRecipeMultipleItemList.size()){
-                                themeRecipeMultipleItemList.add(i1 ,new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_THEME_RECIPE_MSG_TEXT, recipeThemeList.get(0)));
-                                recipeThemeList.remove(0);
+        RokiRestHelper.getByTagOtherThemes(null, false, pageNo, 1, -1,
+                Reponses.RecipeThemeResponse.class, new RetrofitCallback<Reponses.RecipeThemeResponse>() {
+                    @Override
+                    public void onSuccess(Reponses.RecipeThemeResponse recipeThemeResponse) {
+                        if (null != recipeThemeResponse && null != recipeThemeResponse.items) {
+                            recipeThemeList.addAll(recipeThemeResponse.items) ;
+                            pageNo ++ ;
+                            if (recipeThemeList.isEmpty() || recipeThemeList.size() == 0) {
+                                rvRecipeThemeAdapter.addData(themeRecipeMultipleItemList);
+                            }else {
+                                int i1 = (int)((10 +Math.random()*(12-10 +1)) );
+                                if (i1 < themeRecipeMultipleItemList.size()){
+                                    themeRecipeMultipleItemList.add(i1 ,new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_THEME_RECIPE_MSG_TEXT, recipeThemeList.get(0)));
+                                    recipeThemeList.remove(0);
+                                }
+                                rvRecipeThemeAdapter.addData(themeRecipeMultipleItemList);
+                                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreComplete();
                             }
-                    rvRecipeThemeAdapter.addData(themeRecipeMultipleItemList);
-                    rvRecipeThemeAdapter.getLoadMoreModule().loadMoreComplete();
-                }
-            }
+                        }
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
-                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
-            }
+                    @Override
+                    public void onFaild(String err) {
+                        rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
+                    }
         });
 
     }

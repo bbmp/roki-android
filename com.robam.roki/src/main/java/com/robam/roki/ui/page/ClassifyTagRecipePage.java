@@ -44,10 +44,12 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.legent.Callback;
 import com.legent.plat.events.PageBackEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.LogUtils;
+import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.util.NumberUtil;
@@ -146,36 +148,40 @@ public class ClassifyTagRecipePage extends MyBasePage<MainActivity> {
             ProgressDialogHelper.setRunning(cx, true);
         }
 
-        RokiRestHelper.getCookbookByTag(cookBookTagId,  pageNo, pageSize, new Callback<List<Recipe>>() {
-            @Override
-            public void onSuccess(List<Recipe> recipes) {
-                ProgressDialogHelper.setRunning(cx, false);
-                if (recipes.isEmpty() || recipes.size() == 0) {
-                    if (pageNo == 0){
-                        tvDesc.setText("暂时没有该类型数据");
-                        mTagRecipeAdapter.setEmptyView(emptyView);
-                        return;
+        RokiRestHelper.getCookbookByTag(cookBookTagId,  pageNo, pageSize, Reponses.PersonalizedRecipeResponse.class,
+                new RetrofitCallback<Reponses.PersonalizedRecipeResponse>() {
+                    @Override
+                    public void onSuccess(Reponses.PersonalizedRecipeResponse personalizedRecipeResponse) {
+                        ProgressDialogHelper.setRunning(cx, false);
+                        if (null != personalizedRecipeResponse) {
+                            List<Recipe> recipes = personalizedRecipeResponse.cookbooks;
+
+                            if (recipes.isEmpty() || recipes.size() == 0) {
+                                if (pageNo == 0){
+                                    tvDesc.setText("暂时没有该类型数据");
+                                    mTagRecipeAdapter.setEmptyView(emptyView);
+                                    return;
+                                }
+                                mTagRecipeAdapter.getLoadMoreModule().loadMoreEnd();
+                                return;
+                            }
+                            mTagRecipeAdapter.addData(recipes);
+                            pageNo ++ ;
+                            mTagRecipeAdapter.getLoadMoreModule().loadMoreComplete();
+                        }
                     }
-                    mTagRecipeAdapter.getLoadMoreModule().loadMoreEnd();
-                    return;
-                }
-                mTagRecipeAdapter.addData(recipes);
-                pageNo ++ ;
-                mTagRecipeAdapter.getLoadMoreModule().loadMoreComplete();
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                ProgressDialogHelper.setRunning(cx, false);
-                LogUtils.i(TAG, "getbyTagOtherCooks onFailure recipes:" + t.toString());
-                if (pageNo == 0){
-                    tvDesc.setText("服务器请求出错");
-                    mTagRecipeAdapter.setEmptyView(emptyView);
-                }else {
-                    mTagRecipeAdapter.getLoadMoreModule().loadMoreFail();
-                }
-
-            }
+                    @Override
+                    public void onFaild(String err) {
+                        ProgressDialogHelper.setRunning(cx, false);
+                        LogUtils.i(TAG, "getbyTagOtherCooks onFailure recipes:" + err);
+                        if (pageNo == 0){
+                            tvDesc.setText("服务器请求出错");
+                            mTagRecipeAdapter.setEmptyView(emptyView);
+                        }else {
+                            mTagRecipeAdapter.getLoadMoreModule().loadMoreFail();
+                        }
+                    }
         });
     }
 

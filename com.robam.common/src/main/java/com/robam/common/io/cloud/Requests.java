@@ -18,21 +18,6 @@ import java.util.List;
  */
 public interface Requests {
 
-
-    class NewCurrentLiveRequests extends AbsPostRequest {
-
-        @JsonProperty("stutas")
-        public int stutas;
-
-        @JsonProperty("isTop")
-        public int isTop;
-
-        public NewCurrentLiveRequests(int stutas, int isTop) {
-            this.stutas = stutas;
-            this.isTop = isTop;
-        }
-    }
-
     class StoreRequest extends AbsPostRequest {
         @JsonProperty("storeId")
         public String storeId;
@@ -50,12 +35,12 @@ public interface Requests {
             this.userId = userId;
         }
 
-        @Override
-        public String toString() {
-            return "UserRequest{" +
-                    "userId=" + userId +
-                    '}';
-        }
+//        @Override
+//        public String toString() {
+//            return "UserRequest{" +
+//                    "userId=" + userId +
+//                    '}';
+//        }
     }
 
 
