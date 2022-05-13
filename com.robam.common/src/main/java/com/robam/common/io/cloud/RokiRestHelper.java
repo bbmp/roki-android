@@ -15,6 +15,7 @@ import com.legent.plat.Plat;
 import com.legent.plat.exceptions.ExceptionHelper;
 import com.legent.plat.io.RCRetrofitCallback;
 import com.legent.plat.io.RCRetrofitCallbackWithVoid;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.RCReponse;
 import com.legent.utils.LogUtils;
@@ -111,7 +112,7 @@ public class RokiRestHelper {
             APPLICATION_JSON_ACCEPT_APPLICATION_JSON = "application/json; Accept: application/json";
     private static Gson gson = new Gson();
     private static final String TAG = "RokiRestHelper";
-    static IRokiRestService svr = Plat.getCustomApi(IRokiRestService.class);
+    static IRokiRestService svr = CloudHelper.getRestfulApi(IRokiRestService.class);//Plat.getCustomApi(IRokiRestService.class);
 
 
     //用户登陆时会触发

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.legent.Callback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.legent.plat.pojos.device.Payload;
@@ -232,7 +233,7 @@ public class SteamOvenFanLinkagePage extends BasePage {
     //查询设备联动
     private void getData() {
 
-        Plat.deviceService.getQueryDeviceReact(guid, new Callback<Reponses.QueryDeviceReact>() {
+        CloudHelper.DeviceReactQuery(guid, new Callback<Reponses.QueryDeviceReact>() {
             @Override
             public void onSuccess(Reponses.QueryDeviceReact queryDeviceReact) {
 
@@ -333,7 +334,7 @@ public class SteamOvenFanLinkagePage extends BasePage {
         payloadMap.put(OpenKey, openPayload);
 
         try {
-            Plat.deviceService.setAllDeviceLinkage(guid, payloadMap, new Callback<Reponses.SetDeviceLinkage>() {
+            CloudHelper.setLinkage(guid, payloadMap, new Callback<Reponses.SetDeviceLinkage>() {
                 @Override
                 public void onSuccess(Reponses.SetDeviceLinkage setDeviceLinkage) {
                     String msg = setDeviceLinkage.msg;
@@ -392,7 +393,7 @@ public class SteamOvenFanLinkagePage extends BasePage {
         payloadMap.put(FullKey, fullPayloads);
 
 
-        Plat.deviceService.setAllDeviceLinkage(guid, payloadMap, new Callback<Reponses.SetDeviceLinkage>() {
+        CloudHelper.setLinkage(guid, payloadMap, new Callback<Reponses.SetDeviceLinkage>() {
             @Override
             public void onSuccess(Reponses.SetDeviceLinkage setDeviceLinkage) {
                 String msg = setDeviceLinkage.msg;

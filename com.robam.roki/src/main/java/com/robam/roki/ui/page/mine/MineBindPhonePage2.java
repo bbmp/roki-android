@@ -141,7 +141,7 @@ public class MineBindPhonePage2 extends MyBasePage<MainActivity> {
      */
     private void isExisted(final String phone){
         ProgressDialogHelper.setRunning(cx, true);
-        Plat.accountService.isExisted(phone,
+        CloudHelper.isExisted(phone,
                 new Callback<Boolean>() {
                     @Override
                     public void onSuccess(Boolean result) {

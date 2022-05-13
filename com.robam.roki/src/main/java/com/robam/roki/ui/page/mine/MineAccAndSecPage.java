@@ -10,6 +10,7 @@ import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -96,18 +97,22 @@ public class MineAccAndSecPage extends MyBasePage<MainActivity> {
      */
     public  void getUser() {
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), new Callback<User>() {
+        CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), Reponses.GetUserReponse.class, new RetrofitCallback<Reponses.GetUserReponse>() {
 
             @Override
-            public void onSuccess(User user) {
+            public void onSuccess(Reponses.GetUserReponse getUserReponse) {
                 ProgressDialogHelper.setRunning(cx, false);
-                MineAccAndSecPage.this.user = user ;
-                setUser(user);
+                if (null != getUserReponse) {
+                    User user = getUserReponse.user;
+
+                    MineAccAndSecPage.this.user = user ;
+                    setUser(user);
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                ToastUtils.showThrowable(t);
+            public void onFaild(String err) {
+                ToastUtils.show(err);
             }
         });
     }

@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.api.ToastUtils;
@@ -28,7 +29,7 @@ public class UserRecoverPwdPage extends UserVerifyCodePage {
         final String pwdMd5 = User.encryptPassword(pwd);
         ProgressDialogHelper.setRunning(cx, true);
 
-        Plat.accountService.resetPasswordByPhone(phone, pwdMd5, verifyCode, new VoidCallback() {
+        CloudHelper.resetPasswordByPhone(phone, pwdMd5, verifyCode, new VoidCallback() {
             @Override
             public void onSuccess() {
                 ProgressDialogHelper.setRunning(cx, false);

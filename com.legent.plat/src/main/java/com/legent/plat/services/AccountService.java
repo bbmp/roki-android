@@ -18,6 +18,7 @@ import com.legent.plat.events.UserUpdatedEvent;
 import com.legent.plat.exceptions.ExceptionHelper;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.PlatformUser;
 import com.legent.plat.pojos.RCReponse;
 import com.legent.plat.pojos.User;
@@ -25,6 +26,7 @@ import com.legent.plat.pojos.User3rd;
 import com.legent.plat.pojos.device.DeviceInfo;
 import com.legent.plat.services.account.AuthCallback;
 import com.legent.plat.services.account.IAppOAuthService;
+import com.legent.services.AbsService;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.PreferenceUtils;
@@ -36,7 +38,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class AccountService extends AbsAccountCloudService {
+public class AccountService extends AbsService {
 
     private final static String AutoLogin = "AutoLogin";
     public final static String IsOwnUser = "IsOwnUser";
@@ -118,44 +120,11 @@ public class AccountService extends AbsAccountCloudService {
             String authorization = PreferenceUtils.getString(Authorization, null);
             long userId = PreferenceUtils.getLong(LastUserId, 0);
             if (userId != 0) {
-                getUser2(userId, callback);
+                getUser2(userId);
             }
 //            loginByLastAccount(callback);
         }
     }
-
-
-//    public void bind3rd(Context cx, final int platId,
-//                        final VoidCallback callback) {
-
-
-//        bindThirdPlatAccount(cx, platId, new Callback<PlatformUser>() {
-//            @Override
-//            public void onSuccess(final PlatformUser pu) {
-//                final User3rd u3 = new User3rd(pu.userId, pu.nickname);
-//
-//                bind3rd(curUser.id, platId, pu.userId, pu.nickname, new VoidCallback() {
-//                    @Override
-//                    public void onSuccess() {
-//                        // curUser.bind3rd(platId, u3);
-//
-//                        EventUtils.postEvent(new UserUpdatedEvent(curUser));
-//                        Helper.onSuccess(callback);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Throwable t) {
-//                        Helper.onFailure(callback, t);
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                Helper.onFailure(callback, t);
-//            }
-//        });
-//    }
 
 
     public void bind3r(String code,String accessToken, final Callback<User> callback) {
@@ -175,7 +144,7 @@ public class AccountService extends AbsAccountCloudService {
     }
 
     public void unbind3rd(final VoidCallback callback) {
-        unbind3rd(curUser.id, new VoidCallback() {
+        CloudHelper.unbind3rd(curUser.id, new VoidCallback() {
             @Override
             public void onSuccess() {
                 curUser.wxNickname = null;
@@ -194,7 +163,7 @@ public class AccountService extends AbsAccountCloudService {
     public void logout(final VoidCallback callback) {
         if (curUser != null) {
 
-            logout(curUser.TGT, new VoidCallback() {
+            CloudHelper.logout(curUser.TGT, new VoidCallback() {
                 @Override
                 public void onSuccess() {
                     PreferenceUtils.setBool(PrefsKey.Guided, false);
@@ -219,7 +188,6 @@ public class AccountService extends AbsAccountCloudService {
     // override
     // -------------------------------------------------------------------------------
 
-    @Override
     public void login(final String account, final String password, final Callback<User> callback) {
         CloudHelper.login(account, password, new Callback<User>() {
 
@@ -241,7 +209,6 @@ public class AccountService extends AbsAccountCloudService {
     }
 
 
-    @Override
     public void expressLogin(final String phone, String verifyCode, final Callback<User> callback) {
         CloudHelper.expressLogin(phone, verifyCode, new Callback<User>() {
 
@@ -259,7 +226,6 @@ public class AccountService extends AbsAccountCloudService {
     }
 
     //微信第三方登录
-    @Override
     public void login3rd(String appSource, String openId, String phone, final String verifyCode, final Callback<User> callback) {
         CloudHelper.phoneBind(appSource, openId, phone, verifyCode, new Callback<User>() {
 
@@ -268,7 +234,7 @@ public class AccountService extends AbsAccountCloudService {
                 LogUtils.i("20171030", "accountService");
                 user.setPassword(verifyCode);
                 LogUtils.i("20171030", "user.password::" + user.password);
-                onLoginForThirdParty(user, user.phone, user.name, user.figureUrl, user.thirdInfos.
+                onLoginForThirdParty(user, user.phone, user.nickname, user.figureUrl, user.thirdInfos.
                         accessToken, user.password);
                 Helper.onSuccess(callback, user);
             }
@@ -280,7 +246,6 @@ public class AccountService extends AbsAccountCloudService {
         });
     }
 
-    @Override
     public void getUser(final long userId, final Callback<User> callback) {
         if (mapUsers.containsKey(userId)) {
             User user = mapUsers.get(userId);
@@ -308,44 +273,21 @@ public class AccountService extends AbsAccountCloudService {
      * @param userId
      * @param callback
      */
-    public void getUser2(final long userId, final Callback<User> callback) {
-        CloudHelper.getUser2(userId, new Callback<User>() {
+    public void getUser2(final long userId) {
+        CloudHelper.getUser2(userId, Reponses.GetUserReponse.class, new RetrofitCallback<Reponses.GetUserReponse>() {
             @Override
-            public void onSuccess(User user) {
-                mapUsers.put(userId, user);
-                Log.i("LOGIN", "user--------------------" + user.toString());
-                Helper.onSuccess(callback, user);
-                Plat.accountService.onLogin(user);
+            public void onSuccess(Reponses.GetUserReponse getUserReponse) {
+                if (null != getUserReponse)
+                    mapUsers.put(userId, getUserReponse.user);
+
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                Helper.onFailure(callback, t);
+            public void onFaild(String err) {
+
             }
         });
     }
-
-//    @Override
-//    public void updateUser(long id, final String name, final String phone, final String email,
-//                           final boolean gender, final VoidCallback callback) {
-//        CloudHelper.updateUser(id, name, phone, email, gender, new VoidCallback() {
-//            @Override
-//            public void onSuccess() {
-//                curUser.name = name;
-//                curUser.phone = phone;
-//                curUser.email = email;
-//                curUser.gender = gender;
-//                saveUser2Preference(curUser);
-//                EventUtils.postEvent(new UserUpdatedEvent(curUser));
-//                Helper.onSuccess(callback);
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                Helper.onFailure(callback, t);
-//            }
-//        });
-//    }
 
     public void bindNewPhone(long id,  final String phone, final String verifyCode,
                            final VoidCallback callback) {
@@ -380,7 +322,7 @@ public class AccountService extends AbsAccountCloudService {
         CloudHelper.updateUser(id, name, phone, email, gender, birthday, sex ,new VoidCallback() {
             @Override
             public void onSuccess() {
-                curUser.name = name;
+                curUser.nickname = name;
                 curUser.phone = phone;
                 curUser.email = email;
                 curUser.gender = gender;
@@ -398,7 +340,6 @@ public class AccountService extends AbsAccountCloudService {
         });
     }
 
-    @Override
     public void updateFigure(long userId, String figure,
                              final Callback<String> callback) {
         CloudHelper.updateFigure(userId, figure, new Callback<String>() {
@@ -418,13 +359,11 @@ public class AccountService extends AbsAccountCloudService {
     }
 
 
-    @Override
     public void unRegistAccount(long userId, String phone, String verifyCode, Callback<Reponses.UnregisterResponse> callback) {
 //        super.unRegistAccount(userId, phone, verifyCode, callback);
         CloudHelper.unregistByPhone(userId, phone, verifyCode, callback);
     }
 
-    @Override
     public void updatePassword(long userId, String oldPwd, final String newPwd,
                                final VoidCallback callback) {
         CloudHelper.updatePassword(userId, oldPwd, newPwd, new VoidCallback() {
@@ -466,7 +405,7 @@ public class AccountService extends AbsAccountCloudService {
                     null);
             String cert = PreferenceUtils.getString(LastPlat3rd_Cert, null);
 
-            loginFrom3rd(platId, account, nickname, faceUrl, cert,
+            CloudHelper.loginFrom3rd(platId, account, nickname, faceUrl, cert,
                     new Callback<User>() {
 
                         @Override
@@ -623,24 +562,24 @@ public class AccountService extends AbsAccountCloudService {
         });
     }
 
-    public void getToken(String loginType, String sjhm, String smsCode
-            , String password
-            , String accessToken
-            , String refreshToken
-            , String openId
-            , final Callback<Reponses.TokenReponse> callback) {
-        CloudHelper.getToken(loginType, sjhm, smsCode, password, accessToken, refreshToken, openId, "roki_client", "test", IAppType.RKDRD, new Callback<Reponses.TokenReponse>() {
-            @Override
-            public void onSuccess(Reponses.TokenReponse tokenReponse) {
-                Helper.onSuccess(callback, tokenReponse);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onFailure(callback, t);
-            }
-        });
-    }
+//    public void getToken(String loginType, String sjhm, String smsCode
+//            , String password
+//            , String accessToken
+//            , String refreshToken
+//            , String openId
+//            , final Callback<Reponses.TokenReponse> callback) {
+//        CloudHelper.getToken(loginType, sjhm, smsCode, password, accessToken, refreshToken, openId, "roki_client", "test", IAppType.RKDRD, new Callback<Reponses.TokenReponse>() {
+//            @Override
+//            public void onSuccess(Reponses.TokenReponse tokenReponse) {
+//                Helper.onSuccess(callback, tokenReponse);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//    }
 
     /**
      * 根据code获取第三方登录token
@@ -707,24 +646,24 @@ public class AccountService extends AbsAccountCloudService {
      * @param authorization
      * @param callback
      */
-    public void getOauth(final String phone, final String authorization, final Callback<User> callback) {
-        CloudHelper.getOauth(authorization, new Callback<User>() {
-
-            @Override
-            public void onSuccess(User user) {
-                Helper.onSuccess(callback, user);
-                Log.i("LOGIN", "user--------------------" + user.toString());
-                user.authorization = authorization;
-//                Plat.accountService.onLogin(user);
-                getUser2(user.id, callback);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onFailure(callback, t);
-            }
-        });
-    }
+//    public void getOauth(final String phone, final String authorization, final Callback<User> callback) {
+//        CloudHelper.getOauth(authorization, new Callback<User>() {
+//
+//            @Override
+//            public void onSuccess(User user) {
+//                Helper.onSuccess(callback, user);
+//                Log.i("LOGIN", "user--------------------" + user.toString());
+//                user.authorization = authorization;
+////                Plat.accountService.onLogin(user);
+//                getUser2(user.id, callback);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//    }
 
     /**
      * 设置新密码

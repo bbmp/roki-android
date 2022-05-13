@@ -18,6 +18,7 @@ import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeleteChildDeviceEvent;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.plat.pojos.device.AbsDevice;
 import com.legent.plat.pojos.device.AbsDeviceHub;
@@ -164,7 +165,7 @@ public class DeviceDetailPage extends MyBasePage<MainActivity> {
         LogUtils.i("20180817", "devices::" + devices.toString());
         deviceAdapter.loadData(devices);
         long ownerId = Plat.accountService.getCurrentUserId();
-        Plat.deviceService.getDeviceUsers(ownerId, id, new Callback<List<User>>() {
+        CloudHelper.getDeviceUsers(ownerId, id, new Callback<List<User>>() {
             @Override
             public void onSuccess(List<User> users) {
                 userAdapter.loadData(users);
@@ -469,7 +470,7 @@ public class DeviceDetailPage extends MyBasePage<MainActivity> {
             }
 
             void showData(User user) {
-                txtUserName.setText(user.name);
+                txtUserName.setText(user.nickname);
                 txtDesc.setText(user.phone);
             }
         }

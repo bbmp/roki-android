@@ -308,25 +308,25 @@ public class HomeMineView extends MyBaseView {
     /**
      * 获取用户信息3.7
      */
-    public void getUser() {
-        if (Plat.accountService.isLogon()) {
-            ProgressDialogHelper.setRunning(cx, true);
-            CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), new Callback<User>() {
-
-                @Override
-                public void onSuccess(User user) {
-                    ProgressDialogHelper.setRunning(cx, false);
-                    Plat.accountService.onLogin(user);
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                    ProgressDialogHelper.setRunning(cx, false);
-                    ToastUtils.showThrowable(t);
-                }
-            });
-        }
-    }
+//    public void getUser() {
+//        if (Plat.accountService.isLogon()) {
+//            ProgressDialogHelper.setRunning(cx, true);
+//            CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), new Callback<User>() {
+//
+//                @Override
+//                public void onSuccess(User user) {
+//                    ProgressDialogHelper.setRunning(cx, false);
+//                    Plat.accountService.onLogin(user);
+//                }
+//
+//                @Override
+//                public void onFailure(Throwable t) {
+//                    ProgressDialogHelper.setRunning(cx, false);
+//                    ToastUtils.showThrowable(t);
+//                }
+//            });
+//        }
+//    }
 
     /**
      * 设置用户信息
@@ -336,7 +336,7 @@ public class HomeMineView extends MyBaseView {
         boolean isLogin = Plat.accountService.isLogon();
         if (isLogin) {
             User user = Plat.accountService.getCurrentUser();
-            tvUserName.setText(Strings.isNullOrEmpty(user.name) ? user.phone : user.name);
+            tvUserName.setText(Strings.isNullOrEmpty(user.nickname) ? user.phone : user.nickname);
             tvUserPhone.setText(user.getPhone());
             if (!Strings.isNullOrEmpty(user.figureUrl)) {
                 Glide.with(cx).load(user.figureUrl).placeholder(R.mipmap.ic_user_default_figure)

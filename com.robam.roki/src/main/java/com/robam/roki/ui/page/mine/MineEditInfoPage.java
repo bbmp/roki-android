@@ -23,6 +23,8 @@ import com.legent.events.ActivityResultOnPageEvent;
 import com.legent.plat.Plat;
 import com.legent.plat.events.UserUpdatedEvent;
 import com.legent.plat.io.cloud.CloudHelper;
+import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UI;
 import com.legent.ui.UIService;
@@ -113,7 +115,7 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
     }
 
     private void showUser(User user) {
-        stbUserName.setRightText(Strings.isNullOrEmpty(user.name) ? user.phone : user.name);
+        stbUserName.setRightText(Strings.isNullOrEmpty(user.nickname) ? user.phone : user.nickname);
         if ("1".equals(user.sex)){
             stbUserSex.setRightText("男");
             stbUserBirthday.setRightColor(getResources().getColor(R.color.mine_text_color));
@@ -287,7 +289,7 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
      */
     private void setUserInfo(Date birthday) {
         ProgressDialogHelper.setRunning(cx, true);
-        Plat.accountService.updateUser(user.id, user.name, user.phone, user.email, user.gender , birthday, user.sex, new VoidCallback() {
+        Plat.accountService.updateUser(user.id, user.nickname, user.phone, user.email, user.gender , birthday, user.sex, new VoidCallback() {
             @Override
             public void onSuccess() {
                 ProgressDialogHelper.setRunning(cx, false);
@@ -312,7 +314,7 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
             return;
         }
         ProgressDialogHelper.setRunning(cx, true);
-        Plat.accountService.updateUser(user.id, user.name, user.phone, user.email, false,  user.birthday, sex ,new VoidCallback() {
+        Plat.accountService.updateUser(user.id, user.nickname, user.phone, user.email, false,  user.birthday, sex ,new VoidCallback() {
             @Override
             public void onSuccess() {
                 ProgressDialogHelper.setRunning(cx, false);
@@ -362,20 +364,24 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
     public void getUser() {
         if (Plat.accountService.isLogon()) {
             ProgressDialogHelper.setRunning(cx, true);
-            CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), new Callback<User>() {
+            CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), Reponses.GetUserReponse.class, new RetrofitCallback<Reponses.GetUserReponse>() {
 
                 @Override
-                public void onSuccess(User user) {
+                public void onSuccess(Reponses.GetUserReponse getUserReponse) {
                     ProgressDialogHelper.setRunning(cx, false);
-                    Plat.accountService.onLogin(user);
-                    MineEditInfoPage.this.user = user ;
-                    showUser(user);
+                    if (null != getUserReponse) {
+                        User user = getUserReponse.user;
+                        Plat.accountService.onLogin(user);
+                        MineEditInfoPage.this.user = user ;
+                        showUser(user);
+                    }
                 }
 
                 @Override
-                public void onFailure(Throwable t) {
-                    ToastUtils.show(t.getMessage());
+                public void onFaild(String err) {
+                    ToastUtils.show(err);
                 }
+
             });
         }
     }

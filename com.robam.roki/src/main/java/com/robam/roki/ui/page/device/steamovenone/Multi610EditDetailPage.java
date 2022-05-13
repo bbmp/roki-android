@@ -37,7 +37,6 @@ import com.robam.common.pojos.Recipe;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatus;
 import com.robam.roki.R;
-import com.robam.roki.broadcast.RecipeStep;
 import com.robam.roki.db.model.CookingStepsModel;
 import com.robam.roki.db.model.RecipeBean;
 import com.robam.roki.db.model.RecipeStepBean;

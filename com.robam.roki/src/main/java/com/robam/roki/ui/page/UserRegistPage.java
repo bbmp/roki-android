@@ -4,6 +4,7 @@ package com.robam.roki.ui.page;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -20,7 +21,7 @@ public class UserRegistPage extends UserVerifyCodePage {
     protected void onFinalConfirm(final String phone, final String pwd, String verifyCode) {
 
         ProgressDialogHelper.setRunning(cx, true);
-        Plat.accountService.registByPhone(phone, null, User.encryptPassword(pwd), null, true, verifyCode, new VoidCallback() {
+        CloudHelper.registByPhone(phone, null, User.encryptPassword(pwd), null, true, verifyCode, new VoidCallback() {
             @Override
             public void onSuccess() {
                 ProgressDialogHelper.setRunning(cx, false);

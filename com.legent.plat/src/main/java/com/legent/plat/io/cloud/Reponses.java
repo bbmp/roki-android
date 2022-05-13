@@ -129,9 +129,6 @@ public interface Reponses {
 
     class LoginReponse extends RCReponse {
 
-        @JsonProperty("tgt")
-        public String tgt;
-
         @JsonProperty("user")
         public User user;
     }

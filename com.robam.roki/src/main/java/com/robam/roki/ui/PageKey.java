@@ -2,7 +2,7 @@ package com.robam.roki.ui;
 
 public class PageKey {
     // Menu-----start
-    static public final String About = "About";
+//    static public final String About = "About";
     static public final String DeviceManager = "DeviceManager";
     static public final String AbsThemeRecipeListGrid = "AbsThemeRecipeListGrid";
     static public final String RecipeCookMoments = "RecipeCookMoments";
@@ -12,16 +12,16 @@ public class PageKey {
     static public final String SmartParams = "SmartParams";
     static public final String SteriSmartParams = "SteriSmartParams";
     static public final String SteriSmart826Params = "SteriSmart826Params";
-    static public final String TrolleyBus = "TrolleyBus";
-    static public final String OrderYiGuoDetail= "OrderYiGuoDetail";
-    static public final String Test= "Test";
-    static public final String AutoRecipeStart = "AutoRecipeStart";
+//    static public final String TrolleyBus = "TrolleyBus";
+//    static public final String OrderYiGuoDetail= "OrderYiGuoDetail";
+//    static public final String Test= "Test";
+//    static public final String AutoRecipeStart = "AutoRecipeStart";
     // 烤箱模块化
-    static public final String AbsOvenCookMode = "AbsOvenCookMode";
+//    static public final String AbsOvenCookMode = "AbsOvenCookMode";
     static public final String AbsOvenMode = "AbsOvenMode";
     static public final String AbsOvenMore = "AbsOvenMore";
     static public final String AbsSterilizerMore = "AbsSterilizerMore";
-    static public final String AbsOvenWorking = "AbsOvenWorking";
+//    static public final String AbsOvenWorking = "AbsOvenWorking";
 
     static public final String AbsOvenZoning="AbsOvenZoning";
     static public final String AbsOvenLocalRecipe="AbsOvenLocalRecipe";
@@ -29,7 +29,7 @@ public class PageKey {
     //---------------
     static public final String AbsCookerHelper = "AbsCookerHelper";
     static public final String DeviceDetailCooker = "DeviceDetailCooker";
-    static public final String DeviceCookerRecipe = "DeviceCookerRecipe";
+//    static public final String DeviceCookerRecipe = "DeviceCookerRecipe";
 
     //----------------
     // 设备----start
@@ -39,7 +39,7 @@ public class PageKey {
     static public final String DeviceDetail = "DeviceDetail";
     static public final String DeviceFan = "DeviceFan";
     static public final String DeviceFanOther = "DeviceFanOther";//其他型号烟机模块化添加
-    static public final String DeviceSideFan = "DeviceSideFan";
+//    static public final String DeviceSideFan = "DeviceSideFan";
     static public final String DeviceStove = "DeviceStove";
     static public final String Device9B37 = "Device9B37";
     static public final String Device9B39 = "Device9B37";
@@ -53,7 +53,7 @@ public class PageKey {
     static public final String DeviceSteamOvenWorking = "DeviceSteamOvenWorking"; // 蒸汽炉工作页面
     static public final String DeviceSteamWorking = "DeviceSteamWorking";
     static public final String DeviceSteam226 = "DeviceSteam226";//蒸箱226
-    static public final String DeviceSteam228 = "DeviceSteam228";//蒸箱228
+//    static public final String DeviceSteam228 = "DeviceSteam228";//蒸箱228
     static public final String DeviceSteam226Main = "DeviceSteam226Main";
     static public final String DeviceSteam228Main = "DeviceSteam228Main";
     static public final String DeviceSteam226Working = "DeviceSteam226Working";
@@ -74,7 +74,7 @@ public class PageKey {
     static public final String SteamFanLinkage= "SteamFanLinkage";//烟机联动
     static public final String SteamDiyDetail= "SteamDiyDetail";//烟机联动
 
-    static public final String SterilizerWork = "SterilizerWork";//电烤箱
+//    static public final String SterilizerWork = "SterilizerWork";//电烤箱
 
     //---------------------烤箱代码模块化---------------------
     static public final String AbsOven = "AbsOven";//电烤箱
@@ -98,13 +98,13 @@ public class PageKey {
     static public final String DeviceOven026Working = "DeviceOven026Working";
     static public final String DeviceOven028Working = "DeviceOven028Working";
     static public final String DeviceWaterPurifiy = "DeviceWaterPurifiy";//净水器
-    static public final String DeviceWaterPurifier312 = "DeviceWaterPurifier312";
-    static public final String DeviceWaterPurifier321 = "DeviceWaterPurifier321";
-    static public final String DeviceWaterPurifier320 = "DeviceWaterPurifier320";
+//    static public final String DeviceWaterPurifier312 = "DeviceWaterPurifier312";
+//    static public final String DeviceWaterPurifier321 = "DeviceWaterPurifier321";
+//    static public final String DeviceWaterPurifier320 = "DeviceWaterPurifier320";
     static public final String AbsDeviceWaterPurifier = "AbsDeviceWaterPurifier";
     static public final String SmartWaterPurifierParams = "SmartWaterPurifierParams";
-    static public final String DeviceWaterPurifiyNormal = "DeviceWaterPurifiyNormal";//净水器正常页面
-    static public final String DeviceWaterPurifiyControl = "DeviceWaterPurifiyControl";//净水器控制页面
+//    static public final String DeviceWaterPurifiyNormal = "DeviceWaterPurifiyNormal";//净水器正常页面
+//    static public final String DeviceWaterPurifiyControl = "DeviceWaterPurifiyControl";//净水器控制页面
     static public final String DeviceWaterPurifiyFilterShow = "DeviceWaterPurifiyFilterShow";//净水器滤芯显示页面
     static public final String DeviceWaterPurifiyInstall="DeviceWaterPurifiyInstall";//更多页面
     static public final String DeviceWaterPurifierDetail="DeviceWaterPurifierDetail";//饮水量详情
@@ -120,12 +120,12 @@ public class PageKey {
     static public final String DeviceFan8230s = "DeviceFan8230s";//8230s烟机
     static public final String DeviceFan8231s = "DeviceFan8231s";//8231s烟机
     static public final String DeviceFan8230c = "DeviceFan8230c";//8231s烟机
-    static public final String DeviceFan8700Oli = "DeviceFan8700Oli";//8700油网页面//66A2油网页面
-    static public final String DeviceFanOilClean = "DeviceFanOilClean";//5910
-    static public final String DeviceFanOilCleanNew = "DeviceFanOilCleanNew";//66A2油网页面
-    static public final String DeviceFanOilClean2 = "DeviceFanOilClean2";//5610油网页面
+//    static public final String DeviceFan8700Oli = "DeviceFan8700Oli";//8700油网页面//66A2油网页面
+//    static public final String DeviceFanOilClean = "DeviceFanOilClean";//5910
+//    static public final String DeviceFanOilCleanNew = "DeviceFanOilCleanNew";//66A2油网页面
+//    static public final String DeviceFanOilClean2 = "DeviceFanOilClean2";//5610油网页面
     static public final String DeviceMicrowave = "DeviceMicrowave";//微波炉主页面
-    static public final String DeviceMicrowave526 = "DeviceMicrowave526";//微波炉主页面
+//    static public final String DeviceMicrowave526 = "DeviceMicrowave526";//微波炉主页面
     static public final String DeviceMicrowave526Main= "DeviceMicrowave526Main";//微波炉主页面
     static public final String DeviceMicrowaveNormalWorking = "DeviceMicrowaveNormalWorking";//微波炉普通工作页面
     static public final String DeviceMicrowaveLinkageSetting = "DeviceMicrowaveLinkageSetting";//微波炉联动料理设置页面
@@ -143,29 +143,29 @@ public class PageKey {
     static public final String DeviceSteameOvenC906ExpWorking ="DeviceSteameOvenC906ExpWorking";
 
 //模块化
-    static public final String AbsFanDevice = "AbsDeviceFan";//烟机
+//    static public final String AbsFanDevice = "AbsDeviceFan";//烟机
     static public final String AbsRikaDevice = "AbsDeviceRika";//RIKA
     static public final String DeviceOrderSer ="DeviceOrderSer";
     static public final String DeviceSubCooker = "DeviceSubCooker";//cook
-    static public final String DeviceMicrowave526LinkageWorking ="DeviceMicrowave526LinkageWorking";
-    static public final String DeviceSterilizer826 ="DeviceSterilizer826";
+//    static public final String DeviceMicrowave526LinkageWorking ="DeviceMicrowave526LinkageWorking";
+//    static public final String DeviceSterilizer826 ="DeviceSterilizer826";
     static public final String DeviceFanGestureControlPage="DeviceFanGestureControlPage";
 
     // 设备----end
 
     // 菜谱----start
-    static public final String RecipeBanner = "RecipeBanner";
+//    static public final String RecipeBanner = "RecipeBanner";
     static public final String RecipeDetail = "RecipeDetail";
-    static public final String RecipeDetailLoop = "RecipeDetailLoop";
+//    static public final String RecipeDetailLoop = "RecipeDetailLoop";
     static public final String RecipeDetail3rd = "RecipeDetail3rd";
-    static public final String RecipeSearchNew = "RecipeSearchNew";
+//    static public final String RecipeSearchNew = "RecipeSearchNew";
     static public final String RecipeSearch = "RecipeSearch";
     static public final String RecipeSearch2 = "RecipeSearch2";
     static public final String RecipeShow = "RecipeShow";
     static public final String RecipeCooking = "RecipeCooking";
-    static public final String RecipeSeasoning = "RecipeSeasoning";
-    static public final String RecipeHistory = "RecipeHistory";
-    static public final String RecipeStep = "RecipeStep";
+//    static public final String RecipeSeasoning = "RecipeSeasoning";
+//    static public final String RecipeHistory = "RecipeHistory";
+//    static public final String RecipeStep = "RecipeStep";
     static public final String GasSelfCheck = "GasSelfCheck";
     static public final String GasAlarmDeal = "GasAlarmDeal";
 
@@ -175,25 +175,25 @@ public class PageKey {
     // 菜谱-----end
 
     //订单
-    static public final String OrderList = "OrderList";
-    static public final String OrderDetail = "OrderDetail";
-    static public final String OrderContacterEdit = "OrderContacterEdit";
+//    static public final String OrderList = "OrderList";
+//    static public final String OrderDetail = "OrderDetail";
+//    static public final String OrderContacterEdit = "OrderContacterEdit";
     //保养
 //    static public final String MaintainHome = "MaintainHome";
-    static public final String MaintainRequest = "MaintainRequest";
-    static public final String MaintainInfo = "MaintainInfo";
+//    static public final String MaintainRequest = "MaintainRequest";
+//    static public final String MaintainInfo = "MaintainInfo";
 
     // 其它
-    static public final String CookWithoutDevice = "CookWithoutDevice";
-    static public final String TrolleyThirdPlat = "TrolleyThirdPlat";
-    static public final String SteriSwitch = "SteriSwitch";
-    static public final String CountDown = "CountDown";
-    static public final String SeriesInfoDetail = "SeriesInfoDetail";
+//    static public final String CookWithoutDevice = "CookWithoutDevice";
+//    static public final String TrolleyThirdPlat = "TrolleyThirdPlat";
+//    static public final String SteriSwitch = "SteriSwitch";
+//    static public final String CountDown = "CountDown";
+//    static public final String SeriesInfoDetail = "SeriesInfoDetail";
 
 
-    static public final String Youzan = "Youzan";
-    static public final String YouzanOrder = "YouzanOrder";
-    static public final String YouzanTrolleyBus = "YouzanTrolleyBus";
+//    static public final String Youzan = "Youzan";
+//    static public final String YouzanOrder = "YouzanOrder";
+//    static public final String YouzanTrolleyBus = "YouzanTrolleyBus";
     static public final String YouzanOrderDetails = "YouzanOrderDetails";
     static public final String DeviceMoreCook = "DeviceMoreCook";
 
@@ -213,7 +213,7 @@ public class PageKey {
     static public final String UserCancelAccount="UserCancelAccount";//注销账号界面
     static public final String VerifyMobilePhone="VerifyMobilePhone";//注销手机验证界面
     //Login 3.6
-    static public final String LoginOther = "LoginOther" ;//其他登录
+//    static public final String LoginOther = "LoginOther" ;//其他登录
     public static final String LoginPageBase = "LoginPageBase" ;//base
     public static final String LoginBindPhone = "LoginBindPhone";
     public static final String LoginSetPassword = "LoginSetPassword";
@@ -223,7 +223,7 @@ public class PageKey {
     public static final String MineEditUserNamePage = "MineEditUserNamePage";
     public static final String MineSettingPage = "MineSettingPage" ;
     public static final String MineAccAndSecPage = "MineAccAndSecPage";
-    public static final String MineLogoffPage = "MineLogoffPage";
+//    public static final String MineLogoffPage = "MineLogoffPage";
     public static final String MineBindPhonePage = "MineBindPhonePage";
     public static final String MineBindPhonePage2 = "MineBindPhonePage2";
     public static final String MineForgetPasswordPage = "MineForgetPasswordPage";
@@ -233,17 +233,16 @@ public class PageKey {
     public static final String MineCancelAccountPage2 = "MineCancelAccountPage2";
     public static final String MineAboutPage = "MineAboutPage";
     //首页直播
-    static public final String RecipeLiveList = "RecipeLiveList";
-    static public final String RecipeLiveListNew = "RecipeLiveListNew";
+//    static public final String RecipeLiveList = "RecipeLiveList";
+//    static public final String RecipeLiveListNew = "RecipeLiveListNew";
     static public final String RecipeCategoryList = "RecipeCategoryList";
-    static public final String RecipeDynamicShow = "RecipeDynamicShow";
+//    static public final String RecipeDynamicShow = "RecipeDynamicShow";
     //菜谱主题详情页
-    static public final String RecipeThemeDetail = "RecipeThemeDetail";
+//    static public final String RecipeThemeDetail = "RecipeThemeDetail";
     //更多主题页面
-    static public final String MoreThomePage = "MoreThomePage";
+//    static public final String MoreThomePage = "MoreThomePage";
     //3.1UI菜谱主题详情页面
     static public final String SelectThemeDetailPage = "SelectThemeDetailPage";
-    static public final String SelectThemeDetailPage1 = "SelectThemeDetailPage1";
 
     //3.1UI菜谱主题列表页
     static public final String ThemeRecipeListPage = "ThemeRecipeListPage";
@@ -256,17 +255,17 @@ public class PageKey {
     //标签菜谱列表页面
     static public final String ClassifyTagRecipe = "ClassifyTagRecipe";
     //菜谱主题推送详情页
-    static public final String RecipeThemePushDetail = "RecipeThemePushDetail";
+//    static public final String RecipeThemePushDetail = "RecipeThemePushDetail";
     //厨房知识
-    static public final String kitchenKnowledge = "kitchenKnowledge";
+//    static public final String kitchenKnowledge = "kitchenKnowledge";
     //厨房活动
-    static public final String KitchenSourceAct = "KitchenSourceAct";
+//    static public final String KitchenSourceAct = "KitchenSourceAct";
     //动态H5
-    static public final String RecipeDynamic = "RecipeDynamic";
+//    static public final String RecipeDynamic = "RecipeDynamic";
 
     static public final String KitchenKnowledgeArticle = "KitchenKnowledgeArticle";
     //随机菜谱 小游戏界面
-    static public final String RamdomCookBookPage = "RamdomCookBook";
+//    static public final String RamdomCookBookPage = "RamdomCookBook";
     //烹饪曲线数据列表
     static public final String CurveCookbooks = "CurveCookbooks";
     //应用烹饪曲线
@@ -275,19 +274,19 @@ public class PageKey {
     static public final String ActivityWebViewPage = "ActivityWebViewPage";
     //
     //优酷视频
-    public static String VodPlayer = "VodPlayer";
+//    public static String VodPlayer = "VodPlayer";
     //咨询列表
-    public static String ConsultationList = "ConsultationList";
+//    public static String ConsultationList = "ConsultationList";
     // 用户-----end
 
     //	common
     static public final String WebClient = "WebClient";//老板电器的官网
     static public final String WebClientNew = "WebClientNew";
     static public final String WebAdvert = "WebAdvert";//广告页
-    static public final String WebclientConsulist = "WebclientConsulist";
-    static public final String Web = "Web";//测试有赞活动页
-    static public final String WebClientNavigation = "WebClientNavigation";
-    static public final String WebPlay = "WebPlay";
+//    static public final String WebclientConsulist = "WebclientConsulist";
+//    static public final String Web = "Web";//测试有赞活动页
+//    static public final String WebClientNavigation = "WebClientNavigation";
+//    static public final String WebPlay = "WebPlay";
     static public final String Chat = "Chat";
     static public final String ScanCode = "ScanCode";
     static public final String OnLineChat="OnLineChat";
@@ -300,14 +299,14 @@ public class PageKey {
     static public final String DeviceAdd = "DeviceAdd";
     static public final String DeviceScan = "DeviceScan";
     static public final String DeviceWifiConnect = "DeviceWifiConnect";
-    static public final String DeviceZJWifiConnect = "DeviceZJWifiConnect";
-    static public final String DeviceConnect = "DeviceConnect";
+//    static public final String DeviceZJWifiConnect = "DeviceZJWifiConnect";
+//    static public final String DeviceConnect = "DeviceConnect";
     static public final String WifiConnect= "WifiConnect";
     static public final String DeviceSearch= "DeviceSearch";
     static public final String CantfindDevice= "CantfindDevice";
     static public final String SettingWifi= "SettingWifi";
     static public final String CantFinish= "CantFinish";
-    static public final String ZJCantFinish= "ZJCantFinish";
+//    static public final String ZJCantFinish= "ZJCantFinish";
     static public final String RecipeClassify = "RecipeClassify";
     static public final String RecipeClassifySearch = "RecipeClassifySearch";
     static public final String WIFIConnectFailPage = "WIFIConnectFailPage";
@@ -316,12 +315,12 @@ public class PageKey {
 
 
     //联网优化H5
-    static public final String DeviceAddNew = "DeviceAddNew";
+//    static public final String DeviceAddNew = "DeviceAddNew";
     static public final String MoreCook = "MoreCook";
     //H5下厨房
-    static public final String RecipeUnderKitchen = "RecipeUnderKitchen";
+//    static public final String RecipeUnderKitchen = "RecipeUnderKitchen";
     //豆果
-    static public final String RecipeDouGuo = "RecipeDouGuo";
+//    static public final String RecipeDouGuo = "RecipeDouGuo";
 
 
     /**模块化**/
@@ -335,17 +334,17 @@ public class PageKey {
     static public final String DeviceRikaWork = "DeviceRikaWork";//RIKA工作页面
     static public final String DeviceRikaXWork = "DeviceRikaXWork";//RIKA工作页面
     static public final String DeviceRikaYWork = "DeviceRikaYWork";//RIKA工作页面
-    public static final String DeviceRikaSteamOvenWork ="DeviceRikaSteamOvenWork";
-    static public final String DeviceMore = "DeviceMore";//更多页面
+//    public static final String DeviceRikaSteamOvenWork ="DeviceRikaSteamOvenWork";
+//    static public final String DeviceMore = "DeviceMore";//更多页面
     static public final String DeviceMoreGasInfo= "DeviceMoreGasInfo";//更多页面
     static public final String FanDeviceMore = "FanDeviceMore";//烟机更多页面
     static public final String StoveDeviceMore = "StoveDeviceMore";//灶具更多页面
     static public final String PotDeviceMore = "StoveDeviceMore";//温控锅更多页面
     static public final String RikaDeviceMore = "RikaDeviceMore";//RIKA更多页面
     static public final String DeviceInformation = "DeviceInformation";//
-    static public final String DeviceElectronicInstruction = "DeviceElectronicInstruction";//电子使用说明书
-    static public final String DeviceRikaOilClean = "DeviceRikaOilClean";//RIKA油网清洗
-    static public final String Device90B8Z = "Device90B8Z";
+//    static public final String DeviceElectronicInstruction = "DeviceElectronicInstruction";//电子使用说明书
+//    static public final String DeviceRikaOilClean = "DeviceRikaOilClean";//RIKA油网清洗
+//    static public final String Device90B8Z = "Device90B8Z";
     static public final String CookerUpdateDevice = "CookerUpdateDevice";//
     static public final String DeviceRikaModeSelect = "DeviceRikaModeSelect";//
     static public final String DeviceRikaMode2Select = "DeviceRikaMode2Select";//
@@ -393,7 +392,7 @@ public class PageKey {
     //净水机模块化
     static public final String WaterPurifierFilterCoreState = "WaterPurifierFilterCoreState";//滤芯状态
     static public final String HouseholdDrinkingWaterStatistics = "HouseholdDrinkingWaterStatistics";//家庭饮水统计
-    static public final String WaterPurifierMoreData = "WaterPurifierMoreData";//更多饮水数据
+//    static public final String WaterPurifierMoreData = "WaterPurifierMoreData";//更多饮水数据
     static public final String WaterPurifierDeviceMore = "WaterPurifierDeviceMore";//更多页面
     static public final String WaterPurifierFilterReplacement = "WaterPurifierFilterReplacement";//如何更换滤芯
     static public final String WaterPurifierFilterAboutExpire = "WaterPurifierFilterAboutExpire";//滤芯即将到期
@@ -401,7 +400,7 @@ public class PageKey {
 
 
 
-    static public final String SpeechSwitchPage = "SpeechSwitchPage";//语音开关
+//    static public final String SpeechSwitchPage = "SpeechSwitchPage";//语音开关
 
 
     public static final String DevicePotFanLink = "DevicePotFanLink";
@@ -423,9 +422,9 @@ public class PageKey {
     public static final String SteamOvenProMode = "SteamOvenProMode";
     public static final String SteamOven926ProMode = "SteamOven926ProMode";
     public static final String DiyCookbookList = "DiyCookbookList";
-    public static final String FanLinkage = "FanLinkage";
+//    public static final String FanLinkage = "FanLinkage";
     public static final String LocalCookbook = "LocalCookbook";
-    public static final String Local610Cookbook = "Local610Cookbook";
+//    public static final String Local610Cookbook = "Local610Cookbook";
     public static final String Local610CookbookDetailPage = "Local610CookbookDetailPage";
     public static final String MultiStepMode = "MultiStepMode";
     public static final String SteamOvenDiyDetail = "SteamOvenDiyDetail";
@@ -467,7 +466,7 @@ public class PageKey {
     /**
      * 集成灶本地自动菜谱详情
      */
-    public static final String LocalIntegStoveCookbookDetailPage = "LocalIntegStoveCookbookDetailPage";
+//    public static final String LocalIntegStoveCookbookDetailPage = "LocalIntegStoveCookbookDetailPage";
     /**
      * 集成灶多段模式
      */

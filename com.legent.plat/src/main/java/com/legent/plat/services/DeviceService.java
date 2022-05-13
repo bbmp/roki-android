@@ -24,10 +24,14 @@ import com.legent.plat.events.DeviceUpdatedEvent;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.events.UserLogoutEvent;
 import com.legent.plat.events.ViewChangedEvent;
+import com.legent.plat.io.cloud.CloudHelper;
+import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.device.DeviceGroupInfo;
 import com.legent.plat.pojos.device.DeviceInfo;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.plat.pojos.device.IDeviceHub;
+import com.legent.services.AbsService;
 import com.legent.services.ScreenPowerService;
 import com.legent.services.TaskService;
 import com.legent.utils.LogUtils;
@@ -40,7 +44,7 @@ import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class DeviceService extends AbsDeviceCloudService {
+public class DeviceService extends AbsService {
 
     private static DeviceService instance = new DeviceService();
 
@@ -205,31 +209,34 @@ public class DeviceService extends AbsDeviceCloudService {
     public void addWithBind(final String guid, String name, boolean isOwner,
                             final VoidCallback callback) {
 
-        bindDevice(userId, guid, name, isOwner, new VoidCallback() {
+        CloudHelper.bindDevice(userId, guid, name, isOwner, new VoidCallback() {
             @Override
             public void onSuccess() {
-                getDeviceById(userId, guid, new Callback<DeviceInfo>() {
+                CloudHelper.getDeviceById(guid, Reponses.GetDevicePesponse.class, new RetrofitCallback<Reponses.GetDevicePesponse>() {
 
                     @Override
-                    public void onSuccess(DeviceInfo deviceInfo) {
+                    public void onSuccess(Reponses.GetDevicePesponse getDevicePesponse) {
+                        if (null != getDevicePesponse) {
+                            DeviceInfo deviceInfo = getDevicePesponse.device;
+                            if (deviceInfo == null || Strings.isNullOrEmpty(deviceInfo.guid)) {
+                                Helper.onFailure(callback, new Throwable("deviceInfo'guid is invalid"));
+                                return;
+                            }
 
-                        if (deviceInfo == null || Strings.isNullOrEmpty(deviceInfo.guid)) {
-                            Helper.onFailure(callback, new Throwable("deviceInfo'guid is invalid"));
-                            return;
+                            if (Plat.deviceFactory != null) {
+                                IDevice device = Plat.deviceFactory.generate(deviceInfo);
+                                add(device);
+                            }
+                            //这里不需要切到主线程
+                            Helper.onSuccess(callback);
                         }
-
-                        if (Plat.deviceFactory != null) {
-                            IDevice device = Plat.deviceFactory.generate(deviceInfo);
-                            add(device);
-                        }
-
-                        Helper.onSuccess(callback);
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
-                        Helper.onFailure(callback, t);
+                    public void onFaild(String err) {
+                        Helper.onFailure(callback, new Throwable(err));
                     }
+
                 });
             }
 
@@ -242,7 +249,7 @@ public class DeviceService extends AbsDeviceCloudService {
 
     public void deleteWithUnbind(final String guid, final VoidCallback callback) {
 
-        unbindDevice(userId, guid, new VoidCallback() {
+        CloudHelper.unbindDevice(userId, guid, new VoidCallback() {
 
             @Override
             public void onSuccess() {

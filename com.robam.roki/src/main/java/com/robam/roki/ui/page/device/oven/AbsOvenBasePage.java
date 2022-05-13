@@ -234,7 +234,7 @@ public class AbsOvenBasePage extends BasePage {
         LogUtils.i("20200825","userId:"+userId);
         LogUtils.i("20200825","dt:"+dt);
         LogUtils.i("20200825","dc:"+dc);
-        Plat.deviceService.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
+        CloudHelper.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
             @Override
             public void onSuccess(Reponses.DeviceResponse deviceResponse) {
                 if (deviceResponse == null) return;

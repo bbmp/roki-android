@@ -13,6 +13,7 @@ import com.google.common.collect.Lists;
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.constant.IDeviceType;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.plat.pojos.device.AbsDevice;
 import com.legent.plat.pojos.device.AbsDeviceHub;
@@ -143,7 +144,7 @@ public class DeviceInformationPage extends BasePage {
     //用户信息
     private void initUserDate() {
         long ownerId = Plat.accountService.getCurrentUserId();
-        Plat.deviceService.getDeviceUsers(ownerId, id, new Callback<List<User>>() {
+        CloudHelper.getDeviceUsers(ownerId, id, new Callback<List<User>>() {
             @Override
             public void onSuccess(List<User> users) {
                 if (users == null || users.size() == 0) return;
@@ -156,7 +157,7 @@ public class DeviceInformationPage extends BasePage {
 
                     TextView tvName = view.findViewById(R.id.tv_user_name);
                     TextView tvDesc = view.findViewById(R.id.tv_user_desc);
-                    tvName.setText(user.name);
+                    tvName.setText(user.nickname);
                     tvDesc.setText(user.phone);
                     mLlUser.addView(view);
                 }

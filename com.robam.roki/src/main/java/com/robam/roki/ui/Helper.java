@@ -18,8 +18,6 @@ import com.legent.plat.pojos.User;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.popoups.BasePickerPopupWindow;
-import com.legent.ui.ext.popoups.BasePickerPopupWindow2;
-import com.legent.ui.ext.popoups.BasePickerPopupWindow3;
 import com.legent.ui.ext.popoups.BasePickerPopupWindow4;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
@@ -78,11 +76,7 @@ import com.robam.roki.ui.dialog.StoveSelectAllOffTips;
 import com.robam.roki.ui.dialog.StoveSelectTipsDialog;
 import com.robam.roki.ui.dialog.WaterPurifierSetPeopleDialog;
 import com.robam.roki.ui.form.MainActivity;
-import com.robam.roki.ui.view.CrmAreaWheelView;
-import com.robam.roki.ui.view.DeviceOvenNormalSettingWheelView;
-import com.robam.roki.ui.view.OrderAreaWheelView;
 import com.robam.roki.ui.view.OvenResetWheelView;
-import com.robam.roki.ui.view.SteamovenResetWheelView;
 import com.robam.roki.ui.view.recipeclassify.RecipeFilterPopWindow;
 import com.robam.roki.utils.YouzanUserAttestationUtils;
 
@@ -171,149 +165,61 @@ public class Helper {
 
 
 
-    public static void startCook(Context cx, Recipe recipe) {
-        if (MobileStoveCookTaskService.getInstance().isRunning()) {
-            ToastUtils.showShort("正在烧菜中,不可同时烧菜!");
-            return;
-        }
-
-        AbsFan fan = Utils.getDefaultFan();
-        Stove stove = Utils.getDefaultStove();
-        if (stove == null || !stove.isConnected()) {
-            if (fan == null || !fan.isConnected()) {
-                Bundle bd = new Bundle();
-                bd.putLong(PageArgumentKey.BookId, recipe.id);
-                UIService.getInstance().postPage(PageKey.CookWithoutDevice, bd);
-
-            } else {
-                NoStoveDialog.show(cx,recipe);//未检测到灶具
-            }
-        } else {
-                if ("RRQZ".equals(recipe.getJs_cookSteps().get(0).getDc())){
-                boolean isOffLeft = stove.leftHead != null && stove.leftHead.status == StoveStatus.Off;
-                boolean isOffRight = stove.rightHead != null && stove.rightHead.status == StoveStatus.Off;
-
-                if (isOffLeft != isOffRight) {
-                    //有一个是开机状态
-                    startCook(!isOffLeft ? stove.leftHead : stove.rightHead, recipe);
-                } else {
-                    //左右灶状态一样
-                    if (isOffLeft) {
-                        //都是关机状态
-                        //等待开火，请在灶具上开启
-                        ChooseStoveByWaitDialog.show(cx, recipe);
-                    } else {
-                        //都是开机状态
-                        boolean isStandByLeft = stove.leftHead != null && stove.leftHead.status == StoveStatus.StandyBy;
-                        boolean isStandByRight = stove.rightHead != null && stove.rightHead.status == StoveStatus.StandyBy;
-                        if (isStandByLeft != isStandByRight) {
-                            //其中有一个是待机状态
-                            startCook(isStandByLeft ? stove.leftHead : stove.rightHead, recipe);
-                        } else {
-                            //都是待机或都是工作中时，需要选择
-                            ChooseStoveByManualDialog.show(cx, recipe);
-                        }
-                    }
-                }
-            }else{
-                    //MobileStoveCookTaskService.getInstance().start(null, recipe);
-                }
-        }
-    }
+//    public static void startCook(Context cx, Recipe recipe) {
+//        if (MobileStoveCookTaskService.getInstance().isRunning()) {
+//            ToastUtils.showShort("正在烧菜中,不可同时烧菜!");
+//            return;
+//        }
+//
+//        AbsFan fan = Utils.getDefaultFan();
+//        Stove stove = Utils.getDefaultStove();
+//        if (stove == null || !stove.isConnected()) {
+//            if (fan == null || !fan.isConnected()) {
+//                Bundle bd = new Bundle();
+//                bd.putLong(PageArgumentKey.BookId, recipe.id);
+//                UIService.getInstance().postPage(PageKey.CookWithoutDevice, bd);
+//
+//            } else {
+//                NoStoveDialog.show(cx,recipe);//未检测到灶具
+//            }
+//        } else {
+//                if ("RRQZ".equals(recipe.getJs_cookSteps().get(0).getDc())){
+//                boolean isOffLeft = stove.leftHead != null && stove.leftHead.status == StoveStatus.Off;
+//                boolean isOffRight = stove.rightHead != null && stove.rightHead.status == StoveStatus.Off;
+//
+//                if (isOffLeft != isOffRight) {
+//                    //有一个是开机状态
+//                    startCook(!isOffLeft ? stove.leftHead : stove.rightHead, recipe);
+//                } else {
+//                    //左右灶状态一样
+//                    if (isOffLeft) {
+//                        //都是关机状态
+//                        //等待开火，请在灶具上开启
+//                        ChooseStoveByWaitDialog.show(cx, recipe);
+//                    } else {
+//                        //都是开机状态
+//                        boolean isStandByLeft = stove.leftHead != null && stove.leftHead.status == StoveStatus.StandyBy;
+//                        boolean isStandByRight = stove.rightHead != null && stove.rightHead.status == StoveStatus.StandyBy;
+//                        if (isStandByLeft != isStandByRight) {
+//                            //其中有一个是待机状态
+//                            startCook(isStandByLeft ? stove.leftHead : stove.rightHead, recipe);
+//                        } else {
+//                            //都是待机或都是工作中时，需要选择
+//                            ChooseStoveByManualDialog.show(cx, recipe);
+//                        }
+//                    }
+//                }
+//            }else{
+//                    //MobileStoveCookTaskService.getInstance().start(null, recipe);
+//                }
+//        }
+//    }
 
     public static void startCook(Stove.StoveHead head, Recipe recipe) {
         //ToastUtils.show("11",Toast.LENGTH_SHORT);
       //  MobileStoveCookTaskService.getInstance().start(head, recipe);
     }
 
-    public static PopupWindow newCrmAreaPicker(Context cx, final Callback2<CrmArea> callback) {
-        final CrmAreaWheelView view = new CrmAreaWheelView(cx);
-        BasePickerPopupWindow.PickListener listener = new BasePickerPopupWindow.PickListener() {
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onConfirm() {
-                if (callback != null) {
-                    callback.onCompleted(view.getSelected());
-                }
-            }
-        };
-
-        BasePickerPopupWindow pop = new BasePickerPopupWindow(cx, view);
-        pop.setPickListener(listener);
-        return pop;
-    }
-
-
-    public static PopupWindow newOrderAreaPicker(Context cx, final Callback2<String> callback) {
-        final OrderAreaWheelView view = new OrderAreaWheelView(cx);
-        BasePickerPopupWindow.PickListener listener = new BasePickerPopupWindow.PickListener() {
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onConfirm() {
-                if (callback != null) {
-                    callback.onCompleted(view.getSelected());
-                }
-            }
-        };
-
-        BasePickerPopupWindow pop = new BasePickerPopupWindow(cx, view);
-        pop.setPickListener(listener);
-        return pop;
-    }
-
-    public static PopupWindow newSteamOvenTwoSettingPicker(Context cx, final Callback2<DeviceWorkMsg> callback, DeviceWorkMsg msg) {
-        final SteamovenResetWheelView view = new SteamovenResetWheelView(cx, msg.getType());
-        BasePickerPopupWindow2.PickListener listener = new BasePickerPopupWindow2.PickListener() {
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onConfirm() {
-                if (callback != null) {
-                    callback.onCompleted(view.getSelected());
-                }
-            }
-        };
-        BasePickerPopupWindow2 pop = new BasePickerPopupWindow2(cx, view);
-        pop.setPickListener(listener);
-        return pop;
-    }
-
-    public static PopupWindow newOvenTwoSettingPicker(Context cx, final Callback2<NormalModeItemMsg> callback, NormalModeItemMsg msg, final String guid) {
-        final DeviceOvenNormalSettingWheelView view = new DeviceOvenNormalSettingWheelView(cx, msg.getType());
-        BasePickerPopupWindow3.PickListener listener = new BasePickerPopupWindow3.PickListener() {
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onConfirm() {
-                if (callback != null) {
-                    callback.onCompleted(view.getSelected());
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putString(PageArgumentKey.Guid, guid);
-                    bundle1.putSerializable("msg", view.getSelected());
-                    UIService.getInstance().postPage(PageKey.DeviceOvenWorking039, bundle1);
-
-                }
-
-            }
-        };
-        BasePickerPopupWindow3 pop = new BasePickerPopupWindow3(cx, view);
-        pop.setPickListener(listener);
-        return pop;
-    }
 
     public static PopupWindow newOvenResetTwoSettingPicker(Context cx, final Callback2<NormalModeItemMsg> callback, NormalModeItemMsg msg) {
         final OvenResetWheelView view = new OvenResetWheelView(cx, msg.getType());

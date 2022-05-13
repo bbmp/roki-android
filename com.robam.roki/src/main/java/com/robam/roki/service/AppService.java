@@ -10,6 +10,7 @@ import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceLoadCompletedEvent;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.events.UserLogoutEvent;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.device.DeviceGroupInfo;
 import com.legent.plat.pojos.device.DeviceInfo;
 import com.legent.plat.pojos.device.IDevice;
@@ -78,24 +79,6 @@ public class AppService extends AbsService {
         onLoadDevice();
     }
 
-    private void onLoadGroup() {
-        if (userId == 0) return;
-        ds.getDeviceGroups(userId, new Callback<List<DeviceGroupInfo>>() {
-
-            @Override
-            public void onSuccess(List<DeviceGroupInfo> groups) {
-                if (groups != null) {
-                    ds.batchAddGroup(groups);
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                t.printStackTrace();
-            }
-        });
-
-    }
 
     DeviceInfo deviceInfo1;
 
@@ -113,7 +96,7 @@ public class AppService extends AbsService {
         //deviceInfo1.setCategoryName("电烤箱");
         //deviceInfo1.ver=39;
 
-        ds.getDevices(userId, new Callback<List<DeviceInfo>>() {
+        CloudHelper.getDevices(userId, new Callback<List<DeviceInfo>>() {
 
             @Override
             public void onSuccess(List<DeviceInfo> result) {

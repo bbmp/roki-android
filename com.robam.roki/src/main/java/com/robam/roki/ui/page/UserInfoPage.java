@@ -20,6 +20,7 @@ import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.UserUpdatedEvent;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
@@ -165,7 +166,7 @@ public class UserInfoPage extends BasePage {
 
     void showUser(User user) {
 
-        txtName.setText(Strings.isNullOrEmpty(user.name) ? user.phone : user.name);
+        txtName.setText(Strings.isNullOrEmpty(user.nickname) ? user.phone : user.nickname);
         txtEmail.setText(Strings.isNullOrEmpty(user.email) ? "请设置邮箱" : user.email);
         txtPhone.setText(Strings.isNullOrEmpty(user.phone) ? "请设置手机" : user.phone);
         txtPwd.setText(user.hasPassword() ? "修改密码" : "请设置密码");
@@ -187,7 +188,7 @@ public class UserInfoPage extends BasePage {
     }
 
     void setGender(final boolean gender) {
-        Plat.accountService.updateUser(user.id, user.name, user.phone, user.email, gender, new VoidCallback() {
+        CloudHelper.updateUser(user.id, user.nickname, user.phone, user.email, gender, new VoidCallback() {
             @Override
             public void onSuccess() {
                 user.gender = gender;

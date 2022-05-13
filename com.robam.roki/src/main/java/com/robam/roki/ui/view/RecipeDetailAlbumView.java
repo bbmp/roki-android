@@ -270,7 +270,7 @@ public class RecipeDetailAlbumView extends FrameLayout {
                     Plat.accountService.getUser(album.ownerId, new Callback<User>() {
                         @Override
                         public void onSuccess(User user) {
-                            txtOwnerName.setText(user.name);
+                            txtOwnerName.setText(user.nickname);
                             ImageUtils.displayImage(getContext(), user.figureUrl, imgOwnerFigure, DisplayImageOptions_UserFace);
                         }
 

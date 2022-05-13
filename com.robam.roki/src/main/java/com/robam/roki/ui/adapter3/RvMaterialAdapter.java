@@ -20,7 +20,6 @@ import androidx.appcompat.widget.AppCompatEditText;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.legent.ui.IForm;
-import com.legent.ui.ext.popoups.BaseMicroSettingPopupWindowPad;
 import com.robam.roki.R;
 import com.robam.roki.ui.bean3.MaterialSectionItem;
 import com.robam.roki.ui.widget.view.TextEditTextView;

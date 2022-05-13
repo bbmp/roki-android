@@ -6,6 +6,7 @@ import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -23,7 +24,7 @@ public class UserModifyNamePage extends AbsModifyTextPage {
     void initData(Bundle bd) {
         user = bd.getParcelable(PageArgumentKey.User);
         editText.setHint("昵称");
-        editText.setText(user.name);
+        editText.setText(user.nickname);
     }
 
     @Override
@@ -32,13 +33,13 @@ public class UserModifyNamePage extends AbsModifyTextPage {
         final String name = editText.getText().toString();
         Preconditions.checkNotNull(name, "昵称不可为空");
 
-        if (Objects.equal(user.name, name)) {
+        if (Objects.equal(user.nickname, name)) {
             UIService.getInstance().popBack();
             return;
         }
 
         ProgressDialogHelper.setRunning(cx, true);
-        Plat.accountService.updateUser(user.id, name, user.phone, user.email, user.gender, new VoidCallback() {
+        CloudHelper.updateUser(user.id, name, user.phone, user.email, user.gender, new VoidCallback() {
             @Override
             public void onSuccess() {
                 ProgressDialogHelper.setRunning(cx, false);

@@ -28,8 +28,11 @@ import com.hjq.bar.TitleBar;
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.UserLoginNewEvent;
+import com.legent.plat.io.RCRetrofitCallback;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.io.cloud.Requests;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -233,6 +236,27 @@ public class CmccLoginHelper {
         });
     }
 
+    private void getUser2(long userId, boolean isFirstLogin) {
+        CloudHelper.getUser2(userId, Reponses.GetUserReponse.class,
+                new RetrofitCallback<Reponses.GetUserReponse>() {
+                    @Override
+                    public void onSuccess(Reponses.GetUserReponse getUserReponse) {
+                        if (null != getUserReponse) {
+                            User user = getUserReponse.user;
+                            PreferenceUtils.setBool(IsOwnUser, true);
+                            PreferenceUtils.setString(LastOwnAccount, user.getAccount());
+                            onLoginCompleted(user, isFirstLogin);
+                        }
+                    }
+
+                    @Override
+                    public void onFaild(String err) {
+
+                    }
+
+                });
+    }
+
     /**
      * 获取用户信息
      *
@@ -240,19 +264,21 @@ public class CmccLoginHelper {
      */
     private void getOauth(final String access_token, boolean isFirstLogin) {
         ProgressDialogHelper.setRunning(cx, true);
-        Plat.accountService.getOauth(phoneNum, access_token, new Callback<User>() {
+        CloudHelper.getOauth(access_token, Reponses.LoginReponse.class, new RetrofitCallback<Reponses.LoginReponse>() {
             @Override
-            public void onSuccess(User user) {
+            public void onSuccess(Reponses.LoginReponse loginReponse) {
                 ProgressDialogHelper.setRunning(cx, false);
-                Log.i("LOGIN", "user--------------------" + user.toString());
-                user.authorization = access_token;
-                PreferenceUtils.setBool(IsOwnUser, true);
-                PreferenceUtils.setString(LastOwnAccount, user.getAccount());
-                onLoginCompleted(user, isFirstLogin);
+                if (null != loginReponse) {
+                    User user = loginReponse.user;
+
+                    Log.i("LOGIN", "user--------------------" + user.toString());
+                    user.authorization = access_token;
+                    getUser2(user.id, isFirstLogin);
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 ProgressDialogHelper.setRunning(cx, false);
             }
         });

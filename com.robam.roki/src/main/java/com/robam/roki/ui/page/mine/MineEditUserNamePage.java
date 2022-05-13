@@ -5,6 +5,7 @@ import android.widget.EditText;
 
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -47,7 +48,7 @@ public class MineEditUserNamePage extends MyBasePage<MainActivity> {
     @Override
     protected void initData() {
         user = Plat.accountService.getCurrentUser();
-        etUserName.setText(null == user.name ? "" :user.name);
+        etUserName.setText(null == user.nickname ? "" :user.nickname);
     }
 
     /**
@@ -69,7 +70,7 @@ public class MineEditUserNamePage extends MyBasePage<MainActivity> {
      */
     private void setUserInfo(String  name) {
         ProgressDialogHelper.setRunning(cx, true);
-        Plat.accountService.updateUser(user.id, name, user.phone, user.email, user.gender, new VoidCallback() {
+        CloudHelper.updateUser(user.id, name, user.phone, user.email, user.gender, new VoidCallback() {
             @Override
             public void onSuccess() {
                 ToastUtils.show("设置成功");

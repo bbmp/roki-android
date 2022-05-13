@@ -160,7 +160,7 @@ public abstract class AbsCookerDevicePage extends BasePage {
         });
 
 
-        Plat.deviceService.getDeviceByParams(userId, dt, dc, new Callback<com.legent.plat.io.cloud.Reponses.DeviceResponse>() {
+        CloudHelper.getDeviceByParams(userId, dt, dc, new Callback<com.legent.plat.io.cloud.Reponses.DeviceResponse>() {
             @Override
             public void onSuccess(com.legent.plat.io.cloud.Reponses.DeviceResponse deviceResponse) {
                 if (deviceResponse == null) return;
@@ -209,7 +209,7 @@ public abstract class AbsCookerDevicePage extends BasePage {
 
     private void getDataMethod() {
         LogUtils.i("20190215", "here is run");
-        Plat.deviceService.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
+        CloudHelper.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
             @Override
             public void onSuccess(Reponses.DeviceResponse deviceResponse) {
                 if (deviceResponse == null) return;

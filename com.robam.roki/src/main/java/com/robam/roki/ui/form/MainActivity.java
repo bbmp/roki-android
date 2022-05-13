@@ -329,21 +329,6 @@ public class MainActivity extends AbsActivity {
         });
     }
 
-    //解决OPPO第一次初始化网络权限造成Mqtt失败的问题
-    private void initPlat() {
-        Plat.init(getApplication(), APP_TYPE,
-                new RokiDeviceFactory(),
-                new RokiMsgMarshaller(),
-                new RokiMsgSyncDecider(),
-                new RokiNoticeReceiver(),
-                new VoidCallback2() {
-                    @Override
-                    public void onCompleted() {
-                        AppService.getInstance().init(getApplication());
-                    }
-                });
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -491,10 +476,10 @@ public class MainActivity extends AbsActivity {
             ToastUtils.show("添加设备失败", Toast.LENGTH_SHORT);
             return;
         }
-        Plat.deviceService.getDeviceBySn(sn, new Callback<DeviceInfo>() {
+        CloudHelper.getDeviceBySn(sn, new Callback<DeviceInfo>() {
             @Override
             public void onSuccess(final DeviceInfo deviceInfo) {
-                Plat.deviceService.bindDevice(owner.getID(), deviceInfo.getID(), deviceInfo.getName(), false, new VoidCallback() {
+                CloudHelper.bindDevice(owner.getID(), deviceInfo.getID(), deviceInfo.getName(), false, new VoidCallback() {
                     @Override
                     public void onSuccess() {
                         ToastUtils.showShort(R.string.add_device_failure);
@@ -562,26 +547,31 @@ public class MainActivity extends AbsActivity {
             return;
         }
         String guid = sn.substring(4);
-        CloudHelper.getDeviceById(guid, new Callback<DeviceInfo>() {
-            @Override
-            public void onSuccess(final DeviceInfo deviceInfo) {
-                Plat.deviceService.bindDevice(owner.getID(), deviceInfo.getID(), deviceInfo.getName(), false, new VoidCallback() {
-                    @Override
-                    public void onSuccess() {
-                        ToastUtils.showShort(R.string.add_device_failure);
-                        EventUtils.postEvent(new DeviceEasylinkCompletedEvent(deviceInfo));
-                        UIService.getInstance().returnHome();
-                    }
+        CloudHelper.getDeviceById(guid, com.legent.plat.io.cloud.Reponses.GetDevicePesponse.class, new RetrofitCallback<com.legent.plat.io.cloud.Reponses.GetDevicePesponse>() {
 
-                    @Override
-                    public void onFailure(Throwable t) {
-                        ToastUtils.showThrowable(t);
-                    }
-                });
+            @Override
+            public void onSuccess(com.legent.plat.io.cloud.Reponses.GetDevicePesponse getDevicePesponse) {
+                if (null != getDevicePesponse) {
+                    DeviceInfo deviceInfo = getDevicePesponse.device;
+                    CloudHelper.bindDevice(owner.getID(), deviceInfo.getID(), deviceInfo.getName(), false, new VoidCallback() {
+                        @Override
+                        public void onSuccess() {
+                            ToastUtils.showShort(R.string.add_device_failure);
+                            EventUtils.postEvent(new DeviceEasylinkCompletedEvent(deviceInfo));
+                            UIService.getInstance().returnHome();
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            ToastUtils.showThrowable(t);
+                        }
+                    });
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
+
             }
         });
     }

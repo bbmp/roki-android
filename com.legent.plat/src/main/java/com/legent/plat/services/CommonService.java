@@ -18,6 +18,7 @@ import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.AppVersionInfo;
 import com.legent.plat.pojos.RCReponse;
 import com.legent.plat.pojos.device.DeviceGuid;
+import com.legent.services.AbsService;
 import com.legent.services.CrashLogService;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ApiUtils;
@@ -31,7 +32,7 @@ import static com.legent.plat.Plat.appType;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class CommonService extends AbsCommonCloudService {
+public class CommonService extends AbsService {
 
     final static String APP_GUID = "AppGuid";
     final static int LOG_CRASH = 0;
@@ -54,12 +55,12 @@ public class CommonService extends AbsCommonCloudService {
 
     @Subscribe
     public void onEvent(UserLoginEvent event) {
-        bindAppGuidAndUser(appGuid, event.pojo.id, null);
+        CloudHelper.bindAppGuidAndUser(appGuid, event.pojo.id, null);
     }
 
     @Subscribe
     public void onEvent(UserLogoutEvent event) {
-        unbindAppGuidAndUser(appGuid, event.pojo.id, null);
+        CloudHelper.unbindAppGuidAndUser(appGuid, event.pojo.id, null);
     }
 
 
@@ -74,7 +75,7 @@ public class CommonService extends AbsCommonCloudService {
                     postEvent(new AppGuidGettedEvent(appGuid));
                     if (Plat.accountService.isLogon()) {
                         LogUtils.i("2020032009","appGuid:::"+appGuid);
-                        bindAppGuidAndUser(appGuid, Plat.accountService.getCurrentUserId(), null);
+                        CloudHelper.bindAppGuidAndUser(appGuid, Plat.accountService.getCurrentUserId(), null);
                     }
                 }
             }
@@ -162,7 +163,7 @@ public class CommonService extends AbsCommonCloudService {
     }
 
     public void checkAppVersion(Callback<AppVersionInfo> callback) {
-        super.checkAppVersion(appType, callback);
+        CloudHelper.checkAppVersion(appType, callback);
     }
 
     // -------------------------------------------------------------------------------
@@ -184,7 +185,7 @@ public class CommonService extends AbsCommonCloudService {
                     if (Plat.isValidAppGuid()) {
                         postEvent(new AppGuidGettedEvent(appGuid));
                         if (Plat.accountService.isLogon()) {
-                            bindAppGuidAndUser(appGuid, Plat.accountService.getCurrentUserId(), null);
+                            CloudHelper.bindAppGuidAndUser(appGuid, Plat.accountService.getCurrentUserId(), null);
                         }
                     }
                 }
@@ -201,7 +202,7 @@ public class CommonService extends AbsCommonCloudService {
         @Override
         public void onCrashed(String log) {
             if (!AppUtils.isDebug(cx)) {
-                reportLog(appGuid, LOG_CRASH, log, null);
+                CloudHelper.reportLog(appGuid, LOG_CRASH, log, null);
             }
             if (commonCrashListener != null)
                 commonCrashListener.onCrashed();

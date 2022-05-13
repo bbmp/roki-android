@@ -8,6 +8,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
+import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -113,7 +114,7 @@ public class MineSettingPasswordPage extends MyBasePage<MainActivity> {
         final String pwdMd5 = User.encryptPassword(pwd);
         ProgressDialogHelper.setRunning(cx, true);
 
-        Plat.accountService.resetPasswordByPhone(phone, pwdMd5, verifyCode, new VoidCallback() {
+        CloudHelper.resetPasswordByPhone(phone, pwdMd5, verifyCode, new VoidCallback() {
             @Override
             public void onSuccess() {
                 ProgressDialogHelper.setRunning(cx, false);

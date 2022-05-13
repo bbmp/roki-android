@@ -74,7 +74,6 @@ import com.legent.plat.services.DeviceTypeManager;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.adapters.ExtPageAdapter;
-import com.legent.ui.ext.views.ExtViewPager;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.PreferenceUtils;
@@ -616,7 +615,7 @@ public class HomePage extends AbsDUIPage {
                         activity.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
                         StatusBarUtils.setTextDark(getContext(), true);
                     }
-                    homeMineView.getUser();
+//                    homeMineView.getUser();
                     break;
                 default:
                     break;

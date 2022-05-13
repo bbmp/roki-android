@@ -302,7 +302,7 @@ public class ChatPage extends BasePage {
                 txtMsg.setText(msg.msg);
                 if (!msg.isIncoming()) {
                     User user = Plat.accountService.getCurrentUser();
-                    txtUserName.setText(user.name);
+                    txtUserName.setText(user.nickname);
                     ImageUtils.displayImage(getActivity(), user.figureUrl, imgFigure,
                             com.robam.roki.ui.Helper.DisplayImageOptions_UserFace);
                 }

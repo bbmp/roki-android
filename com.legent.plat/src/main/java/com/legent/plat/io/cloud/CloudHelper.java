@@ -99,7 +99,9 @@ import static com.legent.ContextIniter.context;
  */
 public class CloudHelper {
 
+    public static final String APPLICATION_JSON_ACCEPT_APPLICATION_JSON = "application/json; Accept: application/json";
     static ICloudService svr = getRestfulApi(ICloudService.class);
+
 
     static public <T> T getRestfulApi(Class<T> apiClazz) {
         return RestfulService.getInstance().createApi(apiClazz);
@@ -393,7 +395,7 @@ public class CloudHelper {
                 });
     }
 
-    public static void getToken(String loginType
+    public static <T extends RCReponse> void getToken(String loginType
             ,String sjhm
             ,String smsCode
             ,String password
@@ -403,22 +405,11 @@ public class CloudHelper {
             ,String client_id
             ,String client_secret
             ,String appType
-            , final Callback<Reponses.TokenReponse> callback) {
-        svr.getToken(loginType ,sjhm ,smsCode ,password ,accessToken ,refreshToken,openId , client_id ,client_secret ,appType,
-                new RCRetrofitCallback<Reponses.TokenReponse>(callback) {
-                    @Override
-                    protected void afterSuccess(Reponses.TokenReponse result) {
-                        if (result != null) {
-                            callback.onSuccess(result);
-                        }
-                    }
+            , Class<T> entity, final RetrofitCallback<T> callback) {
 
-                    @Override
-                    public void failure(RetrofitError e) {
-                        super.failure(e);
-//                        callback.onFailure(e);
-                    }
-                });
+        Call<ResponseBody> call = svr.getToken(loginType ,sjhm ,smsCode ,password ,accessToken ,refreshToken,openId , client_id ,client_secret ,appType);
+        enqueue(entity, call, callback);
+
     }
     /**
      * 判断是否第一次登录
@@ -448,26 +439,11 @@ public class CloudHelper {
      * @param authorization
      * @param callback
      */
-    public static void getOauth(String authorization,
-                                    final Callback<User> callback) {
-        svr.getOauth(authorization,
-                new RCRetrofitCallback<LoginReponse>(callback) {
-                    @Override
-                    protected void afterSuccess(LoginReponse result) {
-                        if (result != null) {
-                            if (result.user != null) {
-                                result.user.TGT = result.tgt;
-                                callback.onSuccess(result.user);
-                            }
-                        }
-                    }
+    public static <T extends RCReponse> void getOauth(String authorization,
+                                    Class<T> entity, final RetrofitCallback<T> callback) {
+        Call<ResponseBody> call = svr.getOauth(authorization);
+        enqueue(entity, call, callback);
 
-                    @Override
-                    public void failure(RetrofitError e) {
-                        super.failure(e);
-                        callback.onFailure(e);
-                    }
-                });
     }
     /**
      * 设置用户密码
@@ -541,14 +517,13 @@ public class CloudHelper {
      * @param userId
      * @param callback
      */
-    public static void getUser2(long userId, final Callback<User> callback) {
-        svr.getUser2(new UserRequest(userId),
-                new RCRetrofitCallback<GetUserReponse>(callback) {
-                    @Override
-                    protected void afterSuccess(GetUserReponse result) {
-                        callback.onSuccess(result.user);
-                    }
-                });
+    public static <T extends RCReponse> void getUser2(long userId, Class<T> entity, final RetrofitCallback<T> callback) {
+        String json = new UserRequest(userId).toString();
+        RequestBody requestBody =
+                RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
+        Call<ResponseBody> call = svr.getUser2(requestBody);
+        enqueue(entity, call, callback);
+
     }
     static public void updateUser(long id, String name, String phone,
                                   String email, boolean gender, VoidCallback callback) {
@@ -854,14 +829,13 @@ public class CloudHelper {
 
     }
 
-    static public void getDeviceById(String guid, final Callback<DeviceInfo> callback) {
-        svr.getDeviceById(new GuidRequest(guid),
-                new RCRetrofitCallback<GetDevicePesponse>(callback) {
-                    @Override
-                    protected void afterSuccess(GetDevicePesponse result) {
-                        callback.onSuccess(result.device);
-                    }
-                });
+    public static <T extends RCReponse> void getDeviceById(String guid, Class<T> entity,  final RetrofitCallback<T> callback) {
+        String json = new GuidRequest(guid).toString();
+        RequestBody requestBody =
+                RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
+        Call<ResponseBody> call = svr.getDeviceById(requestBody);
+        enqueue(entity, call, callback);
+
     }
 
     static public void getDeviceBySn(String sn, final Callback<DeviceInfo> callback) {

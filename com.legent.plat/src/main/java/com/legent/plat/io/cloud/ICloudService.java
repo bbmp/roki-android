@@ -383,9 +383,9 @@ public interface ICloudService<T extends RCReponse> {
     void getDevices(@Body UserRequest reqBody,
                     Callback<GetDevicesResponse> callback);
 
-    @POST(getDeviceById)
-    void getDeviceById(@Body GuidRequest reqBody,
-                       Callback<GetDevicePesponse> callback);
+    @retrofit2.http.POST(getDeviceById)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getDeviceById(@retrofit2.http.Body RequestBody body);
 
     @POST(getDeviceBySn)
     void getDeviceBySn(@Body GetDeviceBySnRequest reqBody,
@@ -499,19 +499,19 @@ public interface ICloudService<T extends RCReponse> {
      * @param appType
      * @param callback
      */
-    @FormUrlEncoded
-    @POST(token)
-    void getToken(@Field("loginType") String loginType
-            ,@Field("sjhm")String sjhm
-            ,  @Field("smsCode")String smsCode
-            , @Field("password")String password
-            , @Field("accessToken")String accessToken
-            , @Field("refreshToken")String refreshToken
-            , @Field("openId")String openId
-            ,   @Field("client_id")String client_id
-            ,@Field("client_secret")String client_secret
-            ,@Field("appType")String appType,
-                  Callback<Reponses.TokenReponse>callback);
+    @retrofit2.http.FormUrlEncoded
+    @retrofit2.http.POST(token)
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    Call<ResponseBody> getToken(@retrofit2.http.Field("loginType") String loginType
+            ,@retrofit2.http.Field("sjhm") String sjhm
+            ,  @retrofit2.http.Field("smsCode") String smsCode
+            , @retrofit2.http.Field("password") String password
+            , @retrofit2.http.Field("accessToken") String accessToken
+            , @retrofit2.http.Field("refreshToken") String refreshToken
+            , @retrofit2.http.Field("openId") String openId
+            , @retrofit2.http.Field("client_id") String client_id
+            ,@retrofit2.http.Field("client_secret") String client_secret
+            ,@retrofit2.http.Field("appType") String appType);
 
     /**
      * 获取第三方登录的token
@@ -545,15 +545,16 @@ public interface ICloudService<T extends RCReponse> {
      * @param authorization
      * @param callback
      */
-    @GET(getOauth)
-    void getOauth(@Header("authorization") String authorization, Callback<LoginReponse> callback);
+    @retrofit2.http.GET(getOauth)
+    Call<ResponseBody> getOauth(@retrofit2.http.Header("authorization") String authorization);
     /**
      * 获取用户信息3.7
      * @param reqBody
      * @param callback
      */
-    @POST(getUser2)
-    void getUser2(@Body UserRequest reqBody, Callback<GetUserReponse> callback);
+    @retrofit2.http.POST(getUser2)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getUser2(@retrofit2.http.Body RequestBody body);
     /**
      * 设置新密码
      * @param authorization
