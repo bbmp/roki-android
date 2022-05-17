@@ -37,6 +37,7 @@ import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.io.cloud.RetrofitCallback;
+import com.legent.plat.pojos.RCReponse;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
@@ -316,19 +317,22 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> {
                 });
             } else {
                 ProgressDialogHelper.setRunning(cx, true);
-                CookbookManager.getInstance().addFavorityCookbooks(recipe.id, new VoidCallback() {
+                RokiRestHelper.addFavorityCookbooks(recipe.id, RCReponse.class, new RetrofitCallback<RCReponse>() {
                     @Override
-                    public void onSuccess() {
+                    public void onSuccess(RCReponse rcReponse) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.show("收藏成功");
-                        recipe.setIsCollected(true);
-                        imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_24);
+                        if (null != rcReponse) {
+
+                            ToastUtils.show("收藏成功");
+                            recipe.setIsCollected(true);
+                            imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_24);
+                        }
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFaild(String err) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.show(t.getMessage());
+                        ToastUtils.show(err);
                     }
                 });
             }

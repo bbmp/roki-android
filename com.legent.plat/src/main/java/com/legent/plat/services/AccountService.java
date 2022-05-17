@@ -277,9 +277,10 @@ public class AccountService extends AbsService {
         CloudHelper.getUser2(userId, Reponses.GetUserReponse.class, new RetrofitCallback<Reponses.GetUserReponse>() {
             @Override
             public void onSuccess(Reponses.GetUserReponse getUserReponse) {
-                if (null != getUserReponse)
+                if (null != getUserReponse) {
                     mapUsers.put(userId, getUserReponse.user);
-
+                    Plat.accountService.onLogin(getUserReponse.user);
+                }
             }
 
             @Override

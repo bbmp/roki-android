@@ -9,6 +9,10 @@ import android.os.Handler;
 import android.os.Message;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestOptions;
+import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
+
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.constant.IDeviceType;
@@ -49,9 +53,12 @@ import com.robam.common.util.StatusBarUtils;
 import com.robam.roki.MobApp;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
+import com.robam.roki.model.bean.RecipeCategoryMultiItem;
+import com.robam.roki.model.bean.ThemeRecipeMultipleItem;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.adapter.RecipeCategoryAdapter;
+import com.robam.roki.ui.adapter3.CustomLoadMoreHomeView;
 import com.robam.roki.ui.dialog.RecipeSearchDialog;
 import com.robam.roki.ui.extension.GlideApp;
 import com.robam.roki.ui.form.MainActivity;
@@ -80,7 +87,9 @@ public class RecipeCategoryListPage extends MyBasePage<MainActivity> {
     ImageView mIvRecipeSearch;
     private ImageView iv_top_week_title_bg;
     @InjectView(R.id.recyclerView)
-    XRecyclerView mRv;
+    RecyclerView mRv;
+    @InjectView(R.id.swiper_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
     int start;
     int num = 10;
     private long mUserId;
@@ -181,7 +190,7 @@ public class RecipeCategoryListPage extends MyBasePage<MainActivity> {
         initBgTitle();
         initAdapter();//初始化适配器
         requestData();//初始化数据
-        initListener();//监听事件和配置
+//        initListener();//监听事件和配置
     }
 
     /**
@@ -260,33 +269,37 @@ public class RecipeCategoryListPage extends MyBasePage<MainActivity> {
     }
 
     private void initAdapter() {
-        mRecipeCategoryAdapter = new RecipeCategoryAdapter(cx);
-        mRecipeCategoryAdapter.setOnRecyclerViewItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view) {
-                Recipe recipe = (Recipe) view.getTag(R.id.tag_recipe_bg);
-                RecipeDetailPage.show(recipe, recipe.id, RecipeDetailPage.DeviceRecipePage,
-                        RecipeRequestIdentification.RECIPE_SORTED,platformCode,mGuid);
-            }
-        });
+        mRecipeCategoryAdapter = new RecipeCategoryAdapter(platformCode, mGuid);
+//        mRecipeCategoryAdapter.setOnRecyclerViewItemClickListener(new OnRecyclerViewItemClickListener() {
+//            @Override
+//            public void onItemClick(View view) {
+//                Recipe recipe = (Recipe) view.getTag(R.id.tag_recipe_bg);
+//                RecipeDetailPage.show(recipe, recipe.id, RecipeDetailPage.DeviceRecipePage,
+//                        RecipeRequestIdentification.RECIPE_SORTED,platformCode,mGuid);
+//            }
+//        });
 
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(cx, 1);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                int viewType = mRv.getAdapter().getItemViewType(position);
-                if (viewType == RecipeCategoryAdapter.OTHER_VIEW) {
-                    return gridLayoutManager.getSpanCount();
-                } else {
-                    return 1;
-                }
-            }
-        });
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
-        mRv.setLayoutManager(gridLayoutManager);
+        mRv.setLayoutManager(linearLayoutManager);
         mRv.setAdapter(mRecipeCategoryAdapter);
-        mRv.setRefreshProgressStyle(ProgressStyle.SquareSpin);
-        mRv.setLoadingMoreProgressStyle(ProgressStyle.SquareSpin);
+        mRecipeCategoryAdapter.getLoadMoreModule().setLoadMoreView(new CustomLoadMoreHomeView());
+        mRecipeCategoryAdapter.getLoadMoreModule().setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                start += 10 ;
+                requestData();
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                start = 0 ;
+                mRecipeList.clear();
+                //请求数据
+                requestData();
+            }
+        });
     }
 
     private void requestData() {
@@ -300,6 +313,7 @@ public class RecipeCategoryListPage extends MyBasePage<MainActivity> {
                 Reponses.ThumbCookbookResponse.class, new RetrofitCallback<Reponses.ThumbCookbookResponse>() {
                     @Override
                     public void onSuccess(Reponses.ThumbCookbookResponse thumbCookbookResponse) {
+                        swipeRefreshLayout.setRefreshing(false);
                         if (null != thumbCookbookResponse) {
                             List<Recipe> list = thumbCookbookResponse.cookbooks;
                             try {
@@ -308,24 +322,26 @@ public class RecipeCategoryListPage extends MyBasePage<MainActivity> {
                                 if (list == null || list.size() <= 0) {
                                     list = Lists.newArrayList();
                                     if (start > 0) {
-                                        mRv.setNoMore(true);
                                         ToastUtils.show(new String("无更多菜谱"), Toast.LENGTH_SHORT);
                                     }
                                 }
 
                                 mRecipeList.addAll(list);
-
-                                mRecipeCategoryAdapter.addData(list);
-
-                                if(mRecipeList != null && mRecipeList.size() != 0 && mRecipeCategoryAdapter != null){
-                                    mRecipeCategoryAdapter.updateData(mRecipeList);
-                                    if (mRv != null) {
-                                        //更新完成
-                                        mRv.refreshComplete();
-                                        //加载完成
-                                        mRv.loadMoreComplete();
-                                    }
+                                List<RecipeCategoryMultiItem> recipeCategoryMultiItemList = new ArrayList<>();
+                                for (Recipe recipe : mRecipeList) {
+                                    recipeCategoryMultiItemList.add(new RecipeCategoryMultiItem(RecipeCategoryMultiItem.OTHER_VIEW, recipe));
                                 }
+                                mRecipeCategoryAdapter.setList(recipeCategoryMultiItemList);
+
+//                                if(mRecipeList != null && mRecipeList.size() != 0 && mRecipeCategoryAdapter != null){
+//                                    mRecipeCategoryAdapter.updateData(mRecipeList);
+//                                    if (mRv != null) {
+//                                        //更新完成
+//                                        mRv.refreshComplete();
+//                                        //加载完成
+//                                        mRv.loadMoreComplete();
+//                                    }
+//                                }
                             } catch (Exception e) {
                                 Log.e("RecipeCategory", "error:" + e.getMessage());
                             }
@@ -334,7 +350,7 @@ public class RecipeCategoryListPage extends MyBasePage<MainActivity> {
 
                     @Override
                     public void onFaild(String err) {
-
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
         });
@@ -342,26 +358,26 @@ public class RecipeCategoryListPage extends MyBasePage<MainActivity> {
 
     }
 
-    private void initListener() {
-        mRv.setLoadingMoreEnabled(true);
-        mRv.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                start = 0 ;
-                mRecipeList.clear();
-                //请求数据
-                requestData();
-            }
-
-            @Override
-            public void onLoadMore() {
-                LogUtils.i("20181114", " onLoadMore");
-                start += 10 ;
-//                num += 10;
-                requestData();
-            }
-        });
-    }
+//    private void initListener() {
+//        mRv.setLoadingMoreEnabled(true);
+//        mRv.setLoadingListener(new XRecyclerView.LoadingListener() {
+//            @Override
+//            public void onRefresh() {
+//                start = 0 ;
+//                mRecipeList.clear();
+//                //请求数据
+//                requestData();
+//            }
+//
+//            @Override
+//            public void onLoadMore() {
+//                LogUtils.i("20181114", " onLoadMore");
+//                start += 10 ;
+////                num += 10;
+//                requestData();
+//            }
+//        });
+//    }
 
     @Override
     public void onDestroyView() {

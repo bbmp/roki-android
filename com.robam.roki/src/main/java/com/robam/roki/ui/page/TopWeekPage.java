@@ -28,6 +28,7 @@ import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.io.cloud.RetrofitCallback;
+import com.legent.plat.pojos.RCReponse;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.LogUtils;
@@ -183,20 +184,22 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
                 });
             } else {
                 ProgressDialogHelper.setRunning(cx, true);
-                CookbookManager.getInstance().addFavorityCookbooks(recipe.id, new VoidCallback() {
+                RokiRestHelper.addFavorityCookbooks(recipe.id, RCReponse.class, new RetrofitCallback<RCReponse>() {
                     @Override
-                    public void onSuccess() {
+                    public void onSuccess(RCReponse rcReponse) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.show("收藏成功");
-                        recipe.setIsCollected(true);
-                        recipe.collectCount = recipe.collectCount + 1;
-                        rvTopWeekAdapter.setData(position, recipe);
+                        if (null != rcReponse) {
+                            ToastUtils.show("收藏成功");
+                            recipe.setIsCollected(true);
+                            recipe.collectCount = recipe.collectCount + 1;
+                            rvTopWeekAdapter.setData(position, recipe);
+                        }
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFaild(String err) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.show(t.getMessage());
+                        ToastUtils.show(err);
                     }
                 });
             }
@@ -248,8 +251,8 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
      */
     protected void getCollectRecipe() {
 
-        CookbookManager.getInstance().getFavorityCookbooks(
-                new Callback<Reponses.CookbooksResponse>() {
+        RokiRestHelper.getFavorityCookbooks(Reponses.CookbooksResponse.class,
+                new RetrofitCallback<Reponses.CookbooksResponse>() {
                     @Override
                     public void onSuccess(Reponses.CookbooksResponse result) {
                          absRecipes = new ArrayList<>();
@@ -265,8 +268,8 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
-                        ToastUtils.show(t.getMessage());
+                    public void onFaild(String err) {
+                        ToastUtils.show(err);
                     }
                 });
     }
@@ -394,8 +397,8 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
      */
     protected void getCollectRecipe2() {
 
-        CookbookManager.getInstance().getFavorityCookbooks(
-                new Callback<Reponses.CookbooksResponse>() {
+        RokiRestHelper.getFavorityCookbooks(Reponses.CookbooksResponse.class,
+        new RetrofitCallback<Reponses.CookbooksResponse>() {
                     @Override
                     public void onSuccess(Reponses.CookbooksResponse result) {
                         absRecipes = new ArrayList<>();
@@ -419,11 +422,11 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
                         rvTopWeekAdapter.setData(position , recipe);
                     }
 
-                    @Override
-                    public void onFailure(Throwable t) {
-                        ToastUtils.show(t.getMessage());
-                    }
-                });
+            @Override
+            public void onFaild(String err) {
+                ToastUtils.show(err);
+            }
+        });
     }
 
 }

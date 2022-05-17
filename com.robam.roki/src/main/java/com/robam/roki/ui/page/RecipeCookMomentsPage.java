@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
 import com.legent.VoidCallback;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.dialogs.DialogHelper;
@@ -21,6 +22,8 @@ import com.legent.utils.EventUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.CookMomentsRefreshEvent;
 import com.robam.common.events.HomeRecipeViewEvent;
+import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.CookAlbum;
 import com.robam.common.services.CookbookManager;
 import com.robam.roki.MobApp;
@@ -96,18 +99,22 @@ public class RecipeCookMomentsPage extends MyBasePage<MainActivity> {
 
         ProgressDialogHelper.setRunning(cx, true);
 
-        CookbookManager.getInstance().getMyCookAlbums(new Callback<List<CookAlbum>>() {
+        RokiRestHelper.getMyCookAlbums(Reponses.AlbumsResponse.class, new RetrofitCallback<Reponses.AlbumsResponse>() {
             @Override
-            public void onSuccess(List<CookAlbum> cookAlbums) {
+            public void onSuccess(Reponses.AlbumsResponse albumsResponse) {
                 ProgressDialogHelper.setRunning(cx, false);
-                switchView(cookAlbums == null || cookAlbums.size() == 0);
-                gridView.loadData(cookAlbums);
+                if (null != albumsResponse) {
+                    List<CookAlbum> cookAlbums = albumsResponse.cookAlbums;
+
+                    switchView(cookAlbums == null || cookAlbums.size() == 0);
+                    gridView.loadData(cookAlbums);
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.showThrowable(t);
+                ToastUtils.show(err);
             }
         });
     }

@@ -152,62 +152,62 @@ public class StoreService extends AbsService {
 
     }
 
-    public void getCookbooksByName(final String name, Boolean contain3rd,
-                                   final Callback<CookbooksResponse> callback) {
-        RokiRestHelper.getCookbooksByName(name, contain3rd, new Callback<CookbooksResponse>() {
-            @Override
-            public void onSuccess(CookbooksResponse res) {
-//                if (res.cookbooks != null) {
-//                    for (Recipe r : res.cookbooks) {
-//                        r.tra2Save();
-//                    }
-//                }
-//                if (res.cookbooks3rd != null) {
-//                    for (Recipe3rd r : res.cookbooks3rd) {
-//                        r.save2db();
-//                    }
-//                }
+//    public void getCookbooksByName(final String name, Boolean contain3rd,
+//                                   final Callback<CookbooksResponse> callback) {
+//        RokiRestHelper.getCookbooksByName(name, contain3rd, new Callback<CookbooksResponse>() {
+//            @Override
+//            public void onSuccess(CookbooksResponse res) {
+////                if (res.cookbooks != null) {
+////                    for (Recipe r : res.cookbooks) {
+////                        r.tra2Save();
+////                    }
+////                }
+////                if (res.cookbooks3rd != null) {
+////                    for (Recipe3rd r : res.cookbooks3rd) {
+////                        r.save2db();
+////                    }
+////                }
+////
+////                LogUtils.i("20190214","cookbooks:" + res.cookbooks.size());
+////
+////                LogUtils.i("20190214","cookbooks3rd:" + res.cookbooks3rd.size());
+//                Helper.onSuccess(callback, res);
+//            }
 //
-//                LogUtils.i("20190214","cookbooks:" + res.cookbooks.size());
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//    }
+//    public void getCookbooksByName(final String name, Boolean contain3rd,boolean notNeedSearchHistory,
+//                                   final Callback<CookbooksResponse> callback) {
+//        RokiRestHelper.getCookbooksByName(name, contain3rd, notNeedSearchHistory,new Callback<CookbooksResponse>() {
+//            @Override
+//            public void onSuccess(CookbooksResponse res) {
+////                if (res.cookbooks != null) {
+////                    for (Recipe r : res.cookbooks) {
+////                        r.tra2Save();
+////                    }
+////                }
+////                if (res.cookbooks3rd != null) {
+////                    for (Recipe3rd r : res.cookbooks3rd) {
+////                        r.save2db();
+////                    }
+////                }
+////
+////                LogUtils.i("20190214","cookbooks:" + res.cookbooks.size());
+////
+////                LogUtils.i("20190214","cookbooks3rd:" + res.cookbooks3rd.size());
+//                Helper.onSuccess(callback, res);
+//            }
 //
-//                LogUtils.i("20190214","cookbooks3rd:" + res.cookbooks3rd.size());
-                Helper.onSuccess(callback, res);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onFailure(callback, t);
-            }
-        });
-    }
-    public void getCookbooksByName(final String name, Boolean contain3rd,boolean notNeedSearchHistory,
-                                   final Callback<CookbooksResponse> callback) {
-        RokiRestHelper.getCookbooksByName(name, contain3rd, notNeedSearchHistory,new Callback<CookbooksResponse>() {
-            @Override
-            public void onSuccess(CookbooksResponse res) {
-//                if (res.cookbooks != null) {
-//                    for (Recipe r : res.cookbooks) {
-//                        r.tra2Save();
-//                    }
-//                }
-//                if (res.cookbooks3rd != null) {
-//                    for (Recipe3rd r : res.cookbooks3rd) {
-//                        r.save2db();
-//                    }
-//                }
-//
-//                LogUtils.i("20190214","cookbooks:" + res.cookbooks.size());
-//
-//                LogUtils.i("20190214","cookbooks3rd:" + res.cookbooks3rd.size());
-                Helper.onSuccess(callback, res);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onFailure(callback, t);
-            }
-        });
-    }
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//    }
     /* public void getCookbooksClassify(final String name, Boolean contain3rd,
                                       final Callback<Reponses.CookbooksClassifyResponse> callback){
          RokiRestHelper.getCookbooksClassify(name, contain3rd, new Callback<Reponses.CookbooksClassifyResponse>() {
@@ -266,22 +266,22 @@ public class StoreService extends AbsService {
         }
     }
 
-    public void getHotKeysForCookbook(final Callback<List<String>> callback) {
-        RokiRestHelper.getHotKeysForCookbook(new Callback<List<String>>() {
-
-            @Override
-            public void onSuccess(List<String> result) {
-                Set<String> keys = Sets.newHashSet(result);
-                PreferenceUtils.setStrings(PrefsKey.HotKeys, keys);
-                Helper.onSuccess(callback, result);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onFailure(callback, t);
-            }
-        });
-    }
+//    public void getHotKeysForCookbook(final Callback<List<String>> callback) {
+//        RokiRestHelper.getHotKeysForCookbook(new Callback<List<String>>() {
+//
+//            @Override
+//            public void onSuccess(List<String> result) {
+//                Set<String> keys = Sets.newHashSet(result);
+//                PreferenceUtils.setStrings(PrefsKey.HotKeys, keys);
+//                Helper.onSuccess(callback, result);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//    }
 
     public void getCookbookByIds(long userId,String[] recipes, final Callback<List<Recipe>> callback) {
         RokiRestHelper.getRecipeOfThmem(userId,recipes, new Callback<List<Recipe>>() {
@@ -612,53 +612,53 @@ public class StoreService extends AbsService {
         RokiRestHelper.deleteMaterialsFromToday(materialId, callback);
     }
 
-    public void getFavorityCookbooks(final Callback<CookbooksResponse> callback) {
-        RokiRestHelper.getFavorityCookbooks(new Callback<CookbooksResponse>() {
+//    public void getFavorityCookbooks(final Callback<CookbooksResponse> callback) {
+//        RokiRestHelper.getFavorityCookbooks(new Callback<CookbooksResponse>() {
+//
+//            @Override
+//            public void onSuccess(CookbooksResponse result) {
+//                DaoHelper.setField(Recipe.class, AbsRecipe.COLUMN_isFavority, false);
+//                DaoHelper.setField(Recipe3rd.class, AbsRecipe.COLUMN_isFavority, false);
+//                if (result != null) {
+//                    if (result.cookbooks != null) {
+//                        for (Recipe book : result.cookbooks) {
+//                            book.setIsFavority(true);
+//                        }
+//                    }
+//                    if (result.cookbooks3rd != null) {
+//                        for (Recipe3rd book : result.cookbooks3rd) {
+//                            book.setIsFavority(true);
+//                        }
+//                    }
+//                    EventUtils.postEvent(new RefreshReceipeViewEvent());
+//                }
+//
+//                Helper.onSuccess(callback, result);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//    }
 
-            @Override
-            public void onSuccess(CookbooksResponse result) {
-                DaoHelper.setField(Recipe.class, AbsRecipe.COLUMN_isFavority, false);
-                DaoHelper.setField(Recipe3rd.class, AbsRecipe.COLUMN_isFavority, false);
-                if (result != null) {
-                    if (result.cookbooks != null) {
-                        for (Recipe book : result.cookbooks) {
-                            book.setIsFavority(true);
-                        }
-                    }
-                    if (result.cookbooks3rd != null) {
-                        for (Recipe3rd book : result.cookbooks3rd) {
-                            book.setIsFavority(true);
-                        }
-                    }
-                    EventUtils.postEvent(new RefreshReceipeViewEvent());
-                }
-
-                Helper.onSuccess(callback, result);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onFailure(callback, t);
-            }
-        });
-    }
-
-    public void addFavorityCookbooks(final long bookId, final VoidCallback callback) {
-        RokiRestHelper.addFavorityCookbooks(bookId, new VoidCallback() {
-            @Override
-            public void onSuccess() {
-//                Recipe.setIsFavority(bookId, true);
-//                EventUtils.postEvent(new FavorityBookRefreshEvent(bookId, true));
-                Helper.onSuccess(callback);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                LogUtils.i("20181113","t:" + t);
-                Helper.onFailure(callback, t);
-            }
-        });
-    }
+//    public void addFavorityCookbooks(final long bookId, final VoidCallback callback) {
+//        RokiRestHelper.addFavorityCookbooks(bookId, new VoidCallback() {
+//            @Override
+//            public void onSuccess() {
+////                Recipe.setIsFavority(bookId, true);
+////                EventUtils.postEvent(new FavorityBookRefreshEvent(bookId, true));
+//                Helper.onSuccess(callback);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                LogUtils.i("20181113","t:" + t);
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//    }
 
     public void deleteFavorityCookbooks(final long bookId, final VoidCallback callback) {
         RokiRestHelper.deleteFavorityCookbooks(bookId, new VoidCallback() {
@@ -812,10 +812,10 @@ public class StoreService extends AbsService {
 
     }
     //获取搜索记录
-    public void getCookbookSearchHistory(long userId, Callback<Reponses.HistoryResponse> callback){
-        RokiRestHelper.getCookbookSearchHistory(userId,callback);
-
-    }
+//    public void getCookbookSearchHistory(long userId, Callback<Reponses.HistoryResponse> callback){
+//        RokiRestHelper.getCookbookSearchHistory(userId,callback);
+//
+//    }
 
     //删除搜索记录
     public void deleteCookbookSearchHistory(String name,long userId, Callback<Reponses.DeleteHistoryResponse> callback){
@@ -880,25 +880,25 @@ public class StoreService extends AbsService {
         RokiRestHelper.unpraiseCookAlbum(albumId, callback);
     }
 
-    public void getMyCookAlbums(final Callback<List<CookAlbum>> callback) {
-        RokiRestHelper.getMyCookAlbums(new Callback<List<CookAlbum>>() {
-            @Override
-            public void onSuccess(List<CookAlbum> albums) {
-                DaoHelper.deleteAll(CookAlbum.class);
-                if (albums != null) {
-                    for (CookAlbum album : albums) {
-                        album.save2db();
-                    }
-                }
-                Helper.onSuccess(callback, albums);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onFailure(callback, t);
-            }
-        });
-    }
+//    public void getMyCookAlbums(final Callback<List<CookAlbum>> callback) {
+//        RokiRestHelper.getMyCookAlbums(new Callback<List<CookAlbum>>() {
+//            @Override
+//            public void onSuccess(List<CookAlbum> albums) {
+//                DaoHelper.deleteAll(CookAlbum.class);
+//                if (albums != null) {
+//                    for (CookAlbum album : albums) {
+//                        album.save2db();
+//                    }
+//                }
+//                Helper.onSuccess(callback, albums);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//    }
 
 
     public void clearMyCookAlbums(final VoidCallback callback) {
@@ -1135,37 +1135,37 @@ public class StoreService extends AbsService {
     /**
      * 获取已收藏主题列表
      */
-    public void getMyFavoriteThemeRecipeList(final Callback<List<RecipeTheme>> callback) {
-        if (true) {
-            getMyFavoriteThemeRecipeList_new(callback);
-            return;
-        }
-        RokiRestHelper.getMyFavoriteThemeRecipeList(new Callback<Reponses.RecipeThemeResponse2>() {
-            @Override
-            public void onSuccess(Reponses.RecipeThemeResponse2 recipeThemeResponse) {
-                Helper.onSuccess(callback, recipeThemeResponse.recipeThemes);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onFailure(callback, t);
-            }
-        });
-    }
-
-    public void getMyFavoriteThemeRecipeList_new(final Callback<List<RecipeTheme>> callback) {
-        RokiRestHelper.getMyFavoriteThemeRecipeList_new(new Callback<Reponses.RecipeThemeResponse3>() {
-            @Override
-            public void onSuccess(Reponses.RecipeThemeResponse3 recipeThemeResponse) {
-                Helper.onSuccess(callback, recipeThemeResponse.recipeThemes);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onFailure(callback, t);
-            }
-        });
-    }
+//    public void getMyFavoriteThemeRecipeList(final Callback<List<RecipeTheme>> callback) {
+//        if (true) {
+//            getMyFavoriteThemeRecipeList_new(callback);
+//            return;
+//        }
+//        RokiRestHelper.getMyFavoriteThemeRecipeList(new Callback<Reponses.RecipeThemeResponse2>() {
+//            @Override
+//            public void onSuccess(Reponses.RecipeThemeResponse2 recipeThemeResponse) {
+//                Helper.onSuccess(callback, recipeThemeResponse.recipeThemes);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//    }
+//
+//    public void getMyFavoriteThemeRecipeList_new(final Callback<List<RecipeTheme>> callback) {
+//        RokiRestHelper.getMyFavoriteThemeRecipeList_new(new Callback<Reponses.RecipeThemeResponse3>() {
+//            @Override
+//            public void onSuccess(Reponses.RecipeThemeResponse3 recipeThemeResponse) {
+//                Helper.onSuccess(callback, recipeThemeResponse.recipeThemes);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//    }
 
     /**
      * 获取首页动态关注封面
@@ -1243,27 +1243,27 @@ public class StoreService extends AbsService {
     /**
      * 收藏
      */
-    public void setThemeCollect(final long themeID, final Callback<Boolean> callback) {
-        RokiRestHelper.setCollectOfTheme(themeID, new Callback<Reponses.CollectStatusRespone>() {
-            @Override
-            public void onSuccess(Reponses.CollectStatusRespone collectStatusRespone) {
-                // LogUtils.i("20170217","collectStatusRespone"+collectStatusRespone.toString());
-                if (collectStatusRespone != null && "1".equals(collectStatusRespone.status)) {
-                    Helper.onSuccess(callback, true);
-                } else if ("0".equals(collectStatusRespone.status)) {
-                    Helper.onSuccess(callback, true);
-                } else {
-                    Helper.onSuccess(callback, false);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onSuccess(callback, false);
-            }
-        });
-    }
+//    public void setThemeCollect(final long themeID, final Callback<Boolean> callback) {
+//        RokiRestHelper.setCollectOfTheme(themeID, new Callback<Reponses.CollectStatusRespone>() {
+//            @Override
+//            public void onSuccess(Reponses.CollectStatusRespone collectStatusRespone) {
+//                // LogUtils.i("20170217","collectStatusRespone"+collectStatusRespone.toString());
+//                if (collectStatusRespone != null && "1".equals(collectStatusRespone.status)) {
+//                    Helper.onSuccess(callback, true);
+//                } else if ("0".equals(collectStatusRespone.status)) {
+//                    Helper.onSuccess(callback, true);
+//                } else {
+//                    Helper.onSuccess(callback, false);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onSuccess(callback, false);
+//            }
+//        });
+//    }
 
     /**
      * 取消收藏

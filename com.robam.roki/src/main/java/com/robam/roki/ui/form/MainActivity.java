@@ -87,8 +87,6 @@ import com.robam.roki.ui.FormKey;
 import com.robam.roki.ui.Helper;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
-import com.robam.roki.ui.appStatus.AppStatus;
-import com.robam.roki.ui.appStatus.AppStatusManager;
 import com.robam.roki.ui.page.SelectThemeDetailPage;
 import com.robam.roki.ui.view.umpush.UMPushMsg;
 import com.robam.roki.utils.AlarmDataUtils;

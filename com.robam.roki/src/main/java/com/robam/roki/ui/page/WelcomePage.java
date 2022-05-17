@@ -29,8 +29,6 @@ import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
-import com.robam.roki.ui.appStatus.AppStatus;
-import com.robam.roki.ui.appStatus.AppStatusManager;
 import com.robam.roki.ui.extension.GlideApp;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.form.WelcomeActivity;
@@ -172,7 +170,7 @@ public class WelcomePage extends MyBasePage<WelcomeActivity> {
 
     private void startNext() {
         boolean isFirstUse = PreferenceUtils.getBool(PageArgumentKey.IsFirstUse, true);
-        AppStatusManager.getInstance().setAppStatus(AppStatus.STATUS_NORMAL);
+
         LogUtils.i(TAG, "isFirstUse:" + isFirstUse);
         if (isFirstUse) {
 //            WizardActivity.start(activity);
@@ -195,7 +193,7 @@ public class WelcomePage extends MyBasePage<WelcomeActivity> {
         if (PreferenceUtils.getBool(PageArgumentKey.IsFirstUse, true)) {
             return;
         }
-        AppStatusManager.getInstance().setAppStatus(AppStatus.STATUS_NORMAL);
+
         if (mType == 1) {
             if (!TextUtils.isEmpty(mContent)) {
 //                mHandler.removeCallbacks(runnable);
@@ -231,7 +229,7 @@ public class WelcomePage extends MyBasePage<WelcomeActivity> {
                 public void onClick(View v) {
                    PreferenceUtils.setBool(PageArgumentKey.IsFirstUse, false);
                     privacyDialog.dismiss();
-                    AppStatusManager.getInstance().setAppStatus(AppStatus.STATUS_NORMAL);
+
 //                    WizardActivity.start(activity);
                     if (NetworkUtils.isConnect(cx)){
                         WizardActivity.start(activity);
@@ -267,7 +265,7 @@ public class WelcomePage extends MyBasePage<WelcomeActivity> {
             public void onClick(View v) {
                 PreferenceUtils.setBool(PageArgumentKey.IsFirstUse, false);
                 exitDialog.dismiss();
-                AppStatusManager.getInstance().setAppStatus(AppStatus.STATUS_NORMAL);
+
                 if (NetworkUtils.isConnect(cx)){
                     WizardActivity.start(activity);
                 }else {

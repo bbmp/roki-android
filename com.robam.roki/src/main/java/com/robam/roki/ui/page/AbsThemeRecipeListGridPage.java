@@ -17,6 +17,7 @@ import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.dialogs.DialogHelper;
@@ -27,6 +28,7 @@ import com.legent.utils.api.DisplayUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.HomeRecipeViewEvent;
 import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.RecipeTheme;
 import com.robam.common.services.CookbookManager;
 import com.robam.common.services.StoreService;
@@ -114,8 +116,8 @@ public class AbsThemeRecipeListGridPage extends MyBasePage<MainActivity> {
      */
     protected void initRecipeData() {
         ProgressDialogHelper.setRunning(cx, true);
-        CookbookManager.getInstance().getFavorityCookbooks(
-                new Callback<Reponses.CookbooksResponse>() {
+        RokiRestHelper.getFavorityCookbooks(Reponses.CookbooksResponse.class,
+                new RetrofitCallback<Reponses.CookbooksResponse>() {
 
                     @Override
                     public void onSuccess(Reponses.CookbooksResponse result) {
@@ -138,10 +140,10 @@ public class AbsThemeRecipeListGridPage extends MyBasePage<MainActivity> {
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFaild(String err) {
                         ProgressDialogHelper.setRunning(cx, false);
                         gridView.setVisibility(View.GONE);
-                        ToastUtils.showThrowable(t);
+                        ToastUtils.show(err);
                     }
                 });
     }
@@ -153,32 +155,32 @@ public class AbsThemeRecipeListGridPage extends MyBasePage<MainActivity> {
      */
     private void initThemeData() {
 //        ProgressDialogHelper.setRunning(cx, true);
-        StoreService.getInstance().getMyFavoriteThemeRecipeList(new Callback<List<RecipeTheme>>() {
+        RokiRestHelper.getMyFavoriteThemeRecipeList_new(Reponses.RecipeThemeResponse3.class, new RetrofitCallback<Reponses.RecipeThemeResponse3>() {
             @Override
-            public void onSuccess(List<RecipeTheme> recipeThemes) {
-//                ProgressDialogHelper.setRunning(cx, false);
-                theme_flag = recipeThemes;
-                if (recipeThemes == null || recipeThemes.size() == 0) {
-                    //.setVisibility(View.GONE);
-                    gridView.removeHeaderView(linearLayout);
-                    initRecipeData();
-                    return;
-                }
-                if (emptyView != null && gridView != null){
-                    emptyView.setVisibility(View.GONE);
-                    //listView.loadData(recipeThemes);
-                    gridView.addHeaderView(loadHeadView(recipeThemes));
-                    initRecipeData();
+            public void onSuccess(Reponses.RecipeThemeResponse3 recipeThemeResponse3) {
+                if (null != recipeThemeResponse3) {
+                    List<RecipeTheme> recipeThemes = recipeThemeResponse3.recipeThemes;
+                    theme_flag = recipeThemes;
+                    if (recipeThemes == null || recipeThemes.size() == 0) {
+                        //.setVisibility(View.GONE);
+                        gridView.removeHeaderView(linearLayout);
+                        initRecipeData();
+                        return;
+                    }
+                    if (emptyView != null && gridView != null){
+                        emptyView.setVisibility(View.GONE);
+                        //listView.loadData(recipeThemes);
+                        gridView.addHeaderView(loadHeadView(recipeThemes));
+                        initRecipeData();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 theme_flag = null;
                 gridView.removeHeaderView(linearLayout);
                 initRecipeData();
-                t.printStackTrace();
-                ProgressDialogHelper.setRunning(cx, false);
             }
         });
     }

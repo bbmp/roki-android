@@ -32,6 +32,7 @@ import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.io.cloud.RetrofitCallback;
+import com.legent.plat.pojos.RCReponse;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.EventUtils;
@@ -212,23 +213,27 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
             //判断是否被收藏
             if (!theme.isCollect) {
                 ProgressDialogHelper.setRunning(cx, true);
-                StoreService.getInstance().setThemeCollect(theme.id, new Callback<Boolean>() {
+                RokiRestHelper.setCollectOfTheme(theme.id, Reponses.CollectStatusRespone.class, new RetrofitCallback<Reponses.CollectStatusRespone>() {
                     @Override
-                    public void onSuccess(Boolean aBoolean) {
-                        if (aBoolean) {
-                            theme.isCollect = true;
-                            ToastUtils.showShort("收藏成功");
-                            if (percent < 0.8) {
-                                imgFavority.setImageResource(R.drawable.icon_collected);
-                            } else {
-                                imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_24);
-                            }
-                        }
+                    public void onSuccess(Reponses.CollectStatusRespone collectStatusRespone) {
                         ProgressDialogHelper.setRunning(cx, false);
+                        if (null != collectStatusRespone) {
+                            Boolean aBoolean = collectStatusRespone.isSuccess();
+                            if (aBoolean) {
+                                theme.isCollect = true;
+                                ToastUtils.showShort("收藏成功");
+                                if (percent < 0.8) {
+                                    imgFavority.setImageResource(R.drawable.icon_collected);
+                                } else {
+                                    imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_24);
+                                }
+                            }
+
+                        }
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFaild(String err) {
                         ProgressDialogHelper.setRunning(cx, false);
                     }
                 });
@@ -357,20 +362,23 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
                 });
             } else {
                 ProgressDialogHelper.setRunning(cx, true);
-                CookbookManager.getInstance().addFavorityCookbooks(recipe.id, new VoidCallback() {
+                RokiRestHelper.addFavorityCookbooks(recipe.id, RCReponse.class, new RetrofitCallback<RCReponse>() {
                     @Override
-                    public void onSuccess() {
+                    public void onSuccess(RCReponse rcReponse) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.showShort("收藏成功");
-                        recipe.setIsCollected(true);
-                        recipe.collectCount = recipe.collectCount + 1;
-                        rvSelectThemeAdapter.setData(position, recipe);
+                        if (null != rcReponse) {
+
+                            ToastUtils.showShort("收藏成功");
+                            recipe.setIsCollected(true);
+                            recipe.collectCount = recipe.collectCount + 1;
+                            rvSelectThemeAdapter.setData(position, recipe);
+                        }
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFaild(String err) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.showShort(t.getMessage());
+                        ToastUtils.show(err);
                     }
                 });
             }
@@ -450,8 +458,8 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
      */
     protected void getCollectRecipe() {
         ProgressDialogHelper.setRunning(cx, true);
-        CookbookManager.getInstance().getFavorityCookbooks(
-                new Callback<Reponses.CookbooksResponse>() {
+        RokiRestHelper.getFavorityCookbooks(Reponses.CookbooksResponse.class,
+                new RetrofitCallback<Reponses.CookbooksResponse>() {
                     @Override
                     public void onSuccess(Reponses.CookbooksResponse result) {
                         ArrayList<AbsRecipe> absRecipes = new ArrayList<>();
@@ -472,9 +480,9 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFaild(String err) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.showShort(t.getMessage());
+                        ToastUtils.showShort(err);
                     }
                 });
     }
@@ -567,31 +575,34 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
     private void getThemeCollection() {
 
         ProgressDialogHelper.setRunning(cx, true);
-        StoreService.getInstance().getMyFavoriteThemeRecipeList(new Callback<List<RecipeTheme>>() {
+        RokiRestHelper.getMyFavoriteThemeRecipeList_new(Reponses.RecipeThemeResponse3.class, new RetrofitCallback<Reponses.RecipeThemeResponse3>() {
             @Override
-            public void onSuccess(List<RecipeTheme> recipeThemes) {
-                if (recipeThemes == null || recipeThemes.size() == 0) {
-                    return;
-                } else {
-                    for (RecipeTheme recipeTheme :
-                            recipeThemes) {
-                        if (recipeTheme.id.equals(theme.id)) {
-                            theme.isCollect = true ;
-                            if (percent < 0.8) {
-                                imgFavority.setImageResource(R.drawable.icon_collected);
-                            } else {
-                                imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_24);
+            public void onSuccess(Reponses.RecipeThemeResponse3 recipeThemeResponse3) {
+                ProgressDialogHelper.setRunning(cx, false);
+                if (null != recipeThemeResponse3) {
+                    List<RecipeTheme> recipeThemes = recipeThemeResponse3.recipeThemes;
+                    if (recipeThemes == null || recipeThemes.size() == 0) {
+                        return;
+                    } else {
+                        for (RecipeTheme recipeTheme :
+                                recipeThemes) {
+                            if (recipeTheme.id.equals(theme.id)) {
+                                theme.isCollect = true ;
+                                if (percent < 0.8) {
+                                    imgFavority.setImageResource(R.drawable.icon_collected);
+                                } else {
+                                    imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_24);
+                                }
+                                return;
                             }
-                            return;
                         }
                     }
+                    theme.isCollect = false ;
                 }
-                theme.isCollect = false ;
-                ProgressDialogHelper.setRunning(cx, false);
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 ProgressDialogHelper.setRunning(cx, false);
             }
         });

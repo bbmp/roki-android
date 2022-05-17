@@ -151,21 +151,25 @@ public class ThemeRecipeListPage extends MyBasePage<MainActivity> {
             //判断是否被收藏
             if (!recipeTheme.isCollect) {
                 ProgressDialogHelper.setRunning(cx, true);
-                StoreService.getInstance().setThemeCollect(recipeTheme.id, new Callback<Boolean>() {
+                RokiRestHelper.setCollectOfTheme(recipeTheme.id, Reponses.CollectStatusRespone.class, new RetrofitCallback<Reponses.CollectStatusRespone>() {
                     @Override
-                    public void onSuccess(Boolean aBoolean) {
-                        if (aBoolean) {
-                            recipeTheme.isCollect = true;
-                            ToastUtils.show("收藏成功");
-                            view.setImageResource(R.drawable.ic_baseline_favorite_24);
-                        }
+                    public void onSuccess(Reponses.CollectStatusRespone collectStatusRespone) {
                         ProgressDialogHelper.setRunning(cx, false);
+                        if (null != collectStatusRespone) {
+                            Boolean aBoolean = collectStatusRespone.isSuccess();
+                            if (aBoolean) {
+                                recipeTheme.isCollect = true;
+                                ToastUtils.show("收藏成功");
+                                view.setImageResource(R.drawable.ic_baseline_favorite_24);
+                            }
+                        }
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFaild(String err) {
                         ProgressDialogHelper.setRunning(cx, false);
                     }
+
                 });
             } else {
                 ProgressDialogHelper.setRunning(cx, true);
@@ -242,22 +246,25 @@ public class ThemeRecipeListPage extends MyBasePage<MainActivity> {
             return;
         }
         ProgressDialogHelper.setRunning(cx, true);
-        StoreService.getInstance().getMyFavoriteThemeRecipeList(new Callback<List<RecipeTheme>>() {
+        RokiRestHelper.getMyFavoriteThemeRecipeList_new(Reponses.RecipeThemeResponse3.class, new RetrofitCallback<Reponses.RecipeThemeResponse3>() {
             @Override
-            public void onSuccess(List<RecipeTheme> recipeThemes) {
-                if (recipeThemes != null && recipeThemes.size() != 0) {
-                    themeCollection(themes, recipeThemes);
-                } else {
-                    themeRecipeAdapter.setList(themes);
-                    themeRecipeAdapter.setFooterView(footView);
-                }
+            public void onSuccess(Reponses.RecipeThemeResponse3 recipeThemeResponse3) {
                 ProgressDialogHelper.setRunning(cx, false);
+                if (null != recipeThemeResponse3) {
+                    List<RecipeTheme> recipeThemes = recipeThemeResponse3.recipeThemes;
+                    if (recipeThemes != null && recipeThemes.size() != 0) {
+                        themeCollection(themes, recipeThemes);
+                    } else {
+                        themeRecipeAdapter.setList(themes);
+                        themeRecipeAdapter.setFooterView(footView);
+                    }
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
                 themeRecipeAdapter.setEmptyView(emptyView);
-                tvDesc.setText(t.getMessage());
+                tvDesc.setText(err);
                 ProgressDialogHelper.setRunning(cx, false);
             }
         });

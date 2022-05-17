@@ -25,11 +25,13 @@ import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
 import com.legent.Callback;
 import com.legent.plat.events.PageBackEvent;
+import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UI;
 import com.legent.ui.UIService;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.services.CookbookManager;
 import com.robam.common.util.StatusBarUtils;
@@ -318,7 +320,8 @@ public class SpeechRecipePage extends AbsDUIPage {
 //    }
 
     private void searchRecipeByWord(final String recipeName) {
-        CookbookManager.getInstance().getCookbooksBy(recipeName,true , new Callback<Reponses.CookbooksResponse>() {
+        RokiRestHelper.getCookbooksByName(recipeName,true, true, Reponses.CookbooksResponse.class,
+                new RetrofitCallback<Reponses.CookbooksResponse>() {
             @Override
             public void onSuccess(Reponses.CookbooksResponse result) {
                 LogUtils.i(TAG, "onSuccess result cookbooks:" + result.cookbooks.toString() + " " + result.cookbooks3rd.toString());
@@ -357,9 +360,9 @@ public class SpeechRecipePage extends AbsDUIPage {
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                t.printStackTrace();
-                LogUtils.i(TAG, "onFailure result:" + t.toString());
+            public void onFaild(String err) {
+
+                LogUtils.i(TAG, "onFailure result:" + err);
                 MessageBean messageBean = new MessageBean();
                 messageBean.setType(MessageBean.TYPE_OUTPUT);
                 messageBean.setText("服务器响应失败，请稍后重试");
@@ -367,10 +370,10 @@ public class SpeechRecipePage extends AbsDUIPage {
                 mMessageData.add(mMessageList.get(0));
                 mMessageData.add(messageBean);
                 rvSpeakContent.smoothScrollToPosition(mMessageData.size());
-//                mMessageList.add(messageBean);
-                mDialogAdapter.notifyDataSetChanged();
 
+                mDialogAdapter.notifyDataSetChanged();
             }
+
         });
     }
 

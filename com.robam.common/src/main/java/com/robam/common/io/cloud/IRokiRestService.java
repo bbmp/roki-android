@@ -604,9 +604,9 @@ public interface IRokiRestService {
     /**
      * 根据名称获取菜谱列表，包含自有菜谱与第三方菜谱
      */
-    @POST(getCookbooksByName)
-    void getCookbooksByName(@Body GetCookbooksByNameRequest reqBody,
-                            Callback<CookbooksResponse> callback);
+    @retrofit2.http.POST(getCookbooksByName)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getCookbooksByName(@retrofit2.http.Body okhttp3.RequestBody body);
 
 
     /**
@@ -674,8 +674,9 @@ public interface IRokiRestService {
     /**
      * 获取热门搜索关键字
      */
-    @POST(getHotKeysForCookbook)
-    void getHotKeysForCookbook(Callback<HotKeysForCookbookResponse> callback);
+    @retrofit2.http.POST(getHotKeysForCookbook)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getHotKeysForCookbook(@retrofit2.http.Body okhttp3.RequestBody body);
 
     @POST(getRecipeOfThemeList)
     void getRecipeOfThemeList(@Body Requests.GetReicpeOfTheme reqBody, Callback<CookbooksResponse> callback);
@@ -841,8 +842,9 @@ public interface IRokiRestService {
     /**
      * 设置收藏
      */
-    @POST(setCollectOfTheme)
-    void setSetCollectOfTheme(@Body Requests.ThemeCollectRequest request, Callback<Reponses.CollectStatusRespone> callback);
+    @retrofit2.http.POST(setCollectOfTheme)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> setSetCollectOfTheme(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 取消收藏
@@ -875,8 +877,8 @@ public interface IRokiRestService {
     @GET(getRecipeThemeOfCollect)
     void getMyFavoriteThemeRecipeList(@Query("userId") String userId, Callback<Reponses.RecipeThemeResponse2> callback);
 
-    @GET(getRecipeThemeOfCollect_new)
-    void getMyFavoriteThemeRecipeList_new(@Query("userId") String userId, Callback<Reponses.RecipeThemeResponse3> callback);
+    @retrofit2.http.GET(getRecipeThemeOfCollect_new)
+    Call<ResponseBody> getMyFavoriteThemeRecipeList_new(@retrofit2.http.Query("userId") String userId);
     // -------------------------------------------------------------------------------
     // 我的收藏
     // -------------------------------------------------------------------------------
@@ -884,16 +886,16 @@ public interface IRokiRestService {
     /**
      * 获取菜谱-我的收藏
      */
-    @POST(getFavorityCookbooks)
-    void getFavorityCookbooks(@Body UserRequest reqBody,
-                              Callback<CookbooksResponse> callback);
+    @retrofit2.http.POST(getFavorityCookbooks)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getFavorityCookbooks(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 增加菜谱到我的收藏
      */
-    @POST(addFavorityCookbooks)
-    void addFavorityCookbooks(@Body UserBookRequest reqBody,
-                              Callback<RCReponse> callback);
+    @retrofit2.http.POST(addFavorityCookbooks)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> addFavorityCookbooks(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 从我的收藏中删除菜谱
@@ -926,9 +928,9 @@ public interface IRokiRestService {
     void addCookingLog_New(@Body CookingLogRequest reqBody,
                            Callback<RCReponse> callback);
 
-    @POST(getCookbookSearchHistory)
-    void getCookbookSearchHistory(@Body Requests.CookbookSearchHistory reqBody,
-                                  Callback<Reponses.HistoryResponse> callback);
+    @retrofit2.http.POST(getCookbookSearchHistory)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getCookbookSearchHistory(@retrofit2.http.Body okhttp3.RequestBody body);
 
 
     @POST(deleteCookbookSearchHistory)
@@ -983,9 +985,9 @@ public interface IRokiRestService {
     /**
      * 获取厨艺秀列表
      */
-    @POST(getMyCookAlbums)
-    void getMyCookAlbums(@Body UserRequest reqBody,
-                         Callback<AlbumsResponse> callback);
+    @retrofit2.http.POST(getMyCookAlbums)
+    @Headers("Content-Type: application/json")
+    Call<ResponseBody> getMyCookAlbums(@retrofit2.http.Body okhttp3.RequestBody body);
 
     /**
      * 清空厨艺秀列表

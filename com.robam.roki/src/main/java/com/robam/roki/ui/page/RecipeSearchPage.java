@@ -277,7 +277,8 @@ public class RecipeSearchPage extends MyBasePage<MainActivity> {
 //            CookbookManager.getInstance().saveHistoryKeysForCookbook(word);
             ProgressDialogHelper.setRunning(cx, true);
 
-            CookbookManager.getInstance().getCookbooksBy(word , "SpeechRecipePage".equals(come_from) , new Callback<Reponses.CookbooksResponse>() {
+            RokiRestHelper.getCookbooksByName(word , true, "SpeechRecipePage".equals(come_from), Reponses.CookbooksResponse.class,
+                    new RetrofitCallback<Reponses.CookbooksResponse>() {
                 @Override
                 public void onSuccess(Reponses.CookbooksResponse result) {
                     try {
@@ -292,10 +293,11 @@ public class RecipeSearchPage extends MyBasePage<MainActivity> {
                 }
 
                 @Override
-                public void onFailure(Throwable t) {
+                public void onFaild(String err) {
                     ProgressDialogHelper.setRunning(cx, false);
-                    ToastUtils.showThrowable(t);
+                    ToastUtils.show(err);
                 }
+
             });
         }
     }

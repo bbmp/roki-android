@@ -15,7 +15,6 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.ReflectUtils;
 import com.legent.utils.api.ResourcesUtils;
 import com.robam.common.pojos.dictionary.AppExtendDic;
-import com.robam.common.services.AdvertManager;
 import com.robam.common.services.NotifyService;
 import com.robam.common.services.StoreService;
 import com.robam.common.ui.BleRssiDevice;
@@ -50,7 +49,6 @@ abstract public class RobamApp extends PlatApp {
                 "com.robam.roki")) {
             AppExtendDic.init(this);
             StoreService.getInstance().init(this);
-            AdvertManager.getInstance().init(this);
             NotifyService.getInstance().init(this);
             startUI();
         }

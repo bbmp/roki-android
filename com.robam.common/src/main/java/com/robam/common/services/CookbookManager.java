@@ -146,58 +146,58 @@ public class CookbookManager extends AbsService {
     // ------------------------------------------------------------------------------------------------------------------
 
 
-    public void getCookbooksByName(final String name,
-                                   final Callback<CookbooksResponse> callback) {
-        ss.getCookbooksByName(name, true, new Callback<CookbooksResponse>() {
+//    public void getCookbooksByName(final String name,
+//                                   final Callback<CookbooksResponse> callback) {
+//        ss.getCookbooksByName(name, true, new Callback<CookbooksResponse>() {
+//
+//            @Override
+//            public void onSuccess(CookbooksResponse result) {
+//                Helper.onSuccess(callback, result);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//    }
+//    public void getCookbooksBy(final String name, boolean notNeedSearchHistory,
+//                                   final Callback<CookbooksResponse> callback) {
+//        ss.getCookbooksByName(name, true, notNeedSearchHistory ,new Callback<CookbooksResponse>() {
+//
+//            @Override
+//            public void onSuccess(CookbooksResponse result) {
+//                Helper.onSuccess(callback, result);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                CookbooksResponse result = StoreHelper.searchByName(name);
+//                Helper.onSuccess(callback, result);
+//            }
+//        });
+//    }
 
-            @Override
-            public void onSuccess(CookbooksResponse result) {
-                Helper.onSuccess(callback, result);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Helper.onFailure(callback, t);
-            }
-        });
-    }
-    public void getCookbooksBy(final String name, boolean notNeedSearchHistory,
-                                   final Callback<CookbooksResponse> callback) {
-        ss.getCookbooksByName(name, true, notNeedSearchHistory ,new Callback<CookbooksResponse>() {
-
-            @Override
-            public void onSuccess(CookbooksResponse result) {
-                Helper.onSuccess(callback, result);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                CookbooksResponse result = StoreHelper.searchByName(name);
-                Helper.onSuccess(callback, result);
-            }
-        });
-    }
-
-    public void getHotKeysForCookbook(final Callback<List<String>> callback) {
-        ss.getHotKeysForCookbook(new Callback<List<String>>() {
-
-            @Override
-            public void onSuccess(List<String> result) {
-                Helper.onSuccess(callback, result);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Set<String> keys = PreferenceUtils.getStrings(
-                        PrefsKey.HotKeys, null);
-                List<String> result = Lists.newArrayList();
-                if (keys != null) {
-                    result.addAll(keys);
-                }
-                Helper.onSuccess(callback, result);
-            }
-        });
-    }
+//    public void getHotKeysForCookbook(final Callback<List<String>> callback) {
+//        ss.getHotKeysForCookbook(new Callback<List<String>>() {
+//
+//            @Override
+//            public void onSuccess(List<String> result) {
+//                Helper.onSuccess(callback, result);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Set<String> keys = PreferenceUtils.getStrings(
+//                        PrefsKey.HotKeys, null);
+//                List<String> result = Lists.newArrayList();
+//                if (keys != null) {
+//                    result.addAll(keys);
+//                }
+//                Helper.onSuccess(callback, result);
+//            }
+//        });
+//    }
 
     /**
      * 灶具
@@ -295,21 +295,21 @@ public class CookbookManager extends AbsService {
         }
     }
 
-    public void getFavorityCookbooks(final Callback<CookbooksResponse> callback) {
-        ss.getFavorityCookbooks(new Callback<CookbooksResponse>() {
-            @Override
-            public void onSuccess(CookbooksResponse result) {
-                lastUpdateTime_favority = Calendar.getInstance().getTimeInMillis();
-                Helper.onSuccess(callback, result);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                CookbooksResponse result = StoreHelper.getFavorityList();
-                Helper.onSuccess(callback, result);
-            }
-        });
-    }
+//    public void getFavorityCookbooks(final Callback<CookbooksResponse> callback) {
+//        ss.getFavorityCookbooks(new Callback<CookbooksResponse>() {
+//            @Override
+//            public void onSuccess(CookbooksResponse result) {
+//                lastUpdateTime_favority = Calendar.getInstance().getTimeInMillis();
+//                Helper.onSuccess(callback, result);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                CookbooksResponse result = StoreHelper.getFavorityList();
+//                Helper.onSuccess(callback, result);
+//            }
+//        });
+//    }
 
     public void getRecommendCookbooks(final Callback<List<Recipe>> callback) {
         ss.getRecommendCookbooks(new Callback<List<Recipe>>() {
@@ -561,10 +561,10 @@ public class CookbookManager extends AbsService {
 
     // ------------------------------------------------------------------------------------------------------------------
 
-    public void addFavorityCookbooks(final long bookId,
-                                     final VoidCallback callback) {
-        ss.addFavorityCookbooks(bookId, callback);
-    }
+//    public void addFavorityCookbooks(final long bookId,
+//                                     final VoidCallback callback) {
+//        ss.addFavorityCookbooks(bookId, callback);
+//    }
 
     public void deleteFavorityCookbooks(final long bookId,
                                         final VoidCallback callback) {
@@ -594,9 +594,9 @@ public class CookbookManager extends AbsService {
 
     }
 
-    public void getCookbookSearchHistory(long userId, Callback<Reponses.HistoryResponse> callback){
-        ss.getCookbookSearchHistory(userId,callback);
-    }
+//    public void getCookbookSearchHistory(long userId, Callback<Reponses.HistoryResponse> callback){
+//        ss.getCookbookSearchHistory(userId,callback);
+//    }
 
     public void deleteCookbookSearchHistory(String name,long userId, Callback<Reponses.DeleteHistoryResponse> callback){
         ss.deleteCookbookSearchHistory(name,userId,callback);
@@ -640,20 +640,20 @@ public class CookbookManager extends AbsService {
         ss.getAccessoryFrequencyForMob(callback);
     }
 
-    public void getMyCookAlbums(final Callback<List<CookAlbum>> callback) {
-        ss.getMyCookAlbums(new Callback<List<CookAlbum>>() {
-            @Override
-            public void onSuccess(List<CookAlbum> cookAlbums) {
-                Helper.onSuccess(callback, cookAlbums);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                List<CookAlbum> cookAlbums = DaoHelper.getAll(CookAlbum.class);
-                Helper.onSuccess(callback, cookAlbums);
-            }
-        });
-    }
+//    public void getMyCookAlbums(final Callback<List<CookAlbum>> callback) {
+//        ss.getMyCookAlbums(new Callback<List<CookAlbum>>() {
+//            @Override
+//            public void onSuccess(List<CookAlbum> cookAlbums) {
+//                Helper.onSuccess(callback, cookAlbums);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                List<CookAlbum> cookAlbums = DaoHelper.getAll(CookAlbum.class);
+//                Helper.onSuccess(callback, cookAlbums);
+//            }
+//        });
+//    }
 
     public void clearMyCookAlbums(final VoidCallback callback) {
         ss.clearMyCookAlbums(callback);

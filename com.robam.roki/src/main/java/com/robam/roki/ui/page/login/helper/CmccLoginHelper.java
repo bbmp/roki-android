@@ -51,7 +51,6 @@ import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.form.UserActivity;
 import com.robam.roki.ui.page.login.config.Constant;
 import com.robam.roki.ui.widget.view.ScaleImageView;
-import com.robam.roki.utils.YouzanUserAttestationUtils;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import org.json.JSONException;

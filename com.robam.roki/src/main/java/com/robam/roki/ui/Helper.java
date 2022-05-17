@@ -78,7 +78,6 @@ import com.robam.roki.ui.dialog.WaterPurifierSetPeopleDialog;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.view.OvenResetWheelView;
 import com.robam.roki.ui.view.recipeclassify.RecipeFilterPopWindow;
-import com.robam.roki.utils.YouzanUserAttestationUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -148,7 +147,7 @@ public class Helper {
 
         ToastUtils.showShort("登录成功");
         EventUtils.postEvent(new UserLoginNewEvent());
-        YouzanUserAttestationUtils.initYouzanData();
+
         if (atv instanceof MainActivity) {
             UIService.getInstance().popBack();
         } else {
@@ -158,7 +157,7 @@ public class Helper {
     }
 
     public static void onLoginCompleted(final User user) {
-        YouzanUserAttestationUtils.initYouzanData();
+
         UIService.getInstance().returnHome();
     }
 

@@ -145,8 +145,8 @@ public class RecipeSearchDialog extends AbsDialog {
 
     void initData() {
         long userId = Plat.accountService.getCurrentUserId();
-        CookbookManager.getInstance().getCookbookSearchHistory(userId,
-                new Callback<Reponses.HistoryResponse>() {
+        RokiRestHelper.getCookbookSearchHistory(userId, Reponses.HistoryResponse.class,
+                new RetrofitCallback<Reponses.HistoryResponse>() {
                     @Override
                     public void onSuccess(Reponses.HistoryResponse historyResponse) {
                         if (historyResponse == null) {
@@ -156,8 +156,8 @@ public class RecipeSearchDialog extends AbsDialog {
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
-                        LogUtils.i("20180418", " t:" + t);
+                    public void onFaild(String err) {
+                        LogUtils.i("20180418", " t:" + err);
                     }
                 });
 
@@ -207,38 +207,41 @@ public class RecipeSearchDialog extends AbsDialog {
             }
         });
 
-        CookbookManager.getInstance().getHotKeysForCookbook(
-                new Callback<List<String>>() {
+        RokiRestHelper.getHotKeysForCookbook(Reponses.HotKeysForCookbookResponse.class,
+                new RetrofitCallback<Reponses.HotKeysForCookbookResponse>() {
 
                     @Override
-                    public void onSuccess(final List<String> result) {
-                        if (result == null || result.size() == 0) {
-                            return;
+                    public void onSuccess(Reponses.HotKeysForCookbookResponse hotKeysForCookbookResponse) {
+                        if (null != hotKeysForCookbookResponse) {
+                            List<String> result = hotKeysForCookbookResponse.hotKeys;
+                            if (result == null || result.size() == 0) {
+                                return;
+                            }
+                            id_recommend.setAdapter(new TagAdapter<String>(result) {
+                                @Override
+                                public View getView(FlowLayout parent, int position, String s) {
+                                    TextView tv = (TextView) LayoutInflater.from(cx).inflate(R.layout.search_show,
+                                            id_recommend, false);
+                                    tv.setText(s);
+                                    return tv;
+                                }
+                            });
+                            id_recommend.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+                                @Override
+                                public boolean onTagClick(View view, int position, FlowLayout parent) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(PageArgumentKey.text, result.get(position));
+                                    UIService.getInstance().postPage(PageKey.RecipeSearch, bundle);
+                                    CookbookManager.getInstance().saveHistoryKeysForCookbook(result.get(position));
+                                    dismiss();
+                                    return true;
+                                }
+                            });
                         }
-                        id_recommend.setAdapter(new TagAdapter<String>(result) {
-                            @Override
-                            public View getView(FlowLayout parent, int position, String s) {
-                                TextView tv = (TextView) LayoutInflater.from(cx).inflate(R.layout.search_show,
-                                        id_recommend, false);
-                                tv.setText(s);
-                                return tv;
-                            }
-                        });
-                        id_recommend.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-                            @Override
-                            public boolean onTagClick(View view, int position, FlowLayout parent) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString(PageArgumentKey.text, result.get(position));
-                                UIService.getInstance().postPage(PageKey.RecipeSearch, bundle);
-                                CookbookManager.getInstance().saveHistoryKeysForCookbook(result.get(position));
-                                dismiss();
-                                return true;
-                            }
-                        });
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFaild(String err) {
 
                     }
                 });

@@ -43,6 +43,7 @@ import com.legent.plat.Plat;
 import com.legent.plat.events.FloatHelperEvent;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.io.cloud.RetrofitCallback;
+import com.legent.plat.pojos.RCReponse;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -870,24 +871,26 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
                 });
             } else {
                 ProgressDialogHelper.setRunning(cx, true);
-                CookbookManager.getInstance().addFavorityCookbooks(cookbook.id, new VoidCallback() {
+                RokiRestHelper.addFavorityCookbooks(cookbook.id, RCReponse.class, new RetrofitCallback<RCReponse>() {
                     @Override
-                    public void onSuccess() {
+                    public void onSuccess(RCReponse rcReponse) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.show("收藏成功");
-                        cookbook.setIsCollected(true);
-//                        imgFavority.setChecked(true);
-                        if (firstItemPosition == 0) {
-                            imgFavority.setImageResource(R.drawable.icon_collected);
-                        } else {
-                            imgFavority.setImageResource(R.drawable.ic_baseline_favorite_24);
+                        if (null != rcReponse) {
+                            ToastUtils.show("收藏成功");
+                            cookbook.setIsCollected(true);
+
+                            if (firstItemPosition == 0) {
+                                imgFavority.setImageResource(R.drawable.icon_collected);
+                            } else {
+                                imgFavority.setImageResource(R.drawable.ic_baseline_favorite_24);
+                            }
                         }
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFaild(String err) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.show(t.getMessage());
+                        ToastUtils.show(err);
                     }
                 });
             }

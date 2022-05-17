@@ -12,7 +12,7 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.roki.R;
 import com.robam.roki.ui.form.MainActivity;
-import com.robam.roki.utils.YouzanUserAttestationUtils;
+
 
 /**
  * Created by yinwei on 2017/10/27.
@@ -52,7 +52,7 @@ public class UserLoginThirdPage extends AbsVerifyCodePage {
     }
 
     void onThirdLoginCompleted(User user) {
-        YouzanUserAttestationUtils.initYouzanData();
+
         if (activity instanceof MainActivity)
             UIService.getInstance().returnHome();
         else

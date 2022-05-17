@@ -2193,7 +2193,8 @@ public class HomeDeviceView extends FrameLayout implements UIListeners.IRefresh 
     private void getRecipeSerachCount(final String commandApi, String data) throws Exception {
         DuiRecipeCount duiRecipeCount = JsonUtils.json2Pojo(data, DuiRecipeCount.class);
         final String ddd = duiRecipeCount.getDdd();
-        CookbookManager.getInstance().getCookbooksByName(ddd, new Callback<Reponses.CookbooksResponse>() {
+        RokiRestHelper.getCookbooksByName(ddd, true, false, Reponses.CookbooksResponse.class,
+                new RetrofitCallback<Reponses.CookbooksResponse>() {
             @Override
             public void onSuccess(Reponses.CookbooksResponse result) {
                 if (UIService.getInstance().isCurrentPage(PageKey.RecipeDetail)) {
@@ -2210,8 +2211,8 @@ public class HomeDeviceView extends FrameLayout implements UIListeners.IRefresh 
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                t.printStackTrace();
+            public void onFaild(String err) {
+
             }
         });
     }

@@ -563,20 +563,22 @@ public class HomeRecipeView32 extends MyBaseView {
     private void getThemeCollection(List<RecipeTheme> themes) {
 
 //        ProgressDialogHelper.setRunning(cx, true);
-        StoreService.getInstance().getMyFavoriteThemeRecipeList(new Callback<List<RecipeTheme>>() {
+        RokiRestHelper.getMyFavoriteThemeRecipeList_new(Reponses.RecipeThemeResponse3.class, new RetrofitCallback<Reponses.RecipeThemeResponse3>() {
             @Override
-            public void onSuccess(List<RecipeTheme> recipeThemes) {
-                if (recipeThemes != null && recipeThemes.size() != 0) {
-                    setTheme(themeCollection(themes, recipeThemes));
-                } else {
-                    setTheme(themes);
+            public void onSuccess(Reponses.RecipeThemeResponse3 recipeThemeResponse3) {
+                if (null != recipeThemeResponse3) {
+                    List<RecipeTheme> recipeThemes = recipeThemeResponse3.recipeThemes;
+                    if (recipeThemes != null && recipeThemes.size() != 0) {
+                        setTheme(themeCollection(themes, recipeThemes));
+                    } else {
+                        setTheme(themes);
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFaild(String err) {
 
-//                ProgressDialogHelper.setRunning(cx, false);
             }
         });
     }

@@ -379,9 +379,8 @@ public interface ICloudService<T extends RCReponse> {
 
     // ----------------------------------------------------------------
 
-    @POST(getDevices)
-    void getDevices(@Body UserRequest reqBody,
-                    Callback<GetDevicesResponse> callback);
+    @retrofit2.http.POST(getDevices)
+    Call<ResponseBody> getDevices(@retrofit2.http.Body RequestBody body);
 
     @retrofit2.http.POST(getDeviceById)
     @Headers("Content-Type: application/json")

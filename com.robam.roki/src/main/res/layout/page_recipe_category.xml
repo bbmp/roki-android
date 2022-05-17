@@ -82,9 +82,17 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:paddingTop="7dp">
 
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
-            android:id="@+id/recyclerView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swiper_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

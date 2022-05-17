@@ -39,7 +39,7 @@ import com.robam.roki.ui.widget.view.ClearEditText;
 import com.robam.roki.ui.widget.view.CountdownView;
 import com.robam.roki.utils.StringUtil;
 import com.robam.roki.utils.ToolUtils;
-import com.robam.roki.utils.YouzanUserAttestationUtils;
+
 
 
 /**

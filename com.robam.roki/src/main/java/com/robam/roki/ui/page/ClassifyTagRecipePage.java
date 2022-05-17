@@ -40,8 +40,6 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.common.eventbus.Subscribe;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.legent.Callback;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.io.cloud.RetrofitCallback;
