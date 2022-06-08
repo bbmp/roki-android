@@ -37,8 +37,7 @@ import com.aispeech.dui.dsk.duiwidget.DuiWidget;
 import com.aispeech.dui.dsk.duiwidget.ListWidget;
 import com.bumptech.glide.Glide;
 import com.google.common.eventbus.Subscribe;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;

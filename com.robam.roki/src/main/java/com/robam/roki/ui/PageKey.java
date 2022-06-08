@@ -308,7 +308,7 @@ public class PageKey {
     static public final String CantFinish= "CantFinish";
 //    static public final String ZJCantFinish= "ZJCantFinish";
     static public final String RecipeClassify = "RecipeClassify";
-    static public final String RecipeClassifySearch = "RecipeClassifySearch";
+//    static public final String RecipeClassifySearch = "RecipeClassifySearch";
     static public final String WIFIConnectFailPage = "WIFIConnectFailPage";
     static public final String WifiSoftapConnect= "WifiSoftapConnect";
     static public final String WifiSoftapConnectConfirm= "SoftAPConnectConfirm";

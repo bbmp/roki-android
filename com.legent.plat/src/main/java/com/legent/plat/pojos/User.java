@@ -65,7 +65,7 @@ public class User extends AbsKeyPojo<Long> implements Parcelable {
     @JsonProperty("binded")
     public boolean binded;
     @JsonProperty("birthday")
-    public Date birthday ;
+    public long birthday ;
     @JsonProperty("wxNickname")
     public String wxNickname ;
     @JsonProperty("appleIdBinded")
