@@ -1,7 +1,5 @@
 package com.robam.roki.ui.page;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,25 +22,15 @@ import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
-import com.robam.common.events.SteamOvenOneAlarmEvent;
 import com.robam.common.events.SteamOvenOneStatusChangedEvent;
-import com.robam.common.pojos.device.Oven.AbsOven;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOneModel;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatus;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
 import com.robam.roki.R;
-import com.robam.roki.factory.RokiDialogFactory;
-import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.ui.PageArgumentKey;
-import com.robam.roki.ui.PageKey;
-import com.robam.roki.ui.view.DeviceOvenTemWheel;
-import com.robam.roki.ui.view.DeviceOvenTimeWheel;
 import com.robam.roki.ui.view.DeviceSteameC906ModeWheel;
-import com.robam.roki.ui.view.TemlWheelView;
 import com.robam.roki.ui.view.TempC906WheelView;
-import com.robam.roki.utils.DialogUtil;
-import com.robam.roki.utils.StringConstantsUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -111,7 +99,7 @@ public class DeviceSteameOvenC906SteamePage extends BasePage {
             return;
         if (steameOvenC906.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus ||
                 steameOvenC906.powerOnStatus == SteamOvenOnePowerOnStatus.Pause || steameOvenC906.powerOnStatus
-                == SteamOvenOnePowerOnStatus.Order || steameOvenC906.powerStatus == SteamOvenOnePowerStatus.Off){
+                == SteamOvenOnePowerOnStatus.Order || steameOvenC906.powerState == SteamOvenOnePowerStatus.Off){
             UIService.getInstance().popBack();
         }
     }

@@ -68,6 +68,7 @@ public class AbsSteamOvenFirstView extends FrameLayout{
             ButterKnife.inject(this, view);
         }
 
+
         steamOvenCommonAdapter = new SteamOvenCommonAdapter(cx,mainList,otherList);
         ovenFuncShow.setAdapter(steamOvenCommonAdapter);
         GridLayoutManager layoutManager = new GridLayoutManager(cx, 1);

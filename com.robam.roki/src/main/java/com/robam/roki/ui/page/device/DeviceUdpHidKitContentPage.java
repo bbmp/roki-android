@@ -52,6 +52,7 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.WifiAutoConnectManager;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.api.WifiUtils;
+import com.robam.base.BaseDialog;
 import com.robam.common.events.DeviceEasylinkCompletedEvent;
 import com.robam.common.io.cloud.IRokiRestService;
 import com.robam.roki.R;
@@ -62,7 +63,6 @@ import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.mdialog.MessageDialog;
 import com.robam.roki.ui.view.networkoptimization.WIFIConnectFailPage;
-import com.robam.roki.ui.widget.base.BaseDialog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -629,7 +629,7 @@ public class DeviceUdpHidKitContentPage extends BasePage {
             return;
         }
         if (ssidContent == null) {
-            ssidContent = "ROKI-KC306-xxxx";
+            ssidContent = "ROKI-xxxx-xxxx";
         }
 
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("您的设备已发出WI-FI信号，请在手机界面链接WI-FI。\n\n" +
@@ -659,7 +659,7 @@ public class DeviceUdpHidKitContentPage extends BasePage {
             @Override
             public void onClick(View v) {
                 if (mWifiManager == null
-                        || !getWifiSSID(cx).contains("ROKI-KC306")
+                        || !getWifiSSID(cx).contains("ROKI-")
 //                        || mWifiManager.getConnectionInfo() == null
 //                        || mWifiManager.getConnectionInfo().getSSID() == null
 //                        || !mWifiManager.getConnectionInfo().getSSID().contains("ROKI-KC306")
@@ -668,7 +668,8 @@ public class DeviceUdpHidKitContentPage extends BasePage {
                             // 标题可以不用填写
                             .setTitle("提示")
                             // 内容必须要填写
-                            .setMessage("您的手机当前未连接到ROKI-\nKC306热点，请先连接成功\n后，再进行下一步")
+                            .setMessage("您的手机当前未连接到ROKI-\nxxxx" +
+                                    "热点，请先连接成功\n后，再进行下一步")
                             // 确定按钮文本
                             .setConfirm("知道了")
                             // 设置 null 表示不显示取消按钮

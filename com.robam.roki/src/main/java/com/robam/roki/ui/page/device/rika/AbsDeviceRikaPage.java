@@ -1,5 +1,7 @@
 package com.robam.roki.ui.page.device.rika;
 
+import static com.robam.common.pojos.device.rika.RikaStatus.SUBSET_OFF_COUNT;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,10 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.constant.IDeviceType;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.BackgroundFunc;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -118,11 +122,38 @@ public class AbsDeviceRikaPage<Rika extends AbsRika> extends DeviceCatchFilePage
     };
 
     @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            mTvDeviceModelName.setText(name);
+        }
+    }
+
+    @Subscribe
     public void onEvent(RikaStatusChangedEvent event) {
         LogUtils.i("20180417", " Connected:" + event.pojo.isConnected());
         if (rika == null || !Objects.equal(rika.getID(), event.pojo.getID()))
             return;
         rika = (Rika) event.pojo;
+        //子设备离线累计计数 一体机
+        if(rika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_NOT){
+            rika.steamOvenStatusOffTotal++;
+        }else {
+            rika.steamOvenStatusOffTotal=0;
+        }
+        //子设备离线累计计数 蒸箱
+        if(rika.steamWorkStatus == RikaStatus.STEAM_NOT){
+            rika.steamStatusOffTotal++;
+        }else {
+            rika.steamStatusOffTotal=0;
+        }
+        //子设备离线累计计数 消毒柜
+        if(rika.sterilWorkStatus == RikaStatus.STERIL_NOT){
+            rika.sterilStatusOffTotal++;
+        }else {
+            rika.sterilStatusOffTotal=0;
+        }
+
         if (!rika.isConnected()) {
             mTvOffLineText.setVisibility(View.VISIBLE);
         } else {
@@ -170,7 +201,8 @@ public class AbsDeviceRikaPage<Rika extends AbsRika> extends DeviceCatchFilePage
                 }
             }
             ModelMap modelMap = obj.modelMap;
-            mTvDeviceModelName.setText(obj.title);
+//            mTvDeviceModelName.setText(obj.title);
+            mTvDeviceModelName.setText(rika.getName() == null ||  rika.getName().equals(rika.getCategoryName()) ? rika.getDispalyType() : rika.getName());
             mViewBackgroundImg = obj.viewBackgroundImg;
             LogUtils.i("20180815", " mViewBackgroundImg:" + mViewBackgroundImg);
             Glide.with(cx).load(mViewBackgroundImg).into(mIvBg);
@@ -289,13 +321,17 @@ public class AbsDeviceRikaPage<Rika extends AbsRika> extends DeviceCatchFilePage
                     DeviceOfflinePrompt();
                     return;
                 }
-                if (rika.steamWorkStatus == RikaStatus.STEAM_NOT) {
+                if (rika.steamStatusOffTotal >= SUBSET_OFF_COUNT) {
                     ToastUtils.showShort(R.string.steam_invalid_error);
                     return;
                 }
+//                if (rika.steamWorkStatus == RikaStatus.STEAM_NOT) {
+//                    ToastUtils.showShort(R.string.steam_invalid_error);
+//                    return;
+//                }
                 DeviceConfigurationFunctions proFunctions = null;
                 String steamTitle = null;
-                for (DeviceConfigurationFunctions deviceConfigurationFunctions: mDeviceConfigurationFunctions) {
+                for (DeviceConfigurationFunctions deviceConfigurationFunctions : mDeviceConfigurationFunctions) {
                     if (TextUtils.equals(deviceConfigurationFunctions.functionCode, tag)) {
                         proFunctions = deviceConfigurationFunctions;
                         steamTitle = deviceConfigurationFunctions.functionName;
@@ -324,13 +360,17 @@ public class AbsDeviceRikaPage<Rika extends AbsRika> extends DeviceCatchFilePage
                     DeviceOfflinePrompt();
                     return;
                 }
-                if (rika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_NOT) {
+                if (rika.steamOvenStatusOffTotal >= SUBSET_OFF_COUNT) {
                     ToastUtils.showShort(R.string.steam_oven_invalid_error);
                     return;
                 }
+//                if (rika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_NOT) {
+//                    ToastUtils.showShort(R.string.steam_oven_invalid_error);
+//                    return;
+//                }
                 proFunctions = null;
                 String steamRoastTitle = null;
-                for (DeviceConfigurationFunctions deviceConfigurationFunctions: mDeviceConfigurationFunctions) {
+                for (DeviceConfigurationFunctions deviceConfigurationFunctions : mDeviceConfigurationFunctions) {
                     if (TextUtils.equals(deviceConfigurationFunctions.functionCode, tag)) {
                         proFunctions = deviceConfigurationFunctions;
                         steamRoastTitle = deviceConfigurationFunctions.functionName;
@@ -367,10 +407,14 @@ public class AbsDeviceRikaPage<Rika extends AbsRika> extends DeviceCatchFilePage
                     DeviceOfflinePrompt();
                     return;
                 }
-                if (rika.sterilWorkStatus == RikaStatus.STERIL_NOT) {
+                if (rika.sterilStatusOffTotal >= SUBSET_OFF_COUNT) {
                     ToastUtils.showShort(R.string.steri_invalid_error);
                     return;
                 }
+//                if (rika.sterilWorkStatus == RikaStatus.STERIL_NOT) {
+//                    ToastUtils.showShort(R.string.steri_invalid_error);
+//                    return;
+//                }
 
                 if (rika.sterilWorkStatus == RikaStatus.STERIL_ALARM) {
                     ToastUtils.showShort(R.string.device_alarm_status);
@@ -405,10 +449,14 @@ public class AbsDeviceRikaPage<Rika extends AbsRika> extends DeviceCatchFilePage
                     DeviceOfflinePrompt();
                     return;
                 }
-                if (rika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_NOT) {
+                if (rika.steamOvenStatusOffTotal >= SUBSET_OFF_COUNT) {
                     ToastUtils.showShort(R.string.steam_oven_invalid_error);
                     return;
                 }
+//                if (rika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_NOT) {
+//                    ToastUtils.showShort(R.string.steam_oven_invalid_error);
+//                    return;
+//                }
 //                if (rika.sterilWorkStatus == RikaStatus.STERIL_NOT) {
 //                    ToastUtils.showShort(R.string.steri_invalid_error);
 //                    return;
@@ -426,7 +474,7 @@ public class AbsDeviceRikaPage<Rika extends AbsRika> extends DeviceCatchFilePage
 
                 List<DeviceConfigurationFunctions> deviceConfigurationFunctions1 = null;
                 String cleanTitle = null;
-                for (DeviceConfigurationFunctions deviceConfigurationFunctions: mDeviceConfigurationFunctions) {
+                for (DeviceConfigurationFunctions deviceConfigurationFunctions : mDeviceConfigurationFunctions) {
                     if (TextUtils.equals(deviceConfigurationFunctions.functionCode, tag)) {
                         deviceConfigurationFunctions1 = deviceConfigurationFunctions
                                 .subView
@@ -530,10 +578,14 @@ public class AbsDeviceRikaPage<Rika extends AbsRika> extends DeviceCatchFilePage
                     DeviceOfflinePrompt();
                     return;
                 }
-                if (rika.sterilWorkStatus == RikaStatus.STERIL_NOT) {
+                if (rika.sterilStatusOffTotal >= SUBSET_OFF_COUNT) {
                     ToastUtils.showShort(R.string.steri_invalid_error);
                     return;
                 }
+//                if (rika.sterilWorkStatus == RikaStatus.STERIL_NOT) {
+//                    ToastUtils.showShort(R.string.steri_invalid_error);
+//                    return;
+//                }
                 Bundle appointmentElimination = new Bundle();
                 appointmentElimination.putSerializable(PageArgumentKey.List, (Serializable) mDeviceConfigurationFunctions);
                 appointmentElimination.putSerializable(PageArgumentKey.RIKA, rika);
@@ -552,10 +604,14 @@ public class AbsDeviceRikaPage<Rika extends AbsRika> extends DeviceCatchFilePage
 
             case "localCookbook"://本地自动菜谱
 
-//                if (!rika.isConnected()) {
-//                    DeviceOfflinePrompt();
-//                    return;
-//                }
+                if (!rika.isConnected()) {
+                    DeviceOfflinePrompt();
+                    return;
+                }
+                if (rika.steamOvenStatusOffTotal >= SUBSET_OFF_COUNT) {
+                    ToastUtils.showShort(R.string.steam_oven_invalid_error);
+                    return;
+                }
 //                if (rika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_NOT) {
 //                    ToastUtils.showShort(R.string.steam_oven_invalid_error);
 //                    return;
@@ -601,6 +657,10 @@ public class AbsDeviceRikaPage<Rika extends AbsRika> extends DeviceCatchFilePage
         }
         if (rika == null) {
             return;
+        }
+        if (rika.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), rika.getDt(), null);
         }
     }
 

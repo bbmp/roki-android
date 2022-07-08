@@ -13,6 +13,16 @@
         android:contentDescription="@null"
         android:scaleType="centerCrop"/>
 
+    <ImageView
+        android:id="@+id/iv_play"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_alignEnd="@id/imgDish"
+        android:layout_alignTop="@id/imgDish"
+        android:src="@mipmap/tag_video"
+        android:visibility="gone"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,19 +1,24 @@
 package com.robam.roki.ui.page;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +40,7 @@ import com.bumptech.glide.Glide;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
+import com.robam.base.BaseDialog;
 import com.legent.Callback;
 import com.legent.events.ScreenPowerChangedEvent;
 import com.legent.plat.Plat;
@@ -49,6 +55,7 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.StringUtils;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.speech.SpeechManager;
+import com.robam.common.RobamApp;
 import com.robam.common.events.MicroWaveStatusChangedEvent;
 import com.robam.common.events.OvenOtherEvent;
 import com.robam.common.events.OvenStatusChangedEvent;
@@ -62,6 +69,7 @@ import com.robam.common.pojos.device.Oven.OvenStatus;
 import com.robam.common.pojos.device.Steamoven.SteamStatus;
 import com.robam.common.pojos.device.microwave.MicroWaveStatus;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
+import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOneNew;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
 import com.robam.common.util.StatusBarUtils;
 import com.robam.roki.R;
@@ -69,9 +77,9 @@ import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.ui.DeviceSendCommand;
 import com.robam.roki.ui.Helper;
+import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.bean3.SpeechBean;
 import com.robam.roki.ui.view.RecipeDetailAutoView;
-import com.robam.roki.ui.widget.base.BaseDialog;
 import com.robam.roki.utils.DeviceSelectUtils;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.SendCommandUtils;
@@ -155,8 +163,8 @@ public class RecipeCookPage extends AbsDUIPage {
     RecipeDetailAutoView recipeDetailView;
     DeviceSendCommand deviceSendCommand;//发送命令
     int prestep;
-    private short totalSec = 0;
-    private short currentSec = -1;
+    private int totalSec = 0;
+    private int currentSec = -1;
     boolean isHeatRecipe;
 
     @SuppressLint("HandlerLeak")
@@ -179,6 +187,11 @@ public class RecipeCookPage extends AbsDUIPage {
                         if (timer != null) {
                             timer.cancel();
                             timer = null;
+                        }
+                        if (step==1){
+                            status=OvenStatus.Off;
+                        }else if (step==2){
+                            status=OvenStatus.complete;
                         }
                         step -= 1;
                         next();
@@ -399,7 +412,6 @@ public class RecipeCookPage extends AbsDUIPage {
     @Override
     protected int getLayoutId() {
         Log.i("RecipeCookPage", "---------");
-
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 //            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             return R.layout.recipe_auto_cooking_h;
@@ -793,7 +805,9 @@ public class RecipeCookPage extends AbsDUIPage {
             public void onClick(View v) {
                 dialog.dismiss();
                 shutDownDevice();
-                UIService.getInstance().popBack();
+                if (getActivity()!=null)
+                getActivity().finish();
+//                UIService.getInstance().popBack();
 //                SpeechManager.getInstance().dispose();
             }
         });
@@ -954,6 +968,7 @@ public class RecipeCookPage extends AbsDUIPage {
     }
 
     AbsSteameOvenOne steameOvenOne;
+    AbsSteameOvenOneNew steameOvenOneNew;
     boolean flag906 = false;
 
     //一体机轮训
@@ -963,37 +978,74 @@ public class RecipeCookPage extends AbsDUIPage {
             return;
         }
 
-        String guid = event.pojo.getGuid().getGuid();
+//        String guid = event.pojo.getGuid().getGuid();
         String deviceGuid = iDevice.getGuid().getGuid();
-        if (guid.equals(deviceGuid)) {
-            steameOvenOne = event.pojo;
+        if (guid.equals(event.pojo.getGuid().getGuid())) {
+
             if (isTrain906) {
-                short powerStatusTemp = event.pojo.powerStatus;
-                short powerNoStatus = event.pojo.powerOnStatus;
-                short statusTemp = event.pojo.worknStatus;
-                if ((powerStatusTemp == 1 && powerNoStatus == 0 && statusTemp == 255) || (powerStatusTemp == 1 && powerNoStatus == 255 && statusTemp == 255)) {
-                    status = OvenStatus.Off;
-                }
-                if (powerStatusTemp == 2 && powerNoStatus == 3 && statusTemp == 1) {
-                    status = OvenStatus.Working;
-                }
-                if (powerStatusTemp == 2 && powerNoStatus == 3 && statusTemp == 0) {
-                    status = OvenStatus.PreHeat;
+                if (guid.contains(deviceGuid)){
+
+                    steameOvenOneNew = (AbsSteameOvenOneNew) event.pojo;
+                    Log.e(TAG,steameOvenOneNew.toString());
+                    short powerState = steameOvenOneNew.powerState;
+                    short workState =steameOvenOneNew.workState;
+                    Log.e("20180225",powerState+"----workState:"+workState);
+                    if (powerState == 0) {
+                        status = OvenStatus.Off;
+                    }else if ((powerState == 2
+                            &&( workState == 4 ))) {
+                        status = OvenStatus.Working;
+                    }
+                    if (powerState == 2 && workState == 2) {
+                        status = OvenStatus.PreHeat;
+                    }
+
+                    if (powerState == 2 && workState == 5) {
+                        flag906 = true;
+                        status = OvenStatus.Pause;
+                    }
+                    if (powerState == 2 && workState == 3) {
+                        flag906 = false;
+                        status = OvenStatus.Pause;
+                    }
+                    if (powerState == 2 && powerState ==6 ) {
+                        flag906 = false;
+                        status = OvenStatus.complete;
+                    }
+                    Log.e(TAG,"powerState"+powerState+"---workState"+workState+"   status----"+status);
+
+                   int time= (steameOvenOneNew.setTimeH * 256 + steameOvenOneNew.setTime)/60;
+                    stateShow(status, steameOvenOneNew.curTemp, time, steameOvenOneNew.totalRemainSecondsH * 256 + steameOvenOneNew.totalRemainSeconds);
+                }else {
+                    steameOvenOne =event.pojo;
+                    short powerStatusTemp = event.pojo.powerState;
+                    short powerNoStatus = event.pojo.powerOnStatus;
+                    short statusTemp = event.pojo.workState;
+                    if ((powerStatusTemp == 1 && powerNoStatus == 0 && statusTemp == 255) || (powerStatusTemp == 1 && powerNoStatus == 255 && statusTemp == 255)) {
+                        status = OvenStatus.Off;
+                    }
+                    if (powerStatusTemp == 2 && powerNoStatus == 3 && statusTemp == 1) {
+                        status = OvenStatus.Working;
+                    }
+                    if (powerStatusTemp == 2 && powerNoStatus == 3 && statusTemp == 0) {
+                        status = OvenStatus.PreHeat;
+                    }
+
+                    if (powerStatusTemp == 2 && powerNoStatus == 0 && statusTemp == 255 && steameOvenOne.alarm != 0) {
+                        flag906 = true;
+                        status = OvenStatus.Pause;
+                    }
+                    if (powerStatusTemp == 2 && powerNoStatus == 1 && statusTemp == 255) {
+                        flag906 = false;
+                        status = OvenStatus.Pause;
+                    }
+                    if (powerStatusTemp == 2 && powerNoStatus == 0 && statusTemp == 255) {
+                        flag906 = false;
+                        status = OvenStatus.complete;
+                    }
+                    stateShow(status, event.pojo.temp, event.pojo.setTime, event.pojo.leftTime);
                 }
 
-                if (powerStatusTemp == 2 && powerNoStatus == 0 && statusTemp == 255 && steameOvenOne.alarm != 0) {
-                    flag906 = true;
-                    status = OvenStatus.Pause;
-                }
-                if (powerStatusTemp == 2 && powerNoStatus == 1 && statusTemp == 255) {
-                    flag906 = false;
-                    status = OvenStatus.Pause;
-                }
-                if (powerStatusTemp == 2 && powerNoStatus == 0 && statusTemp == 255) {
-                    flag906 = false;
-                    status = OvenStatus.complete;
-                }
-                stateShow(status, event.pojo.temp, event.pojo.setTime, event.pojo.leftTime);
             }
         }
 
@@ -1100,7 +1152,7 @@ public class RecipeCookPage extends AbsDUIPage {
     boolean heatFlag = false;
 
 
-    private void stateShow(short status, short temp, short setTime, short time) {
+    private void stateShow(short status, short temp, int setTime, int time) {
         alarm = false;
         switch (status) {
             case OvenStatus.PreHeat:
@@ -1122,7 +1174,7 @@ public class RecipeCookPage extends AbsDUIPage {
                     return;
                 }
                 if (is228) {
-                    if (time / 60 == setTime) {
+                    if (time / 60 == setTime&&!guid.contains("620")) {
                         return;
                     }
                     if (Math.abs((currentSec - time)) >= 0 && Math.abs((currentSec - time)) <= 5) {
@@ -1496,11 +1548,67 @@ public class RecipeCookPage extends AbsDUIPage {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 0x12){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                //用户同意了权限申请
+                showFloatingWindow();
+                getActivity().finish();
+            }else{
+                //用户拒绝了权限申请，建议向用户解释权限用途
+                ToastUtils.show("请打开浮窗权限，否则无法缩小",Toast.LENGTH_LONG);
+            }
+        }
+
+    }
+
+
+    //参考自http://stackoverflow.com/questions/32061934/permission-from-manifest-doesnt-work-in-android-6
+    public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public void requestDrawOverLays() {
+        if (!Settings.canDrawOverlays(getContext())) {
+            Toast.makeText(getContext(), "您还没有打开悬浮窗权限", Toast.LENGTH_SHORT).show();
+            //跳转到相应软件的设置页面
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
+            startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+        } else {
+            // 授权成功之后执行的方法
+            showFloatingWindow();
+            getActivity().finish();
+        }
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == OVERLAY_PERMISSION_REQ_CODE) {
+            if (!Settings.canDrawOverlays(getContext())) {
+                Toast.makeText(getContext(), "获取浮窗权限失败", Toast.LENGTH_SHORT).show();
+            } else {
+                showFloatingWindow();
+                if ( UIService.getInstance().isCurrentPage(PageKey.RecipeCook)){
+                    UIService.getInstance().popBack();
+                }
+            }
+        }
+    }
+
 
     @Override
     public void onLeftClick(View view) {
-        showFloatingWindow();
-        super.onLeftClick(view);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestDrawOverLays();
+        }else{
+            showFloatingWindow();
+//            super.onLeftClick(view);
+
+            getActivity().finish();
+        }
+
     }
 
     @Override
@@ -1556,7 +1664,7 @@ public class RecipeCookPage extends AbsDUIPage {
     public static String AGAIN = "再来一次";
     public static String AGAIN_2 = "再说一遍";
     public static String PAUSE = "暂停";
-    public static String END = "结束";
+    public static String END = "结束工作";
     public static String END_2 = "退出";
     /**
      * 语音识别
@@ -1647,45 +1755,47 @@ public class RecipeCookPage extends AbsDUIPage {
     };
 
     private void setStep(String speek) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (NEXT.equals(speek)) {
-                        if (step == recipeDetailView.adapter.getCount() - 1) {
-                            onSpeakClick("已经到最后一步");
-                            return;
+        if (getActivity()!=null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (NEXT.equals(speek)) {
+                            if (step == recipeDetailView.adapter.getCount() - 1) {
+                                onSpeakClick("已经到最后一步");
+                                return;
+                            }
+                            int position = step + 1;
+                            stepToNext2(position);
+                        } else if (speek.contains(LAST) || speek.contains(LAST_2)) {
+                            if (step == 0) {
+                                onSpeakClick("已经是第一步");
+                                return;
+                            }
+                            int position = step - 1;
+                            stepToNext2(position);
+                        } else if (AGAIN.equals(speek) || AGAIN_2.equals(speek)) {
+                            onSpeakClick(step);
+                        } else if (speek.contains(PAUSE)) {
+                            if (status == OvenStatus.Pause) {
+                                onSpeakClick("已经暂停");
+                                return;
+                            }
+                            singleOnClick(step);
+                            speech();
+                        } else if (speek.contains(END) || speek.contains(END_2)&&isPlaying) {
+                            quickWork();
+                        } else {
+                            speech();
                         }
-                        int position = step + 1;
-                        stepToNext2(position);
-                    } else if (speek.contains(LAST) || speek.contains(LAST_2)) {
-                        if (step == 0) {
-                            onSpeakClick("已经是第一步");
-                            return;
-                        }
-                        int position = step - 1;
-                        stepToNext2(position);
-                    } else if (AGAIN.equals(speek) || AGAIN_2.equals(speek)) {
-                        onSpeakClick(step);
-                    } else if (speek.contains(PAUSE)) {
-                        if (status == OvenStatus.Pause) {
-                            onSpeakClick("已经暂停");
-                            return;
-                        }
-                        singleOnClick(step);
-                        speech();
-                    } else if (speek.contains(END) || speek.contains(END_2)) {
-                        quickWork();
-                    } else {
+                    } catch (Exception e) {
+                        e.getMessage();
                         speech();
                     }
-                } catch (Exception e) {
-                    e.getMessage();
-                    speech();
-                }
 
-            }
-        });
+                }
+            });
+        }
     }
 
     /**
@@ -1716,7 +1826,7 @@ public class RecipeCookPage extends AbsDUIPage {
         }
         tvRokiMessage.setText("你说，ROKI正在听...");
 //        if (ivRoki != null){
-        Glide.with(getActivity())
+        Glide.with(RobamApp.getInstance())
                 .load(R.drawable.ic_discern)
                 .into(ivRoki);
 //        }
@@ -1752,6 +1862,8 @@ public class RecipeCookPage extends AbsDUIPage {
 
     }
 
+    private boolean isPlaying=true;
+
     //语音播报
     public void onSpeakClick(final String message) {
         if (!cbYinliang.isChecked()) {
@@ -1771,6 +1883,7 @@ public class RecipeCookPage extends AbsDUIPage {
 //                    ttsEngine.setSpeaker("gqlanfp");
 //                }
 
+                isPlaying=false;
                 SpeechManager.getInstance().startSpeaking2(message, new SpeechManager.SpeakComple() {
                     @Override
                     public void comple() {

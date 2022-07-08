@@ -1,19 +1,27 @@
 package com.robam.roki.ui.view.networkoptimization;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.device.DeviceInfo;
 import com.legent.plat.services.DeviceTypeManager;
 import com.legent.ui.UIService;
@@ -21,15 +29,31 @@ import com.legent.ui.ext.HeadPage;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
+import com.robam.base.BaseDialog;
 import com.robam.common.events.DeviceEasylinkCompletedEvent;
-import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.DeviceGroupList;
 import com.robam.common.pojos.DeviceItemList;
+import com.robam.common.pojos.Group;
+import com.robam.common.pojos.Tag;
 import com.robam.roki.R;
+import com.robam.roki.model.bean.RecipeTagGroupItem;
 import com.robam.roki.service.IanSend;
 import com.robam.roki.ui.PageKey;
-import com.robam.roki.ui.widget.base.BaseDialog;
+import com.robam.roki.ui.bean3.DeviceTagGroupItem;
+import com.robam.roki.ui.extension.GlideApp;
+import com.robam.roki.ui.form.MainActivity;
+import com.robam.roki.ui.page.ClassifyTagRecipePage;
+import com.robam.roki.ui.page.login.MyBasePage;
+import com.robam.roki.ui.view.linkrecipetag.LinkageRecyclerView;
+import com.robam.roki.ui.view.linkrecipetag.adapter.viewholder.LinkagePrimaryViewHolder;
+import com.robam.roki.ui.view.linkrecipetag.adapter.viewholder.LinkageSecondaryFooterViewHolder;
+import com.robam.roki.ui.view.linkrecipetag.adapter.viewholder.LinkageSecondaryHeaderViewHolder;
+import com.robam.roki.ui.view.linkrecipetag.adapter.viewholder.LinkageSecondaryViewHolder;
+import com.robam.roki.ui.view.linkrecipetag.bean.BaseGroupedItem;
+import com.robam.roki.ui.view.linkrecipetag.contract.ILinkagePrimaryAdapterConfig;
+import com.robam.roki.ui.view.linkrecipetag.contract.ILinkageSecondaryAdapterConfig;
+import com.robam.roki.ui.view.recipeclassify.RecipeClassifyPage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,80 +61,88 @@ import java.util.Comparator;
 import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import skin.support.content.res.SkinCompatResources;
 
 /**
  * Created by sylar on 15/6/14.
  */
-public class DeviceAddPage extends HeadPage {
+public class DeviceAddPage extends MyBasePage<MainActivity> {
+    private final String TAG = DeviceAddPage.this.getClass().getName();
     /**
      * Called when the activity is first created.
      */
-    private ExpandableListView expandableListView;
-    List<DeviceGroupList> groupList = new ArrayList<DeviceGroupList>();
-    List<List<DeviceItemList>> deviceList = new ArrayList<List<DeviceItemList>>();
+    private LinkageRecyclerView linkageRecyclerView;
+    private ImageView ivBack;
+    private static final int SPAN_COUNT_FOR_GRID_MODE = 3;
+    private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
+    private static final int MARQUEE_REPEAT_NONE_MODE = 0;
+
     IanSend send;
     private int form;
 
-    public void setGroupListAndDeviceList() {
-        RokiRestHelper.getNetworkDeviceInfoRequest("roki", null, null, Reponses.NetworkDeviceInfoResponse.class, new RetrofitCallback<Reponses.NetworkDeviceInfoResponse>() {
 
+    public void setGroupListAndDeviceList() {
+        RokiRestHelper.getNetworkDeviceInfoRequest("roki", null, null, new Callback<List<DeviceGroupList>>() {
             @Override
-            public void onSuccess(Reponses.NetworkDeviceInfoResponse networkDeviceInfoResponse) {
-                if (null != networkDeviceInfoResponse && null != networkDeviceInfoResponse.deviceGroupList) {
-                    List<DeviceGroupList> deviceGroupLists = networkDeviceInfoResponse.deviceGroupList;
-                    for (int i = 0; i < deviceGroupLists.size(); i++) {
-                        LogUtils.i("20170214", "deviceGroupLists" + deviceGroupLists.get(i).getDc());
+            public void onSuccess(List<DeviceGroupList> deviceGroupLists) {
+                List<DeviceTagGroupItem> deviceTagGroupItemList = new ArrayList<>();
+                if (deviceGroupLists != null) {
+                    for (DeviceGroupList group : deviceGroupLists) {
+
+                        DeviceTagGroupItem deviceTagGroupItem = new DeviceTagGroupItem(true, group.name);
+                        deviceTagGroupItem.isHeader = true;
+                        deviceTagGroupItem.header = group.name;
+                        deviceTagGroupItemList.add(deviceTagGroupItem);
+                        LogUtils.i(TAG, "group name:" + group.name + " group toString :" + group.toString());
+                        for (DeviceItemList deviceItem : group.getDeviceItemLists()) {
+                            DeviceTagGroupItem.ItemInfo itemInfo = new DeviceTagGroupItem.ItemInfo(group.name, group.name, deviceItem.getNetImgUrl(), deviceItem.getName());
+                            itemInfo.setTitle(group.name);
+                            itemInfo.setGroup(group.name);
+                            itemInfo.setIconUrl(deviceItem.iconUrl);
+                            itemInfo.setDp(deviceItem.getDp());
+                            itemInfo.setDisplayType(deviceItem.displayType);
+                            itemInfo.setNetTips(deviceItem.getNetTips());
+                            DeviceTagGroupItem deviceTagGroupItem1 = new DeviceTagGroupItem(itemInfo);
+                            deviceTagGroupItem1.isHeader = false;
+                            deviceTagGroupItemList.add(deviceTagGroupItem1);
+                        }
                     }
-                    groupList.clear();
-                    deviceList.clear();
-                    for (int i = 0; i < deviceGroupLists.size(); i++) {
-                        deviceGroupLists.get(i).save2db();
-                    }
-                    for (int i = 0; i < deviceGroupLists.size(); i++) {
-                        DeviceGroupList groupListBean = deviceGroupLists.get(i);
-                        addGroupListBean(groupListBean, deviceGroupLists, i, i, R.mipmap.youyanji, groupListBean.name, groupListBean.englishName);
-                    }
-                    Comparator comp = new SortComparatorGroupListBean();
-                    Collections.sort(groupList, comp);
-                    for (int i = 0; i < groupList.size(); i++) {
-                        LogUtils.i("20170214", "groupList:" + groupList.get(i).getDeviceItemLists());
-                        deviceList.add(groupList.get(i).getDeviceItemLists());
-                    }
-                    setExpandableListAdapter();
                 }
+                linkageRecyclerView.init(deviceTagGroupItemList, new ElemeLinkagePrimaryAdapterConfig(), new ElemeLinkageSecondaryAdapterConfig());
+                linkageRecyclerView.setGridMode(true);
+
+                for (int i = 0; i < deviceGroupLists.size(); i++) {
+                    LogUtils.i("20170214", "deviceGroupLists" + deviceGroupLists.get(i).getDc());
+                }
+
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
 
             }
         });
     }
 
+
+    @OnClick(R.id.layoutSearch)
+    public void onClickLayoutSearch() {
+        UIService.getInstance().postPage(PageKey.DeviceSearch);
+    }
+
+
+
     @Override
-    protected View onCreateContentView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
-        View view = layoutInflater.inflate(R.layout.expandablelistview, viewGroup, false);
-        ButterKnife.inject(this, view);
+    protected int getLayoutId() {
+        return R.layout.expandablelistview;
+    }
+
+    @Override
+    protected void initView() {
         form = getArguments() == null ? 0 : getArguments().getInt("form" , 0);
-        expandableListView = view.findViewById(R.id.expandableListView);
-        setGroupListAndDeviceList();
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                return false;
-            }
-        });
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                int count = expandableListView.getExpandableListAdapter().getGroupCount();
-                for (int j = 0; j < count; j++) {
-                    if (j != groupPosition) {
-                        expandableListView.collapseGroup(j);
-                    }
-                }
-            }
-        });
+        linkageRecyclerView = findViewById(R.id.linkage_rv);
+        ivBack = findViewById(R.id.img_back);
+
         send = new IanSend(activity, cx);
         send.addOnDevicelistener(new IanSend.OnDevicelistener() {
             @Override
@@ -125,36 +157,19 @@ public class DeviceAddPage extends HeadPage {
             }
         });
         send.join();
-        return view;
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIService.getInstance().popBack();
+            }
+        });
     }
 
+    @Override
+    protected void initData() {
+        setGroupListAndDeviceList();
 
-    //创建ExpandableList的Adapter容器
-    private void setExpandableListAdapter() {
-      /*  for (int i = 0; i < deviceList.size(); i++) {
-            LogUtils.i("20170214","deviceList:"+deviceList.get(i).toString());
-        }*/
-        LogUtils.i("20170214", "deviceList:" + deviceList.size());
-        ExpandableListAdapter adapter = new ExpandableListAdapter(cx, groupList, deviceList);
-        expandableListView.setAdapter(adapter);
     }
-
-    @OnClick(R.id.layoutSearch)
-    public void onClickLayoutSearch() {
-        UIService.getInstance().postPage(PageKey.DeviceSearch);
-    }
-
-
-    //向设备组集合里面添加设备并排序
-    private void addGroupListBean(DeviceGroupList groupListBean, List<DeviceGroupList> deviceGroupLists, int position, int sortId, int mipmap, String deviceName, String deviceEnglishName) {
-        groupListBean = deviceGroupLists.get(position);
-        groupListBean.setDeviceName(deviceName);
-        groupListBean.setDeviceEnglishName(deviceEnglishName);
-        groupListBean.setImage_device(mipmap);
-        groupListBean.setSortId(sortId);
-        groupList.add(groupListBean);
-    }
-
 
     @Override
     public void onDestroyView() {
@@ -260,13 +275,169 @@ public class DeviceAddPage extends HeadPage {
         }
     }
 
+//    @Override
+//    protected void setStateBarFixer() {
+//        if (form == 1){
+//            super.setStateBarFixer();
+//        }else {
+//            super.setStateBarFixer();
+//        }
+//
+//    }
+private class ElemeLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
+
+    private Context mContext;
+
     @Override
-    protected void setStateBarFixer() {
-        if (form == 1){
-            super.setStateBarFixer();
-        }else {
-            super.setStateBarFixer();
+    public void setContext(Context context) {
+        mContext = context;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.default_adapter_linkage_primary;
+    }
+
+    @Override
+    public int getGroupTitleViewId() {
+        return R.id.tv_group;
+    }
+
+    @Override
+    public int getRootViewId() {
+        return R.id.layout_group;
+    }
+
+    @Override
+    public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
+        LogUtils.i(TAG, "onBindViewHolde title:" + title);
+        TextView tvTitle = ((TextView) holder.mGroupTitle);
+//            tvTitle.setTextSize(16);
+        tvTitle.setText(title);
+//            tvTitle.setBackgroundColor(mContext.getResources().getColor(
+//                    selected ? com.robam.roki.ui.view.linkrecipetag.R.color.colorPurple : com.robam.roki.ui.view.linkrecipetag.R.color.colorWhite));
+        int target = SkinCompatResources.getInstance().getTargetResId(mContext, R.color.text_color_net_err);
+        target = (target != 0)?target:R.color.text_color_net_err;
+        tvTitle.setTextColor(ContextCompat.getColor(mContext,
+                selected ? R.color.text_select_color : target));
+        tvTitle.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
+        tvTitle.setFocusable(selected);
+        tvTitle.setFocusableInTouchMode(selected);
+        tvTitle.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
+    }
+
+    @Override
+    public void onItemClick(LinkagePrimaryViewHolder holder, View view, String title) {
+        //TODO
+    }
+
+}
+
+    private class ElemeLinkageSecondaryAdapterConfig implements
+            ILinkageSecondaryAdapterConfig<DeviceTagGroupItem.ItemInfo> {
+
+        private Context mContext;
+
+        @Override
+        public void setContext(Context context) {
+            mContext = context;
         }
+
+        @Override
+        public int getGridLayoutId() {
+            return R.layout.item_device_tag_adapter_secondary_grid;
+        }
+
+        @Override
+        public int getLinearLayoutId() {
+            return R.layout.item_recipe_tag_adapter_secondary_linear;
+        }
+
+        @Override
+        public int getHeaderLayoutId() {
+            return R.layout.default_adapter_linkage_secondary_header;
+        }
+
+        @Override
+        public int getFooterLayoutId() {
+            return 0;
+        }
+
+        @Override
+        public int getHeaderTextViewId() {
+            return R.id.secondary_header;
+        }
+
+        @Override
+        public int getSpanCountOfGridMode() {
+            return SPAN_COUNT_FOR_GRID_MODE;
+        }
+
+        @Override
+        public void onBindViewHolder(final LinkageSecondaryViewHolder holder,
+                                     final BaseGroupedItem<DeviceTagGroupItem.ItemInfo> item) {
+
+            LogUtils.i(TAG, "item header:" + item.header + " item.info.getName:" + item.info.getName() + " item Title:" + item.info.getTitle());
+            ((TextView) holder.getView(R.id.tv_device_tag_name)).setText(item.info.getName());
+            ImageView imageView = holder.getView(R.id.iv_device_tag);
+            GlideApp.with(cx).load(item.info.getIconUrl()).into(imageView);
+            holder.getView(R.id.iv_goods_item).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (TextUtils.isEmpty(item.info.getName())) {
+
+                        return;
+                    }
+
+                    if ("YYJ02".equals(item.info.getDp())) {//有屏
+                        Bundle bundle = new Bundle();
+                        bundle.putString("NetImgUrl", item.info.getImgUrl());
+                        bundle.putString("displayType", item.info.getDisplayType());
+                        bundle.putString("strDeviceName", item.info.getName());
+                        UIService.getInstance().postPage(PageKey.DeviceScan, bundle);
+                    } else if ("YYJ01".equals(item.info.getDp())) {//无屏
+                        SwitchToWiFiConnectPage(item);
+                    }
+//                    else if (strDeviceName.contains("找不到")) {
+//                        UIService.getInstance().postPage(PageKey.CantfindDevice);
+//                    }
+                    else {
+                        SwitchToWiFiConnectPage(item);
+                    }
+                }
+            });
+
+        }
+
+        @Override
+        public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
+                                           BaseGroupedItem<DeviceTagGroupItem.ItemInfo> item) {
+
+            ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
+        }
+
+        @Override
+        public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
+                                           BaseGroupedItem<DeviceTagGroupItem.ItemInfo> item) {
+
+        }
+    }
+    private void SwitchToWiFiConnectPage(BaseGroupedItem<DeviceTagGroupItem.ItemInfo> item) {
+        Bundle bundle = new Bundle();
+        bundle.putString("NetImgUrl", item.info.getImgUrl());
+        bundle.putString("NetTips", item.info.getNetTips());
+        bundle.putString("displayType", item.info.getDisplayType());
+        bundle.putString("chnName", item.info.getGroup());
+        bundle.putString("strDeviceName", item.info.getName());
+        LogUtils.i("20170802", "strDeviceName::" + item.info.getName());
+        LogUtils.i("20170227", "NetTips:" + item.info.getNetTips());
+
+       /* if ("9W70".equals(strDeviceName)||"9B39".equals(strDeviceName)){
+            UIService.getInstance().postPage(PageKey.DeviceZJWifiConnect, bundle);
+        }else{*/
+        UIService.getInstance().postPage(PageKey.DeviceWifiConnect, bundle);
+        //}
+
 
     }
 }

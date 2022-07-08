@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/mine_white_background"
+    android:orientation="vertical">
+
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#00ffffff" />
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/title_layout_device_function"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/shape_kitchen_bg_round"
+        android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_89">
+        <TextView
+            android:id="@+id/tv_func"
+            android:text="漂洗剂消息通知"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_18"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+
+        <com.robam.widget.view.SwitchButton
+            android:id="@+id/sb_notifi_1"
+            tools:ignore="MissingClass,RelativeOverlap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20" />
+
+        <TextView
+            android:text="关闭后，将不再提醒缺少漂洗剂。"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_6"
+            android:layout_below="@id/tv_func"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/sp_12" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_dishturb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_mode" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_89">
+
+            <TextView
+                android:id="@+id/tv_func1"
+                android:text="水软盐消息通知"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_18"
+                android:textColor="@color/text_color_device_category"
+                android:textSize="@dimen/sp_20" />
+
+            <com.robam.widget.view.SwitchButton
+                android:id="@+id/sb_notifi_2"
+                tools:ignore="MissingClass,RelativeOverlap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_20" />
+
+            <TextView
+                android:text="关关闭后，将不再通知缺少水软盐。"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_below="@id/tv_func1"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/sp_12" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

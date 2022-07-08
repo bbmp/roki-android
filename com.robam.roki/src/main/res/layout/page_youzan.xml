@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/c14"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/img_youzan_back"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:src="@drawable/ic_return_selector"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:paddingRight="32dp"
+            android:textColor="@color/gray"
+            android:maxLines="1"
+            android:text=""/>
+
+
+    </LinearLayout>
+
+
+    <com.youzan.sdk.web.plugin.YouzanBrowser
+        android:id="@+id/youzan_browser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

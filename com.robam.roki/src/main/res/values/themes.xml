@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="RokiFullScreenTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="RokiFullScreenTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="RokiFullScreenTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

@@ -20,10 +20,11 @@ import com.robam.common.pojos.device.Pot.Pot;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.ui.PageArgumentKey;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 
 /**
@@ -60,7 +61,7 @@ public class PotOtherFuncAdapter extends RecyclerView.Adapter<PotOtherFuncViewHo
     public PotOtherFuncViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
         View view = mInflater.inflate(R.layout.item_pot_otherfunc_page, parent, false);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         PotOtherFuncViewHolder otherFuncViewHolder = new PotOtherFuncViewHolder(view);
         otherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,21 +79,35 @@ public class PotOtherFuncAdapter extends RecyclerView.Adapter<PotOtherFuncViewHo
         if (mDatas != null && mDatas.size() > 0) {
 
             if ("automatiCooking".equals(mDatas.get(position).functionCode)) {
-                Glide.with(mContext)
+                Glide.with(cx)
                         .load(mDatas.get(position).backgroundImg)
 //                        .crossFade()
                         .into(holder.mImageView);
                 holder.mTvName.setText(mDatas.get(position).functionName);
                 holder.mTvDesc.setText(mDatas.get(position).msg);
             } else if ("tobaccoPotLinkage".equals(mDatas.get(position).functionCode)) {
-                Glide.with(mContext)
+                Glide.with(cx)
                         .load(mDatas.get(position).backgroundImg)
 //                        .crossFade()
                         .into(holder.mImageView);
                 holder.mTvName.setText(mDatas.get(position).functionName);
                 holder.mTvDesc.setText(mDatas.get(position).msg);
             } else if ("dryBurningWarning".equals(mDatas.get(position).functionCode)) {
-                Glide.with(mContext)
+                Glide.with(cx)
+                        .load(mDatas.get(position).backgroundImg)
+//                        .crossFade()
+                        .into(holder.mImageView);
+                holder.mTvName.setText(mDatas.get(position).functionName);
+                holder.mTvDesc.setText(mDatas.get(position).msg);
+            }else if ("curveCooking".equals(mDatas.get(position).functionCode)) {
+                Glide.with(cx)
+                        .load(mDatas.get(position).backgroundImg)
+//                        .crossFade()
+                        .into(holder.mImageView);
+                holder.mTvName.setText(mDatas.get(position).functionName);
+                holder.mTvDesc.setText(mDatas.get(position).msg);
+            }else if ("favoriteCooking".equals(mDatas.get(position).functionCode)) {
+                Glide.with(cx)
                         .load(mDatas.get(position).backgroundImg)
 //                        .crossFade()
                         .into(holder.mImageView);

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/item_recipe_detail_step_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_27"
+        android:layout_marginTop="@dimen/dp_8"
+        android:text="步骤一"
+        android:textColor="@color/text_color_device"
+        android:textSize="@dimen/dp_16" />
+
+    <ImageView
+        android:id="@+id/item_recipe_detail_step_img"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_68"
+        android:layout_below="@+id/item_recipe_detail_step_number"
+        android:layout_marginLeft="@dimen/dp_27"
+        android:layout_marginTop="@dimen/dp_12"
+
+        android:layout_marginRight="@dimen/dp_27"
+        android:background="@drawable/shape_input_curve_et"
+        android:scaleType="fitXY" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_recipe_detail_step_number"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_toRightOf="@+id/item_recipe_detail_step_img"
+        android:background="@drawable/shape_input_curve_et">
+
+        <ImageView
+            android:id="@+id/item_add_cooked_change_view"
+
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_44"
+
+            android:layout_marginLeft="@dimen/dp_27"
+            android:background="@drawable/shape_input_curve_et"
+            android:src="@mipmap/icon_audio_input"
+            android:text="语音"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/item_add_cooked_view_picture_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/item_add_cooked_change_view"
+            android:text="按住输入"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/item_add_cooked_view_picture_txt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_68"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_marginRight="@dimen/dp_26"
+            android:layout_toRightOf="@+id/item_add_cooked_change_view"
+            android:background="@drawable/shape_recipe_name_bg"
+
+            android:gravity="center_vertical"
+
+            android:hint="添加步骤说明"
+            android:paddingLeft="@dimen/dp_16"
+            android:textColor="@color/step_text_main_color"
+            android:textSize="@dimen/sp_18" />
+
+
+        <RelativeLayout
+            android:id="@+id/item_add_cooked_view_player_audio"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginRight="@dimen/dp_26"
+            android:layout_toRightOf="@+id/item_add_cooked_change_view"
+            android:background="@drawable/shape_icon_record_bg"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:id="@+id/item_add_cooked_view_recorde"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:src="@mipmap/icon_audio_image" />
+
+            <TextView
+                android:id="@+id/item_add_cooked_view_step_audio_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:layout_toRightOf="@+id/item_add_cooked_view_recorde"
+
+                android:text="点击播放"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_18" />
+
+
+            <ImageView
+                android:id="@+id/item_add_cooked_view_step_audio_icon_delete"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_7"
+                android:src="@mipmap/icon_audio_delete"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

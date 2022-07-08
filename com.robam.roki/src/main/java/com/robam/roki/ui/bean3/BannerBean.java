@@ -31,5 +31,7 @@ public class BannerBean {
         public String groundingDateTime;
         public Object cronDate;
         public String resourceName;
+        public String secondTitle;//分享文案
+        public String forwardImageUrl;//分享图片链接
     }
 }

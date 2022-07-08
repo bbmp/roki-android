@@ -1,80 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/annonce.main.coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="false"
+    android:background="@drawable/shape_bg_main"
+    android:fitsSystemWindows="true"
     tools:ignore="RtlHardcoded">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/top_week_appbar"
+    <View
+        android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="0dp"
+        android:background="@color/transparent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status_bar_fix">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/tv_top_week_back"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?colorPrimary"
-            app:expandedTitleMarginBottom="94dp"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:expandedTitleTextAppearance="@style/CollapsingTextAppearance.Inverse"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            android:layout_centerInParent="true"
+            android:text="上周TOP榜单"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
 
-            <ImageView
-                android:id="@+id/iv_top_week_title_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/img_week_top_bg" />
+    </RelativeLayout>
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/top_week_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@null"
-                android:layout_marginTop="26dp"
-                app:layout_collapseMode="pin">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_top_week_back"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/icon_back_white" />
-
-                    <TextView
-                        android:id="@+id/tv_top_week_toolbar_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/roki_important_text_color"
-                        android:textSize="18sp"
-                        android:layout_centerInParent="true"
-                        android:visibility="invisible"
-                        android:text="上周TOP榜单" />
-                </RelativeLayout>
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/xrv_top_recipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:behavior_overlapTop="30dp"
-        android:background="@drawable/bg_top_week_2"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_8"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rl_title"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/xrv_top_recipe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

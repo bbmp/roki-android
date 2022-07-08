@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgHead"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_device_header_stove" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imgHead"
+                android:layout_marginRight="7dp"
+                android:layout_toLeftOf="@+id/imgHead"
+                android:gravity="right"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="电磁灶"
+                    android:textColor="@color/c03"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Induction Hob"
+                    android:textColor="@color/c03"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp">
+
+            <FrameLayout
+                android:id="@+id/divHint"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="@color/device_board_bg">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="15dp"
+                    android:text="为了安全，请在电磁灶上开启"
+                    android:textColor="#7c7c7c"
+                    android:textSize="15sp" />
+
+
+                <RelativeLayout
+                    android:id="@+id/divTransparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/device_board_translucent"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imgCornerLeft"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:padding="2dp"
+                        android:src="@mipmap/ic_device_stove_corner_1" />
+
+                    <ImageView
+                        android:id="@+id/imgCornerRight"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:padding="2dp"
+                        android:src="@mipmap/ic_device_stove_corner_2" />
+                </RelativeLayout>
+
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/divHint"
+                android:orientation="horizontal">
+
+                <com.robam.roki.ui.view.DeviceStoveHeadView
+                    android:id="@+id/leftView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <RelativeLayout
+                    android:layout_width="2dp"
+                    android:layout_height="300dp"
+                    android:background="@color/device_board_bg">
+
+                    <View
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:background="#484848" />
+
+                </RelativeLayout>
+
+
+                <com.robam.roki.ui.view.DeviceStoveHeadView
+                    android:id="@+id/rightView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgLock"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/divHint"
+                android:layout_centerHorizontal="true"
+                android:padding="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_device_stove_lock" />
+        </RelativeLayout>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="防止小朋友操作，离开时可开启童锁！"
+            android:textColor="@color/c03"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="*开启童锁，其它按键将被锁住，不能操作！"
+            android:textColor="@color/c03"
+            android:textSize="12sp" />
+    </LinearLayout>
+</ScrollView>

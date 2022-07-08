@@ -47,8 +47,10 @@ package com.robam.softap;
     /**
      *  设备(固件)发射出的 WiFi, App 一开始需要代码的方式连接上这个 WiFi
      */
-    public static final String MXHCIP_LIGHT_WIFI_SSID = "ROKI-OHOS-";
-    public static final String MXHCIP_LIGHT_WIFI_PASSWORD = "roki123456";
+//    public static final String MXHCIP_LIGHT_WIFI_SSID = "ROKI-OHOS-";
+     public static final String MXHCIP_LIGHT_WIFI_SSID = "ROKI-";
+
+     public static final String MXHCIP_LIGHT_WIFI_PASSWORD = "roki123456";
 
     public static final String DISCOVERY_FAILURE_REASON_SOCKET_TIMEOUT = "server socket timeout";
     public static final String DISCOVERY_FAILURE_REASON_SOCKET_ACCEPT_FAILED = "tcp server socket accept failed";

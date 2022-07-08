@@ -120,7 +120,7 @@ public class DialogType_23 extends BaseDialog {
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
                 // 去掉下划线
-                ds.setColor(Color.parseColor("#EFCE17"));
+                ds.setColor(Color.parseColor("#ff61acff"));
                 ds.setUnderlineText(false);
             }
 
@@ -144,7 +144,7 @@ public class DialogType_23 extends BaseDialog {
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
                 // 去掉下划线
-                ds.setColor(Color.parseColor("#EFCE17"));
+                ds.setColor(Color.parseColor("#ff61acff"));
                 ds.setUnderlineText(false);
             }
 

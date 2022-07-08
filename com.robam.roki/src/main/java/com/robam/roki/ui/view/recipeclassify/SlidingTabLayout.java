@@ -18,6 +18,7 @@ import com.legent.utils.LogUtils;
 import com.robam.roki.R;
 import com.robam.roki.ui.view.networkoptimization.SettingWifiPage;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by moon.zhong on 2015/3/9.
@@ -260,7 +261,7 @@ public class SlidingTabLayout extends LinearLayout {
             TextView selectView = (TextView) getChildAt(mSelectedPosition);
 //            if (mSelectedPosition == 0 && )
             LogUtils.i("20180303", "position:" + position + " selectView:" + selectView.getText());
-            if (getContext().getString(R.string.recipe_class_hot).equals(selectView.getText()) && position == 0){
+            if (cx.getString(R.string.recipe_class_hot).equals(selectView.getText()) && position == 0){
                 selectView.setTextColor(0Xfff85c3d);
             }else {
                 selectView.setTextColor(0Xff5d5d5d);

@@ -1,9 +1,11 @@
 package com.robam.common.ui;
 
+import java.io.Serializable;
+
 import cn.com.heaton.blelibrary.ble.model.BleDevice;
 import cn.com.heaton.blelibrary.ble.model.ScanRecord;
 
-public class BleRssiDevice extends BleDevice {
+public class BleRssiDevice extends BleDevice implements Serializable {
     private ScanRecord scanRecord;
     private int rssi;
     private long rssiUpdateTime;

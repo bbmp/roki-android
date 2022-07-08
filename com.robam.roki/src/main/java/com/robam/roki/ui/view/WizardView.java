@@ -30,6 +30,7 @@ import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.form.MainActivity;
+import com.robam.roki.ui.form.WelcomeActivity;
 import com.robam.roki.ui.page.login.helper.CmccLoginHelper;
 
 import butterknife.ButterKnife;
@@ -116,7 +117,7 @@ public class WizardView extends FrameLayout {
     public void onClickStroll() {
 //        if (isCheck) {
             PreferenceUtils.setBool(PageArgumentKey.IsFirstUse, false);
-            MainActivity.start((Activity) getContext());
+            WelcomeActivity.start((Activity) getContext());
 //        } else {
 //            ToastUtils.show("请阅读并同意协议及隐私政策", Toast.LENGTH_SHORT);
 //        }
@@ -128,7 +129,7 @@ public class WizardView extends FrameLayout {
         if (!view.isInEditMode()) {
             ButterKnife.inject(this, view);
         }
-        ImageUtils.displayImage(cx, imagesUrl, imgBg);
+        ImageUtils.displayImage(imagesUrl, imgBg);
         tvtLogin.setBackground(getResources().getDrawable(R.drawable.shape_button_background_selected));
 //        txtStroll.setBackground(getResources().getDrawable(R.drawable.shape_button_background_selected));
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getResources().getString(R.string.roki_priviacy_agreement_title));

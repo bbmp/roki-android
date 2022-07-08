@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/titlebar_icon_style"
+    android:layout_width="?android:actionBarSize"
+    android:layout_height="?android:actionBarSize"
+    android:layout_gravity="center"
+    android:src="@drawable/ic_baseline_arrow_back_black_24"
+    tools:ignore="MissingDefaultResource" />

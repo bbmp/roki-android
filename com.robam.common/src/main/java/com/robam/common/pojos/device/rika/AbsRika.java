@@ -95,6 +95,12 @@ public class AbsRika extends AbsDeviceHub implements IRika, Serializable {
     public short steamOvenAbolishWaterTake;//抽废水状态
     public short steamOvenAbolishWaterSwitchStatus;//抽废水开关
 
+//    public int subsetStatusOffTotal;//一体机连续离线次数
+    public int steamOvenStatusOffTotal;//一体机连续离线次数
+    public int steamStatusOffTotal;//蒸箱连续离线次数
+    public int sterilStatusOffTotal;//消毒柜连续离线次数
+
+
     protected short terminalType = TerminalType.getType();
     RikaAlarmCodeBean mRikaAlarmCodeBean = null;
     RikaSmartParams smartParams = new RikaSmartParams();

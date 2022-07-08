@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.legent.plat.events.PageBackEvent;
-//import com.legent.ui.ext.BaseActivity;
+import com.legent.ui.ext.BaseActivity;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.robam.common.pojos.Recipe;

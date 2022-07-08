@@ -3,15 +3,21 @@ package com.robam.roki.ui.view;
 import static com.robam.roki.ui.activity3.ActivityWebViewPage.kitchenKnowledge_url;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -24,17 +30,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.plat.Plat;
+import com.legent.plat.events.MessageEvent;
+import com.legent.plat.events.MessageEventNumber;
 import com.legent.plat.events.PageBackEvent;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
+import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.TimeUtils;
 import com.legent.utils.api.NetworkUtils;
-import com.legent.utils.api.ToastUtils;
-import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.DeviceType;
 import com.robam.common.pojos.Recipe;
@@ -43,30 +50,38 @@ import com.robam.common.pojos.RecipeTheme;
 import com.robam.common.services.CookbookManager;
 import com.robam.common.services.StoreService;
 import com.robam.common.util.StatusBarUtils;
-import com.robam.roki.MobApp;
 import com.robam.roki.R;
 import com.robam.roki.model.bean.ThemeRecipeMultipleItem;
 import com.robam.roki.model.bean.TopicMultipleItem;
+import com.robam.roki.net.request.bean.MessageUserUnreadBean;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
+import com.robam.roki.ui.activity3.MessageActivity;
 import com.robam.roki.ui.activity3.RWebActivity;
 import com.robam.roki.ui.adapter.RecipeTopicAdapter;
 import com.robam.roki.ui.adapter.SelectedTopicsAdapter;
 import com.robam.roki.ui.adapter3.CustomLoadMoreHomeView;
+import com.robam.roki.ui.adapter3.CustomLoadMoreView;
 import com.robam.roki.ui.adapter3.MBannerAdapter;
 import com.robam.roki.ui.adapter3.RvRecipeThemeAdapter;
 import com.robam.roki.ui.bean3.BannerBean;
+import com.robam.roki.ui.helper3.DialogHelper;
 import com.robam.roki.ui.helper3.MyIndicator;
 import com.robam.roki.ui.helper3.UploadFileHelper;
 
 import com.robam.roki.ui.page.RecipeDetailPage;
 import com.robam.roki.ui.page.SelectThemeDetailPage;
+import com.robam.roki.ui.page.login.helper.CmccLoginHelper;
 import com.robam.roki.ui.page.mine.MyBaseView;
+import com.robam.roki.utils.LoginUtil;
+import com.robam.roki.utils.suspendedball.SystemUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.indicator.BaseIndicator;
 import com.youth.banner.indicator.CircleIndicator;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.InjectView;
 
 /**
  * @author wwq
@@ -133,13 +148,17 @@ public class HomeRecipeView32 extends MyBaseView {
     /**
      * 菜谱数据 用于排除
      */
-    private ArrayList<Recipe> recipeDatas = new ArrayList<>();
+    private ArrayList<Long> recipeIds = new ArrayList<>();
     /**
      * 页数
      */
     private int pageNo = 0;
     private Banner banner;
     private RecyclerView rvFootHome;
+    //猜你喜欢
+    private RelativeLayout rlSelectTopics;
+
+    LinearLayout llEmpty;
 
     public HomeRecipeView32(Context context) {
         super(context);
@@ -157,33 +176,54 @@ public class HomeRecipeView32 extends MyBaseView {
         return R.layout.view_home_recipe_new3_2;
     }
 
+
+
+    @Subscribe
+    public void onEvent(MessageEventNumber event) {
+                if (!Plat.accountService.isLogon()||event.getNumber()==0) {
+                    findViewById(R.id.textview_home_device_number).setVisibility(View.GONE);
+                }else{
+                    if (event.getNumber()<=99) {
+
+                        ((TextView) findViewById(R.id.textview_home_device_number)).setText(event.getNumber() + "");
+                    }else {
+
+                        ((TextView) findViewById(R.id.textview_home_device_number)).setText("99+");
+                    }
+                    findViewById(R.id.textview_home_device_number).setVisibility(View.VISIBLE);
+                }
+    }
+
+
     @Override
     protected void initView() {
 //        StatusBarUtils.setColor(cx, Color.WHITE);
+        setStateBarFixer(cx);
         rvHomeRecipe = findViewBy(R.id.rv_home_recipe);
         srlHome = findViewBy(R.id.srl_home);
         etReipeSearch = findViewBy(R.id.et_recipe_search);
         rl_recipe_search = findViewBy(R.id.rl_recipe_search);
         ivRecipeVoice = findViewBy(R.id.iv_recipe_voice);
         ivToTop = findViewBy(R.id.iv_to_top);
+        llEmpty = findViewBy(R.id.ll_empty);
         rvHomeRecipe.setLayoutManager(new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL));
-        RvRecipeThemeAdapter rvRecipeThemeAdapter2 = new RvRecipeThemeAdapter();
-        rvHomeRecipe.setAdapter(rvRecipeThemeAdapter2);
-//        rvRecipeThemeAdapter.getLoadMoreModule().setLoadMoreView(new CustomLoadMoreHomeView());
-//        rvRecipeThemeAdapter.getLoadMoreModule().setOnLoadMoreListener(new OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore() {
-//                loadRecipeData();
-//            }
-//        });
+        rvRecipeThemeAdapter = new RvRecipeThemeAdapter();
+        rvHomeRecipe.setAdapter(rvRecipeThemeAdapter);
+        rvRecipeThemeAdapter.getLoadMoreModule().setLoadMoreView(new CustomLoadMoreView());
+        rvRecipeThemeAdapter.getLoadMoreModule().setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                loadRecipeData();
+            }
+        });
         View topView = activity.getLayoutInflater().inflate( R.layout.view_home_recipe_itme_top, null);
-        rvRecipeThemeAdapter2.addHeaderView(topView);
+        rvRecipeThemeAdapter.addHeaderView(topView);
 
-        View footView = activity.getLayoutInflater().inflate( R.layout.view_home_recipe_itme_foot, null);
-        rvRecipeThemeAdapter2.addFooterView(footView);
+//        View footView = activity.getLayoutInflater().inflate( R.layout.view_home_recipe_itme_foot, null);
+//        rvRecipeThemeAdapter2.addFooterView(footView);
 
         banner = (Banner)topView.findViewById(R.id.br_home);
-
+        rlSelectTopics = topView.findViewById(R.id.rl_select_theme_list);
 
         stove = topView.findViewById(R.id.home_recipe_ll_stove);
         combiSteamOven = topView.findViewById(R.id.home_recipe_ll_combi_steam_oven);
@@ -200,15 +240,23 @@ public class HomeRecipeView32 extends MyBaseView {
         rvWeekTopics.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         setOnClickListener(rl_recipe_search,etReipeSearch , ivRecipeVoice ,stove , combiSteamOven , oven , steamOven , more ,tvThemeMore ,tvWeekTopMore ,ivToTop , tvmore3);
 
-        rvFootHome = footView.findViewById(R.id.rv_home_foot);
-        rvFootHome.setLayoutManager(new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL));
-        rvRecipeThemeAdapter = new RvRecipeThemeAdapter();
-        rvFootHome.setAdapter(rvRecipeThemeAdapter);
-        rvRecipeThemeAdapter.getLoadMoreModule().setLoadMoreView(new CustomLoadMoreHomeView());
-        rvRecipeThemeAdapter.getLoadMoreModule().setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                loadRecipeData();
+//        rvFootHome = footView.findViewById(R.id.rv_home_foot);
+//        rvFootHome.setLayoutManager(new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL));
+//        rvRecipeThemeAdapter = new RvRecipeThemeAdapter();
+//        rvFootHome.setAdapter(rvRecipeThemeAdapter);
+//        rvRecipeThemeAdapter.getLoadMoreModule().setLoadMoreView(new CustomLoadMoreHomeView());
+//        rvRecipeThemeAdapter.getLoadMoreModule().setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore() {
+//                loadRecipeData();
+//            }
+//        });
+
+        findViewBy(R.id.home_recipe_img).setOnClickListener(view -> {
+            if (Plat.accountService.isLogon()) {
+                getContext().startActivity(new Intent(getContext(), MessageActivity.class));
+            }else{
+                CmccLoginHelper.getInstance().toLogin();
             }
         });
 
@@ -255,6 +303,7 @@ public class HomeRecipeView32 extends MyBaseView {
                 rvRecipeThemeAdapter.setNewInstance(new ArrayList<ThemeRecipeMultipleItem>());
                 getBannerRes();
                 getByTagOtherThemes();
+                getWeekRecipeTops();
                 getThemeHttpData();
             }
         });
@@ -263,10 +312,43 @@ public class HomeRecipeView32 extends MyBaseView {
 
     @Override
     protected void initData() {
-        getBannerRes();
-        getByTagOtherThemes();
-        getWeekRecipeTops();
-        getThemeHttpData();
+
+        if (!NetworkUtils.isConnect(getContext())){
+            llEmpty.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!NetworkUtils.isConnect(getContext())){
+                        // 警告对话框
+                        ProgressDialogHelper.setRunning(getContext(), true);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ProgressDialogHelper.setRunning(getContext(), false);
+                            }
+                        } , 1500);
+                    }else {
+//                        onRefresh();
+                        getBannerRes();
+                        getByTagOtherThemes();
+                        getWeekRecipeTops();
+                        getThemeHttpData();
+                        rvHomeRecipe.setVisibility(View.VISIBLE);
+                        llEmpty.setVisibility(GONE);
+                    }
+
+                }
+            });
+            llEmpty.setVisibility(VISIBLE);
+            rvHomeRecipe.setVisibility(GONE);
+            DialogHelper.notNetDialog(getContext());
+        }else {
+            getBannerRes();
+            getByTagOtherThemes();
+            getWeekRecipeTops();
+            getThemeHttpData();
+        }
+
     }
 
     @Override
@@ -301,16 +383,14 @@ public class HomeRecipeView32 extends MyBaseView {
     /**
      * 设备菜谱点击调用(可提供外部调用)
      */
-    public static void recipeCategoryClick(String category) {
-        boolean connect = NetworkUtils.isConnect(MobApp.getInstance());
-        if (!connect){
-            ToastUtils.showLong("当前网络不可用，请检查网络连接");
-            return;
-        }
+    public void recipeCategoryClick(String category) {
         Bundle bundle = new Bundle();
         bundle.putString(PageArgumentKey.RecipeId, category);
         UIService.getInstance().postPage(PageKey.RecipeCategoryList, bundle);
     }
+
+
+
 
     /**
      * 获取banner资源图片
@@ -361,8 +441,9 @@ public class HomeRecipeView32 extends MyBaseView {
                                             Bundle bd = new Bundle();
                                             bd.putString(PageArgumentKey.title, item.title);
                                             bd.putString(PageArgumentKey.Url, item.resource);
-                                            bd.putString("Share_Img",item.imageUrl);
+                                            bd.putString("Share_Img",item.forwardImageUrl);
                                             bd.putString(PageArgumentKey.H5Key, "common_act");
+                                            bd.putString("shareContText", item.secondTitle);
                                             UIService.getInstance().postPage(PageKey.ActivityWebViewPage,bd);
                                         }
 
@@ -383,8 +464,9 @@ public class HomeRecipeView32 extends MyBaseView {
                                         Bundle bd = new Bundle();
                                         bd.putString(PageArgumentKey.title, item.title);
                                         bd.putString(PageArgumentKey.Url, item.resource);
-                                        bd.putString("Share_Img",item.imageUrl);
+                                        bd.putString("Share_Img",item.forwardImageUrl);
                                         bd.putString(PageArgumentKey.H5Key, "special_act");
+                                        bd.putString("shareContText", item.secondTitle);
                                         UIService.getInstance().postPage(PageKey.ActivityWebViewPage,bd);
                                     }else {
 //                                        ToastUtils.show("");
@@ -415,21 +497,20 @@ public class HomeRecipeView32 extends MyBaseView {
      * 获取某个标签或推荐或周上新的主题
      */
     public void getByTagOtherThemes() {
-        RokiRestHelper.getByTagOtherThemes(null, false, pageNo, 10, -1,
-                Reponses.RecipeThemeResponse.class, new RetrofitCallback<Reponses.RecipeThemeResponse>() {
-                    @Override
-                    public void onSuccess(Reponses.RecipeThemeResponse recipeThemeResponse) {
-                        if (null != recipeThemeResponse && null != recipeThemeResponse.items) {
-                            recipeThemeList.addAll(recipeThemeResponse.items) ;
-                            loadRecipeData();
-                        }
-                    }
+        RokiRestHelper.getByTagOtherThemes(null, false, pageNo, 10, -1, new Callback<List<RecipeTheme>>() {
+            @Override
+            public void onSuccess(List<RecipeTheme> recipeThemes) {
+                recipeThemeList.clear();
+                recipeIds.clear();
+                recipeThemeList.addAll(recipeThemes) ;
+                loadRecipeData();
+            }
 
-                    @Override
-                    public void onFaild(String err) {
-                        rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
-                        srlHome.setRefreshing(false);
-                    }
+            @Override
+            public void onFailure(Throwable t) {
+                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
+                srlHome.setRefreshing(false);
+            }
         });
     }
 
@@ -441,32 +522,28 @@ public class HomeRecipeView32 extends MyBaseView {
             rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
             return;
         }
-        RokiRestHelper.getbyTagOtherCooks(null , true, pageNo, 10, -1 , getIds(recipeDatas),
-                Reponses.PersonalizedRecipeResponse.class, new RetrofitCallback<Reponses.PersonalizedRecipeResponse>() {
-                    @Override
-                    public void onSuccess(Reponses.PersonalizedRecipeResponse personalizedRecipeResponse) {
-                        if (null != personalizedRecipeResponse) {
-                            List<Recipe> recipes = personalizedRecipeResponse.cookbooks;
-                            if (recipes == null || recipes.size() == 0 ) {
-                                LogUtils.i(TAG, " recipes isEmpty!");
-                                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
-                            }else {
-                                recipeDatas.addAll(recipes);
-                                List<ThemeRecipeMultipleItem> themeRecipeMultipleItemList = new ArrayList<>();
-                                for (Recipe recipe : recipes) {
-                                    themeRecipeMultipleItemList.add(new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_RECIPE_MSG_TEXT, recipe));
-                                }
-                                settingData(themeRecipeMultipleItemList);
-                            }
-                            srlHome.setRefreshing(false);
-                        }
+        RokiRestHelper.getbyTagOtherCooks(null , true, pageNo, 10, -1 , recipeIds, new Callback<List<Recipe>>() {
+            @Override
+            public void onSuccess(List<Recipe> recipes) {
+                if (recipes == null || recipes.size() == 0 ) {
+                    LogUtils.i(TAG, " recipes isEmpty!");
+                    rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
+                }else {
+                    setIds(recipes);
+                    List<ThemeRecipeMultipleItem> themeRecipeMultipleItemList = new ArrayList<>();
+                    for (Recipe recipe : recipes) {
+                        themeRecipeMultipleItemList.add(new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_RECIPE_MSG_TEXT, recipe));
                     }
+                    settingData(themeRecipeMultipleItemList);
+                }
+                srlHome.setRefreshing(false);
+            }
 
-                    @Override
-                    public void onFaild(String err) {
-                        rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
-                        srlHome.setRefreshing(false);
-                    }
+            @Override
+            public void onFailure(Throwable t) {
+                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
+                srlHome.setRefreshing(false);
+            }
         });
     }
 
@@ -498,37 +575,39 @@ public class HomeRecipeView32 extends MyBaseView {
     private void getWeekRecipeTops() {
         String weekTime = TimeUtils.getlastWeekTime();
         LogUtils.i(TAG, "weekTime:" + weekTime);
-        RokiRestHelper.getWeekTops(weekTime, 0, 5, Reponses.WeekTopsResponse.class, new RetrofitCallback<Reponses.WeekTopsResponse>() {
+        RokiRestHelper.getWeekTops(weekTime, 0, 5, new Callback<List<Recipe>>() {
             @Override
-            public void onSuccess(Reponses.WeekTopsResponse weekTopsResponse) {
-                if (null != weekTopsResponse && null != weekTopsResponse.payload) {
-                    LogUtils.i(TAG, "getWeekTops onSuccess");
-                    List<Recipe> recipes = weekTopsResponse.payload;
+            public void onSuccess(final List<Recipe> recipes) {
+                LogUtils.i(TAG, "getWeekTops onSuccess");
+//                if (recipes.isEmpty()) {
+//                    rlLastWeekTopList.setVisibility(GONE);
+//                    return;
+//                }
 
-                    for (Recipe recipe : recipes) {
-                        LogUtils.i(TAG, "imgLarge:" + recipe.imgLarge);
-                        recipe.setItemType(Recipe.IMG);
-                    }
-                    recipes.add(new Recipe(Recipe.TEXT));
-                    mRecipeTopicAdapter = new RecipeTopicAdapter(recipes);
-                    rvWeekTopics.setAdapter(mRecipeTopicAdapter);
-                    mRecipeTopicAdapter.setOnItemClickListener(new OnItemClickListener() {
-                        @Override
-                        public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                            LogUtils.i(TAG, "recipes.size:" + recipes.size() + " position:" + position);
-                            if (recipes.size() == position + 1) {
-                                UIService.getInstance().postPage(PageKey.TopWeekPage);
-                            } else {
-                                RecipeDetailPage.show(recipes.get(position).id, recipes.get(position).sourceType);
-                            }
-                        }
-                    });
+                for (Recipe recipe : recipes) {
+                    LogUtils.i(TAG, "imgLarge:" + recipe.imgLarge);
+                    recipe.setItemType(Recipe.IMG);
                 }
+                recipes.add(new Recipe(Recipe.TEXT));
+                mRecipeTopicAdapter = new RecipeTopicAdapter(recipes);
+                rvWeekTopics.setAdapter(mRecipeTopicAdapter);
+                mRecipeTopicAdapter.setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                        LogUtils.i(TAG, "recipes.size:" + recipes.size() + " position:" + position);
+                        if (recipes.size() == position + 1) {
+                            UIService.getInstance().postPage(PageKey.TopWeekPage);
+                        } else {
+                            RecipeDetailPage.show(recipes.get(position).id, recipes.get(position).sourceType);
+                        }
+                    }
+                });
+
             }
 
             @Override
-            public void onFaild(String err) {
-                LogUtils.i(TAG, "onFailure " + err);
+            public void onFailure(Throwable t) {
+                LogUtils.i(TAG, "onFailure " + t.toString());
             }
         });
     }
@@ -537,21 +616,22 @@ public class HomeRecipeView32 extends MyBaseView {
      * 精选专题列表
      */
     private void getThemeHttpData() {
-        RokiRestHelper.getThemeRecipeList(Reponses.RecipeThemeResponse.class, new RetrofitCallback<Reponses.RecipeThemeResponse>() {
+        CookbookManager.getInstance().getThemeRecipes(new Callback<List<RecipeTheme>>() {
             @Override
-            public void onSuccess(Reponses.RecipeThemeResponse recipeThemeResponse) {
-                if (null != recipeThemeResponse) {
-                    if (Plat.accountService.isLogon()) {
-                        getThemeCollection(recipeThemeResponse.items);
-                        return;
-                    }
-                    //设置精选专题
-                    setTheme(recipeThemeResponse.items);
+            public void onSuccess(final List<RecipeTheme> recipeThemes) {
+//                final ArrayList<String> timeDataList = new ArrayList<>();
+                if (Plat.accountService.isLogon()) {
+                    getThemeCollection(recipeThemes);
+                    return;
                 }
+                //设置精选专题
+                setTheme(recipeThemes);
+
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
+//                viewHomeRecipeRefresh.onRefreshComplete();
 
             }
         });
@@ -563,22 +643,20 @@ public class HomeRecipeView32 extends MyBaseView {
     private void getThemeCollection(List<RecipeTheme> themes) {
 
 //        ProgressDialogHelper.setRunning(cx, true);
-        RokiRestHelper.getMyFavoriteThemeRecipeList_new(Reponses.RecipeThemeResponse3.class, new RetrofitCallback<Reponses.RecipeThemeResponse3>() {
+        StoreService.getInstance().getMyFavoriteThemeRecipeList(new Callback<List<RecipeTheme>>() {
             @Override
-            public void onSuccess(Reponses.RecipeThemeResponse3 recipeThemeResponse3) {
-                if (null != recipeThemeResponse3) {
-                    List<RecipeTheme> recipeThemes = recipeThemeResponse3.recipeThemes;
-                    if (recipeThemes != null && recipeThemes.size() != 0) {
-                        setTheme(themeCollection(themes, recipeThemes));
-                    } else {
-                        setTheme(themes);
-                    }
+            public void onSuccess(List<RecipeTheme> recipeThemes) {
+                if (recipeThemes != null && recipeThemes.size() != 0) {
+                    setTheme(themeCollection(themes, recipeThemes));
+                } else {
+                    setTheme(themes);
                 }
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
 
+//                ProgressDialogHelper.setRunning(cx, false);
             }
         });
     }
@@ -611,6 +689,7 @@ public class HomeRecipeView32 extends MyBaseView {
 //            rlSelectThemeList.setVisibility(GONE);
 //            return;
 //        }
+        rlSelectTopics.setVisibility(View.VISIBLE);
         List<TopicMultipleItem> topicMultipleItemList = new ArrayList<TopicMultipleItem>() ;
         for (RecipeTheme recipeTheme : recipeThemes) {
             if (topicMultipleItemList.size() < 5) {
@@ -636,12 +715,12 @@ public class HomeRecipeView32 extends MyBaseView {
         });
     }
 
-    private ArrayList<Long> getIds(ArrayList<Recipe> recipes){
-        ArrayList<Long> ids = new ArrayList<>();
+    private void setIds(List<Recipe> recipes){
+
         for (Recipe recipe : recipes) {
-            ids.add(recipe.getID());
+            recipeIds.add(recipe.getID());
         }
-        return ids ;
+
     }
     /**
      * 模拟从专题详情页返回
@@ -658,12 +737,12 @@ public class HomeRecipeView32 extends MyBaseView {
                         || "RecipeDetailPage".equals(event.getPageName())
         ) {
             if (UIService.getInstance().isHome()) {
-                if (Build.VERSION.SDK_INT >= 21) {
-                    View decorView = activity.getWindow().getDecorView();
-                    decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-                    activity.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
-                    StatusBarUtils.setTextDark(getContext(), true);
-                }
+//                if (Build.VERSION.SDK_INT >= 21) {
+//                    View decorView = activity.getWindow().getDecorView();
+//                    decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//                    activity.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+//                    StatusBarUtils.setTextDark(getContext(), true);
+//                }
 //                getThemeHttpData();
             }
         }
@@ -676,5 +755,16 @@ public class HomeRecipeView32 extends MyBaseView {
         }
         return false;
     }
-
+    /**
+     * 设置状态栏占位
+     */
+    private void setStateBarFixer(Context context){
+        View mStateBarFixer = findViewBy(R.id.status_bar_fix);
+        if (mStateBarFixer != null){
+            ViewGroup.LayoutParams layoutParams = mStateBarFixer.getLayoutParams();
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            layoutParams.height = SystemUtils.getStatusBarHeight(context);
+            mStateBarFixer.setLayoutParams(layoutParams);
+        }
+    }
 }

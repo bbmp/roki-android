@@ -4,48 +4,64 @@
     style="@style/common_dialog_root_bg_layout_style">
 
     <LinearLayout
-        style="@style/common_dialog_root_layout_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:background="@drawable/shape_diglog_bg_splash"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="@dimen/dp_30"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/common_dialog_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="13dp"
-                android:paddingTop="14dp"
-                android:textSize="18sp"
-                android:textColor="@color/c20"
+                android:textSize="@dimen/sp_20"
+                android:textColor="@color/text_color_net_err"
+                android:layout_marginTop="@dimen/common_dialog_title_bottom_small_space"
                 android:layout_marginBottom="@dimen/common_dialog_title_bottom_small_space"
                 tools:text="对话框标题"/>
 
         </LinearLayout>
 
 
-        <View style="@style/common_dialog_btn_top_divider_style" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="38dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/common_dialog_cancel_btn"
-                style="@style/common_dialog_cancel_small_btn_style_new"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textSize="@dimen/sp_20"
+                android:textColor="@color/text_color_online"
+                android:background="@drawable/countdown_selector_3"
                 tools:text="取消" />
 
-            <View
-                android:id="@+id/common_dialog_btn_middle_divider"
-                style="@style/common_dialog_btn_vertical_divider_style"/>
+            <TextView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="wrap_content"/>
 
             <Button
                 android:id="@+id/common_dialog_ok_btn"
-                style="@style/common_dialog_cancel_small_btn_style_new"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:textColor="@color/text_color_exit_login"
+                android:background="@drawable/button_round_selector"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textSize="@dimen/sp_20"
                 tools:text="确定" />
         </LinearLayout>
     </LinearLayout>

@@ -1,0 +1,809 @@
+@startuml
+
+title __BASE's Class Diagram__\n
+
+  namespace com.robam.base {
+    abstract class com.robam.base.BaseActivity {
+        {static} + RESULT_ERROR : int
+        - mActivityCallbacks : SparseArray<OnActivityCallback>
+        + dispatchKeyEvent()
+        + finish()
+        + getBundle()
+        + getContentView()
+        + getContext()
+        + startActivityForResult()
+        + startActivityForResult()
+        + startActivityForResult()
+        + startActivityForResult()
+        {abstract} # getLayoutId()
+        # initActivity()
+        {abstract} # initData()
+        # initLayout()
+        # initSoftKeyboard()
+        {abstract} # initView()
+        # onActivityResult()
+        # onCreate()
+        # onDestroy()
+        # onNewIntent()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BaseActivity.OnActivityCallback {
+        {abstract} + onActivityResult()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    abstract class com.robam.base.BaseAdapter {
+        - mChildClickListeners : SparseArray<OnChildClickListener>
+        - mChildLongClickListeners : SparseArray<OnChildLongClickListener>
+        - mContext : Context
+        - mPositionOffset : int
+        - mRecyclerView : RecyclerView
+        + BaseAdapter()
+        + getContext()
+        + getRecyclerView()
+        + onAttachedToRecyclerView()
+        + onBindViewHolder()
+        + onDetachedFromRecyclerView()
+        + setOnChildClickListener()
+        + setOnChildLongClickListener()
+        + setOnItemClickListener()
+        + setOnItemLongClickListener()
+        # generateDefaultLayoutManager()
+        - checkRecyclerViewState()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BaseAdapter.OnChildClickListener {
+        {abstract} + onChildClick()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BaseAdapter.OnChildLongClickListener {
+        {abstract} + onChildLongClick()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BaseAdapter.OnItemClickListener {
+        {abstract} + onItemClick()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BaseAdapter.OnItemLongClickListener {
+        {abstract} + onItemLongClick()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    abstract class com.robam.base.BaseAdapter.ViewHolder {
+        + ViewHolder()
+        + ViewHolder()
+        + findViewById()
+        + getItemView()
+        {abstract} + onBindView()
+        + onClick()
+        + onLongClick()
+        # getViewHolderPosition()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog {
+        - mCancelListeners : List<OnCancelListener>
+        - mDismissListeners : List<OnDismissListener>
+        - mLifecycle : LifecycleRegistry
+        - mListeners : ListenersWrapper<BaseDialog>
+        - mShowListeners : List<OnShowListener>
+        + BaseDialog()
+        + BaseDialog()
+        + addOnCancelListener()
+        + addOnDismissListener()
+        + addOnShowListener()
+        + dismiss()
+        + getContentView()
+        + getGravity()
+        + getLifecycle()
+        + getWindowAnimations()
+        + onCancel()
+        + onDismiss()
+        + onShow()
+        + removeOnCancelListener()
+        + removeOnDismissListener()
+        + removeOnShowListener()
+        + setBackgroundDimAmount()
+        + setBackgroundDimEnabled()
+        + setGravity()
+        + setHeight()
+        + setOnCancelListener()
+        + setOnDismissListener()
+        + setOnKeyListener()
+        + setOnKeyListener()
+        + setOnShowListener()
+        + setWidth()
+        + setWindowAnimations()
+        + setXOffset()
+        + setYOffset()
+        # onCreate()
+        # onStart()
+        # onStop()
+        - setOnCancelListeners()
+        - setOnDismissListeners()
+        - setOnShowListeners()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog.Builder {
+        - mActivity : Activity
+        - mAnimStyle : int
+        - mBackgroundDimAmount : float
+        - mBackgroundDimEnabled : boolean
+        - mCancelListeners : List<OnCancelListener>
+        - mCancelable : boolean
+        - mCanceledOnTouchOutside : boolean
+        - mClickArray : SparseArray<OnClickListener<?>>
+        - mContentView : View
+        - mContext : Context
+        - mDismissListeners : List<OnDismissListener>
+        - mGravity : int
+        - mHeight : int
+        - mShowListeners : List<OnShowListener>
+        - mThemeId : int
+        - mWidth : int
+        - mXOffset : int
+        - mYOffset : int
+        + Builder()
+        + Builder()
+        + addOnCancelListener()
+        + addOnDismissListener()
+        + addOnShowListener()
+        + create()
+        + dismiss()
+        + findViewById()
+        + getContentView()
+        + getContext()
+        + getDialog()
+        + isCreated()
+        + isShowing()
+        + post()
+        + postAtTime()
+        + postDelayed()
+        + setAnimStyle()
+        + setBackground()
+        + setBackground()
+        + setBackgroundDimAmount()
+        + setBackgroundDimEnabled()
+        + setCancelable()
+        + setCanceledOnTouchOutside()
+        + setContentView()
+        + setContentView()
+        + setGravity()
+        + setHeight()
+        + setHint()
+        + setHint()
+        + setImageDrawable()
+        + setImageDrawable()
+        + setOnClickListener()
+        + setOnCreateListener()
+        + setOnKeyListener()
+        + setText()
+        + setText()
+        + setTextColor()
+        + setThemeStyle()
+        + setVisibility()
+        + setWidth()
+        + setXOffset()
+        + setYOffset()
+        + show()
+        # createDialog()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog.CancelListenerWrapper {
+        + onCancel()
+        - CancelListenerWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog.DialogLifecycle {
+        - mActivity : Activity
+        - mDialogAnim : int
+        + onActivityCreated()
+        + onActivityDestroyed()
+        + onActivityPaused()
+        + onActivityResumed()
+        + onActivitySaveInstanceState()
+        + onActivityStarted()
+        + onActivityStopped()
+        + onDismiss()
+        + onShow()
+        - DialogLifecycle()
+        - registerActivityLifecycleCallbacks()
+        - unregisterActivityLifecycleCallbacks()
+        {static} - with()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog.DismissListenerWrapper {
+        + onDismiss()
+        - DismissListenerWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog.KeyListenerWrapper {
+        + onKey()
+        - KeyListenerWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog.ListenersWrapper {
+        + onCancel()
+        + onDismiss()
+        + onShow()
+        - ListenersWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BaseDialog.OnCancelListener {
+        {abstract} + onCancel()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BaseDialog.OnClickListener {
+        {abstract} + onClick()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BaseDialog.OnCreateListener {
+        {abstract} + onCreate()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BaseDialog.OnDismissListener {
+        {abstract} + onDismiss()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BaseDialog.OnKeyListener {
+        {abstract} + onKey()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BaseDialog.OnShowListener {
+        {abstract} + onShow()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog.ShowListenerWrapper {
+        + onShow()
+        - ShowListenerWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog.ShowPostAtTimeWrapper {
+        - mRunnable : Runnable
+        - mUptimeMillis : long
+        + onShow()
+        - ShowPostAtTimeWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog.ShowPostDelayedWrapper {
+        - mDelayMillis : long
+        - mRunnable : Runnable
+        + onShow()
+        - ShowPostDelayedWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog.ShowPostWrapper {
+        - mRunnable : Runnable
+        + onShow()
+        - ShowPostWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BaseDialog.ViewClickWrapper {
+        + onClick()
+        - ViewClickWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    abstract class com.robam.base.BaseFragment {
+        - mLoading : boolean
+        - mRootView : View
+        + dispatchKeyEvent()
+        + findViewById()
+        + finish()
+        + getApplication()
+        + getAttachActivity()
+        + getBundle()
+        + getView()
+        + isLoading()
+        + onAttach()
+        + onCreateView()
+        + onDestroy()
+        + onDestroyView()
+        + onDetach()
+        + onKeyDown()
+        + onKeyUp()
+        + onResume()
+        + startActivityForResult()
+        + startActivityForResult()
+        + startActivityForResult()
+        {abstract} # getLayoutId()
+        {abstract} # initData()
+        {abstract} # initView()
+        # onActivityResume()
+        # onFragmentResume()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BasePopupWindow {
+        - mContext : Context
+        - mDismissListeners : List<OnDismissListener>
+        - mShowListeners : List<OnShowListener>
+        + BasePopupWindow()
+        + addOnDismissListener()
+        + addOnShowListener()
+        + dismiss()
+        + findViewById()
+        + getContext()
+        + getWindowLayoutType()
+        + onDismiss()
+        + removeOnDismissListener()
+        + removeOnShowListener()
+        + setBackgroundDimAmount()
+        + setOnDismissListener()
+        + setOverlapAnchor()
+        + setWindowLayoutType()
+        + showAsDropDown()
+        + showAtLocation()
+        - setActivityAlpha()
+        - setOnDismissListeners()
+        - setOnShowListeners()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BasePopupWindow.Builder {
+        {static} - DEFAULT_ANCHORED_GRAVITY : int
+        - mActivity : Activity
+        - mAnimations : int
+        - mBackgroundDimAmount : float
+        - mClickArray : SparseArray<OnClickListener<? extends View>>
+        - mContentView : View
+        - mContext : Context
+        - mDismissListeners : List<OnDismissListener>
+        - mFocusable : boolean
+        - mGravity : int
+        - mHeight : int
+        - mOutsideTouchable : boolean
+        - mShowListeners : List<OnShowListener>
+        - mTouchable : boolean
+        - mWidth : int
+        - mXOffset : int
+        - mYOffset : int
+        + Builder()
+        + Builder()
+        + addOnDismissListener()
+        + addOnShowListener()
+        + create()
+        + dismiss()
+        + findViewById()
+        + getContentView()
+        + getContext()
+        + getPopupWindow()
+        + isCreated()
+        + isShowing()
+        + post()
+        + postAtTime()
+        + postDelayed()
+        + setAnimStyle()
+        + setBackground()
+        + setBackground()
+        + setBackgroundDimAmount()
+        + setContentView()
+        + setContentView()
+        + setFocusable()
+        + setGravity()
+        + setHeight()
+        + setHint()
+        + setHint()
+        + setImageDrawable()
+        + setImageDrawable()
+        + setOnClickListener()
+        + setOnCreateListener()
+        + setOutsideTouchable()
+        + setText()
+        + setText()
+        + setTextColor()
+        + setTouchable()
+        + setVisibility()
+        + setWidth()
+        + setXOffset()
+        + setYOffset()
+        + showAsDropDown()
+        + showAtLocation()
+        # createPopupWindow()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BasePopupWindow.DismissListenerWrapper {
+        + onDismiss()
+        - DismissListenerWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BasePopupWindow.OnClickListener {
+        {abstract} + onClick()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BasePopupWindow.OnCreateListener {
+        {abstract} + onCreate()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BasePopupWindow.OnDismissListener {
+        {abstract} + onDismiss()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    interface com.robam.base.BasePopupWindow.OnShowListener {
+        {abstract} + onShow()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BasePopupWindow.PopupBackground {
+        - mAlpha : float
+        + onDismiss()
+        + onShow()
+        - setAlpha()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BasePopupWindow.PopupWindowLifecycle {
+        - mActivity : Activity
+        + onActivityCreated()
+        + onActivityDestroyed()
+        + onActivityPaused()
+        + onActivityResumed()
+        + onActivitySaveInstanceState()
+        + onActivityStarted()
+        + onActivityStopped()
+        + onDismiss()
+        + onShow()
+        - PopupWindowLifecycle()
+        - registerActivityLifecycleCallbacks()
+        - unregisterActivityLifecycleCallbacks()
+        {static} - with()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BasePopupWindow.ShowPostAtTimeWrapper {
+        - mRunnable : Runnable
+        - mUptimeMillis : long
+        + onShow()
+        - ShowPostAtTimeWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BasePopupWindow.ShowPostDelayedWrapper {
+        - mDelayMillis : long
+        - mRunnable : Runnable
+        + onShow()
+        - ShowPostDelayedWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BasePopupWindow.ShowPostWrapper {
+        - mRunnable : Runnable
+        + onShow()
+        - ShowPostWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BasePopupWindow.ViewClickWrapper {
+        + onClick()
+        - ViewClickWrapper()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BottomSheetDialog {
+        - mBottomSheetBehavior : BottomSheetBehavior<FrameLayout>
+        - mCancelable : boolean
+        - mCanceledOnTouchOutside : boolean
+        - mCanceledOnTouchOutsideSet : boolean
+        + BottomSheetDialog()
+        + BottomSheetDialog()
+        + cancel()
+        + getBottomSheetBehavior()
+        + onClick()
+        + onTouch()
+        + setCancelable()
+        + setCanceledOnTouchOutside()
+        + setContentView()
+        + setContentView()
+        + setContentView()
+        # onCreate()
+        # onStart()
+        - shouldWindowCloseOnTouchOutside()
+        - wrapContentView()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BottomSheetDialog.BehaviorAccessibilityDelegate {
+        + onInitializeAccessibilityNodeInfo()
+        + performAccessibilityAction()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.BottomSheetDialog.MyBottomSheetCallback {
+        + onSlide()
+        + onStateChanged()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.FragmentPagerAdapter {
+        - mFragmentSet : List<F>
+        - mFragmentTitle : List<CharSequence>
+        - mLazyMode : boolean
+        - mViewPager : ViewPager
+        + FragmentPagerAdapter()
+        + FragmentPagerAdapter()
+        + FragmentPagerAdapter()
+        + addFragment()
+        + addFragment()
+        + getCount()
+        + getFragmentIndex()
+        + getItem()
+        + getItemId()
+        + getPageTitle()
+        + getShowFragment()
+        + setLazyMode()
+        + setPrimaryItem()
+        + startUpdate()
+        - refreshLazyMode()
+    }
+  }
+  
+
+  namespace com.robam.base {
+    class com.robam.base.RecyclerPagerAdapter {
+        - mAdapter : Adapter
+        + RecyclerPagerAdapter()
+        + destroyItem()
+        + getCount()
+        + instantiateItem()
+        + isViewFromObject()
+    }
+  }
+  
+
+  com.robam.base.BaseActivity .up.|> com.robam.base.action.ActivityAction
+  com.robam.base.BaseActivity .up.|> com.robam.base.action.BundleAction
+  com.robam.base.BaseActivity .up.|> com.robam.base.action.ClickAction
+  com.robam.base.BaseActivity .up.|> com.robam.base.action.HandlerAction
+  com.robam.base.BaseActivity .up.|> com.robam.base.action.KeyboardAction
+  com.robam.base.BaseActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.robam.base.BaseActivity +-down- com.robam.base.BaseActivity.OnActivityCallback
+  com.robam.base.BaseAdapter .up.|> com.robam.base.action.ResourcesAction
+  com.robam.base.BaseAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  com.robam.base.BaseAdapter o-- com.robam.base.BaseAdapter.OnItemClickListener : mItemClickListener
+  com.robam.base.BaseAdapter o-- com.robam.base.BaseAdapter.OnItemLongClickListener : mItemLongClickListener
+  com.robam.base.BaseAdapter +-down- com.robam.base.BaseAdapter.OnChildClickListener
+  com.robam.base.BaseAdapter +-down- com.robam.base.BaseAdapter.OnChildLongClickListener
+  com.robam.base.BaseAdapter +-down- com.robam.base.BaseAdapter.OnItemClickListener
+  com.robam.base.BaseAdapter +-down- com.robam.base.BaseAdapter.OnItemLongClickListener
+  com.robam.base.BaseAdapter +-down- com.robam.base.BaseAdapter.ViewHolder
+  com.robam.base.BaseAdapter.ViewHolder .up.|> android.view.View.OnClickListener
+  com.robam.base.BaseAdapter.ViewHolder .up.|> android.view.View.OnLongClickListener
+  com.robam.base.BaseAdapter.ViewHolder -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+  com.robam.base.BaseDialog .up.|> android.content.DialogInterface.OnCancelListener
+  com.robam.base.BaseDialog .up.|> android.content.DialogInterface.OnDismissListener
+  com.robam.base.BaseDialog .up.|> android.content.DialogInterface.OnShowListener
+  com.robam.base.BaseDialog .up.|> androidx.lifecycle.LifecycleOwner
+  com.robam.base.BaseDialog .up.|> com.robam.base.action.ActivityAction
+  com.robam.base.BaseDialog .up.|> com.robam.base.action.AnimAction
+  com.robam.base.BaseDialog .up.|> com.robam.base.action.ClickAction
+  com.robam.base.BaseDialog .up.|> com.robam.base.action.HandlerAction
+  com.robam.base.BaseDialog .up.|> com.robam.base.action.KeyboardAction
+  com.robam.base.BaseDialog .up.|> com.robam.base.action.ResourcesAction
+  com.robam.base.BaseDialog -up-|> androidx.appcompat.app.AppCompatDialog
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.Builder
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.CancelListenerWrapper
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.DialogLifecycle
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.DismissListenerWrapper
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.KeyListenerWrapper
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.ListenersWrapper
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.OnCancelListener
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.OnClickListener
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.OnCreateListener
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.OnDismissListener
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.OnKeyListener
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.OnShowListener
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.ShowListenerWrapper
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.ShowPostAtTimeWrapper
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.ShowPostDelayedWrapper
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.ShowPostWrapper
+  com.robam.base.BaseDialog +-down- com.robam.base.BaseDialog.ViewClickWrapper
+  com.robam.base.BaseDialog.Builder .up.|> com.robam.base.action.ActivityAction
+  com.robam.base.BaseDialog.Builder .up.|> com.robam.base.action.ClickAction
+  com.robam.base.BaseDialog.Builder .up.|> com.robam.base.action.KeyboardAction
+  com.robam.base.BaseDialog.Builder .up.|> com.robam.base.action.ResourcesAction
+  com.robam.base.BaseDialog.Builder o-- com.robam.base.BaseDialog.OnCreateListener : mCreateListener
+  com.robam.base.BaseDialog.Builder o-- com.robam.base.BaseDialog : mDialog
+  com.robam.base.BaseDialog.Builder o-- com.robam.base.BaseDialog.OnKeyListener : mKeyListener
+  com.robam.base.BaseDialog.CancelListenerWrapper .up.|> com.robam.base.BaseDialog.OnCancelListener
+  com.robam.base.BaseDialog.CancelListenerWrapper -up-|> java.lang.ref.SoftReference
+  com.robam.base.BaseDialog.DialogLifecycle .up.|> android.app.Application.ActivityLifecycleCallbacks
+  com.robam.base.BaseDialog.DialogLifecycle .up.|> com.robam.base.BaseDialog.OnDismissListener
+  com.robam.base.BaseDialog.DialogLifecycle .up.|> com.robam.base.BaseDialog.OnShowListener
+  com.robam.base.BaseDialog.DialogLifecycle o-- com.robam.base.BaseDialog : mDialog
+  com.robam.base.BaseDialog.DismissListenerWrapper .up.|> com.robam.base.BaseDialog.OnDismissListener
+  com.robam.base.BaseDialog.DismissListenerWrapper -up-|> java.lang.ref.SoftReference
+  com.robam.base.BaseDialog.KeyListenerWrapper .up.|> android.content.DialogInterface.OnKeyListener
+  com.robam.base.BaseDialog.KeyListenerWrapper o-- com.robam.base.BaseDialog.OnKeyListener : mListener
+  com.robam.base.BaseDialog.ListenersWrapper .up.|> android.content.DialogInterface.OnCancelListener
+  com.robam.base.BaseDialog.ListenersWrapper .up.|> android.content.DialogInterface.OnDismissListener
+  com.robam.base.BaseDialog.ListenersWrapper .up.|> android.content.DialogInterface.OnShowListener
+  com.robam.base.BaseDialog.ListenersWrapper -up-|> java.lang.ref.SoftReference
+  com.robam.base.BaseDialog.ShowListenerWrapper .up.|> com.robam.base.BaseDialog.OnShowListener
+  com.robam.base.BaseDialog.ShowListenerWrapper -up-|> java.lang.ref.SoftReference
+  com.robam.base.BaseDialog.ShowPostAtTimeWrapper .up.|> com.robam.base.BaseDialog.OnShowListener
+  com.robam.base.BaseDialog.ShowPostDelayedWrapper .up.|> com.robam.base.BaseDialog.OnShowListener
+  com.robam.base.BaseDialog.ShowPostWrapper .up.|> com.robam.base.BaseDialog.OnShowListener
+  com.robam.base.BaseDialog.ViewClickWrapper .up.|> android.view.View.OnClickListener
+  com.robam.base.BaseDialog.ViewClickWrapper o-- com.robam.base.BaseDialog : mDialog
+  com.robam.base.BaseDialog.ViewClickWrapper o-- com.robam.base.BaseDialog.OnClickListener : mListener
+  com.robam.base.BaseFragment .up.|> com.robam.base.action.ActivityAction
+  com.robam.base.BaseFragment .up.|> com.robam.base.action.BundleAction
+  com.robam.base.BaseFragment .up.|> com.robam.base.action.ClickAction
+  com.robam.base.BaseFragment .up.|> com.robam.base.action.HandlerAction
+  com.robam.base.BaseFragment .up.|> com.robam.base.action.KeyboardAction
+  com.robam.base.BaseFragment .up.|> com.robam.base.action.ResourcesAction
+  com.robam.base.BaseFragment -up-|> androidx.fragment.app.Fragment
+  com.robam.base.BaseFragment o-- A : mActivity
+  com.robam.base.BasePopupWindow .up.|> android.widget.PopupWindow.OnDismissListener
+  com.robam.base.BasePopupWindow .up.|> com.robam.base.action.ActivityAction
+  com.robam.base.BasePopupWindow .up.|> com.robam.base.action.AnimAction
+  com.robam.base.BasePopupWindow .up.|> com.robam.base.action.ClickAction
+  com.robam.base.BasePopupWindow .up.|> com.robam.base.action.HandlerAction
+  com.robam.base.BasePopupWindow .up.|> com.robam.base.action.KeyboardAction
+  com.robam.base.BasePopupWindow -up-|> android.widget.PopupWindow
+  com.robam.base.BasePopupWindow o-- com.robam.base.BasePopupWindow.PopupBackground : mPopupBackground
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.Builder
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.DismissListenerWrapper
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.OnClickListener
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.OnCreateListener
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.OnDismissListener
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.OnShowListener
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.PopupBackground
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.PopupWindowLifecycle
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.ShowPostAtTimeWrapper
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.ShowPostDelayedWrapper
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.ShowPostWrapper
+  com.robam.base.BasePopupWindow +-down- com.robam.base.BasePopupWindow.ViewClickWrapper
+  com.robam.base.BasePopupWindow.Builder .up.|> com.robam.base.action.ActivityAction
+  com.robam.base.BasePopupWindow.Builder .up.|> com.robam.base.action.ClickAction
+  com.robam.base.BasePopupWindow.Builder .up.|> com.robam.base.action.KeyboardAction
+  com.robam.base.BasePopupWindow.Builder .up.|> com.robam.base.action.ResourcesAction
+  com.robam.base.BasePopupWindow.Builder o-- com.robam.base.BasePopupWindow.OnCreateListener : mCreateListener
+  com.robam.base.BasePopupWindow.Builder o-- com.robam.base.BasePopupWindow : mPopupWindow
+  com.robam.base.BasePopupWindow.DismissListenerWrapper .up.|> com.robam.base.BasePopupWindow.OnDismissListener
+  com.robam.base.BasePopupWindow.DismissListenerWrapper -up-|> java.lang.ref.SoftReference
+  com.robam.base.BasePopupWindow.PopupBackground .up.|> com.robam.base.BasePopupWindow.OnDismissListener
+  com.robam.base.BasePopupWindow.PopupBackground .up.|> com.robam.base.BasePopupWindow.OnShowListener
+  com.robam.base.BasePopupWindow.PopupWindowLifecycle .up.|> android.app.Application.ActivityLifecycleCallbacks
+  com.robam.base.BasePopupWindow.PopupWindowLifecycle .up.|> com.robam.base.BasePopupWindow.OnDismissListener
+  com.robam.base.BasePopupWindow.PopupWindowLifecycle .up.|> com.robam.base.BasePopupWindow.OnShowListener
+  com.robam.base.BasePopupWindow.PopupWindowLifecycle o-- com.robam.base.BasePopupWindow : mPopupWindow
+  com.robam.base.BasePopupWindow.ShowPostAtTimeWrapper .up.|> com.robam.base.BasePopupWindow.OnShowListener
+  com.robam.base.BasePopupWindow.ShowPostDelayedWrapper .up.|> com.robam.base.BasePopupWindow.OnShowListener
+  com.robam.base.BasePopupWindow.ShowPostWrapper .up.|> com.robam.base.BasePopupWindow.OnShowListener
+  com.robam.base.BasePopupWindow.ViewClickWrapper .up.|> android.view.View.OnClickListener
+  com.robam.base.BasePopupWindow.ViewClickWrapper o-- com.robam.base.BasePopupWindow : mBasePopupWindow
+  com.robam.base.BasePopupWindow.ViewClickWrapper o-- com.robam.base.BasePopupWindow.OnClickListener : mListener
+  com.robam.base.BottomSheetDialog .up.|> android.view.View.OnClickListener
+  com.robam.base.BottomSheetDialog .up.|> android.view.View.OnTouchListener
+  com.robam.base.BottomSheetDialog -up-|> com.robam.base.BaseDialog
+  com.robam.base.BottomSheetDialog +-down- com.robam.base.BottomSheetDialog.BehaviorAccessibilityDelegate
+  com.robam.base.BottomSheetDialog +-down- com.robam.base.BottomSheetDialog.MyBottomSheetCallback
+  com.robam.base.BottomSheetDialog.BehaviorAccessibilityDelegate -up-|> androidx.core.view.AccessibilityDelegateCompat
+  com.robam.base.BottomSheetDialog.MyBottomSheetCallback -up-|> com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+  com.robam.base.FragmentPagerAdapter -up-|> androidx.fragment.app.FragmentPagerAdapter
+  com.robam.base.FragmentPagerAdapter o-- F : mShowFragment
+  com.robam.base.RecyclerPagerAdapter -up-|> androidx.viewpager.widget.PagerAdapter
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

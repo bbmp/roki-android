@@ -9,6 +9,10 @@ public class Extra {
     public static class ExtraDTO {
         public String type;
         public String id;
+        public String url;
+        public String secondTitle;
+        public String title;
+        public String img;
     }
 
     public static class BodyDTO {

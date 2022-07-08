@@ -26,7 +26,6 @@ import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOneModel;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatus;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
-import com.robam.common.pojos.device.steameovenone.SteamOvenOneWorkStatus;
 import com.robam.roki.R;
 import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
@@ -139,12 +138,12 @@ public class DeviceSteameOvenC906OvenPage extends BasePage {
 
     @Subscribe
     public void onEvent(SteamOvenOneStatusChangedEvent event) {
-        LogUtils.i("20171205", " worknStatus:" + steameOvenC906.worknStatus);
+        LogUtils.i("20171205", " worknStatus:" + steameOvenC906.workState);
         if (steameOvenC906 == null || !Objects.equal(steameOvenC906.getID(), event.pojo.getID()))
             return;
         if (steameOvenC906.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus ||
                 steameOvenC906.powerOnStatus == SteamOvenOnePowerOnStatus.Pause || steameOvenC906.powerOnStatus
-                == SteamOvenOnePowerOnStatus.Order || steameOvenC906.powerStatus == SteamOvenOnePowerStatus.Off) {
+                == SteamOvenOnePowerOnStatus.Order || steameOvenC906.powerState == SteamOvenOnePowerStatus.Off) {
             UIService.getInstance().popBack();
         }
     }

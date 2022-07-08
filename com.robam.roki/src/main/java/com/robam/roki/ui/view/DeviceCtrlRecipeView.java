@@ -21,12 +21,10 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.legent.Callback;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.utils.StringUtils;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.graphic.ImageUtils;
-import com.robam.common.io.cloud.Reponses;
-import com.robam.common.io.cloud.RokiRestHelper;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.robam.common.pojos.Dc;
 import com.robam.common.pojos.DeviceType;
 import com.robam.common.pojos.Recipe;
@@ -41,7 +39,7 @@ import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-import static com.legent.ContextIniter.context;
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by Administrator on 2016/10/11.
@@ -86,7 +84,7 @@ public class DeviceCtrlRecipeView extends PullToRefreshListView implements PullT
     }
 
     private void init() {
-        r = getContext().getResources();
+        r = cx.getResources();
         listView = this.getRefreshableView();
         setMode(PullToRefreshBase.Mode.BOTH);//开启上推和下拉
         setOnRefreshListener(this);
@@ -169,31 +167,26 @@ public class DeviceCtrlRecipeView extends PullToRefreshListView implements PullT
      */
     public void getRecipeByDcFromHttp() {
         //获取设备菜谱
-        RokiRestHelper.getGroundingRecipesByDevice(type, "all", start, num,
-                Reponses.ThumbCookbookResponse.class, new RetrofitCallback<Reponses.ThumbCookbookResponse>() {
-                    @Override
-                    public void onSuccess(Reponses.ThumbCookbookResponse thumbCookbookResponse) {
-                        if (null != thumbCookbookResponse) {
-                            List<Recipe> recipes = thumbCookbookResponse.cookbooks;
-                            if (recipes == null || recipes.size() <= 0) {
-                                recipes = Lists.newArrayList();
-                                if (start > 0)
-                                    ToastUtils.show(R.string.not_more_recipes, Toast.LENGTH_SHORT);
-                            }
-                            if (start == 0) {
-                                dataList.clear();
-                            }
-                            dataList.addAll(recipes);
-                            adapter.notifyDataSetChanged();
-                            onRefreshComplete();
-                        }
-                    }
+        CookbookManager.getInstance().getGroundingRecipesByDevice(type, "all", start, num, devicePlat, new Callback<List<Recipe>>() {
+            @Override
+            public void onSuccess(List<Recipe> recipe) {
+                if (recipe == null || recipe.size() <= 0) {
+                    recipe = Lists.newArrayList();
+                    if (start > 0)
+                        ToastUtils.show(R.string.not_more_recipes, Toast.LENGTH_SHORT);
+                }
+                if (start == 0) {
+                    dataList.clear();
+                }
+                dataList.addAll(recipe);
+                adapter.notifyDataSetChanged();
+                onRefreshComplete();
+            }
 
-                    @Override
-                    public void onFaild(String err) {
-                        onRefreshComplete();
-                    }
-
+            @Override
+            public void onFailure(Throwable t) {
+                onRefreshComplete();
+            }
         });
     }
 
@@ -220,7 +213,7 @@ public class DeviceCtrlRecipeView extends PullToRefreshListView implements PullT
         public View getView(int position, View convertView, ViewGroup parent) {
             Recipe recipe = dataList.get(position);
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.view_home_recommandrecipe, null, false);
+                convertView = LayoutInflater.from(cx).inflate(R.layout.view_home_recommandrecipe, null, false);
                 viewHolder = new ViewHolder();
                 viewHolder.imageView = (ImageView) convertView.findViewById(R.id.iv_img);
 

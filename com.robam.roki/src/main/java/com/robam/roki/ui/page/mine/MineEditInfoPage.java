@@ -9,37 +9,44 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 
 import com.google.common.base.Strings;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
+import com.legent.ui.ext.BaseActivity;
+import com.robam.base.BaseDialog;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.events.ActivityResultOnPageEvent;
 import com.legent.plat.Plat;
 import com.legent.plat.events.UserUpdatedEvent;
 import com.legent.plat.io.cloud.CloudHelper;
-import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UI;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.EventUtils;
-import com.legent.utils.api.ToastUtils;
 import com.legent.utils.graphic.ImageUtils;
 import com.robam.roki.R;
+import com.robam.roki.model.bean.DeviceMoreBean;
 import com.robam.roki.ui.Helper;
 import com.robam.roki.ui.PageKey;
+import com.robam.roki.ui.activity3.EditDeviceNameActivity;
+import com.robam.roki.ui.activity3.EditUserNameActivity;
+import com.robam.roki.ui.activity3.device.base.DeviceInfoActivity;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.mdialog.DateDialog;
 import com.robam.roki.ui.mdialog.MenuDialog;
 import com.robam.roki.ui.page.login.MyBasePage;
-import com.robam.roki.ui.widget.base.BaseDialog;
 import com.robam.roki.ui.widget.layout.SettingBar;
 import com.robam.roki.utils.DateUtil;
 import com.robam.roki.utils.PermissionsUtils;
@@ -65,7 +72,7 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
     /**
      * 头像
      */
-    private SettingBar stbUserPhoto;
+    private RelativeLayout stbUserPhoto;
     /**
      * 头像图片
      */
@@ -73,15 +80,20 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
     /**
      * 用户名
      */
-    private SettingBar stbUserName;
+    private RelativeLayout stbUserName;
+    private TextView tvName;
     /**
      * 性别
      */
-    private SettingBar stbUserSex;
+    private RelativeLayout stbUserSex;
+    private TextView tvGender;
     /**
      * 生日
      */
-    private SettingBar stbUserBirthday;
+    private RelativeLayout stbUserBirthday;
+    private TextView tvBirth;
+
+    private ImageView ivBack;
     /**
      * 用户信息
      */
@@ -97,14 +109,16 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        setTitle(R.string.user_info);
-        getTitleBar().setOnTitleBarListener(this);
-        stbUserPhoto = (SettingBar) findViewById(R.id.stb_user_photo);
-        ivPersonPhoto = (AppCompatImageView) findViewById(R.id.iv_person_photo);
-        stbUserName = (SettingBar) findViewById(R.id.stb_user_name);
-        stbUserSex = (SettingBar) findViewById(R.id.stb_user_sex);
-        stbUserBirthday = (SettingBar) findViewById(R.id.stb_user_birthday);
-        setOnClickListener(stbUserPhoto, stbUserName, stbUserSex, stbUserBirthday);
+        ivBack = findViewById(R.id.img_back);
+        stbUserPhoto = findViewById(R.id.stb_user_photo);
+        ivPersonPhoto = findViewById(R.id.iv_person_photo);
+        stbUserName = findViewById(R.id.stb_user_name);
+        tvName = findViewById(R.id.tv_name);
+        stbUserSex = findViewById(R.id.stb_user_sex);
+        tvGender = findViewById(R.id.tv_gender);
+        stbUserBirthday = findViewById(R.id.stb_user_birthday);
+        tvBirth = findViewById(R.id.tv_birth);
+        setOnClickListener(stbUserPhoto, stbUserName, stbUserSex, stbUserBirthday, ivBack);
     }
 
     @Override
@@ -115,24 +129,19 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
     }
 
     private void showUser(User user) {
-        stbUserName.setRightText(Strings.isNullOrEmpty(user.nickname) ? user.phone : user.nickname);
+        tvName.setText(Strings.isNullOrEmpty(user.name) ? user.phone : user.name);
         if ("1".equals(user.sex)){
-            stbUserSex.setRightText("男");
-            stbUserBirthday.setRightColor(getResources().getColor(R.color.mine_text_color));
+            tvGender.setText("男");
         }else if("2".equals(user.sex)){
-            stbUserSex.setRightText("女");
-            stbUserBirthday.setRightColor(getResources().getColor(R.color.mine_text_color));
+            tvGender.setText("女");
         }else {
-            stbUserSex.setRightText("点击选择");
-            stbUserBirthday.setRightColor(getResources().getColor(R.color.mine_text_color3));
+            tvGender.setText("点击选择");
         }
-        stbUserBirthday.setRightText(null == user.birthday ?  "点击选择" : DateUtil.date2String(user.birthday ,DateUtil.PATTERN_DATE));
+        tvBirth.setText(null == user.birthday ?  "点击选择" : DateUtil.date2String(user.birthday ,DateUtil.PATTERN_DATE));
         if(null == user.birthday){
-            stbUserBirthday.setRightText("点击选择");
-            stbUserBirthday.setRightColor(getResources().getColor(R.color.mine_text_color3));
+            tvBirth.setText("点击选择");
         }else {
-            stbUserBirthday.setRightText(DateUtil.date2String(user.birthday ,DateUtil.PATTERN_DATE));
-            stbUserBirthday.setRightColor(getResources().getColor(R.color.mine_text_color));
+            tvBirth.setText(DateUtil.date2String(user.birthday ,DateUtil.PATTERN_DATE));
         }
         showFigure(user.figureUrl);
     }
@@ -145,7 +154,7 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
         if (Strings.isNullOrEmpty(figure)) {
             ivPersonPhoto.setImageResource(R.mipmap.ic_user_default_figure);
         } else {
-            ImageUtils.displayImage(cx, figure, ivPersonPhoto, Helper.DisplayImageOptions_UserFace);
+            ImageUtils.displayImage(figure, ivPersonPhoto, Helper.DisplayImageOptions_UserFace);
         }
     }
     /**
@@ -159,7 +168,16 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
         }else if (view.equals(stbUserBirthday)){
             selectDate();
         }else if (view.equals(stbUserName)){
-            UIService.getInstance().postPage(PageKey.MineEditUserNamePage);
+//            UIService.getInstance().postPage(PageKey.MineEditUserNamePage);
+            Intent intent = new Intent(getAttachActivity(), EditUserNameActivity.class);
+            startActivityForResult(intent, new BaseActivity.OnActivityCallback() {
+                @Override
+                public void onActivityResult(int resultCode, @Nullable Intent data) {
+                    if (resultCode == Activity.RESULT_OK){
+                        tvName.setText(data.getStringExtra(EditDeviceNameActivity.DEVICE_NAME));
+                    }
+                }
+            });
         }else if (view.equals(stbUserPhoto)){
             if (pickHelper == null) {
                 pickHelper = new PickImageHelperTwo(activity, pickCallback);
@@ -177,6 +195,8 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
             }
 
 //            selectPhoto();
+        } else if (view.equals(ivBack)) {
+            UIService.getInstance().popBack();
         }
     }
 
@@ -203,9 +223,14 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
                         @Override
                         public void onFailure(Throwable t) {
                             ProgressDialogHelper.setRunning(cx, false);
-                         ToastUtils.showThrowable(t);
+                            ToastUtils.show(t.getMessage());
                         }
                     });
+        }
+
+        @Override
+        public void onPickComplete(String bmp) {
+
         }
     };
 
@@ -225,7 +250,7 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
                         if ("拍照".equals(string)){
                             pickHelper.camera();
                         }else if ("我的相册".equals(string)){
-                            pickHelper.gallery();
+                            pickHelper.gallery(PickImageHelperTwo.PHOTO_REQUEST_GALLERY);
                         }
                     }
 
@@ -248,7 +273,7 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
                 .setListener(new DateDialog.OnListener() {
                     @Override
                     public void onSelected(BaseDialog dialog, int year, int month, int day) {
-                       // ToastUtils.show(year + getString(R.string.common_year) + month + getString(R.string.common_month) + day + getString(R.string.common_day));
+                        // ToastUtils.show(year + getString(R.string.common_year) + month + getString(R.string.common_month) + day + getString(R.string.common_day));
                         String dateStr = year + "-" + month + "-" + day ;
                         Date date = DateUtil.string2Date(dateStr, DateUtil.PATTERN_DATE);
                         setUserInfo(date);
@@ -289,7 +314,7 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
      */
     private void setUserInfo(Date birthday) {
         ProgressDialogHelper.setRunning(cx, true);
-        Plat.accountService.updateUser(user.id, user.nickname, user.phone, user.email, user.gender , birthday, user.sex, new VoidCallback() {
+        Plat.accountService.updateUser(user.id, user.name, user.phone, user.email, user.gender , birthday, user.sex, new VoidCallback() {
             @Override
             public void onSuccess() {
                 ProgressDialogHelper.setRunning(cx, false);
@@ -314,7 +339,7 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
             return;
         }
         ProgressDialogHelper.setRunning(cx, true);
-        Plat.accountService.updateUser(user.id, user.nickname, user.phone, user.email, false,  user.birthday, sex ,new VoidCallback() {
+        Plat.accountService.updateUser(user.id, user.name, user.phone, user.email, false,  user.birthday, sex ,new VoidCallback() {
             @Override
             public void onSuccess() {
                 ProgressDialogHelper.setRunning(cx, false);
@@ -329,15 +354,7 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
             }
         });
     }
-    /**
-     * 返回
-     *
-     * @param view 被点击的左项View
-     */
-    @Override
-    public void onLeftClick(View view) {
-        UIService.getInstance().popBack();
-    }
+
 
     @Subscribe
     public void onEvent(UserUpdatedEvent event) {
@@ -364,24 +381,20 @@ public class MineEditInfoPage extends MyBasePage<MainActivity> {
     public void getUser() {
         if (Plat.accountService.isLogon()) {
             ProgressDialogHelper.setRunning(cx, true);
-            CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), Reponses.GetUserReponse.class, new RetrofitCallback<Reponses.GetUserReponse>() {
+            CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), new Callback<User>() {
 
                 @Override
-                public void onSuccess(Reponses.GetUserReponse getUserReponse) {
+                public void onSuccess(User user) {
                     ProgressDialogHelper.setRunning(cx, false);
-                    if (null != getUserReponse) {
-                        User user = getUserReponse.user;
-                        Plat.accountService.onLogin(user);
-                        MineEditInfoPage.this.user = user ;
-                        showUser(user);
-                    }
+                    Plat.accountService.onLogin(user);
+                    MineEditInfoPage.this.user = user ;
+                    showUser(user);
                 }
 
                 @Override
-                public void onFaild(String err) {
-                    ToastUtils.show(err);
+                public void onFailure(Throwable t) {
+                    ToastUtils.show(t.getMessage());
                 }
-
             });
         }
     }

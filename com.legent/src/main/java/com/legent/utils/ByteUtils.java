@@ -152,4 +152,35 @@ public class ByteUtils {
         System.arraycopy(buf.array(), 0, bytes, 0, bytes.length);
         return Arrays.toString(bytes);
     }
+
+    /**
+     * byte数组转int（高低八位相反）
+     * @param b
+     * @return
+     */
+    public static int byteToInt2(byte[] b)
+    {
+        int mask=0xff;
+        int temp=0;
+        int n=0;
+        for(int i = b.length - 1 ; i >= 0 ; i--){
+            n<<=8;
+            temp=b[i]&mask;
+            n|=temp;
+        }
+        return n;
+    }
+    /**
+     * int转byte数组
+     * @param n
+     * @return
+     */
+    public static byte[] intToBytes2(int n){
+        byte[] b = new byte[4];
+        for(int i = 3; i >=  0 ; i--)
+        {
+            b[i]=(byte)(n>>(24 - (3-i)*8));
+        }
+        return b;
+    }
 }

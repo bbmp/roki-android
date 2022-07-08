@@ -140,6 +140,7 @@ public class RecipeStepBean extends LitePalSupport {
     }
 
     public int getTime() {
+
         return time;
     }
 

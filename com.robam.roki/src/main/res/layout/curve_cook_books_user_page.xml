@@ -39,6 +39,20 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <com.youth.banner.Banner
+                android:id="@+id/recipethemebanner"
+                android:layout_width="match_parent"
+                android:layout_height="295dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp" />
+            <ImageView
+                android:id="@+id/img_screen"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/add"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="16dp"/>
 <!--            <com.youth.banner.Banner-->
 <!--                android:id="@+id/recipethemebanner"-->
 <!--                android:layout_width="match_parent"-->

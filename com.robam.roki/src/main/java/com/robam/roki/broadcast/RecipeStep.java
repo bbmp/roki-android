@@ -129,7 +129,7 @@ public class RecipeStep extends FrameLayout {
 
     public void refresh() {
         if (cookStep == null) return;
-        ImageUtils.displayImage(cx, cookStep.imageUrl, recipe_step_img_bg);//设置背景图片
+        ImageUtils.displayImage(cookStep.imageUrl, recipe_step_img_bg);//设置背景图片
         if (cookStep.dc == null || "".equals(cookStep.dc)) {//判断菜谱是否韩有品类
             noHasDeviceMode();
             hasCategory = false;

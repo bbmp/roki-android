@@ -2,6 +2,7 @@ package com.robam.roki.ui.page;
 
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -203,8 +204,12 @@ public class DeviceFanStoveLinkagePage extends BasePage {
         sp.IsPowerLinkage = mChkIsInternalDays.isChecked();
         sp.IsLevelLinkage = mChkIsInternalDays.isChecked();
         sp.IsShutdownLinkage = mChkIsInternalDays.isChecked();
-        sp.ShutdownDelay = Short.parseShort(RemoveManOrsymbolUtil.getRemoveString(mTvMinute.getText().toString()));
+        if (TextUtils.isEmpty(RemoveManOrsymbolUtil.getRemoveString(mTvMinute.getText().toString()))){
+            sp.ShutdownDelay=1;
+        }else {
+            sp.ShutdownDelay = Short.parseShort(RemoveManOrsymbolUtil.getRemoveString(mTvMinute.getText().toString()));
 
+        }
         fan.setSmartConfig(sp, new VoidCallback() {
 
             @Override

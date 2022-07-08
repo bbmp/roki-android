@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/mine_white_background"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/act_steam_curve_work"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_28"
+            android:src="@mipmap/ic_arrow_back" />
+
+        <TextView
+            android:id="@+id/act_steam_curve_item_model_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="风扇烤"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_24" />
+
+        <TextView
+            android:id="@+id/act_steam_curve_item_temp_content_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="风扇烤"
+            android:visibility="gone"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_24" />
+
+        <TextView
+            android:id="@+id/act_steam_curve_item_temp_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="200℃"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_24" />
+
+        <TextView
+            android:id="@+id/act_steam_curve_item_time_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="60min"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_24" />
+
+        <com.robam.roki.ui.widget.view.ItemMutiTitleView
+            android:id="@+id/item_mutil_title_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_28" />
+
+        <TextView
+
+
+            android:id="@+id/act_steam_curve_work_left_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_69"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="剩余时间"
+            android:textColor="@color/text_color_device"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/act_steam_curve_work_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_18"
+            android:layout_toRightOf="@+id/act_steam_curve_work_left_time_text"
+            android:text="11"
+            android:textColor="@color/text_color_device"
+            android:textSize="@dimen/sp_30" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_16"
+
+            android:layout_toRightOf="@+id/act_steam_curve_work_time"
+            android:text="min"
+            android:textColor="@color/text_color_device"
+            android:textSize="@dimen/sp_12" />
+
+
+        <ImageView
+            android:id="@+id/act_switch_scream"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_21"
+            android:layout_marginRight="@dimen/dp_16"
+            android:src="@mipmap/icon_switch_screen" />
+
+
+    </LinearLayout>
+
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/act_steam_cook_chart"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_300"
+        android:layout_above="@+id/act_steam_curve_make_step"
+        android:layout_below="@+id/act_steam_curve_work"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_16" />
+
+    <Button
+
+        android:id="@+id/act_steam_curve_make_step"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:layout_toLeftOf="@+id/btn_left_work_finish"
+        android:background="@drawable/shape_add_picture_bg"
+        android:text="标记步骤"
+        android:textColor="@color/common_dialog_btn_normal_bg_blue"
+        android:textSize="@dimen/sp_20" />
+
+    <Button
+        android:id="@+id/btn_left_work_finish"
+        android:layout_width="@dimen/dp_166"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:layout_toLeftOf="@+id/btn_right"
+        android:layout_weight="1"
+        android:background="@drawable/device_button_bg_cancel"
+        android:text="结束工作"
+        android:textColor="@color/text_color_device_category"
+        android:textSize="@dimen/sp_20" />
+
+    <Button
+        android:id="@+id/btn_right"
+        android:layout_width="@dimen/dp_166"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_38"
+        android:layout_marginBottom="@dimen/dp_28"
+
+        android:layout_weight="1"
+        android:background="@drawable/device_button_bg_confim"
+        android:text="暂停"
+        android:textColor="@color/text_select_color"
+        android:textSize="@dimen/sp_20" />
+
+</RelativeLayout>

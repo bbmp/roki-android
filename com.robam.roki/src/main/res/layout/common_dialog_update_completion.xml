@@ -7,7 +7,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="139dp"
-        android:background="@drawable/common_dialog_bg_with_rounded_rectangle"
+        android:background="@drawable/shape_bg_white_8dp_night"
         android:layout_marginRight="68dp"
         android:layout_marginLeft="68dp"
         android:orientation="vertical">

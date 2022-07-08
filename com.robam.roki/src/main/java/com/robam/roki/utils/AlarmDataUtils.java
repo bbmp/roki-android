@@ -12,9 +12,7 @@ import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.services.RestfulService;
 import com.legent.utils.FileUtils;
 import com.legent.utils.LogUtils;
@@ -432,7 +430,7 @@ public class AlarmDataUtils {
     }
 
     //一体机报警处理
-    public static void steamOvenOneAlarmStatus(AbsSteameOvenOne steamOvenOne, short alarmId) {
+    public static void steamOvenOneAlarmStatus(AbsSteameOvenOne steamOvenOne, short alarmId,boolean isNoShow) {
         fileJson = PreferenceUtils.getString("alarm", null);
         LogUtils.i("202012071057", "fileJson::" + fileJson);
         String alarmCode = String.valueOf(alarmId);
@@ -449,6 +447,11 @@ public class AlarmDataUtils {
             Integer alertLevel = (Integer) steamOvenOneCode.get("alertLevel");
             String alertName = (String) steamOvenOneCode.get("alertName");
             String alertDescr = (String) steamOvenOneCode.get("alertDescr");
+           if (isNoShow){
+               if (alertDescr.contains("缺水")){
+                   return;
+               }
+           }
             String alertCode = (String) steamOvenOneCode.get("alertCode");
             LogUtils.i("202012071057", "alertLevel::" + alertLevel);
             LogUtils.i("20180831", "alertLevel:" + alertLevel);
@@ -658,7 +661,7 @@ public class AlarmDataUtils {
     private static void downloadJson() {
 
         final String url = PreferenceUtils.getString("downloadUrl", "");
-        CloudHelper.getAllDeviceErrorInfo(Reponses.ErrorInfoResponse.class, new RetrofitCallback<Reponses.ErrorInfoResponse>() {
+        Plat.deviceService.getAllDeviceErrorInfo(new Callback<Reponses.ErrorInfoResponse>() {
             @Override
             public void onSuccess(Reponses.ErrorInfoResponse errorInfoResponse) {
                 String downloadUrl = errorInfoResponse.url;
@@ -684,7 +687,7 @@ public class AlarmDataUtils {
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 downloadCount++;
                 if (downloadCount <= 3) {
                     downloadJson();

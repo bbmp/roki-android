@@ -22,18 +22,16 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.events.UserLoginEvent;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
+import com.legent.ui.ext.utils.StatusBarCompat;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
-import com.legent.utils.api.ToastUtils;
-import com.robam.common.io.cloud.Reponses;
-import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.RecipeTheme;
 import com.robam.common.services.CookbookManager;
 import com.robam.common.services.StoreService;
@@ -94,7 +92,7 @@ public class ThemeRecipeListPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        StatusBarUtils.setColor(cx , getResources().getColor(R.color.white));
+//        StatusBarUtils.setColor(cx , getResources().getColor(R.color.white));
         xRvThemeRecipe.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         themeRecipeAdapter = new RvThemeAdapter();
         themeRecipeAdapter.addChildClickViewIds(R.id.iv_love_theme, R.id.iv_theme_item_img);
@@ -117,20 +115,22 @@ public class ThemeRecipeListPage extends MyBasePage<MainActivity> {
             }
         });
         footView = LinearLayout.inflate(cx, R.layout.foot_tell_roki, null);
-        tvThemeTellRoki = (TextView) footView.findViewById(R.id.tv_theme_tell_roki);
-        String tellRokiText = tvThemeTellRoki.getText().toString().trim();
-        int start = 15;
-        ssb = new SpannableStringBuilder();
-        ssb.append(tellRokiText);
-        ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.roki_sub_color)), start, start + 6, 0);
-        tvThemeTellRoki.setText(ssb);
-        tvThemeTellRoki.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogUtils.i(TAG, "click tagRecipeTellRoki ");
-                UIService.getInstance().postPage(PageKey.TellRoki);
-            }
-        });
+        footView.findViewById(R.id.load_more_loading_view).setVisibility(View.GONE);
+        footView.findViewById(R.id.load_more_load_end_view).setVisibility(View.VISIBLE);
+//        tvThemeTellRoki = (TextView) footView.findViewById(R.id.tv_theme_tell_roki);
+//        String tellRokiText = tvThemeTellRoki.getText().toString().trim();
+//        int start = 15;
+//        ssb = new SpannableStringBuilder();
+//        ssb.append(tellRokiText);
+//        ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.roki_sub_color)), start, start + 6, 0);
+//        tvThemeTellRoki.setText(ssb);
+//        tvThemeTellRoki.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                LogUtils.i(TAG, "click tagRecipeTellRoki ");
+//                UIService.getInstance().postPage(PageKey.TellRoki);
+//            }
+//        });
         //空布局
         emptyView = LinearLayout.inflate(cx, R.layout.view_emoji_empty, null);
         tvDesc = (TextView) emptyView.findViewById(R.id.txtDesc);
@@ -151,25 +151,22 @@ public class ThemeRecipeListPage extends MyBasePage<MainActivity> {
             //判断是否被收藏
             if (!recipeTheme.isCollect) {
                 ProgressDialogHelper.setRunning(cx, true);
-                RokiRestHelper.setCollectOfTheme(recipeTheme.id, Reponses.CollectStatusRespone.class, new RetrofitCallback<Reponses.CollectStatusRespone>() {
+                StoreService.getInstance().setThemeCollect(recipeTheme.id, new Callback<Boolean>() {
                     @Override
-                    public void onSuccess(Reponses.CollectStatusRespone collectStatusRespone) {
-                        ProgressDialogHelper.setRunning(cx, false);
-                        if (null != collectStatusRespone) {
-                            Boolean aBoolean = collectStatusRespone.isSuccess();
-                            if (aBoolean) {
-                                recipeTheme.isCollect = true;
-                                ToastUtils.show("收藏成功");
-                                view.setImageResource(R.drawable.ic_baseline_favorite_24);
-                            }
+                    public void onSuccess(Boolean aBoolean) {
+                        if (aBoolean) {
+                            recipeTheme.isCollect = true;
+                            ToastUtils.show("收藏成功");
+                            view.setSelected(true);
+//                            view.setImageResource(R.drawable.ic_baseline_favorite_24);
                         }
-                    }
-
-                    @Override
-                    public void onFaild(String err) {
                         ProgressDialogHelper.setRunning(cx, false);
                     }
 
+                    @Override
+                    public void onFailure(Throwable t) {
+                        ProgressDialogHelper.setRunning(cx, false);
+                    }
                 });
             } else {
                 ProgressDialogHelper.setRunning(cx, true);
@@ -179,7 +176,8 @@ public class ThemeRecipeListPage extends MyBasePage<MainActivity> {
                         if (aBoolean) {
                             recipeTheme.isCollect = false;
                             ToastUtils.show("已取消收藏");
-                            view.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                            view.setSelected(false);
+//                            view.setImageResource(R.drawable.ic_baseline_favorite_border_24);
                         }
                         ProgressDialogHelper.setRunning(cx, false);
                     }
@@ -211,26 +209,23 @@ public class ThemeRecipeListPage extends MyBasePage<MainActivity> {
      */
     private void getThemeRecipeList() {
         ProgressDialogHelper.setRunning(cx, true);
-        RokiRestHelper.getThemeRecipeList(Reponses.RecipeThemeResponse.class, new RetrofitCallback<Reponses.RecipeThemeResponse>() {
+        CookbookManager.getInstance().getThemeRecipes(new Callback<List<RecipeTheme>>() {
             @Override
-            public void onSuccess(Reponses.RecipeThemeResponse recipeThemeResponse) {
-                if (null != recipeThemeResponse) {
-                    List<RecipeTheme> themes = recipeThemeResponse.items;
-                    if (themes == null || themes.size() == 0) {
-                        themeRecipeAdapter.setEmptyView(emptyView);
-                        tvDesc.setText("没有获取到专题数据");
-                        return;
-                    }
-                    //获取被收藏的专题
-                    getThemeCollection(themes);
-                    ProgressDialogHelper.setRunning(cx, false);
+            public void onSuccess(List<RecipeTheme> themes) {
+                if (themes == null || themes.size() == 0) {
+                    themeRecipeAdapter.setEmptyView(emptyView);
+                    tvDesc.setText("没有获取到专题数据");
+                    return;
                 }
+                //获取被收藏的专题
+                getThemeCollection(themes);
+                ProgressDialogHelper.setRunning(cx, false);
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 themeRecipeAdapter.setEmptyView(emptyView);
-                tvDesc.setText(err);
+                tvDesc.setText(t.getMessage());
                 ProgressDialogHelper.setRunning(cx, false);
             }
         });
@@ -246,25 +241,22 @@ public class ThemeRecipeListPage extends MyBasePage<MainActivity> {
             return;
         }
         ProgressDialogHelper.setRunning(cx, true);
-        RokiRestHelper.getMyFavoriteThemeRecipeList_new(Reponses.RecipeThemeResponse3.class, new RetrofitCallback<Reponses.RecipeThemeResponse3>() {
+        StoreService.getInstance().getMyFavoriteThemeRecipeList(new Callback<List<RecipeTheme>>() {
             @Override
-            public void onSuccess(Reponses.RecipeThemeResponse3 recipeThemeResponse3) {
-                ProgressDialogHelper.setRunning(cx, false);
-                if (null != recipeThemeResponse3) {
-                    List<RecipeTheme> recipeThemes = recipeThemeResponse3.recipeThemes;
-                    if (recipeThemes != null && recipeThemes.size() != 0) {
-                        themeCollection(themes, recipeThemes);
-                    } else {
-                        themeRecipeAdapter.setList(themes);
-                        themeRecipeAdapter.setFooterView(footView);
-                    }
+            public void onSuccess(List<RecipeTheme> recipeThemes) {
+                if (recipeThemes != null && recipeThemes.size() != 0) {
+                    themeCollection(themes, recipeThemes);
+                } else {
+                    themeRecipeAdapter.setList(themes);
+                    themeRecipeAdapter.setFooterView(footView);
                 }
+                ProgressDialogHelper.setRunning(cx, false);
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 themeRecipeAdapter.setEmptyView(emptyView);
-                tvDesc.setText(err);
+                tvDesc.setText(t.getMessage());
                 ProgressDialogHelper.setRunning(cx, false);
             }
         });
@@ -308,11 +300,12 @@ public class ThemeRecipeListPage extends MyBasePage<MainActivity> {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (Build.VERSION.SDK_INT >= 21){
-            View decorView = activity.getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-            StatusBarUtils.setTextDark(getContext() ,true);
-        }
+//        if (Build.VERSION.SDK_INT >= 21){
+//            View decorView = activity.getWindow().getDecorView();
+//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+//            StatusBarUtils.setTextDark(getContext() ,true);
+//        }
     }
+
 }

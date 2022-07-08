@@ -8,7 +8,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.robam.roki.ui.widget.base.BaseAdapter;
+import com.robam.base.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

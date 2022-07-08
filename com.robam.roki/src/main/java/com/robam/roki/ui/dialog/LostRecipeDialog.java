@@ -115,7 +115,7 @@ public class LostRecipeDialog extends AbsDialog {
             @Override
             public void onSuccess(List<Advert.MobAdvert> mobAdverts) {
                 recipe.setTag(mobAdverts.get(0).content);
-                ImageUtils.displayImage(cx, mobAdverts.get(0).getImgUrl(), recipe);
+                ImageUtils.displayImage(mobAdverts.get(0).getImgUrl(), recipe, ImageUtils.defaultOptions);
             }
 
             @Override

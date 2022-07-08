@@ -25,7 +25,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/device_power_saving_mode"
                     android:textColor="#000000"
-                    android:textSize="19sp" />
+                    android:textSize="19sp"
+                    android:id="@+id/textView9"/>
 
                 <View
                     android:layout_width="match_parent"

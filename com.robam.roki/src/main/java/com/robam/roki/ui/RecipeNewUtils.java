@@ -5,11 +5,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.common.base.Strings;
+import com.j256.ormlite.stmt.query.In;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.pojos.device.DeviceGuid;
 import com.legent.plat.pojos.device.IDevice;
-import com.legent.ui.UIService;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.Utils;
@@ -27,13 +27,21 @@ import com.robam.common.pojos.device.Oven.OvenStatus;
 import com.robam.common.pojos.device.Steamoven.AbsSteamoven;
 import com.robam.common.pojos.device.Steamoven.SteamStatus;
 import com.robam.common.pojos.device.fan.AbsFan;
+import com.robam.common.pojos.device.integratedStove.IntegStoveStatus;
+import com.robam.common.pojos.device.integratedStove.SteamOvenFaultEnum;
+import com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum;
 import com.robam.common.pojos.device.microwave.AbsMicroWave;
 import com.robam.common.pojos.device.microwave.MicroWaveStatus;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
+import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOneNew;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOneModel;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatus;
+import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatusNew;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
+import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatusNew;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOneWorkStatus;
+import com.robam.common.pojos.device.steameovenone.SteamOvenOneWorkStatusNew;
+import com.robam.roki.ui.page.device.integratedStove.SteamOvenHelper;
 import com.robam.roki.ui.view.RecipeParamShowView;
 
 import java.util.HashMap;
@@ -153,10 +161,52 @@ public class RecipeNewUtils {
     }
 
     private static void setSteamAndOvenPreSetModel(IDevice iDevice, RecipeParamShowView stepPage, final Callback<Integer> callback) {
-        setSteamOvenPreSetParam(stepPage, (AbsSteameOvenOne) iDevice, MsgKeys.setSteameOvenAutomaticMode_Req, callback);
+
+        if (iDevice.getDt().equals("DB620")||iDevice.getDt().equals("CQ920")){
+            setSteamOvenPreSetParam(stepPage, (AbsSteameOvenOneNew) iDevice, callback);
+        }else {
+            setSteamOvenPreSetParam(stepPage, (AbsSteameOvenOne) iDevice, MsgKeys.setSteameOvenAutomaticMode_Req, callback);
+        }
 
     }
 
+    private static void setSteamOvenPreSetParam(RecipeParamShowView stepPage, final AbsSteameOvenOneNew steamOven,
+                                                final Callback<Integer> callback) {
+        try {
+            if (!steamOven.isConnected()) {
+                callback.onSuccess(3);
+                return;
+            }
+            if (steamOven.powerOnStatus == SteamOvenOnePowerOnStatus.AlarmStatus) {
+                callback.onSuccess(1);
+                return;
+            }
+            final Map<String, paramCode> paramMap = stepPage.paramMap;
+            if (steamOven.powerState == SteamOvenOnePowerStatus.On && steamOven.powerOnStatus != SteamOvenOnePowerOnStatus.WorkingStatus) {
+                sendCommand(steamOven, paramMap, callback);
+            } else if (steamOven.powerState == SteamOvenOnePowerStatus.Wait || steamOven.powerState == SteamOvenOnePowerStatus.Off) {
+                steamOven.setSteameOvenStatus_on(new VoidCallback() {
+                    @Override
+                    public void onSuccess() {
+                        sendCommand(steamOven, paramMap, callback);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+
+                    }
+                });
+            } else {
+                callback.onSuccess(2);
+                return;
+            }
+
+        } catch (Exception e) {
+
+        }
+
+
+    }
     private static void setSteamOvenPreSetParam(RecipeParamShowView stepPage, final AbsSteameOvenOne steamOven,
                                                 final short msgKeys, final Callback<Integer> callback) {
         try {
@@ -169,9 +219,9 @@ public class RecipeNewUtils {
                 return;
             }
             final Map<String, paramCode> paramMap = stepPage.paramMap;
-            if (steamOven.powerStatus == SteamOvenOnePowerStatus.On && steamOven.powerOnStatus != SteamOvenOnePowerOnStatus.WorkingStatus) {
+            if (steamOven.powerState == SteamOvenOnePowerStatus.On && steamOven.powerOnStatus != SteamOvenOnePowerOnStatus.WorkingStatus) {
                 sendCommand(steamOven, paramMap, callback);
-            } else if (steamOven.powerStatus == SteamOvenOnePowerStatus.Wait || steamOven.powerStatus == SteamOvenOnePowerStatus.Off) {
+            } else if (steamOven.powerState == SteamOvenOnePowerStatus.Wait || steamOven.powerState == SteamOvenOnePowerStatus.Off) {
                 steamOven.setSteameOvenStatus_on(new VoidCallback() {
                     @Override
                     public void onSuccess() {
@@ -193,6 +243,85 @@ public class RecipeNewUtils {
         }
     }
 
+
+    private static boolean WorkBeforeCheck(AbsSteameOvenOneNew steamOven,int mSteamModel){
+        SteamOvenFaultEnum faultEnum = SteamOvenFaultEnum.match(steamOven.faultCode);
+        if (SteamOvenFaultEnum.NO_FAULT != faultEnum&&steamOven.faultCode!=11) {
+            if (faultEnum != null) {
+                com.hjq.toast.ToastUtils.show(SteamOvenFaultEnum.match(steamOven.faultCode).getValue());
+            }else {
+                com.hjq.toast.ToastUtils.show("设备端故障未处理，请及时处理");
+            }
+            return false;
+        }
+        if (SteamOvenHelper.isWork2(steamOven.workState)) {
+            com.hjq.toast.ToastUtils.show("设备已占用");
+            return false;
+        }
+        //门已打开 而且不能开门工作
+        if (!SteamOvenHelper.isDoorState(steamOven.doorState) && !SteamOvenHelper.isOpenDoorWork(SteamOvenModeEnum.match(mSteamModel)) ){
+            com.hjq.toast.ToastUtils.show("门未关好，请检查并确认关好门");
+            return false;
+        }
+
+        /**
+         * 判断是否需要水
+         */
+        if (SteamOvenHelper.isWater(SteamOvenModeEnum.match(mSteamModel))) {
+            if (SteamOvenHelper.isDescale(steamOven.descaleFlag)) {
+                com.hjq.toast.ToastUtils.show("设备需要除垢后才能继续工作，请先除垢");
+                return false;
+            }
+            if (!SteamOvenHelper.isWaterBoxState(steamOven.waterBoxState)) {
+                com.hjq.toast.ToastUtils.show("水箱已弹出，请检查水箱状态");
+                return false;
+            }
+            if (!SteamOvenHelper.isWaterLevelState(steamOven.waterLevelState)) {
+                com.hjq.toast.ToastUtils.show("水箱缺水，请加水");
+                return false;
+            }
+        }
+        return true;
+    }
+    private static void sendCommand(final AbsSteameOvenOneNew steamOven, Map<String, paramCode> paramMap, final Callback<Integer> callback) {
+
+//        paramCode paramCode = paramMap.get(MsgParams.OvenSteamMode);
+//        Log.e("结果",)
+        if (!WorkBeforeCheck(steamOven,paramMap.get(MsgParams.OvenSteamMode).value)){
+            return;
+        }
+
+
+        if (steamOven.workState==5){
+
+            steamOven.setSteamWorkStatus(SteamOvenHelper.isPause(steamOven.workState) ? IntegStoveStatus.workCtrl_continue : IntegStoveStatus.workCtrl_time_out, (short) 4, new VoidCallback() {
+                @Override
+                public void onSuccess() {
+                    callback.onSuccess(0);
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                }
+            });
+
+        }else {
+
+            steamOven.setSteameOvenOneRunMode(Short.valueOf(String.valueOf(paramMap.get(MsgParams.OvenSteamMode).value)),
+                    Integer.valueOf(String.valueOf(paramMap.get(MsgParams.OvenSteamTime).value)) / 60,
+                    Short.valueOf(String.valueOf(paramMap.get(MsgParams.OvenSteamTemp).value)), (short) 0, (short) 0, new VoidCallback() {
+                        public void onSuccess() {
+
+                            callback.onSuccess(0);
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            callback.onSuccess(1);
+                        }
+                    });
+        }
+    }
     private static void sendCommand(final AbsSteameOvenOne steamOven, Map<String, paramCode> paramMap, final Callback<Integer> callback) {
         paramCode paramCode = paramMap.get(MsgParams.OvenSteamMode);
         if (paramCode != null && "EXP".equals(paramCode.valueName)) {
@@ -794,12 +923,17 @@ public class RecipeNewUtils {
                 setMicroStatusModel(status, iDevice, callback);
             } else if (DeviceType.RZKY.equals(iDevice.getDc())) {
                 LogUtils.i("20171122", "status::" + status);
-                if (status == SteamOvenOnePowerOnStatus.WorkingStatus)
-                    status = SteamOvenOnePowerOnStatus.WorkingStatus;
-                if (status == SteamOvenOnePowerOnStatus.Pause)
-                    status = SteamOvenOnePowerOnStatus.Pause;
-                if (status == SteamOvenOnePowerStatus.RecipeOff)
-                    status = SteamOvenOnePowerStatus.RecipeOff;
+                if (iDevice.getDt().equals("DB620")||iDevice.getDt().equals("CQ920")){
+
+
+                }else {
+                    if (status == SteamOvenOnePowerOnStatus.WorkingStatus)
+                        status = SteamOvenOnePowerOnStatus.WorkingStatus;
+                    if (status == SteamOvenOnePowerOnStatus.Pause)
+                        status = SteamOvenOnePowerOnStatus.Pause;
+                    if (status == SteamOvenOnePowerStatus.RecipeOff)
+                        status = SteamOvenOnePowerStatus.RecipeOff;
+                }
 
                 setSteamAndOvenStatusModel(status, iDevice, callback);
             }
@@ -809,9 +943,77 @@ public class RecipeNewUtils {
     }
 
     private static void setSteamAndOvenStatusModel(short status, IDevice iDevice, final Callback<Integer> callback) {
-        AbsSteameOvenOne steameOvenOne = Utils.getDefaultSteameOven();
-        setSteamAndOvenStatusParam(status, (AbsSteameOvenOne) iDevice, callback);
+//        AbsSteameOvenOne steameOvenOne = Utils.getDefaultSteameOven();
+
+        if (iDevice.getDt().equals("DB620")||iDevice.getDt().equals("CQ920")){
+            setSteamAndOvenStatusParam(status, (AbsSteameOvenOneNew) iDevice, callback);
+        }else {
+            setSteamAndOvenStatusParam(status, (AbsSteameOvenOne) iDevice, callback);
+        }
     }
+    private static void setSteamAndOvenStatusParam(short status, final AbsSteameOvenOneNew steamOven, final Callback<Integer> callback) {
+        if (!steamOven.isConnected()) {
+            callback.onSuccess(3);
+            return;
+        }
+        Log.e("发送",status+"---");
+//        if (steamOven.powerOnStatus == SteamOvenOnePowerOnStatus.AlarmStatus) {
+//            callback.onSuccess(4);
+//            return;
+//        }
+//        if (status == SteamOvenOnePowerOnStatus.WorkingStatus) {
+//            if (steamOven.powerState != SteamOvenOnePowerOnStatusNew.Open//SteamOvenOnePowerStatus.On
+//                    && steamOven.workState != SteamOvenOneWorkStatusNew.PreHeat
+//                    && steamOven.workState != SteamOvenOneWorkStatusNew.Working) {
+//                callback.onSuccess(2);
+//                return;
+//            }
+//
+//            if (steamOven.powerOnStatus != SteamOvenOnePowerOnStatusNew.Working) {
+//                callback.onSuccess(2);
+//                return;
+//            }
+//
+//        LogUtils.i("20171122结果ooo", "steamOven::" + steamOven.powerState + " " + status);
+
+                short key=status==0?SteamOvenOnePowerStatusNew.powerCtrlKey:SteamOvenOnePowerStatusNew.workCtrlKey;
+                steamOven.setSteamWorkStatus(status, key, new VoidCallback() {
+
+
+                    @Override
+                    public void onSuccess() {
+                        callback.onSuccess(0);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        callback.onSuccess(1);
+                    }
+                });
+
+
+//        if (status == 1) {
+////            steamOven.setSteameOvenStatus();
+//            steamOven.setSteameOvenStatus_Off( new VoidCallback() {
+//
+//
+//                @Override
+//                public void onSuccess() {
+//                    callback.onSuccess(0);
+//                }
+//
+//                @Override
+//                public void onFailure(Throwable t) {
+//                    callback.onSuccess(1);
+//                }
+//            });
+//        }else{
+
+
+//            steamOven.setSteameOvenStatus_on( );
+
+//            steamOven.setSteameOvenStatus();
+        }
 
     private static void setSteamAndOvenStatusParam(short status, final AbsSteameOvenOne steamOven, final Callback<Integer> callback) {
         if (!steamOven.isConnected()) {
@@ -823,7 +1025,8 @@ public class RecipeNewUtils {
             return;
         }
         if (status == SteamOvenOnePowerOnStatus.WorkingStatus) {
-            if (steamOven.powerStatus != SteamOvenOnePowerStatus.On && steamOven.worknStatus != SteamOvenOneWorkStatus.PreHeat && steamOven.worknStatus != SteamOvenOneWorkStatus.Working) {
+            if (steamOven.powerState != SteamOvenOnePowerStatus.On && steamOven.workState != SteamOvenOneWorkStatus.PreHeat
+                    && steamOven.workState != SteamOvenOneWorkStatus.Working) {
                 callback.onSuccess(2);
                 return;
             }
@@ -833,7 +1036,7 @@ public class RecipeNewUtils {
                 return;
             }
         }
-        LogUtils.i("20171122", "steamOven::" + steamOven.powerStatus + " " + status);
+        LogUtils.i("20171122", "steamOven::" + steamOven.powerState + " " + status);
         if (status == SteamOvenOnePowerStatus.RecipeOff) {
             steamOven.setSteameOvenStatus(SteamOvenOnePowerStatus.Off, SteamOvenOnePowerOnStatus.NoStatus, new VoidCallback() {
                 @Override
@@ -847,7 +1050,7 @@ public class RecipeNewUtils {
                 }
             });
         } else {
-            LogUtils.i("20180126", "power:::" + steamOven.powerStatus + " status::" + status);
+            LogUtils.i("20180126", "power:::" + steamOven.powerState + " status::" + status);
 //            steamOven.setSteamOvenOneStatusControl(status, new VoidCallback() {
 //                @Override
 //                public void onSuccess() {
@@ -860,7 +1063,7 @@ public class RecipeNewUtils {
 //                }
 //            });
             //以前注释掉的
-            steamOven.setSteameOvenStatus(steamOven.powerStatus, status, new VoidCallback() {
+            steamOven.setSteameOvenStatus(steamOven.powerState, status, new VoidCallback() {
                 @Override
                 public void onSuccess() {
                     callback.onSuccess(0);

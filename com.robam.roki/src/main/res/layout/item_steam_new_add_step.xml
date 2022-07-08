@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginStart="13dp"
+    android:layout_marginEnd="13dp"
+    android:layout_marginTop="5dp"
+    android:background="@color/mine_white_background"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/add_step"
+        android:textSize="15sp"
+        android:text="@string/device_add_multi_step"
+        android:textColor="#FF61ACFF"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"/>
+</LinearLayout>

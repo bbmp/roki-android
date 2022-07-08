@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.VoidCallback;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.legent.ui.UIService;
@@ -100,6 +101,10 @@ public class DeviceFanOilCupPage extends BasePage {
         super.onResume();
         if (fan == null) {
             return;
+        }
+        if (fan.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), fan.getDt() + ":油杯检测页", null);
         }
     }
 

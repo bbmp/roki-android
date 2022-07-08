@@ -1,0 +1,1033 @@
+//{
+//  "serverOpt": {
+//    "ecsHost": "183.129.170.221",
+//    "ecsPort": "8088",
+//    "acsHost": "183.129.170.221",
+//    "acsPort": "1884",
+//    "mqttUser": "smalKettle",
+//    "mqttPwd": "smal2014"
+//  },
+//  "commOpt": {
+//    "appType": "ktapp",
+//    "pollingPeriodInFront": "2000",
+//    "pollingPeriodInBack": "30000",
+//    "implDeviceFactory": "com.smal.kettle.io.device.DeviceFactory",
+//    "implAppNoticeReceiver": "com.smal.kettle.io.device.AppNoticeReceiver",
+//    "implAppOAuthService": "com.legent.utils.sharesdk.ShareSdkOAuthService"
+//  },
+//  "deviceTypes": [
+//    {
+//      "id": "R8700",
+//      "name": "油烟机",
+//      "tag": "Cooker Hood"
+//    },
+//    {
+//      "id": "R9700",
+//      "name": "油烟机",
+//      "tag": "Cooker Hood"
+//    },
+//    {
+//      "id": "R9W70",
+//      "name": "电磁灶",
+//      "tag": "Induction Hob"
+//    },
+//    {
+//      "id": "R9W71",
+//      "name": "消毒柜",
+//      "tag": "Sterilizer"
+//    },
+//    {
+//      "id": "R9W72",
+//      "name": "电烤箱",
+//      "tag": "Oven"
+//    },
+//    {
+//      "id": "R9W73",
+//      "name": "微波炉",
+//      "tag": "Microwave"
+//    },
+//    {
+//      "id": "R9W74",
+//      "name": "蒸汽炉",
+//      "tag": "SteamOven"
+//    }
+//  ],
+//  "resultCodes": [
+//    {
+//      "id": "5001",
+//      "name": "@string/rc_5001"
+//    },
+//    {
+//      "id": "5002",
+//      "name": "@string/rc_5002"
+//    },
+//    {
+//      "id": "5003",
+//      "name": "@string/rc_5003"
+//    },
+//    {
+//      "id": "5004",
+//      "name": "@string/rc_5004"
+//    },
+//    {
+//      "id": "5005",
+//      "name": "@string/rc_5005"
+//    },
+//    {
+//      "id": "5006",
+//      "name": "@string/rc_5006"
+//    },
+//    {
+//      "id": "5007",
+//      "name": "@string/rc_5007"
+//    },
+//    {
+//      "id": "5008",
+//      "name": "@string/rc_5008"
+//    },
+//    {
+//      "id": "5009",
+//      "name": "@string/rc_5009"
+//    },
+//    {
+//      "id": "5010",
+//      "name": "@string/rc_5010"
+//    },
+//    {
+//      "id": "5011",
+//      "name": "@string/rc_5011"
+//    },
+//    {
+//      "id": "5012",
+//      "name": "@string/rc_5012"
+//    },
+//    {
+//      "id": "5101",
+//      "name": "@string/rc_5101"
+//    },
+//    {
+//      "id": "5102",
+//      "name": "@string/rc_5102"
+//    },
+//    {
+//      "id": "5103",
+//      "name": "@string/rc_5103"
+//    },
+//    {
+//      "id": "5104",
+//      "name": "@string/rc_5104"
+//    },
+//    {
+//      "id": "5105",
+//      "name": "@string/rc_5105"
+//    },
+//    {
+//      "id": "5200",
+//      "name": "@string/rc_5200"
+//    },
+//    {
+//      "id": "5201",
+//      "name": "@string/rc_5201"
+//    },
+//    {
+//      "id": "5202",
+//      "name": "@string/rc_5202"
+//    },
+//    {
+//      "id": "5203",
+//      "name": "@string/rc_5203"
+//    },
+//    {
+//      "id": "5204",
+//      "name": "@string/rc_5204"
+//    }
+//  ],
+//  "msgDic": {
+//    "syncTimeout": "2000",
+//    "indexs": [
+//      {
+//        "deviceTypeId": "9815C",
+//        "templateId": "smal"
+//      },
+//      {
+//        "deviceTypeId": "9876C",
+//        "templateId": "smal"
+//      },
+//      {
+//        "deviceTypeId": "9820C",
+//        "templateId": "smal"
+//      },
+//      {
+//        "deviceTypeId": "9821C",
+//        "templateId": "smal"
+//      },
+//      {
+//        "deviceTypeId": "9816C",
+//        "templateId": "smal"
+//      }
+//    ],
+//    "templates": [
+//      {
+//        "id": "smal",
+//        "name": "小智生活2015版协议",
+//        "msgs": [
+//          {
+//            "id": 1,
+//            "name": "GetDeviceInfo_Req",
+//            "pairsId": 101,
+//            "desc": "读取设备信息（请求）",
+//            "params": [
+//              {
+//                "id": "AppType",
+//                "name": "App类型",
+//                "desc": "ASCII,2字节",
+//                "type": "string",
+//                "len": "2"
+//              },
+//              {
+//                "id": "AppNum",
+//                "name": "AppNum",
+//                "desc": "ASCII,12字节",
+//                "type": "string",
+//                "len": "12"
+//              }
+//            ]
+//          },
+//          {
+//            "id": 101,
+//            "name": "GetDeviceInfo_Rep",
+//            "pairsId": 1,
+//            "desc": "读取设备信息（回应）",
+//            "params": [
+//              {
+//                "id": "OtaVer",
+//                "name": "固件版本号",
+//                "desc": "",
+//                "type": "short",
+//                "len": "1"
+//              },
+//              {
+//                "id": "PrefsModeId",
+//                "name": "偏好模式编码",
+//                "desc": "",
+//                "type": "int"
+//              },
+//              {
+//                "id": "BoardWarmTem",
+//                "name": "面板保温温度",
+//                "desc": "",
+//                "type": "short",
+//                "len": "1"
+//              },
+//              {
+//                "id": "OwnerId",
+//                "name": "用户的小智ID",
+//                "desc": "ASCII,10字节",
+//                "type": "string",
+//                "len": "10"
+//              }
+//            ]
+//          },
+//          {
+//            "id": 2,
+//            "name": "GetDeviceParams_Req",
+//            "pairsId": 102,
+//            "desc": "读取设备参数（请求）",
+//            "params": [
+//              {
+//                "id": "AppType",
+//                "name": "App类型",
+//                "type": "string",
+//                "len": "2"
+//              },
+//              {
+//                "id": "AppNum",
+//                "name": "AppNum",
+//                "type": "string",
+//                "len": "12"
+//              }
+//            ]
+//          },
+//          {
+//            "id": 102,
+//            "name": "GetDeviceParams_Rep",
+//            "pairsId": 2,
+//            "desc": "读取设备参数（回应）",
+//            "params": [
+//              {
+//                "id": "Light",
+//                "name": "灯光开关",
+//                "type": "bool"
+//              },
+//              {
+//                "id": "KeySound",
+//                "name": "按键音大小",
+//                "desc": "无:0小:1,大:2",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "HintSound",
+//                "name": "提示音大小",
+//                "desc": "无:0小:1,大:2",
+//                "type": "short",
+//                "len": 1
+//              }
+//            ]
+//          },
+//          {
+//            "id": 3,
+//            "name": "GetDeviceStatus_Req",
+//            "pairsId": 103,
+//            "desc": "读取设备状态（请求）",
+//            "params": [
+//              {
+//                "id": "AppType",
+//                "name": "App类型",
+//                "type": "string",
+//                "len": "2"
+//              },
+//              {
+//                "id": "AppNum",
+//                "name": "AppNum",
+//                "type": "string",
+//                "len": "12"
+//              }
+//            ]
+//          },
+//          {
+//            "id": 103,
+//            "name": "GetDeviceStatus_Rep",
+//            "pairsId": 3,
+//            "desc": "读取设备状态（回应）",
+//            "params": [
+//              {
+//                "id": "CT",
+//                "name": "当前水温",
+//                "desc": "",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "FT",
+//                "name": "当前底座温度",
+//                "desc": "",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "StateId",
+//                "name": "状态码",
+//                "desc": "",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "ModeId",
+//                "name": "模式编码",
+//                "desc": "",
+//                "type": "int"
+//              },
+//              {
+//                "id": "PlanTime",
+//                "name": "当前模式完成所需时间",
+//                "desc": "（单位：秒）",
+//                "type": "int"
+//              },
+//              {
+//                "id": "OverTime",
+//                "name": "当前模式已运行时间",
+//                "desc": "（单位：秒）",
+//                "type": "int"
+//              },
+//              {
+//                "id": "IsFinished",
+//                "name": "当前模式是否已完成(到保温前)",
+//                "type": "bool"
+//              },
+//              {
+//                "id": "OAT_Hour",
+//                "name": "预约用水绝对时间之小时",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "OAT_Minute",
+//                "name": "预约用水绝对时间之分钟",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "ORT",
+//                "name": "预约用水相对时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "AlarmId",
+//                "name": "报警码",
+//                "desc": "",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "TgtTem",
+//                "name": "目标温度",
+//                "desc": "",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "StewStepIndex",
+//                "name": "当前煲料阶段",
+//                "desc": "取值范围0~5，0表示不在煲料阶段",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "StewLevel",
+//                "name": "当前煲料火力等级",
+//                "desc": "小:0,中:1,大:2, 可控硅大火:3",
+//                "type": "short",
+//                "len": 1
+//              }
+//            ]
+//          },
+//          {
+//            "id": 51,
+//            "name": "SetPerfsMode_Req",
+//            "pairsId": 151,
+//            "desc": "设置偏好模式（请求）",
+//            "params": [
+//              {
+//                "id": "AppType",
+//                "name": "App类型",
+//                "type": "string",
+//                "len": "2"
+//              },
+//              {
+//                "id": "AppNum",
+//                "name": "AppNum",
+//                "type": "string",
+//                "len": "12"
+//              },
+//              {
+//                "id": "ModeId",
+//                "name": "模式编码",
+//                "desc": "",
+//                "type": "int"
+//              },
+//              {
+//                "id": "SoaKTime",
+//                "name": "泡料时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "SoakTem",
+//                "name": "泡料温度",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "IsBoil",
+//                "name": "泡料温度",
+//                "type": "bool"
+//              },
+//              {
+//                "id": "BoilLevel",
+//                "name": "煮沸功率等级",
+//                "desc": "小:0,中:1,大:2",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "PurifyTime",
+//                "name": "净化时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "DechlorTime",
+//                "name": "除氯时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "NeedHint",
+//                "name": "是否提示加料",
+//                "type": "bool"
+//              },
+//              {
+//                "id": "StewTime",
+//                "name": "煲料时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "EachStewTime",
+//                "name": "煲料小周期煮时间",
+//                "desc": "(单位：秒)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "EachStewLevel",
+//                "name": "煲料小周期煮功率等级",
+//                "desc": "小:0,中:1,大:2",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "EachStewRestTime",
+//                "name": "煲料小周期停时间",
+//                "desc": "(单位：秒)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "IsKeepWarm",
+//                "name": "是否保温",
+//                "type": "bool"
+//              },
+//              {
+//                "id": "TgtTem",
+//                "name": "目标温度",
+//                "desc": "",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "KeepWarmTime",
+//                "name": "保温时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "StewStepCount",
+//                "name": "煲料阶段数",
+//                "desc": "取值范围1~5",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "StewStepList",
+//                "name": "煲料阶段列表",
+//                "desc": "",
+//                "type": "list",
+//                "refParamId": "StewStepCount",
+//                "params": [
+//                  {
+//                    "id": "StewTime",
+//                    "name": "煲料时间",
+//                    "desc": "(单位：分钟)",
+//                    "type": "short",
+//                    "len": 2
+//                  },
+//                  {
+//                    "id": "EachStewTime",
+//                    "name": "煲料小周期煮时间",
+//                    "desc": "(单位：秒)",
+//                    "type": "short",
+//                    "len": 2
+//                  },
+//                  {
+//                    "id": "EachStewLevel",
+//                    "name": "煲料小周期煮功率等级",
+//                    "desc": "小:0,中:1,大:2",
+//                    "type": "short",
+//                    "len": 1
+//                  },
+//                  {
+//                    "id": "EachStewRestTime",
+//                    "name": "煲料小周期停时间",
+//                    "desc": "(单位：秒)",
+//                    "type": "short",
+//                    "len": 2
+//                  }
+//                ]
+//              }
+//            ]
+//          },
+//          {
+//            "id": 151,
+//            "name": "SetPerfsMode_Rep",
+//            "pairsId": 51,
+//            "desc": "设置偏好模式（回应）",
+//            "params": [
+//              {
+//                "id": "RC",
+//                "name": "回应码",
+//                "type": "short",
+//                "len": 1
+//              }
+//            ]
+//          },
+//          {
+//            "id": 52,
+//            "name": "SetLight_Req",
+//            "pairsId": 152,
+//            "desc": "启停设备灯光效果（请求）",
+//            "params": [
+//              {
+//                "id": "AppType",
+//                "name": "App类型",
+//                "type": "string",
+//                "len": "2"
+//              },
+//              {
+//                "id": "AppNum",
+//                "name": "AppNum",
+//                "type": "string",
+//                "len": "12"
+//              },
+//              {
+//                "id": "Light",
+//                "name": "灯光开关",
+//                "type": "bool"
+//              }
+//            ]
+//          },
+//          {
+//            "id": 152,
+//            "name": "SetLight_Rep",
+//            "pairsId": 52,
+//            "desc": "启停设备灯光效果（回应）",
+//            "params": [
+//              {
+//                "id": "RC",
+//                "name": "回应码",
+//                "type": "short",
+//                "len": 1
+//              }
+//            ]
+//          },
+//          {
+//            "id": 53,
+//            "name": "SetKeySound_Req",
+//            "pairsId": 153,
+//            "desc": "调节按键声音大小（请求）",
+//            "params": [
+//              {
+//                "id": "AppType",
+//                "name": "App类型",
+//                "type": "string",
+//                "len": "2"
+//              },
+//              {
+//                "id": "AppNum",
+//                "name": "AppNum",
+//                "type": "string",
+//                "len": "12"
+//              },
+//              {
+//                "id": "KeySound",
+//                "name": "按键音大小",
+//                "desc": "无:0小:1,大:2",
+//                "type": "short",
+//                "len": 1
+//              }
+//            ]
+//          },
+//          {
+//            "id": 153,
+//            "name": "SetKeySound_Rep",
+//            "pairsId": 53,
+//            "desc": "调节按键声音大小（回应）",
+//            "params": [
+//              {
+//                "id": "RC",
+//                "name": "回应码",
+//                "type": "short",
+//                "len": 1
+//              }
+//            ]
+//          },
+//          {
+//            "id": 54,
+//            "name": "SetHintSound_Req",
+//            "pairsId": 154,
+//            "desc": "调节提示音大小（请求）",
+//            "params": [
+//              {
+//                "id": "AppType",
+//                "name": "App类型",
+//                "type": "string",
+//                "len": "2"
+//              },
+//              {
+//                "id": "AppNum",
+//                "name": "AppNum",
+//                "type": "string",
+//                "len": "12"
+//              },
+//              {
+//                "id": "HintSound",
+//                "name": "提示音大小",
+//                "desc": "无:0小:1,大:2",
+//                "type": "short",
+//                "len": 1
+//              }
+//            ]
+//          },
+//          {
+//            "id": 154,
+//            "name": "SetHintSound_Rep",
+//            "pairsId": 54,
+//            "desc": "调节提示音大小（回应）",
+//            "params": [
+//              {
+//                "id": "RC",
+//                "name": "回应码",
+//                "type": "short",
+//                "len": 1
+//              }
+//            ]
+//          },
+//          {
+//            "id": 55,
+//            "name": "Start_Req",
+//            "pairsId": 155,
+//            "desc": "启动烧水（请求）",
+//            "params": [
+//              {
+//                "id": "AppType",
+//                "name": "App类型",
+//                "type": "string",
+//                "len": "2"
+//              },
+//              {
+//                "id": "AppNum",
+//                "name": "AppNum",
+//                "type": "string",
+//                "len": "12"
+//              },
+//              {
+//                "id": "ModeId",
+//                "name": "模式编码",
+//                "desc": "",
+//                "type": "int"
+//              },
+//              {
+//                "id": "SoaKTime",
+//                "name": "泡料时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "SoakTem",
+//                "name": "泡料温度",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "IsBoil",
+//                "name": "泡料温度",
+//                "type": "bool"
+//              },
+//              {
+//                "id": "BoilLevel",
+//                "name": "煮沸功率等级",
+//                "desc": "小:0,中:1,大:2",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "PurifyTime",
+//                "name": "净化时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "DechlorTime",
+//                "name": "除氯时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "NeedHint",
+//                "name": "是否提示加料",
+//                "type": "bool"
+//              },
+//              {
+//                "id": "StewTime",
+//                "name": "煲料时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "EachStewTime",
+//                "name": "煲料小周期煮时间",
+//                "desc": "(单位：秒)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "EachStewLevel",
+//                "name": "煲料小周期煮功率等级",
+//                "desc": "小:0,中:1,大:2",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "EachStewRestTime",
+//                "name": "煲料小周期停时间",
+//                "desc": "(单位：秒)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "IsKeepWarm",
+//                "name": "是否保温",
+//                "type": "bool"
+//              },
+//              {
+//                "id": "TgtTem",
+//                "name": "目标温度",
+//                "desc": "",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "KeepWarmTime",
+//                "name": "保温时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "OAT_Hour",
+//                "name": "预约用水绝对时间之小时",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "OAT_Minute",
+//                "name": "预约用水绝对时间之分钟",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "ORT",
+//                "name": "预约用水相对时间",
+//                "desc": "(单位：分钟)",
+//                "type": "short",
+//                "len": 2
+//              },
+//              {
+//                "id": "StewStepCount",
+//                "name": "煲料阶段数",
+//                "desc": "取值范围1~5",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "StewStepList",
+//                "name": "煲料阶段列表",
+//                "desc": "",
+//                "type": "list",
+//                "refParamId": "StewStepCount",
+//                "params": [
+//                  {
+//                    "id": "StewTime",
+//                    "name": "煲料时间",
+//                    "desc": "(单位：分钟)",
+//                    "type": "short",
+//                    "len": 2
+//                  },
+//                  {
+//                    "id": "EachStewTime",
+//                    "name": "煲料小周期煮时间",
+//                    "desc": "(单位：秒)",
+//                    "type": "short",
+//                    "len": 2
+//                  },
+//                  {
+//                    "id": "EachStewLevel",
+//                    "name": "煲料小周期煮功率等级",
+//                    "desc": "小:0,中:1,大:2",
+//                    "type": "short",
+//                    "len": 1
+//                  },
+//                  {
+//                    "id": "EachStewRestTime",
+//                    "name": "煲料小周期停时间",
+//                    "desc": "(单位：秒)",
+//                    "type": "short",
+//                    "len": 2
+//                  }
+//                ]
+//              }
+//            ]
+//          },
+//          {
+//            "id": 155,
+//            "name": "Start_Rep",
+//            "pairsId": 55,
+//            "desc": "启动烧水（回应）",
+//            "params": [
+//              {
+//                "id": "RC",
+//                "name": "回应码",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "PlanTime",
+//                "name": "当前模式完成所需时间",
+//                "desc": "（单位：秒）",
+//                "type": "int"
+//              }
+//            ]
+//          },
+//          {
+//            "id": 56,
+//            "name": "Stop_Req",
+//            "pairsId": 156,
+//            "desc": "停止烧水（请求）",
+//            "params": [
+//              {
+//                "id": "AppType",
+//                "name": "App类型",
+//                "type": "string",
+//                "len": "2"
+//              },
+//              {
+//                "id": "AppNum",
+//                "name": "AppNum",
+//                "type": "string",
+//                "len": "12"
+//              }
+//            ]
+//          },
+//          {
+//            "id": 156,
+//            "name": "Stop_Rep",
+//            "pairsId": 56,
+//            "desc": "停止烧水（回应）",
+//            "params": [
+//              {
+//                "id": "RC",
+//                "name": "回应码",
+//                "type": "short",
+//                "len": 1
+//              }
+//            ]
+//          },
+//          {
+//            "id": 58,
+//            "name": "SetBoardWarmTemperature_Req",
+//            "pairsId": 158,
+//            "desc": "设备面板保温温度（请求）",
+//            "params": [
+//              {
+//                "id": "AppType",
+//                "name": "App类型",
+//                "type": "string",
+//                "len": "2"
+//              },
+//              {
+//                "id": "AppNum",
+//                "name": "AppNum",
+//                "type": "string",
+//                "len": "12"
+//              },
+//              {
+//                "id": "BoardWarmTem",
+//                "name": "面板保温温度",
+//                "desc": "",
+//                "type": "short",
+//                "len": "1"
+//              }
+//            ]
+//          },
+//          {
+//            "id": 158,
+//            "name": "SetBoardWarmTemperature_Rep",
+//            "pairsId": 58,
+//            "desc": "设备面板保温温度（回应）",
+//            "params": [
+//              {
+//                "id": "RC",
+//                "name": "回应码",
+//                "type": "short",
+//                "len": 1
+//              }
+//            ]
+//          },
+//          {
+//            "id": 204,
+//            "name": "Alarm_Noti",
+//            "desc": "报警通知",
+//            "params": [
+//              {
+//                "id": "AlarmId",
+//                "name": "报警码",
+//                "desc": "",
+//                "type": "short",
+//                "len": 1
+//              }
+//            ]
+//          },
+//          {
+//            "id": 205,
+//            "name": "Event_Noti",
+//            "desc": "报警通知",
+//            "params": [
+//              {
+//                "id": "EventId",
+//                "name": "事件码",
+//                "desc": "",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "StateId",
+//                "name": "状态码",
+//                "desc": "",
+//                "type": "short",
+//                "len": 1
+//              },
+//              {
+//                "id": "ModeId",
+//                "name": "模式编码",
+//                "desc": "",
+//                "type": "int"
+//              },
+//              {
+//                "id": "AppNum",
+//                "name": "AppNum",
+//                "desc": "ASCII,12字节",
+//                "type": "string",
+//                "len": "12"
+//              }
+//            ]
+//          },
+//          {
+//            "id": 206,
+//            "name": "DeviceInfoChanged_Noti",
+//            "desc": "设备信息更改通知",
+//            "params": [
+//              {
+//                "id": "PrefsModeId",
+//                "name": "偏好模式编码",
+//                "desc": "",
+//                "type": "int"
+//              }
+//            ]
+//          }
+//        ]
+//      }
+//    ]
+//  }
+//}

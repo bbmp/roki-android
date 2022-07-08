@@ -7,7 +7,7 @@ import com.robam.roki.utils.StringConstantsUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.legent.ContextIniter.context;
+import static com.legent.ContextIniter.cx;
 
 
 /**
@@ -20,7 +20,7 @@ public class HelperFanData {
         ArrayList<String> datas = Lists.newArrayList();
         for (int i = data.get(0); i <= data.get(1);
              i = data.get(2) + i) {
-            datas.add(i + context.getString(R.string.fan_day));
+            datas.add(i + cx.getString(R.string.fan_day));
         }
         return datas;
     }
@@ -30,7 +30,7 @@ public class HelperFanData {
     public static List<String> getTimeHour(List<Integer> hour) {
         List<String> hourList = new ArrayList<>();
         for (int i = 0; i <= hour.get(1); i = i + hour.get(hour.size() - 1)) {
-            hourList.add(i + context.getString(R.string.fan_time_remind_hour));
+            hourList.add(i + cx.getString(R.string.fan_time_remind_hour));
         }
         return hourList;
     }
@@ -38,7 +38,7 @@ public class HelperFanData {
     public static List<String> getTimeHour2(List<Integer> hour) {
         List<String> hourList = new ArrayList<>();
         for (int i = 0; i <= hour.get(1); i = i + hour.get(hour.size() - 1)) {
-            hourList.add(i + context.getString(R.string.fan_time_remind_hour2));
+            hourList.add(i + cx.getString(R.string.fan_time_remind_hour2));
         }
         return hourList;
     }
@@ -49,7 +49,7 @@ public class HelperFanData {
     public static List<String> getTimeMinute(List<Integer> minute) {
         List<String> minuteList = new ArrayList<>();
         for (int i = minute.get(0); i <= minute.get(1); i = i + minute.get(minute.size() - 1)) {
-            minuteList.add(i + context.getString(R.string.minute));
+            minuteList.add(i + cx.getString(R.string.minute));
         }
         return minuteList;
     }
@@ -57,7 +57,7 @@ public class HelperFanData {
     public static List<String> getTimeMinute2(List<Integer> minute) {
         List<String> minuteList = new ArrayList<>();
         for (int i = minute.get(0); i <= minute.get(1); i = i + minute.get(minute.size() - 1)) {
-            minuteList.add(i + context.getString(R.string.minute2));
+            minuteList.add(i + cx.getString(R.string.minute2));
         }
         return minuteList;
     }
@@ -65,7 +65,7 @@ public class HelperFanData {
     public static List<String>getTemp(List<Integer>temp){
         List<String>tempList=new ArrayList<>();
         for (int i = temp.get(0); i <= temp.get(1); i = i + temp.get(temp.size() - 1)) {
-            tempList.add(i + context.getString(R.string.dialog_degree_text));
+            tempList.add(i + cx.getString(R.string.dialog_degree_text));
         }
         return tempList;
     }
@@ -76,24 +76,24 @@ public class HelperFanData {
     public static short getWeekValue(String date) {
 
         short week = 0;
-        if (context.getString(R.string.on_monday).equals(date)) {
+        if (cx.getString(R.string.on_monday).equals(date)) {
             week = 1;
-        } else if (context.getString(R.string.on_tuesday).equals(date)) {
+        } else if (cx.getString(R.string.on_tuesday).equals(date)) {
             week = 2;
 
-        } else if (context.getString(R.string.on_wednesday).equals(date)) {
+        } else if (cx.getString(R.string.on_wednesday).equals(date)) {
             week = 3;
 
-        } else if (context.getString(R.string.on_thursdays).equals(date)) {
+        } else if (cx.getString(R.string.on_thursdays).equals(date)) {
             week = 4;
 
-        } else if (context.getString(R.string.on_fridays).equals(date)) {
+        } else if (cx.getString(R.string.on_fridays).equals(date)) {
             week = 5;
 
-        } else if (context.getString(R.string.on_saturday).equals(date)) {
+        } else if (cx.getString(R.string.on_saturday).equals(date)) {
             week = 6;
 
-        } else if (context.getString(R.string.on_sunday).equals(date)) {
+        } else if (cx.getString(R.string.on_sunday).equals(date)) {
             week = 7;
 
         }

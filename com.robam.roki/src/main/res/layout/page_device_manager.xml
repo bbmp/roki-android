@@ -3,40 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="@drawable/shape_bg_main"
     android:orientation="vertical">
     <View
         android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white" />
+        android:background="@color/transparent" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/dp_44">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="5dp"
-            android:src="@mipmap/icon_back_black" />
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_centerInParent="true"
             android:maxLines="1"
-            android:paddingRight="42dp"
             android:text="@string/my_device"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <FrameLayout
@@ -52,28 +49,20 @@
 
         <LinearLayout
             android:id="@+id/mainView"
+            android:layout_marginTop="@dimen/dp_28"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:orientation="vertical"
+            android:background="@drawable/shape_kitchen_bg_round">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/my_device_kitchen_appliance"
-                android:textColor="@color/c11"
-                android:textSize="13sp" />
-
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listview"
-                style="@style/common_listview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:dividerHeight="1px"
-                android:fastScrollEnabled="false" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"/>
 
 
         </LinearLayout>

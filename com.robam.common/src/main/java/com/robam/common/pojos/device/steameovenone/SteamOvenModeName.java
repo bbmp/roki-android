@@ -14,6 +14,8 @@ public interface SteamOvenModeName {
     String zkyAutoRecipes = "zkyAutoRecipes";//蒸烤一体机
     String professionalBaking = "professionalBaking";//专业烘烤
 
+    String addSteamRoastModel="addSteamRoastModel";
+
     String professionalModel = "professionalModel";//专业模式
     String multiStepModel = "multiStepModel";//多段模式
     String localCookbook = "localCookbook";//本地菜谱
@@ -29,5 +31,8 @@ public interface SteamOvenModeName {
     String fry = "friedMode";//炸模式
     String airfryFunction = "airfryFunction";//空气炸模式
     String fzMode = "fzMode";//610辅助模式
+
+
+    String microwaveModel="microwaveModel";
 
 }

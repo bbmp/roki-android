@@ -23,6 +23,7 @@ import com.robam.common.services.StoveAlarmManager;
 import org.json.JSONException;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,6 +62,9 @@ public class Stove extends AbsDevice implements IStove,Serializable {
     public short AutoPowerOffFive;
     public short power;
 
+    public short leftTemp ;
+    public short rightTemp ;
+
 
     public StoveHead leftHead, rightHead;
     public boolean isLock = false;
@@ -98,6 +102,9 @@ public class Stove extends AbsDevice implements IStove,Serializable {
             e.printStackTrace();
         }
     }
+
+
+
 
     @Override
     public void onReceivedMsg(Msg msg) {
@@ -170,10 +177,15 @@ public class Stove extends AbsDevice implements IStove,Serializable {
                 if (Plat.DEBUG)
                     LogUtils.i("stove_polling_rep", "isLock:" + isLock);
                 List<StoveHead> heads = (List<StoveHead>) msg.opt(MsgParams.StoveHeadList);
+
+                this.leftTemp  = (short) msg.optInt(MsgParams.LeftTemp);
+                this.rightTemp  = (short) msg.optInt(MsgParams.RightTemp);
                 if (heads != null) {
                     onGetHeads(heads);
                 }
+                onStatusChanged();
                 break;
+
 
             default:
                 break;
@@ -228,6 +240,80 @@ public class Stove extends AbsDevice implements IStove,Serializable {
 
     }
 
+    /**
+     *
+     * @param OrderNumber  headId = 0 左灶； headId = 1 右灶
+     * @param ControlInstruction  0停止 1 启动
+     * @param callback
+     */
+
+
+    @Override
+    public void setAutoTemporarySetting(short OrderNumber,short ControlInstruction,VoidCallback callback){
+
+         try {
+             Msg msg = newReqMsg(MsgKeys.setAutoTemporarySetting_Look_Rep);
+             msg.putOpt(MsgParams.TerminalType, terminalType);
+             msg.putOpt(MsgParams.headOrderNumber, OrderNumber);
+             msg.putOpt(MsgParams.ControlInstruction, ControlInstruction);
+             sendMsg(msg, new RCMsgCallbackWithVoid(callback) {
+             protected void afterSuccess(Msg resMsg) {
+                    if (Plat.DEBUG)
+                        LogUtils.i("stove_status", "灶自动控温控制设置 ");
+                short id = (short) resMsg.optInt(MsgParams.IhId);
+                StoveHead head = getHeadById(id);
+                   /* head.status = ihStatus;
+
+                    onStatusChanged();*/
+            }
+        });
+         }catch (JSONException e) {
+             e.printStackTrace();
+         }
+
+
+
+    }
+
+
+
+
+    @Override
+    public void setAutoTemporaryStep(short OrderNumber, short ArgumentNumber, ArrayList<Short> controlWay,
+                                     ArrayList<Short> tap, ArrayList<Integer> temp, ArrayList<Integer> time, VoidCallback callback){
+        try {
+            Msg msg = newReqMsg(MsgKeys.setAutoTemporaryStep_Look_Rep);
+            msg.putOpt(MsgParams.TerminalType, terminalType);
+            msg.putOpt(MsgParams.headOrderNumber, OrderNumber);
+            msg.putOpt(MsgParams.ArgumentNumber, ArgumentNumber);
+
+            msg.putOpt(MsgParams.AutoTemporaryLength, 6);
+            msg.putOpt(MsgParams.AutoTemporaryControlWay, controlWay);
+            msg.putOpt(MsgParams.AutoTemporaryControlTap, tap);
+            msg.putOpt(MsgParams.AutoTemporaryControlTemp, temp);
+            msg.putOpt(MsgParams.AutoTemporaryControlTime, time);
+
+            if (Plat.DEBUG){
+
+
+            }
+            sendMsg(msg, new RCMsgCallbackWithVoid(callback) {
+                protected void afterSuccess(Msg resMsg) {
+//                    if (Plat.DEBUG)
+//                        LogUtils.i("stove_status", "状态设置成功 " + ihStatus);
+                    short id = (short) resMsg.optInt(MsgParams.IhId);
+                    StoveHead head = getHeadById(id);
+                   /* head.status = ihStatus;
+
+                    onStatusChanged();*/
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
 
     @Override
@@ -423,7 +509,7 @@ public class Stove extends AbsDevice implements IStove,Serializable {
     //
     // -------------------------------------------------------------------------------
 
-    static public class StoveHead {
+    static public class StoveHead implements Serializable {
 
         final static public short LEFT_ID = 0;
         final static public short RIGHT_ID = 1;
@@ -440,6 +526,7 @@ public class Stove extends AbsDevice implements IStove,Serializable {
         public short time;
         public short workTime;
         public short alarmId;
+        public short temp;
 
         private short savedLevel;
 
@@ -455,6 +542,7 @@ public class Stove extends AbsDevice implements IStove,Serializable {
             this.time = head.time;
             this.workTime = head.workTime;
             this.alarmId = head.alarmId;
+            this.temp=head.temp;
         }
 
         public boolean isLeft() {
@@ -469,6 +557,7 @@ public class Stove extends AbsDevice implements IStove,Serializable {
             status = StoveStatus.Off;
             level = 0;
             time = 0;
+            temp =0;
             alarmId = StoveAlarmManager.getInstance().getDefault().getID();
         }
 

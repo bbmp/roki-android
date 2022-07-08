@@ -45,7 +45,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="60dp"
                 android:background="@drawable/selector_rika_item_bg"
-                android:src="@mipmap/icon_device_switch"/>
+                android:src="@mipmap/icon_device_switch_night"/>
 
             <ImageView
                 android:id="@+id/oven_more"

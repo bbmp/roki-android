@@ -34,7 +34,8 @@
             android:textColor="@color/c16"
             android:textSize="20sp"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView6"/>
 
     </RelativeLayout>
 

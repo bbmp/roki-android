@@ -3,22 +3,18 @@ package com.robam.roki.ui.dialog;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.common.base.Objects;
 import com.legent.ui.ext.dialogs.AbsDialog;
 import com.legent.utils.api.ViewUtils;
 import com.legent.utils.graphic.ImageUtils;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.robam.roki.R;
 import com.robam.roki.model.helper.ShareHelper;
 
@@ -190,30 +186,63 @@ public class KitchenSourceShareDialog extends AbsDialog{
 
             String finalWebUrl = webUrl;
             String finalText = text;
-            ImageUtils.loadImage(cx, img, new CustomTarget<Bitmap>() {
+            ImageUtils.loadImage(img, new ImageLoadingListener() {
+
 
                 @Override
-                public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
-                    if (bitmap == null) {
+                public void onLoadingStarted(String s, View view) {
+
+                }
+
+                @Override
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String s, View view, Bitmap loadedImage) {
+
+                    if (loadedImage == null) {
                         ShareHelper.shareDingding(cx,title,img, finalWebUrl, finalText);
                         return;
                     }
 
-                    if (bitmap != null) {
-                        String img_path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "img.png";
+                    if (loadedImage != null) {
+//                        Canvas canvasBackBitmap = new Canvas(backBitmap);
+//                        canvasBackBitmap.drawBitmap(backBitmap, new Matrix(), null);
+//                        canvasBackBitmap.drawBitmap(encodeBitmap, 0, 3, null);
+//                        Paint paintRecipeName = new Paint();
+//                        paintRecipeName.setColor(0xff000000);
+//                        paintRecipeName.setAntiAlias(true);
+//                        paintRecipeName.setTextSize(16);
+//                        canvasBackBitmap.drawText(book.name, 100, 46, paintRecipeName);
+//                        Paint paintText = new Paint();
+//                        paintText.setColor(0xff6d6d6d);
+//                        paintText.setTextSize(12);
+//                        paintText.setAntiAlias(true);
+//                        canvasBackBitmap.drawText(TEXT, 100, 73, paintText);
+//                        resultBitmap = BitmapUtils.add2Bitmap(maxBitmap, backBitmap);
+//                        Canvas canvas = new Canvas(resultBitmap);
+//                        canvas.drawBitmap(resultBitmap, new Matrix(), null);
+////                    int x = width / 2 - newLogbitmap.getWidth() / 2; log在中间
+////                    int y = height - newLogbitmap.getHeight() - padding;
+//                        int x = resultBitmap.getWidth() - newLogbitmap.getWidth() - padding;
+//                        int y = resultBitmap.getHeight() - newLogbitmap.getHeight() / 2 - backBitmap.getHeight();
+//                        canvas.drawBitmap(newLogbitmap, x, y, null); //写入点的x、y坐标
+                       String img_path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "img.png";
                         FileOutputStream out = null;
                         try {
                             out = new FileOutputStream(img_path);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                        loadedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
                         ShareHelper.shareDingding(cx,title,img_path, finalWebUrl, finalText);
                     }
                 }
 
                 @Override
-                public void onLoadCleared(@Nullable Drawable drawable) {
+                public void onLoadingCancelled(String s, View view) {
 
                 }
             });

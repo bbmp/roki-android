@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
@@ -45,6 +46,10 @@ public class AbsSteamModePage extends AbsOvenGridBasePage {
         super.onResume();
         if (steam == null) {
             return;
+        }
+        if (steam.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), steam.getDt() + ":蒸模式页", null);
         }
 
     }

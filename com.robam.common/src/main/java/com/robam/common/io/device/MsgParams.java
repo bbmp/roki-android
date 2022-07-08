@@ -152,7 +152,10 @@ public interface MsgParams {
     String Pot_Temp = "Pot_Temp";
 
     String Pot_keybood = "Pot_keybood";
-
+    /**
+     * 无人锅记录曲线打点
+     */
+    String Pot_IsDot = "Pot_IsDot";
     /**
      * 温控锅按键值上报
      */
@@ -798,6 +801,10 @@ public interface MsgParams {
     String OverTempProtectSetLength = "OverTempProtectSetLength";
     String OverTempProtectSet = "OverTempProtectSet";
     /**
+     * 灶具最小火工作时候 烟机自动调节
+     */
+    String fanStoveAuto = "fanStoveAuto";
+    /**
      * 一体机状态
      */
     String SteameOvenStatus = "SteameOvenStatus";
@@ -1105,6 +1112,10 @@ public interface MsgParams {
     String headNumber = "headNumber";
     //童锁状态
     String lockStatus = "lockStatus";
+
+    //炉头序号
+    String headOrderNumber  = "lockStatus";
+
 
 
     //左灶具炉头工作状态
@@ -1564,8 +1575,37 @@ public interface MsgParams {
 
     //干烧预警烟锅联动开关
     String potBurningWarnSwitch = "potBurningWarnSwitch";
+    /**
+     * 智能互动数据
+     */
+    String interactionData = "interactionData";
+    /**
+     * P挡菜谱序号
+     */
+    String Pot_P_Number = "Pot_P_Number";
+    //炉头ID
+    String HeadId = "HeadId";
     //锅状态
     String Pot_status = "Pot_status";
+    //无人锅电机模式
+    String Pot_ESPMode = "Pot_ESPMode";
+    //无人锅锅盖状态
+    String Pot_LisState = "Pot_LisState";
+    //P档菜谱值
+    String Pot_PMenuValue = "Pot_PMenuValue";
+    //无人锅平台菜谱/曲线还原模式值
+    String Pot_PlatformMenuValue = "Pot_PlatformMenuValue";
+    //无人锅电量
+    String Pot_ElectricValue = "Pot_ElectricValue";
+    //无人锅模式状态
+    String Pot_ModelState = "Pot_ModelState";
+    //无人锅本地记录状态
+    String Pot_LocalRecordState = "Pot_LocalRecordState";
+    //菜谱/曲线还原运行秒数
+    String Pot_MenuRestoreSecond = "Pot_MenuRestoreSecond";
+    //无人锅绑定炉头
+    String Pot_BindHead = "Pot_BindHead";
+
     String TemperatureReportOne = "TemperatureReportOne";
 
     String TemperatureReportTwo = "TemperatureReportTwo";
@@ -1618,6 +1658,8 @@ public interface MsgParams {
     String ProtectTipDryPower = "ProtectTipDryPower";
     //防干烧开关
     String ProtectDryPower = "ProtectDryPower";
+    //变速巡航
+    String CRUISE = "cruise";
 
 
     String FanStovePowerKey = "FanStovePowerKey";
@@ -1659,6 +1701,19 @@ public interface MsgParams {
 
     String GestureControlPowerKey = "GestureControlPowerKey";
     String GestureControlPowerLength = "GestureControlPowerLength";
+    /**
+     * 变速巡航（智能恒吸）
+     */
+    String CruiseKey = "CruiseKey";
+    String CruiseLength = "CruiseLength";
+    String CruiseValue = "CruiseValue";
+
+    /**
+     * 灶具最小火力烟机自动调节
+     */
+    String fanStoveKey = "fanStoveKey";
+    String fanStoveLength = "fanStoveLength";
+    String fanStoveValue = "fanStoveValue";
 
     //----------------------洗碗机------------------------
 
@@ -1730,7 +1785,7 @@ public interface MsgParams {
     String startupgrade_len = "startupgrade_len";
     String startupgrade_val = "startupgrade_val";
 
-   /* --------------------------------------------------------集成灶新增-------------------------------------------------------------------*/
+    /* --------------------------------------------------------集成灶新增-------------------------------------------------------------------*/
     /**
      * 炉头类型 0 ：燃气灶 1 ：电磁灶
      */
@@ -1747,4 +1802,162 @@ public interface MsgParams {
      * 电源状态
      */
     String powerState = "powerState" ;
+    String ControlInstruction = "controlinstruction";
+    String AutoTemporaryKey = "autotemporarykey";
+    String AutoTemporaryLength = "autotemporarylength";
+    String AutoTemporaryControlWay = "autotemporarycontrolway";
+    String AutoTemporaryControlTap = "autotemporarycontroltap";
+    String AutoTemporaryControlTemp = "autotemporarycontroltemp";
+    String AutoTemporaryControlTime = "autotemporarycontroltime";
+
+    String LeftTemp = "lefttemp";
+    String RightTemp = "righttemp";
+
+
+
+    /**
+     * 工作状态
+     */
+    String workState="workState";
+
+
+    String workCtrl="workCtrl";
+
+
+
+    //设置预约时间
+    String setOrderMinutes="setOrderMinutes";
+
+
+    //剩余预约
+    String orderLeftMinutes="orderLeftMinutes";
+
+
+    String lightSwitch="lightSwitch";
+
+
+
+    String waterBoxState="waterBoxState";
+
+
+    /**
+     *
+     * 水箱控制:
+     */
+    String waterBoxCtrl="waterBoxCtrl";
+
+    String waterLevelState="waterLevelState";
+
+    /**
+     * 门状态
+     */
+    String doorState="doorState";
+    /**
+     * 门控制开关:
+     */
+
+    String doorSwitch = "doorSwitch";
+
+    /**
+     * 门控制开关:加蒸汽工作状
+     * 态:steamState
+     */
+    String steamState = "steamState";
+
+    /**
+     * 加蒸汽控制
+     *
+     */
+    String steamCtrl = "steamCtrl";
+
+    /**
+     *菜谱编号:
+     */
+    String recipeId="recipeId";
+    /**
+     * 菜谱设置总时
+     * 间
+     */
+    String recipeSetMinutes = "recipeSetMinutes";
+    /**
+     * 当前EXP模式当前下温
+     * 度
+     */
+    String curTemp2 = "curTemp2";
+    /**
+     * 总剩余时
+     * 间
+     */
+    String totalRemainSeconds = "totalRemainSeconds";
+    /**
+     * 当前温度/上温
+     */
+    String curTemp ="curTemp" ;
+
+    /**
+     * 除垢请求标志:descaleFlag
+     */
+
+    String descaleFlag = "descaleFlag";
+    /**
+     * 当前蒸模式累计工作时间:
+     */
+    String curSteamTotalHours = "curSteamTotalHours";
+    /**
+     * 蒸模式累计需除垢时间:
+     */
+    String curSteamTotalNeedHours = "curSteamTotalNeedHours";
+    /**
+     * 实际运行时间:
+     */
+    String cookedTime = "cookedTime";
+
+
+    /**
+     * 当前段数/段序
+     * 号
+     */
+
+    String curSectionNbr = "curSectionNbr";
+
+    /**
+     * 设置段
+     */
+    String sectionNumber="sectionNumber";
+
+
+    /**
+     * (首段)设置专业/辅助模
+     * 式
+     */
+    String mode="mode";
+    /**
+     * (首段)设置温度/上温
+     * 度
+     */
+    String setUpTemp = "setUpTemp";
+
+    /**
+     * (首段)设置时间
+     */
+    String setTime = "setTime";
+    /**
+     * (首段)设置下温
+     */
+    String setDownTemp = "setDownTemp";
+    String UserID = "UserID";
+    /**
+     * 故障码
+     */
+    String faultCode = "faultCode";
+
+    String rotateSwitch = "rotateSwitch";
+    String restTime = "restTime";
+    String workCtrlKey = "workKey";
+    String workCtrlKeyLength = "workCtrlKeyLength";
+    String workCtrlKeyValue = "workCtrlKeyValue";
+    String sectionNumberLengh = "sectionNumberLengh";
+    String sectionNumberKey = "sectionNumberKey";
+    String chugouType = "chugouType";
+
 }

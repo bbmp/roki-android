@@ -28,8 +28,8 @@ public class MyIndicator extends BaseIndicator {
 
 //        mPaint.setTextSize(BannerUtils.dp2px(10));
 //        mPaint.setTextAlign(Paint.Align.CENTER);
-        width = (int) BannerUtils.dp2px(9);
-        height = (int) BannerUtils.dp2px(5);
+        width = (int) BannerUtils.dp2px(8);
+        height = (int) BannerUtils.dp2px(2);
         radiusLine = (int) BannerUtils.dp2px(20);
 
 
@@ -69,18 +69,19 @@ public class MyIndicator extends BaseIndicator {
                 this.mPaint.setColor(this.config.getCurrentPosition() == i ? this.config.getSelectedColor() : this.config.getNormalColor());
                 int indicatorWidth = this.config.getCurrentPosition() == i ? this.config.getSelectedWidth() : this.config.getNormalWidth();
                 int radius = this.config.getCurrentPosition() == i ? this.mSelectedRadius : this.mNormalRadius;
-                if (this.config.getCurrentPosition() == i){
+//                if (this.config.getCurrentPosition() == i){
 
-                    RectF rectF = new RectF(left, 0, left + width, height);
-                    mPaint.setColor(Color.parseColor("#efba17"));
-                    canvas.drawRoundRect(rectF, radiusLine, radiusLine, mPaint);
-                    left += (float)(indicatorWidth  + width);
+                    RectF rectF = new RectF(left, 0, left + indicatorWidth, height);
+//                    mPaint.setColor(Color.parseColor("#ff61acff"));
+                    canvas.drawRoundRect(rectF, radius, radius, mPaint);
+                    left += (float)(indicatorWidth  + this.config.getIndicatorSpace());
 
-                }else {
-                    mPaint.setColor(Color.parseColor("#26000000"));
-                    canvas.drawCircle(left + (float)radius, (float)this.maxRadius, (float)radius, this.mPaint);
-                    left += (float)(indicatorWidth + this.config.getIndicatorSpace());
-                }
+//                }else {
+//                    RectF rectF = new RectF(left, 0, left + width, height);
+//                    mPaint.setColor(Color.parseColor("#80999999"));
+//                    canvas.drawRoundRect(rectF, radiusLine, radiusLine, mPaint);
+//                    left += (float)(width  + this.config.getIndicatorSpace());
+//                }
 
 //                left += (float)(indicatorWidth + this.config.getIndicatorSpace());
             }

@@ -52,7 +52,7 @@ public class LocalCookContentFragment extends Fragment {
         LocalCookContentFragment fragment = new LocalCookContentFragment();
         if (tags != null) {
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("tags", tags);
+            bundle.putSerializable("tags", tags);
             bundle.putString(PageArgumentKey.Guid, guid);
             fragment.setArguments(bundle);
         }
@@ -71,7 +71,7 @@ public class LocalCookContentFragment extends Fragment {
         rv_view = view.findViewById(R.id.rv_view);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            tags = bundle.getParcelableArrayList("tags");
+            tags = (ArrayList<CookBookTag>) bundle.getSerializable("tags");
             guid = bundle.getString(PageArgumentKey.Guid);
             oven = Plat.deviceService.lookupChild(guid);
         }

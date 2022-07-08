@@ -1,17 +1,11 @@
 package com.robam.roki;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -26,6 +20,10 @@ import com.aispeech.dui.dds.DDSAuthListener;
 import com.aispeech.dui.dds.DDSConfig;
 import com.aispeech.dui.dds.DDSInitListener;
 import com.aispeech.dui.dds.exceptions.DDSNotInitCompleteException;
+import com.clj.fastble.BleManager;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.hjq.toast.ToastUtils;
+import com.hjq.toast.style.ToastBlackStyle;
 import com.legent.VoidCallback2;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceTokenEvent;
@@ -40,6 +38,7 @@ import com.robam.common.services.NotifyService;
 import com.robam.roki.service.AppService;
 import com.robam.roki.service.MobNotifyService;
 import com.robam.roki.service.ShareSdkOAuthService;
+import com.robam.roki.ui.activity3.device.base.other.ActivityManager;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.push.PushHelper;
 import com.robam.roki.ui.view.umpush.CustomNotificationHandler;
@@ -54,10 +53,20 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.api.UPushRegisterCallback;
 import com.umeng.message.entity.UMessage;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.android.agoo.huawei.HuaWeiRegister;
 import org.android.agoo.xiaomi.MiPushRegistar;
 import org.litepal.LitePal;
+
+import skin.support.SkinCompatManager;
+import skin.support.app.SkinAppCompatViewInflater;
+import skin.support.app.SkinLayoutInflater;
+import skin.support.constraint.app.SkinConstraintViewInflater;
+import skin.support.design.app.SkinMaterialViewInflater;
+import skin.support.utils.SkinPreference;
+import skin.support.utils.Slog;
+
 public class MobApp extends RobamApp {
 
 
@@ -68,6 +77,17 @@ public class MobApp extends RobamApp {
 
 
     public static  String id;
+
+    public static String cookId;
+
+    public static String Game;
+
+
+    public static String h5Url;
+    public static String secondTitle;
+    public static String img;
+    public static String title;
+    private static FirebaseAnalytics mFirebaseAnalytics;
 
 
 //    private void initsdk(){
@@ -116,6 +136,7 @@ public class MobApp extends RobamApp {
         super.onCreate();
         //初始化有赞
 //        YouzanSDK.init(this, "a9263a4f294b175f63");//正式版
+        ScreenAdapterTools.init(this);
         registToWX();
 //        MiPushRegistar.register(context, XIAOMI_ID, XIAOMI_KEY, false);
         //友盟推送
@@ -126,16 +147,18 @@ public class MobApp extends RobamApp {
             StrictMode.setVmPolicy(builder.build());
         }
         // 初始化吐司
-//        ToastUtils.init(this, new ToastBlackStyle(this) {
-//
-//            @Override
-//            public int getCornerRadius() {
-//                return (int) getResources().getDimension(R.dimen.dialog_ui_round_size);
-//            }
-//        });
-        CrashReport.initCrashReport(this, "d7782dd9d5", true);
+        ToastUtils.init(this, new ToastBlackStyle(this) {
+
+            @Override
+            public int getCornerRadius() {
+                return (int) getResources().getDimension(R.dimen.dialog_ui_round_size);
+            }
+        });
+//        CrashReport.initCrashReport(this, "d7782dd9d5", true);
 
         LitePal.initialize(this);
+        // Activity 栈管理初始化
+        ActivityManager.getInstance().init(this);
 //        SQLiteDatabase db = LitePal.getDatabase();
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
 //            String processName = getProcessName(this);
@@ -146,6 +169,18 @@ public class MobApp extends RobamApp {
 //        }
         HuaWeiRegister.register(this);
 
+        BleManager.getInstance().init(this);
+        BleManager.getInstance()
+                .enableLog(true)
+                .setReConnectCount(3, 5000)
+                .setOperateTimeout(5000);
+//换肤
+        Slog.DEBUG = BuildConfig.DEBUG;
+        SkinCompatManager.withoutActivity(this)
+                .addInflater((SkinLayoutInflater) new SkinAppCompatViewInflater())  // 基础控件换肤
+                .addInflater(new SkinMaterialViewInflater())
+                .addInflater(new SkinConstraintViewInflater())
+                .loadSkin();
 
 
     }
@@ -163,53 +198,53 @@ public class MobApp extends RobamApp {
         return config;
     }
 
-    // dds初始状态监听器,监听init是否成功
-    public DDSInitListener mInitListener = new DDSInitListener() {
-        @Override
-        public void onInitComplete(boolean isFull) {
-
-            LogUtils.i(TAG, "思必驰语音初始化成功 isFull:" + isFull);
-            try {
-
-            }catch (Exception e){
-                Log.d(TAG ,"思必驰广播失败");
-            }
-
-        }
-
-        @Override
-        public void onError(int what, final String msg) {
-            Log.e(TAG, "Init onError: " + what + ", error: " + msg);
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                }
-            });
-        }
-    };
-    // dds认证状态监听器,监听auth是否成功
-    public DDSAuthListener mAuthListener = new DDSAuthListener() {
-        @Override
-        public void onAuthSuccess() {
-            LogUtils.i(TAG, "onAuthSuccess");
-            // 发送一个认证成功的广播
-//            getContext().sendBroadcast(new Intent("ddsdemo.intent.action.auth_success"));
-        }
-
-        @Override
-        public void onAuthFailed(final String errId, final String error) {
-            LogUtils.i(TAG, "onAuthFailed: " + errId + ", error:" + error);
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-//                    Toast.makeText(THIS,
-//                            "授权错误:" + errId + ":\n" + error + "\n请查看手册处理", Toast.LENGTH_LONG).show();
-                }
-            });
-            // 发送一个认证失败的广播
-//            getContext().sendBroadcast(new Intent("ddsdemo.intent.action.auth_failed"));
-        }
-    };
+//    // dds初始状态监听器,监听init是否成功
+//    public DDSInitListener mInitListener = new DDSInitListener() {
+//        @Override
+//        public void onInitComplete(boolean isFull) {
+//
+//            LogUtils.i(TAG, "思必驰语音初始化成功 isFull:" + isFull);
+//            try {
+//
+//            }catch (Exception e){
+//                Log.d(TAG ,"思必驰广播失败");
+//            }
+//
+//        }
+//
+//        @Override
+//        public void onError(int what, final String msg) {
+//            Log.e(TAG, "Init onError: " + what + ", error: " + msg);
+//            new Handler(Looper.getMainLooper()).post(new Runnable() {
+//                @Override
+//                public void run() {
+//                }
+//            });
+//        }
+//    };
+//    // dds认证状态监听器,监听auth是否成功
+//    public DDSAuthListener mAuthListener = new DDSAuthListener() {
+//        @Override
+//        public void onAuthSuccess() {
+//            LogUtils.i(TAG, "onAuthSuccess");
+//            // 发送一个认证成功的广播
+////            getContext().sendBroadcast(new Intent("ddsdemo.intent.action.auth_success"));
+//        }
+//
+//        @Override
+//        public void onAuthFailed(final String errId, final String error) {
+//            LogUtils.i(TAG, "onAuthFailed: " + errId + ", error:" + error);
+//            new Handler(Looper.getMainLooper()).post(new Runnable() {
+//                @Override
+//                public void run() {
+////                    Toast.makeText(THIS,
+////                            "授权错误:" + errId + ":\n" + error + "\n请查看手册处理", Toast.LENGTH_LONG).show();
+//                }
+//            });
+//            // 发送一个认证失败的广播
+////            getContext().sendBroadcast(new Intent("ddsdemo.intent.action.auth_failed"));
+//        }
+//    };
 
 //    private String getProcessName(Context context) {
 //        if (context == null) return null;
@@ -234,46 +269,46 @@ public class MobApp extends RobamApp {
     }
 
     //适配8.0以上版本通知栏不显示
-    private void initNotification() {
-        UmengMessageHandler messageHandler = new UmengMessageHandler() {
-            @SuppressLint("NewApi")
-            @Override
-            public Notification getNotification(Context context, UMessage msg) {
-                if (msg.extra != null && msg.extra.get("type") .equals("theme")) {
-                    NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                    @SuppressLint({"NewApi", "LocalSuppress"}) NotificationChannel channel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_HIGH);
-                    if (manager != null) {
-                        manager.createNotificationChannel(channel);
-                    }
-                    PendingIntent pendingIntent = toMainActivity(msg.extra.get("id"),msg.extra.get("type"));
-                    Notification.Builder builder = new Notification.Builder(context, "channel_id");
-                    builder.setSmallIcon(R.mipmap.ic_launcher)
-                            .setWhen(System.currentTimeMillis())
-                            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
-                            .setContentIntent(pendingIntent)
-                            .setContentTitle(msg.title)
-                            .setContentText(msg.text)
-                            .setAutoCancel(true);
-                    return builder.build();
-                } else {
-                    NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                    @SuppressLint({"NewApi", "LocalSuppress"}) NotificationChannel channel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_HIGH);
-                    if (manager != null) {
-                        manager.createNotificationChannel(channel);
-                    }
-                    Notification.Builder builder = new Notification.Builder(context, "channel_id");
-                    builder.setSmallIcon(R.mipmap.ic_launcher)
-                            .setWhen(System.currentTimeMillis())
-                            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
-                            .setContentTitle(msg.title)
-                            .setContentText(msg.text)
-                            .setAutoCancel(true);
-                    return builder.build();
-                }
-            }
-        };
-        mPushAgent.setMessageHandler(messageHandler);
-    }
+//    private void initNotification() {
+//        UmengMessageHandler messageHandler = new UmengMessageHandler() {
+//            @SuppressLint("NewApi")
+//            @Override
+//            public Notification getNotification(Context context, UMessage msg) {
+//                if (msg.extra != null && msg.extra.get("type") .equals("theme")) {
+//                    NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//                    @SuppressLint({"NewApi", "LocalSuppress"}) NotificationChannel channel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_HIGH);
+//                    if (manager != null) {
+//                        manager.createNotificationChannel(channel);
+//                    }
+//                    PendingIntent pendingIntent = toMainActivity(msg.extra.get("id"),msg.extra.get("type"));
+//                    Notification.Builder builder = new Notification.Builder(context, "channel_id");
+//                    builder.setSmallIcon(R.mipmap.ic_launcher)
+//                            .setWhen(System.currentTimeMillis())
+//                            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
+//                            .setContentIntent(pendingIntent)
+//                            .setContentTitle(msg.title)
+//                            .setContentText(msg.text)
+//                            .setAutoCancel(true);
+//                    return builder.build();
+//                } else {
+//                    NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//                    @SuppressLint({"NewApi", "LocalSuppress"}) NotificationChannel channel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_HIGH);
+//                    if (manager != null) {
+//                        manager.createNotificationChannel(channel);
+//                    }
+//                    Notification.Builder builder = new Notification.Builder(context, "channel_id");
+//                    builder.setSmallIcon(R.mipmap.ic_launcher)
+//                            .setWhen(System.currentTimeMillis())
+//                            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
+//                            .setContentTitle(msg.title)
+//                            .setContentText(msg.text)
+//                            .setAutoCancel(true);
+//                    return builder.build();
+//                }
+//            }
+//        };
+//        mPushAgent.setMessageHandler(messageHandler);
+//    }
 
     private void registToWX() {
         //AppConst.WEIXIN.APP_ID是指你应用在微信开放平台上的AppID，记得替换。
@@ -288,11 +323,15 @@ public class MobApp extends RobamApp {
         System.gc();
     }
 
+    public static FirebaseAnalytics getmFirebaseAnalytics() {
+        return mFirebaseAnalytics;
+    }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
-//        xcrash.XCrash.init(this);
+        xcrash.XCrash.init(this);
     }
 
     @Override
@@ -302,6 +341,9 @@ public class MobApp extends RobamApp {
 
     @Override
     protected void initPlat() {
+        if (mFirebaseAnalytics==null) {
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        }
         super.initPlat();
         Plat.appOAuthService = new ShareSdkOAuthService();
         Plat.init(this, APP_TYPE,

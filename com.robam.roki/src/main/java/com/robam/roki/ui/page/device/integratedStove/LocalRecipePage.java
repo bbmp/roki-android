@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
@@ -19,7 +20,6 @@ import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.ui.UIService;
 import com.legent.utils.LogUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.IntegStoveStatusChangedEvent;
 import com.robam.common.io.device.MsgKeys;
 import com.robam.common.pojos.device.IRokiFamily;
@@ -173,21 +173,21 @@ public class LocalRecipePage extends Fragment {
             @Override
             public void onConfirm(Object index) {
                 if ( !SteamOvenHelper.isDoorState(integratedStove.doorState) ) {
-                    ToastUtils.showShort("门未关好，请检查并确认关好门");
+                    ToastUtils.show("门未关好，请检查并确认关好门");
                     return;
                 }
                 if (SteamOvenHelper.isRecipeWater(needWater)){
 
                     if (SteamOvenHelper.isDescale(integratedStove.descaleFlag)) {
-                        ToastUtils.showShort("设备需要除垢后才能继续工作，请先除垢");
+                        ToastUtils.show("设备需要除垢后才能继续工作，请先除垢");
                         return;
                     }
                     if (!SteamOvenHelper.isWaterBoxState(integratedStove.waterBoxState)){
-                        ToastUtils.showShort("水箱已弹出，请检查水箱状态");
+                        ToastUtils.show("水箱已弹出，请检查水箱状态");
                         return;
                     }
                     if (!SteamOvenHelper.isWaterLevelState(integratedStove.waterLevelState)){
-                        ToastUtils.showShort("水箱缺水，请加水");
+                        ToastUtils.show("水箱缺水，请加水");
                         return;
                     }
                 }

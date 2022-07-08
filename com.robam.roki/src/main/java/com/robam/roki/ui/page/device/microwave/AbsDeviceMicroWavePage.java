@@ -15,9 +15,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -52,6 +54,7 @@ import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.RemoveManOrsymbolUtil;
 import com.robam.roki.utils.StringConstantsUtil;
 import com.robam.roki.utils.ToolUtils;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -101,6 +104,14 @@ public class AbsDeviceMicroWavePage<MicroWave extends AbsMicroWave>
     private IRokiDialog mHotRecipeDialog;
     private IRokiDialog mToTasteDialog;
 
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            mTvDeviceModelName.setText(name);
+        }
+    }
+
     Handler mHandler = new Handler() {
 
         @Override
@@ -149,6 +160,10 @@ public class AbsDeviceMicroWavePage<MicroWave extends AbsMicroWave>
         super.onResume();
         if (mMicroWave == null) {
             return;
+        }
+        if (mMicroWave.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), mMicroWave.getDt(), null);
         }
     }
 
@@ -215,7 +230,7 @@ public class AbsDeviceMicroWavePage<MicroWave extends AbsMicroWave>
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_device_microwave, container, false);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         ButterKnife.inject(this, view);
         initData();
         return view;
@@ -253,7 +268,9 @@ public class AbsDeviceMicroWavePage<MicroWave extends AbsMicroWave>
                     Glide.with(cx).load(mBackgroundImg).into(mIvBg);
                 }
                 if (mTvDeviceModelName != null) {
-                    mTvDeviceModelName.setText(deviceResponse.title);
+//                    mTvDeviceModelName.setText(deviceResponse.title);
+                    mTvDeviceModelName.setText(mMicroWave.getName() == null || mMicroWave.getName().equals(mMicroWave.getCategoryName() ) ?
+                            mMicroWave.getDispalyType() : mMicroWave.getName());
                 }
                 MainFunc mainFunc = deviceResponse.modelMap.mainFunc;
                 mainList = mainFunc.deviceConfigurationFunctions;

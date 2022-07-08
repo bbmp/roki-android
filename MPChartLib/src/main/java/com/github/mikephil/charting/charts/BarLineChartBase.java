@@ -135,6 +135,8 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
     protected XAxisRenderer mXAxisRenderer;
 
+    public MoveViewJob job ;
+
     // /** the approximator object used for data filtering */
     // private Approximator mApproximator;
 
@@ -839,7 +841,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
      */
     public void moveViewToX(float xValue) {
 
-        Runnable job = MoveViewJob.getInstance(mViewPortHandler, xValue, 0f,
+         job = MoveViewJob.getInstance(mViewPortHandler, xValue, 0f,
                 getTransformer(AxisDependency.LEFT), this);
 
         addViewportJob(job);
@@ -858,7 +860,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
         float yInView = getAxisRange(axis) / mViewPortHandler.getScaleY();
 
-        Runnable job = MoveViewJob.getInstance(mViewPortHandler, xValue, yValue + yInView / 2f,
+         job = MoveViewJob.getInstance(mViewPortHandler, xValue, yValue + yInView / 2f,
                 getTransformer(axis), this);
 
         addViewportJob(job);
@@ -900,7 +902,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
         float valsInView = getAxisRange(axis) / mViewPortHandler.getScaleY();
 
-        Runnable job = MoveViewJob.getInstance(mViewPortHandler, 0f, yValue + valsInView / 2f,
+         job = MoveViewJob.getInstance(mViewPortHandler, 0f, yValue + valsInView / 2f,
                 getTransformer(axis), this);
 
         addViewportJob(job);
@@ -920,7 +922,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
         float yInView = getAxisRange(axis) / mViewPortHandler.getScaleY();
         float xInView = getXAxis().mAxisRange / mViewPortHandler.getScaleX();
 
-        Runnable job = MoveViewJob.getInstance(mViewPortHandler,
+         job = MoveViewJob.getInstance(mViewPortHandler,
                 xValue - xInView / 2f, yValue + yInView / 2f,
                 getTransformer(axis), this);
 

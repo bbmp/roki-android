@@ -17,9 +17,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.legent.plat.events.DeviceNameChangeEvent;
+import com.robam.base.BaseDialog;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.constant.IDeviceType;
@@ -68,7 +72,6 @@ import com.robam.roki.ui.adapter.OtherFunc2Adapter;
 import com.robam.roki.ui.adapter.OtherFuncAdapter;
 import com.robam.roki.ui.mdialog.MessageDialog;
 import com.robam.roki.ui.page.device.DeviceCatchFilePage;
-import com.robam.roki.ui.widget.base.BaseDialog;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.ToolUtils;
 
@@ -138,6 +141,13 @@ public class AbsIntegratedStovePage<Integrated extends AbsIntegratedStove> exten
 //        }
 //    };
 
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            mTvDeviceModelName.setText(name);
+        }
+    }
 
     @Subscribe
     public void onEvent(IntegStoveStatusChangedEvent event) {
@@ -194,7 +204,8 @@ public class AbsIntegratedStovePage<Integrated extends AbsIntegratedStove> exten
                 }
             }
             ModelMap modelMap = obj.modelMap;
-            mTvDeviceModelName.setText(obj.title);
+//            mTvDeviceModelName.setText(obj.title);
+            mTvDeviceModelName.setText(integrated.getName() == null ||  integrated.getName().equals(integrated.getCategoryName()) ? integrated.getDispalyType() : integrated.getName());
             mViewBackgroundImg = obj.viewBackgroundImg;
             LogUtils.i("20180815", " mViewBackgroundImg:" + mViewBackgroundImg);
             Glide.with(cx).load(mViewBackgroundImg).into(mIvBg);
@@ -512,6 +523,10 @@ public class AbsIntegratedStovePage<Integrated extends AbsIntegratedStove> exten
         }
         if (integrated == null) {
             return;
+        }
+        if (integrated.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), integrated.getDt(), null);
         }
     }
 

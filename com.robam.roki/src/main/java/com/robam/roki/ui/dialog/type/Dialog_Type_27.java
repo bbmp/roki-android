@@ -65,7 +65,7 @@ public class Dialog_Type_27 extends BaseDialog {
     public Dialog_Type_27(Context context, List<DeviceConfigurationFunctions> deviceConfigurationFunctions,OnItemClickListener onItemClickListener) {
         super(context);
         this.deviceConfigurationFunctionsList = deviceConfigurationFunctions;
-//        modeGridAdapter = new AbsSteamProfessionalAdapter(deviceConfigurationFunctions, context);
+        modeGridAdapter = new AbsSteamProfessionalAdapter(deviceConfigurationFunctions, context);
         mDeviceModelAdapter.addData(deviceConfigurationFunctions);
         mDeviceModelAdapter.setOnItemClickListener(onItemClickListener);
     }
@@ -87,7 +87,7 @@ public class Dialog_Type_27 extends BaseDialog {
         myGridView = rootView.findViewById(R.id.mode_list);
         myGridView.setLayoutManager(new LinearLayoutManager(mContext ,   RecyclerView.HORIZONTAL , false));
         createDialog(rootView);
-        mDeviceModelAdapter = new Rv610ModeAdapter(mContext);
+        mDeviceModelAdapter = new Rv610ModeAdapter();
         myGridView.setAdapter(mDeviceModelAdapter);
     }
 

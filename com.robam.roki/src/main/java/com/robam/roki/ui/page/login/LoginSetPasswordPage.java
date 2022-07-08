@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.pojos.RCReponse;
@@ -12,7 +13,6 @@ import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.roki.R;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.form.UserActivity;

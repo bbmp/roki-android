@@ -19,14 +19,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     testOptions {
         unitTests.returnDefaultValues = true // this prevents "not mocked" error
     }
 }
 
 dependencies {
-    api 'androidx.annotation:annotation:1.0.0'
-//    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.annotation:annotation:1.0.0'
+    testImplementation 'junit:junit:4.12'
 }
 
 task sourcesJar(type: Jar) {

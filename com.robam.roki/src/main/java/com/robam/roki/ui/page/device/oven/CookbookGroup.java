@@ -1,10 +1,14 @@
 package com.robam.roki.ui.page.device.oven;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 
 
-public class CookbookGroup {
+public class CookbookGroup implements Serializable {
     public long id;
 
     public String functionCode;
@@ -20,6 +24,7 @@ public class CookbookGroup {
 
     public CookbookGroup() {
     }
+
 
 
 
@@ -70,4 +75,6 @@ public class CookbookGroup {
     public void setCookBookTagList(List<CookBookTag> cookBookTagList) {
         this.cookBookTagList = cookBookTagList;
     }
+
+
 }

@@ -51,7 +51,7 @@
             android:imeOptions="actionSearch"/>
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
         android:id="@+id/rv_610_recipe"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"

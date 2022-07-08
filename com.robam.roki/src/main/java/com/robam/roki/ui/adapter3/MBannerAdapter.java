@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.legent.utils.api.ToastUtils;
+import com.hjq.toast.ToastUtils;
+import com.robam.roki.R;
 import com.robam.roki.ui.bean3.BannerBean;
 import com.robam.roki.ui.extension.GlideApp;
 import com.robam.roki.utils.OnMultiClickListener;
@@ -39,6 +40,8 @@ public class MBannerAdapter extends BannerAdapter<BannerBean.DataDTO ,MBannerAda
     public void onBindView(BannerViewHolder bannerViewHolder, BannerBean.DataDTO item, int i, int i1) {
         GlideApp.with(bannerViewHolder.imageView)
                 .load(item.imageUrl)
+                .placeholder(R.mipmap.banner_default)
+                .override(350*2, 131*2)
 //                .apply(RequestOptions.bitmapTransform(new RoundedCorners(30)))
                 .into(bannerViewHolder.imageView);
         if (onItemClicklinstener != null){
@@ -50,7 +53,7 @@ public class MBannerAdapter extends BannerAdapter<BannerBean.DataDTO ,MBannerAda
 
                 @Override
                 protected void onMoreErrorClick() {
-                    ToastUtils.showShort("请不要连续点击");
+                    ToastUtils.show("请不要连续点击");
                 }
             });
 

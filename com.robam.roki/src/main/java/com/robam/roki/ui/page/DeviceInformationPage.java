@@ -10,10 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.common.collect.Lists;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.constant.IDeviceType;
-import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.plat.pojos.device.AbsDevice;
 import com.legent.plat.pojos.device.AbsDeviceHub;
@@ -28,6 +28,7 @@ import com.robam.common.pojos.device.gassensor.GasSensor;
 import com.robam.roki.MobApp;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
@@ -84,6 +85,10 @@ public class DeviceInformationPage extends BasePage {
         if (mIDevice==null) {
             return;
         }
+        if (mIDevice.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), mIDevice.getDt() + ":产品信息页", null);
+        }
     }
 
     @Override
@@ -127,7 +132,7 @@ public class DeviceInformationPage extends BasePage {
             if (inflater == null)
                 return;
             View view = inflater.inflate(R.layout.item_information_device_page, null, false);
-
+            ScreenAdapterTools.getInstance().loadView(view);
             TextView tvDcName = view.findViewById(R.id.tv_dc_name);
             TextView tvModel = view.findViewById(R.id.tv_model);
             TextView tvCoding = view.findViewById(R.id.tv_coding);
@@ -144,7 +149,7 @@ public class DeviceInformationPage extends BasePage {
     //用户信息
     private void initUserDate() {
         long ownerId = Plat.accountService.getCurrentUserId();
-        CloudHelper.getDeviceUsers(ownerId, id, new Callback<List<User>>() {
+        Plat.deviceService.getDeviceUsers(ownerId, id, new Callback<List<User>>() {
             @Override
             public void onSuccess(List<User> users) {
                 if (users == null || users.size() == 0) return;
@@ -154,10 +159,10 @@ public class DeviceInformationPage extends BasePage {
                     if (inflater == null)
                         return;
                     View view = inflater.inflate(R.layout.item_information_user_page, null, false);
-
+                    ScreenAdapterTools.getInstance().loadView(view);
                     TextView tvName = view.findViewById(R.id.tv_user_name);
                     TextView tvDesc = view.findViewById(R.id.tv_user_desc);
-                    tvName.setText(user.nickname);
+                    tvName.setText(user.name);
                     tvDesc.setText(user.phone);
                     mLlUser.addView(view);
                 }

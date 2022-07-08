@@ -2,6 +2,8 @@ package com.robam.roki.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.legent.utils.api.DisplayUtils;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.util.NumberUtil;
 import com.robam.common.util.RecipeUtils;
@@ -33,16 +36,10 @@ public class RecipeTopicAdapter extends BaseMultiItemQuickAdapter<Recipe, BaseVi
             .placeholder(R.mipmap.icon_recipe_default) //预加载图片
             .error(R.mipmap.icon_recipe_default) //加载失败图片
             .priority(Priority.HIGH) //优先级
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC) //缓存
-            .transform(new RoundedCornersTransformation(30, 0,RoundedCornersTransformation.CornerType.TOP)); //圆角
-
-    private Integer weekTopRanking[] = {R.mipmap.icon_week_top1, R.mipmap.icon_week_top2,
-            R.mipmap.icon_week_top3, R.mipmap.icon_week_top4,
-            R.mipmap.icon_week_top5, R.mipmap.icon_week_top6,
-            R.mipmap.icon_week_top7, R.mipmap.icon_week_top8,
-            R.mipmap.icon_week_top9, R.mipmap.icon_week_top10
-    };
-
+            .skipMemoryCache(true)
+            .override(167*2, 188*2)
+            .diskCacheStrategy(DiskCacheStrategy.NONE); //缓存
+//            .transform(new RoundedCornersTransformation(30, 0,RoundedCornersTransformation.CornerType.BOTTOM)); //圆角
 
     public RecipeTopicAdapter(@Nullable List<Recipe> data) {
         super(data);
@@ -58,22 +55,20 @@ public class RecipeTopicAdapter extends BaseMultiItemQuickAdapter<Recipe, BaseVi
             case Recipe.IMG:
                 ImageView ivItemTopic = baseViewHolder.itemView.findViewById(R.id.iv_item_topic_img);
                 TextView recipeName = baseViewHolder.itemView.findViewById(R.id.tv_recipe_name);
-                TextView recipeReadNumber = baseViewHolder.itemView.findViewById(R.id.tv_recipe_read_number);
-                ImageView ivWeekTopicRanking = baseViewHolder.itemView.findViewById(R.id.iv_week_topic_ranking);
+
+                TextView ivWeekTopicRanking = baseViewHolder.itemView.findViewById(R.id.iv_week_topic_ranking);
                 recipeName.setText(recipe.name);
-                recipeReadNumber.setText("上周 " + NumberUtil.converString(recipe.viewCount));
 
-
-//                Drawable drawable1 = UiUtils.getResources().getDrawable(R.drawable.icon_hot, null);
-//                drawable1.setBounds(0, 0, 35, 35);
-//                recipeReadNumber.setCompoundDrawables(drawable1, null, null, null);
                 GlideApp.with(getContext())
                         .load(RecipeUtils.getRecipeImgUrl(recipe))
                         .apply(options)
                         .into(ivItemTopic);
-                GlideApp.with(getContext())
-                        .load(weekTopRanking[baseViewHolder.getBindingAdapterPosition()])
-                        .into(ivWeekTopicRanking);
+                ivWeekTopicRanking.setText("TOP" + (baseViewHolder.getBindingAdapterPosition() + 1));
+
+                if (!TextUtils.isEmpty(recipe.video))
+                    baseViewHolder.getView(R.id.iv_play).setVisibility(View.VISIBLE);
+                else
+                    baseViewHolder.getView(R.id.iv_play).setVisibility(View.GONE);
                 break;
             case Recipe.TEXT:
                 break;

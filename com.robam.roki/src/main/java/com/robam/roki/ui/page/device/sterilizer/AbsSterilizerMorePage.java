@@ -19,20 +19,20 @@ public class AbsSterilizerMorePage extends AbsDeviceMorePage {
     public void subItemOnClick(View v, int position) {
         switch (position) {
             //留言咨询
-            case 0:
+            case 1:
                 UIService.getInstance().postPage(PageKey.Chat);
                 break;
             //一件售后
-            case 1:
+            case 2:
                 callAfterSale();
                 break;
             //产品信息
-            case 2:
+            case 3:
                 Bundle bd = new Bundle();
                 bd.putString(PageArgumentKey.Guid, mGuid);
                 UIService.getInstance().postPage(PageKey.DeviceInformation, bd);
                 break;
-            case 3:
+            case 4:
                 Bundle bd2 = new Bundle();
                 bd2.putString(PageArgumentKey.Url, functionParams);
                 bd2.putString(PageArgumentKey.WebTitle, functionName);

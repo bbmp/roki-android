@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_marginTop="@dimen/dp_3"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/widget_add_cooked_view_step_"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/widget_add_cooked_view_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_3"
+            android:text="步骤"
+            android:textColor="@color/text_color_device"
+            android:textSize="@dimen/dp_16" />
+
+        <ImageView
+            android:id="@+id/add_cooked_step_view_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/mine_white_background"
+        android:layout_below="@+id/widget_add_cooked_view_step_"
+        android:id="@+id/rl_add_cooked_step_picture"
+        android:layout_marginTop="@dimen/dp_18"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_24"
+        android:scaleType="fitXY"
+        android:src="@drawable/default_ptr_rotate"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_68">
+
+        <ImageView
+
+
+            android:id="@+id/widget_add_cooked_view_picture_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:scaleType="fitXY" />
+
+        <ImageView
+
+
+            android:id="@+id/widget_add_cooked_view_picture_view_icon"
+            android:layout_width="@dimen/dp_31"
+            android:layout_height="@dimen/dp_31"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:src="@mipmap/icon_add_picture" />
+        <TextView
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/widget_add_cooked_view_picture_view_icon"
+            android:text="点击上传"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:id="@+id/widget_add_cooked_view_picture_view_delete"
+            android:layout_marginRight="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/button_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_18"
+        android:layout_below="@+id/widget_add_cooked_view_step_"
+        android:layout_toRightOf="@+id/rl_add_cooked_step_picture"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/widget_add_cooked_change_view"
+
+            android:layout_width="@dimen/dp_44"
+
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginLeft="@dimen/dp_27"
+            android:background="@drawable/shape_input_curve_et"
+            android:src="@mipmap/icon_audio_input" />
+
+        <EditText
+            android:id="@+id/widget_add_cooked_view_picture_et"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_68"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_marginRight="@dimen/dp_26"
+            android:layout_toRightOf="@+id/widget_add_cooked_change_view"
+            android:background="@drawable/shape_recipe_name_bg"
+
+            android:hint="添加步骤说明"
+            android:paddingLeft="@dimen/dp_16"
+            android:textColor="@color/step_text_main_color" />
+
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/widget_add_cooked_view_record_audio"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_marginRight="@dimen/dp_26"
+            android:layout_toRightOf="@+id/widget_add_cooked_change_view"
+            android:background="@drawable/shape_icon_record_bg">
+
+
+            <ImageView
+                android:id="@+id/widget_add_cooked_view_recorde"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:src="@mipmap/icon_audio_image"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/widget_add_cooked_view_step_audio_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:layout_toRightOf="@+id/widget_add_cooked_view_recorde"
+                android:text="@string/widget_press_input_audio"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_18" />
+
+
+            <ImageView
+                android:id="@+id/widget_add_cooked_view_step_audio_icon_delete"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_7"
+                android:src="@mipmap/icon_audio_delete"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+
+
+            android:visibility="gone"
+            android:id="@+id/widget_add_cooked_view_play_audio"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_marginRight="@dimen/dp_26"
+            android:layout_toRightOf="@+id/widget_add_cooked_change_view"
+
+            android:background="@drawable/shape_icon_record_bg">
+
+
+            <TextView
+                android:id="@+id/widget_add_cooked_view_step_audio_time_play_audio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_8"
+
+                android:text="点击播放"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_18" />
+
+
+            <ImageView
+                android:id="@+id/widget_add_cooked_view_step_audio_icon_delete_play_audio"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_7"
+                android:src="@mipmap/icon_audio_delete"
+                 />
+
+
+        </RelativeLayout>
+
+       </RelativeLayout>
+
+</RelativeLayout>

@@ -3,6 +3,7 @@ package com.robam.roki.ui.view.networkoptimization;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.LocationManager;
@@ -11,11 +12,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,7 +30,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.clj.fastble.BleManager;
+import com.clj.fastble.data.BleDevice;
 import com.google.common.base.Strings;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
@@ -44,11 +51,14 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.api.PreferenceUtils;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.api.WifiUtils;
+import com.robam.base.BaseDialog;
 import com.robam.common.events.DeviceEasylinkCompletedEvent;
+import com.robam.common.ui.BleRssiDevice;
 import com.robam.roki.MobApp;
 import com.robam.roki.R;
 import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
+import com.robam.roki.ui.FormKey;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.utils.DialogUtil;
@@ -60,6 +70,7 @@ import java.lang.ref.WeakReference;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import skin.support.content.res.SkinCompatResources;
 
 /**
  * Created by zhoudingjun on 2016/12/14.
@@ -70,7 +81,7 @@ public class WifiConnectPage extends BasePage {
     public EditText edtWifiName;
     public EditText edtPwd;
     @InjectView(R.id.btn_connect)
-    TextView btn_connect;
+    Button btn_connect;
     @InjectView(R.id.imgPwd)
     ImageView imgPwd;
     @InjectView(R.id.img_back)
@@ -86,9 +97,12 @@ public class WifiConnectPage extends BasePage {
     private ICookerLink cookerLink;
     private IRokiDialog mDialogByType;
     public static boolean isContent = true;
-
+    private BleDevice bleRssiDevice;
     String guid = null;
     String dt = null;
+    String WIFITYPE = null;
+
+    private BaseDialog blueSetDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bd) {
@@ -96,6 +110,8 @@ public class WifiConnectPage extends BasePage {
         if (bb != null) {
             guid = bb.getString(PageArgumentKey.Guid);
             dt = bb.getString("displayType");
+            bleRssiDevice = (BleDevice) bb.getParcelable("BleRssiDevice");
+            WIFITYPE = bb.getString(PageArgumentKey.WIFITYPE);
         }
 
         View view = inflater.inflate(R.layout.view_device_connect_wifi, container, false);
@@ -155,9 +171,6 @@ public class WifiConnectPage extends BasePage {
     }
 
 
-
-
-
     @OnClick(R.id.img_back)
     public void onMImgBackClicked() {
         UIService.getInstance().popBack();
@@ -166,7 +179,7 @@ public class WifiConnectPage extends BasePage {
     @OnClick(R.id.edtPwd)
     public void onMEdtPwdClicked() {
         edtPwd.setCursorVisible(true);
-        mRelPwd.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_wifipwd_bg));
+//        mRelPwd.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_wifipwd_bg));
     }
 
 
@@ -195,6 +208,9 @@ public class WifiConnectPage extends BasePage {
                 case 3:
                     wifiConnectPage.udpSmartConnect();
                     break;
+                case 4:
+                    wifiConnectPage.blueConnect();
+                    break;
                 default:
                     break;
             }
@@ -218,44 +234,60 @@ public class WifiConnectPage extends BasePage {
     @OnClick(R.id.btn_connect)
     public void onClickBtn_Connect() {
         isContent = true;
+        if (TextUtils.isEmpty(edtPwd.getText())) {
+            ToastUtils.show("请输入WiFi密码",Toast.LENGTH_SHORT);
+            return;
+        }
+
         if (dt != null) {
             if ("C21-01R".equals(dt)) {
 //                handler.sendEmptyMessage(2);
                 handler.sendEmptyMessage(3);
                 edtPwd.setCursorVisible(false);
-                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
+//                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
                 return;
             } else if ("C21-02R".equals(dt)) {
                 handler.sendEmptyMessage(3);
                 edtPwd.setCursorVisible(false);
-                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
+//                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
                 return;
             } else if ("C21-03R".equals(dt)) {
                 handler.sendEmptyMessage(3);
                 edtPwd.setCursorVisible(false);
-                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
+//                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
                 return;
-            } else if ("KC306".equals(dt)){
+            } else if ("KC306".equals(dt) ||"5010S".equals(dt) ) {
                 handler.sendEmptyMessage(3);
                 edtPwd.setCursorVisible(false);
-                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
+//                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
+                return;
+            }else if ("DB620".equals(dt)||"KM310".equals(dt)) {
+                handler.sendEmptyMessage(4);
+                edtPwd.setCursorVisible(false);
+//                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
                 return;
             }
         }
+        if (WIFITYPE != null && WIFITYPE.equals(FormKey.HOME_WIFITYPE_BLUE)) {
+            handler.sendEmptyMessage(4);
+            edtPwd.setCursorVisible(false);
+//            mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
+            return;
+        }
         if (guid != null) {
-            if ("KC306".equals(guid)){
+            if ("KC306".equals(guid) ) {
                 handler.sendEmptyMessage(3);
                 edtPwd.setCursorVisible(false);
-                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
-            }else {
+//                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
+            } else {
                 handler.sendEmptyMessage(2);
                 edtPwd.setCursorVisible(false);
-                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
+//                mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
             }
         } else {
             handler.sendEmptyMessage(1);
             edtPwd.setCursorVisible(false);
-            mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
+//            mRelPwd.setBackground(getResources().getDrawable(R.drawable.shape_wifi_name_bg));
         }
     }
 
@@ -265,10 +297,10 @@ public class WifiConnectPage extends BasePage {
         if (TextUtils.isEmpty(edtPwd.getText())) return;
         if (checked) {
             edtPwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            imgPwd.setImageResource(R.mipmap.img_yan_close);
+            imgPwd.setImageDrawable(SkinCompatResources.getDrawable(getContext(), R.mipmap.img_yan_close));
         } else {
             edtPwd.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-            imgPwd.setImageResource(R.mipmap.yanjing);
+            imgPwd.setImageDrawable(SkinCompatResources.getDrawable(getContext(), R.mipmap.yanjing));
         }
         checked = !checked;
     }
@@ -354,6 +386,71 @@ public class WifiConnectPage extends BasePage {
 
 
     }
+    private void blueConnect(){
+        if (!BleManager.getInstance().isBlueEnable()) {
+            openBlueset();
+            return;
+        }
+        final String ssid = edtWifiName.getText().toString();
+        final String pwd = edtPwd.getText().toString();
+        if (TextUtils.isEmpty(ssid)) {
+            ToastUtils.show(getString(R.string.roki_error_no_wifi), Toast.LENGTH_SHORT);
+            return;
+        }
+        String name = Thread.currentThread().getName();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                PreferenceUtils.setString(PrefsKey.Ssid, ssid);
+                PreferenceUtils.setString(ssid, pwd);
+                Bundle bundle = new Bundle();
+//                bundle.putString(PageArgumentKey.wifiName, name);
+                bundle.putString(PageArgumentKey.Ssid, ssid);
+                bundle.putString(PageArgumentKey.Pwd, pwd);
+                bundle.putString(PageArgumentKey.Guid, dt);
+                if(WIFITYPE != null && WIFITYPE.equals(FormKey.HOME_WIFITYPE_BLUE)){
+                    bundle.putParcelable("BleRssiDevice", bleRssiDevice);
+                    UIService.getInstance().postPage(PageKey.DeviceBlueContent, bundle);
+                }else {
+                    UIService.getInstance().postPage(PageKey.DeviceBlueContentSearch, bundle);
+                }
+            }
+        });
+    }
+    private void openBlueset(){
+        if (blueSetDialog == null) {
+            blueSetDialog = new BaseDialog(cx);
+            blueSetDialog.setContentView(R.layout.dialog_open_bluetooth);
+            blueSetDialog.setCanceledOnTouchOutside(true);
+            blueSetDialog.setGravity(Gravity.CENTER_VERTICAL);
+            blueSetDialog.setWidth(activity.getWindowManager().getDefaultDisplay().getWidth());
+            TextView tv_cancel = (TextView) blueSetDialog.findViewById(R.id.tv_cancel);
+            TextView tv_set = (TextView) blueSetDialog.findViewById(R.id.tv_set);
+
+            blueSetDialog.setCancelable(false);
+
+            tv_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    blueSetDialog.dismiss();
+
+                }
+            });
+            tv_set.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+                    activity.startActivity(intent);
+                    blueSetDialog.dismiss();
+                }
+            });
+            blueSetDialog.show();
+        } else {
+            if (!blueSetDialog.isShowing()) {
+                blueSetDialog.show();
+            }
+        }
+    }
 
     private void udpSmartConnect() {
         final String ssid = edtWifiName.getText().toString();
@@ -377,9 +474,9 @@ public class WifiConnectPage extends BasePage {
                 bundle.putString(PageArgumentKey.Ssid, ssid);
                 bundle.putString(PageArgumentKey.Pwd, pwd);
                 bundle.putString(PageArgumentKey.Guid, dt);
-                if ("KC306".equals(dt)|| "KC306".equals(guid)){
+                if ("KC306".equals(dt) || "KC306".equals(guid) || "5010S".equals(dt) ) {
                     UIService.getInstance().postPage(PageKey.DeviceUdpHidKitContent, bundle);
-                }else if ("C21-01R".equals(dt) || "C21-02R".equals(dt) || "C21-03R".equals(dt) ){
+                } else if ("C21-01R".equals(dt) || "C21-02R".equals(dt) || "C21-03R".equals(dt)) {
                     UIService.getInstance().postPage(PageKey.DeviceUdpContent, bundle);
                 }
             }
@@ -488,5 +585,7 @@ public class WifiConnectPage extends BasePage {
     @Override
     public void onResume() {
         super.onResume();
+        FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+        firebaseAnalytics.setCurrentScreen(getActivity(), "设备添加进度页", null);
     }
 }

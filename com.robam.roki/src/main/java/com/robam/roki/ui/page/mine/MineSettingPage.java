@@ -1,15 +1,19 @@
 package com.robam.roki.ui.page.mine;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.common.eventbus.Subscribe;
-
+import com.hjq.toast.ToastUtils;
 import com.legent.plat.Plat;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.ui.UIService;
 import com.legent.utils.DataCleanManagerUtils;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.roki.R;
 import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
@@ -19,6 +23,7 @@ import com.robam.roki.ui.page.login.MyBasePage;
 import com.robam.roki.ui.page.login.helper.CmccLoginHelper;
 import com.robam.roki.ui.widget.layout.SettingBar;
 import com.robam.roki.utils.DialogUtil;
+import com.youzan.sdk.YouzanSDK;
 
 
 /**
@@ -30,15 +35,17 @@ public class MineSettingPage extends MyBasePage<MainActivity> {
     /**
      * 账户与安全
      */
-    private SettingBar stbSettingAccAndSec;
+    private RelativeLayout stbSettingAccAndSec;
     /**
      * 清楚缓存
      */
-    private SettingBar stbClearCache;
+    private RelativeLayout stbClearCache;
     /**
      * 退出账户
      */
-    private AppCompatButton btnLogout;
+    private Button btnLogout;
+    private TextView tvCache;
+    private ImageView ivBack;
 
     @Override
     protected int getLayoutId() {
@@ -47,17 +54,17 @@ public class MineSettingPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        setTitle(R.string.my_setting);
-        getTitleBar().setOnTitleBarListener(this);
-        stbSettingAccAndSec = (SettingBar) findViewById(R.id.stb_setting_acc_and_sec);
-        stbClearCache = (SettingBar) findViewById(R.id.stb_clear_cache);
-        btnLogout = (AppCompatButton) findViewById(R.id.btn_logout);
-        setOnClickListener(stbSettingAccAndSec ,stbClearCache ,btnLogout);
+        tvCache = findViewById(R.id.tv_cache);
+        ivBack = findViewById(R.id.img_back);
+        stbSettingAccAndSec = findViewById(R.id.stb_setting_acc_and_sec);
+        stbClearCache = findViewById(R.id.stb_clear_cache);
+        btnLogout = findViewById(R.id.btn_logout);
+        setOnClickListener(stbSettingAccAndSec ,stbClearCache ,btnLogout, ivBack);
     }
 
     @Override
     protected void initData() {
-        stbClearCache.setRightText(DataCleanManagerUtils.getCacheSize(cx));
+        tvCache.setText(DataCleanManagerUtils.getCacheSize(cx));
         if(!Plat.accountService.isLogon()){
             btnLogout.setText("立即登录");
         }else {
@@ -87,7 +94,9 @@ public class MineSettingPage extends MyBasePage<MainActivity> {
         }else if(view.equals(stbClearCache)){
             DataCleanManagerUtils.clearAppCache(getContext());
             ToastUtils.show("缓存清除成功");
-            stbClearCache.setRightText(DataCleanManagerUtils.getCacheSize(getContext()));
+            tvCache.setText(DataCleanManagerUtils.getCacheSize(getContext()));
+        } else if (view.equals(ivBack)) {
+            UIService.getInstance().popBack();
         }
     }
 

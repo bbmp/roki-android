@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="大家都在做"
-        android:textColor="@color/roki_important_text_color"
+        android:textColor="@color/text_color_net_err"
         android:textSize="20sp"
         android:textStyle="bold" />
 

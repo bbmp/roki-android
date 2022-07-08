@@ -3,6 +3,7 @@ package com.robam.roki.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.services.DeviceService;

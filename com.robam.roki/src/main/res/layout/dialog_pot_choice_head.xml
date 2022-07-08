@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ll_dialog_context"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_dialog_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_28"
+            android:gravity="center_horizontal"
+            android:text="请将食材放入无人锅，\n选择炉头并开始烹饪"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_24"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_choice_left"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_left_head_state"
+                    android:layout_width="@dimen/dp_124"
+                    android:layout_height="@dimen/dp_124"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="左灶"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16"
+                    android:background="@mipmap/icon_choice_selected"
+                    android:padding="@dimen/dp_2"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_choice_right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_right_head_state"
+                    android:layout_width="@dimen/dp_124"
+                    android:layout_height="@dimen/dp_124"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="右灶"
+                    android:textColor="@color/text_select_color"
+                    android:textSize="@dimen/sp_16"
+                    android:background="@mipmap/icon_choice_common"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_complete"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            android:layout_margin="@dimen/dp_24"
+            android:background="@drawable/countdown_complete"
+            android:text="确认"
+            android:textColor="@color/text_select_color"
+            android:textSize="@dimen/sp_20" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

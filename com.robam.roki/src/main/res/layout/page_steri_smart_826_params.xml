@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/mainView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/fenggu_intelligent_setting"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <com.legent.ui.ext.views.CheckBoxView
+                    android:id="@+id/chkIsInternalDays"
+                    android:layout_marginTop="5dp"
+                    style="@style/check_826_box_style" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/device_sterilizer_fixed_week"
+                    android:textColor="@color/gray"
+                    android:textSize="13sp" />
+
+
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/txtInternalDays"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:text="@string/on_sunday"
+                        android:background="@drawable/shape_line_gray_night"
+                        android:textColor="@color/c11"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/device_sterilizer_in_the_time_of_the_electricity_trough"
+                    android:textColor="@color/gray"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtPVCTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:text="23:00"
+                        android:background="@drawable/shape_line_gray_night"
+                        android:textColor="@color/c11"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="35dp"
+                        android:layout_height="2dp"
+                        android:text="一"
+                        android:textColor="@color/gray"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/device_sterilizer_open_disinfection_mode"
+                    android:textColor="@color/gray"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtRestore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="22dp"
+                android:layout_marginRight="5dp"
+                android:text="@string/device_sterilizer_factory_data_reset"
+                android:textColor="@color/c11"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

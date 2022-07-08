@@ -655,7 +655,7 @@ public class AbsOvenPage extends AbsOvenBasePage {
             desc = ovenParams.getParam().getDesc().getValue();
             List<Integer> tempUp = ovenParams.getParam().getUpTemp().getValue();
             String tempUpDefault = ovenParams.getParam().getUpTempDefault().getValue();
-            List<Integer> time = ovenParams.getParam().getMinute().getValue();
+            List<Integer> time = ovenParams.getParam().getSetTime().getValue();
             List<Integer> tempDown = ovenParams.getParam().getDownTemp().getValue();
             String timeDefault = ovenParams.getParam().getMinuteDefault().getValue();
             String tempDiff = ovenParams.getParam().getTempDiff().getValue();

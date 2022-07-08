@@ -2,12 +2,21 @@ package com.robam.roki.model.bean;
 
 public class DeviceMoreBean {
     private String name;
+    private String deviceName;
     private int imageRes;
     private String imageUrl;
     private int type;
 
     public String getName() {
         return name;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
 
     public int getImageRes() {

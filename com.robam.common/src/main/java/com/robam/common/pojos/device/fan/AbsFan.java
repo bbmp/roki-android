@@ -84,7 +84,7 @@ public class AbsFan extends AbsDeviceHub implements IFan, Serializable {
     public short rightStoveBraiseAlarm;
     public int temperatureReportOne;
     public int temperatureReportTwo;
-    public short ventilationRemainingTime;
+    public int ventilationRemainingTime;
     public short stoveLinkageRemainingTime;
     public short periodicallyRemainingTime;
     public short presTurnOffRemainingTime;
@@ -92,6 +92,10 @@ public class AbsFan extends AbsDeviceHub implements IFan, Serializable {
     private short remindTime;
     public short eventId;
     public short eventParam;
+    /**
+     * 智感恒吸
+     */
+    public short cruise;
 
 
     public AbsFan(DeviceInfo devInfo) {
@@ -203,13 +207,15 @@ public class AbsFan extends AbsDeviceHub implements IFan, Serializable {
                     AbsFan.this.temperatureReportOne = msg.optInt(MsgParams.TemperatureReportOne);
                     AbsFan.this.temperatureReportTwo = msg.optInt(MsgParams.TemperatureReportTwo);
                     AbsFan.this.braiseAlarm = (short) msg.optInt(MsgParams.BraiseAlarm);
+                    //20220505新增变速巡航
+                    AbsFan.this.cruise = (short) msg.optInt(MsgParams.CRUISE);
                     byte[] args = new byte[8];
                     for (short i = 7; i > -1; i--) {
                         args[7 - i] = ((braiseAlarm & (1 << i)) == 0) ? (byte) 0 : 1;
                         leftStoveBraiseAlarm = args[7];
                         rightStoveBraiseAlarm = args[6];
                     }
-                    AbsFan.this.ventilationRemainingTime = (short) msg.optInt(MsgParams.RegularVentilationRemainingTime);
+                    AbsFan.this.ventilationRemainingTime = (int) msg.optInt(MsgParams.RegularVentilationRemainingTime);
                     AbsFan.this.stoveLinkageRemainingTime = (short) msg.optInt(MsgParams.FanStoveLinkageVentilationRemainingTime);
                     //判断是否接收成功 255代表没有接收成功    5916s
                     if ((short) msg.optInt(MsgParams.PeriodicallyRemindTheRemainingTime) != 255) {
@@ -485,7 +491,9 @@ public class AbsFan extends AbsDeviceHub implements IFan, Serializable {
                     smartParams.R8230S_Switch = (short) resMsg.optInt(MsgParams.R8230SFrySwitch);
                     smartParams.R8230S_Time = (short) resMsg.optInt(MsgParams.R8230SFryTime);
                     smartParams.gesture = (short) resMsg.optInt(MsgParams.gesture);
-
+                    //添加灶具小火，烟机自动匹配风量字段
+                    smartParams.fanStoveAuto = (short) resMsg.optInt(MsgParams.fanStoveAuto);
+                    Log.i("smartParams" , "-------"  +smartParams.fanStoveAuto) ;
                     if (smartParams.TimingVentilationPeriod == 255)
                         smartParams.TimingVentilationPeriod = 3;
                     if (smartParams.WeeklyVentilationDate_Week == 255)
@@ -687,7 +695,7 @@ public class AbsFan extends AbsDeviceHub implements IFan, Serializable {
     }
 
     /**
-     * 设置开启灶具烟机自动开启开关
+     * 烟灶联动
      */
     @Override
     public void setPowerLinkageSwitch(FanStatusComposite fanStatusComposite, short argumentNumber, VoidCallback callback) {
@@ -718,6 +726,36 @@ public class AbsFan extends AbsDeviceHub implements IFan, Serializable {
         }
     }
 
+    /**
+     * y烟灶联动
+     */
+    public void setPowerLinkageSwitch(short isPowerLinkage, short argumentNumber, VoidCallback callback) {
+        try {
+            Msg msg = newReqMsg(MsgKeys.SetFanStatusCompose_Req);
+            msg.putOpt(MsgParams.TerminalType, terminalType);
+            msg.putOpt(MsgParams.ArgumentNumber, argumentNumber);
+            if (argumentNumber > 0) {
+                msg.putOpt(MsgParams.FanStovePowerKey, 1);
+                msg.putOpt(MsgParams.FanStovePowerLength, 1);
+                msg.putOpt(MsgParams.FanStovePower, isPowerLinkage);
+            }
+            msg.setIsFan(true);
+            sendMsg(msg, new RCMsgCallbackWithVoid(callback) {
+                @Override
+                protected void afterSuccess(Msg resMsg) {
+                    LogUtils.i("20190425", "afterSuccess:" + resMsg.toString());
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    super.onFailure(t);
+                    LogUtils.i("20190425", "Throwable:" + t.toString());
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 设置灶具烟机档位联动开关
      */
@@ -980,6 +1018,102 @@ public class AbsFan extends AbsDeviceHub implements IFan, Serializable {
         }
     }
 
+
+    /**
+     * 设置变速巡航
+     *
+     * @param callback
+     */
+    public void setCruise(int cruise, VoidCallback callback) {
+        try {
+            Msg msg = newReqMsg(MsgKeys.SetFanStatusCompose_Req);
+            msg.putOpt(MsgParams.TerminalType, terminalType);
+            msg.putOpt(MsgParams.ArgumentNumber, 1);
+            msg.putOpt(MsgParams.CruiseKey, 17);
+            msg.putOpt(MsgParams.CruiseLength, 1);
+            msg.putOpt(MsgParams.CruiseValue, cruise);
+
+            msg.setIsFan(true);
+            sendMsg(msg, new RCMsgCallbackWithVoid(callback) {
+                @Override
+                protected void afterSuccess(Msg resMsg) {
+                    LogUtils.i("20190425", "afterSuccess:" + resMsg.toString());
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    super.onFailure(t);
+                    LogUtils.i("20190425", "Throwable:" + t.toString());
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 设置灶具最小火力烟机自动调节
+     *
+     * @param callback
+     */
+    public void setFanStoveAuto(int fanStoveAuto, VoidCallback callback) {
+        try {
+            Msg msg = newReqMsg(MsgKeys.SetFanStatusCompose_Req);
+            msg.putOpt(MsgParams.TerminalType, terminalType);
+            msg.putOpt(MsgParams.ArgumentNumber, 1);
+            msg.putOpt(MsgParams.fanStoveKey, 18);
+            msg.putOpt(MsgParams.fanStoveLength, 1);
+            msg.putOpt(MsgParams.fanStoveValue, fanStoveAuto);
+
+            msg.setIsFan(true);
+            sendMsg(msg, new RCMsgCallbackWithVoid(callback) {
+                @Override
+                protected void afterSuccess(Msg resMsg) {
+                    LogUtils.i("20190425", "afterSuccess:" + resMsg.toString());
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    super.onFailure(t);
+                    LogUtils.i("20190425", "Throwable:" + t.toString());
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 设置灶具最小火力烟机自动调节
+     *
+     * @param callback
+     */
+    public void setDelayedShut(int time, VoidCallback callback) {
+        try {
+            Msg msg = newReqMsg(MsgKeys.SetFanStatusCompose_Req);
+            msg.putOpt(MsgParams.TerminalType, terminalType);
+            msg.putOpt(MsgParams.ArgumentNumber, 1);
+            msg.putOpt(MsgParams.StoveShutDelayTimeKey, 4);
+            msg.putOpt(MsgParams.StoveShutDelayTimeLength, 1);
+            msg.putOpt(MsgParams.StoveShutDelayTime, time);
+
+            msg.setIsFan(true);
+            sendMsg(msg, new RCMsgCallbackWithVoid(callback) {
+                @Override
+                protected void afterSuccess(Msg resMsg) {
+                    LogUtils.i("20190425", "afterSuccess:" + resMsg.toString());
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    super.onFailure(t);
+                    LogUtils.i("20190425", "Throwable:" + t.toString());
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void setProtectDryPower(FanStatusComposite fanStatusComposite, VoidCallback callback) {
         try {

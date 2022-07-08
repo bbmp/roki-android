@@ -14,9 +14,11 @@ import com.bumptech.glide.Glide;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by lixin on 2020/10/19.
@@ -43,7 +45,7 @@ public class HidKitOtherFuncAdapter extends RecyclerView.Adapter<HidKitOtherFunc
     public HidKitOtherFuncViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
         View view = mInflater.inflate(R.layout.item_otherfunc_hidkit_page, parent, false);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         HidKitOtherFuncViewHolder hidKitOtherFuncViewHolder = new HidKitOtherFuncViewHolder(view);
         hidKitOtherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +61,7 @@ public class HidKitOtherFuncAdapter extends RecyclerView.Adapter<HidKitOtherFunc
     @Override
     public void onBindViewHolder(HidKitOtherFuncViewHolder holder, int position) {
         if (null != mData && 0 < mData.size()) {
-            Glide.with(mContext).load(mData.get(position).backgroundImg).into(holder.mImageView);
+            Glide.with(cx).load(mData.get(position).backgroundImg).into(holder.mImageView);
             holder.mTvName.setText(mData.get(position).functionName);
             holder.mTvDesc.setText(mData.get(position).msg);
             holder.mItemView.setTag(mData.get(position).functionCode);

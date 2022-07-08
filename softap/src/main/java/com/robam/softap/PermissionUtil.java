@@ -5,10 +5,10 @@ import android.app.Activity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.tbruyelle.rxpermissions2.Permission;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.tbruyelle.rxpermissions.Permission;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
-import io.reactivex.functions.Consumer;
+import rx.functions.Action1;
 
 
 /**
@@ -85,9 +85,10 @@ public class PermissionUtil {
                                                   listener, String permission) {
         RxPermissions rxPermissions = new RxPermissions(activity);
         rxPermissions.requestEach(permission)
-                .subscribe(new Consumer<Permission>() {
+                .subscribe(new Action1<Permission>() {
                     @Override
-                    public void accept(Permission permission) throws Exception {
+                    public void call(Permission permission) {
+
                         if (permission.granted) {
                             //授权成功
                             if (listener != null) {
@@ -110,6 +111,8 @@ public class PermissionUtil {
                                 listener.onFailed(permission.shouldShowRequestPermissionRationale);
                             }
                         }
+
+
                     }
                 });
     }
@@ -137,9 +140,10 @@ public class PermissionUtil {
 
         RxPermissions rxPermissions = new RxPermissions(activity);
         rxPermissions.request(args)
-                .subscribe(new Consumer<Boolean>() {
+                .subscribe(new Action1<Boolean>() {
                     @Override
-                    public void accept(Boolean aBoolean) throws Exception {
+                    public void call(Boolean aBoolean) {
+
                         if (aBoolean) {
                             //全部已经授权
                             if (listener != null) {
@@ -155,6 +159,7 @@ public class PermissionUtil {
                             Toast.makeText(activity, !TextUtils.isEmpty(showMsg) ? showMsg :
                                     SHOW_AGAIN_MESSAGE, Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
     }

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.legent.plat.io.device.msg.Msg;
 import com.legent.plat.io.device.msg.MsgUtils;
+import com.legent.utils.ByteUtils;
 import com.legent.utils.LogUtils;
 import com.robam.common.io.device.MsgKeys;
 import com.robam.common.io.device.MsgParams;
@@ -63,8 +64,8 @@ public class IntegratedStoveMsgMar {
                             buf.put(OrderTime_key);
                             byte OrderTime_length = (byte) msg.optInt(MsgParamsNew.setOrderMinutesLength);
                             buf.put(OrderTime_length);
-                            byte OrderTime = (byte) msg.optInt(MsgParamsNew.setOrderMinutes);
-                            buf.put(OrderTime);
+                            byte[] orderTime = ByteUtils.intToBytes2(msg.optInt(MsgParamsNew.setOrderMinutes));
+                            buf.put(orderTime);
                             //总段数
                             byte steameOvenTotalNumberOfSegments_Key = (byte) msg.optInt(MsgParamsNew.sectionNumberKey);
                             buf.put(steameOvenTotalNumberOfSegments_Key);
@@ -106,6 +107,10 @@ public class IntegratedStoveMsgMar {
                             buf.put(steamLength);
                             byte steam = (byte) msg.optInt(MsgParamsNew.steam);
                             buf.put(steam);
+                            //新添加需要把菜谱id设置为0
+                            buf.put( ( byte ) 17 );
+                            buf.put( ( byte ) 1 );
+                            buf.put( ( byte ) 0 );
                             break;
                         //单属性设置
                         case 1:
@@ -148,6 +153,11 @@ public class IntegratedStoveMsgMar {
 //                            buf.put(OrderTime_length);
 //                            byte OrderTime = (byte) msg.optInt(MsgParamsNew.setOrderMinutes);
 //                            buf.put(OrderTime);
+
+                            //新添加需要把菜谱id设置为0
+                            buf.put( ( byte ) 17 );
+                            buf.put( ( byte ) 1 );
+                            buf.put( ( byte ) 0 );
                             //总段数
                             byte steameOvenTotalNumberOfSegments_Key2 = (byte) msg.optInt(MsgParamsNew.sectionNumberKey);
                             buf.put(steameOvenTotalNumberOfSegments_Key2);
@@ -692,8 +702,16 @@ public class IntegratedStoveMsgMar {
                                             msg.putOpt(MsgParamsNew.workState, workState);
                                             break;
                                         case 6:
-                                            short orderLeftMinutes = MsgUtils.getShort(payload[offset++]);
-                                            msg.putOpt(MsgParamsNew.orderLeftMinutes, orderLeftMinutes);
+//                                            short orderLeftMinutes = MsgUtils.getShort(payload[offset++]);
+//                                            msg.putOpt(MsgParamsNew.orderLeftMinutes, orderLeftMinutes);
+                                            byte[]  orderLeftMinutes = new byte[steamOvenHeader_Length];
+                                            for (int i = 0 ; i < steamOvenHeader_Length ; i ++ ){
+                                                short orderLeftMinute = MsgUtils.getShort(payload[offset]);
+                                                orderLeftMinutes[i] = (byte) orderLeftMinute ;
+                                                offset ++ ;
+                                            }
+                                            int orderLeftMinute = ByteUtils.byteToInt2(orderLeftMinutes);
+                                            msg.putOpt(MsgParamsNew.orderLeftMinutes, orderLeftMinute);
                                             break;
                                         case 7:
                                             short faultCode = MsgUtils.getShort(payload[offset++]);
@@ -728,12 +746,29 @@ public class IntegratedStoveMsgMar {
                                             msg.putOpt(MsgParamsNew.recipeSetMinutes, recipeSetMinutes);
                                             break;
                                         case 19:
-                                            short curTemp = MsgUtils.getShort(payload[offset++]);
-                                            msg.putOpt(MsgParamsNew.curTemp, curTemp);
+//                                            short curTemp = MsgUtils.getShort(payload[offset++]);
+//                                            msg.putOpt(MsgParamsNew.curTemp, curTemp);
+
+                                            byte[]  curTemps = new byte[steamOvenHeader_Length];
+                                            for (int i = 0 ; i < steamOvenHeader_Length ; i ++ ){
+                                                short curTemp = MsgUtils.getShort(payload[offset]);
+                                                curTemps[i] = (byte) curTemp ;
+                                                offset ++ ;
+                                            }
+                                            int upTemp = ByteUtils.byteToInt2(curTemps);
+                                            msg.putOpt(MsgParamsNew.curTemp, upTemp);
                                             break;
                                         case 20:
-                                            short curTemp2 = MsgUtils.getShort(payload[offset++]);
-                                            msg.putOpt(MsgParamsNew.curTemp2, curTemp2);
+//                                            short curTemp2 = MsgUtils.getShort(payload[offset++]);
+//                                            msg.putOpt(MsgParamsNew.curTemp2, curTemp2);
+                                            byte[]  curTemp2s = new byte[steamOvenHeader_Length];
+                                            for (int i = 0 ; i < steamOvenHeader_Length ; i ++ ){
+                                                short curTemp2 = MsgUtils.getShort(payload[offset]);
+                                                curTemp2s[i] = (byte) curTemp2 ;
+                                                offset ++ ;
+                                            }
+                                            int downTemp = ByteUtils.byteToInt2(curTemp2s);
+                                            msg.putOpt(MsgParamsNew.curTemp2, downTemp);
                                             break;
 
                                         case 21:
@@ -747,20 +782,20 @@ public class IntegratedStoveMsgMar {
                                             short descaleFlag = MsgUtils.getShort(payload[offset++]);
                                             msg.putOpt(MsgParamsNew.descaleFlag, descaleFlag);
                                             break;
-                                        case 23:
-                                            short curSteamTotalHours = MsgUtils.getShort(payload[offset++]);
-                                            msg.putOpt(MsgParamsNew.curSteamTotalHours, curSteamTotalHours);
-                                            offset++;
-                                            break;
-                                        case 24:
-                                            short curSteamTotalNeedHours = MsgUtils.getShort(payload[offset++]);
-                                            msg.putOpt(MsgParamsNew.curSteamTotalNeedHours, curSteamTotalNeedHours);
-                                            offset++;
-                                            break;
-                                        case 25:
-                                            short cookedTime = MsgUtils.getShort(payload[offset++]);
-                                            msg.putOpt(MsgParamsNew.cookedTime, cookedTime);
-                                            break;
+//                                        case 23:
+//                                            short curSteamTotalHours = MsgUtils.getShort(payload[offset++]);
+//                                            msg.putOpt(MsgParamsNew.curSteamTotalHours, curSteamTotalHours);
+//                                            offset++;
+//                                            break;
+//                                        case 24:
+//                                            short curSteamTotalNeedHours = MsgUtils.getShort(payload[offset++]);
+//                                            msg.putOpt(MsgParamsNew.curSteamTotalNeedHours, curSteamTotalNeedHours);
+//                                            offset++;
+//                                            break;
+//                                        case 25:
+//                                            short cookedTime = MsgUtils.getShort(payload[offset++]);
+//                                            msg.putOpt(MsgParamsNew.cookedTime, cookedTime);
+//                                            break;
                                         case 26:
                                             short chugouType = MsgUtils.getShort(payload[offset++]);
                                             msg.putOpt(MsgParamsNew.chugouType, chugouType);

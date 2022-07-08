@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="373dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/common_dialog_bottom_bg_with_top_25corner">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="加时"
+            android:textColor="#333333"
+            android:textSize="24dp"
+            android:layout_marginTop="17dp"/>
+        <TextView
+            android:id="@+id/tv_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="加时后，设备将根据设置的时间继续烹饪"
+            android:textColor="#333333"
+            android:textSize="14dp"
+            android:layout_marginTop="8dp"/>
+
+
+        <com.robam.roki.ui.view.wheelview.LoopView
+            android:id="@+id/wheel_view"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/round_button_shape_change"
+            android:text="确定加时"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/shape_main_color_10dp_bg"
+            android:text="取消"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

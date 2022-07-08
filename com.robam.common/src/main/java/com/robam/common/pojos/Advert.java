@@ -1,9 +1,11 @@
 package com.robam.common.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.j256.ormlite.field.DatabaseField;
 import com.legent.pojos.AbsStorePojo;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Advert extends AbsStorePojo<Long> {
 
     /**
@@ -34,6 +36,22 @@ public class Advert extends AbsStorePojo<Long> {
     @DatabaseField
     @JsonProperty("image")
     public String imgUrl;
+
+    @DatabaseField
+    @JsonProperty("linkAction")
+    public int linkAction;
+
+    @DatabaseField
+    @JsonProperty("secondTitle")
+    public String secondTitle;
+
+    @DatabaseField
+    @JsonProperty("forwardImageUrl")
+    public String forwardImageUrl;
+
+    @DatabaseField
+    @JsonProperty("title")
+    public String title;
 
     @Override
     public String toString() {

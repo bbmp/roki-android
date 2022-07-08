@@ -23,23 +23,23 @@ import android.widget.VideoView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.events.ConnectionModeChangedEvent;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.events.UserLoginEvent;
-import com.legent.plat.io.cloud.RetrofitCallback;
-import com.legent.plat.pojos.RCReponse;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
+import com.legent.ui.ext.utils.StatusBarCompat;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.io.cloud.Reponses;
-import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.AbsRecipe;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.pojos.RecipeTheme;
@@ -89,8 +89,7 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
     @InjectView(R.id.tv_select_theme_back)
     ImageView tvSelectThemeBack;
 
-    @InjectView(R.id.tv_select_theme_toolbar_title)
-    TextView tvSelectThemeToolBarTitle;
+
 
 //    @InjectView(R.id.tv_theme_desc)
 //    TextView tvThemeDesc;
@@ -119,6 +118,7 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
     private RecipeTheme theme;//主题对象
     private List<Recipe> recipeList = new ArrayList<>();
 
+    private FirebaseAnalytics firebaseAnalytics;
     private int pageNo = 0;
     private int pageSize = 10;
     private RvSelectThemeAdapter rvSelectThemeAdapter;
@@ -143,12 +143,11 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        setStateBarTransparent();
-        selectThemeToolbar = (Toolbar) findViewById(R.id.select_theme_toolbar);
-        appBarLayout = findViewById(R.id.select_theme_appbar);
+//        StatusBarCompat.setStateBarTransparent(getActivity());
 
         xRvSelectThemeRecipe.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
+        xRvSelectThemeRecipe.setHasFixedSize(true);
+        xRvSelectThemeRecipe.setNestedScrollingEnabled(false);
         rvSelectThemeAdapter = new RvSelectThemeAdapter();
         rvSelectThemeAdapter.addChildClickViewIds(R.id.iv_top_week_img, R.id.iv_love_recipe);
         xRvSelectThemeRecipe.setAdapter(rvSelectThemeAdapter);
@@ -165,20 +164,22 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
         });
 
         footView = LinearLayout.inflate(cx, R.layout.foot_tell_roki, null);
-        tvThemeTellRoki = (TextView) footView.findViewById(R.id.tv_theme_tell_roki);
-        String tellRokiText = tvThemeTellRoki.getText().toString().trim();
-        int start = 15;
-        SpannableStringBuilder ssb = new SpannableStringBuilder();
-        ssb.append(tellRokiText);
-        ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.roki_sub_color)), start, start + 6, 0);
-        tvThemeTellRoki.setText(ssb);
-        tvThemeTellRoki.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogUtils.i(TAG, "click tagRecipeTellRoki ");
-                UIService.getInstance().postPage(PageKey.TellRoki);
-            }
-        });
+        footView.findViewById(R.id.load_more_loading_view).setVisibility(View.GONE);
+        footView.findViewById(R.id.load_more_load_end_view).setVisibility(View.VISIBLE);
+//        tvThemeTellRoki = (TextView) footView.findViewById(R.id.tv_theme_tell_roki);
+//        String tellRokiText = tvThemeTellRoki.getText().toString().trim();
+//        int start = 15;
+//        SpannableStringBuilder ssb = new SpannableStringBuilder();
+//        ssb.append(tellRokiText);
+//        ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.roki_sub_color)), start, start + 6, 0);
+//        tvThemeTellRoki.setText(ssb);
+//        tvThemeTellRoki.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                LogUtils.i(TAG, "click tagRecipeTellRoki ");
+//                UIService.getInstance().postPage(PageKey.TellRoki);
+//            }
+//        });
         //空布局
         emptyView = LinearLayout.inflate(cx, R.layout.view_emoji_empty, null);
         tvDesc = (TextView) emptyView.findViewById(R.id.txtDesc);
@@ -187,9 +188,11 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
             @Override
             public void onRefresh() {
                 recipeList.clear();
+                if (theme!=null)
                 getThemeRecipeDetail(theme.id);
             }
         });
+
     }
 
     @OnClick(R.id.imgShare)
@@ -213,27 +216,24 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
             //判断是否被收藏
             if (!theme.isCollect) {
                 ProgressDialogHelper.setRunning(cx, true);
-                RokiRestHelper.setCollectOfTheme(theme.id, Reponses.CollectStatusRespone.class, new RetrofitCallback<Reponses.CollectStatusRespone>() {
+                StoreService.getInstance().setThemeCollect(theme.id, new Callback<Boolean>() {
                     @Override
-                    public void onSuccess(Reponses.CollectStatusRespone collectStatusRespone) {
-                        ProgressDialogHelper.setRunning(cx, false);
-                        if (null != collectStatusRespone) {
-                            Boolean aBoolean = collectStatusRespone.isSuccess();
-                            if (aBoolean) {
-                                theme.isCollect = true;
-                                ToastUtils.showShort("收藏成功");
-                                if (percent < 0.8) {
-                                    imgFavority.setImageResource(R.drawable.icon_collected);
-                                } else {
-                                    imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_24);
-                                }
-                            }
-
+                    public void onSuccess(Boolean aBoolean) {
+                        if (aBoolean) {
+                            theme.isCollect = true;
+                            ToastUtils.show("收藏成功");
+                            imgFavority.setSelected(true);
+//                            if (percent < 0.8) {
+//                                imgFavority.setImageResource(R.drawable.icon_collected);
+//                            } else {
+//                                imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_24);
+//                            }
                         }
+                        ProgressDialogHelper.setRunning(cx, false);
                     }
 
                     @Override
-                    public void onFaild(String err) {
+                    public void onFailure(Throwable t) {
                         ProgressDialogHelper.setRunning(cx, false);
                     }
                 });
@@ -244,12 +244,13 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
                     public void onSuccess(Boolean aBoolean) {
                         if (aBoolean) {
                             theme.isCollect = false;
-                            ToastUtils.showShort("已取消收藏");
-                            if (percent < 0.8) {
-                                imgFavority.setImageResource(R.drawable.icon_collect);
-                            } else {
-                                imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_border_24);
-                            }
+                            ToastUtils.show("已取消收藏");
+                            imgFavority.setSelected(false);
+//                            if (percent < 0.8) {
+//                                imgFavority.setImageResource(R.drawable.icon_collect);
+//                            } else {
+//                                imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_border_24);
+//                            }
                         }
                         ProgressDialogHelper.setRunning(cx, false);
                     }
@@ -272,32 +273,23 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
     @Override
     protected void initData() {
         selectThemeBundle = getArguments();
-
+        firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+        if (getActivity()!=null)
+        firebaseAnalytics.setCurrentScreen(getActivity(), "主题详情页面", null);
         int type_theme = selectThemeBundle.getInt(PageArgumentKey.ThemeType, 1);
         if (type_theme == TYPE_THEME_RECIPE) {
             theme = (RecipeTheme) selectThemeBundle.getSerializable(PageArgumentKey.Theme);
 //            setAvatorChange();
+            if ( theme==null){
+                return;
+            }
             LogUtils.i(TAG, "tHeme name:" + theme.name + "theme id:" + theme.id + " theme.subName: " + theme.subName + " theme.imageUrl:" + theme.imageUrl + "" + theme.description + " theme.viewCount:" + theme.viewCount + " theme collectCount:" + theme.collectCount);
-            GlideApp.with(getActivity())
-                    .load(theme.imageUrl)
-                    .into(ivSelectThemeTitleBg);
-            tvSelectThemeToolBarTitle.setText(theme.name);
-//            tvThemeDesc.setText(theme.description);
-//            if (percent < 0.8) {
-//                imgFavority.setImageResource(theme.isCollect ? R.drawable.icon_collected : R.drawable.icon_collect);
-//            } else {
-//                imgFavority.setImageResource(theme.isCollect ? R.drawable.ic_baseline_favorite_24 : R.drawable.ic_baseline_favorite_border_24);
-//            }
+
             imgFavority.setSelected(theme.isCollect);
             getThemeRecipeDetail(theme.id);
         } else if (type_theme == TYPE_THEME_DETAIL) {
             ThemeRecipeDetail themeRecipeDetail = (ThemeRecipeDetail) selectThemeBundle.getSerializable(PageArgumentKey.ThemeDetail);
-//            setAvatorChange();
-            GlideApp.with(getActivity())
-                    .load(themeRecipeDetail.imageUrl)
-                    .into(ivSelectThemeTitleBg);
-            tvSelectThemeToolBarTitle.setText(themeRecipeDetail.name);
-//            tvThemeDesc.setText(themeRecipeDetail.description);
+
             getThemeRecipeDetail(themeRecipeDetail.id);
         }else if (type_theme == TYPE_THEME_BANNER){
             long aLong = selectThemeBundle.getLong(PageArgumentKey.Id);
@@ -331,8 +323,12 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
     public void onDestroyView() {
         super.onDestroyView();
         EventUtils.postEvent(new PageBackEvent("SelectThemeDetailPage"));
-        StatusBarUtils.setColor(cx, getResources().getColor(R.color.white));
-        StatusBarUtils.setTextDark(cx, true);
+//        StatusBarUtils.setColor(cx, getResources().getColor(R.color.white));
+//        StatusBarUtils.setTextDark(cx, true);
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            View decorView = activity.getWindow().getDecorView();
+//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//        }
     }
 
     /**
@@ -347,7 +343,7 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
                     @Override
                     public void onSuccess() {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.showShort("已取消收藏");
+                        ToastUtils.show("已取消收藏");
                         recipe.setIsCollected(false);
                         recipe.collectCount = recipe.collectCount - 1;
                         rvSelectThemeAdapter.setData(position, recipe);
@@ -356,29 +352,26 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
                     @Override
                     public void onFailure(Throwable t) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.showShort(t.getMessage());
+                        ToastUtils.show(t.getMessage());
 
                     }
                 });
             } else {
                 ProgressDialogHelper.setRunning(cx, true);
-                RokiRestHelper.addFavorityCookbooks(recipe.id, RCReponse.class, new RetrofitCallback<RCReponse>() {
+                CookbookManager.getInstance().addFavorityCookbooks(recipe.id, new VoidCallback() {
                     @Override
-                    public void onSuccess(RCReponse rcReponse) {
+                    public void onSuccess() {
                         ProgressDialogHelper.setRunning(cx, false);
-                        if (null != rcReponse) {
-
-                            ToastUtils.showShort("收藏成功");
-                            recipe.setIsCollected(true);
-                            recipe.collectCount = recipe.collectCount + 1;
-                            rvSelectThemeAdapter.setData(position, recipe);
-                        }
+                        ToastUtils.show("收藏成功");
+                        recipe.setIsCollected(true);
+                        recipe.collectCount = recipe.collectCount + 1;
+                        rvSelectThemeAdapter.setData(position, recipe);
                     }
 
                     @Override
-                    public void onFaild(String err) {
+                    public void onFailure(Throwable t) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.show(err);
+                        ToastUtils.show(t.getMessage());
                     }
                 });
             }
@@ -399,40 +392,40 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
      */
     private void getThemeRecipeDetail(long themeId) {
         LogUtils.i(TAG, "getThemeRecipeDetail themeId:" + themeId);
-        RokiRestHelper.getThemeRecipeDetail(themeId, Reponses.ThemeRecipeDetailResponse.class, new RetrofitCallback<Reponses.ThemeRecipeDetailResponse>() {
+        ProgressDialogHelper.setRunning(cx, true);
+        CookbookManager.getInstance().getThemeRecipeDetail(themeId, new Callback<Reponses.ThemeRecipeDetailResponse>() {
             @Override
             public void onSuccess(Reponses.ThemeRecipeDetailResponse themeRecipeDetailResponse) {
-                if (themeRecipeDetailResponse != null && themeRecipeDetailResponse.theme != null) {
+                ProgressDialogHelper.setRunning(cx, false);
+                if (themeRecipeDetailResponse != null && themeRecipeDetailResponse.themeRecipeDetail != null) {
 
                     if (theme==null){
-                        theme=themeRecipeDetailResponse.theme;
+                        theme=themeRecipeDetailResponse.themeRecipeDetail;
                     }
                     if (theme.isCollect){
-                        theme = themeRecipeDetailResponse.theme ;
+                        theme = themeRecipeDetailResponse.themeRecipeDetail ;
                         theme.isCollect = true ;
                     }else {
-                        theme = themeRecipeDetailResponse.theme ;
+                        theme = themeRecipeDetailResponse.themeRecipeDetail ;
                     }
 
-                    LogUtils.i(TAG, "onSuccess theme viewCount:" + themeRecipeDetailResponse.theme.viewCount + " theme collectCount:" + themeRecipeDetailResponse.theme.collectCount);
+                    LogUtils.i(TAG, "onSuccess theme viewCount:" + themeRecipeDetailResponse.themeRecipeDetail.viewCount + " theme collectCount:" + themeRecipeDetailResponse.themeRecipeDetail.collectCount);
 //                    if (tvReadThemeNumber == null) {
 //                        return;
 //                    }
-                    GlideApp.with(getActivity())
-                            .load(themeRecipeDetailResponse.theme.imageUrl)
-                            .into(ivSelectThemeTitleBg);
-                    tvSelectThemeToolBarTitle.setText(themeRecipeDetailResponse.theme.name);
-//                    tvThemeDesc.setText(themeRecipeDetailResponse.themeRecipeDetail.description);
-//
-//                    tvReadThemeNumber.setText("阅读 " + NumberUtil.converString(themeRecipeDetailResponse.themeRecipeDetail.viewCount));
-//                    tvCollectThemeNumber.setText("收藏 " + NumberUtil.converString(themeRecipeDetailResponse.themeRecipeDetail.collectCount));
-                   if (themeRecipeDetailResponse.theme.cookbookSet != null) {
-                       recipeList.addAll(themeRecipeDetailResponse.theme.cookbookSet);
+//                    StatusBarCompat.setStateBarTransparent(getActivity());
+                    if (getActivity()!=null) {
+                        GlideApp.with(getActivity())
+                                .load(themeRecipeDetailResponse.themeRecipeDetail.imageUrl)
+                                .into(ivSelectThemeTitleBg);
+                    }
+
+                   if (themeRecipeDetailResponse.themeRecipeDetail.recipeList!=null) {
+                       recipeList.addAll(themeRecipeDetailResponse.themeRecipeDetail.recipeList);
 //                       tvThemeRecipeNumber.setText(themeRecipeDetailResponse.themeRecipeDetail.recipeList.size() + "道菜谱");
                    }
                     rvSelectThemeAdapter.setThemeRecipeDetailResponse(themeRecipeDetailResponse);
 
-                    setAvatorChange();
                     if (!Plat.accountService.isLogon()) {
                         setAdapterData();
                     } else {
@@ -445,11 +438,11 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
             }
 
             @Override
-            public void onFaild(String err) {
-                LogUtils.i(TAG, "onFail:" + err);
+            public void onFailure(Throwable t) {
+                LogUtils.i(TAG, "onFail:" + t.toString());
+                ProgressDialogHelper.setRunning(cx, false);
                 srl_theme.setRefreshing(false);
             }
-
         });
     }
 
@@ -458,8 +451,8 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
      */
     protected void getCollectRecipe() {
         ProgressDialogHelper.setRunning(cx, true);
-        RokiRestHelper.getFavorityCookbooks(Reponses.CookbooksResponse.class,
-                new RetrofitCallback<Reponses.CookbooksResponse>() {
+        CookbookManager.getInstance().getFavorityCookbooks(
+                new Callback<Reponses.CookbooksResponse>() {
                     @Override
                     public void onSuccess(Reponses.CookbooksResponse result) {
                         ArrayList<AbsRecipe> absRecipes = new ArrayList<>();
@@ -480,9 +473,9 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
                     }
 
                     @Override
-                    public void onFaild(String err) {
+                    public void onFailure(Throwable t) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.showShort(err);
+                        ToastUtils.show(t.getMessage());
                     }
                 });
     }
@@ -517,45 +510,6 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
 
 
     /**
-     * 渐变toolbar背景
-     */
-    private void setAvatorChange() {
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                //verticalOffset始终为0以下的负数
-                percent = (Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange());
-                LogUtils.i(TAG, "percent:" + percent);
-                selectThemeToolbar.setBackgroundColor(changeAlpha(Color.WHITE, percent));
-                if (percent > 0.8) {
-                    tvSelectThemeToolBarTitle.setVisibility(View.VISIBLE);
-                    StatusBarUtils.setTextDark(cx, true);
-                    tvSelectThemeBack.setImageResource(R.mipmap.icon_back_black);
-//                    imgFavority.setImageResource(R.drawable.ic_recipe_favority);
-//                    imgFavority.setImageResource(theme.isCollect ? R.drawable.ic_baseline_favorite_24 : R.drawable.ic_baseline_favorite_border_24);
-
-                    imgShare.setImageResource(R.mipmap.ic_recipe_detail_share);
-                } else {
-                    tvSelectThemeToolBarTitle.setVisibility(View.INVISIBLE);
-                    StatusBarUtils.setTextDark(cx, false);
-                    tvSelectThemeBack.setImageResource(R.mipmap.icon_back);
-//                    imgFavority.setImageResource(R.drawable.ic_recipe_favority_shape);
-//                    imgFavority.setImageResource(theme.isCollect ? R.drawable.icon_collected : R.drawable.animation_conmmion_dot);
-                    imgShare.setImageResource(R.mipmap.icon_share);
-                }
-//                imgFavority.setSelected(theme.isCollect);
-
-                if (percent < 0.8) {
-                    imgFavority.setImageResource(theme.isCollect ? R.drawable.icon_collected : R.drawable.icon_collect);
-                } else {
-                    imgFavority.setImageResource(theme.isCollect ? R.drawable.ic_baseline_favorite_24 : R.drawable.ic_baseline_favorite_border_24);
-                }
-
-            }
-        });
-    }
-
-    /**
      * @param color
      * @param fraction
      * @return
@@ -575,34 +529,32 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
     private void getThemeCollection() {
 
         ProgressDialogHelper.setRunning(cx, true);
-        RokiRestHelper.getMyFavoriteThemeRecipeList_new(Reponses.RecipeThemeResponse3.class, new RetrofitCallback<Reponses.RecipeThemeResponse3>() {
+        StoreService.getInstance().getMyFavoriteThemeRecipeList(new Callback<List<RecipeTheme>>() {
             @Override
-            public void onSuccess(Reponses.RecipeThemeResponse3 recipeThemeResponse3) {
-                ProgressDialogHelper.setRunning(cx, false);
-                if (null != recipeThemeResponse3) {
-                    List<RecipeTheme> recipeThemes = recipeThemeResponse3.recipeThemes;
-                    if (recipeThemes == null || recipeThemes.size() == 0) {
-                        return;
-                    } else {
-                        for (RecipeTheme recipeTheme :
-                                recipeThemes) {
-                            if (recipeTheme.id.equals(theme.id)) {
-                                theme.isCollect = true ;
-                                if (percent < 0.8) {
-                                    imgFavority.setImageResource(R.drawable.icon_collected);
-                                } else {
-                                    imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_24);
-                                }
-                                return;
-                            }
+            public void onSuccess(List<RecipeTheme> recipeThemes) {
+                if (recipeThemes == null || recipeThemes.size() == 0) {
+                    return;
+                } else {
+                    for (RecipeTheme recipeTheme :
+                            recipeThemes) {
+                        if (recipeTheme.id.equals(theme.id)) {
+                            theme.isCollect = true ;
+                            imgFavority.setSelected(true);
+//                            if (percent < 0.8) {
+//                                imgFavority.setImageResource(R.drawable.icon_collected);
+//                            } else {
+//                                imgFavority.setImageResource(com.robam.common.R.drawable.ic_baseline_favorite_24);
+//                            }
+                            return;
                         }
                     }
-                    theme.isCollect = false ;
                 }
+                theme.isCollect = false ;
+                ProgressDialogHelper.setRunning(cx, false);
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
             }
         });
@@ -629,7 +581,7 @@ public class SelectThemeDetailPage extends MyBasePage<MainActivity> {
         if ("RecipeDetailPage".equals(event.getPageName())) {
             recipeList.clear();
             getThemeRecipeDetail(theme.id);
-
+//            setStateBarTransparent();
         }
     }
 

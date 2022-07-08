@@ -27,11 +27,11 @@ public interface IDeviceType {
     String RXDG_ZN = "消毒柜";
     String RDKX_ZN = "电烤箱";
     String RZQL_ZN = "电蒸箱";
-    String RZKY_ZN = "一体机";
+    String RZKY_ZN = "蒸烤一体机";
     String RIKA_ZN = "集成烟机";
     String RJCZ_ZN = "集成灶";
     String RWBL_ZN = "微波炉";
-    String RPOT_ZN = "温控锅";
+    String RPOT_ZN = "无人锅";
     String RJSQ_ZN = "净水器";
     String RDCZ_ZN = "电磁灶";
     String RRQZ_ZN = "燃气灶";
@@ -39,4 +39,5 @@ public interface IDeviceType {
     String RQCG_ZN = "燃气传感器";
     String KZNZ_ZN = "火鸡灶";
     String RRQZ_AND_RDCZ_ZN = "灶具";
+    String RCBH_ZN = "藏宝盒";
 }

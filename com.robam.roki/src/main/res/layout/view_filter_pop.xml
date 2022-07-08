@@ -15,6 +15,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/origin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -39,6 +40,7 @@
                 android:background="#808080"/>
 
             <TextView
+                android:id="@+id/electrickitchen"
                 android:layout_marginTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,6 +66,7 @@
 
             <TextView
                 android:layout_marginTop="2dp"
+                android:id="@+id/flavor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"

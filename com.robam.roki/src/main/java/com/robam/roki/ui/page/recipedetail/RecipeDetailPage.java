@@ -1,5 +1,6 @@
 package com.robam.roki.ui.page.recipedetail;
 
+import static com.blankj.utilcode.util.ServiceUtils.startService;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -35,22 +36,25 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.events.AppVisibleEvent;
 import com.legent.plat.Plat;
 import com.legent.plat.events.FloatHelperEvent;
 import com.legent.plat.events.PageBackEvent;
-import com.legent.plat.io.cloud.RetrofitCallback;
-import com.legent.plat.pojos.RCReponse;
+import com.legent.plat.events.RecipteLoginEvent;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
+import com.legent.ui.ext.utils.StatusBarCompat;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
-import com.legent.utils.api.ToastUtils;
+import com.robam.base.BaseDialog;
 import com.robam.common.Utils;
+import com.robam.common.events.StoveStatusChangedEvent;
 import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.CookBookVideo;
@@ -69,6 +73,9 @@ import com.robam.common.services.StoreService;
 import com.robam.common.util.RecipeUtils;
 import com.robam.common.util.StatusBarUtils;
 import com.robam.roki.R;
+import com.robam.roki.net.OnRequestListener;
+import com.robam.roki.net.request.api.PublishApi;
+import com.robam.roki.net.request.bean.AlumListBean;
 import com.robam.roki.ui.Helper;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
@@ -77,19 +84,21 @@ import com.robam.roki.ui.adapter3.RvDeviceAdapter;
 import com.robam.roki.ui.adapter3.RvRecipeDetailAdapter;
 import com.robam.roki.ui.bean3.RecipeDetailItem;
 import com.robam.roki.ui.dialog.CookbookShareDialog;
+import com.robam.roki.ui.dialog.DeviceSelectStoveHeadDialog;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.form.RecipeActivity;
 import com.robam.roki.ui.form.RecipeNoDeviceActivity;
 import com.robam.roki.ui.form.RecipePotActivity;
 import com.robam.roki.ui.form.RecipeRRQZActivity;
+import com.robam.roki.ui.helper3.RecipeHelper;
 import com.robam.roki.ui.page.ClassifyTagRecipePage;
 import com.robam.roki.ui.page.login.MyBasePage;
 import com.robam.roki.ui.page.login.helper.CmccLoginHelper;
-import com.robam.roki.ui.widget.base.BaseDialog;
 import com.robam.roki.ui.widget.view.PlayerView;
 import com.robam.roki.utils.ButtonUtils;
 import com.robam.roki.utils.DeviceSelectUtils;
 import com.robam.roki.utils.PermissionsUtils;
+
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -108,12 +117,15 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  * des：3.2菜谱详情页
  */
 
-public class RecipeDetailPage extends MyBasePage<MainActivity> implements KeyboardWatcher.SoftKeyboardStateListener{
+public class RecipeDetailPage extends MyBasePage<MainActivity> implements KeyboardWatcher.SoftKeyboardStateListener, OnRequestListener {
 
+
+    private PublishApi mPublishApi;
     private MultiTransformation options = new MultiTransformation<>(new CenterCrop(),
             new RoundedCornersTransformation(999, 0));
     private static int pageKey = 0;
     private static Long ID;
+    private boolean startMain;
     private String entranceCode;
     private String platformCode;
     private String mGuid;
@@ -134,7 +146,7 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
     /**
      * 详情数据adapter
      */
-    private RvRecipeDetailAdapter rvRecipeDetailAdapter;
+    public RvRecipeDetailAdapter rvRecipeDetailAdapter;
     /**
      * 自动烹饪
      */
@@ -353,9 +365,6 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
     }
     @Override
     protected void initView() {
-//        setStateBarTransparent();
-//        StatusBarUtils.setColor(cx, Color.WHITE);
-        StatusBarUtils.setTextDark(cx, true);
         titleItem = (RelativeLayout) findViewById(R.id.title_item);
         imgreturn = (ImageView) findViewById(R.id.imgreturn);
         imgFavority = (ImageView) findViewById(R.id.imgFavority);
@@ -366,11 +375,8 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
         rvRecipeDetailAdapter = new RvRecipeDetailAdapter(this);
         rvRecipeDetail.setAdapter(rvRecipeDetailAdapter);
         tvCookName = (TextView) findViewById(R.id.tv_cook_name);
-        //默认黑色
-        setStatusBarColor(getActivity(),R.color.black);
-        setLightStatusBar(getActivity(),false);
-        imgFavority.setImageResource(R.drawable.ic_recipe_favority_black_shape);
 
+//        imgFavority.setImageResource(R.drawable.ic_recipe_favority_black_shape);
         rvRecipeDetail.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -397,34 +403,30 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
 
                     if (firstItemPosition == 0) {
 //                        btnAutomatic.setVisibility(View.GONE);
-                        tvCookName.setVisibility(View.INVISIBLE);
-                        titleItem.setBackgroundColor(Color.TRANSPARENT);
-                        imgreturn.setImageResource(R.mipmap.icon_back_has_black);
-                        imgFavority.setImageResource(R.drawable.ic_recipe_favority_black_shape);
-                        imgFavority.setSelected(cookbook.collected);
-                        imgShare.setImageResource(R.mipmap.icon_share_black);
-                        setStatusBarColor(getActivity(),R.color.black);
-                        setLightStatusBar(getActivity(),false);
+
 
                     } else {
-                        if (STATIC_COOK.equals(cookbook.getCookbookType())) {
+                        if (cookbook==null){
+                            return;
+                        }
+                        if (cookbook!=null&&STATIC_COOK.equals(cookbook.getCookbookType())) {
                             btnAutomatic.setText("菜谱教学");
                         }
                         btnAutomatic.setVisibility(View.VISIBLE);
-                        setStatusBarColor(getActivity(),R.color.white);
-                        setLightStatusBar(getActivity(),true);
-                        titleItem.setBackgroundColor(Color.WHITE);
-                        tvCookName.setVisibility(View.VISIBLE);
-                        imgreturn.setImageResource(R.drawable.icon_left_recipe);
-                        imgFavority.setImageResource(R.drawable.ic_recipe_favority);
-                        imgFavority.setSelected(cookbook.collected);
-                        imgShare.setImageResource(R.mipmap.ic_recipe_detail_share);
+
+                        if (STATIC_COOK.equals(cookbook.getCookbookType())) {
+                            btnAutomatic.setText("菜谱教学");
+                        }
                         tvCookName.setText(cookbook.name);
+                        imgFavority.setSelected(cookbook.collected);
+
+
 
                     }
                 }
             }
         });
+        mPublishApi=new PublishApi(this);
 
 //        fabRecipe = (DragFloatActionButton2) findViewById(R.id.fab_recipe);
 //        fabRecipe.setOnClickListener(new DragFloatActionButton2.OnClickListener() {
@@ -510,6 +512,10 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
 
     //逐级返回页面
     private void backPageRec() {
+        if (startMain) {
+            MainActivity.start(getActivity());
+            return;
+        }
         if (idTemp.size() <= 1) {
             if (rvRecipeDetailAdapter != null) {
                 rvRecipeDetailAdapter.setStopVideo();
@@ -518,13 +524,14 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
         } else {
             ID = idTemp.get(idTemp.size() - 2);
             idTemp.remove(idTemp.size() - 1);
-            getCookDetail(ID);
+            getCookAlubm(ID);
         }
     }
 
     @Override
     protected void initData() {
         ID = getArguments().getLong(PageArgumentKey.BookId);
+        startMain = getArguments().getBoolean("startmain");
         entranceCode = getArguments().getString(PageArgumentKey.entranceCode);
         platformCode = getArguments().getString(PageArgumentKey.platformCode);
         mGuid = getArguments().getString(PageArgumentKey.Guid);
@@ -538,72 +545,69 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
         }
         KeyboardWatcher.with(activity)
                 .setListener(this);
-        getCookDetail(ID);
+        getCookAlubm(ID);
         idTemp.add(ID);
-
-
     }
 
     /**
      * 获取菜谱详情
      */
-    private void getCookDetail(long recipeid) {
+    private void getCookAlubm(long recipeid) {
+        mPublishApi.getList(R.layout.cooker_recipe_desc_show_item,recipeid);
 
+//        getCookDetail();
+    }
+
+    private void getCookDetail(){
         ProgressDialogHelper.setRunning(cx, true);
-        RokiRestHelper.getCookbookById(recipeid, "1", "1", Reponses.CookbookResponse.class, new RetrofitCallback<Reponses.CookbookResponse>() {
+        RecipeHelper.getCookbookById(ID, "1", "1", new Callback<Recipe>() {
 
             @Override
-            public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
-                if (null != cookbookResponse) {
-                    cookbook = cookbookResponse.cookbook;
-                    imgFavority.setSelected(cookbook.collected);
-                    boolean isLogin = Plat.accountService.isLogon();
-                    if (!isLogin) {
-                        setData();
-                    } else {
-                        setData();
-                        RokiRestHelper.getIsCollectBook(Plat.accountService.getCurrentUserId(), recipeid, Reponses.IsCollectBookResponse.class,
-                                new RetrofitCallback<Reponses.IsCollectBookResponse>() {
-                            @Override
-                            public void onSuccess(Reponses.IsCollectBookResponse isCollectBookResponse) {
-                                try {
-                                    if (isCollectBookResponse != null) {
-                                        boolean isCollect = isCollectBookResponse.isCollect;
-                                        if (isCollect) {
-                                            imgFavority.setSelected(true);
-                                            if (cookbook.id == recipeid) {
-                                                cookbook.collected = true;
-                                                imgFavority.setImageResource(R.drawable.ic_recipe_favority_black_shape);
-                                            }
-                                        } else {
-                                            imgFavority.setSelected(false);
-                                            if (cookbook.id == recipeid) {
-                                                cookbook.collected = false;
-                                                imgFavority.setImageResource(R.drawable.ic_recipe_favority_black_shape);
-                                            }
+            public void onSuccess(Recipe recipe) {
+
+                cookbook = recipe;
+                imgFavority.setSelected(cookbook.collected);
+                boolean isLogin = Plat.accountService.isLogon();
+                setData();
+                if (isLogin) {
+                    StoreService.getInstance().getIsCollectBookId(Plat.accountService.getCurrentUserId(), ID, new Callback<Reponses.IsCollectBookResponse>() {
+                        @Override
+                        public void onSuccess(Reponses.IsCollectBookResponse isCollectBookResponse) {
+                            try {
+                                if (isCollectBookResponse != null) {
+                                    boolean isCollect = isCollectBookResponse.isCollect;
+                                    if (isCollect) {
+                                        imgFavority.setSelected(true);
+                                        if (recipe.id == ID) {
+                                            cookbook.collected = true;
+//                                            imgFavority.setImageResource(R.drawable.ic_recipe_favority_black_shape);
                                         }
-                                        imgFavority.setSelected(cookbook.collected);
+                                    } else {
+                                        imgFavority.setSelected(false);
+                                        if (recipe.id == ID) {
+                                            cookbook.collected = false;
+//                                            imgFavority.setImageResource(R.drawable.ic_recipe_favority_black_shape);
+                                        }
                                     }
-                                } catch (Exception e) {
-
+                                    imgFavority.setSelected(cookbook.collected);
                                 }
-                            }
-
-                            @Override
-                            public void onFaild(String err) {
+                            } catch (Exception e) {
 
                             }
-                        });
-                    }
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                        }
+                    });
                 }
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
 
             }
         });
-
     }
 
     /**
@@ -612,70 +616,70 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
     private void setData() {
 
         ExecutorService es = Executors.newSingleThreadExecutor();
-        es.execute(new Runnable() {
-            @Override
-            public void run() {
-                // ...
-                if (cookbook != null) {
-                    //判断此菜谱是否是燃气菜谱
-                    if (cookbook.getJs_dcs().size() == 0) {
-                        isRQZ = true;
-                    } else {
-                        for (Dc dc : cookbook.getJs_dcs()) {
-                            if (DeviceType.RRQZ.equals(dc.getDc())) {
-                                isRQZ = true;
-                                break;
-                            }
+        es.execute(() -> {
+            // ...
+            if (cookbook != null) {
+                //判断此菜谱是否是燃气菜谱
+                if (cookbook.getJs_dcs().size() == 0) {
+                    isRQZ = true;
+                } else {
+                    for (Dc dc : cookbook.getJs_dcs()) {
+                        if (DeviceType.RRQZ.equals(dc.getDc())) {
+                            isRQZ = true;
+                            break;
                         }
                     }
-
-                    ArrayList<RecipeDetailItem> recipeDetailItems = new ArrayList<>();
-                    //showType失效，方法中判断showType
-                    String recipeImgUrl = RecipeUtils.getRecipeImgUrl(cookbook);
-                    recipeDetailItems.add(new RecipeDetailItem(cookbook.showType, cookbook.video, recipeImgUrl));
-                    recipeDetailItems.add(new RecipeDetailItem(cookbook.materials));
-                    int step1 = 0;
-                    int step2 = 0;
-                    cookSteps = new ArrayList<>();
-                    if (null != cookbook.js_cookSteps && cookbook.js_cookSteps.size() != 0) {
-                        for (PreSubStep cookprepareStep : cookbook.preStep.getPreSubSteps()) {
-                            cookprepareStep.isPrepareStep = true;
-                            recipeDetailItems.add(new RecipeDetailItem(cookprepareStep));
-                            step1++;
-                        }
-                    }
-                    if (null != cookbook.js_cookSteps && cookbook.js_cookSteps.size() != 0) {
-                        for (CookStep cookStep : cookbook.js_cookSteps) {
-                            if (!cookStep.isPrepareStep) {
-                                cookStep.isPrepareStep = false;
-                                cookStep.order = cookSteps.size() + 1;
-                                recipeDetailItems.add(new RecipeDetailItem(cookStep));
-                                cookSteps.add(cookStep);
-                                step2++;
-                            }
-
-                        }
-                    }
-
-                    int finalStep = step1;
-                    int finalStep1 = step2;
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            tvCookName.setText(cookbook.name);
-                            rvRecipeDetailAdapter.setCookbook(cookbook, finalStep, finalStep1);
-                            if (recipeDetailItems != null && recipeDetailItems.size() > 0) {
-                                recipeDetailItems.get(0).isPlaying = true;
-                            }
-                            rvRecipeDetailAdapter.setNewInstance(recipeDetailItems);
-//                            rvRecipeDetail.scrollToPosition(0);
-                            ProgressDialogHelper.setRunning(cx, false);
-                            loadRecipeData();
-
-                        }
-                    });
-
                 }
+
+                ArrayList<RecipeDetailItem> recipeDetailItems = new ArrayList<>();
+                //showType失效，方法中判断showType
+                String recipeImgUrl = RecipeUtils.getRecipeImgUrl(cookbook);
+                recipeDetailItems.add(new RecipeDetailItem(cookbook.showType, cookbook.video, recipeImgUrl));
+                recipeDetailItems.add(new RecipeDetailItem(cookbook.materials));
+
+                int step1 = 0;
+                int step2 = 0;
+                cookSteps = new ArrayList<>();
+                if (null != cookbook.js_cookSteps && cookbook.js_cookSteps.size() != 0) {
+                    for (PreSubStep cookprepareStep : cookbook.preStep.getPreSubSteps()) {
+                        cookprepareStep.isPrepareStep = true;
+                        recipeDetailItems.add(new RecipeDetailItem(cookprepareStep));
+                        step1++;
+                    }
+                }
+
+                if (null != cookbook.js_cookSteps && cookbook.js_cookSteps.size() != 0) {
+                    for (CookStep cookStep : cookbook.js_cookSteps) {
+                        if (!cookStep.isPrepareStep) {
+                            cookStep.isPrepareStep = false;
+                            cookStep.order = cookSteps.size() + 1;
+                            recipeDetailItems.add(new RecipeDetailItem(cookStep));
+                            cookSteps.add(cookStep);
+                            step2++;
+                        }
+
+                    }
+                }
+                //TODO
+                if (mAlumListBean!=null)
+                recipeDetailItems.add(new RecipeDetailItem(mAlumListBean));
+
+                int finalStep = step1;
+                int finalStep1 = step2;
+                getActivity().runOnUiThread(() -> {
+                    tvCookName.setText(cookbook.name);
+                    rvRecipeDetailAdapter.setCookbook(cookbook, finalStep, finalStep1);
+                    if (recipeDetailItems != null && recipeDetailItems.size() > 0) {
+                        recipeDetailItems.get(0).isPlaying = true;
+                    }
+
+                    rvRecipeDetailAdapter.setNewInstance(recipeDetailItems);
+                    rvRecipeDetail.scrollToPosition(0);
+                    ProgressDialogHelper.setRunning(cx, false);
+                    loadRecipeData();
+
+                });
+
             }
         });
 
@@ -686,31 +690,27 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
      * 获取大家都在做菜谱数据
      */
     private void loadRecipeData() {
-        RokiRestHelper.getbyTagOtherCooks(null, true, 0, 5, -1, null,
-                Reponses.PersonalizedRecipeResponse.class, new RetrofitCallback<Reponses.PersonalizedRecipeResponse>() {
-                    @Override
-                    public void onSuccess(Reponses.PersonalizedRecipeResponse personalizedRecipeResponse) {
-                        if (null != personalizedRecipeResponse) {
-                            List<Recipe> recipes = personalizedRecipeResponse.cookbooks;
-                            if (recipes != null && recipes.size() != 0) {
-                                rvRecipeDetailAdapter.addData(new RecipeDetailItem(recipes));
-                                rvRecipeDetailAdapter.addOnFootItemClickListener(new RvRecipeDetailAdapter.OnFootItemClickListener() {
-                                    @Override
-                                    public void onItemClick(int position) {
-                                        ID = recipes.get(position).id;
-                                        getCookDetail(ID);
-                                        idTemp.add(ID);
-
-                                    }
-                                });
-                            }
+        RokiRestHelper.getbyTagOtherCooks(null, false, 0, 5, -1, new Callback<List<Recipe>>() {
+            @Override
+            public void onSuccess(List<Recipe> recipes) {
+                if (recipes != null && recipes.size() != 0) {
+                    rvRecipeDetailAdapter.addData(new RecipeDetailItem(recipes));
+                    rvRecipeDetailAdapter.addOnFootItemClickListener(new RvRecipeDetailAdapter.OnFootItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            ID = recipes.get(position).id;
+                            getCookAlubm(ID);
+                            idTemp.add(ID);
+//                            RecipeDetailLoopPage.show(ID, recipes.get(position).sourceType);
                         }
-                    }
+                    });
+                }
+            }
 
-                    @Override
-                    public void onFaild(String err) {
-                        ToastUtils.show(err);
-                    }
+            @Override
+            public void onFailure(Throwable t) {
+                ToastUtils.show(t.getMessage());
+            }
         });
     }
 
@@ -790,6 +790,11 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
         });
     }
 
+    @Subscribe
+    public void event(RecipteLoginEvent event){
+        getCookAlubm(ID);
+    }
+
     /**
      * 分享
      */
@@ -855,12 +860,12 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
                         ProgressDialogHelper.setRunning(cx, false);
                         ToastUtils.show("取消收藏");
                         cookbook.setIsCollected(false);
-//                        imgFavority.set(false);
-                        if (firstItemPosition == 0) {
-                            imgFavority.setImageResource(R.drawable.icon_collect);
-                        } else {
-                            imgFavority.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-                        }
+                        imgFavority.setSelected(false);
+//                        if (firstItemPosition == 0) {
+//                            imgFavority.setImageResource(R.drawable.icon_collect);
+//                        } else {
+//                            imgFavority.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+//                        }
                     }
 
                     @Override
@@ -871,26 +876,24 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
                 });
             } else {
                 ProgressDialogHelper.setRunning(cx, true);
-                RokiRestHelper.addFavorityCookbooks(cookbook.id, RCReponse.class, new RetrofitCallback<RCReponse>() {
+                CookbookManager.getInstance().addFavorityCookbooks(cookbook.id, new VoidCallback() {
                     @Override
-                    public void onSuccess(RCReponse rcReponse) {
+                    public void onSuccess() {
                         ProgressDialogHelper.setRunning(cx, false);
-                        if (null != rcReponse) {
-                            ToastUtils.show("收藏成功");
-                            cookbook.setIsCollected(true);
-
-                            if (firstItemPosition == 0) {
-                                imgFavority.setImageResource(R.drawable.icon_collected);
-                            } else {
-                                imgFavority.setImageResource(R.drawable.ic_baseline_favorite_24);
-                            }
-                        }
+                        ToastUtils.show("收藏成功");
+                        cookbook.setIsCollected(true);
+                        imgFavority.setSelected(true);
+//                        if (firstItemPosition == 0) {
+//                            imgFavority.setImageResource(R.drawable.icon_collected);
+//                        } else {
+//                            imgFavority.setImageResource(R.drawable.ic_baseline_favorite_24);
+//                        }
                     }
 
                     @Override
-                    public void onFaild(String err) {
+                    public void onFailure(Throwable t) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.show(err);
+                        ToastUtils.show(t.getMessage());
                     }
                 });
             }
@@ -1148,10 +1151,10 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
                                 return;
                             }
 
-                            if (RecipeCookUtils.getInstance().isWaterBoxState(iDevice)) {
-                                ToastUtils.show("水箱已弹出，请确保水箱已放好");
-                                return;
-                            }
+//                            if (RecipeCookUtils.getInstance().isWaterBoxState(iDevice)) {
+//                                ToastUtils.show("水箱已弹出，请确保水箱已放好");
+//                                return;
+//                            }
                             if (RecipeCookUtils.getInstance().isWhichDevice(iDevice)) {
                                 ToastUtils.show(iDevice.getDeviceType() + "被占用，停止后才可自动烹饪");
                                 return;
@@ -1182,6 +1185,7 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
         StoreService.getInstance().getCookBookSteps(ID, "", "", new Callback<List<CookStep>>() {
             @Override
             public void onSuccess(List<CookStep> cookStepsTemp) {
+
                 cookSteps = (ArrayList<CookStep>) cookStepsTemp;
                 if (cookSteps != null && "".equals(cookSteps.get(0).getDc())) {
                     ToastUtils.show("此菜谱不支持自动烹饪");
@@ -1375,7 +1379,15 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
             }
         });
     }
+    DeviceSelectStoveHeadDialog mDeviceSelectStoveHeadDialog;
+    @Subscribe
+    public void onEvent(StoveStatusChangedEvent event) {
+        Stove stove = event.pojo;
+        if (stove!=null&&mDeviceSelectStoveHeadDialog!=null){
+            mDeviceSelectStoveHeadDialog.updateDialog(stove);
+        }
 
+    }
     /**
      * 选择烟机左右炉头
      *
@@ -1385,7 +1397,7 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
         if (fantemp != null) {
             if (fantemp.getChildStove() != null) {
                 final Stove stove = fantemp.getChildStove();
-                Helper.newDeviceSelectStoveHeadDialog(cx, new Callback<Integer>() {
+                 mDeviceSelectStoveHeadDialog = Helper.newDeviceSelectStoveHeadDialog(cx, new Callback<Integer>() {
                     @Override
                     public void onSuccess(Integer integer) {
                         LogUtils.i("20180404", "type:" + cookbook.getCookbookType());
@@ -1547,13 +1559,10 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            View decorView = activity.getWindow().getDecorView();
-//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-//            StatusBarUtils.setTextDark(getContext(), true);
-//        }
+
         idTemp.clear();
+        if (  rvRecipeDetailAdapter!=null)
+        rvRecipeDetailAdapter.setStopVideo();
         EventUtils.postEvent(new PageBackEvent("RecipeDetailPage"));
     }
 
@@ -1610,6 +1619,7 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
         }else {
             btnVisi = false ;
         }
+        if (rvRecipeDetailAdapter!=null&&rvRecipeDetailAdapter.rvMaterialAdapter!=null)
         rvRecipeDetailAdapter.rvMaterialAdapter.setOpen(true);
     }
 
@@ -1627,6 +1637,37 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
             btnAutomatic.setVisibility(View.INVISIBLE);
         }
         isOpen = false ;
+    }
+
+    @Override
+    public void onFailure(int requestId, int requestCode, @Nullable String msg, @Nullable Object data) {
+        if (requestId==R.layout.cooker_recipe_desc_show_item){
+            getCookDetail();
+        }
+    }
+
+    @Override
+    public void onSaveCache(int requestId, int requestCode, @Nullable Object paramObject) {
+
+    }
+
+
+    AlumListBean mAlumListBean;
+
+    @Override
+    public void onSuccess(int requestId, int requestCode, @Nullable Object paramObject) {
+
+        if (requestId==R.layout.cooker_recipe_desc_show_item){
+            if (paramObject==null){
+                return;
+            }
+
+            if (paramObject instanceof AlumListBean) {
+                mAlumListBean = (AlumListBean) paramObject;
+
+                getCookDetail();
+            }
+        }
     }
 
     private class FloatingOnTouchListener implements View.OnTouchListener {
@@ -1662,11 +1703,11 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
 
     @Override
     protected void setStateBarFixer() {
-        if (pageKey == ClassifyTagRecipePage.PAGEKEY) {
-            StatusBarUtils.setColor(cx, getResources().getColor(R.color.white));
-        } else {
+//        if (pageKey == ClassifyTagRecipePage.PAGEKEY) {
+//            StatusBarUtils.setColor(cx, getResources().getColor(R.color.white));
+//        } else {
             super.setStateBarFixer();
-        }
+//        }
 //        if (StatusBarUtils.getColor(cx) == Color.TRANSPARENT ) {
 
 //        }
@@ -1675,11 +1716,11 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
 
     @Override
     protected void setStateBarFixer2() {
-        if (pageKey == ClassifyTagRecipePage.PAGEKEY) {
-            StatusBarUtils.setColor(cx, getResources().getColor(R.color.white));
-        } else {
+//        if (pageKey == ClassifyTagRecipePage.PAGEKEY) {
+//            StatusBarUtils.setColor(cx, getResources().getColor(R.color.white));
+//        } else {
             super.setStateBarFixer2();
-        }
+//        }
 
     }
 
@@ -1693,8 +1734,15 @@ public class RecipeDetailPage extends MyBasePage<MainActivity> implements Keyboa
         if (
                 "FloatWindow".equals(event.getPageName())
         ) {
-            getCookDetail(ID);
+            getCookAlubm(ID);
         }
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+//        setStateBarFixer2();
     }
 
     @Subscribe

@@ -27,6 +27,7 @@ import com.robam.common.pojos.device.integratedStove.AbsIntegratedStove;
 import com.robam.common.pojos.device.microwave.AbsMicroWave;
 import com.robam.common.pojos.device.rika.AbsRika;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
+import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOneNew;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -500,6 +501,17 @@ public class Utils {
         return false;
     }
 
+
+    static public boolean isSteamOvenMsgNew(String guid) {//判断是否为蒸考一体机db620
+        IDevice iDevice = Plat.deviceService.lookupChild(guid);
+        if (iDevice instanceof AbsSteameOvenOneNew) {
+            String dc = iDevice.getDc();
+            if (IDeviceType.RZKY.equals(dc)) {
+                return DeviceTypeManager.getInstance().isInDeviceCategory(IDeviceType.RZKY, dc);
+            }
+        }
+        return false;
+    }
 
     static public boolean isRikaMsg(String guid) {//判断是否为RIKA
         IDevice iDevice = Plat.deviceService.lookupChild(guid);

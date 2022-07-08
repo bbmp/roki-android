@@ -14,6 +14,7 @@ import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet {
 
@@ -65,6 +66,12 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
     private boolean mDrawCircleHole = true;
 
     private boolean mDrawCirclesLast = false;
+
+    private List<Entry> appointList;
+
+    private List<DataDescriptBean> operationList;
+
+    private List<Entry> specialValueList;
 
     public LineDataSet(List<Entry> yVals, String label) {
         super(yVals, label);
@@ -168,10 +175,27 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
     public float getCircleRadius() {
         return mCircleRadius;
     }
+
     @Override
     public boolean isDrawCirclesLast() {
         return mDrawCirclesLast;
     }
+
+    @Override
+    public List<Entry> appointList() {
+        return appointList;
+    }
+
+    @Override
+    public List<DataDescriptBean> operationList() {
+        return operationList;
+    }
+
+    @Override
+    public List<Entry> specialValueList() {
+        return specialValueList;
+    }
+
     /**
      * Sets the hole radius of the drawn circles.
      * Default radius = 2f, Min = 0.5f
@@ -257,6 +281,17 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
 
     public void setDrawCirclesLast(boolean enabled) {
         this.mDrawCirclesLast = enabled;
+    }
+
+    public void setAppointList(List<Entry> appointList) {
+        this.appointList = appointList;
+    }
+    public void setOperationList(List<DataDescriptBean> operationList) {
+        this.operationList = operationList;
+    }
+
+    public void setSpecialValueList(List<Entry> specialValueList) {
+        this.specialValueList = specialValueList;
     }
 
     @Override

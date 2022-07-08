@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:roki="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_page">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/selector_rika_item_bg"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/c41"
+            android:textSize="20sp"
+            tools:text="虚拟场景模式" />
+        <ImageView
+            android:id="@+id/iv_recipe_search"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="11dp"
+            android:src="@mipmap/ic_recipe_search" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_failed_tips"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_36"
+        android:background="#4B4B4B"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        android:text="我的最爱菜谱下载失败，请确认烟机是否联网。"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_14"
+        android:visibility="gone"/>
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/id_tab"
+        roki:pstsShouldExpand="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        roki:pstsIndicatorColor="@color/c02"
+        roki:pstsSelectedTabTextColor="@color/c02"
+        roki:pstsSelectedTabTextSize="17sp"
+        roki:pstsTabTextColor="@color/white"
+        android:background="@color/white"
+        roki:pstsTabTextSize="17sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/id_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@drawable/shape_bg_white_999dp">
+
+            <TextView
+                android:id="@+id/tv_fav_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:text="我的最爱"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tv_fav_check"
+                android:layout_width="@dimen/dp_104"
+                android:layout_height="@dimen/dp_60"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:background="@mipmap/bg_check_favourite"
+                android:gravity="center"
+                android:text="查看"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16" />
+        </RelativeLayout>
+    </RelativeLayout>
+   
+    
+</LinearLayout>

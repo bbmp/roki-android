@@ -2,11 +2,9 @@ package com.robam.softap;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -117,8 +115,7 @@ public class HandlerThread implements Runnable {
         wifiInfoMap.put("key", password);
         wifiInfoMap.put("extraData", "{\"AppType\":\"RKDRD\",\"AppId\":\"LmbaVG70I9tg\",\"UserId\":\"3305047125\"}");
 
-        Gson gson = new Gson();
-        String wifiInfoGson = gson.toJson(wifiInfoMap);
+        String wifiInfoGson = JSON.toJSONString(wifiInfoMap);
         Log.d(TAG, "encryptWifiInfoToByte: wifiInfoGson = " + wifiInfoGson);
         byte[] key = new byte[4];
         byte[] wifiInfoGsonBytes = wifiInfoGson.getBytes();
@@ -191,11 +188,9 @@ public class HandlerThread implements Runnable {
         Log.d(TAG, "decryptedByteAndGetCode: decryptedByte = " + decryptedByte);
         int readyCode = ERROR_CODE;
         try {
-            readyCode = new JSONObject(decryptedByte).getInt("code");
+            readyCode = JSON.parseObject(decryptedByte).getInteger("code");
         } catch (NullPointerException nullPointerException) {
 
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
         Log.d(TAG, "decryptedByteAndGetCode: readyCode = " + readyCode);
         return readyCode;

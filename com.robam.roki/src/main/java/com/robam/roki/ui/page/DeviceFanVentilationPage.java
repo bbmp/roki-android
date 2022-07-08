@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -142,6 +143,11 @@ public class DeviceFanVentilationPage extends BasePage {
         super.onResume();
         if (fan == null) {
             return;
+        }
+        if (fan.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), fan.getDt() + ":通风换气页", null);
+
         }
     }
 

@@ -5,8 +5,11 @@ public class NumberUtil {
     public static String converString(int num) {
         String unit = "";
         double newNum = 0.0;
+        if (num <= 0)
+            return unit;
+
         if (num < 1000) {
-            return String.valueOf(num);
+            return num + "";
         }
 
         if (num >= 1000 && num < 10000) {

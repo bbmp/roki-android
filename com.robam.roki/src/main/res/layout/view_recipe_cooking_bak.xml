@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Black_65"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="668"
+        android:background="#fff">
+
+        <com.robam.roki.ui.view.RecipeCookingProgressView
+            android:id="@+id/progressView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_margin="16dp" />
+
+        <LinearLayout
+            android:id="@+id/divStepIndex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="20dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtStepIndex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textColor="@color/c08"
+                android:textSize="77sp" />
+
+            <TextView
+                android:id="@+id/txtStepCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/4"
+                android:textColor="@color/c13"
+                android:textSize="36sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtStepDesc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/divStepIndex"
+            android:paddingBottom="10dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:scrollbarFadeDuration="500"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="锅内加入准备好的清水(1000ml），煮沸（不加锅盖）后倒入腌制好的鱼片焯水，待鱼片变成白色后关火；
+将鱼片捞出沥干水分待用，同时将炒锅洗净擦干"
+            android:textColor="@color/c12"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="424"
+        android:background="@color/c04"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="254">
+
+            <ImageView
+                android:id="@+id/imgRecipe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:scaleType="centerCrop" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp">
+
+                <com.robam.roki.ui.view.RecipeCookingFanStatusView
+                    android:id="@+id/fanStatusView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.robam.roki.ui.view.RecipeCookingStoveStatusView
+                    android:id="@+id/stoveStatusView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@+id/fanStatusView" />
+
+                <com.robam.roki.ui.view.RecipeCookingPreviewView
+                    android:id="@+id/previewView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <com.robam.roki.ui.view.RecipeCookingMaterialsView
+            android:id="@+id/materialsView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="414"
+            android:background="@mipmap/img_recipe_cooking_wave" />
+
+    </LinearLayout>
+
+</LinearLayout>

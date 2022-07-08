@@ -25,30 +25,24 @@ import com.cmic.sso.sdk.auth.LoginPageInListener;
 import com.cmic.sso.sdk.auth.TokenListener;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
+import com.legent.events.BlueLoginSuccessEvent;
 import com.legent.plat.Plat;
-import com.legent.plat.events.UserLoginNewEvent;
-import com.legent.plat.io.RCRetrofitCallback;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.Requests;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.EventUtils;
-import com.legent.utils.LogUtils;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.CmccBackEvent;
 import com.robam.common.events.CmccEvent;
 import com.robam.common.io.cloud.IRokiRestService;
 import com.robam.roki.MobApp;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageKey;
-import com.robam.roki.ui.activity3.RWebActivity;
 import com.robam.roki.ui.form.MainActivity;
-import com.robam.roki.ui.form.UserActivity;
 import com.robam.roki.ui.page.login.config.Constant;
 import com.robam.roki.ui.widget.view.ScaleImageView;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -179,7 +173,7 @@ public class CmccLoginHelper {
             public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
                 Log.i("LOGIN", t.getMessage());
-                ToastUtils.showThrowable(t);
+                ToastUtils.show(t.toString());
             }
         });
     }
@@ -205,7 +199,7 @@ public class CmccLoginHelper {
             public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
                 Log.i("LOGIN", t.getMessage());
-                ToastUtils.showThrowable(t);
+                ToastUtils.show(t);
             }
         });
     }
@@ -230,30 +224,9 @@ public class CmccLoginHelper {
             public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
                 Log.i("LOGIN", t.getMessage());
-                ToastUtils.showThrowable(t);
+                ToastUtils.show(t);
             }
         });
-    }
-
-    private void getUser2(long userId, boolean isFirstLogin) {
-        CloudHelper.getUser2(userId, Reponses.GetUserReponse.class,
-                new RetrofitCallback<Reponses.GetUserReponse>() {
-                    @Override
-                    public void onSuccess(Reponses.GetUserReponse getUserReponse) {
-                        if (null != getUserReponse) {
-                            User user = getUserReponse.user;
-                            PreferenceUtils.setBool(IsOwnUser, true);
-                            PreferenceUtils.setString(LastOwnAccount, user.getAccount());
-                            onLoginCompleted(user, isFirstLogin);
-                        }
-                    }
-
-                    @Override
-                    public void onFaild(String err) {
-
-                    }
-
-                });
     }
 
     /**
@@ -263,21 +236,19 @@ public class CmccLoginHelper {
      */
     private void getOauth(final String access_token, boolean isFirstLogin) {
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.getOauth(access_token, Reponses.LoginReponse.class, new RetrofitCallback<Reponses.LoginReponse>() {
+        Plat.accountService.getOauth(phoneNum, access_token, new Callback<User>() {
             @Override
-            public void onSuccess(Reponses.LoginReponse loginReponse) {
+            public void onSuccess(User user) {
                 ProgressDialogHelper.setRunning(cx, false);
-                if (null != loginReponse) {
-                    User user = loginReponse.user;
-
-                    Log.i("LOGIN", "user--------------------" + user.toString());
-                    user.authorization = access_token;
-                    getUser2(user.id, isFirstLogin);
-                }
+                Log.i("LOGIN", "user--------------------" + user.toString());
+                user.authorization = access_token;
+                PreferenceUtils.setBool(IsOwnUser, true);
+                PreferenceUtils.setString(LastOwnAccount, user.getAccount());
+                onLoginCompleted(user, isFirstLogin);
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
             }
         });
@@ -289,7 +260,7 @@ public class CmccLoginHelper {
      * @param user
      */
     private void onLoginCompleted(User user, boolean isFirstLogin) {
-        ToastUtils.showShort("用户登录成功");
+        ToastUtils.show("用户登录成功");
         user.phone = phoneNum;
         Plat.accountService.onLogin(user);
         if (isFirstLogin) {
@@ -299,9 +270,6 @@ public class CmccLoginHelper {
             mAuthnHelper.quitAuthActivity();
         } else {
             if (cx instanceof MainActivity) {
-                EventUtils.postEvent(new UserLoginNewEvent());
-                mAuthnHelper.quitAuthActivity();
-            } else if (cx instanceof RWebActivity) {
                 mAuthnHelper.quitAuthActivity();
             } else {
                 mAuthnHelper.quitAuthActivity();
@@ -340,14 +308,13 @@ public class CmccLoginHelper {
         UIService.getInstance().postPage(PageKey.LoginPageBase);
     }
 
-    public void toLogin() {
-        if (isGetPhone) {
+    public void toLogin(){
+        if (isGetPhone){
             loginAuth();
-        } else {
+        }else {
             login();
         }
     }
-
     /**
      * 初始化一键登录sdk
      */
@@ -384,15 +351,11 @@ public class CmccLoginHelper {
 
             @Override
             public void onRightClick(View view) {
-                try {
-                    mAuthnHelper.quitAuthActivity();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("right_title_id", R.string.login_code);
-                    bundle.putBoolean("isCmccLogin", true);
-                    UIService.getInstance().postPage(PageKey.UserLogin, bundle);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                mAuthnHelper.quitAuthActivity();
+                Bundle bundle = new Bundle();
+                bundle.putInt("right_title_id", R.string.login_code);
+                bundle.putBoolean("isCmccLogin", true);
+                UIService.getInstance().postPage(PageKey.UserLogin, bundle);
             }
         });
         //其他手机登录
@@ -402,8 +365,8 @@ public class CmccLoginHelper {
             public void onClick(View v) {
                 mAuthnHelper.quitAuthActivity();
                 Bundle bundle = new Bundle();
-                bundle.putBoolean("isCmccLogin", true);
-                UIService.getInstance().postPage(PageKey.UserLogin, bundle);
+                bundle.putBoolean("isCmccLogin",true);
+                UIService.getInstance().postPage(PageKey.UserLogin,bundle);
             }
         });
         ScaleImageView iv_login_wechat = (ScaleImageView) view.findViewById(R.id.iv_login_wechat);
@@ -430,7 +393,7 @@ public class CmccLoginHelper {
                 .setAuthPageActIn("cmcc_in_activity", "cmcc_in_activity")
                 .setAuthPageActOut("cmcc_out_activity", "cmcc_out_activity")
                 .setNavColor(Color.parseColor("#EFCE17"))
-                .setStatusBar(Color.parseColor("#FFFFFF"), true)
+                .setStatusBar(Color.parseColor("#FFFFFF") ,true )
                 .setNavTextColor(Color.parseColor("#333333"))
                 .setAuthContentView(view)
                 .setCheckTipText("")
@@ -444,7 +407,7 @@ public class CmccLoginHelper {
                 .setLogBtnClickListener(new LoginClickListener() {
                     @Override
                     public void onLoginClickStart(Context context, JSONObject jsonObject) {
-                        alertDialog = new AlertDialog.Builder(context, R.style.dialog).create();
+                        alertDialog = new AlertDialog.Builder(context ,R.style.dialog).create();
                         alertDialog.setCancelable(false);
                         alertDialog.setCanceledOnTouchOutside(false);
                         alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
@@ -480,7 +443,7 @@ public class CmccLoginHelper {
                 .setCheckBoxListener(new CheckBoxListener() {
                     @Override
                     public void onLoginClick(Context context, JSONObject jsonObject) {
-                        ToastUtils.showShort(R.string.accept_user_privacy_policy);
+                        ToastUtils.show(R.string.accept_user_privacy_policy);
                     }
                 })
                 .setCheckBoxImgPath("icon_selected", "icon_select", 18, 18)
@@ -500,7 +463,7 @@ public class CmccLoginHelper {
      * @param accessToken
      */
     private void login3rd(String code, final String accessToken) {
-        LoginHelper.loginWx(cx, code, true);
+        LoginHelper.loginWx(cx, code ,true);
     }
 
     /**

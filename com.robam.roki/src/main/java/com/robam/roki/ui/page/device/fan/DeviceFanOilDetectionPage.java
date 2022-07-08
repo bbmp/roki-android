@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.VoidCallback;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.legent.ui.UIService;
@@ -74,25 +75,28 @@ public class DeviceFanOilDetectionPage extends BasePage {
         LogUtils.i("20180510", "mClean:" + mClean);
         if (fan == null || !Objects.equal(fan.getID(), event.pojo.getID())) return;
         mClean = event.pojo.clean;
+        LogUtils.i("DeviceFanOilDetectionPage" ,"-------78");
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         Bundle bd = getArguments();
-
+        LogUtils.i("DeviceFanOilDetectionPage" ,"-------85");
         fan = bd == null ? null : (AbsFan) bd.getSerializable(PageArgumentKey.Bean);
         title = bd == null ? null : (String) bd.getSerializable(PageArgumentKey.title);
         mDisassembleName = bd == null ? null : (String) bd.getSerializable(PageArgumentKey.dismantling);
         mDisassembleUrl = bd == null ? null : (String) bd.getSerializable(PageArgumentKey.Url);
         mTag = bd == null ? null : (String) bd.getSerializable(PageArgumentKey.tag);
         mList = bd == null ? null : (List<DeviceConfigurationFunctions>) bd.getSerializable(PageArgumentKey.List);
+        LogUtils.i("DeviceFanOilDetectionPage" ,"-------92");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_fan_oil_detection, container, false);
         ButterKnife.inject(this, view);
+        LogUtils.i("DeviceFanOilDetectionPage" ,"-------97");
         if ("other".equals(mTag)) {
             waitTime = 3000;
         } else {
@@ -109,6 +113,10 @@ public class DeviceFanOilDetectionPage extends BasePage {
         if (fan==null) {
             return;
         }
+        if (fan.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), fan.getDt() + ":油网检测页", null);
+        }
     }
 
     @Override
@@ -120,7 +128,7 @@ public class DeviceFanOilDetectionPage extends BasePage {
     }
 
     private void initData() {
-
+        LogUtils.i("DeviceFanOilDetectionPage" ,"-------130");
         if (mList == null || mList.size() == 0) return;
         for (int i = 0; i < mList.size(); i++) {
             if ("oilNetworkDetection".equals(mList.get(i).functionCode)) {
@@ -139,6 +147,8 @@ public class DeviceFanOilDetectionPage extends BasePage {
                 }
             }
         }
+
+        LogUtils.i("DeviceFanOilDetectionPage" ,"-------149");
     }
 
     //净化检测

@@ -71,6 +71,7 @@
 
 
             <TextView
+                android:id="@+id/mic_txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -79,6 +80,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/mic_txtDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"

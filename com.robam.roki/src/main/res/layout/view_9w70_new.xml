@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/device_board_bg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="15dp"
+                    android:text="为了安全，请在电磁灶上开启"
+                    android:textColor="#7c7c7c"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:id="@+id/divStoveHead"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/divHeadLeft"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:paddingBottom="20dp"
+                            android:paddingTop="20dp">
+
+                            <ImageView
+                                android:id="@+id/imageView4"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@mipmap/ic_stove_left"
+                                android:layout_marginTop="81px"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true" />
+                            <ImageView
+                                android:id="@+id/imageView5"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@mipmap/ic_stove_fire_off"
+                                android:layout_below="@+id/imageView4"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="29px" />
+
+                            <TextView
+                                android:id="@+id/txtLevelLeft"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="P8"
+                                android:textColor="@color/device_board_text_color_selector"
+                                android:textSize="36sp"
+                                android:layout_below="@+id/imageView5"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="8px" />
+
+
+                            <TextView
+                                android:id="@+id/txtClockLeft"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:gravity="center"
+                                android:text="定时"
+                                android:textColor="@color/device_board_text_color_selector"
+                                android:textSize="30dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="30px"/>
+
+
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="30dp"
+                        android:background="#484848" />
+
+                    <LinearLayout
+                        android:id="@+id/divHeadRight"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:paddingBottom="20dp"
+                            android:paddingTop="20dp">
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@mipmap/ic_stove_right"
+                                android:id="@+id/imageView2"
+                                android:layout_marginTop="81px"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true" />
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@mipmap/ic_stove_fire_off"
+                                android:id="@+id/imageView3"
+                                android:layout_below="@+id/imageView2"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="29px" />
+
+                            <TextView
+                                android:id="@+id/txtLevelRight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="P8"
+                                android:textColor="@color/device_board_text_color_selector"
+                                android:textSize="36sp"
+                                android:layout_below="@+id/imageView3"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="8px" />
+
+                            <TextView
+                                android:id="@+id/txtClockRight"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:gravity="center"
+                                android:text="定时"
+                                android:textColor="@color/device_board_text_color_selector"
+                                android:textSize="30dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="30px"/>
+
+                          <!--  <Button
+                                android:id="@+id/stove_btn"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="+"
+                                android:layout_alignParentBottom="true"
+                                />-->
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/divLock"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/device_board_translucent"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="2dp"
+                    android:src="@mipmap/ic_device_stove_corner_1" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="2dp"
+                    android:src="@mipmap/ic_device_stove_corner_2" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:padding="2dp"
+                    android:src="@mipmap/ic_device_stove_corner_3" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:padding="2dp"
+                    android:src="@mipmap/ic_device_stove_corner_4" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/txtHint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="为了安全\n请在灶具上开启"
+                android:textColor="#e52f0c"
+                android:textSize="24sp"
+                android:visibility="gone" />
+
+
+            <ImageView
+                android:id="@+id/imgLock"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/divHint"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:padding="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_device_stove_lock" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/divPower"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

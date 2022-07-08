@@ -510,7 +510,15 @@ public class RikaMsgMar {
                                             break;
                                     }
 
+
+                                case 'B':
+                                    break;
                                 case 'C':
+
+                                    break;
+
+                                case 'D':
+
 
                                     break;
                             }

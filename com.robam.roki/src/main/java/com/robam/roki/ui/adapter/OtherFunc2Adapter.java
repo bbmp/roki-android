@@ -58,12 +58,13 @@ import com.robam.roki.ui.dialog.RikaFanTimeRemindDialog;
 import com.robam.roki.ui.page.device.integratedStove.SteamOvenHelper;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.TestDatas;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by 14807 on 2018/1/24.
@@ -143,8 +144,8 @@ public class OtherFunc2Adapter extends RecyclerView.Adapter<OtherFunc2ViewHolder
     public OtherFunc2ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
         View view = mInflater.inflate(R.layout.item_otherfunc_page, parent, false);
-
-        OtherFunc2ViewHolder otherFuncViewHolder = new OtherFunc2ViewHolder(mContext, view);
+        ScreenAdapterTools.getInstance().loadView(view);
+        OtherFunc2ViewHolder otherFuncViewHolder = new OtherFunc2ViewHolder(view);
         otherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,7 +167,7 @@ public class OtherFunc2Adapter extends RecyclerView.Adapter<OtherFunc2ViewHolder
     public void onBindViewHolder(OtherFunc2ViewHolder holder, int position) {
         String count_remind_time = TimeUtils.secToHourMinSec(count_remind);
         String sterilWorkTimeLeft = TimeUtils.secToHourMinSec(mSterilWorkTimeLeft);
-        Glide.with(mContext).load(mDatas.get(position).backgroundImg)
+        Glide.with(cx).load(mDatas.get(position).backgroundImg)
                 .transition(DrawableTransitionOptions.with(new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()))
                 .into(holder.mImageView);
         holder.mTvWorkName.setVisibility(View.GONE);
@@ -183,7 +184,7 @@ public class OtherFunc2Adapter extends RecyclerView.Adapter<OtherFunc2ViewHolder
                     holder.mTvWorkName.setText(R.string.fan_run_open);
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_green_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_green_dot));
                     holder.startAnimation();
                 } else {
                     holder.mTvName.setText(mDatas.get(position).functionName);
@@ -200,12 +201,12 @@ public class OtherFunc2Adapter extends RecyclerView.Adapter<OtherFunc2ViewHolder
                         holder.startAnimation();
                         holder.mTvName.setText("暂停中");
                         holder.mTvDesc.setVisibility(View.GONE);
-                        holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_red_dot));
+                        holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_red_dot));
                     }else if (workState == IntegStoveStatus.workState_work){
                         holder.startAnimation();
                         holder.mTvName.setText("除垢中" );
                         holder.mTvDesc.setVisibility(View.GONE);
-                        holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_green_dot));
+                        holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_green_dot));
                     }else {
                         holder.stopAnimation();
                         holder.mTvName.setText(mDatas.get(position).functionName);
@@ -222,22 +223,22 @@ public class OtherFunc2Adapter extends RecyclerView.Adapter<OtherFunc2ViewHolder
                     holder.mTvName.setText("预约中");
 
                     holder.mTvDesc.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                 } else if (workState == IntegStoveStatus.workState_preheat) {
                     holder.startAnimation();
                     holder.mTvName.setText("预热中" + mIntegratedStove.curTemp + "℃");
                     holder.mTvDesc.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                 } else if (workState == IntegStoveStatus.workState_preheat_time_out || workState == IntegStoveStatus.workState_work_time_out) {
                     holder.startAnimation();
                     holder.mTvName.setText("暂停中剩余" + TimeUtils.secToHourMinSec(totalRemainSeconds + totalRemainSeconds2 * 256));
                     holder.mTvDesc.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_red_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_red_dot));
                 }else if (workState == IntegStoveStatus.workState_work){
                     holder.startAnimation();
                     holder.mTvName.setText("工作中剩余" + TimeUtils.secToHourMinSec(totalRemainSeconds + totalRemainSeconds2 * 256));
                     holder.mTvDesc.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_green_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_green_dot));
                 }else {
                     holder.stopAnimation();
                     holder.mTvName.setText(mDatas.get(position).functionName);
@@ -250,7 +251,7 @@ public class OtherFunc2Adapter extends RecyclerView.Adapter<OtherFunc2ViewHolder
                 holder.mTvName.setText(mDatas.get(position).functionName);
                 holder.mTvDesc.setText(mDatas.get(position).msg);
                 holder.mStateShow.setVisibility(View.GONE);
-                Glide.with(mContext).load(mDatas.get(position).backgroundImg)
+                Glide.with(cx).load(mDatas.get(position).backgroundImg)
                         .placeholder(R.drawable.ic_multi_img)
                         .error(R.drawable.ic_multi_img)
                         .transition(DrawableTransitionOptions.with(new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()))
@@ -259,7 +260,7 @@ public class OtherFunc2Adapter extends RecyclerView.Adapter<OtherFunc2ViewHolder
                 holder.mTvName.setText(mDatas.get(position).functionName);
                 holder.mTvDesc.setText(mDatas.get(position).msg);
                 holder.mStateShow.setVisibility(View.GONE);
-                Glide.with(mContext).load(mDatas.get(position).backgroundImg)
+                Glide.with(cx).load(mDatas.get(position).backgroundImg)
                         .transition(DrawableTransitionOptions.with(new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()))
                         .into(holder.mImageView);
             }
@@ -364,11 +365,11 @@ public class OtherFunc2Adapter extends RecyclerView.Adapter<OtherFunc2ViewHolder
      * 关闭煲汤提醒广播
      */
     private void stopBroadcastReceiver() {
-        AlarmManager alarmManager = AlarmManagerUtil.getInstance(mContext);
-        Intent intent = new Intent(mContext, DeviceTimeToRemindReceiver.class);
+        AlarmManager alarmManager = AlarmManagerUtil.getInstance(cx);
+        Intent intent = new Intent(cx, DeviceTimeToRemindReceiver.class);
         intent.setAction("DeviceTimeToRemindReceiver");
         intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(cx, 0, intent, 0);
         alarmManager.cancel(pendingIntent);
     }
 
@@ -379,11 +380,11 @@ public class OtherFunc2Adapter extends RecyclerView.Adapter<OtherFunc2ViewHolder
      * @param timestr
      */
     private void startBroadcastReceiver(long time, String timestr) {
-        AlarmManager alarmManager = AlarmManagerUtil.getInstance(mContext);
-        Intent intent = new Intent(mContext, DeviceTimeToRemindReceiver.class);
+        AlarmManager alarmManager = AlarmManagerUtil.getInstance(cx);
+        Intent intent = new Intent(cx, DeviceTimeToRemindReceiver.class);
         intent.setAction("DeviceTimeToRemindReceiver");
         intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(cx, 0, intent, 0);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
     }
 
@@ -478,12 +479,10 @@ class OtherFunc2ViewHolder extends RecyclerView.ViewHolder {
     LinearLayout mLlDefaultText;
     ImageView mStateShow;
     AlphaAnimation mAlphaAnimation;
-    Context mContext;
 
-    public OtherFunc2ViewHolder(Context context, View itemView) {
+    public OtherFunc2ViewHolder(View itemView) {
         super(itemView);
         this.setIsRecyclable(false);
-        mContext = context;
         mTvName = itemView.findViewById(R.id.tv_name);
         mTvWorkName = itemView.findViewById(R.id.tv_work_name);
         mLlDefaultText = itemView.findViewById(R.id.ll_default_text);
@@ -497,7 +496,7 @@ class OtherFunc2ViewHolder extends RecyclerView.ViewHolder {
 
         mAlphaAnimation = null;
         if (mAlphaAnimation == null) {
-            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(mContext, R.anim.device_rika_dot_alpha);
+            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(cx, R.anim.device_rika_dot_alpha);
             LinearInterpolator lin = new LinearInterpolator();
             mAlphaAnimation.setInterpolator(lin);
             mStateShow.startAnimation(mAlphaAnimation);

@@ -38,6 +38,12 @@
         <attr name="title_right_text" />
     </declare-styleable>
 
+
+    <declare-styleable name="ItemCustomizeRecipeView">
+        <attr name="recipe_type" format="integer"/>
+
+    </declare-styleable>
+
     <declare-styleable name="SwipyRefreshLayout">
         <attr name="srl_direction">
             <enum name="top" value="0" />
@@ -364,6 +370,23 @@
         <attr name="right_bottom_radius" format="dimension" />
         <attr name="left_bottom_radius" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="RatioImageView">
+        <attr name="ratio" format="float"/>
+    </declare-styleable>
 
+    <declare-styleable name="NineGridLayout">
+        <attr name="sapcing" format="dimension"/>
+        <attr name="oneImageWidth" format="dimension"/>
+        <attr name="oneImageHeight" format="dimension"/>
+        <attr name="image_ratio" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+        <attr name="civ_circle_background_color" format="color" />
+    </declare-styleable>
 </resources>
 

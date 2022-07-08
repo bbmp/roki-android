@@ -1,13 +1,13 @@
 package com.robam.roki.model.bean;
 
 import com.google.gson.annotations.SerializedName;
-import com.legent.utils.LogUtils;
 
-import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by 14807 on 2018/5/18.
  */
+
 
 public class StoveBackgroundFunParams {
 
@@ -436,5 +436,132 @@ public class StoveBackgroundFunParams {
                 this.paramType = paramType;
             }
         }
+
+
     }
+
+    private TempDTO temp;
+
+    public TempDTO getTempDTO() {
+        return temp;
+    }
+
+    public void setTempDTO(TempDTO temp) {
+        this.temp = temp;
+    }
+
+    /**
+     * {\"param\":{\"0\":{\"value\":\"关\",\"paramType\":\"String\"},\"1\":{\"value\":\"F1\",\"paramType\":\"String\"},\"2\":{\"value\":\"F2\",\"paramType\":\"String\"},\"3\":{\"value\":\"F3\",\"paramType\":\"String\"},\"4\":{\"value\":\"F4\",\"paramType\":\"String\"},\"5\":{\"value\":\"F5\",\"paramType\":\"String\"},\"6\":{\"value\":\"F6\",\"paramType\":\"String\"},\"7\":{\"value\":\"F7\",\"paramType\":\"String\"},\"8\":{\"value\":\"F8\",\"paramType\":\"String\"},\"9\":{\"value\":\"F9\",\"paramType\":\"String\"}},\"temp\":{\"锅温\":{\"value\":[0,130,1],\"color\":\"#FFFFFF\",\"paramType\":\"section\"},\"低温\":{\"value\":[131,180,1],\"color\":\"#EFCE17\",\"paramType\":\"section\"},\"中温\":{\"value\":[181,240,1],\"color\":\"#FC9D59\",\"paramType\":\"section\"},\"高温\":{\"value\":[214,280,1],\"color\":\"#F95151\",\"paramType\":\"section\"}}}
+     */
+    public static class TempDTO {
+        @SerializedName("锅温")
+        private PotTempDTO potTempDTO;
+        @SerializedName("低温")
+        private PotTempLDTO potTempLDTO;
+        @SerializedName("中温")
+        private PotTempMDTO potTempMDTO;
+        @SerializedName("高温")
+        private PotTempHDTO PotTempHDTO;
+
+        public PotTempDTO getpotTempDTO() {
+            return potTempDTO;
+        }
+
+        public PotTempLDTO getPotTempLDTO() {
+            return potTempLDTO;
+        }
+
+        public PotTempMDTO getPotTempMDTO() {
+            return potTempMDTO;
+        }
+
+        public PotTempHDTO getPotTempHDTO() {
+            return PotTempHDTO;
+        }
+
+        public static class PotTempDTO {
+            @SerializedName("value")
+            private List<Integer> value;
+            @SerializedName("color")
+            private String color;
+            @SerializedName("paramType")
+            private String paramType;
+
+            public List<Integer> getValue() {
+                return value;
+            }
+
+            public String getColor() {
+                return color;
+            }
+
+            public String getParamType() {
+                return paramType;
+            }
+        }
+
+        public static class PotTempLDTO {
+            @SerializedName("value")
+            private List<Integer> value;
+            @SerializedName("color")
+            private String color;
+            @SerializedName("paramType")
+            private String paramType;
+
+            public List<Integer> getValue() {
+                return value;
+            }
+
+            public String getColor() {
+                return color;
+            }
+
+            public String getParamType() {
+                return paramType;
+            }
+        }
+
+        public static class PotTempMDTO {
+            @SerializedName("value")
+            private List<Integer> value;
+            @SerializedName("color")
+            private String color;
+            @SerializedName("paramType")
+            private String paramType;
+
+            public List<Integer> getValue() {
+                return value;
+            }
+
+            public String getColor() {
+                return color;
+            }
+
+            public String getParamType() {
+                return paramType;
+            }
+        }
+
+        public static class PotTempHDTO {
+            @SerializedName("value")
+            private List<Integer> value;
+            @SerializedName("color")
+            private String color;
+            @SerializedName("paramType")
+            private String paramType;
+
+            public List<Integer> getValue() {
+                return value;
+            }
+
+            public String getColor() {
+                return color;
+            }
+
+            public String getParamType() {
+                return paramType;
+            }
+        }
+    }
+
 }

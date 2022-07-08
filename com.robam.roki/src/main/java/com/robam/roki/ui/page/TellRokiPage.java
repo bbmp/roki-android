@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.UserLoginEvent;
@@ -21,7 +22,6 @@ import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.LogUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.roki.R;
@@ -213,7 +213,7 @@ public class TellRokiPage extends MyBasePage<MainActivity> {
             @Override
             public void onFailure(Throwable t) {
                 LogUtils.i(TAG, "onFailure:" + t.toString());
-                ToastUtils.show(t.getMessage());
+                com.hjq.toast.ToastUtils.show(t.getMessage());
                 ProgressDialogHelper.setRunning(cx, false);
             }
         });

@@ -45,10 +45,10 @@ abstract public class AbsLoader extends AbsService implements ILayoutLoader {
         Fragment frm = null;
         frm = (Fragment) page;
         String frmTag = pageKey;
-        if (fm.findFragmentByTag(frmTag) != null && !"DeviceSubCooker".equals(frmTag)) {
-            Log.d(TAG, String.format("page exist: %s", pageKey));
-            return page;
-        }
+//        if (fm.findFragmentByTag(frmTag) != null && !"DeviceSubCooker".equals(frmTag)) {
+//            Log.d(TAG, String.format("page exist: %s", pageKey));
+//            return page;
+//        }
 
         if (args != null) {
             frm.setArguments(args);

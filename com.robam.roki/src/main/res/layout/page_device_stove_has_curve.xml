@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="9dp"
+                android:background="@mipmap/icon_back"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+            <TextView
+                android:id="@+id/tv_device_model_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+
+            <ImageView
+                android:id="@+id/iv_device_more"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/selector_rika_item_bg"
+                android:src="@drawable/ic_more_withe" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_240"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp_188"
+                android:layout_height="@dimen/dp_52"
+                android:background="@drawable/shape_trans_white_frame">
+
+                <TextView
+                    android:id="@+id/tv_left_head_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_30"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:text="关"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:id="@+id/tv_left_pot_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_left_head_state"
+                    android:layout_marginLeft="@dimen/dp_26"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:text="锅温"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12" />
+
+                <ImageView
+                    android:id="@+id/img_left_head"
+                    android:layout_width="@dimen/dp_14"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_toRightOf="@id/tv_left_pot_temp"
+                    android:src="@mipmap/icon_stove_left" />
+
+                <View
+                    android:id="@+id/v_center_line"
+                    android:layout_width="@dimen/dp_1"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginBottom="@dimen/dp_8"
+                    android:background="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_right_head_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:layout_marginRight="@dimen/dp_30"
+                    android:text="关"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:id="@+id/tv_right_pot_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_right_head_state"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginRight="@dimen/dp_26"
+                    android:text="锅温"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12" />
+
+                <ImageView
+                    android:id="@+id/img_right_head"
+                    android:layout_width="@dimen/dp_14"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_toRightOf="@id/v_center_line"
+                    android:src="@mipmap/icon_stove_right" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_off_line_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:gravity="center"
+                android:text="@string/device_new_connected"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <com.robam.roki.ui.view.IOSScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="10dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.9"
+                    android:overScrollMode="never" />
+
+            </LinearLayout>
+
+        </com.robam.roki.ui.view.IOSScrollView>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_lock_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/shape_fan_lock_bg"
+        android:visibility="gone" />
+
+</FrameLayout>

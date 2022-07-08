@@ -2,28 +2,25 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_gravity="center"
-    android:background="@color/roki_background_white"
+    android:background="@drawable/shape_bg_main"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
     <View
         android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white" />
+        android:background="@color/transparent" />
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="@dimen/dp_44">
 
         <ImageView
             android:id="@+id/home_recipe_live_imgv_return"
-            android:layout_width="25dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/icon_back_black" />
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
 
         <TextView
             android:id="@+id/home_recipe_live_title"
@@ -31,12 +28,14 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="全部菜谱"
-            android:textColor="#5d5d5d"
-            android:textSize="18sp" />
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+
     </RelativeLayout>
 
     <com.robam.roki.ui.view.linkrecipetag.LinkageRecyclerView
         android:id="@+id/linkage_rv"
+        android:layout_marginTop="@dimen/dp_12"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />

@@ -1,8 +1,10 @@
 package com.robam.roki.ui.adapter3;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
+import static android.text.TextUtils.isEmpty;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,12 +21,15 @@ import androidx.appcompat.widget.AppCompatEditText;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.hjq.toast.ToastUtils;
 import com.legent.ui.IForm;
+import com.legent.ui.ext.popoups.BaseMicroSettingPopupWindowPad;
 import com.robam.roki.R;
 import com.robam.roki.ui.bean3.MaterialSectionItem;
 import com.robam.roki.ui.widget.view.TextEditTextView;
 import com.robam.roki.utils.OnMultiClickListener;
 import com.robam.roki.utils.StringUtil;
+import com.robam.roki.utils.bubble.Util;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,6 +37,9 @@ import org.jetbrains.annotations.Nullable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import skin.support.content.res.SkinCompatResources;
 
 /**
  * @author r210190
@@ -97,23 +105,27 @@ public class RvMaterialAdapter extends BaseSectionQuickAdapter<MaterialSectionIt
                         setNumDown();
                     }
                 });
-                holder.setBackgroundResource(R.id.tv_materials_number, R.drawable.edit_materials_bg)
-                        .setBackgroundResource(R.id.ll_num, R.drawable.edit_materials_bg);
+//                holder.setBackgroundResource(R.id.tv_materials_number, R.drawable.edit_materials_bg)
+//                        .setBackgroundResource(R.id.ll_num, R.drawable.edit_materials_bg);
+                holder.setBackgroundResource(R.id.ll_num, R.drawable.edit_materials_bg);
+                holder.setTextColor(R.id.tv_materials_number, SkinCompatResources.getColor(getContext(), R.color.text_color_net_err));
                 holder.setEnabled(R.id.tv_materials_number, true);
                 if (et_materials_number != null) {
                     if ("0".equals(et_materials_number.getText().toString()) || num == 0) {
-                        holder.setImageResource(R.id.iv_down, R.drawable.ic_down_material_off);
+//                        holder.setImageResource(R.id.iv_down, R.drawable.ic_down_material_off);
                         holder.setEnabled(R.id.iv_down, false);
                     } else {
-                        holder.setImageResource(R.id.iv_down, R.drawable.ic_down_material);
+//                        int targetId = SkinCompatResources.getInstance().getTargetResId(getContext(), R.mipmap.ic_down_material);
+//                        holder.setImageResource(R.id.iv_down, (targetId != 0)?targetId:R.mipmap.ic_down_material);
                         holder.setEnabled(R.id.iv_down, true);
                     }
 
                     if ("99999".equals(et_materials_number.getText().toString())) {
-                        holder.setImageResource(R.id.iv_add, R.drawable.ic_add_material_off);
+//                        holder.setImageResource(R.id.iv_add, R.drawable.ic_add_material_off);
                         holder.setEnabled(R.id.iv_add, false);
                     } else {
-                        holder.setImageResource(R.id.iv_add, R.drawable.ic_add);
+//                        int targetId = SkinCompatResources.getInstance().getTargetResId(getContext(), R.mipmap.ic_add);
+//                        holder.setImageResource(R.id.iv_add, (targetId != 0)?targetId:R.mipmap.ic_add);
                         holder.setEnabled(R.id.iv_add, true);
                     }
                 }
@@ -136,7 +148,7 @@ public class RvMaterialAdapter extends BaseSectionQuickAdapter<MaterialSectionIt
                 }
                 if (item.material.popularWeight != null && !item.material.popularWeight.isEmpty()) {
                     float pWeight = Float.parseFloat(item.material.popularWeight);
-                    float v = pWeight * num ;
+                    float v = (pWeight * num)+0.5f ;
                     if (v < 1 && v> 0) {
                         v = 1 ;
                     }
@@ -156,8 +168,7 @@ public class RvMaterialAdapter extends BaseSectionQuickAdapter<MaterialSectionIt
                             .setText(R.id.tv_materials_number, str)
                             .setText(R.id.tv_unit, unit)
                             .setVisible(R.id.iv_add, holder.getLayoutPosition() == 1)
-                            .setVisible(R.id.iv_down, holder.getLayoutPosition() == 1)
-                    ;
+                            .setVisible(R.id.iv_down, holder.getLayoutPosition() == 1);
                 }
 
 
@@ -171,7 +182,7 @@ public class RvMaterialAdapter extends BaseSectionQuickAdapter<MaterialSectionIt
             }
 
             if (getItemPosition(item) == 1) {
-                et_materials_number = (AppCompatEditText) holder.getView(R.id.tv_materials_number);
+                et_materials_number = holder.getView(R.id.tv_materials_number);
                 et_materials_number.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
                 et_materials_number.addTextChangedListener(textWatcher);
                 et_materials_number.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -228,8 +239,15 @@ public class RvMaterialAdapter extends BaseSectionQuickAdapter<MaterialSectionIt
                 if (editable.toString() != null) {
                     if (editable.toString().length() == 0){
                        editFirst = 0 ;
-                    }else {
-                        editFirst = Float.parseFloat(editable.toString());
+                    }else if (editable.toString().length() > 5){
+                        editFirst = 99999;
+                        et_materials_number.setText(99999+"");
+                    }
+                    else {
+                        if (!isset){
+                            editFirst = Float.parseFloat(editable.toString());
+                        }
+
                     }
                 }
             }
@@ -238,7 +256,13 @@ public class RvMaterialAdapter extends BaseSectionQuickAdapter<MaterialSectionIt
 
     public void setNumAdd() {
 //        num = num + aFloat;
-        int i = (int) Float.parseFloat(et_materials_number.getText().toString());
+        int i = 0 ;
+        if(et_materials_number.getText() != null
+                && et_materials_number.getText().toString().trim() != null
+                && et_materials_number.getText().toString().trim().length() != 0
+        ){
+            i = (int) Float.parseFloat(et_materials_number.getText().toString());
+        }
         int edit = (i + addDown) > 99999 ? 99999 : (i + addDown) ;
         if (et_materials_number != null) {
             et_materials_number.setText(edit + "");
@@ -248,10 +272,43 @@ public class RvMaterialAdapter extends BaseSectionQuickAdapter<MaterialSectionIt
         if ( !isOpen)
         notifyDataSetChanged();
     }
+    public static boolean isNumeric(String str){
+        Pattern pattern = Pattern.compile("[0-9]*");
+        if(str.indexOf(".")>0){//判断是否有小数点
+            if(str.indexOf(".")==str.lastIndexOf(".") && str.split("\\.").length==2){ //判断是否只有一个小数点
+                return pattern.matcher(str.replace(".","")).matches();
+            }else {
+                return false;
+            }
+        }else {
+            return pattern.matcher(str).matches();
+        }
+    }
 
+    /**
+     * 是否是数字或小数
+     * @tags @return
+     * @exception
+     * @author wanghc
+     * @date 2015-9-16 下午5:50:15
+     * @return boolean
+     */
+    private boolean isNumber(String str){
+        if(  isEmpty(str)){
+            return false;
+        }
+        String reg = "\\d+(\\.\\d+)?";
+        return str.matches(reg);
+
+    }
     public void setNumDown() {
 //        num = num - aFloat;
-        int i = (int) Float.parseFloat(et_materials_number.getText().toString());
+        int i;
+        if (isNumber(et_materials_number.getText().toString())) {
+            i= (int) Float.parseFloat(et_materials_number.getText().toString());
+        }else{
+            i=0;
+        }
         int edit = (i - addDown) < 0 ? 0 : (i - addDown) ;
         if (et_materials_number != null) {
             et_materials_number.setText(edit + "");
@@ -264,15 +321,18 @@ public class RvMaterialAdapter extends BaseSectionQuickAdapter<MaterialSectionIt
 
 
     public void setNum() {
-        if (et_materials_number.getText().toString()== null ||"".equals(et_materials_number.getText().toString()) ){
-            et_materials_number.setText("0");
-            this.num = 0;
-        }else {
-             editFirst = Integer.parseInt(et_materials_number.getText().toString());
+        if (et_materials_number!=null) {
+            if (et_materials_number.getText().toString() == null || "".equals(et_materials_number.getText().toString())) {
+                et_materials_number.setText("0");
+                this.num = 0;
+            } else {
+                if (isNumeric(et_materials_number.getText().toString()))
+                    editFirst = Integer.parseInt(et_materials_number.getText().toString());
 //            this.num = editFirst /first;
+            }
+            isset = true;
+            notifyDataSetChanged();
         }
-        isset = true ;
-        notifyDataSetChanged();
 
     }
     boolean isOpen = false ;

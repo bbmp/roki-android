@@ -2,105 +2,93 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/shape_bg_main">
     <View
         android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white" />
-    <LinearLayout
+        android:background="@color/transparent" />
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/dp_44">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="10dp"
-            android:src="@mipmap/icon_back_black" />
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:gravity="center"
+            android:layout_centerInParent="true"
             android:maxLines="1"
             android:text="@string/my_device_detail"
-            android:textColor="@color/black"
-            android:textSize="17sp" />
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:id="@+id/tv_delete"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:lines="1"
-            android:paddingRight="6dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_20"
             android:text="@string/my_device_delete"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-    </LinearLayout>
+            android:textColor="#ff61acff"
+            android:textSize="@dimen/sp_14" />
+    </RelativeLayout>
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_20">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="22dp"
-            android:paddingRight="22dp">
-
-            <com.legent.ui.ext.views.NestedListView
-                android:id="@+id/deviceListView"
-                style="@style/common_listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:dividerHeight="0dp"
-                android:fastScrollEnabled="false"
-                android:listSelector="@color/Transparent"
-                android:visibility="visible" />
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:scaleType="centerInside"
-                    android:src="@mipmap/ic_device_detail_user" />
-
-                <TextView
-                    android:id="@+id/txtDevice"
-                    android:layout_width="wrap_content"
+                android:background="@drawable/shape_kitchen_bg_round">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/deviceListView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/device_detail_user"
-                    android:textColor="@color/c11"
-                    android:textSize="14sp" />
+                    android:nestedScrollingEnabled="false"/>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/txtDevice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="@string/device_detail_user"
+                android:textColor="@color/text_color_net_err"
+                android:textSize="@dimen/sp_20" />
 
-            <com.legent.ui.ext.views.NestedListView
-                android:id="@+id/userListView"
-                style="@style/common_listview"
+            <LinearLayout
+
+                android:layout_marginTop="@dimen/dp_6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:dividerHeight="1px"
-                android:fastScrollEnabled="false" />
+                android:background="@drawable/shape_kitchen_bg_round">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/userListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"/>
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

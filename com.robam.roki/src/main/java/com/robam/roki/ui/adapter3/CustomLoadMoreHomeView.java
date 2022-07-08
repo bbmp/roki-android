@@ -37,7 +37,7 @@ public class CustomLoadMoreHomeView extends BaseLoadMoreView {
     public View getLoadEndView(@NotNull BaseViewHolder baseViewHolder) {
         TextView tvThemeTellRoki = (TextView) baseViewHolder.findView(R.id.tv_theme_tell_roki);
         tvThemeTellRoki.setText("---我是有底线的---");
-        tvThemeTellRoki.setTextColor(Color.GRAY);
+//        tvThemeTellRoki.setTextColor(Color.GRAY);
 //        String tellRokiText = tvThemeTellRoki.getText().toString().trim();
 //        int start = 15;
 //        SpannableStringBuilder ssb = new SpannableStringBuilder();

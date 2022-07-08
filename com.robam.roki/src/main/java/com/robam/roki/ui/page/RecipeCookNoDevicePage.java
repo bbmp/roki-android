@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,10 +27,12 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
+import com.robam.base.BaseDialog;
 import com.legent.plat.Plat;
 import com.legent.plat.events.FloatHelperEvent;
 import com.legent.plat.events.PageBack2Event;
 import com.legent.plat.events.PageBackEvent;
+import com.legent.plat.io.device.msg.PushMsg;
 import com.legent.ui.UIService;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
@@ -42,7 +45,6 @@ import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.ui.bean3.SpeechBean;
 import com.robam.roki.ui.view.RecipeDetailAuto2View;
-import com.robam.roki.ui.widget.base.BaseDialog;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.StringUtil;
 
@@ -110,6 +112,22 @@ public class RecipeCookNoDevicePage extends AbsDUIPage {
 
     boolean isError = false;
 
+    private Handler mVoice=new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            String text= (String) msg.obj;
+            setStep(text);
+        }
+    };
+
+    private void sendMsg(String text){
+        Message message=Message.obtain();
+        message.obj=text;
+        mVoice.sendMessage(message);
+    }
+
+
     Handler handler = new Handler();
 
     Runnable runnable = new Runnable() {
@@ -126,7 +144,7 @@ public class RecipeCookNoDevicePage extends AbsDUIPage {
     };
     private Recipe recipe;
     private String imgLarge;
-//    private TTSEngine ttsEngine;
+    private TTSEngine ttsEngine;
     /**
      * 语音播报异常
      */
@@ -475,15 +493,17 @@ public class RecipeCookNoDevicePage extends AbsDUIPage {
 
         @Override
         public void finalResults(String s) {
+
             LogUtils.i(TAG, "finalResults:" + s);
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 String text = jsonObject.get("text").toString();
-                setStep(text);
+                sendMsg(text);
             } catch (JSONException e) {
                 e.printStackTrace();
                 isDuiError = true;
-                setStep("唤醒");
+
+                sendMsg("唤醒");
                 isError = true ;
             }
 //            finally {
@@ -495,7 +515,7 @@ public class RecipeCookNoDevicePage extends AbsDUIPage {
         public void error(String s) {
             LogUtils.i(TAG, "error:" + s);
             isError = true ;
-            setStep("唤醒");
+            sendMsg("唤醒");
 //            speech();
 
         }
@@ -506,11 +526,11 @@ public class RecipeCookNoDevicePage extends AbsDUIPage {
         }
     };
 
+
     private void setStep(String speek) {
-        try {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+
+            try {
+                getActivity().runOnUiThread(() -> {
                     try {
                         if (speek.contains(NEXT)) {
                             if (step == recipeDetailView.adapter.getCount() - 1) {
@@ -539,17 +559,17 @@ public class RecipeCookNoDevicePage extends AbsDUIPage {
                     } catch (Exception e) {
                         e.getMessage();
 //                    speech();
-                    isError = true ;
-                        setStep("唤醒");
+                        isError = true;
+                        sendMsg("唤醒");
                     }
 
-                }
-            });
-        } catch (Exception e) {
-            e.getMessage();
-            isError = true ;
-            setStep("唤醒");
-        }
+                });
+            } catch (Exception e) {
+                e.getMessage();
+                isError = true;
+                sendMsg("唤醒");
+            }
+
 
     }
 
@@ -570,7 +590,7 @@ public class RecipeCookNoDevicePage extends AbsDUIPage {
         } catch (DDSNotInitCompleteException e) {
             e.printStackTrace();
             isError = true ;
-            setStep("唤醒");
+            sendMsg("唤醒");
             LogUtils.i(TAG, "DDSNotInitCompleteException " + e.toString());
         }
     }
@@ -611,28 +631,28 @@ public class RecipeCookNoDevicePage extends AbsDUIPage {
 //                    setStep("唤醒");
 //                }
 //            });
-        } catch (Exception e) {
+        } catch (DDSNotInitCompleteException e) {
             e.printStackTrace();
-            setStep("唤醒");
+            sendMsg("唤醒");
         }
     }
 
     //语音播报
-    public void onSpeakClick(final String message) {
+    public void onSpeakClick(final String message)  throws DDSNotInitCompleteException {
         if (!cbYinliang.isChecked()) {
             speech();
             return;
         }
-        try {
+//        try {
             tvRokiMessage.setText("ROKI正在说话，请稍后...");
             Glide.with(getActivity())
                     .load(R.drawable.ic_play)
                     .into(ivRoki);
-            try {
+//            try {
 //                if (ttsEngine == null){
-//                ttsEngine = DDS.getInstance().getAgent().getTTSEngine();
-//                ttsEngine.setMode(TTSEngine.LOCAL);
-//                ttsEngine.setSpeaker("gqlanfp");
+                ttsEngine = DDS.getInstance().getAgent().getTTSEngine();
+                ttsEngine.setMode(TTSEngine.LOCAL);
+                ttsEngine.setSpeaker("gqlanfp");
 //                }
                 isError = false;
                 SpeechManager.getInstance().startSpeaking2(message, new SpeechManager.SpeakComple() {
@@ -640,7 +660,7 @@ public class RecipeCookNoDevicePage extends AbsDUIPage {
                     public void comple() {
                         LogUtils.i(TAG, "语音播放完成");
 //                        speech();
-                        setStep("唤醒");
+                        sendMsg("唤醒");
                         isError = true;
                     }
                 });
@@ -668,22 +688,22 @@ public class RecipeCookNoDevicePage extends AbsDUIPage {
 //                        setStep("唤醒");
 //                    }
 //                });
-            } catch (Exception e) {
-                e.printStackTrace();
-                setStep("唤醒");
-//                isError = true ;
-            }
+//            } catch (DDSNotInitCompleteException e) {
+//                e.printStackTrace();
+//                setStep("唤醒");
+////                isError = true ;
+//            }
 //            SpeechManager.getInstance().startSpeaking2(message, new SpeechManager.SpeakComple() {
 //                @Override
 //                public void comple() {
 //                    setStep("");
 //                }
 //            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            setStep("唤醒");
-//            isError = true ;
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            setStep("唤醒");
+////            isError = true ;
+//        }
     }
 
     @SuppressLint("InflateParams")

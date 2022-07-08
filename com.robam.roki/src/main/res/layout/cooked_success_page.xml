@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.page.curve.SaveCurveSuccessPage">
+
+
+    <include
+        android:id="@+id/recipe_save_success"
+        layout="@layout/include_title_bar"/>
+    <RelativeLayout
+        android:layout_below="@+id/recipe_save_success"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/recipe_save_success_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_160"
+            android:src="@mipmap/icon_recipe_add_line"
+            android:layout_width="@dimen/dp_102"
+            android:layout_height="@dimen/dp_102"/>
+        <TextView
+
+            android:layout_marginTop="@dimen/dp_10"
+            android:textColor="#000"
+            android:textSize="@dimen/sp_24"
+            android:layout_below="@+id/recipe_save_success_img"
+            android:id="@+id/recipe_save_success_txt"
+            android:layout_centerHorizontal="true"
+            android:text="保存成功"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/recipe_save_success_show_step"
+            android:textColor="#66686C"
+            android:layout_marginTop="@dimen/dp_20"
+            android:textSize="@dimen/dp_18"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/recipe_save_success_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已放入APP “我的 - 烹饪曲线”" />
+        <TextView
+
+            android:textColor="#FC9D59"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/sp_18"
+            android:id="@+id/recipe_save_success_curve_list"
+            android:layout_below="@+id/recipe_save_success_show_step"
+            android:text="点击查看"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

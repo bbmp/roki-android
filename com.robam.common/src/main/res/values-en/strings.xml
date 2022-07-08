@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="fan_state_on">Open</string>
+    <string name="fan_state_off">Close</string>
+    <string name="lastStep">It has come to the last step, quit or not?</string>
+    <string name="stove_warm_0">Internal fault, please apply for after-sales service</string>
+    <string name="stove_warm_1">No cooker or no adapter pot, please check and use the correct pot</string>
+    <string name="stove_warm_2">Fan rotation anomalies, please apply for after-sales service</string>
+    <string name="stove_warm_3">Voltage is not stable, please use it later</string>
+    <string name="stove_warm_4">Voltage is not stable, please use it later</string>
+    <string name="stove_warm_5">The device working time is too long, please use it later</string>
+    <string name="stove_warm_13">Internal fault, please apply for after-sales service</string>
+    <string name="stove_warm_12">--</string>
+    <string name="stove_warm_11">--</string>
+    <string name="stove_warm_14">--</string>
+    <string name="stove_warm_6">Internal fault, please apply for after-sales service</string>
+    <string name="stove_warm_8">Internal fault, please apply for after-sales service</string>
+    <string name="stove_warm_9">Internal fault, please apply for after-sales service</string>
+    <string name="stove_warm_7">Remove protection</string>
+    <string name="stove_warm_15">Function complete </string>
+</resources>

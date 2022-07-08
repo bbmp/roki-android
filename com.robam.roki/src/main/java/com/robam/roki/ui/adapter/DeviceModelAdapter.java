@@ -57,7 +57,7 @@ public class DeviceModelAdapter extends RecyclerView.Adapter<DeviceSelectModelVi
     public void onBindViewHolder(DeviceSelectModelViewHolder holder, int position) {
 
         if (mDeviceSeletModelList != null && mDeviceSeletModelList.size() > 0) {
-            ImageUtils.displayImage(mContext, mDeviceSeletModelList.get(position).backgroundImg, holder.img);
+            ImageUtils.displayImage(mDeviceSeletModelList.get(position).backgroundImg, holder.img);
             holder.name.setText(mDeviceSeletModelList.get(position).functionName);
             holder.itemView.setTag(mDeviceSeletModelList.get(position).functionCode);
         }

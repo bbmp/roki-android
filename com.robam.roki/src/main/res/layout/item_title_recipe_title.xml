@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+
+    android:layout_marginTop="@dimen/dp_14"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingDefaultResource">
+
+    <TextView
+
+        android:id="@+id/item_title_recipe_txt"
+        android:background="#FFFFFFFF"
+        android:textSize="@dimen/sp_15"
+        android:textColor="#80222222"
+        android:layout_marginLeft="@dimen/dp_19"
+        android:layout_marginRight="@dimen/dp_19"
+        android:gravity="center"
+        android:layout_width="@dimen/dp_73"
+        android:layout_height="@dimen/dp_29"
+        android:text="@string/curve_tips"
+        tools:ignore="MissingDefaultResource">
+
+    </TextView>
+
+</RelativeLayout>

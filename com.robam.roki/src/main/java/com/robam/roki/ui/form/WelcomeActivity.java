@@ -1,34 +1,27 @@
 package com.robam.roki.ui.form;
 
+import static com.robam.roki.ui.page.SelectThemeDetailPage.TYPE_THEME_BANNER;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.legent.ui.AbsActivity;
-//import com.legent.ui.ext.BaseActivity;
+import com.legent.ui.ext.BaseActivity;
 import com.legent.utils.EventUtils;
 import com.robam.common.events.Detailevnet;
 import com.robam.roki.ui.FormKey;
+import com.robam.roki.ui.page.SelectThemeDetailPage;
 
 
 /**
  * @author r210190
  * des 启动页
  */
-public class WelcomeActivity extends AbsActivity {
+public class WelcomeActivity extends BaseActivity {
 
 	 public static void start(Activity atv) {
 		atv.startActivity(new Intent(atv, WelcomeActivity.class));
 		atv.finish();
-	}
-
-	@Override
-	protected void onCreate(Bundle savedState) {
-		super.onCreate(savedState);
 	}
 
 	private static final String TAG = "WelcomeActivity";
@@ -43,7 +36,7 @@ public class WelcomeActivity extends AbsActivity {
 	@Override
 	protected void setContentView() {
 		super.setContentView();
-//	   EventUtils.postEvent(new Detailevnet(Long.parseLong("6")));
+//		EventUtils.postEvent(new Detailevnet(Long.parseLong("6")));
 
 	}
 
@@ -62,25 +55,9 @@ public class WelcomeActivity extends AbsActivity {
 	protected void onKeyDown_Back() {
 
 	}
-
+	//重写，不进行换肤
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		Log.e(TAG, "onDestroy");
-	}
+	public void applySkin() {
 
-	@Override
-	protected void onSaveInstanceState(@NonNull Bundle outState) {
-		super.onSaveInstanceState(outState);
-	}
-
-	@Override
-	protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-	}
-
-	@Override
-	public void onLowMemory() {
-		super.onLowMemory();
 	}
 }

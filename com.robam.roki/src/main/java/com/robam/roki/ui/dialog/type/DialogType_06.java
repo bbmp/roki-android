@@ -21,6 +21,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by  on 2017/8/16.
@@ -115,7 +116,7 @@ public class DialogType_06 extends BaseDialog {
 
     @Override
     public void initDialog() {
-        View rootView = LayoutInflater.from(mContext).inflate(R.layout.common_dialog_layout_type_06, null);
+        View rootView = LayoutInflater.from(cx).inflate(R.layout.common_dialog_layout_type_06, null);
         mTvPro = rootView.findViewById(R.id.tv_pro);
         mMImageDot = rootView.findViewById(R.id.img_dot);
         mMImageDot.setBackgroundResource(R.drawable.animation_conmmion_dot);

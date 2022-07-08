@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:roki="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_bg_main">
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#00ffffff" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/status_bar_fix"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/title"
+            layout="@layout/title_layout_device_mian" />
+        <com.astuetz.PagerSlidingTabStrip
+            android:id="@+id/id_tab"
+            roki:pstsShouldExpand="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_46"
+            android:foregroundGravity="left"
+            android:background="@color/white"
+            android:layout_below="@id/title"
+            roki:pstsIndicatorHeight="0dp"
+            roki:pstsSelectedTabTextColor="@color/text_color_device_category"
+            roki:pstsSelectedTabTextSize="@dimen/sp_16"
+            roki:pstsTabTextSize="@dimen/sp_12"
+            roki:pstsTabTextColor="@color/text_color_gray" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/id_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_below="@id/id_tab"/>
+
+        <TextView
+            android:id="@+id/tv_top_tips"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_36"
+            android:layout_below="@id/title"
+            android:background="@color/device_new_connected"
+            android:gravity="center"
+            android:text="请先连接智能灶，再启动菜谱。"
+            android:textSize="@dimen/sp_12"
+            android:visibility="invisible" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@drawable/shape_bg_white_999dp">
+
+            <TextView
+                android:id="@+id/tv_fav_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:text="我的最爱"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tv_fav_check"
+                android:layout_width="@dimen/dp_104"
+                android:layout_height="@dimen/dp_60"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:background="@drawable/shape_bg_blue_right_999dp"
+                android:gravity="center"
+                android:text="查看"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
+

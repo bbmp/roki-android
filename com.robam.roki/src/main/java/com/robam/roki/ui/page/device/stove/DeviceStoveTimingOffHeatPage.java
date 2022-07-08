@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.legent.ui.UIService;
 import com.robam.common.events.StoveAlarmEvent;
@@ -59,6 +60,10 @@ public class DeviceStoveTimingOffHeatPage extends AbsDeviceBasePage {
         super.onResume();
         if (stove==null) {
             return;
+        }
+        if (stove.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), stove.getDt() + ":定时关火页", null);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.robam.roki.ui.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import com.etsy.android.grid.StaggeredGridView;
 import com.legent.ui.ext.adapters.ExtBaseAdapter;
 import com.robam.common.pojos.CookAlbum;
+import com.robam.roki.ui.activity3.recipedetail.ProductDetailActivity;
 
 import java.util.List;
 
@@ -69,6 +71,8 @@ public class MomentGridView extends StaggeredGridView {
             }
 
             void showData(CookAlbum album, boolean isSmallSize) {
+
+
                 view.showData(album, isSmallSize);
             }
         }

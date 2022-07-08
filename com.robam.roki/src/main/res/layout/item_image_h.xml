@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <ImageView
+    <com.legent.ui.ext.views.RoundImageView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="200dp"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        app:riv_corner_radius="@dimen/dp_10"/>
 </RelativeLayout>

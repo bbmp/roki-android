@@ -22,22 +22,67 @@ import com.robam.common.io.device.TerminalType;
 import java.io.Serializable;
 
 public class AbsDishWasher extends AbsDeviceHub implements IDishWasher, Serializable {
+    /**
+     * 电源状态
+     */
     public short powerStatus;
+    /**
+     * 锁
+     */
     public short StoveLock;
+    /**
+     * 工作模式
+     */
     public short DishWasherWorkMode;
+    /**
+     * 剩余工作时间
+     */
     public short DishWasherRemainingWorkingTime;
+    /**
+     * 下层洗
+     */
     public short LowerLayerWasher;
+    /**
+     * 加强干燥
+     */
     public short EnhancedDryStatus;
     public short AppointmentSwitchStatus;
     public short AutoVentilation;
+    /**
+     * 设置的预约时间
+     */
     public short AppointmentTime;
+    /**
+     * 预约剩余时间
+     */
     public short AppointmentRemainingTime;
+    /**
+     * 漂洗剂档位
+     */
     public short RinseAgentPositionValue;
+    /**
+     * 冲盐档位
+     */
     public short SaltFlushValue;
+    /**
+     * 风机开关
+     */
     public short DishWasherFanSwitch;
+    /**
+     * 开门开关
+     */
     public short DoorOpenState;
+    /**
+     * 漂洗剂状态呢
+     */
     public short LackRinseStatus;
+    /**
+     * 冲盐状态
+     */
     public short LackSaltStatus;
+    /**
+     * 异常报警状态
+     */
     public short AbnormalAlarmStatus;
     public short ArgumentNumber;
     public short CurrentWaterTemperatureValue;
@@ -219,9 +264,9 @@ public class AbsDishWasher extends AbsDeviceHub implements IDishWasher, Serializ
     }
 
     //设置洗碗机工作模式
-    public void setDishWasherWorkMode(final short workMode, final short bottomWasherSwitch,
-                                      final short autoVentilation,final short enhancedDrySwitch,
-                                      short appointmentSwitch,short appointmentTime,
+    public void setDishWasherWorkMode(final int workMode, final int bottomWasherSwitch,
+                                      final int autoVentilation,final int enhancedDrySwitch,
+                                      int appointmentSwitch,int appointmentTime,
                                       VoidCallback voidCallback) {
         try {
             Msg msg = newReqMsg(MsgKeys.setDishWasherWorkMode);
@@ -235,9 +280,9 @@ public class AbsDishWasher extends AbsDeviceHub implements IDishWasher, Serializ
             sendMsg(msg,new RCMsgCallbackWithVoid(voidCallback){
                 @Override
                 protected void afterSuccess(Msg resMsg) {
-                    AbsDishWasher.this.DishWasherWorkMode=workMode;
-                    AbsDishWasher.this.LowerLayerWasher=bottomWasherSwitch;
-                    AbsDishWasher.this.AutoVentilation=autoVentilation;
+                    AbsDishWasher.this.DishWasherWorkMode = (short) workMode;
+                    AbsDishWasher.this.LowerLayerWasher = (short)bottomWasherSwitch;
+                    AbsDishWasher.this.AutoVentilation = (short)autoVentilation;
                     onStatusChanged();
                 }
             });

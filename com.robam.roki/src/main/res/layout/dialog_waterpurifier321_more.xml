@@ -58,7 +58,8 @@ android:orientation="vertical">
         android:layout_height="wrap_content"
         android:text="售后服务"
         android:textColor="@color/c03"
-        android:textSize="21sp" />
+        android:textSize="21sp"
+        android:id="@+id/textView3" />
 
     <View
         android:layout_width="0dp"
@@ -75,6 +76,7 @@ android:orientation="vertical">
 
 <!--中间线-->
 <TextView
+    android:id="@+id/tv_sales_service_line"
     android:layout_width="match_parent"
     android:layout_height="1px"
     android:layout_marginLeft="25dp"
@@ -155,6 +157,7 @@ android:orientation="vertical">
 
 <!--中间线-->
 <TextView
+    android:id="@+id/tv_feedback_suggestions_line"
     android:layout_width="match_parent"
     android:layout_height="1px"
     android:layout_marginLeft="25dp"

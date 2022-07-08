@@ -17,10 +17,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.BackgroundFunc;
@@ -130,6 +132,14 @@ public class AbsOvenBasePage extends BasePage {
     protected static AbsOvenModeSettingHasDbDialog absOvenModeSettingHasDbDialog;
     protected static AbsOvenModeSettingDialog absOvenModeSettingDialog;
 
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            ovenName.setText(name);
+        }
+    }
+
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
@@ -234,7 +244,7 @@ public class AbsOvenBasePage extends BasePage {
         LogUtils.i("20200825","userId:"+userId);
         LogUtils.i("20200825","dt:"+dt);
         LogUtils.i("20200825","dc:"+dc);
-        CloudHelper.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
+        Plat.deviceService.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
             @Override
             public void onSuccess(Reponses.DeviceResponse deviceResponse) {
                 if (deviceResponse == null) return;
@@ -266,8 +276,8 @@ public class AbsOvenBasePage extends BasePage {
             String backgroundImg = deviceResponse.viewBackgroundImg;
             Glide.with(cx).load(backgroundImg).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivOvenBg);
             //标题
-            ovenName.setText(deviceResponse.title);
-
+//            ovenName.setText(deviceResponse.title);
+            ovenName.setText(oven.getName() == null ||  oven.getName().equals(oven.getCategoryName()) ? oven.getDispalyType() : oven.getName());
             BackgroundFunc bgFunc = deviceResponse.modelMap.backgroundFunc;
             bgFunList = bgFunc.deviceConfigurationFunctions;
             if (bgFunList.size() != 0) {
@@ -1010,6 +1020,10 @@ public class AbsOvenBasePage extends BasePage {
         super.onResume();
         if (oven == null) {
             return;
+        }
+        if (oven.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), oven.getDt(), null);
         }
     }
 

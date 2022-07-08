@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/annonce.main.coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="RtlHardcoded">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/flexible_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/flexible.example.collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:contentScrim="?colorPrimary"
+            app:expandedTitleMarginBottom="94dp"
+            app:expandedTitleTextAppearance="@style/CollapsingTextAppearance.Inverse"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/img_week_top_bg" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/top_week_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/transparent"
+                style="@style/ToolBarWithNavigationBack"
+                app:layout_collapseMode="pin"
+                app:title=""
+                app:titleTextColor="@color/roki_important_text_color" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/xrv_top_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.jcodecraeer.xrecyclerview.XRecyclerView>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

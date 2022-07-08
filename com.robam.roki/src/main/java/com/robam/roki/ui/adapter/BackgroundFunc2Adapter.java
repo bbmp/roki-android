@@ -30,12 +30,15 @@ import com.robam.common.pojos.device.rika.RikaStatus;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.ui.extension.GlideApp;
+import com.robam.roki.ui.page.device.integratedStove.SteamOvenHelper;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 
 /**
@@ -83,6 +86,7 @@ public class BackgroundFunc2Adapter extends RecyclerView.Adapter<BackgroundFunc2
     @Override
     public BackgroundFunc2ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_backgroundfunc_page, parent, false);
+        ScreenAdapterTools.getInstance().loadView(view);
         BackgroundFunc2ViewHolder backgroundFuncViewHolder = new BackgroundFunc2ViewHolder(view);
         backgroundFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,11 +113,11 @@ public class BackgroundFunc2Adapter extends RecyclerView.Adapter<BackgroundFunc2
                         String value = (String) paramValue.get("value");
                         holder.mTvModelName.setText(value);
                         if (mIntegratedStove.fan_gear == 0) {
-                            Glide.with(mContext)
+                            Glide.with(cx)
                                     .load(mDeviceConfigurationFunctions.get(position).backgroundImg)
                                     .into(holder.mIvModelImg);
                         } else {
-                            Glide.with(mContext)
+                            Glide.with(cx)
                                     .asGif()
                                     .load(R.drawable.ic_fan_gear_ac)
 //                                    .placeholder(R.drawable.ic_fan_fear)
@@ -129,13 +133,13 @@ public class BackgroundFunc2Adapter extends RecyclerView.Adapter<BackgroundFunc2
                     LogUtils.i("20180412", " value:" + value);
                     holder.mTvModelName.setText(value);
                     if (mIntegratedStove.stove_powerState == IntegStoveStatus.powerState_off) {
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(position)
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(position)
                                 .backgroundImg)
                                 .transition(DrawableTransitionOptions.with(drawableCrossFadeFactory))
 //                                .crossFade()
                                 .into(holder.mIvModelImg);
                     } else {
-                        GlideApp.with(mContext)
+                        GlideApp.with(cx)
                                 .load(mDeviceConfigurationFunctions.get(position).backgroundImgH)
 //                                .asGif()
 
@@ -148,12 +152,12 @@ public class BackgroundFunc2Adapter extends RecyclerView.Adapter<BackgroundFunc2
                     String value = (String) paramValue.get("value");
                     holder.mTvModelName.setText(value);
                     if (mIntegratedStove.stove_powerState2 == IntegStoveStatus.powerState_off) {
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(position)
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(position)
                                 .backgroundImg)
 //                                .crossFade()
                                 .into(holder.mIvModelImg);
                     } else {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .asGif()
                                 .load(mDeviceConfigurationFunctions.get(position).backgroundImgH)
                                 .into(holder.mIvModelImg);
@@ -169,23 +173,27 @@ public class BackgroundFunc2Adapter extends RecyclerView.Adapter<BackgroundFunc2
 
                             JSONObject paramValue = (JSONObject) param.get(String.valueOf(mIntegratedStove.mode));
                             String value = (String) paramValue.get("value");
+                            if (SteamOvenHelper.isShowSteam(mIntegratedStove.mode)) {
+                                value = value + " " + SteamOvenHelper.getSteamContent(mIntegratedStove.steam) ;
+
+                            }
                             holder.mTvModelName.setText(value);
 
                             if (SteamOvenModeEnum.match(mIntegratedStove.mode) == SteamOvenModeEnum.NO_MOEL) {
-                                Glide.with(mContext).load(R.mipmap.bg_rika_device)
+                                Glide.with(cx).load(R.mipmap.bg_rika_device)
                                         .transition(DrawableTransitionOptions.with(new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()))
                                         .into(holder.mIvModelImg);
                             } else {
-                                Glide.with(mContext).asGif().load(R.mipmap.bg_rika_device_gif)
+                                Glide.with(cx).asGif().load(R.mipmap.bg_rika_device_gif)
                                         .into(holder.mIvModelImg);
                             }
                         } else {
-                            Glide.with(mContext).asGif().load(R.mipmap.bg_rika_device_gif)
+                            Glide.with(cx).asGif().load(R.mipmap.bg_rika_device_gif)
                                     .into(holder.mIvModelImg);
                             holder.mTvModelName.setText("P" + mIntegratedStove.recipeId);
                         }
                     }else {
-                        Glide.with(mContext).load(R.mipmap.bg_rika_device)
+                        Glide.with(cx).load(R.mipmap.bg_rika_device)
                                 .transition(DrawableTransitionOptions.with(new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()))
                                 .into(holder.mIvModelImg);
                         holder.mTvModelName.setText("无模式");

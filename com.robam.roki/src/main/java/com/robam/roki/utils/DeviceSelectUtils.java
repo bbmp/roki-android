@@ -120,6 +120,20 @@ public class DeviceSelectUtils {
         }
         return stoves;
     }
+    /**
+     * 筛选支持联动的蒸烤一体机
+     * @param list
+     * @return
+     */
+    public List<IDevice> deviceLinkageSteamOvenSelect(List<IDevice> list ){
+        List<IDevice> iDevices = new ArrayList<>();
+        for (IDevice iDevice : list) {
+            if ("CQ920".equals(iDevice.getDt())){
+                iDevices.add(iDevice);
+            }
+        }
+        return iDevices;
+    }
 
     public Pot[] getPot(){
         Pot[] defaultPot = Utils.getDefaultPot();
@@ -179,7 +193,7 @@ public class DeviceSelectUtils {
         return listTemp;
     }
 
-    public String timeStardard(short time){
+    public String timeStardard(int time){
         String timeMin=null;
         String timeSec=null;
         if (time/60<10){

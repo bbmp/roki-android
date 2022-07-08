@@ -47,7 +47,8 @@
             android:layout_height="wrap_content"
             android:text="上传我做的这道菜"
             android:textColor="#ffffff"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:id="@+id/textView2" />
     </LinearLayout>
 
 </LinearLayout>

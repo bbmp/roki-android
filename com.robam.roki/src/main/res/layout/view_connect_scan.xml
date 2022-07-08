@@ -1,22 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/net_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/shape_bg_main">
 
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/transparent" />
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_below="@id/status_bar_fix">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="添加设备"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_add_device_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_below="@id/rl_title"
+        android:gravity="center"
+        android:text=""
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/text_color_net_err"/>
     <ImageView
         android:scaleType="centerCrop"
         android:id="@+id/background"
+        android:layout_below="@+id/tv_add_device_name"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_height="@dimen/dp_300"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"/>
     <TextView
         android:id="@+id/tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/background"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="15dp"
-        android:textColor="@color/black" />
+        android:textColor="@color/text_color_net_err" />
 
     <TextView
         android:visibility="gone"
@@ -27,16 +72,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="90dp"
         android:text="@string/scandesc"
-        android:textColor="@color/black" />
+        android:textColor="@color/text_color_net_err"
+        android:textSize="@dimen/sp_16"/>
 
-    <TextView
+    <Button
         android:id="@+id/btn_scan"
-        style="@style/common_button"
+        android:textColor="@color/text_color_exit_login"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_28"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:text="@string/loading" />
+        android:textSize="@dimen/sp_20"
+        android:text="@string/loading"
+        android:background="@drawable/shape_button_bg"/>
 </RelativeLayout>

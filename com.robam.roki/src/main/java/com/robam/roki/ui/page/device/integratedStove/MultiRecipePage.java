@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,43 +21,45 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
+import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.io.device.msg.Msg;
+import com.legent.plat.pojos.RCReponse;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.legent.ui.UIService;
-import com.legent.utils.LogUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.IntegStoveStatusChangedEvent;
-import com.robam.common.events.SteamOvenOpenDoorSteamEvent;
+import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.io.device.MsgKeys;
 import com.robam.common.io.device.MsgParams;
 import com.robam.common.io.device.MsgParamsNew;
-import com.robam.common.io.device.TerminalType;
 import com.robam.common.pojos.device.integratedStove.AbsIntegratedStove;
 import com.robam.common.pojos.device.integratedStove.IntegStoveStatus;
 import com.robam.common.pojos.device.integratedStove.IntegratedStoveConstant;
 import com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum;
-import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
-import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
 import com.robam.roki.R;
 import com.robam.roki.db.model.RecipeBean;
 import com.robam.roki.db.model.RecipeStepBean;
+import com.robam.roki.factory.RokiDialogFactory;
+import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
-import com.robam.roki.ui.adapter3.Rv610RecipeAdapter;
 import com.robam.roki.ui.adapter3.Rv610StepAdapter;
+import com.robam.roki.ui.adapter3.RvMultiRecipeAdapter;
 import com.robam.roki.ui.form.MainActivity;
-import com.robam.roki.ui.page.device.steamovenone.Multi610EditDetailPage;
+import com.robam.roki.ui.page.device.steamovenone.MultiAddEditDetailPage;
 import com.robam.roki.ui.page.login.MyBasePage;
+import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.StringUtil;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.LitePal;
 
 import java.util.List;
-
 import static com.robam.common.io.device.MsgParams.ArgumentNumber;
 import static com.robam.common.io.device.MsgParams.UserId;
 
@@ -80,7 +83,7 @@ public class MultiRecipePage extends MyBasePage<MainActivity> {
     /**
      * 菜谱adapter
      */
-    private Rv610RecipeAdapter rv610RecipeAdapter;
+    private RvMultiRecipeAdapter rvIntegraRecipeAdapter;
 
     String guid;
     AbsIntegratedStove integratedStove;
@@ -89,7 +92,8 @@ public class MultiRecipePage extends MyBasePage<MainActivity> {
     /**
      * 选中的多段菜谱
      */
-    private RecipeBean recipeBean;
+//    private RecipeBean recipeBean;
+    private Reponses.multiRecipeList recipeBean;
     private int mPosition;
 
     /**
@@ -111,7 +115,7 @@ public class MultiRecipePage extends MyBasePage<MainActivity> {
     }
     @Override
     protected int getLayoutId() {
-        return R.layout.page_multi_610_recipe_list;
+        return R.layout.page_multi_integra_recipe_list;
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -122,8 +126,8 @@ public class MultiRecipePage extends MyBasePage<MainActivity> {
         rv610Recipe = (RecyclerView) findViewById(R.id.rv_610_recipe);
         btnAutomatic = (AppCompatButton) findViewById(R.id.btn_automatic);
         rv610Recipe.setLayoutManager(new LinearLayoutManager(cx, RecyclerView.VERTICAL, false));
-        rv610RecipeAdapter = new Rv610RecipeAdapter();
-        rv610Recipe.setAdapter(rv610RecipeAdapter);
+        rvIntegraRecipeAdapter = new RvMultiRecipeAdapter();
+        rv610Recipe.setAdapter(rvIntegraRecipeAdapter);
 //        rv610RecipeAdapter.addChildClickViewIds(R.id.stb_step_top,R.id.tv_del );
         recipeName.setInputType(InputType.TYPE_CLASS_TEXT
                 | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
@@ -157,39 +161,38 @@ public class MultiRecipePage extends MyBasePage<MainActivity> {
                 }
             }
         });
-        rv610RecipeAdapter.addChildClickViewIds(R.id.stb_step_top, R.id.tv_del);
-        rv610RecipeAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+        rvIntegraRecipeAdapter.addChildClickViewIds(R.id.tv_right, R.id.tv_del);
+        rvIntegraRecipeAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                if (view.getId() == R.id.stb_step_top) {
-                    RecipeBean item = rv610RecipeAdapter.getItem(position);
-                    int recipeId = item.getId();
+                if (view.getId() == R.id.tv_right) {
+
                     Bundle bundle = getArguments();
-                    bundle.putInt(MultiEditDetailPage.RECIPEID , recipeId);
-                    UIService.getInstance().postPage(PageKey.MultiEditDetailPage , bundle);
+                    bundle.putInt(MultiAddEditDetailPage.RECIPEID, (int) rvIntegraRecipeAdapter.getItem(position).id);
+                    bundle.putSerializable("Item", rvIntegraRecipeAdapter.getItem(position));
+                    UIService.getInstance().postPage(PageKey.MultiAddEditDetailPage, bundle);
                 } else if (view.getId() == R.id.tv_del) {
-                    LitePal.delete(RecipeBean.class, rv610RecipeAdapter.getItem(position).getId());
-                    rv610RecipeAdapter.removeAt(position);
-                    rv610RecipeAdapter.setDelPosition(-1);
+                    deleteMultiRecipe((int) rvIntegraRecipeAdapter.getItem(position).id, position);
                 }
             }
         });
-        rv610RecipeAdapter.addChildLongClickViewIds(R.id.stb_step_top);
-        rv610RecipeAdapter.addOnLeftTouchListener(new Rv610StepAdapter.OnLeftTouchListener() {
+        rvIntegraRecipeAdapter.addChildLongClickViewIds(R.id.stb_step_top);
+        rvIntegraRecipeAdapter.addOnLeftTouchListener(new Rv610StepAdapter.OnLeftTouchListener() {
             @Override
             public void onLeftTouch(int position) {
-                rv610RecipeAdapter.setDelPosition(position);
+                rvIntegraRecipeAdapter.setDelPosition(position);
             }
         });
-        rv610RecipeAdapter.addOnSelectListener(new Rv610RecipeAdapter.OnSelectListener() {
+
+        rvIntegraRecipeAdapter.addOnSelectListener(new RvMultiRecipeAdapter.OnSelectListener() {
 
             @Override
             public void onSelect(int position) {
-                recipeBean = rv610RecipeAdapter.getItem(position) ;
-                rv610RecipeAdapter.setSelectPosition(position);
-                if (rv610RecipeAdapter.getSelectPosition() != -1){
+                recipeBean = rvIntegraRecipeAdapter.getItem(position - 1);
+                rvIntegraRecipeAdapter.setSelectPosition(position);
+                if (rvIntegraRecipeAdapter.getSelectPosition() != -1) {
                     btnAutomatic.setEnabled(true);
-                }else {
+                } else {
                     btnAutomatic.setEnabled(false);
                 }
             }
@@ -197,8 +200,19 @@ public class MultiRecipePage extends MyBasePage<MainActivity> {
         setOnClickListener(btnAutomatic);
         btnAutomatic.setEnabled(false);
 
+        View head_view = LinearLayout.inflate(cx, R.layout.head_multi_recipe, null);
+        rvIntegraRecipeAdapter.addHeaderView(head_view);
+        head_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = getArguments();
+                bundle.putInt(MultiAddEditDetailPage.RECIPEID, -1);
+                UIService.getInstance().postPage(PageKey.MultiAddEditDetailPage, bundle);
+            }
+        });
     }
 
+    String needDescalingParams;
     @Override
     protected void initData() {
         Bundle bd = getArguments();
@@ -206,28 +220,30 @@ public class MultiRecipePage extends MyBasePage<MainActivity> {
         integratedStove = Plat.deviceService.lookupChild(guid);
         mDatas = bd == null ? null : (List<DeviceConfigurationFunctions>) bd.getSerializable(PageArgumentKey.List);
         title = bd == null ? null : bd.getString(PageArgumentKey.title);
-//        needDescalingParams = bd == null ? null : bd.getString(PageArgumentKey.descaling);
+
+        needDescalingParams = bd == null ? null : bd.getString(PageArgumentKey.descaling);
         userId = Plat.accountService.getCurrentUserId();
 
-        List<RecipeBean> recipeBeans = LitePal.where("device = ? and  user_id = ?", integratedStove.getDispalyType(), Plat.accountService.getCurrentUserId() + "").find(RecipeBean.class);
-        rv610RecipeAdapter.addData(recipeBeans);
-
+//        List<RecipeBean> recipeBeans = LitePal.where("device = ? and  user_id = ?", integratedStove.getDispalyType(), Plat.accountService.getCurrentUserId() + "").find(RecipeBean.class);
+//        rvIntegraRecipeAdapter.addData(recipeBeans);
+        getRecipeData();
     }
 
     @Subscribe
     public void onEvent(PageBackEvent event) {
-        if ("Multi610EditDetailPage".equals(event.getPageName())) {
-            List<RecipeBean> recipeBeans = LitePal.where("device = ? and  user_id = ?", integratedStove.getDispalyType(), Plat.accountService.getCurrentUserId() + "").find(RecipeBean.class);
-            rv610RecipeAdapter.setNewInstance(recipeBeans);
-            rv610RecipeAdapter.setSelectPosition(-1);
-            btnAutomatic.setEnabled(false);
+        if ("MultiAddEditDetailPage".equals(event.getPageName())) {
+//            List<RecipeBean> recipeBeans = LitePal.where("device = ? and  user_id = ?", integratedStove.getDispalyType(), Plat.accountService.getCurrentUserId() + "").find(RecipeBean.class);
+//            rvIntegraRecipeAdapter.setNewInstance(recipeBeans);
+//            rvIntegraRecipeAdapter.setSelectPosition(-1);
+//            btnAutomatic.setEnabled(false);
+            getRecipeData();
         }
     }
 
     @Override
     public void onRightClick(View view) {
-        getArguments().putInt(Multi610EditDetailPage.RECIPEID, -1);
-        UIService.getInstance().postPage(PageKey.MultiEditDetailPage, getArguments());
+//        getArguments().putInt(Multi610EditDetailPage.RECIPEID, -1);
+//        UIService.getInstance().postPage(PageKey.MultiEditDetailPage, getArguments());
     }
 
     @Override
@@ -238,46 +254,85 @@ public class MultiRecipePage extends MyBasePage<MainActivity> {
     }
 
     private void searchRecipe(String recipeName) {
-        if (StringUtil.isEmpty(recipeName)) {
-            List<RecipeBean> recipeBeans = LitePal.where("device = ? and  user_id = ?", integratedStove.getDispalyType(), Plat.accountService.getCurrentUserId() + "").find(RecipeBean.class);
-            rv610RecipeAdapter.setNewInstance(recipeBeans);
-        } else {
-            List<RecipeBean> recipeBeans = LitePal.where("device = ? and  user_id = ? and recipe_names like ?", integratedStove.getDispalyType(), Plat.accountService.getCurrentUserId() + "", "%" + recipeName + "%").find(RecipeBean.class);
-            rv610RecipeAdapter.setNewInstance(recipeBeans);
-        }
+//        if (StringUtil.isEmpty(recipeName)) {
+//            List<RecipeBean> recipeBeans = LitePal.where("device = ? and  user_id = ?", integratedStove.getDispalyType(), Plat.accountService.getCurrentUserId() + "").find(RecipeBean.class);
+//            rvIntegraRecipeAdapter.setNewInstance(recipeBeans);
+//        } else {
+//            List<RecipeBean> recipeBeans = LitePal.where("device = ? and  user_id = ? and recipe_names like ?", integratedStove.getDispalyType(), Plat.accountService.getCurrentUserId() + "", "%" + recipeName + "%").find(RecipeBean.class);
+//            rvIntegraRecipeAdapter.setNewInstance(recipeBeans);
+//        }
     }
 
-
+    IRokiDialog dialogByType;
+    private void descalingDialog() {
+        if (needDescalingParams==null){
+            return;
+        }
+        if (dialogByType == null) {
+            dialogByType = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_TYPE_02);
+        }
+        if (dialogByType.isShow()) {
+            return;
+        }
+        String descalingTitle = null;
+        String descalingContent = null;
+        String descalingButton = null;
+        try {
+            if (!"".equals(needDescalingParams)) {
+                JSONObject jsonObject = new JSONObject(needDescalingParams);
+                JSONObject needDescaling = jsonObject.getJSONObject("needDescaling");
+                descalingTitle = needDescaling.getString("title");
+                descalingContent = needDescaling.getString("content");
+                descalingButton = needDescaling.getString("positiveButton");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        dialogByType.setTitleText(descalingTitle);
+        dialogByType.setContentText(descalingContent);
+        final IRokiDialog finalDialogByType = dialogByType;
+        dialogByType.setOkBtn(descalingButton, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalDialogByType != null) {
+                    finalDialogByType.dismiss();
+                }
+            }
+        });
+        dialogByType.show();
+    }
     private void setSteamOvenOneMultiStepMode() {
         if ( SteamOvenHelper.isWork(integratedStove.workState) ) {
-            ToastUtils.showShort("设备已占用");
+            ToastUtils.show("设备已占用");
             return;
         }
         if ( !SteamOvenHelper.isDoorState(integratedStove.doorState) ) {
-            ToastUtils.showShort("门未关好，请检查并确认关好门");
+            ToastUtils.show("门未关好，请检查并确认关好门");
             return;
         }
-        List<RecipeStepBean> recipeStepList = recipeBean.getRecipeStepList();
+        List<Reponses.saveMultiRecipeList> recipeStepList = recipeBean.multiStepDtoList;
         //多段是否含有需要用水箱的
         boolean isWater = false ;
-        for (RecipeStepBean step :
+        for (Reponses.saveMultiRecipeList step :
                 recipeStepList) {
-            if (SteamOvenHelper.isWater(SteamOvenModeEnum.match(step.getWork_mode())) ){
+            if (SteamOvenHelper.isWater(SteamOvenModeEnum.match(Integer.parseInt(step.modelCode))) ){
                 isWater = true ;
             }
         }
         if (isWater
         ) {
             if (SteamOvenHelper.isDescale(integratedStove.descaleFlag)) {
-                ToastUtils.showShort("设备需要除垢后才能继续工作，请先除垢");
+//                ToastUtils.show("设备需要除垢后才能继续工作，请先除垢");
+
+                descalingDialog();
                 return;
             }
             if (!SteamOvenHelper.isWaterBoxState(integratedStove.waterBoxState)){
-                ToastUtils.showShort("水箱已弹出，请检查水箱状态");
+                ToastUtils.show("水箱已弹出，请检查水箱状态");
                 return;
             }
             if (!SteamOvenHelper.isWaterLevelState(integratedStove.waterLevelState)){
-                ToastUtils.showShort("水箱缺水，请加水");
+                ToastUtils.show("水箱缺水，请加水");
                 return;
             }
         }
@@ -287,7 +342,8 @@ public class MultiRecipePage extends MyBasePage<MainActivity> {
                 msg.putOpt(MsgParams.TerminalType, integratedStove.terminalType);
                 msg.putOpt(UserId, integratedStove.getSrcUser());
                 msg.putOpt(MsgParams.categoryCode , IntegratedStoveConstant.STEAME_OVEN_ONE);
-                msg.putOpt(ArgumentNumber, 3 + recipeStepList.size()*4);
+                //多加一个参数 需要把菜谱id置为0
+                msg.putOpt(ArgumentNumber, 3 + recipeStepList.size()*4 + 1);
                 msg.putOpt(MsgParamsNew.type , 2) ;
                 //一体机电源控制
                 msg.putOpt(MsgParamsNew.powerCtrlKey, 2);
@@ -307,23 +363,23 @@ public class MultiRecipePage extends MyBasePage<MainActivity> {
                 msg.putOpt(MsgParamsNew.sectionNumber, recipeStepList.size() ) ;
 //                msg.putOpt(MsgParamsNew.sectionNumber, recipeStepList.size() ) ;
                 for (int i = 0; i < recipeStepList.size(); i++) {
-                    RecipeStepBean bean = recipeStepList.get(i);
+                    Reponses.saveMultiRecipeList bean = recipeStepList.get(i);
                     //模式
                     msg.putOpt(MsgParamsNew.modeKey + i, 101 + i *10  ) ;
                     msg.putOpt(MsgParamsNew.modeLength + i, 1) ;
-                    msg.putOpt(MsgParamsNew.mode + i, bean.getWork_mode()) ;
+                    msg.putOpt(MsgParamsNew.mode + i, bean.modelCode) ;
                     //温度上温度
                     msg.putOpt(MsgParamsNew.setUpTempKey + i  , 102 + i *10 );
                     msg.putOpt(MsgParamsNew.setUpTempLength + i, 1);
-                    msg.putOpt(MsgParamsNew.setUpTemp + i ,bean.getTemperature());
+                    msg.putOpt(MsgParamsNew.setUpTemp + i ,bean.temperature);
                     //时间
                     msg.putOpt(MsgParamsNew.setTimeKey + i , 104 + i *10 );
                     msg.putOpt(MsgParamsNew.setTimeLength + i, 1);
-                    msg.putOpt(MsgParamsNew.setTime + i, bean.getTime());
+                    msg.putOpt(MsgParamsNew.setTime + i, bean.getTime(integratedStove.getGuid().getGuid()));
                     //蒸汽量
                     msg.putOpt(MsgParamsNew.steamKey + i, 106 + i *10 );
                     msg.putOpt(MsgParamsNew.steamLength + i , 1);
-                    msg.putOpt(MsgParamsNew.steam + i, bean.getSteam_flow());
+                    msg.putOpt(MsgParamsNew.steam + i, bean.steamQuantity);
                 }
 
                 integratedStove.setSteamOvenOneMultiStepMode(msg, new VoidCallback() {
@@ -344,10 +400,40 @@ public class MultiRecipePage extends MyBasePage<MainActivity> {
         }
     }
 
-    @Subscribe
-    public void onEvent(SteamOvenOpenDoorSteamEvent event) {
-//        if (steameOvenOne == null || !Objects.equal(steameOvenOne.getID(), event.pojo.getID()))
-//            return;
-//        steameOvenOne = (AbsSteameOvenOne) event.pojo;
+
+    private void getRecipeData() {
+        RokiRestHelper.getMultiRecipe(userId + "", 0, 100, integratedStove.getDt() ,new Callback<Reponses.MultiRecipeResponse>() {
+            @Override
+            public void onSuccess(Reponses.MultiRecipeResponse recipes) {
+                if (recipes.datas != null && recipes.datas.size() > 0) {
+                    rvIntegraRecipeAdapter.getData().clear();
+                    rvIntegraRecipeAdapter.addData(recipes.datas);
+                    rvIntegraRecipeAdapter.setSelectPosition(-1);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
+
+    private void deleteMultiRecipe(int id, int position) {
+        RokiRestHelper.deleteMultiRecipe(id,  new Callback<RCReponse>() {
+            @Override
+            public void onSuccess(RCReponse recipes) {
+                com.hjq.toast.ToastUtils.show("删除成功");
+                rvIntegraRecipeAdapter.removeAt(position);
+                rvIntegraRecipeAdapter.setDelPosition(-1);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                com.hjq.toast.ToastUtils.show("删除失败");
+            }
+        });
+    }
+
+
 }

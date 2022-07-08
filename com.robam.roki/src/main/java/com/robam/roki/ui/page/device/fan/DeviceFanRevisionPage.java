@@ -18,11 +18,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.constant.IAppType;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.BackgroundFunc;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -67,6 +69,10 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
+/**
+ * 烟机设备主页面
+ * @param <Fan>
+ */
 public class DeviceFanRevisionPage<Fan extends AbsFan> extends DeviceCatchFilePage {
     Fan fan;
     @InjectView(R.id.iv_bg)
@@ -106,6 +112,15 @@ public class DeviceFanRevisionPage<Fan extends AbsFan> extends DeviceCatchFilePa
     private String oilNetDismantTitle;
     private String protocolVersionParams;
 
+
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            mTvDeviceModelName.setText(name);
+        }
+    }
+
     @Subscribe
     public void onEvent(FanStatusChangedEvent event) {
         LogUtils.i("20200611", "FanStatusChangedEvent:::" + event.pojo.toString());
@@ -119,7 +134,7 @@ public class DeviceFanRevisionPage<Fan extends AbsFan> extends DeviceCatchFilePa
                 redSmartConfig();
             }
         }
-
+        mFanOtherFuncAdapter.setFan(fan);
         updateCleanLock(event.pojo);
     }
 
@@ -177,6 +192,12 @@ public class DeviceFanRevisionPage<Fan extends AbsFan> extends DeviceCatchFilePa
         if (fan == null) {
             return;
         }
+        if (fan.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), fan.getDt(), null);
+        }
+
+
     }
 
     @Override
@@ -196,7 +217,8 @@ public class DeviceFanRevisionPage<Fan extends AbsFan> extends DeviceCatchFilePa
         }
         if (obj.title != null && mTvDeviceModelName != null) {
             String title = obj.title;
-            mTvDeviceModelName.setText(title);
+//            mTvDeviceModelName.setText(title);
+            mTvDeviceModelName.setText(fan.getName() == null  || fan.getName().equals(fan.getCategoryName())? fan.getDispalyType() : fan.getName());
         }
         String backgroundImg = obj.viewBackgroundImg;
         if (!TextUtils.isEmpty(backgroundImg)) {
@@ -332,7 +354,7 @@ public class DeviceFanRevisionPage<Fan extends AbsFan> extends DeviceCatchFilePa
             ToastUtils.showShort(R.string.device_connected);
             return;
         }
-        if (fan.level != 0) {
+        if (fan.level != 0 || fan.status == FanStatus.On) {
 
             ToolUtils.logEvent(fan.getDt(), "关机", "roki_设备");
 
@@ -344,9 +366,9 @@ public class DeviceFanRevisionPage<Fan extends AbsFan> extends DeviceCatchFilePa
                 @Override
                 public void onClick(View v) {
                     closeDialog.dismiss();
-                    fan.restFanCleanTime(new VoidCallback() {
-                        @Override
-                        public void onSuccess() {
+//                    fan.restFanCleanTime(new VoidCallback() {
+//                        @Override
+//                        public void onSuccess() {
                             fan.setFanStatus(AbsFan.PowerLevel_0, new VoidCallback() {
                                 @Override
                                 public void onSuccess() {
@@ -357,12 +379,12 @@ public class DeviceFanRevisionPage<Fan extends AbsFan> extends DeviceCatchFilePa
                                 public void onFailure(Throwable t) {
                                 }
                             });
-                        }
-
-                        @Override
-                        public void onFailure(Throwable t) {
-                        }
-                    });
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Throwable t) {
+//                        }
+//                    });
                 }
             });
             closeDialog.setCancelBtn(R.string.can_btn, new View.OnClickListener() {
@@ -375,28 +397,30 @@ public class DeviceFanRevisionPage<Fan extends AbsFan> extends DeviceCatchFilePa
             });
         } else if (FanStatus.CleanLock == fan.status) {
             ToastUtils.showShort(R.string.device_lock_text);
-        } else if (fan.status == FanStatus.On) {
-            fan.restFanCleanTime(new VoidCallback() {
-                @Override
-                public void onSuccess() {
-                    fan.setFanStatus(AbsFan.PowerLevel_0, new VoidCallback() {
-                        @Override
-                        public void onSuccess() {
-                            ToastUtils.showShort(R.string.device_close_text);
-                            Log.i("20190808123", fan.status + "");
-                        }
-
-                        @Override
-                        public void onFailure(Throwable t) {
-                        }
-                    });
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                }
-            });
-        } else {
+        }
+//        else if (fan.status == FanStatus.On) {
+//            fan.restFanCleanTime(new VoidCallback() {
+//                @Override
+//                public void onSuccess() {
+//                    fan.setFanStatus(AbsFan.PowerLevel_0, new VoidCallback() {
+//                        @Override
+//                        public void onSuccess() {
+//                            ToastUtils.showShort(R.string.device_close_text);
+//                            Log.i("20190808123", fan.status + "");
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Throwable t) {
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onFailure(Throwable t) {
+//                }
+//            });
+//        }
+        else {
             ToastUtils.showShort(R.string.device_close_text);
         }
     }
@@ -454,6 +478,7 @@ public class DeviceFanRevisionPage<Fan extends AbsFan> extends DeviceCatchFilePa
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(mFanOtherFuncAdapter!=null)
         mFanOtherFuncAdapter.closeTask();
     }
 }

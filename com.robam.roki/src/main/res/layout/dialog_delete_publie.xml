@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    android:background="@drawable/shape_delete_dialog"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/dialog_delete_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_40"
+        android:text="是否确认删除作品"
+        android:textColor="#333333"
+        android:textSize="@dimen/sp_18"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/dialog_delete_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_delete_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="已经上传的作品删除后，不可恢复"
+        android:textColor="#666666"
+        android:textSize="@dimen/sp_15" />
+    <View
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_below="@+id/dialog_delete_content"
+        android:background="#E5E5E5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"/>
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_31"
+        android:layout_below="@+id/dialog_delete_content"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+
+
+        <TextView
+            android:id="@+id/dialog_delete_cancel"
+            android:textSize="@dimen/sp_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#478BF3"
+            android:textStyle="bold" />
+        <View
+            android:background="#E5E5E5"
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/dialog_delete_ok"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#478BF3"
+            android:text="确认"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+</RelativeLayout>

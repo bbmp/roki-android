@@ -10,6 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.common.eventbus.Subscribe;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceCollectionChangedEvent;
@@ -44,7 +51,7 @@ public class DeviceManagerPage extends MyBasePage<MainActivity> {
     @InjectView(R.id.mainView)
     LinearLayout mainView;
     @InjectView(R.id.listview)
-    ListView listview;
+    RecyclerView listview;
     Adapter adapter;
     @InjectView(R.id.img_back)
     ImageView imgBack;
@@ -62,18 +69,10 @@ public class DeviceManagerPage extends MyBasePage<MainActivity> {
     }
 
 
-    @OnItemClick(R.id.listview)
-    public void onItemClickDevice(AdapterView<?> parent, View view, int position, long id) {
-        IDevice dev = adapter.getEntity(position);
-        Bundle bd = new Bundle();
-        bd.putString(PageArgumentKey.Guid, dev.getID());
-        UIService.getInstance().postPage(PageKey.DeviceDetail, bd);
-    }
-
-
     @Override
     public void onResume() {
         super.onResume();
+        MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), "厨电管理页", null);
     }
 
     @Override
@@ -84,7 +83,16 @@ public class DeviceManagerPage extends MyBasePage<MainActivity> {
         switchView(isEmpty);
         if (isEmpty) return;
         List<IDevice> list = Plat.deviceService.queryAll();
-        adapter.loadData(list);
+        adapter.setList(list);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> baseQuickAdapter, @NonNull View view, int i) {
+                IDevice dev = adapter.getItem(i);
+                Bundle bd = new Bundle();
+                bd.putString(PageArgumentKey.Guid, dev.getID());
+                UIService.getInstance().postPage(PageKey.DeviceDetail, bd);
+            }
+        });
     }
 
 
@@ -113,7 +121,7 @@ public class DeviceManagerPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-
+        listview.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @OnClick(R.id.img_back)
@@ -122,44 +130,21 @@ public class DeviceManagerPage extends MyBasePage<MainActivity> {
     }
 
 
-    class Adapter extends ExtBaseAdapter<IDevice> {
+    static class Adapter extends BaseQuickAdapter<IDevice, BaseViewHolder> {
+        public Adapter() {
+            super(R.layout.view_device_manager_item);
+        }
+
+
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            ViewHolder vh;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(cx).inflate(R.layout.view_device_manager_item, parent, false);
-                vh = new ViewHolder(convertView);
-                convertView.setTag(vh);
+        protected void convert(@NonNull BaseViewHolder baseViewHolder, IDevice iDevice) {
+            if (iDevice.getCategoryName() != null) {
+                baseViewHolder.setText(R.id.edtName, iDevice.getCategoryName());
             } else {
-                vh = (ViewHolder) convertView.getTag();
+                baseViewHolder.setText(R.id.edtName, "");
             }
-            IDevice dev = list.get(position);
-            vh.showData(dev);
-
-            return convertView;
         }
 
-        class ViewHolder {
-            @InjectView(R.id.edtName)
-            TextView txtName;
-
-            ViewHolder(View view) {
-                ButterKnife.inject(this, view);
-            }
-
-            void showData(IDevice dev) {
-                LogUtils.i("20170327", "dev:" + dev.getID());
-                String deviceName;
-                if (dev.getCategoryName() != null) {
-                    deviceName = dev.getCategoryName();
-                    txtName.setText(deviceName);
-                } else {
-                    txtName.setText("");
-                }
-            }
-
-        }
     }
 }
 

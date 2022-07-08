@@ -10,10 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.recyclerview.widget.RecyclerView;
-import com.robam.roki.R;
-import com.robam.roki.ui.widget.base.BaseAdapter;
-import com.robam.roki.ui.widget.base.BaseDialog;
 
+import com.robam.base.BaseAdapter;
+import com.robam.base.BaseDialog;
+import com.robam.roki.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

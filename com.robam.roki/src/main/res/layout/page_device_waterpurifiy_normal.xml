@@ -48,7 +48,6 @@
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
                         android:gravity="center_vertical"
-                        android:text="@string/device_water_name"
                         android:textColor="#ffffff"
                         android:textSize="16sp" />
 
@@ -227,11 +226,13 @@
                     android:layout_marginTop="20dp"
                     android:orientation="vertical">
                     <include
+                        android:id="@+id/water_quality"
                         layout="@layout/view_device_waterpurifier_water_quality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                     <include
+                        android:id="@+id/water_time"
                         layout="@layout/view_waterpurifier_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -275,6 +276,7 @@
 
                         <!-- 滤芯显示 布局 第一行 -->
                         <TextView
+                            android:id="@+id/text_lvxin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"

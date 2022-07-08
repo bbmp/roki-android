@@ -15,6 +15,7 @@ import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.utils.DialogUtil;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by rent on 2016/9/30.
@@ -26,7 +27,6 @@ public class FullScreenDialog extends Dialog{
     String text;
     View contentView;
     public ImageView oilclean_lock_bg;
-    private Context mContext;
 
 
     public interface CallBack {
@@ -37,7 +37,6 @@ public class FullScreenDialog extends Dialog{
 
     public FullScreenDialog(Context context, int res, CallBack callBack, String text) {
         super(context, R.style.dialog_bg_aim_aount);
-        mContext = context;
         this.res = res;
         this.callBack = callBack;
         this.text = text;
@@ -45,7 +44,7 @@ public class FullScreenDialog extends Dialog{
     }
 
     void initView() {
-        contentView = LayoutInflater.from(mContext)
+        contentView = LayoutInflater.from(cx)
                 .inflate(res, null, false);
         oilclean_lock_bg = contentView.findViewById(R.id.oilclean_lock_bg);
         setContentView(contentView);

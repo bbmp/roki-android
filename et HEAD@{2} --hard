@@ -1,0 +1,110 @@
+[33mcb7bb7d2[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/CQ920_3.2.7[m[33m, [m[1;32mCQ920_3.2.7[m[33m)[m HEAD@{0}: reset: moving to cb7bb7d20172305a87f7e17c7b480f9cbbc8b67b
+[33md6bd6003[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{1}: rebase (start): checkout master
+[33mcb7bb7d2[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/CQ920_3.2.7[m[33m, [m[1;32mCQ920_3.2.7[m[33m)[m HEAD@{2}: commit: 完善自定义å½菜谱
+[33m9a323bda[m HEAD@{3}: commit: dddd
+[33m35702b18[m HEAD@{4}: commit: add
+[33maccf77f5[m HEAD@{5}: commit: 完善ui
+[33ma4cce607[m HEAD@{6}: checkout: moving from 3.2.1-610 to CQ920_3.2.7
+[33m1a13b5a5[m[33m ([m[1;31morigin/3.2.1-610[m[33m, [m[1;32m3.2.1-610[m[33m)[m HEAD@{7}: checkout: moving from master to 3.2.1-610
+[33md6bd6003[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{8}: checkout: moving from 3.2.1-610 to master
+[33m1a13b5a5[m[33m ([m[1;31morigin/3.2.1-610[m[33m, [m[1;32m3.2.1-610[m[33m)[m HEAD@{9}: checkout: moving from CQ920_3.2.7 to 3.2.1-610
+[33ma4cce607[m HEAD@{10}: commit: dd
+[33m1ad3a65a[m HEAD@{11}: commit: add
+[33m77e6a143[m HEAD@{12}: commit (merge): Merge branch 'chart_new' into CQ920_3.2.7
+[33ma4a629b1[m HEAD@{13}: checkout: moving from chart_new to CQ920_3.2.7
+[33m1c9ecebe[m[33m ([m[1;31morigin/chart_new[m[33m, [m[1;32mchart_new[m[33m)[m HEAD@{14}: merge origin/chart_new: Fast-forward
+[33mb85d0839[m HEAD@{15}: checkout: moving from CQ920_3.2.7 to chart_new
+[33ma4a629b1[m HEAD@{16}: commit: add
+[33m9b4287be[m HEAD@{17}: merge chart_new: Merge made by the 'recursive' strategy.
+[33m4f800264[m HEAD@{18}: checkout: moving from chart_new to CQ920_3.2.7
+[33mb85d0839[m HEAD@{19}: merge origin/chart_new: Fast-forward
+[33m2130f726[m HEAD@{20}: checkout: moving from CQ920_3.2.7 to chart_new
+[33m4f800264[m HEAD@{21}: commit: add
+[33m07db4125[m HEAD@{22}: commit (merge): Merge branch 'chart_new' into CQ920_3.2.7
+[33m7b507808[m HEAD@{23}: checkout: moving from chart_new to CQ920_3.2.7
+[33m2130f726[m HEAD@{24}: merge origin/chart_new: Fast-forward
+[33mdee69246[m HEAD@{25}: checkout: moving from CQ920_3.2.7 to chart_new
+[33m7b507808[m HEAD@{26}: commit: add
+[33m37529ea5[m HEAD@{27}: checkout: moving from 3.2.1-610 to CQ920_3.2.7
+[33m1a13b5a5[m[33m ([m[1;31morigin/3.2.1-610[m[33m, [m[1;32m3.2.1-610[m[33m)[m HEAD@{28}: checkout: moving from CQ920_3.2.7 to 3.2.1-610
+[33m37529ea5[m HEAD@{29}: checkout: moving from 3.2.1-610 to CQ920_3.2.7
+[33m1a13b5a5[m[33m ([m[1;31morigin/3.2.1-610[m[33m, [m[1;32m3.2.1-610[m[33m)[m HEAD@{30}: commit: add
+[33m3f05d156[m HEAD@{31}: merge master: Merge made by the 'recursive' strategy.
+[33m35fbcb59[m HEAD@{32}: checkout: moving from master to 3.2.1-610
+[33md6bd6003[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{33}: checkout: moving from 3.2.1-610 to master
+[33m35fbcb59[m HEAD@{34}: commit: 620
+[33m46e1f7dc[m HEAD@{35}: checkout: moving from CQ920_3.2.7 to 3.2.1-610
+[33m37529ea5[m HEAD@{36}: commit: add
+[33m24edc63a[m HEAD@{37}: checkout: moving from 3.2.1-610 to CQ920_3.2.7
+[33m46e1f7dc[m HEAD@{38}: commit: dd
+[33m9baaf040[m HEAD@{39}: checkout: moving from CQ920_3.2.7 to 3.2.1-610
+[33m24edc63a[m HEAD@{40}: commit: ddd
+[33mdc77bcba[m HEAD@{41}: commit (merge): Merge branch 'master' into CQ920_3.2.7
+[33m5479e009[m HEAD@{42}: checkout: moving from master to CQ920_3.2.7
+[33md6bd6003[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{43}: merge origin/master: Merge made by the 'recursive' strategy.
+[33m35fd6428[m HEAD@{44}: checkout: moving from CQ920_3.2.7 to master
+[33m5479e009[m HEAD@{45}: checkout: moving from CQ920_3.2.7 to CQ920_3.2.7
+[33m5479e009[m HEAD@{46}: checkout: moving from 3.2.1-610 to CQ920_3.2.7
+[33m9baaf040[m HEAD@{47}: commit: add
+[33m81fb5469[m HEAD@{48}: checkout: moving from CQ920_3.2.7 to 3.2.1-610
+[33m5479e009[m HEAD@{49}: commit: add
+[33m3803cfdd[m HEAD@{50}: checkout: moving from 3.2.1-610 to CQ920_3.2.7
+[33m81fb5469[m HEAD@{51}: commit: fix
+[33m5596b4a2[m HEAD@{52}: checkout: moving from CQ920_3.2.7 to 3.2.1-610
+[33m3803cfdd[m HEAD@{53}: commit: fix bugs
+[33m8ef222a9[m HEAD@{54}: checkout: moving from 3.2.1-610 to CQ920_3.2.7
+[33m5596b4a2[m HEAD@{55}: commit: fix bugs
+[33mbdcf0b81[m HEAD@{56}: commit (merge): Merge branch 'master' into 3.2.1-610
+[33mdcc3678d[m HEAD@{57}: commit: add dix
+[33mf6c89a5d[m HEAD@{58}: checkout: moving from CQ920_3.2.7 to 3.2.1-610
+[33m8ef222a9[m HEAD@{59}: commit: dd
+[33mbd0621f3[m HEAD@{60}: commit: add
+[33mf3f46d46[m HEAD@{61}: checkout: moving from 3.2.6 to CQ920_3.2.7
+[33md1f2f804[m[33m ([m[1;32m3.2.6[m[33m)[m HEAD@{62}: checkout: moving from 3.2.1-610 to 3.2.6
+[33mf6c89a5d[m HEAD@{63}: commit: 修改
+[33m07498d8c[m HEAD@{64}: checkout: moving from CQ920_3.2.7 to 3.2.1-610
+[33mf3f46d46[m HEAD@{65}: commit: add
+[33mcfad4a83[m HEAD@{66}: commit: develop
+[33ma5b6f588[m HEAD@{67}: checkout: moving from 3.2.1-610 to CQ920_3.2.7
+[33m07498d8c[m HEAD@{68}: checkout: moving from CQ920_3.2.7 to 3.2.1-610
+[33ma5b6f588[m HEAD@{69}: commit: custom
+[33m13924af9[m HEAD@{70}: checkout: moving from 3.2.1-610 to CQ920_3.2.7
+[33m07498d8c[m HEAD@{71}: commit: fix bugs
+[33m5f8f8c0a[m HEAD@{72}: checkout: moving from CQ920_3.2.7 to 3.2.1-610
+[33m13924af9[m HEAD@{73}: commit: fix bugs
+[33m8865eac9[m HEAD@{74}: checkout: moving from 3.2.1-610 to CQ920_3.2.7
+[33m5f8f8c0a[m HEAD@{75}: commit: fix bugs
+[33m0d0ce5ff[m HEAD@{76}: checkout: moving from CQ920_3.2.7 to 3.2.1-610
+[33m8865eac9[m HEAD@{77}: commit: add
+[33mff44c3e4[m HEAD@{78}: commit (merge): Merge remote-tracking branch 'origin/chart_new' into CQ920_3.2.7
+[33mb52daadb[m HEAD@{79}: checkout: moving from dev_chart to CQ920_3.2.7
+[33m67dd60e0[m[33m ([m[1;31morigin/dev_chart[m[33m, [m[1;32mdev_chart[m[33m)[m HEAD@{80}: checkout: moving from CQ920_3.2.7 to dev_chart
+[33mb52daadb[m HEAD@{81}: commit: add 920
+[33ma6b4c0ef[m HEAD@{82}: pull: Merge made by the 'recursive' strategy.
+[33m61ae2d23[m HEAD@{83}: commit: 合并620
+[33m92208c7e[m HEAD@{84}: commit (merge): Merge branch '3.2.1-610' into CQ920_3.2.7
+[33m0bd30cd9[m HEAD@{85}: checkout: moving from b62d47baaecb462c9db4f72e02654c9c13be7ddb to CQ920_3.2.7
+[33mb62d47ba[m HEAD@{86}: reset: moving to b62d47baaecb462c9db4f72e02654c9c13be7ddb
+[33m9cb3a491[m HEAD@{87}: checkout: moving from CQ920_3.2.7 to 9cb3a491901542cd98c431579359582a758cc373
+[33m22f22e5f[m HEAD@{88}: checkout: moving from 736a2127a15ed7f702aaa1412ccf5c870d99b31b to CQ920_3.2.7
+[33m736a2127[m HEAD@{89}: commit: dd
+[33m9cb3a491[m HEAD@{90}: checkout: moving from CQ920_3.2.7 to 9cb3a491901542cd98c431579359582a758cc373
+[33m22f22e5f[m HEAD@{91}: commit: ---
+[33m9cb3a491[m HEAD@{92}: reset: moving to 9cb3a491901542cd98c431579359582a758cc373
+[33m4642c008[m HEAD@{93}: checkout: moving from master to CQ920_3.2.7
+[33m35fd6428[m HEAD@{94}: checkout: moving from CQ920_3.2.7 to master
+[33m4642c008[m HEAD@{95}: checkout: moving from master to CQ920_3.2.7
+[33m35fd6428[m HEAD@{96}: checkout: moving from CQ920_3.2.7 to master
+[33m4642c008[m HEAD@{97}: checkout: moving from master to CQ920_3.2.7
+[33m35fd6428[m HEAD@{98}: commit: dd
+[33m62226df4[m HEAD@{99}: checkout: moving from CQ920_3.2.7 to master
+[33m4642c008[m HEAD@{100}: checkout: moving from master to CQ920_3.2.7
+[33m62226df4[m HEAD@{101}: checkout: moving from CQ920_3.2.7 to master
+[33m4642c008[m HEAD@{102}: checkout: moving from dev_chart to CQ920_3.2.7
+[33m67dd60e0[m[33m ([m[1;31morigin/dev_chart[m[33m, [m[1;32mdev_chart[m[33m)[m HEAD@{103}: checkout: moving from CQ920_3.2.7 to dev_chart
+[33m4642c008[m HEAD@{104}: commit: 去除
+[33m8e0b6830[m HEAD@{105}: checkout: moving from dev_chart to CQ920_3.2.7
+[33m67dd60e0[m[33m ([m[1;31morigin/dev_chart[m[33m, [m[1;32mdev_chart[m[33m)[m HEAD@{106}: checkout: moving from CQ920_3.2.7 to dev_chart
+[33m8e0b6830[m HEAD@{107}: commit: 去除
+[33ma34c61d6[m HEAD@{108}: checkout: moving from dev_chart to CQ920_3.2.7
+[33m67dd60e0[m[33m ([m[1;31morigin/dev_chart[m[33m, [m[1;32mdev_chart[m[33m)[m HEAD@{109

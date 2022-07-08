@@ -2,6 +2,8 @@ package com.robam.roki.ui.page.mine;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
+import static com.robam.roki.ui.page.SelectThemeDetailPage.TYPE_THEME_BANNER;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,15 +11,19 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.app.NotificationCompat;
 
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.plat.pojos.AppVersionInfo;
 import com.legent.ui.UIService;
@@ -30,10 +36,13 @@ import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.form.MainActivity;
+import com.robam.roki.ui.page.SelectThemeDetailPage;
 import com.robam.roki.ui.page.login.MyBasePage;
 import com.robam.roki.ui.widget.layout.SettingBar;
 
 import java.util.Calendar;
+
+import butterknife.OnClick;
 
 
 /**
@@ -49,24 +58,25 @@ public class MineAboutPage extends MyBasePage<MainActivity> {
     /**
      * 公司官网
      */
-    private SettingBar stbAboutWeb;
+    private RelativeLayout stbAboutWeb;
     /**
      * 用户协议
      */
-    private SettingBar stbAboutAgreement;
+    private RelativeLayout stbAboutAgreement;
     /**
      * 隐私协议
      */
-    private SettingBar stbAboutPrivacy;
+    private RelativeLayout stbAboutPrivacy;
 
     /**
      * 隐私协议
      */
-    private SettingBar stbUpload;
+    private RelativeLayout stbUpload;
     /**
      * 底部信息
      */
-    private AppCompatTextView tvAboutBottom;
+    private TextView tvAboutBottom;
+    private ImageView ivBack;
 
     AppVersionInfo verInfo ;
 
@@ -126,15 +136,14 @@ public class MineAboutPage extends MyBasePage<MainActivity> {
     }
     @Override
     protected void initView() {
-        setTitle(R.string.my_about);
-        getTitleBar().setOnTitleBarListener(this);
+        ivBack = findViewById(R.id.img_back);
         tvVersion = (TextView) findViewById(R.id.tv_version);
-        stbAboutWeb = (SettingBar) findViewById(R.id.stb_about_web);
-        stbAboutAgreement = (SettingBar) findViewById(R.id.stb_about_agreement);
-        stbAboutPrivacy = (SettingBar) findViewById(R.id.stb_about_privacy);
-        stbUpload = (SettingBar) findViewById(R.id.stb_upload);
-        setOnClickListener(stbAboutAgreement, stbAboutPrivacy , stbUpload);
-        tvAboutBottom = (AppCompatTextView) findViewById(R.id.tv_about_bottom);
+        stbAboutWeb = findViewById(R.id.stb_about_web);
+        stbAboutAgreement = findViewById(R.id.stb_about_agreement);
+        stbAboutPrivacy = findViewById(R.id.stb_about_privacy);
+        stbUpload = findViewById(R.id.stb_upload);
+        setOnClickListener(stbAboutAgreement, stbAboutPrivacy , stbUpload, ivBack);
+        tvAboutBottom = findViewById(R.id.tv_about_bottom);
         tvAboutBottom.setOnClickListener(new View.OnClickListener(){
 
 
@@ -169,6 +178,8 @@ public class MineAboutPage extends MyBasePage<MainActivity> {
             bdprivacy.putString(PageArgumentKey.WebTitle, cx.getString(R.string.my_about_privacy_protocol));
             UIService.getInstance().postPage(PageKey.WebClientNew, bdprivacy);
         }else if (view.equals(stbUpload)){
+
+//            SelectThemeDetailPage.show(Long.parseLong("6"), TYPE_THEME_BANNER);
 //            if (verInfo == null){
                 checkVer();
 //            }else {
@@ -178,6 +189,9 @@ public class MineAboutPage extends MyBasePage<MainActivity> {
 //                    ToastUtils.show("当前已经是最新版本");
 //                }
 //            }
+        } else if (view.equals(ivBack)) {
+            UIService.getInstance().popBack();
+
         }
     }
     private void checkVer() {

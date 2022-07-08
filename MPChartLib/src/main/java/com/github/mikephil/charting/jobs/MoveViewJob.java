@@ -37,6 +37,11 @@ public class MoveViewJob extends ViewPortJob {
         super(viewPortHandler, xValue, yValue, trans, v);
     }
 
+    public void removePool(){
+        pool.removePool();
+        pool = ObjectPool.create(2, new MoveViewJob(null,0,0,null,null));
+        pool.setReplenishPercentage(0.5f);
+    }
     @Override
     public void run() {
 

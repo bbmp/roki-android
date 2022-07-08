@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="rokidata" />
-    <version value="4" />
+    <version value="5" />
     <list>
         <mapping class="com.robam.roki.db.model.CookingStepsModel" />
         <mapping class="com.robam.roki.db.model.RecipeBean" />
         <mapping class="com.robam.roki.db.model.RecipeStepBean" />
+        <mapping class="com.robam.roki.ui.activity3.device.base.table.FunctionEntity" />
+        <mapping class="com.robam.roki.ui.activity3.device.base.table.LocalRecipeEntity" />
+        <mapping class="com.robam.roki.ui.activity3.device.base.table.DishModeEntity" />
     </list>
     <storage value="android/data/com.robam.roki/files"/>
 </litepal>

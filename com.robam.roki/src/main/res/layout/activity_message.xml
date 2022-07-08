@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:fitsSystemWindows="false"
+    android:background="@drawable/shape_bg_main"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity3.MessageActivity">
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/transparent" />
+     <include layout="@layout/include_title_bar"/>
+     <RelativeLayout
+
+
+         android:visibility="gone"
+         android:id="@+id/act_rl_notification"
+         android:background="@color/text_color_notification_bg"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/dp_36">
+
+         <TextView
+
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="@dimen/dp_20"
+             android:text="开启消息通知，随时接收设备消息"
+             android:textColor="@color/text_color_net_err"
+             android:textSize="@dimen/sp_16" />
+
+         <TextView
+
+             android:id="@+id/open_notification_permission"
+             android:layout_width="@dimen/dp_52"
+             android:layout_height="@dimen/dp_20"
+
+             android:layout_toLeftOf="@+id/open_notification_permission_close"
+             android:layout_centerVertical="true"
+             android:layout_marginRight="@dimen/dp_16"
+             android:background="@drawable/shape_open_notification"
+             android:gravity="center"
+             android:text="去开启"
+             android:textColor="#FFFFFFFF"
+             android:textSize="@dimen/sp_12" />
+
+         <ImageView
+             android:id="@+id/open_notification_permission_close"
+
+             android:layout_width="@dimen/dp_24"
+             android:layout_height="@dimen/dp_24"
+             android:layout_alignParentRight="true"
+             android:layout_centerVertical="true"
+             android:layout_marginRight="@dimen/dp_20"
+             android:src="@mipmap/notification_close" />
+
+
+     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_28"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/shape_kitchen_bg_round">
+        <RelativeLayout
+            android:id="@+id/act_rl_device_notification"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_59"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20">
+
+            <TextView
+                android:id="@+id/tv_device_notifacation"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_59"
+                android:gravity="center_vertical"
+                android:text="@string/device_notification"
+                android:textColor="@color/text_color_net_err"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:id="@+id/act_img_device_notification_number"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:layout_toRightOf="@id/tv_device_notifacation"
+                android:background="@drawable/shape_notification"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_8" />
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@mipmap/ic_arrow_right"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:background="@drawable/shape_divider_bg"/>
+        <RelativeLayout
+            android:id="@+id/act_rl_activity_notification"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_59"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20">
+
+            <TextView
+                android:id="@+id/tv_activity_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_59"
+                android:gravity="center_vertical"
+                android:text="@string/activity_notification"
+                android:textColor="@color/text_color_net_err"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:id="@+id/act_img_activity_notification_number"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:layout_toRightOf="@id/tv_activity_notification"
+                android:background="@drawable/shape_notification"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_8" />
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@mipmap/ic_arrow_right"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:background="@drawable/shape_divider_bg"/>
+        <RelativeLayout
+            android:id="@+id/act_rl_customer_service_notification"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_59"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20">
+
+            <TextView
+                android:id="@+id/tv_customer_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_59"
+                android:gravity="center_vertical"
+                android:text="@string/customer_service_notification"
+                android:textColor="@color/text_color_net_err"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:id="@+id/act_img_customer_service_notification_unread_num"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:layout_toRightOf="@id/tv_customer_notification"
+                android:background="@drawable/shape_notification"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_8" />
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@mipmap/ic_arrow_right"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

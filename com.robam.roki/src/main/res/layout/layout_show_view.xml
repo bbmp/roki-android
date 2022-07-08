@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/chart_show_marker"
+    android:orientation="vertical"
+    tools:ignore="Overdraw">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="10dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="开门刷蜂蜜"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#1F282D"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_value"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableLeft="@mipmap/icon_fire"
+        android:ellipsize="end"
+        android:paddingLeft="8dp"
+        android:paddingTop="4dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="4dp"
+        android:singleLine="true"
+        android:text="280℃"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#1F282D"
+        android:textSize="18sp" />
+
+</LinearLayout>

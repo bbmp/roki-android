@@ -54,6 +54,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 import static android.content.Context.VIBRATOR_SERVICE;
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by 14807 on 2018/2/9.

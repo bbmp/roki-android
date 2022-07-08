@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-    android:fitsSystemWindows="false">
+    android:fitsSystemWindows="false"
+              >
 
     <ImageView
         android:id="@+id/img_advert"
@@ -12,6 +13,7 @@
         android:scaleType="centerCrop" />
 
     <com.robam.roki.ui.view.RingImageView
+        android:id="@+id/ring"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
@@ -21,10 +23,15 @@
 
     <com.robam.roki.ui.widget.view.CountdownView2
         android:id="@+id/cv_ring"
+        android:visibility="invisible"
+        android:background="@drawable/shape_counter_down"
         style="@style/CountdownViewStyle_2"
-        android:text="跳过"
+        android:text="跳过3s"
+        android:textSize="@dimen/sp_14"
+        android:textColor="#333333"
         android:layout_gravity="end"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_27"
         android:layout_marginTop="40dp"
         />
 

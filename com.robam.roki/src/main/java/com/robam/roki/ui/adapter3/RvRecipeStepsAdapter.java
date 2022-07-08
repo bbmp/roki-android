@@ -2,8 +2,6 @@ package com.robam.roki.ui.adapter3;
 
 import android.widget.ImageView;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_bg_main">
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/transparent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="选择照片"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.robam.roki.ui.widget.layout.StatusLayout
+            android:id="@+id/hl_image_select_hint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_image_select_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:itemCount="20"
+                tools:layoutManager="GridLayoutManager"
+                tools:spanCount="3" />
+
+        </com.robam.roki.ui.widget.layout.StatusLayout>
+
+        <com.robam.widget.view.FloatActionButton
+            android:id="@+id/fab_image_select_floating"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@drawable/roll_accent_bg"
+            android:padding="@dimen/dp_20"
+            app:srcCompat="@drawable/succeed_ic" />
+    </FrameLayout>
+
+</LinearLayout>

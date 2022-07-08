@@ -3,57 +3,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="@drawable/shape_bg_main"
     android:orientation="vertical">
     <View
         android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white" />
-    <LinearLayout
+        android:background="@color/transparent" />
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/dp_44">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="5dp"
-            android:src="@mipmap/icon_back_black" />
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
 
         <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:maxLines="1"
-            android:paddingRight="42dp"
+            android:layout_centerInParent="true"
             android:text="@string/my_collect"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/my_device_delete"
+            android:textColor="#ff61acff"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
 
-    </LinearLayout>
-
-    <com.robam.roki.ui.view.EmojiEmptyView
-        android:id="@+id/emptyView"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:description="" />
+        app:tabIndicatorColor="#ff61acff"
+        app:tabTextColor="@color/text_color_net_err"
+        app:tabIndicator="@drawable/shape_tablayout_indicator"
+        app:tabMode="fixed"/>
 
-    <com.robam.roki.ui.view.RecipeGridTitleView
-        android:id="@+id/gridView"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:column_count="2"
-        app:grid_paddingBottom="4dp"
-        app:grid_paddingLeft="4dp"
-        app:grid_paddingRight="4dp"
-        app:grid_paddingTop="4dp"
-        app:item_margin="6dp" />
+        android:layout_height="match_parent"/>
+
 
 </LinearLayout>

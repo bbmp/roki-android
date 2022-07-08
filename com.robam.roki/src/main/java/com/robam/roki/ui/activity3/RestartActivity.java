@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.legent.utils.api.ToastUtils;
 import com.robam.roki.R;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.form.WelcomeActivity;
@@ -39,7 +38,7 @@ public final class RestartActivity extends AppActivity {
     protected void initData() {
         restart(this);
         finish();
-        ToastUtils.show("应用出了点小意外，正在重新启动");
+        toast("应用出了点小意外，正在重新启动");
     }
 
     public static void restart(Context context) {

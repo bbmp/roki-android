@@ -32,6 +32,7 @@ import com.robam.common.pojos.device.rika.RikaStatus;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.ui.extension.GlideApp;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +42,7 @@ import java.util.Map;
 
 import static android.R.attr.id;
 import static android.R.attr.value;
+import static com.legent.ContextIniter.cx;
 
 
 /**
@@ -98,6 +100,7 @@ public class BackgroundFuncAdapter extends RecyclerView.Adapter<BackgroundFuncVi
     @Override
     public BackgroundFuncViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_backgroundfunc_page, parent, false);
+        ScreenAdapterTools.getInstance().loadView(view);
         BackgroundFuncViewHolder backgroundFuncViewHolder = new BackgroundFuncViewHolder(view);
         backgroundFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,12 +126,12 @@ public class BackgroundFuncAdapter extends RecyclerView.Adapter<BackgroundFuncVi
                         String value = (String) paramValue.get("value");
                         holder.mTvModelName.setText(value);
                         if (mRikaFanPower == 0) {
-                            Glide.with(mContext)
+                            Glide.with(cx)
                                     .load(mDeviceConfigurationFunctions.get(position).backgroundImg)
 //                                    .crossFade()
                                     .into(holder.mIvModelImg);
                         } else {
-                            Glide.with(mContext)
+                            Glide.with(cx)
                                     .asGif()
                                     .load(mDeviceConfigurationFunctions.get(position).backgroundImgH)
                                     .into(holder.mIvModelImg);
@@ -142,13 +145,13 @@ public class BackgroundFuncAdapter extends RecyclerView.Adapter<BackgroundFuncVi
                     LogUtils.i("20180412", " value:" + value);
                     holder.mTvModelName.setText(value);
                     if (mStoveHeadLeftPower == 0){
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(position)
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(position)
                                 .backgroundImg)
                                 .transition(DrawableTransitionOptions.with(drawableCrossFadeFactory))
 //                                .crossFade()
                                 .into(holder.mIvModelImg);
                     }else {
-                        GlideApp.with(mContext)
+                        GlideApp.with(cx)
                                 .load(mDeviceConfigurationFunctions.get(position).backgroundImgH)
 //                                .asGif()
 
@@ -161,12 +164,12 @@ public class BackgroundFuncAdapter extends RecyclerView.Adapter<BackgroundFuncVi
                     String value = (String) paramValue.get("value");
                     holder.mTvModelName.setText(value);
                     if (mStoveHeadRightPower == 0){
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(position)
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(position)
                                 .backgroundImg)
 //                                .crossFade()
                                 .into(holder.mIvModelImg);
                     }else {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .asGif()
                                 .load(mDeviceConfigurationFunctions.get(position).backgroundImgH)
                                 .into(holder.mIvModelImg);
@@ -181,13 +184,13 @@ public class BackgroundFuncAdapter extends RecyclerView.Adapter<BackgroundFuncVi
                     String value = (String) paramValue.get("value");
                     holder.mTvModelName.setText(value);
                     if (mSteamRunModel == RikaModel.Steame.NO_MOEL || mRika.steamWorkStatus == RikaStatus.STEAM_ON) {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .load(mDeviceConfigurationFunctions.get(position)
                                         .backgroundImg)
 //                                .crossFade()
                                 .into(holder.mIvModelImg);
                     }else {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .asGif()
                                 .load(mDeviceConfigurationFunctions.get(position).backgroundImgH)
                                 .into(holder.mIvModelImg);
@@ -202,11 +205,11 @@ public class BackgroundFuncAdapter extends RecyclerView.Adapter<BackgroundFuncVi
                     String value = (String) paramValue.get("value");
                     holder.mTvModelName.setText(value);
                     if (mSteamOvenRunModel == 0 || mSteamOvenRunModel == 255 || mRika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_ON){
-                        Glide.with(mContext).load(R.mipmap.bg_rika_device)
+                        Glide.with(cx).load(R.mipmap.bg_rika_device)
                                 .transition(DrawableTransitionOptions.with(new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()))
                                 .into(holder.mIvModelImg);
                     }else {
-                        Glide.with(mContext).asGif().load(R.mipmap.bg_rika_device_gif)
+                        Glide.with(cx).asGif().load(R.mipmap.bg_rika_device_gif)
                                 .into(holder.mIvModelImg);
                     }
                 } else if ("disinfectionModel".equals(functionCode)){
@@ -218,7 +221,7 @@ public class BackgroundFuncAdapter extends RecyclerView.Adapter<BackgroundFuncVi
                     JSONObject paramValue = (JSONObject) param.get(String.valueOf(mSterilWorkStatus));
                     String value = (String) paramValue.get("value");
                     holder.mTvModelName.setText(value);
-                    Glide.with(mContext).load(mDeviceConfigurationFunctions.get(position)
+                    Glide.with(cx).load(mDeviceConfigurationFunctions.get(position)
                             .backgroundImg)
 //                            .crossFade()
                             .into(holder.mIvModelImg);

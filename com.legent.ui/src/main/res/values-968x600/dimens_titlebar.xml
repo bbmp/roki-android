@@ -9,6 +9,7 @@
     <dimen name="titlebar_divider_height">1dp</dimen>
 
     <!--icon-->
+    <dimen name="titlebar_icon_padding_size">10dp</dimen>
     <dimen name="titlebar_icon_padding_top">10dp</dimen>
     <dimen name="titlebar_icon_padding_bottom">10dp</dimen>
     <dimen name="titlebar_icon_padding_left">10dp</dimen>

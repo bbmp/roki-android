@@ -30,6 +30,7 @@ public class Notification implements IJsonPojo {
 	public String title;
 
 	@JsonProperty("alert")
+
 	public String content;
 
 	@JsonProperty("alert_format")

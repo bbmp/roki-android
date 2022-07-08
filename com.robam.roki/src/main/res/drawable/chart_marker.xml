@@ -4,14 +4,14 @@
     <!--设置圆角-->
     <!--  按顺序分别对应：左下角的角度、右下角的角度、左上角的角度、右上角的角度-->
     <corners
-        android:bottomLeftRadius="10dp"
-        android:bottomRightRadius="0dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="10dp"
         android:topLeftRadius="10dp"
         android:topRightRadius="10dp" />
     <!--设置圆角背景色-->
-    <solid android:color="@color/line_chart_deep" />
+    <solid android:color="@color/line_chart_marker" />
     <!--  设置边框大小与背景色-->
     <stroke
         android:width="1px"
-        android:color="@color/line_chart_deep" />
+        android:color="@color/line_chart_marker" />
 </shape>

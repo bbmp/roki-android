@@ -34,10 +34,8 @@ dependencies {
     api deps.jackson_core
     api deps.jackson_annotations
     api deps.jackson_databind
-//    api deps.universal_imageloader
-    api deps.glide
+    api deps.universal_imageloader
     api deps.retrofit.converter
-    api 'com.squareup.retrofit2:retrofit:2.1.0'
-    api 'com.squareup.retrofit2:converter-gson:2.1.0'
+
 }
 

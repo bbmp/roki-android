@@ -1,5 +1,8 @@
 package com.robam.roki.ui.helper3;
 
+import static com.robam.common.RobamApp.BANNERURL;
+
+import android.app.Application;
 import android.os.Handler;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -83,7 +86,8 @@ public class UploadFileHelper {
         MultipartBody mBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
                 .addFormDataPart("type" , type)
                 .addFormDataPart("phone" , phone)
-                .addFormDataPart("platForm" , "andorid")
+                .addFormDataPart("platForm" , "android")
+//                .addFormDataPart("type" , type)
                 .addFormDataPart("file" , name , fileBody)
                 .build();
 
@@ -101,7 +105,7 @@ public class UploadFileHelper {
             }
             response.body().close();
         } catch (Exception e) {
-            //TODO
+            e.printStackTrace();
         }
         return result ;
     }
@@ -163,11 +167,13 @@ public class UploadFileHelper {
             public void run() {
                 try {
                     final OkhttpClientImpl httpClient = new OkhttpClientImpl();
-                    String testBannerUrl = "http://develop.api.myroki.com/api-cook-manage/cook-manage-admin/api/ops/carousel/show";
-                    String BannerUrl = "https://cook.myroki.com/api-cook-manage/cook-manage-admin/api/ops/carousel/show";
+                    String BannerUrl=BANNERURL;
+//                    String BannerUrl = "http://develop.api.myroki.com/api-cook-manage/cook-manage-admin/api/ops/carousel/show";
+//                    String BannerUrl = "https://cook.myroki.com/api-cook-manage/cook-manage-admin/api/ops/carousel/show";
 //                    final IRequest request = new BaseRequest(testBannerUrl);
                     final IRequest request = new BaseRequest(BannerUrl);
                     IResponse response = httpClient.get(request, false);
+                    LogUtils.i("banner", "response=" + response.getData());
                     if (response != null && response.getCode() == 200) {
                         if (response.getData() != null) {
                             BannerBean bannerBean = new Gson().fromJson(response.getData(), BannerBean.class);

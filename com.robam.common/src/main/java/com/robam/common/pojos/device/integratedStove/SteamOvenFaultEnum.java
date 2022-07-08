@@ -20,7 +20,9 @@ public enum SteamOvenFaultEnum {
     HIGH_FAULT(8,"高温报警故障"),
     TEMP_HEAT_FAULT(9,"温度加热异常故障 "),
     COOL_FAULT(10,"冷气阀故障"),
-    LACKWATER(11,"缺水故障"),
+//    LACKWATER(11,"缺水故障"),
+    Updraft_fan_FAULT(12,"上风机故障"),
+    Microwave_Frequency_Conversion(13,"微波变频故障"),
     ;
 
     private int code;

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:paddingHorizontal="@dimen/dp_10"
+    >
+
+    <TextView
+        android:id="@+id/tv_tab_sliding_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:paddingVertical="@dimen/dp_12"
+        tools:text="我是标签"
+        tools:textSize="@dimen/sp_15" />
+
+
+</FrameLayout>

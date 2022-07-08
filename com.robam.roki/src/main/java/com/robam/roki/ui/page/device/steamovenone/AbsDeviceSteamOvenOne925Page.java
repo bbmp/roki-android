@@ -20,6 +20,7 @@ import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.BackgroundFunc;
@@ -65,7 +66,7 @@ import com.robam.roki.ui.page.device.DeviceCatchFilePage;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.TestDatas;
 import com.robam.roki.utils.ToolUtils;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -155,7 +156,13 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
     public IRokiDialog dryDialog;
     private IRokiDialog descalingDialog;
     public String needDescalingParams;
-
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            mTvDeviceModelName.setText(name);
+        }
+    }
 
     //从字符中提取数字
     private String getNumData(String str) {
@@ -173,6 +180,7 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
 //            mSteamOvenOne = Plat.deviceService.lookupChild(mGuid);
             return;
         }
+        MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), mSteamOvenOne.getDt() + ":工作页", null);
 
     }
 
@@ -257,15 +265,15 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
             mCompleteSign = false;
             LogUtils.i("202010201813", "666" + mCompleteSign);
         }
-        if (SteamOvenOnePowerStatus.Off == event.pojo.powerStatus
+        if (SteamOvenOnePowerStatus.Off == event.pojo.powerState
                 && !mCompleteSign//关机 且 未工作sign
-                || SteamOvenOnePowerStatus.Wait == event.pojo.powerStatus
+                || SteamOvenOnePowerStatus.Wait == event.pojo.powerState
                 //&& !mCompleteSign //待机 且 未工作sign
-                || SteamOvenOnePowerStatus.On == event.pojo.powerStatus
+                || SteamOvenOnePowerStatus.On == event.pojo.powerState
                 && SteamOvenOnePowerOnStatus.OperatingState == event.pojo.powerOnStatus
                 && !mCompleteSign //开机 且 操作状态 且 未工作sign
                 ) {
-            LogUtils.i("202010201813", "222" + event.pojo.powerStatus);
+            LogUtils.i("202010201813", "222" + event.pojo.powerState);
             if (mCloseDialog != null && mCloseDialog.isShow()) {
                 mCloseDialog.dismiss();
             }
@@ -281,10 +289,10 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
             contain.getChildAt(1).setVisibility(View.INVISIBLE);
         } else {
             LogUtils.i("202010201813", "777" + mCompleteSign);
-            LogUtils.i("202010201813", "powerStatus" + event.pojo.powerStatus);
+            LogUtils.i("202010201813", "powerStatus" + event.pojo.powerState);
             LogUtils.i("202010201813", "powerOnStatus" + event.pojo.powerOnStatus);
-            if (SteamOvenOnePowerStatus.Off == event.pojo.powerStatus) {
-                LogUtils.i("202010201813", "444" + event.pojo.powerStatus);
+            if (SteamOvenOnePowerStatus.Off == event.pojo.powerState) {
+                LogUtils.i("202010201813", "444" + event.pojo.powerState);
                 contain.getChildAt(0).setVisibility(View.VISIBLE);
                 contain.getChildAt(1).setVisibility(View.INVISIBLE);
                 mCompleteSign = false;
@@ -306,12 +314,12 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
             }
             if (mSteamOvenOne.WaterStatus == 1
                     && mSteamOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.AlarmStatus
-                    && mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.On
-                    || SteamOvenOnePowerStatus.On == event.pojo.powerStatus
+                    && mSteamOvenOne.powerState == SteamOvenOnePowerStatus.On
+                    || SteamOvenOnePowerStatus.On == event.pojo.powerState
                     && SteamOvenOnePowerOnStatus.AlarmStatus == event.pojo.powerOnStatus) {
                 return;
             }
-            LogUtils.i("202010201813", "555" + event.pojo.powerStatus);
+            LogUtils.i("202010201813", "555" + event.pojo.powerState);
             closeAllDialog2();
             closePage();
             contain.getChildAt(0).setVisibility(View.INVISIBLE);
@@ -407,7 +415,7 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_device_steamovenone925, container, false);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         ButterKnife.inject(this, view);
         initData();
         return view;
@@ -469,7 +477,8 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
                     Glide.with(cx).load(backgroundImg).into(mIvBg);
                 }
                 if (mTvDeviceModelName != null) {
-                    mTvDeviceModelName.setText(deviceResponse.title);
+//                    mTvDeviceModelName.setText(deviceResponse.title);
+                    mTvDeviceModelName.setText(mSteamOvenOne.getName() == null ||  mSteamOvenOne.getName().equals(mSteamOvenOne.getCategoryName()) ? mSteamOvenOne.getDispalyType() : mSteamOvenOne.getName());
                 }
                 mainFunc = deviceResponse.modelMap.mainFunc;
                 mainList = mainFunc.deviceConfigurationFunctions;
@@ -1305,14 +1314,14 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
             ToastUtils.showShort(R.string.device_connected);
             return;
         }
-        if (mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.Off) {
+        if (mSteamOvenOne.powerState == SteamOvenOnePowerStatus.Off) {
             ToastUtils.show(getString(R.string.oven_common_off), Toast.LENGTH_SHORT);
             return;
         }
         ToolUtils.logEvent(mSteamOvenOne.getDt(), "关机", "roki_设备");
 
 
-        if (mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.On && mSteamOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.OperatingState) {
+        if (mSteamOvenOne.powerState == SteamOvenOnePowerStatus.On && mSteamOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.OperatingState) {
             mSteamOvenOne.setSteameOvenStatus_Off(new VoidCallback() {
                 @Override
                 public void onSuccess() {
@@ -1324,7 +1333,7 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
                 }
             });
         } else {
-            if (mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait && mSteamOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.NoStatus) {
+            if (mSteamOvenOne.powerState == SteamOvenOnePowerStatus.Wait && mSteamOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.NoStatus) {
                 mSteamOvenOne.setSteameOvenStatus_Off(new VoidCallback() {
                     @Override
                     public void onSuccess() {
@@ -1393,8 +1402,8 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
 
     //蒸、烤、辅助模式
     private void sendSteamOvenFZModel(final String code) {
-        if (mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait) {
+        if (mSteamOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                mSteamOvenOne.powerState == SteamOvenOnePowerStatus.Wait) {
             mSteamOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
                 public void onSuccess() {
@@ -1440,8 +1449,8 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
      * 干燥模式
      */
     private void dryMode(final String code) {
-        if (mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait) {
+        if (mSteamOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                mSteamOvenOne.powerState == SteamOvenOnePowerStatus.Wait) {
             mSteamOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
                 public void onSuccess() {
@@ -1710,7 +1719,7 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
         LogUtils.i("20180721", "code:" + cmd + " mode:" + mode + " setTime:" + setTime + " setTempUp:" +
                 setTempUp + " setTempDown::" + setTempDown);
         final short expMode = Short.parseShort(mode);
-        if (mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.Off) {
+        if (mSteamOvenOne.powerState == SteamOvenOnePowerStatus.Off) {
             mSteamOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
                 public void onSuccess() {
@@ -1771,8 +1780,8 @@ public class AbsDeviceSteamOvenOne925Page<SteamOvenOne extends AbsSteameOvenOne>
     //CQ908专业模式
     private void sendExpCommand(final String model, final int time, final int tempUp, final int tempDown, final String code) {
 
-        if (mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait
+        if (mSteamOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                mSteamOvenOne.powerState == SteamOvenOnePowerStatus.Wait
         ) {
 
             mSteamOvenOne.setSteameOvenStatus_on(new VoidCallback() {

@@ -69,7 +69,7 @@ public class ExpandableChildItemView extends FrameLayout {
         if (deviceItemList.getIconUrl() == null) {
             img_device.setVisibility(GONE);
         } else {
-            ImageUtils.displayImage(getContext(), deviceItemList.getIconUrl(), img_device);
+            ImageUtils.displayImage(deviceItemList.getIconUrl(), img_device);
         }
         String str = deviceItemList.displayType;
         //  LogUtils.i("20170603","str:::"+str);

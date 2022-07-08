@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.robam.base.BaseDialog;
 import com.robam.roki.R;
-import com.robam.roki.ui.widget.base.BaseDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

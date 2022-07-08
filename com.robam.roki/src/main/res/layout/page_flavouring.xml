@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/white"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.page.curve.FlavouringPage">
+
+    <include
+        android:id="@+id/include_page_item"
+        layout="@layout/include_title_bar"/>
+    <EditText
+        android:layout_below="@+id/include_page_item"
+        android:layout_marginTop="@dimen/dp_33"
+        android:background="@drawable/shape_input_curve_et"
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingTop="@dimen/dp_8"
+        android:paddingLeft="@dimen/dp_18"
+        android:hint="q请输入作料名称"
+        android:layout_marginRight="@dimen/dp_21"
+        android:layout_marginLeft="@dimen/dp_21"
+        android:id="@+id/page_flavouring_food_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/page_flavouring_food_et"
+        android:layout_marginTop="@dimen/dp_7"
+        android:layout_marginRight="@dimen/dp_21"
+        android:layout_marginLeft="@dimen/dp_21"
+        android:id="@+id/page_flavouring_food_list_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_marginTop="@dimen/dp_25"
+        android:layout_below="@+id/page_flavouring_food_et"
+        android:text="确定使用"
+        android:background="@drawable/shape_icon_save_bg"
+        style="@style/style_button_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

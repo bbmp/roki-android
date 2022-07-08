@@ -16,12 +16,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.solver.GoalRow;
 import androidx.core.content.ContextCompat;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.base.Strings;
 import com.google.common.eventbus.Subscribe;
-import com.google.gson.Gson;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceFindEvent;
@@ -166,8 +165,7 @@ public class BleConnectActivity extends AppActivity {
             wifiInfoMap.put("ssid", "物联研究院");
             wifiInfoMap.put("pwd", "rokitest2021");
 
-            Gson gson = new Gson();
-            String wifiInfoGson = gson.toJson(wifiInfoMap);
+            String wifiInfoGson = JSON.toJSONString(wifiInfoMap);
             Log.e("onEvent", "onSend: "+wifiInfoGson );
             final BluetoothGattCharacteristic read = readChar;
             /**

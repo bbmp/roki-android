@@ -337,6 +337,7 @@
                 android:textSize="18sp" />
 
             <ImageView
+                android:id="@+id/mic_nw_linked_imgSwitch"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_above="@id/mic_nw_linked_txtSwitch"

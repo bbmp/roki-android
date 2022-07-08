@@ -1,81 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="260dp"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginStart="14dp"
-    android:layout_marginTop="7dp"
-    android:layout_marginEnd="13dp"
-    android:layout_marginBottom="7dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="0dp">
+    android:background="@drawable/shape_kitchen_bg_round"
+    android:layout_marginLeft="@dimen/dp_20"
+    android:layout_marginRight="@dimen/dp_20"
+    android:layout_marginTop="@dimen/dp_20"
+    android:layout_height="@dimen/dp_225">
 
-    <RelativeLayout
+    <com.legent.ui.ext.views.RoundImageView
+        android:id="@+id/iv_top_week_img"
         android:layout_width="match_parent"
-        android:layout_height="260dp">
+        android:layout_height="@dimen/dp_158"
+        android:src="@mipmap/img_default"
+        android:scaleType="centerCrop"
+        app:riv_left_top_corner_radius="@dimen/dp_10"
+        app:riv_right_top_corner_radius="@dimen/dp_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/tv_topic_ranking"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_24"
+        android:textSize="@dimen/sp_16"
+        android:textColor="#ffffffff"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@drawable/round_button_shape_bg_2"
+        app:layout_constraintLeft_toLeftOf="@id/iv_top_week_img"
+        app:layout_constraintTop_toTopOf="@id/iv_top_week_img"/>
+    <ImageView
+        android:id="@+id/iv_play"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:src="@mipmap/tag_video"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="@id/iv_top_week_img"
+        app:layout_constraintTop_toTopOf="@id/iv_top_week_img"/>
+    <TextView
+        android:id="@+id/tv_recipe_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:text="蜜汁烤鸡翅"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/text_color_net_err"
+        app:layout_constraintTop_toBottomOf="@id/iv_top_week_img"
+        app:layout_constraintBottom_toTopOf="@id/tv_recipe_read_number"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <TextView
+        android:id="@+id/tv_recipe_read_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:singleLine="true"
+        android:text="阅读 10.1w"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/text_color_touch_retry"
+        app:layout_constraintTop_toBottomOf="@id/tv_recipe_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/iv_love_recipe"/>
 
-        <ImageView
-            android:id="@+id/iv_top_week_img"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/img_default" />
-
-        <ImageView
-            android:id="@+id/iv_topic_ranking"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            app:srcCompat="@mipmap/icon_week_top1" />
-
-        <TextView
-            android:id="@+id/tv_recipe_name"
-            style="@style/RokiImportantText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/iv_top_week_img"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="10dp"
-            android:text="蜜汁烤鸡翅" />
-
-        <TextView
-
-            android:id="@+id/tv_recipe_read_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_recipe_name"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="5dp"
-            android:drawablePadding="3dp"
-            android:singleLine="true"
-            android:textColor="#FB7432"
-            android:textSize="12sp"
-            tools:text="阅读 56.8w" />
-
-        <TextView
-            android:id="@+id/tv_recipe_collect_number"
-            style="@style/RokiTipsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_recipe_name"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:drawablePadding="3dp"
-            android:singleLine="true"
-            android:textSize="12sp"
-            android:visibility="gone"
-            tools:text="阅读 10.1w" />
-
-        <ImageView
-            android:id="@+id/iv_love_recipe"
-            android:layout_width="20dp"
-            android:layout_height="18dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="20dp"
-            app:srcCompat="@drawable/ic_baseline_favorite_24" />
-
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/iv_love_recipe"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_24"
+        android:src="@drawable/ic_recipe_favority_black_shape"
+        app:layout_constraintTop_toBottomOf="@id/iv_top_week_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

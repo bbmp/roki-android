@@ -1,45 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="326dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal|bottom"
-    android:background="@drawable/shape_diglog_bg_top_radius"
+    android:background="@drawable/shape_dialog_bg"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="right"
-        >
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_not_tips"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="#666666"
             android:gravity="center"
-            android:text="不再提示"/>
-        <ImageView
-            android:id="@+id/iv_close"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="23dp"
-            android:layout_toRightOf="@+id/tv_not_tips"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_close_device_bluetooth"/>
+            android:text="不再提示"
+            android:textColor="#666666" />
+
     </RelativeLayout>
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:textColor="@color/common_text_color"
-        android:textSize="16sp"
-        android:layout_marginBottom="24dp"
-        android:text="请选择要添加的设备"/>
+        android:layout_marginTop="@dimen/dp_28">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="发现附近有以下设备"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/button_delete" />
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/tv_scan_again"
+        android:textColor="@color/text_color_exit_login"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:layout_marginTop="@dimen/dp_37"
+        android:textSize="@dimen/sp_20"
+        android:text="重新扫描"
+        android:background="@drawable/shape_button_bg"/>
 </LinearLayout>
 

@@ -21,6 +21,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -28,7 +29,6 @@ import com.legent.ui.UIService;
 import com.legent.utils.EventUtils;
 import com.legent.utils.JsonUtils;
 import com.legent.utils.LogUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.IntegStoveStatusChangedEvent;
 import com.robam.common.pojos.device.integratedStove.AbsIntegratedStove;
 import com.robam.common.pojos.device.integratedStove.IntegStoveStatus;
@@ -48,6 +48,7 @@ import com.robam.roki.model.helper.HelperRikaData;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.adapter3.Rv610StepAdapter;
+import com.robam.roki.ui.adapter3.RvIntegraStepAdapter;
 import com.robam.roki.ui.dialog.type.Dialog_Type_27;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.page.login.MyBasePage;
@@ -85,7 +86,7 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
     /**
      * 步骤adapter
      */
-    private Rv610StepAdapter rv610StepAdapter;
+    private RvIntegraStepAdapter rvIntegraStepAdapter;
     /**
      * 携带菜谱id
      */
@@ -138,7 +139,7 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
     }
     @Override
     protected int getLayoutId() {
-        return R.layout.page_multi_610_recipe_edit;
+        return R.layout.page_multi_integra_recipe_edit;
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -147,14 +148,14 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
        getTitleBar().setOnTitleBarListener(this);
         btnAutomatic = findViewById(R.id.btn_automatic);
         rv610Step.setLayoutManager(new LinearLayoutManager(cx, RecyclerView.VERTICAL, false));
-        rv610StepAdapter = new Rv610StepAdapter();
-        rv610Step.setAdapter(rv610StepAdapter);
-        View footViewAdd = getLayoutInflater().inflate(R.layout.item_d610_add_step, new FrameLayout(cx), false);
-        rv610StepAdapter.addFooterView(footViewAdd);
+        rvIntegraStepAdapter = new RvIntegraStepAdapter();
+        rv610Step.setAdapter(rvIntegraStepAdapter);
+        View footViewAdd = getLayoutInflater().inflate(R.layout.item_integra_add_step, new FrameLayout(cx), false);
+        rvIntegraStepAdapter.addFooterView(footViewAdd);
 
-        rv610StepAdapter.addChildClickViewIds(R.id.ll_item , R.id.tv_del);
-        rv610StepAdapter.addChildLongClickViewIds(R.id.ll_item);
-        rv610StepAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+        rvIntegraStepAdapter.addChildClickViewIds(R.id.ll_item , R.id.tv_del);
+        rvIntegraStepAdapter.addChildLongClickViewIds(R.id.ll_item);
+        rvIntegraStepAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(@NonNull @NotNull BaseQuickAdapter baseQuickAdapter, @NonNull @NotNull View view, int i) {
                 if (view.getId() == R.id.ll_item){
@@ -162,21 +163,21 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
                     selectStep(i);
                 }else if (view.getId() == R.id.tv_del){
                     if (recipeId != -1){
-                        LitePal.delete(RecipeStepBean.class , rv610StepAdapter.getItem(i).getId());
-                        rv610StepAdapter.removeAt(i);
+                        LitePal.delete(RecipeStepBean.class , rvIntegraStepAdapter.getItem(i).getId());
+                        rvIntegraStepAdapter.removeAt(i);
                     }else {
-                        rv610StepAdapter.removeAt(i);
+                        rvIntegraStepAdapter.removeAt(i);
                     }
-                    rv610StepAdapter.setSelectPosition(-1);
+                    rvIntegraStepAdapter.setSelectPosition(-1);
                 }
             }
         });
 
-        rv610StepAdapter.setOnItemChildLongClickListener(new OnItemChildLongClickListener() {
+        rvIntegraStepAdapter.setOnItemChildLongClickListener(new OnItemChildLongClickListener() {
             @Override
             public boolean onItemChildLongClick(@NonNull @NotNull BaseQuickAdapter baseQuickAdapter, @NonNull @NotNull View view, int i) {
                 if (view.getId() == R.id.ll_item){
-                    rv610StepAdapter.setSelectPosition(i);
+                    rvIntegraStepAdapter.setSelectPosition(i);
                 }
 
                 return true;
@@ -191,8 +192,8 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
         footViewAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (rv610StepAdapter.getItemCount() >= 4){
-                    ToastUtils.showShort("多段步骤只能添加三步");
+                if (rvIntegraStepAdapter.getItemCount() >= 4){
+                    ToastUtils.show("多段步骤只能添加三步");
                     return;
                 }
                 selectStep(-1);
@@ -211,10 +212,10 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
             integratedStove = Plat.deviceService.lookupChild(guid);
             if (recipeId != -1 ){
                  firstRecipe = LitePal.where("id = ?", recipeId + "").findFirst(RecipeBean.class);
-                rv610StepAdapter.addData(firstRecipe.getRecipeStepList());
+                rvIntegraStepAdapter.addData(firstRecipe.getRecipeStepList());
                 recipeName.setText(firstRecipe.getRecipe_names());
 //                recipeName.setEnabled(false);
-                multiInfo.setText("共" + strings[firstRecipe.getRecipeStepList().size()]+"段 " + firstRecipe.getRecipeStepTimes() + "min");
+                multiInfo.setText( firstRecipe.getRecipeStepTimes() + "min");
             }
 
         }
@@ -226,14 +227,14 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
     public void onClick(View view) {
         if (view == btnAutomatic){
             if (StringUtil.isEmpty(recipeName.getText().toString())){
-                ToastUtils.showShort("请输入菜谱名称");
+                ToastUtils.show("请输入菜谱名称");
                 return;
             }
             if (recipeId != -1){
                 ContentValues values = new ContentValues();
                 values.put("recipe_names", recipeName.getText().toString());
                 LitePal.update(RecipeBean.class , values , recipeId) ;
-                ToastUtils.showShort("保存成功");
+                ToastUtils.show("保存成功");
                 UIService.getInstance().popBack();
                 return;
             }
@@ -241,14 +242,14 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
             RecipeBean d610Recipe = new RecipeBean(recipeId ,recipeName.getText().toString(), Plat.accountService.getCurrentUserId(), integratedStove.getDispalyType(), System.currentTimeMillis());
             d610Recipe.save();
             RecipeBean recipeBean = LitePal.where("recipe_id = ?", recipeId).findFirst(RecipeBean.class);
-            List<RecipeStepBean> datas = rv610StepAdapter.getData();
+            List<RecipeStepBean> datas = rvIntegraStepAdapter.getData();
             for (RecipeStepBean bean:
                     datas) {
 //                bean.setRecipe_id(recipeBean.getRecipe_id());
                 bean.setRecipebean(recipeBean);
                 bean.save();
             }
-            ToastUtils.showShort("保存成功");
+            ToastUtils.show("保存成功");
             UIService.getInstance().popBack();
         }
     }
@@ -263,7 +264,7 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
                  DeviceConfigurationFunctions item = dialog.mDeviceModelAdapter.getItem(position);
                  SteamOvenModeEnum match = SteamOvenModeEnum.catchMessage(item.functionName);
                  if (match == SteamOvenModeEnum.ZHIKONGZHENG){
-                     expMode( position);
+                     pengpaiMode( position);
                  }else {
                      modelSelectItemEvent(position);
                  }
@@ -272,7 +273,7 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
          });
         dialog.show();
         if (SteamOvenModeEnum.catchMessage(mDatas.get(0).functionName) == SteamOvenModeEnum.ZHIKONGZHENG){
-            expMode(0);
+            pengpaiMode(0);
         }else {
             modelSelectItemEvent(0);
         }
@@ -306,21 +307,21 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
                 recipeStepBean.setTime(Integer.parseInt(time));
                 if (recipeId != -1 ){
                     if (position != -1){
-                        recipeStepBean.update(rv610StepAdapter.getItem(position).getId());
+                        recipeStepBean.update(rvIntegraStepAdapter.getItem(position).getId());
                         firstRecipe = LitePal.where("id = ?", recipeId + "").findFirst(RecipeBean.class);
-                        rv610StepAdapter.setNewInstance(firstRecipe.getRecipeStepList());
+                        rvIntegraStepAdapter.setNewInstance(firstRecipe.getRecipeStepList());
                     }else {
                         recipeStepBean.setRecipebean(firstRecipe);
                         recipeStepBean.save();
-                        rv610StepAdapter.addData(recipeStepBean);
+                        rvIntegraStepAdapter.addData(recipeStepBean);
                     }
                     firstRecipe = LitePal.where("id = ?", recipeId + "").findFirst(RecipeBean.class);
-                    multiInfo.setText("共" + strings[firstRecipe.getRecipeStepList().size()]+"段 " + firstRecipe.getRecipeStepTimes() + "min");
+                    multiInfo.setText( firstRecipe.getRecipeStepTimes() + "min");
                 }else {
                     if (position != -1){
-                        rv610StepAdapter.setData(position , recipeStepBean);
+                        rvIntegraStepAdapter.setData(position , recipeStepBean);
                     }else {
-                        rv610StepAdapter.addData(recipeStepBean);
+                        rvIntegraStepAdapter.addData(recipeStepBean);
                     }
                 }
 
@@ -386,7 +387,7 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
         }
     }
 
-    private void expMode(int position){
+    private void pengpaiMode(int position){
         try {
             ppzParams = JsonUtils.json2Pojo(mDatas.get(position).functionParams, PengpaiZhengParamBean.class);
             if (ppzParams != null) {
@@ -400,9 +401,6 @@ public class MultiEditDetailPage extends MyBasePage<MainActivity> {
                 String tempUpDefault = ppzParams.param.defaultSetTemp.value;
                 String timeDefault = ppzParams.param.defaultSetTime.value;
                 String defSteamFlow = ppzParams.param.defaultSetSteam.value;
-//                String tempStart = ppzParams.param.getTempStart().getValue();
-//                String downMin = ppzParams.param.getTempMin().getValue();
-
 
                 mode = Short.parseShort(ppzParams.param.model.value);
                 int deNum1 = Integer.parseInt(tempUpDefault) - tempUp.get(0);

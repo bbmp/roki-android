@@ -15,6 +15,7 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.ReflectUtils;
 import com.legent.utils.api.ResourcesUtils;
 import com.robam.common.pojos.dictionary.AppExtendDic;
+//import com.robam.common.services.AdvertManager;
 import com.robam.common.services.NotifyService;
 import com.robam.common.services.StoreService;
 import com.robam.common.ui.BleRssiDevice;
@@ -44,24 +45,28 @@ abstract public class RobamApp extends PlatApp {
     @Override
     protected void init() {
         super.init();
+
         initPlat();
         if (Objects.equal(this.getPackageName(),
                 "com.robam.roki")) {
             AppExtendDic.init(this);
             StoreService.getInstance().init(this);
+//            AdvertManager.getInstance().init(this);
             NotifyService.getInstance().init(this);
             startUI();
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             String processName = getProcessName(this);
-            if (!"com.robam.roki".equals(processName)){//判断不等于默认进程名称
+            if (!"com.robam.roki".equals(processName)) {//判断不等于默认进程名称
                 WebView.setDataDirectorySuffix(processName);
             }
         }
         initBLE();
+
+
     }
 
-    private void initBLE(){
+    private void initBLE() {
         Ble.options()
                 .setLogBleEnable(true)//设置是否输出打印蓝牙日志
                 .setThrowBleException(true)//设置是否抛出蓝牙异常
@@ -95,7 +100,7 @@ abstract public class RobamApp extends PlatApp {
                 });
     }
 
-    public  String getProcessName(Context context) {
+    public String getProcessName(Context context) {
         if (context == null) return null;
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
@@ -106,9 +111,15 @@ abstract public class RobamApp extends PlatApp {
         return null;
     }
 
+
+//    public static final String BANNERURL = "http://develop.api.myroki.com/api-cook-manage/cook-manage-admin/api/ops/carousel/show";
+
+    public static final String BANNERURL = "https://cook.myroki.com/api-cook-manage/cook-manage-admin/api/ops/carousel/show";
     protected void initPlat() {
-          Plat.serverOpt.set(SERVICE_HOST, ecsPort, MQTT_HOST, acsHost);
-//         Plat.serverOpt.set(Test_SERVICE_HOST, Test_ecsPort, Test_MQTT_HOST, Test_acsHost);
+
+       Plat.serverOpt.set(SERVICE_HOST, ecsPort, MQTT_HOST, acsHost);
+//        Plat.serverOpt.set(Test_SERVICE_HOST, Test_ecsPort, Test_MQTT_HOST, Test_acsHost);
+
 
 //        if (Plat.dcMqtt != null) {
 //            Plat.dcMqtt.setAsyncLogEnable(true);// 1104 zhaiyuanyi
@@ -129,15 +140,10 @@ abstract public class RobamApp extends PlatApp {
     }
 
 
-
-
     protected void startUI() {
         String uiConfig = ResourcesUtils.raw2String(R.raw.ui);
         UIService.getInstance().loadConfig(uiConfig);
     }
-
-
-
 
 
 }

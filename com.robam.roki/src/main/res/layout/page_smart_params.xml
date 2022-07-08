@@ -100,6 +100,7 @@
                 android:visibility="gone"
                 >
                 <LinearLayout
+                    android:id="@+id/fan_connect_stove"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

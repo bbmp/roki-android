@@ -11,11 +11,14 @@
     <item name="tag_fan_main_func_key" type="id" />
     <item name="tag_fan_other_func_key_pos" type="id" />
 
+    <item name="tag_appointmentDisinfection" type="id" />
+
     <item name="tag_stove_timing_btn_left" type="id" />
     <item name="tag_stove_timing_btn_right" type="id" />
     <item name="tag_recipe_bg" type="id" />
     <item name="tag_recipe_collected" type="id" />
     <item name="tag_recipe_collected_select" type="id" />
     <item name="tag_recipe_collected_holder" type="id" />
+    <item name="tag_theme_collected_holder" type="id" />
 
 </resources>

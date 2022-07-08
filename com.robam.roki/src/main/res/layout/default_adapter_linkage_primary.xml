@@ -21,7 +21,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_group"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_32">
 
     <TextView
         android:id="@+id/tv_group"
@@ -29,12 +30,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="厨电"
-        style="@style/RokiMainText"
         android:textStyle="bold"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        android:padding="10dp"
         android:textColor="@color/roki_general_text_color"
         android:singleLine="true"
+        android:textSize="@dimen/sp_16"
         tools:title="厨电" />
 </LinearLayout>

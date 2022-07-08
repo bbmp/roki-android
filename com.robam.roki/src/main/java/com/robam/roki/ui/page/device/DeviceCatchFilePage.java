@@ -128,7 +128,7 @@ public abstract class DeviceCatchFilePage extends BasePage {
      * 缓存基类获取数据
      */
     protected void getDataMethod() {
-        CloudHelper.getDeviceByParams(mUserId, mDt, mDc, new Callback<Reponses.DeviceResponse>() {
+        Plat.deviceService.getDeviceByParams(mUserId, mDt, mDc, new Callback<Reponses.DeviceResponse>() {
             @Override
             public void onSuccess(Reponses.DeviceResponse deviceResponse) {
                 if (deviceResponse == null) return;

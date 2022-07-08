@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_64"
+    android:layout_marginStart="25dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="25dp"
+    android:background="@drawable/shape_recipe_item_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/rb_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:background="@null"
+        android:button="@drawable/radiobutton_selector" />
+
+    <TextView
+        android:id="@+id/tv_device_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:textColor="@color/text_color_device_category"
+        android:textSize="@dimen/sp_20"
+        tools:text="燃气灶9W263" />
+
+</LinearLayout>

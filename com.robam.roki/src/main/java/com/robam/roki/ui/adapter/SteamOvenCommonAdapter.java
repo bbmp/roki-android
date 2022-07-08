@@ -173,6 +173,11 @@ public class SteamOvenCommonAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         private void setData(final List<DeviceConfigurationFunctions> mainList) {
             this.mainList = mainList;
+//            if (mainList.size()==2){
+//
+//            }else if (mainList.size()==3){
+//
+//            }
             if (mainList.size()==0){
                 moreV.setVisibility(View.GONE);
                 return;
@@ -189,34 +194,31 @@ public class SteamOvenCommonAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 moreV.setVisibility(View.GONE);
             }
 
-            moreV.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (falg) {
-                        moreTdown.setVisibility(View.INVISIBLE);
-                        moreTup.setVisibility(View.VISIBLE);
-                        falg = false;
-                    } else {
-                        moreTdown.setVisibility(View.VISIBLE);
-                        moreTup.setVisibility(View.INVISIBLE);
-                        falg = true;
-                    }
+            moreV.setOnClickListener(v -> {
+                if (falg) {
+                    moreTdown.setVisibility(View.INVISIBLE);
+                    moreTup.setVisibility(View.VISIBLE);
+                    falg = false;
+                } else {
+                    moreTdown.setVisibility(View.VISIBLE);
+                    moreTup.setVisibility(View.INVISIBLE);
+                    falg = true;
+                }
 
-                    if (gridViewOnclickLister != null) {
-                        gridViewOnclickLister.onGridClick("more");
-                    }
+                if (gridViewOnclickLister != null) {
+                    gridViewOnclickLister.onGridClick("more");
                 }
             });
-            gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //  ToastUtils.show(position+"", Toast.LENGTH_SHORT);
-                    view.setTag(mainList.get(position).functionCode);
-                    if (gridViewOnclickLister != null) {
-                        gridViewOnclickLister.onGridClick(mainList.get(position).functionCode);
-                    }
+            gv.setOnItemClickListener((parent, view, position, id) -> {
+                //  ToastUtils.show(position+"", Toast.LENGTH_SHORT);
+                view.setTag(mainList.get(position).functionCode);
+                if (gridViewOnclickLister != null) {
+                    gridViewOnclickLister.onGridClick(mainList.get(position).functionCode);
                 }
             });
+            if (mainList.get(0).deviceType.equalsIgnoreCase("db620")||mainList.get(0).deviceType.equalsIgnoreCase("cq920"))
+                         moreV.setVisibility(View.GONE);
+
         }
 
         //gridview适配器

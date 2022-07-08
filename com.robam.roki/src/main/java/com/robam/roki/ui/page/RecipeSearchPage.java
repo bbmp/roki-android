@@ -26,6 +26,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -35,7 +36,6 @@ import com.google.common.base.Strings;
 import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
 import com.legent.plat.events.PageBackEvent;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -72,6 +72,7 @@ import java.util.Random;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import skin.support.content.res.SkinCompatResources;
 
 /**
  * @author wwq
@@ -84,7 +85,7 @@ public class RecipeSearchPage extends MyBasePage<MainActivity> {
     @InjectView(R.id.imgSearch)
     ImageView mImgSearch;
     @InjectView(R.id.layoutSearch)
-    LinearLayout mLayoutSearch;
+    RelativeLayout mLayoutSearch;
     private List<AbsRecipe> absRecipes;
     private int count;
     private static final String TAG = "RecipeSearchPage";
@@ -243,11 +244,11 @@ public class RecipeSearchPage extends MyBasePage<MainActivity> {
                 String emptyMessage = "ROKI没有找到‘" + searchWord + "’,换个关键词试试";
 
                 SpannableString spannableString1 = new SpannableString(emptyMessage);
-                spannableString1.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")),
+                spannableString1.setSpan(new ForegroundColorSpan(SkinCompatResources.getColor(getContext(), R.color.text_color_net_err)),
                         0, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannableString1.setSpan(new ForegroundColorSpan(Color.parseColor("#FB7432")),
+                spannableString1.setSpan(new ForegroundColorSpan(Color.parseColor("#61ACFF")),
                         8, emptyMessage.length() - 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannableString1.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")),
+                spannableString1.setSpan(new ForegroundColorSpan(SkinCompatResources.getColor(getContext(), R.color.text_color_net_err)),
                         emptyMessage.length() - 8, emptyMessage.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 emptyView.setText(spannableString1);
             }
@@ -277,8 +278,7 @@ public class RecipeSearchPage extends MyBasePage<MainActivity> {
 //            CookbookManager.getInstance().saveHistoryKeysForCookbook(word);
             ProgressDialogHelper.setRunning(cx, true);
 
-            RokiRestHelper.getCookbooksByName(word , true, "SpeechRecipePage".equals(come_from), Reponses.CookbooksResponse.class,
-                    new RetrofitCallback<Reponses.CookbooksResponse>() {
+            CookbookManager.getInstance().getCookbooksBy(word , "SpeechRecipePage".equals(come_from) , new Callback<Reponses.CookbooksResponse>() {
                 @Override
                 public void onSuccess(Reponses.CookbooksResponse result) {
                     try {
@@ -293,11 +293,10 @@ public class RecipeSearchPage extends MyBasePage<MainActivity> {
                 }
 
                 @Override
-                public void onFaild(String err) {
+                public void onFailure(Throwable t) {
                     ProgressDialogHelper.setRunning(cx, false);
-                    ToastUtils.show(err);
+                    ToastUtils.showThrowable(t);
                 }
-
             });
         }
     }
@@ -358,33 +357,31 @@ public class RecipeSearchPage extends MyBasePage<MainActivity> {
      */
     private void loadRecipeData() {
         LogUtils.i(TAG, "pageNo:" + pageNo + " pageSize:" + pageSize);
-        RokiRestHelper.getbyTagOtherCooks(null, true, pageNo, pageSize, -1, null,
-                Reponses.PersonalizedRecipeResponse.class, new RetrofitCallback<Reponses.PersonalizedRecipeResponse>() {
-                    @Override
-                    public void onSuccess(Reponses.PersonalizedRecipeResponse personalizedRecipeResponse) {
-                        if (null != personalizedRecipeResponse) {
-                            List<Recipe> recipes = personalizedRecipeResponse.cookbooks;
-                            if (recipes.isEmpty() || recipes.size() == 0 ) {
-                                LogUtils.i(TAG, " recipes isEmpty!");
-                                if(pageNo == 0){
+        RokiRestHelper.getbyTagOtherCooks(null, true, pageNo, pageSize, -1, new Callback<List<Recipe>>() {
+            @Override
+            public void onSuccess(List<Recipe> recipes) {
 
-                                }else {
-                                    rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
-                                }
-                            }else {
-                                themeRecipeMultipleItemList.clear();
-                                for (Recipe recipe : recipes) {
-                                    themeRecipeMultipleItemList.add(new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_RECIPE_MSG_TEXT, recipe));
-                                }
-                                getByTagOtherThemes();
-                            }
-                        }
-                    }
 
-                    @Override
-                    public void onFaild(String err) {
-                        ToastUtils.show("请求数据失败", Toast.LENGTH_LONG);
+                if (recipes.isEmpty() || recipes.size() == 0 ) {
+                    LogUtils.i(TAG, " recipes isEmpty!");
+                    if(pageNo == 0){
+
+                    }else {
+                        rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
                     }
+                }else {
+                    themeRecipeMultipleItemList.clear();
+                    for (Recipe recipe : recipes) {
+                        themeRecipeMultipleItemList.add(new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_RECIPE_MSG_TEXT, recipe));
+                    }
+                    getByTagOtherThemes();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                ToastUtils.show("请求数据失败", Toast.LENGTH_LONG);
+            }
         });
     }
 
@@ -392,31 +389,28 @@ public class RecipeSearchPage extends MyBasePage<MainActivity> {
      */
     private void getByTagOtherThemes() {
 //        Long cookBookTagId = tagRecipe.getCookbookTagId() == null ? null : (Long) (tagRecipe.getCookbookTagId());
-        RokiRestHelper.getByTagOtherThemes(null, false, pageNo, 1, -1,
-                Reponses.RecipeThemeResponse.class, new RetrofitCallback<Reponses.RecipeThemeResponse>() {
-                    @Override
-                    public void onSuccess(Reponses.RecipeThemeResponse recipeThemeResponse) {
-                        if (null != recipeThemeResponse && null != recipeThemeResponse.items) {
-                            recipeThemeList.addAll(recipeThemeResponse.items) ;
-                            pageNo ++ ;
-                            if (recipeThemeList.isEmpty() || recipeThemeList.size() == 0) {
-                                rvRecipeThemeAdapter.addData(themeRecipeMultipleItemList);
-                            }else {
-                                int i1 = (int)((10 +Math.random()*(12-10 +1)) );
-                                if (i1 < themeRecipeMultipleItemList.size()){
-                                    themeRecipeMultipleItemList.add(i1 ,new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_THEME_RECIPE_MSG_TEXT, recipeThemeList.get(0)));
-                                    recipeThemeList.remove(0);
-                                }
-                                rvRecipeThemeAdapter.addData(themeRecipeMultipleItemList);
-                                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreComplete();
+        RokiRestHelper.getByTagOtherThemes(null, false, pageNo, 1, -1, new Callback<List<RecipeTheme>>() {
+            @Override
+            public void onSuccess(List<RecipeTheme> recipeThemes) {
+                recipeThemeList.addAll(recipeThemes) ;
+                pageNo ++ ;
+                if (recipeThemeList.isEmpty() || recipeThemeList.size() == 0) {
+                    rvRecipeThemeAdapter.addData(themeRecipeMultipleItemList);
+                }else {
+                    int i1 = (int)((10 +Math.random()*(12-10 +1)) );
+                            if (i1 < themeRecipeMultipleItemList.size()){
+                                themeRecipeMultipleItemList.add(i1 ,new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_THEME_RECIPE_MSG_TEXT, recipeThemeList.get(0)));
+                                recipeThemeList.remove(0);
                             }
-                        }
-                    }
+                    rvRecipeThemeAdapter.addData(themeRecipeMultipleItemList);
+                    rvRecipeThemeAdapter.getLoadMoreModule().loadMoreComplete();
+                }
+            }
 
-                    @Override
-                    public void onFaild(String err) {
-                        rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
-                    }
+            @Override
+            public void onFailure(Throwable t) {
+                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
+            }
         });
 
     }

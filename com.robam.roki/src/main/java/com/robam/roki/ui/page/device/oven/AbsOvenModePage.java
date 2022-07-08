@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
@@ -40,6 +41,10 @@ public class AbsOvenModePage extends AbsOvenGridBasePage {
     @Override
     public void onResume() {
         super.onResume();
+        if (dt != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), dt + ":烤模式页", null);
+        }
     }
 
     @Subscribe

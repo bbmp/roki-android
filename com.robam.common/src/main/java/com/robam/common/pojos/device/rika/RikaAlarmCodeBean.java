@@ -2,12 +2,14 @@ package com.robam.common.pojos.device.rika;
 
 import com.legent.utils.LogUtils;
 
+import java.io.Serializable;
+
 /**
  * Created by 14807 on 2018/4/2.
  * Rika 报警码存储bean
  */
 
-public class RikaAlarmCodeBean {
+public class RikaAlarmCodeBean implements Serializable {
 
     private short fanAlarmCode;//烟机
 

@@ -82,6 +82,7 @@ public class DevicePotFanDryPage extends BasePage {
         if (pot==null) {
             return;
         }
+        MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(),pot.getDt()+":干烧警示页",null);
     }
 
     private void getFanPotLinkValue(final String value) {

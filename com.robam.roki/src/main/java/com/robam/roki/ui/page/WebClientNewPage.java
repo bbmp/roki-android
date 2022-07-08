@@ -40,8 +40,8 @@ public class WebClientNewPage extends MyBasePage<MainActivity> {
     @InjectView(R.id.webView)
     protected ExtWebView webView;
     String url;
-//    @InjectView(R.id.iv_back)
-//    ImageView mIvBack;
+    @InjectView(R.id.iv_back)
+    ImageView mIvBack;
 //    @InjectView(R.id.tv_title)
 //    TextView mTvTitle;
 
@@ -62,7 +62,7 @@ public class WebClientNewPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        getTitleBar().setOnTitleBarListener(this);
+
     }
 
     @Override
@@ -110,10 +110,10 @@ public class WebClientNewPage extends MyBasePage<MainActivity> {
         webView.loadUrl(url);
     }
 
-//    @OnClick(R.id.iv_back)
-//    public void onViewClicked() {
-//        UIService.getInstance().popBack();
-//    }
+    @OnClick(R.id.iv_back)
+    public void onViewClicked() {
+        UIService.getInstance().popBack();
+    }
 
     public class callMethodFromAndroidLister {
         private Context context;

@@ -56,13 +56,13 @@
             android:id="@+id/txtMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="25dp"
             android:layout_marginRight="46dp"
-            android:gravity="left"
-            android:layout_alignParentRight="true"
             android:background="@drawable/shape_user_leave_message_bg"
+            android:gravity="left"
             android:text="我们家WIFI连不上！！"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color_net_err"
             android:textIsSelectable="true"
             android:textSize="15sp" />
 

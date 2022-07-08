@@ -1,8 +1,7 @@
 package com.robam.roki.ui.page;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+
 import androidx.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -38,9 +37,6 @@ import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.utils.DialogUtil;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -114,18 +110,18 @@ public class DeviceOtherC906WorkingPage extends BasePage {
         if (steameOvenC906 == null || !Objects.equal(steameOvenC906.getID(), event.pojo.getID()))
             return;
 
-        if (event.pojo.worknStatus == SteamOvenOneWorkStatus.PreHeat &&
+        if (event.pojo.workState == SteamOvenOneWorkStatus.PreHeat &&
                 event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus) {
             setPreHeatModel();
-        } else if (event.pojo.worknStatus == SteamOvenOneWorkStatus.Working &&
+        } else if (event.pojo.workState == SteamOvenOneWorkStatus.Working &&
                 event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus) {
             setWorkMode();
         } else if (event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.Pause &&
-                event.pojo.powerStatus == SteamOvenOnePowerStatus.On) {
+                event.pojo.powerState == SteamOvenOnePowerStatus.On) {
             setPauseMolde();
         } else if (event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.Order) {
             setOrderMolde();
-        } else if (event.pojo.powerStatus == SteamOvenOnePowerStatus.On && !steameOvenC906.isConnected()) {
+        } else if (event.pojo.powerState == SteamOvenOnePowerStatus.On && !steameOvenC906.isConnected()) {
             back();
         } else if (event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.AlarmStatus) {
             setPauseMolde();

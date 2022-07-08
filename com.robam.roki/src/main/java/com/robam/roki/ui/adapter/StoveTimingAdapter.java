@@ -40,10 +40,11 @@ import com.robam.roki.utils.JsonUtils;
 import com.robam.roki.utils.RemoveManOrsymbolUtil;
 import com.robam.roki.utils.StringConstantsUtil;
 import com.robam.roki.utils.ToolUtils;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 import static com.robam.common.pojos.device.Stove.Stove.StoveHead.LEFT_ID;
 import static com.robam.common.pojos.device.Stove.Stove.StoveHead.RIGHT_ID;
 
@@ -112,7 +113,7 @@ public class StoveTimingAdapter extends RecyclerView.Adapter<StoveTimingViewHold
     @Override
     public StoveTimingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_stove_quickly_page, parent, false);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         StoveTimingViewHolder stoveTimingViewHolder = new StoveTimingViewHolder(view);
         stoveTimingViewHolder.iv_stove_button_right.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,10 +142,10 @@ public class StoveTimingAdapter extends RecyclerView.Adapter<StoveTimingViewHold
                     holder.iv_stove_button_left.setImageResource(R.mipmap.img_time_off_fire);
                 } else if (mStove.leftHead.status != StoveStatus.Off && mStove.leftHead.time != 0 ||
                         mStove.leftHead.status != StoveStatus.StandyBy && mStove.leftHead.time != 0) {
-                    Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_stove_button_left);
+                    Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_stove_button_left);
                 } else if (mStove.leftHead.status != StoveStatus.Off && mStove.leftHead.time == 0
                         || mStove.leftHead.status != StoveStatus.StandyBy && mStove.leftHead.time == 0) {
-                    Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_stove_button_left);
+                    Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_stove_button_left);
                 }
                 holder.iv_stove_button_left.setTag(R.id.tag_stove_timing_btn_left, functionCode);
                 if (!TextUtils.isEmpty(functionParams)) {
@@ -169,11 +170,11 @@ public class StoveTimingAdapter extends RecyclerView.Adapter<StoveTimingViewHold
 
                 } else if (mStove.rightHead.status != StoveStatus.Off && mStove.rightHead.time != 0 ||
                         mStove.rightHead.status != StoveStatus.StandyBy && mStove.rightHead.time != 0) {
-                    Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_stove_button_right);
+                    Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_stove_button_right);
 
                 } else if (mStove.rightHead.status != StoveStatus.Off && mStove.rightHead.time == 0 ||
                         mStove.rightHead.status != StoveStatus.StandyBy && mStove.rightHead.time == 0) {
-                    Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_stove_button_right);
+                    Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_stove_button_right);
                 }
                 holder.iv_stove_button_right.setTag(R.id.tag_stove_timing_btn_right, functionCode);
                 if (!TextUtils.isEmpty(functionParams)) {
@@ -195,7 +196,7 @@ public class StoveTimingAdapter extends RecyclerView.Adapter<StoveTimingViewHold
                 if (!TextUtils.isEmpty(functionParams)) {
                     String value;
                     String tips;
-                    if (IRokiFamily.R9B37.equals(mStove.getDt())) {
+                    if (IRokiFamily.R9B37.equals(mStove.getDt())||IRokiFamily.R9B010.equals(mStove.getDt())) {
                         value = JsonUtils.getValue(functionParams, mStove.leftHead.status);
                         tips = JsonUtils.getTips(functionParams, mStove.leftHead.status);
                     } else {
@@ -206,10 +207,10 @@ public class StoveTimingAdapter extends RecyclerView.Adapter<StoveTimingViewHold
                     holder.tv_fire_desc_left.setText(tips);
                     if (mStove.leftHead.status == StoveStatus.Off || mStove.leftHead.status == StoveStatus.StandyBy) {
                         holder.tv_fire_left.setTextColor(mContext.getResources().getColor(R.color.c64));
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_fire_left);
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_fire_left);
                     } else {
                         holder.tv_fire_left.setTextColor(mContext.getResources().getColor(R.color.c31));
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_fire_left);
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_fire_left);
                     }
                     holder.tv_stove_left_name.setText(mDeviceConfigurationFunctions.get(i).functionName);
                 }
@@ -229,10 +230,10 @@ public class StoveTimingAdapter extends RecyclerView.Adapter<StoveTimingViewHold
                     holder.tv_fire_desc_right.setText(tips);
                     if (mStove.rightHead.status == StoveStatus.Off || mStove.rightHead.status == StoveStatus.StandyBy) {
                         holder.tv_fire_right.setTextColor(mContext.getResources().getColor(R.color.c64));
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_fire_right);
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_fire_right);
                     } else {
                         holder.tv_fire_right.setTextColor(mContext.getResources().getColor(R.color.c31));
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_fire_right);
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_fire_right);
                     }
                     holder.tv_stove_right_name.setText(mDeviceConfigurationFunctions.get(i).functionName);
                 }
@@ -267,7 +268,7 @@ public class StoveTimingAdapter extends RecyclerView.Adapter<StoveTimingViewHold
         } else if (mStove.leftHead.time != 0 && mStove.leftHead.status == StoveStatus.Working) {
             final IRokiDialog leftDialog = RokiDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_10);
             leftDialog.setTitleText(R.string.device_stove_off_timing);
-            leftDialog.setContentText(mContext.getString(R.string.device_stove_off_desc));
+            leftDialog.setContentText(cx.getString(R.string.device_stove_off_desc));
             final Stove.StoveHead finalHead = head;
             leftDialog.setOkBtn(R.string.ok_btn, new View.OnClickListener() {
                 @Override
@@ -327,7 +328,7 @@ public class StoveTimingAdapter extends RecyclerView.Adapter<StoveTimingViewHold
         } else if (mStove.rightHead.time != 0 && mStove.rightHead.status == StoveStatus.Working) {
             final IRokiDialog rightDialog = RokiDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_10);
             rightDialog.setTitleText(R.string.device_stove_off_timing);
-            rightDialog.setContentText(mContext.getString(R.string.device_stove_off_desc));
+            rightDialog.setContentText(cx.getString(R.string.device_stove_off_desc));
             final Stove.StoveHead finalHead = head;
             rightDialog.setOkBtn(R.string.ok_btn, new View.OnClickListener() {
                 @Override

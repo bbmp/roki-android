@@ -22,6 +22,7 @@ import com.robam.roki.R;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 public class RecipeGridTitleView extends StaggeredGridView {
     public static final int Model_Search = 0;
@@ -75,15 +76,15 @@ public class RecipeGridTitleView extends StaggeredGridView {
         }
         this.removeHeaderView(title);
         if (list != null && list.size() > 0) {
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DisplayUtils.dip2px(getContext(), 30));
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DisplayUtils.dip2px(cx, 30));
             //layoutParams.setMargins(DisplayUtils.dip2px(cx, 8), DisplayUtils.dip2px(cx, 5), 0, 0);
             layoutParams.gravity = Gravity.CENTER_VERTICAL;
-            title = new TextView(getContext());
+            title = new TextView(cx);
             title.setLayoutParams(layoutParams);
             title.setText("菜谱");
             title.setTextSize(16);
-            title.setPadding(DisplayUtils.dip2px(getContext(), 8), DisplayUtils.dip2px(getContext(), 5), 0, 0);
-            title.setTextColor(getContext().getResources().getColor(R.color.c06));
+            title.setPadding(DisplayUtils.dip2px(cx, 8), DisplayUtils.dip2px(cx, 5), 0, 0);
+            title.setTextColor(cx.getResources().getColor(R.color.c06));
             this.addHeaderView(title);
         }
         if (adapter == null) {

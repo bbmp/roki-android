@@ -18,8 +18,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.VoidCallback;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.BackgroundFunc;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -44,7 +46,7 @@ import com.robam.roki.ui.page.device.DeviceCatchFilePage;
 import com.robam.roki.ui.view.SlideLockView;
 import com.robam.roki.utils.AlarmDataUtils;
 import com.robam.roki.utils.DialogUtil;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.io.Serializable;
 import java.util.List;
@@ -127,6 +129,13 @@ public class AbsDeviceWaterPurifierPage<WaterPurifier extends AbsWaterPurifier> 
     private List<DeviceConfigurationFunctions> mAboutexpireList;
     boolean sing = true;
     private IRokiDialog dialogByType;
+
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            mTvDeviceModelName.setText(name);
+        }
+    }
 
     @Subscribe
     public void onEvent(DeviceConnectionChangedEvent event) {
@@ -412,7 +421,8 @@ public class AbsDeviceWaterPurifierPage<WaterPurifier extends AbsWaterPurifier> 
             }
         }
         String deviceTitle = obj.title;
-        mTvDeviceModelName.setText(deviceTitle);
+//        mTvDeviceModelName.setText(deviceTitle);
+        mTvDeviceModelName.setText(mWaterPurifier.getName() == null || mWaterPurifier.getName().equals(mWaterPurifier.getCategoryName())  ? mWaterPurifier.getDispalyType() : mWaterPurifier.getName());
         String backgroundImg = obj.viewBackgroundImg;
         Glide.with(cx).load(backgroundImg).into(mIvBg);
         OtherFunc otherFunc = obj.modelMap.otherFunc;
@@ -650,6 +660,8 @@ public class AbsDeviceWaterPurifierPage<WaterPurifier extends AbsWaterPurifier> 
         if (mWaterPurifier == null) {
             return;
         }
+        FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+        firebaseAnalytics.setCurrentScreen(getActivity(), mWaterPurifier.getDt(), null);
     }
 
 
@@ -670,7 +682,7 @@ public class AbsDeviceWaterPurifierPage<WaterPurifier extends AbsWaterPurifier> 
         @Override
         public WaterPurifierOtherFuncViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = mInflater.inflate(R.layout.item_otherfunc_page, parent, false);
-
+            ScreenAdapterTools.getInstance().loadView(view);
             WaterPurifierOtherFuncViewHolder otherFuncViewHolder = new WaterPurifierOtherFuncViewHolder(view);
             otherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override

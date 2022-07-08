@@ -3,6 +3,7 @@
 
 
     <!-- text -->
+    <dimen name="common_text_size_large">22sp</dimen>
     <dimen name="common_text_size_medium">15sp</dimen>
     <dimen name="common_text_size_small">12sp</dimen>
 
@@ -14,6 +15,7 @@
     <!-- popWindown -->
     <dimen name="common_popWindown_height">456px</dimen>
     <dimen name="common_popWindown_width">1030px</dimen>
+    <dimen name="common_divMain_margintop">10dp</dimen>
     <dimen name="common_microwava_popWindown_height">456px</dimen>
     <dimen name="common_stove_popWindown_height">456px</dimen>
 

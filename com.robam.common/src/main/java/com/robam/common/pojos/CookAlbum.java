@@ -4,12 +4,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.j256.ormlite.field.DatabaseField;
 import com.legent.pojos.AbsStorePojo;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 烧菜图片分享圈
  *
  * @author sylar
  */
-public class CookAlbum extends AbsStorePojo<Long> {
+public class CookAlbum extends AbsStorePojo<Long> implements Serializable {
 
     public final static String Col_ID = "id";
     public final static String COL_praiseCount = "praiseCount";
@@ -34,6 +38,10 @@ public class CookAlbum extends AbsStorePojo<Long> {
     @JsonProperty("desc")
     public String desc;
 
+    public String bookName;
+
+    public String createdTime;
+
     @DatabaseField
     @JsonProperty("ownerName")
     public String ownerName;
@@ -41,6 +49,8 @@ public class CookAlbum extends AbsStorePojo<Long> {
     @DatabaseField(columnName = COL_praiseCount)
     @JsonProperty("praiseCount")
     public int praiseCount;
+
+    public ArrayList<String> url;
 
     @DatabaseField
     @JsonProperty("hasPraised")

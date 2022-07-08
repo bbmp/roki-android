@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_bg_main">
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#00ffffff" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/status_bar_fix"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/title"
+            layout="@layout/title_layout_device_mian" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_favourite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/title" />
+
+        <TextView
+            android:id="@+id/tv_top_tips"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_36"
+            android:layout_below="@id/title"
+            android:background="@color/device_new_connected"
+            android:gravity="center"
+            android:text="请先连接智能灶，再启动菜谱。"
+            android:textSize="@dimen/sp_12"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+</RelativeLayout>
+

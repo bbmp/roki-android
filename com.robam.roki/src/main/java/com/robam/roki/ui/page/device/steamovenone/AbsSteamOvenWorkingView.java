@@ -3,7 +3,6 @@ package com.robam.roki.ui.page.device.steamovenone;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -35,7 +34,7 @@ import com.robam.roki.R;
 import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.utils.DialogUtil;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -208,7 +207,7 @@ public class AbsSteamOvenWorkingView extends FrameLayout {
 
     public void initView() {
         View view = LayoutInflater.from(cx).inflate(R.layout.abs_steamoven_working_page, this, true);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         if (!view.isInEditMode()) {
             ButterKnife.inject(this, view);
         }
@@ -744,14 +743,14 @@ public class AbsSteamOvenWorkingView extends FrameLayout {
             localAutoRecipe();
         }
 
-        if (steameOvenOne.worknStatus == SteamOvenOneWorkStatus.PreHeat &&
+        if (steameOvenOne.workState == SteamOvenOneWorkStatus.PreHeat &&
                 steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus) {
             heatMode();
-        } else if (steameOvenOne.worknStatus == SteamOvenOneWorkStatus.Working &&
+        } else if (steameOvenOne.workState == SteamOvenOneWorkStatus.Working &&
                 steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus) {
             runMode();
         } else if (steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.Pause &&
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.On) {
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.On) {
             LogUtils.i("202010231621", steameOvenOne.powerOnStatus + "");
             pauseMode();
         } else if (steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.Order) {
@@ -946,7 +945,7 @@ public class AbsSteamOvenWorkingView extends FrameLayout {
 
     @OnClick(R.id.fl_run_stop)
     public void finishWork() {
-        LogUtils.i("2020092201", "steameOvenOne.powerStatus::" + steameOvenOne.powerStatus);
+        LogUtils.i("2020092201", "steameOvenOne.powerStatus::" + steameOvenOne.powerState);
         closedialog = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_TYPE_10);
         closedialog.setTitleText(R.string.close_work);
         closedialog.setContentText(R.string.is_close_work);
@@ -957,7 +956,7 @@ public class AbsSteamOvenWorkingView extends FrameLayout {
             public void onClick(View view) {
                 if (closedialog.isShow()) {
                     closedialog.dismiss();
-                    if (steameOvenOne.powerStatus == SteamOvenOnePowerOnStatus.Order || steameOvenOne.powerStatus == SteamOvenOnePowerOnStatus.WorkingStatus) {
+                    if (steameOvenOne.powerState == SteamOvenOnePowerOnStatus.Order || steameOvenOne.powerState == SteamOvenOnePowerOnStatus.WorkingStatus) {
                         steameOvenOne.setSteameOvenStatus(SteamOvenOnePowerStatus.On, SteamOvenOnePowerOnStatus.OperatingState, null);
                     } else {
                         steameOvenOne.setSteameOvenStatus(SteamOvenOnePowerStatus.Off, SteamOvenOnePowerOnStatus.OperatingState, null);

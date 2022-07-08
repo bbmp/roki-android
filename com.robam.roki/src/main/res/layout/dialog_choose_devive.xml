@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@drawable/shape_dialog_bg"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:textColor="#000"
+        android:layout_marginTop="@dimen/dp_15"
+        android:textSize="@dimen/sp_24"
+        android:gravity="center"
+        android:text="选择设备"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+<!--    <RadioGroup-->
+<!--        android:layout_marginTop="@dimen/dp_34"-->
+<!--        android:id="@+id/diaog_choose_device_rg"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+<!--        <RadioButton-->
+<!--            android:paddingLeft="@dimen/dp_10"-->
+<!--            style="@style/device_picker_check_box_style"-->
+<!--            android:textSize="@dimen/sp_18"-->
+<!--            android:layout_marginLeft="@dimen/dp_20"-->
+<!--            android:layout_marginRight="@dimen/dp_20"-->
+<!--            android:background="@drawable/shape_conner_bg"-->
+<!--            android:id="@+id/diaog_choose_device_rb_1"-->
+<!--            android:text="烘烤一体机"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/dp_55"/>-->
+<!--        <RadioButton-->
+<!--            android:paddingLeft="@dimen/dp_10"-->
+<!--            style="@style/device_picker_check_box_style"-->
+<!--            android:textSize="@dimen/sp_18"-->
+<!--            android:layout_marginLeft="@dimen/dp_20"-->
+<!--            android:layout_marginTop="@dimen/dp_8"-->
+<!--            android:layout_marginRight="@dimen/dp_20"-->
+<!--            android:id="@+id/diaog_choose_device_rb_2"-->
+<!--            android:text="烘烤一体机"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/dp_55"/>-->
+<!--        <RadioButton-->
+<!--            android:paddingLeft="@dimen/dp_10"-->
+<!--            style="@style/device_picker_check_box_style"-->
+<!--            android:textSize="@dimen/sp_18"-->
+<!--            android:layout_marginLeft="@dimen/dp_20"-->
+<!--            android:layout_marginTop="@dimen/dp_8"-->
+<!--            android:layout_marginRight="@dimen/dp_20"-->
+<!--            android:id="@+id/diaog_choose_device_rb_3"-->
+<!--            android:text="烘烤一体机"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/dp_55"/>-->
+
+
+<!--    </RadioGroup>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dialog_device_choose_list"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_180"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/ButtonStyle"
+        android:background="@drawable/shape_icon_save_bg"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginRight="@dimen/dp_60"
+       android:layout_marginLeft="@dimen/dp_60"
+        android:id="@+id/dialog_choose_device_confirm"
+        android:text="确定"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:background="@drawable/shape_icon_bg_radius_23"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_32"
+        style="@style/style_button_cancel"
+        android:id="@+id/dialog_choose_device_cancel"
+        android:text="取消"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

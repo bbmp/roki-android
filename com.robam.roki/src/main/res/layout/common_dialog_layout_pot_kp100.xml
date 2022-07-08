@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/common_dialog_bottom_bg_with_top_20corner"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="36dp"
+            android:layout_marginRight="@dimen/dp_20"
+            android:gravity="center"
+            android:text="请将食材放入无人锅，选择炉头并开启录制烹饪。"
+            android:textColor="#333333"
+            android:textSize="18dp" />
+        <TextView
+            android:id="@+id/tv_content_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_80"
+            android:layout_marginRight="@dimen/dp_50"
+            android:layout_marginBottom="@dimen/dp_80"
+            android:gravity="center"
+            android:text="请将食材放入无人锅，选择炉头并开启录制烹饪。"
+            android:textColor="#333333"
+            android:textSize="18dp" />
+        <LinearLayout
+            android:id="@+id/ll_heard_choice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_left_head"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"
+                android:layout_marginRight="@dimen/dp_24"
+                android:src="@mipmap/ic_left_off" />
+
+            <ImageView
+                android:id="@+id/img_right_head"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:src="@mipmap/ic_right_off" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_change_battery"
+            android:layout_width="@dimen/dp_256"
+            android:layout_height="@dimen/dp_190"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_50"
+            android:src="@mipmap/pot_state_high" />
+
+        <LinearLayout
+            android:id="@+id/ll_buttom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_finish"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/shape_yellow_bg4"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/shape_main_color_10dp_bg"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

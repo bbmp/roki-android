@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/waterpurifier_alarm"
+    android:baselineAligned="false">
+
+    <ImageView
+        android:id="@+id/water_leak"
+        android:layout_marginTop="68dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/img_water_making_all"
+        />
+    <LinearLayout
+        android:id="@+id/water_ll"
+        android:layout_below="@id/water_leak"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <ImageView
+            android:layout_marginLeft="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/img_waterpurifier_alarm"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="3dp"
+            android:textSize="20sp"
+            android:lines="1"
+            android:textColor="#ffffff"
+            android:text="检测到水龙头超长时间出水,"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/water_ll1"
+        android:layout_below="@id/water_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" 净水器开启了智能节流，"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            />
+
+        <TextView
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="  避免家庭水资源浪费。"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/water_text1"
+        android:layout_below="@id/water_ll1"
+        android:gravity="center"
+        android:layout_marginTop="11dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请检查水龙头，是否忘了关闭。"
+        android:textSize="12sp"
+        android:textColor="#fe0e0e"
+        />
+
+    <LinearLayout
+        android:id="@+id/water_ll2"
+        android:layout_below="@id/water_text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/water_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="再按一下 “"
+            android:textSize="12sp"
+            android:textColor="#fe0e0e"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/img_waterpurifier_restore"
+            />
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="” 键恢复初始状态，"
+            android:textSize="12sp"
+            android:textColor="#fe0e0e"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/water_alarm_btn"
+        android:layout_width="171dp"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:text="一键售后"
+        android:textSize="15sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:background="#f55821"
+        />
+
+</RelativeLayout>

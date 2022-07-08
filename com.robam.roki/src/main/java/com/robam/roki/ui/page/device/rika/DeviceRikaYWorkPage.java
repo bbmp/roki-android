@@ -27,6 +27,7 @@ import com.legent.VoidCallback;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
+import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.TimeUtils;
 import com.legent.utils.api.PreferenceUtils;
@@ -51,6 +52,8 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 import static android.content.Context.VIBRATOR_SERVICE;
+import static com.legent.ContextIniter.cx;
+import static com.robam.common.pojos.device.rika.RikaStatus.SUBSET_OFF_COUNT;
 
 /**
  * Created by 14807 on 2018/2/9.
@@ -126,30 +129,73 @@ public class DeviceRikaYWorkPage extends BasePage implements OnTouchListener {
     boolean sige = false;
     Vibrator mVibrator;
     private IRokiDialog mCloseDialog;
-    private boolean isShow = true;
+    private boolean isPageShow = true;
     private boolean isComplete = false;
 
     @Subscribe
     public void onEvent(RikaStatusChangedEvent event) {
+        LogUtils.i("20220318", "RikaStatusChangedEvent:" + mRika.steamOvenWorkStatus);
         if (mRika == null || !Objects.equal(mRika.getID(), event.pojo.getID()))
             return;
         mRika = event.pojo;
         int steamOvenTimeWorkRemaining = event.pojo.steamOvenTimeWorkRemaining;
-        if (mRika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_NOT) {
+        //子设备离线累计计数 一体机
+        if(mRika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_NOT){
+            mRika.steamOvenStatusOffTotal++;
+        }else {
+            mRika.steamOvenStatusOffTotal=0;
+        }
+        //子设备离线累计计数 蒸箱
+        if(mRika.steamWorkStatus == RikaStatus.STEAM_NOT){
+            mRika.steamStatusOffTotal++;
+        }else {
+            mRika.steamStatusOffTotal=0;
+        }
+        //子设备离线累计计数 消毒柜
+        if(mRika.sterilWorkStatus == RikaStatus.STERIL_NOT){
+            mRika.sterilStatusOffTotal++;
+        }else {
+            mRika.sterilStatusOffTotal=0;
+        }
+        LogUtils.i("20220409","离线次数："+mRika.steamOvenStatusOffTotal);
+        if (mRika.steamOvenStatusOffTotal >= SUBSET_OFF_COUNT && isPageShow) {
+            isPageShow = false;
             ToastUtils.showShort(R.string.steam_oven_invalid_error);
             UIService.getInstance().popBack();
+            return;
+        }
+//        if ((mRika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_OFF || mRika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_NOT) && isPageShow) {
+//            isPageShow = false;
+//            ToastUtils.showShort(R.string.steam_oven_invalid_error);
+//            UIService.getInstance().popBack();
+//            return;
+//        }
+        if (mRika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_OFF) {
+            LogUtils.i("20180815", " steamOvenWorkStatus:" + mRika.steamOvenWorkStatus);
+            if (getPageTitle() != null)
+                UIService.getInstance().popBack();
             return;
         }
         if (mRika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_PREHEAT || mRika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_RUN) {
             isComplete = false;
         }
-        updateUI(steamOvenTimeWorkRemaining);
+//        LogUtils.i("20220318", "steamOvenWorkStatus:" + mRika.steamOvenWorkStatus);
+        if (mRika.steamOvenWorkStatus != RikaStatus.STEAMOVEN_NOT ) {
+            updateUI(steamOvenTimeWorkRemaining);
+        }
+
     }
 
     @Subscribe
     public void onEvent(RikaSteamOvenWorkEvent event) {
+        LogUtils.i("20220318", "RikaSteamOvenWorkEvent:" + mRika.steamOvenWorkStatus);
         if (mRika == null || !Objects.equal(mRika.getID(), event.rika.getID()))
             return;
+        if ((mRika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_OFF || mRika.steamOvenWorkStatus == RikaStatus.STEAMOVEN_NOT) && isPageShow) {
+            isPageShow = false;
+            UIService.getInstance().popBack();
+            return;
+        }
         if (event.steamOvenEventCode == 15) {
             if (event.steamOvenEventArg == 0) {
                 complete();
@@ -170,12 +216,23 @@ public class DeviceRikaYWorkPage extends BasePage implements OnTouchListener {
 
     @Subscribe
     public void onEvent(DeviceConnectionChangedEvent event) {
+        LogUtils.i("20220318", "DeviceConnectionChangedEvent:");
+
         if (mRika == null || !Objects.equal(mRika.getID(), event.device.getID()))
             return;
-        if (!event.isConnected) {
+        if(event.isConnected){
+            event.offLineTotal++;
+        }else{
+            event.offLineTotal=0;
+        }
+        if (event.offLineTotal>=2) {
             ToastUtils.showLong(R.string.device_new_connected);
             UIService.getInstance().popBack();
         }
+//        if (!event.isConnected) {
+//            ToastUtils.showLong(R.string.device_new_connected);
+//            UIService.getInstance().popBack();
+//        }
     }
 
     private void complete() {
@@ -185,6 +242,7 @@ public class DeviceRikaYWorkPage extends BasePage implements OnTouchListener {
         mTvSterilizerDesc.setVisibility(View.GONE);
         mTvWorkingResidueTimeDesc.setVisibility(View.GONE);
         mFlRunStop.setVisibility(View.GONE);
+        UIService.getInstance().popBack();
     }
 
     private void updateUI(int time) {
@@ -223,12 +281,12 @@ public class DeviceRikaYWorkPage extends BasePage implements OnTouchListener {
             } else {
                 mTvTemp.setText(mRika.steamOvenSetTemp + "℃");
             }
-            mTvTime.setText(mRika.steamOvenSetTime+ "min");
+            mTvTime.setText(mRika.steamOvenSetTime + "min");
         } else {
             mAutoLayout.setVisibility(View.GONE);
             mRecipeLayout.setVisibility(View.VISIBLE);
             mTvDeviceModelName.setText(getRecipeName(mRika.steamOvenAutomaticRecipe));
-            mTvRecipe.setText("P"+mRika.steamOvenAutomaticRecipe+getRecipeName(mRika.steamOvenAutomaticRecipe));
+            mTvRecipe.setText("P" + mRika.steamOvenAutomaticRecipe + getRecipeName(mRika.steamOvenAutomaticRecipe));
         }
 
         if (RikaStatus.STEAMOVEN_RUN == workStatus) {
@@ -258,7 +316,7 @@ public class DeviceRikaYWorkPage extends BasePage implements OnTouchListener {
             mTvWorkingResidueTimeDesc.setText("预热中");
             mTvWorkingResidueTimeDesc.setTextSize(36);
             mTvWorkingResidueTime.setTextSize(20);
-            mTvWorkingResidueTime.setText("当前温度: " + mRika.steamOvenWorkTemp+ "℃" );
+            mTvWorkingResidueTime.setText("当前温度: " + mRika.steamOvenWorkTemp + "℃");
             mFlRunStop.setVisibility(View.VISIBLE);
             sige = false;
 //            mTvModel.setText(R.string.sterilize_drying_text);
@@ -368,6 +426,7 @@ public class DeviceRikaYWorkPage extends BasePage implements OnTouchListener {
         stopAnimation();
         isComplete = false;
         ButterKnife.reset(this);
+
     }
 
     @OnClick(R.id.iv_back)
@@ -435,38 +494,38 @@ public class DeviceRikaYWorkPage extends BasePage implements OnTouchListener {
 
     @OnClick(R.id.fl_run_stop)
     public void onMFlRunStopClicked() {
-            mCloseDialog = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_TYPE_10);
-            mCloseDialog.setTitleText(R.string.close_work);
-            mCloseDialog.setContentText(R.string.is_close_work);
-            mCloseDialog.show();
-            mCloseDialog.setOkBtn(R.string.ok_btn, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mCloseDialog.dismiss();
-                    if (RikaStatus.STEAMOVEN_ON != mRika.steamOvenWorkStatus) {
-                        short n = 0;
-                        mRika.setSteamWorkStatus((short) 1, RikaStatus.STEAMQVEN_CATEGORYCODE, (short) 1,
-                                (short) 49, (short) 1, RikaStatus.STEAMOVEN_OFF, new VoidCallback() {
-                                    @Override
-                                    public void onSuccess() {
-                                        UIService.getInstance().popBack();
-                                    }
+        mCloseDialog = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_TYPE_10);
+        mCloseDialog.setTitleText(R.string.close_work);
+        mCloseDialog.setContentText(R.string.is_close_work);
+        mCloseDialog.show();
+        mCloseDialog.setOkBtn(R.string.ok_btn, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCloseDialog.dismiss();
+                if (RikaStatus.STEAMOVEN_ON != mRika.steamOvenWorkStatus) {
+                    short n = 0;
+                    mRika.setSteamWorkStatus((short) 1, RikaStatus.STEAMQVEN_CATEGORYCODE, (short) 1,
+                            (short) 49, (short) 1, RikaStatus.STEAMOVEN_OFF, new VoidCallback() {
+                                @Override
+                                public void onSuccess() {
+                                    UIService.getInstance().popBack();
+                                }
 
-                                    @Override
-                                    public void onFailure(Throwable t) {
-                                    }
-                                });
-                    }
+                                @Override
+                                public void onFailure(Throwable t) {
+                                }
+                            });
                 }
-            });
-            mCloseDialog.setCancelBtn(R.string.can_btn, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mCloseDialog.isShow()) {
-                        mCloseDialog.dismiss();
-                    }
+            }
+        });
+        mCloseDialog.setCancelBtn(R.string.can_btn, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCloseDialog.isShow()) {
+                    mCloseDialog.dismiss();
                 }
-            });
+            }
+        });
     }
 
     @Override

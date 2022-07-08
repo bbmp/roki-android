@@ -10,6 +10,22 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_ADDED" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" /> <!-- 网络权限 -->
@@ -27,9 +43,11 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 屏幕唤醒 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 获取手机录音机使用权限,听写、识别、语义理解需要用到此权限 -->
@@ -42,8 +60,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-    <!-- 显示顶层浮窗 -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" /> <!-- 显示顶层浮窗 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -52,64 +69,326 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-
     <application
         android:name=".MobApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:logo="@mipmap/ic_launcher"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/RokiFullScreenTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:label,android:icon,android:allowBackup"
         tools:targetApi="n">
+        <activity
+            android:name=".ui.activity3.device.steamoven.SteamCurveWorkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity3.recipedetail.RecipeSearchActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activity3.device.steamoven.SteamMoreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity3.device.base.DevicePMenuActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activity3.device.pot.PotCookingCurveActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity
+            android:name=".ui.activity3.device.pot.PotMoreMenuActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activity3.device.pot.PotMyFavouriteActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activity3.device.stove.StoveTimingFireActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.page.device.steamovenone.steamovenone920.Local620CookbookDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.device.steamoven.AddMutilEditCookBookActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity3.device.steamoven.NewMutilCookBook4Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity3.device.steamoven.LocalSteamCookbookActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.page.device.steamovenone.steamovenone920.Local620CookbookDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.page.device.steamovenone.steamovenone920.LocalCookbook620Activity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 烟机主界面功能模块 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.fan.FanFunctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 烟机联动模块 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.fan.FanLinkageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 智能恒吸 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.fan.FanConSuctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 假日模式 4.0 -->
+        <!-- 假日模式 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.fan.FanHolidayActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 假日模式 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.fan.FanMoreActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 无人锅功能界面 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.pot.PotFunctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 一体机功能界面 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.steamoven.SteamOvenFunctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 灶具功能界面 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.stove.StoveFunctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 洗碗机功能界面 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.dishwasher.DishWssherFunctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 洗碗机节水统计 4.0 -->
+        <!-- 模式选择 4.0 -->
+        <!-- 洗碗机节水统计 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.dishwasher.DishWaterCensusActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 模式选择 4.0 -->
+        <!-- 洗碗机专业模式 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.dishwasher.DishModeSelectActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 一体机模式选择 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.steamoven.SteamOvenModeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 洗碗机工作界面 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.dishwasher.DishWorkActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 洗碗机更多界面 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.dishwasher.DishMoreActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 洗碗机免打扰设置 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.dishwasher.DishDisturbActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 洗碗机耗材通知 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.dishwasher.DishConsNotifiActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 设备信息界面 4.0 -->
+        <!-- 洗碗机教程界面 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.dishwasher.DishCourseActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 设备信息界面 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.base.DeviceInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 设备留言咨询 4.0 -->
+        <!-- 设备留言咨询 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.base.DeviceChatActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 藏宝盒首页 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.hidkit.HidKitFunctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 藏宝盒更多 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.hidkit.HidkitMoreActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 藏宝盒二级功能页 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.hidkit.HidKitOtherActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 藏宝盒智能家居 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.hidkit.HidKitSmartHomeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 一体机工作界面 4.0 -->
+        <activity
+            android:name=".ui.activity3.device.steamoven.SteamOvenWorkActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.RandomRecipeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.recipedetail.ProductDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.page.device.steamovenone.steamovenone920.CustomizeRecipeOrPreviewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.page.device.steamovenone.steamovenone920.RecipeListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.page.device.steamovenone.steamovenone620.ui.CreateRecipeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.page.device.steamovenone.steamovenone620.ui.MultiRecipeSteamOvenPageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.RandomRecipeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.recipedetail.ProductDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.SelectThemeDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.recipedetail.RecipeDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.recipedetail.ImagePreviewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- 图片选择 -->
+        <activity
+            android:name=".ui.activity3.ImageSelectActivity"
+            android:label="@string/image_select_title"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.recipedetail.PublishListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.recipedetail.PublishedWorksActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.ChatActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.NotificationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity3.MessageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name="com.zlw.main.recorderlib.recorder.RecordService"
+            android:exported="false"
+            tools:ignore="MissingClass" />
+
+        <activity
+            android:name=".ui.page.curve.SaveCurveSuccessActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.page.curve.CookingCurveListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.page.curve.RecipeSuccessActivity"
+            android:configChanges="keyboard"
+            android:exported="false"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ui.page.curve.DishesPreparedByStepActivity"
+            android:configChanges="keyboard"
+            android:exported="false"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ui.page.curve.FlavouringActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.page.curve.RecipeCureDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
         <activity
             android:name=".ui.push.MfrMessageActivity"
             android:exported="true"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="${applicationId}"
                     android:path="/thirdpush"
                     android:scheme="agoo" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.form.WelcomeActivity"
             android:launchMode="singleTop"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/RokiFullScreenTheme">
+            android:resizeableActivity="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.cmic.sso.sdk.activity.LoginAuthActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="unspecified"
             android:launchMode="singleTop"
-            />
-
+            android:screenOrientation="unspecified" />
         <activity
             android:name=".ui.form.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/RokiFullScreenTheme"
-             />
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.activity3.main.HomeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.activity3.temporary.TemporaryActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.activity3.SpeechCookActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -121,23 +400,40 @@
             android:launchMode="singleTask"
             android:theme="@style/RokiFullScreenTheme"
             android:windowSoftInputMode="stateUnspecified|stateHidden" />
-
+        <activity
+            android:name=".ui.activity3.NotificationWebActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/RokiFullScreenTheme"
+            android:windowSoftInputMode="stateUnspecified|stateHidden" />
         <activity
             android:name=".ui.activity3.RWebActivity"
-            android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:windowSoftInputMode="stateUnspecified|stateHidden"
-            android:theme="@style/RokiFullScreenTheme"/>
+            android:launchMode="singleTop"
+            android:theme="@style/RokiFullScreenTheme"
+            android:windowSoftInputMode="stateUnspecified|stateHidden" />
         <activity
             android:name=".ui.form.UserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RokiFullScreenTheme"
             android:windowSoftInputMode="stateUnspecified|stateHidden" />
         <activity
+            android:name=".ui.page.device.steamovenone.steamovenone920.RecipePreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.form.WizardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RokiFullScreenTheme"
             android:windowSoftInputMode="stateUnspecified|stateHidden" />
+        <activity
+            android:name=".ui.form.CookCurveActivity"
+            android:configChanges="orientation"
+            android:theme="@style/RokiFullScreenTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".ui.form.SteamOvenCookCurveActivity"
+            android:configChanges="orientation"
+            android:theme="@style/RokiFullScreenTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".ui.form.CookingActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -147,24 +443,20 @@
             android:name=".ui.form.RecipePotActivity"
             android:configChanges="orientation"
             android:theme="@style/RokiFullScreenTheme"
-            android:windowSoftInputMode="stateHidden|adjustPan"  /> <!-- extend activity -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- extend activity -->
         <activity
             android:name=".ui.form.RecipeActivity"
             android:configChanges="orientation"
-
             android:theme="@style/RokiFullScreenTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".ui.form.RecipeNoDeviceActivity"
             android:configChanges="orientation"
-
             android:theme="@style/RokiFullScreenTheme"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-<!--        android:screenOrientation="landscape"-->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- android:screenOrientation="landscape" -->
         <activity
             android:name=".ui.form.RecipeRRQZActivity"
             android:configChanges="orientation"
-
             android:theme="@style/RokiFullScreenTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
@@ -179,22 +471,32 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.dialog.CountDownDialog"
-            android:theme="@style/AppTheme" /> <!-- 播放界面demo -->
+            android:theme="@style/RokiFullScreenTheme" /> <!-- 播放界面demo -->
         <activity
             android:name=".ui.form.VideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".ui.view.networkoptimization.BleConnectActivity" />
-
+            android:theme="@style/RokiFullScreenTheme" />
+        <activity android:name=".ui.view.networkoptimization.BleConnectActivity" />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
-            android:theme="@style/AppTheme" />
-         <!-- service -->
+            android:theme="@style/RokiFullScreenTheme" />
+        <activity
+            android:name=".ui.activity3.temporary.ThemeListActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.activity3.EditDeviceNameActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.activity3.EditUserNameActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" /> <!-- service -->
         <service android:name=".ui.floating.FloatingService" />
+
         <receiver
             android:name="com.legent.plat.services.DevicePollingReceiver"
             android:exported="false">
@@ -237,7 +539,9 @@
         <meta-data
             android:name="client_secret"
             android:value="9a98ce3841ae9f686fbea940a93b8167" />
-
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" /> <!-- 友盟推送 -->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="57b7ea43e0f55a4697000cb0" />
@@ -255,51 +559,176 @@
             android:value="1.0" />
         <meta-data
             android:name="unit"
-            android:value="dp" />
-        <!-- 允许绘制到小米刘海屏机型的刘海区域 -->
+            android:value="dp" /> <!-- 允许绘制到小米刘海屏机型的刘海区域 -->
         <meta-data
             android:name="notch.config"
-            android:value="portrait" />
-        <!-- 允许绘制到华为刘海屏机型的刘海区域 -->
+            android:value="portrait" /> <!-- 允许绘制到华为刘海屏机型的刘海区域 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" />
+            android:value="true" /> <!-- Android 11 软件包可见性适配：https://www.jianshu.com/p/d1ccd425c4ce -->
+        <!-- <queries> -->
+        <!-- &lt;!&ndash; 拍照意图：MediaStore.ACTION_IMAGE_CAPTURE &ndash;&gt; -->
+        <!-- <intent> -->
+        <!-- <action android:name="android.media.action.IMAGE_CAPTURE" /> -->
+        <!-- </intent> -->
+        <!-- &lt;!&ndash; 拍摄意图：MediaStore.ACTION_VIDEO_CAPTURE &ndash;&gt; -->
+        <!-- <intent> -->
+        <!-- <action android:name="android.media.action.VIDEO_CAPTURE" /> -->
+        <!-- </intent> -->
+        <!-- &lt;!&ndash; 图片裁剪意图 &ndash;&gt; -->
+        <!-- <intent> -->
+        <!-- <action android:name="com.android.camera.action.CROP" /> -->
+        <!-- </intent> -->
+        <!-- &lt;!&ndash; 打电话意图：Intent.ACTION_DIAL &ndash;&gt; -->
+        <!-- <intent> -->
+        <!-- <action android:name="android.intent.action.DIAL" /> -->
+        <!-- </intent> -->
+        <!-- &lt;!&ndash; 分享意图：Intent.ACTION_SEND &ndash;&gt; -->
+        <!-- <intent> -->
+        <!-- <action android:name="android.intent.action.SEND" /> -->
+        <!-- </intent> -->
+        <!-- &lt;!&ndash; 调起其他页面意图：Intent.ACTION_VIEW &ndash;&gt; -->
+        <!-- <intent> -->
+        <!-- <action android:name="android.intent.action.VIEW" /> -->
+        <!-- </intent> -->
+        <!-- &lt;!&ndash; 手 Q 的包名 &ndash;&gt; -->
+        <!-- <package android:name="com.tencent.mobileqq" /> -->
+        <!-- &lt;!&ndash; 微信的包名 &ndash;&gt; -->
+        <!-- <package android:name="com.tencent.mm" /> -->
+        <!-- </queries> -->
+        <service
+            android:name="com.taobao.accs.ChannelService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.SERVICE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.ELECTION" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="appid=10396002" />
+
+        <service
+            android:name="com.taobao.accs.data.MsgDistributeService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.taobao.accs.EventReceiver"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.taobao.accs.ServiceReceiver"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.COMMAND" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.START_FROM_AGOO" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.taobao.accs.ChannelService$KernelService"
+            android:process=":channel" />
+        <service
+            android:name="org.android.agoo.accs.AgooService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.umeng.message.UmengIntentService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.umeng.message.XiaomiIntentService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.taobao.agoo.AgooCommondReceiver"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.COMMAND" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.umeng.message.UmengMessageIntentReceiverService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="org.android.agoo.client.MessageReceiverService" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
+            android:exported="false" />
+
+        <service
+            android:name="com.umeng.message.UmengMessageCallbackHandlerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.umeng.messge.registercallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.enablecallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.disablecallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.message.handler.action" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.umeng.message.UmengDownloadResourceService"
+            android:exported="false" />
+
+        <provider
+            android:name="com.umeng.message.provider.MessageProvider"
+            android:authorities="${applicationId}.umeng.message"
+            android:exported="false">
+            <grant-uri-permission android:pathPattern=".*" />
+        </provider>
     </application>
-    <!-- Android 11 软件包可见性适配：https://www.jianshu.com/p/d1ccd425c4ce -->
-<!--    <queries>-->
-<!--        &lt;!&ndash; 拍照意图：MediaStore.ACTION_IMAGE_CAPTURE &ndash;&gt;-->
-<!--        <intent>-->
-<!--            <action android:name="android.media.action.IMAGE_CAPTURE" />-->
-<!--        </intent>-->
-
-<!--        &lt;!&ndash; 拍摄意图：MediaStore.ACTION_VIDEO_CAPTURE &ndash;&gt;-->
-<!--        <intent>-->
-<!--            <action android:name="android.media.action.VIDEO_CAPTURE" />-->
-<!--        </intent>-->
-
-<!--        &lt;!&ndash; 图片裁剪意图 &ndash;&gt;-->
-<!--        <intent>-->
-<!--            <action android:name="com.android.camera.action.CROP" />-->
-<!--        </intent>-->
-
-<!--        &lt;!&ndash; 打电话意图：Intent.ACTION_DIAL &ndash;&gt;-->
-<!--        <intent>-->
-<!--            <action android:name="android.intent.action.DIAL" />-->
-<!--        </intent>-->
-
-<!--        &lt;!&ndash; 分享意图：Intent.ACTION_SEND &ndash;&gt;-->
-<!--        <intent>-->
-<!--            <action android:name="android.intent.action.SEND" />-->
-<!--        </intent>-->
-
-<!--        &lt;!&ndash; 调起其他页面意图：Intent.ACTION_VIEW &ndash;&gt;-->
-<!--        <intent>-->
-<!--            <action android:name="android.intent.action.VIEW" />-->
-<!--        </intent>-->
-<!--        &lt;!&ndash; 手 Q 的包名 &ndash;&gt;-->
-<!--        <package android:name="com.tencent.mobileqq" />-->
-<!--        &lt;!&ndash; 微信的包名 &ndash;&gt;-->
-<!--        <package android:name="com.tencent.mm" />-->
-<!--    </queries>-->
 
 </manifest>

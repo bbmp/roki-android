@@ -481,8 +481,8 @@ public class SteamOvenProModePage extends BasePage {
     //蒸、烤、辅助模式
     private void sendSteamOvenFZModel() {
         LogUtils.i("20200507000", "model::" + model);
-        if (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait
+        if (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait
                 ) {
             steameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
@@ -529,8 +529,8 @@ public class SteamOvenProModePage extends BasePage {
      * 干燥模式
      */
     private void dryMode(final String mode, final String defaultTime, final String defaultTemp) {
-        if (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait
+        if (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait
                 ) {
             steameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override

@@ -1,5 +1,7 @@
 package com.robam.common.io.device;
 
+import android.util.Log;
+
 import com.legent.plat.io.device.AbsPlatProtocol;
 import com.legent.plat.io.device.IAppMsgMarshaller;
 import com.legent.plat.io.device.msg.Msg;
@@ -34,6 +36,7 @@ public class RokiMsgMarshaller implements IAppMsgMarshaller {
     @Override
     public byte[] marshal(Msg msg) throws Exception {
         int key = msg.getID();
+        Log.e("结果",key+"---");
         ByteBuffer buf = ByteBuffer.allocate(BufferSize).order(BYTE_ORDER);
         if (isStoveMsg(msg)) {//灶具
             StoveMsgMar.marshaller(key, msg, buf);
@@ -57,7 +60,7 @@ public class RokiMsgMarshaller implements IAppMsgMarshaller {
             SteamOvenMsgMar.marshaller(key, msg, buf);
         }else if (isRikaMsg(msg)){//Rika
             RikaMsgMar.marshaller(key,msg,buf);
-        }else if (isCookerMsg(msg)){//灶具
+        }else if (isCookerMsg(msg)){//灶具w
             CookerMsgMar.marshaller(key,msg,buf);
         }else if (isDishWasher(msg)){//洗碗机
             DishWasherMsgMar.marshaller(key,msg,buf);
@@ -69,15 +72,33 @@ public class RokiMsgMarshaller implements IAppMsgMarshaller {
         }
 
         byte[] data = new byte[buf.position()];
+
+
         System.arraycopy(buf.array(), 0, data, 0, data.length);
+        Log.e("标记",key+"---");
+        if (key==169) {
+            Log.e("标记", buf.toString() + "----" + data.toString());
+        }
+
+        if (key==192){
+
+            String str="";
+            for (byte datum : data) {
+
+                str+=datum+" ";
+            }
+            Log.e(TAG,str);
+
+        }
         buf.clear();
         return data;
     }
 
+    private static final String TAG = "RokiMsgMarshaller";
+
     //将字节流反序列化成设备通讯消息模型
     @Override
     public void unmarshal(Msg msg, byte[] payload) throws Exception {
-
         int key = msg.getID();
         if (isStoveMsg(msg)) {
             StoveMsgMar.unmarshaller(key, msg, payload);
@@ -110,6 +131,7 @@ public class RokiMsgMarshaller implements IAppMsgMarshaller {
         }    else if (isRJCZMsg(msg)){//集成灶
             IntegratedStoveMsgMar.unmarshaller(key,msg,payload);
         }
+        Log.e("结果",key+"---");
     }
 
     private boolean isCookerMsg(Msg msg){

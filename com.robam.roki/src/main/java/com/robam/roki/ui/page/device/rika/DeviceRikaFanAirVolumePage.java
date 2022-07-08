@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.VoidCallback;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.legent.plat.pojos.device.SubView;
@@ -115,6 +116,10 @@ public class DeviceRikaFanAirVolumePage extends BasePage {
         if (mRika==null) {
             return;
         }
+        if (mRika.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), mRika.getDt() + ":烟机风量页", null);
+        }
     }
 
     @Subscribe
@@ -201,7 +206,7 @@ public class DeviceRikaFanAirVolumePage extends BasePage {
                     mTvStoveCenter.setText(deviceVolumeList.get(i).functionName);
                     fanNumCenter();
                 } else if ("offButton".equals(deviceVolumeList.get(i).functionCode)) {
-                    ImageUtils.displayImage(cx, deviceVolumeList.get(i).backgroundImg, mIvFanCloseVolume);
+                    ImageUtils.displayImage(deviceVolumeList.get(i).backgroundImg, mIvFanCloseVolume);
                 }
             }
 

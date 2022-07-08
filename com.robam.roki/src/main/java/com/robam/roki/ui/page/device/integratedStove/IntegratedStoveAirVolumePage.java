@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.VoidCallback;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.legent.plat.pojos.device.SubView;
@@ -24,6 +25,7 @@ import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.graphic.ImageUtils;
+import com.robam.base.BaseDialog;
 import com.robam.common.events.IntegStoveStatusChangedEvent;
 import com.robam.common.events.RikaStatusChangedEvent;
 import com.robam.common.pojos.device.integratedStove.AbsIntegratedStove;
@@ -34,7 +36,6 @@ import com.robam.roki.MobApp;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.mdialog.MessageDialog;
-import com.robam.roki.ui.widget.base.BaseDialog;
 import com.robam.roki.utils.ToolUtils;
 
 import java.util.List;
@@ -142,6 +143,10 @@ public class IntegratedStoveAirVolumePage extends BasePage {
         if (integratedStove == null) {
             return;
         }
+        if (integratedStove.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), integratedStove.getDt() + ":烟机风量页", null);
+        }
     }
 
     @Subscribe
@@ -240,7 +245,7 @@ public class IntegratedStoveAirVolumePage extends BasePage {
                     mTvStoveCenter.setText(deviceVolumeList.get(i).functionName);
                     fanNumCenter();
                 } else if ("offButton".equals(deviceVolumeList.get(i).functionCode)) {
-                    ImageUtils.displayImage(cx, deviceVolumeList.get(i).backgroundImg, mIvFanCloseVolume);
+                    ImageUtils.displayImage(deviceVolumeList.get(i).backgroundImg, mIvFanCloseVolume);
                 }
             }
 

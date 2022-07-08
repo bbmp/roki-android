@@ -16,12 +16,6 @@ public class ToastUtils {
 		ToastUtils.cx = cx;
 	}
 
-	public static void show(String msg) {
-		showShort(msg);
-	}
-	public static void show(int resId) {
-		showShort(resId);
-	}
 	public static void showThrowable(Throwable t) {
 		if (t != null)
 			showShort(t.getMessage());

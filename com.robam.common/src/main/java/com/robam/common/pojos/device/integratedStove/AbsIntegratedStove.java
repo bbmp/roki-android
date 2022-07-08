@@ -11,6 +11,7 @@ import com.legent.plat.io.RCMsgCallbackWithVoid;
 import com.legent.plat.io.device.msg.Msg;
 import com.legent.plat.pojos.device.AbsDeviceHub;
 import com.legent.plat.pojos.device.DeviceInfo;
+import com.legent.utils.ByteUtils;
 import com.legent.utils.LogUtils;
 import com.robam.common.events.IntegStoveAlarmEvent;
 import com.robam.common.events.IntegStoveEvent;
@@ -593,7 +594,7 @@ public class AbsIntegratedStove extends AbsDeviceHub implements IintegStove, Ser
 //                                this.waterLevelState = 1;
 //                                break;
                             case START_WORK:
-                                this.workState = IntegStoveStatus.workState_work;
+//                                this.workState = IntegStoveStatus.workState_work;
                                 break;
                             case PAUSE_WORK:
                                 this.workState = IntegStoveStatus.workState_work_time_out;
@@ -1157,14 +1158,16 @@ public class AbsIntegratedStove extends AbsDeviceHub implements IintegStove, Ser
      */
     public void setSteameOvenOneRunMode(final short mode, final short setTime,
                                         final short setTemp,
-                                        short orderTime, short steamFlow ,VoidCallback callback) {
+                                        int orderTime, short steamFlow ,VoidCallback callback) {
         try {
             Msg msg = newReqMsg(MsgKeys.setDeviceAttribute_Req);
             msg.putOpt(MsgParams.TerminalType, terminalType);
             msg.putOpt(UserId, getSrcUser());
 
             msg.putOpt(MsgParams.categoryCode , IntegratedStoveConstant.STEAME_OVEN_ONE);
-            msg.putOpt(ArgumentNumber, 8);
+            //参数个数
+                msg.putOpt(ArgumentNumber, 9);
+
             msg.putOpt(MsgParamsNew.type , 0) ;
             //一体机电源控制
             msg.putOpt(MsgParamsNew.powerCtrlKey, 2);
@@ -1176,7 +1179,8 @@ public class AbsIntegratedStove extends AbsDeviceHub implements IintegStove, Ser
             msg.putOpt(MsgParamsNew.workCtrl, 1);
             //预约时间
             msg.putOpt(MsgParamsNew.setOrderMinutesKey, 5);
-            msg.putOpt(MsgParamsNew.setOrderMinutesLength, 1);
+            byte[] orderTimeBytes = ByteUtils.intToBytes2(orderTime);
+            msg.putOpt(MsgParamsNew.setOrderMinutesLength, orderTimeBytes.length);
             msg.putOpt(MsgParamsNew.setOrderMinutes, orderTime);
             //段数
             msg.putOpt(MsgParamsNew.sectionNumberKey, 100) ;

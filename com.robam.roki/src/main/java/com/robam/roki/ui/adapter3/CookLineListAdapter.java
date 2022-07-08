@@ -4,7 +4,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.legent.utils.api.ToastUtils;
+import com.hjq.toast.ToastUtils;
 import com.robam.common.pojos.CurveCookbookDto;
 import com.robam.common.pojos.PayLoadCookBook;
 import com.robam.roki.R;
@@ -28,15 +28,15 @@ public class CookLineListAdapter extends BaseQuickAdapter<PayLoadCookBook, BaseV
             holder.setText(R.id.tv_title , item.curveCookbookDto.name);
             TextView tv_show = (TextView)holder.getView(R.id.tv_show);
             tv_show.setOnClickListener(v -> {
-                ToastUtils.showShort("分享");
+                ToastUtils.show("分享");
             });
             TextView tv_check_edit = (TextView)holder.getView(R.id.tv_check_edit);
             tv_check_edit.setOnClickListener(v -> {
-                ToastUtils.showShort("查看编辑");
+                ToastUtils.show("查看编辑");
             });
             TextView tv_cook = (TextView)holder.getView(R.id.tv_cook);
             tv_cook.setOnClickListener(v -> {
-                ToastUtils.showShort("烹饪");
+                ToastUtils.show("烹饪");
             });
         }
     }

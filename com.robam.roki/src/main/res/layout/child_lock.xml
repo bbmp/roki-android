@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="130dp">
+
+            <com.robam.roki.ui.view.SlideLockView
+                android:id="@+id/slideLockView"
+                android:layout_width="62dp"
+                android:layout_height="256dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/shape_slide_lock_bg"
+                android:gravity="center"
+                app:lock_drawable="@mipmap/lock_icon"
+                app:lock_radius="30dp"/>
+
+            <TextView
+                android:id="@+id/tv_child_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ems="1"
+                android:text="@string/device_slide_lock_text"
+                android:textColor="#888888"
+                android:gravity="center_vertical"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+
+</RelativeLayout>

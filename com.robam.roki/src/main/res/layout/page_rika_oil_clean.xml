@@ -22,6 +22,7 @@
             android:src="@drawable/ic_baseline_arrow_back_ios_24"/>
 
         <TextView
+            android:id="@+id/tv_oil_clean"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -82,6 +83,7 @@
 
 
             <com.robam.roki.ui.view.RoundImageView
+                android:id="@+id/iv_round_02"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:layout_marginLeft="27dp"

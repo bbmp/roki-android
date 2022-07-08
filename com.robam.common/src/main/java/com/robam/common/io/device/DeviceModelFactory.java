@@ -62,6 +62,7 @@ import com.robam.common.pojos.device.rika.AbsRika;
 import com.robam.common.pojos.device.rika.Rika90B8X;
 import com.robam.common.pojos.device.rika.Rika90B8Z;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
+import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOneNew;
 import com.robam.common.pojos.device.steameovenone.SteamOvenC906;
 
 
@@ -122,7 +123,7 @@ public class DeviceModelFactory {
                 return new Steam209(devInfo);
             } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.RS226)) {
                 return new Steam226(devInfo);
-            }else if (DeviceTypeManager.getInstance().isInDeviceType(guid,IRokiFamily.HS906)){
+            } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.HS906)) {
                 return new Steam228(devInfo);
             } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.RS228)) {
                 return new Steam228(devInfo);
@@ -134,7 +135,7 @@ public class DeviceModelFactory {
                 return new Oven039(devInfo);
             } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.RR026)) {
                 return new Oven026(devInfo);
-            }else if (DeviceTypeManager.getInstance().isInDeviceType(guid,IRokiFamily.HK906)){
+            } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.HK906)) {
                 return new OvenHK906(devInfo);
             } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.RR016)) {
                 return new Oven016(devInfo);
@@ -160,15 +161,15 @@ public class DeviceModelFactory {
                 return new Rika90B8Z(devInfo);
             } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.RIKA_X)) {
                 return new Rika90B8X(devInfo);
-            }else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.KDC01)){
+            } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.KDC01)) {
                 return new AbsCooker(devInfo);
-            } else if (DeviceTypeManager.getInstance().isInDeviceType(guid,IRokiFamily.R0003)){
+            } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.R0003)) {
                 return new GasSensor(devInfo);
-            }else if(DeviceTypeManager.getInstance().isInDeviceType(guid,IRokiFamily.WB755)){
+            } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.WB755)) {
                 return new AbsDishWasher(devInfo);
-            }else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.KC306)) {
+            } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.KC306)) {
                 return new AbsHidKit(devInfo);
-            }else{
+            } else {
                 return null;
             }
         } else {
@@ -176,17 +177,19 @@ public class DeviceModelFactory {
                 return new Stove(deviceInfo);
             } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.R9W851)) {
                 return new Stove(deviceInfo);
-            }  else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.HI704)){
+            } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.HI704)) {
                 return new StoveHI704(deviceInfo);
             } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.R9B39)) {
                 return new Stove9B39(deviceInfo);
-            }else if (DeviceTypeManager.getInstance().isInDeviceType(guid,IRokiFamily._9B30C)){
+            } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily._9B30C)) {
                 return new Stove9B30C(deviceInfo);
             } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.R9B37)) {
                 return new Stove9B37(deviceInfo);
             } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.R0001)) {
                 return new Pot(deviceInfo);
-            }else if (DeviceTypeManager.getInstance().isInDeviceType(guid,IRokiFamily.R0003)){
+            } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.R0004)) {
+                return new Pot(deviceInfo);
+            } else if (DeviceTypeManager.getInstance().isInDeviceType(guid, IRokiFamily.R0003)) {
                 return new GasSensor(deviceInfo);
             } else {
                 //TODO
@@ -227,7 +230,11 @@ public class DeviceModelFactory {
                     iDevice = new AbsOven(devInfo);
                     break;
                 case IDeviceType.RZKY:
-                    iDevice = new AbsSteameOvenOne(devInfo);
+                    if (deviceInfo.dt.equals("DB620") || deviceInfo.dt.equals("CQ920")) {
+                        iDevice = new AbsSteameOvenOneNew(devInfo);
+                    } else {
+                        iDevice = new AbsSteameOvenOne(devInfo);
+                    }
                     break;
                 case IDeviceType.RIKA:
                     iDevice = new AbsRika(devInfo);
@@ -251,7 +258,7 @@ public class DeviceModelFactory {
                     iDevice = new GasSensor(deviceInfo);
                     break;
                 case IDeviceType.RXWJ:
-                    iDevice =  new AbsDishWasher(devInfo);
+                    iDevice = new AbsDishWasher(devInfo);
                     break;
             }
         } else {

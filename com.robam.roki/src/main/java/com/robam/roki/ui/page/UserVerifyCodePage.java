@@ -24,9 +24,6 @@ import com.google.common.base.Strings;
 import com.legent.Callback;
 import com.legent.VoidCallback2;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.CloudHelper;
-import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.HeadPage;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -102,6 +99,7 @@ abstract public class UserVerifyCodePage extends HeadPage {
     @Override
     public void onResume() {
         super.onResume();
+        MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), "注册页", null);
     }
 
     @Override
@@ -190,26 +188,25 @@ abstract public class UserVerifyCodePage extends HeadPage {
         this.phone = phone;
 
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.getVerifyCode(phone, Reponses.GetVerifyCodeReponse.class, new RetrofitCallback<Reponses.GetVerifyCodeReponse>() {
+        Plat.accountService.getVerifyCode(phone, new Callback<String>() {
             @Override
-            public void onSuccess(Reponses.GetVerifyCodeReponse getVerifyCodeReponse) {
+            public void onSuccess(String s) {
+                code = s;
+                String strPhone = phone.substring(0, 3) + "****" + phone.substring(7);
+                txtPhone.setText(strPhone);
                 ProgressDialogHelper.setRunning(cx, false);
-                if (null != getVerifyCodeReponse) {
-                    code = getVerifyCodeReponse.verifyCode;
-                    String strPhone = phone.substring(0, 3) + "****" + phone.substring(7);
-                    txtPhone.setText(strPhone);
-                    ToastUtils.showShort("短信验证码已发送，请及时查收");
+                ToastUtils.showShort("短信验证码已发送，请及时查收");
 
-                    if (callback != null) {
-                        callback.onCompleted();
-                    }
+                if (callback != null) {
+                    callback.onCompleted();
                 }
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(err);
+                LogUtils.i("20171223", "t::" + t);
+                ToastUtils.showThrowable(t);
             }
         });
 

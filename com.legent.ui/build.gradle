@@ -17,6 +17,11 @@ android {
     lintOptions {
         abortOnError false
     }
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res', 'src/main/res-night']
+        }
+    }
 }
 
 
@@ -25,5 +30,6 @@ dependencies {
     api project(':com.legent.plat')
     api deps.recyclerview
     implementation 'androidx.fragment:fragment:1.2.4'
-
+    api project(':androidx:skin-support')
+    api project(':androidx:skin-support-appcompat')
 }

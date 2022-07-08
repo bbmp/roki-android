@@ -1,11 +1,12 @@
 package com.robam.common.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by yinwei on 2016/12/29.
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TodayDrinking  {
     @JsonProperty("timeType")
     public String timeType;

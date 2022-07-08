@@ -7,30 +7,27 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.common.base.Objects;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.hjq.toast.ToastUtils;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.legent.ui.ext.dialogs.AbsDialog;
 import com.legent.utils.LogUtils;
-import com.legent.utils.api.ToastUtils;
 import com.legent.utils.api.ViewUtils;
 import com.legent.utils.graphic.BitmapUtils;
 import com.legent.utils.graphic.ImageUtils;
-import com.legent.utils.qrcode.QrUtils;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.robam.common.Utils;
 import com.robam.common.pojos.RecipeTheme;
 import com.robam.roki.R;
 import com.robam.roki.model.helper.ShareHelper;
@@ -157,20 +154,28 @@ public class RecipeThemeShareDialog extends AbsDialog {
 
     private void shareImg(final String platKey) {
         String imgUrl = theme.imageUrl;
-        newLogbitmap = compressBitmap(R.mipmap.img_share_r, 25, 25);
+        newLogbitmap = compressBitmap(R.mipmap.img_share_r, Utils.dip2px(getContext(), 25), Utils.dip2px(getContext(), 25));
         link_url = String.format(LINK_URL,
                 theme.id);
-        encodeBitmap = encodeAsBitmap(link_url);
+        encodeBitmap = encodeAsBitmap(getContext(), link_url);
         Bitmap beicaibackground = BitmapFactory.decodeResource(cx.getResources(), R.mipmap.u17);
-        final Bitmap backBitmap = BitmapUtils.zoomBySize(beicaibackground, 310, 103);
+
         if (platKey.equals(Dingding.NAME)){
-            ImageUtils.loadImage(cx, imgUrl, new CustomTarget<Bitmap>() {
+            ImageUtils.loadImage(imgUrl, new ImageLoadingListener() {
                 @Override
-                public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
+                public void onLoadingStarted(String imageUri, View view) {
+                }
 
-                    maxBitmap = BitmapUtils.zoomBySize(bitmap, 310, 310);
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                }
 
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    maxBitmap = loadedImage;
+                    //modify by wang 22/04/19
                     if (maxBitmap != null) {
+                        Bitmap backBitmap = BitmapUtils.zoomBySize(beicaibackground, maxBitmap.getWidth(), Utils.dip2px(getContext(), 100));
 
                         Canvas canvas = new Canvas(maxBitmap);
                         canvas.drawBitmap(maxBitmap, new Matrix(), null);
@@ -192,31 +197,40 @@ public class RecipeThemeShareDialog extends AbsDialog {
                 }
 
                 @Override
-                public void onLoadCleared(@Nullable Drawable drawable) {
+                public void onLoadingCancelled(String imageUri, View view) {
 
                 }
             });
         }else {
-            ImageUtils.loadImage(cx, imgUrl, new CustomTarget<Bitmap>() {
+            ImageUtils.loadImage(imgUrl, new ImageLoadingListener() {
                 @Override
-                public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
+                public void onLoadingStarted(String imageUri, View view) {
+                }
 
-                    maxBitmap = BitmapUtils.zoomBySize(bitmap, 310, 310);
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                }
 
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    maxBitmap = loadedImage;
+                    //modify by wang 22/04/19
                     if (maxBitmap != null) {
+                        Bitmap backBitmap = BitmapUtils.zoomBySize(beicaibackground, maxBitmap.getWidth(), Utils.dip2px(getContext(), 100));
+
                         Canvas canvasBackBitmap = new Canvas(backBitmap);
                         canvasBackBitmap.drawBitmap(backBitmap, new Matrix(), null);
-                        canvasBackBitmap.drawBitmap(encodeBitmap, 0, 3, null);
+                        canvasBackBitmap.drawBitmap(encodeBitmap, 0, 0, null);
                         Paint paintRecipeName = new Paint();
                         paintRecipeName.setColor(0xff000000);
                         paintRecipeName.setAntiAlias(true);
-                        paintRecipeName.setTextSize(16);
-                        canvasBackBitmap.drawText(theme.name, 100, 46, paintRecipeName);
+                        paintRecipeName.setTextSize(Utils.sp2px(getContext(), 14));
+                        canvasBackBitmap.drawText(theme.name, Utils.dip2px(getContext(), 100), Utils.dip2px(getContext(), 46), paintRecipeName);
                         Paint paintText = new Paint();
                         paintText.setColor(0xff6d6d6d);
-                        paintText.setTextSize(12);
+                        paintText.setTextSize(Utils.sp2px(getContext(), 9));
                         paintText.setAntiAlias(true);
-                        canvasBackBitmap.drawText(TEXT, 100, 73, paintText);
+                        canvasBackBitmap.drawText(TEXT, Utils.dip2px(getContext(), 100), Utils.dip2px(getContext(), 73), paintText);
                         resultBitmap = BitmapUtils.add2Bitmap(maxBitmap, backBitmap);
                         Canvas canvas = new Canvas(resultBitmap);
                         canvas.drawBitmap(resultBitmap, new Matrix(), null);
@@ -238,7 +252,7 @@ public class RecipeThemeShareDialog extends AbsDialog {
                 }
 
                 @Override
-                public void onLoadCleared(@Nullable Drawable drawable) {
+                public void onLoadingCancelled(String imageUri, View view) {
 
                 }
             });
@@ -312,27 +326,25 @@ public class RecipeThemeShareDialog extends AbsDialog {
      * @param str
      * @return
      */
-    protected static Bitmap encodeAsBitmap(String str) {
+    protected static Bitmap encodeAsBitmap(Context context, String str) {
         Bitmap bitmap = null;
         BitMatrix result = null;
-        bitmap = QrUtils.create2DCode(str);
-
-//        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-//        try {
-//            result = multiFormatWriter.encode(str, BarcodeFormat.QR_CODE, 100, 100);
-//            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-//            bitmap = barcodeEncoder.createBitmap(result);
-//        } catch (WriterException e) {
-//            e.printStackTrace();
-//        } catch (IllegalArgumentException iae) {
-//            return null;
-//        }
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            result = multiFormatWriter.encode(str, BarcodeFormat.QR_CODE, Utils.dip2px(context, 100), Utils.dip2px(context, 100));
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            bitmap = barcodeEncoder.createBitmap(result);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException iae) {
+            return null;
+        }
         return bitmap;
     }
     //将连接copy到剪切板
     private void copyUrl() {
         if (theme == null){
-            ToastUtils.showShort("获取主题失败，请检查网络");
+            ToastUtils.show("获取主题失败，请检查网络");
             dismiss();
             return;
         }

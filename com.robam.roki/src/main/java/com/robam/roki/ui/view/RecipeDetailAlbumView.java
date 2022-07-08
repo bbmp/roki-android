@@ -11,12 +11,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
-import com.legent.Helper;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.RecipePraiseEvent;
@@ -28,6 +24,8 @@ import com.legent.utils.EventUtils;
 import com.legent.utils.api.DisplayUtils;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.graphic.ImageUtils;
+import com.legent.utils.graphic.collection.CircleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.robam.common.events.CookMomentsRefreshEvent;
 import com.robam.common.pojos.CookAlbum;
 import com.robam.common.services.CookbookManager;
@@ -42,16 +40,11 @@ import butterknife.OnClick;
 
 public class RecipeDetailAlbumView extends FrameLayout {
 
-//    DisplayImageOptions DisplayImageOptions_UserFace = new DisplayImageOptions.Builder()
-//            .showImageOnLoading(R.mipmap.ic_recipe_figure_default)
-//            .showImageForEmptyUri(R.mipmap.ic_recipe_figure_default)
-//            .showImageOnFail(R.mipmap.ic_recipe_figure_default).cacheInMemory(true)
-//            .cacheOnDisk(true).displayer(new CircleBitmapDisplayer()).build();
-    RequestOptions DisplayImageOptions_UserFace = new RequestOptions().centerCrop()
-            .placeholder(R.mipmap.ic_recipe_figure_default)
-            .error(R.mipmap.ic_recipe_figure_default)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .transform(new CircleCrop());
+    DisplayImageOptions DisplayImageOptions_UserFace = new DisplayImageOptions.Builder()
+            .showImageOnLoading(R.mipmap.ic_recipe_figure_default)
+            .showImageForEmptyUri(R.mipmap.ic_recipe_figure_default)
+            .showImageOnFail(R.mipmap.ic_recipe_figure_default).cacheInMemory(true)
+            .cacheOnDisk(true).displayer(new CircleBitmapDisplayer()).build();
 
     @InjectView(R.id.albumsView)
     HorizontalListView albumsView;
@@ -261,7 +254,7 @@ public class RecipeDetailAlbumView extends FrameLayout {
                 } else {
                     imgPhoto.setImageBitmap(null);
                     imgOwnerFigure.setImageResource(R.mipmap.ic_recipe_figure_default);
-                    ImageUtils.displayImage(getContext(), album.imgUrl, imgPhoto);
+                    ImageUtils.displayImage(album.imgUrl, imgPhoto);
 
                     txtDesc.setText(album.desc);
                     txtPraiseCount.setText(String.format("%s 赞", album.praiseCount));
@@ -270,8 +263,8 @@ public class RecipeDetailAlbumView extends FrameLayout {
                     Plat.accountService.getUser(album.ownerId, new Callback<User>() {
                         @Override
                         public void onSuccess(User user) {
-                            txtOwnerName.setText(user.nickname);
-                            ImageUtils.displayImage(getContext(), user.figureUrl, imgOwnerFigure, DisplayImageOptions_UserFace);
+                            txtOwnerName.setText(user.name);
+                            ImageUtils.displayImage(user.figureUrl, imgOwnerFigure, DisplayImageOptions_UserFace);
                         }
 
                         @Override

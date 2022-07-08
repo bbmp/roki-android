@@ -10,8 +10,10 @@ public class TopicMultipleItem implements MultiItemEntity {
     public static final int IMG_SPAN_SIZE = 1;
     public static final int IMG_TEXT_SPAN_SIZE = 4;
     public static final int IMG_TEXT_SPAN_SIZE_MIN = 2;
+    public static final int IMG_THEME_RECIPE_COLLECT = 5;//我的收藏主题
     private int itemType;
     private int spanSize;
+    private String title;
 
     public TopicMultipleItem(int itemType, int spanSize, String content) {
         this.itemType = itemType;
@@ -19,6 +21,11 @@ public class TopicMultipleItem implements MultiItemEntity {
         this.content = content;
     }
 
+    public TopicMultipleItem(int itemType, String content, String title) {
+        this.itemType = itemType;
+        this.content = content;
+        this.title = title;
+    }
     public TopicMultipleItem(int itemType, int spanSize) {
         this.itemType = itemType;
         this.spanSize = spanSize;
@@ -47,4 +54,7 @@ public class TopicMultipleItem implements MultiItemEntity {
         return itemType;
     }
 
+    public String getTitle() {
+        return title;
+    }
 }

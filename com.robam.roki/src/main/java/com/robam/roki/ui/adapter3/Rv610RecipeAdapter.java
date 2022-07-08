@@ -1,6 +1,8 @@
 package com.robam.roki.ui.adapter3;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -19,11 +21,19 @@ import com.robam.roki.R;
 import com.robam.roki.db.model.CookingStepsModel;
 import com.robam.roki.db.model.RecipeBean;
 import com.robam.roki.db.model.RecipeStepBean;
+import com.robam.roki.ui.dialog.CookbookRandomShareDialog;
+import com.robam.roki.ui.dialog.ImageShareDialog;
+import com.robam.roki.ui.dialog.KitchenSourceShareDialog;
 import com.robam.roki.ui.mdialog.MenuDialog;
+import com.robam.roki.ui.mdialog.RecipteMutiShareDialog;
 import com.robam.roki.ui.widget.layout.SettingBar;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -46,6 +56,20 @@ public class Rv610RecipeAdapter extends BaseQuickAdapter<RecipeBean, BaseViewHol
         super(R.layout.item_d610_recipe);
     }
 
+    public String saveBitmapFile(Bitmap bitmap){
+        File file=new File(Environment.getExternalStorageDirectory()+"/pic/01.jpg");//将要保存图片的路径
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+
+            return file.getAbsolutePath();
+        }
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -58,8 +82,20 @@ public class Rv610RecipeAdapter extends BaseQuickAdapter<RecipeBean, BaseViewHol
             }
             List<RecipeStepBean> recipeStepList = item.getRecipeStepList();
             SettingBar stbStep = (SettingBar)holder.getView(R.id.stb_step_top);
+
+//            holder.getView(R.id.txt_share).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+////                    RecipteMutiShareDialog mRecipteMultipleShareDialog=new RecipteMutiShareDialog(getContext(),item.getRecipe_names(),recipeStepList);
+////                    mRecipteMultipleShareDialog.create();
+////                    mRecipteMultipleShareDialog.show();
+//
+////                    ImageShareDialog.show(getContext());
+////
+//                }
+//            });
             stbStep.setLeftText(item.getRecipe_names());
-            stbStep.setRightText("共" + strings[recipeStepList.size()] +"段" + " " +item.getRecipeStepTimes() + "min");
+            stbStep.setRightText(item.getRecipeStepTimes() + "min");
 //            addChildClickViewIds(R.id.stb_step_top , R.id.tv_del);
             addChildClickViewIds( R.id.tv_del);
             stbStep.getLeftView().setOnClickListener(new View.OnClickListener() {
@@ -73,7 +109,7 @@ public class Rv610RecipeAdapter extends BaseQuickAdapter<RecipeBean, BaseViewHol
 //            addChildLongClickViewIds(R.id.stb_step_top);
             RecyclerView rv610Step = (RecyclerView) holder.getView(R.id.rv_610_step);
             rv610Step.setLayoutManager(new LinearLayoutManager(getContext() , RecyclerView.VERTICAL , false));
-//            rv610Step.setLayoutManager(new GridLayoutManager(getContext(), 2));
+//          rv610Step.setLayoutManager(new GridLayoutManager(getContext(), 2));
             Rv610RecipeStepAdapter rv610StepAdapter = new Rv610RecipeStepAdapter();
             rv610Step.setAdapter(rv610StepAdapter);
             rv610StepAdapter.addData(recipeStepList);
@@ -190,6 +226,13 @@ public class Rv610RecipeAdapter extends BaseQuickAdapter<RecipeBean, BaseViewHol
     }
 
     OnSelectListener onSelectListener ;
+
+    String recipeName;
+    public void setRecipeName(String recipeName) {
+        this.recipeName=recipeName;
+
+    }
+
     public interface OnSelectListener{
         void onSelect(int position);
     }

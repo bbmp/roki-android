@@ -13,6 +13,8 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.robam.roki.R;
 
+import skin.support.content.res.SkinCompatResources;
+
 
 /**
  *    time   : 2018/10/18
@@ -39,7 +41,11 @@ public final class ClearEditText extends RegexEditText
     public ClearEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        mClearDrawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.button_delete));
+        //皮肤切换
+        mClearDrawable = DrawableCompat.wrap(SkinCompatResources.getDrawable(context, R.mipmap.button_delete));
+        setHintTextColor(SkinCompatResources.getColor(getContext(), R.color.text_color_search));
+        setTextColor(SkinCompatResources.getColor(getContext(), R.color.text_color_device_category));
+
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
         setDrawableVisible(false);
         super.setOnTouchListener(this);

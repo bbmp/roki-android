@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -502,6 +503,10 @@ public class DeviceFanStoveLinkage2Page extends BasePage {
         super.onResume();
         if (fan == null) {
             return;
+        }
+        if (fan.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), fan.getDt() + ":烟灶联动页", null);
         }
     }
 

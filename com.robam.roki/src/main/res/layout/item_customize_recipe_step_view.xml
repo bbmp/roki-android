@@ -1,0 +1,55 @@
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_customize_recipe_view_step"
+    android:background="@drawable/shape_kitchen_bg_round"
+    android:layout_width="match_parent"
+    android:paddingBottom="@dimen/dp_16"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MissingDefaultResource">
+
+
+    <TextView
+        android:id="@+id/item_customize_recipe_step"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_22"
+        android:layout_marginTop="@dimen/dp_11"
+        android:text="步骤一"
+        android:textColor="@color/text_color_device" />
+
+    <RelativeLayout
+        android:id="@+id/item_customize_recipe_view_add_step"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_68"
+        android:layout_below="@+id/item_customize_recipe_step"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_11"
+
+        android:background="@drawable/shape_recipe_name_bg">
+
+        <com.robam.roki.ui.page.device.steamovenone.steamovenone920.widget.ChooseAlbumPhotoView
+
+            android:id="@+id/item_customize_recipe_step_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <EditText
+
+        android:id="@+id/item_customize_recipe_description"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_68"
+        android:layout_below="@+id/item_customize_recipe_step"
+        android:layout_marginLeft="@dimen/dp_22"
+        android:layout_marginTop="@dimen/dp_11"
+        android:layout_toRightOf="@+id/item_customize_recipe_view_add_step"
+        android:background="@drawable/shape_recipe_name_bg"
+        android:hint="添加步骤说明"
+        android:paddingLeft="@dimen/dp_12"
+
+        android:textColor="@color/text_color_device"
+        android:textColorHint="#8020292E"
+        android:textSize="@dimen/sp_15" />
+
+</RelativeLayout>

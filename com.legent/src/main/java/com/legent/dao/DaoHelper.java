@@ -165,15 +165,15 @@ public class DaoHelper {
         }
 
     }
-
-    static public <T> T getTopOne(Class<T> clazz) {
-        List<T> list = getTop(clazz, 1);
-        if (list != null && list.size() > 0) {
-            return list.get(0);
-        } else {
-            return null;
-        }
-    }
+// 未调用
+//    static public <T> T getTopOne(Class<T> clazz) {
+//        List<T> list = getTop(clazz, 1);
+//        if (list != null && list.size() > 0) {
+//            return list.get(0);
+//        } else {
+//            return null;
+//        }
+//    }
 
     static public <T> List<T> getTop(Class<T> clazz, int count) {
         List<T> list = getAll(clazz);

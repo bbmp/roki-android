@@ -72,7 +72,6 @@ public class LogUtils {
                 .concat(DEFAULT_SUFFIX);
         return path;
     }
-
     public static String getUploadPath2() {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(new Date());

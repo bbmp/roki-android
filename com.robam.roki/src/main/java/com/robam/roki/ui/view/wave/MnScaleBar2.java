@@ -8,6 +8,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+
 import com.legent.utils.LogUtils;
 
 import java.util.ArrayList;

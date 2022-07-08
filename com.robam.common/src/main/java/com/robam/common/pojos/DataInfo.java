@@ -3,12 +3,13 @@ package com.robam.common.pojos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by yinwei on 2016/12/29.
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DataInfo implements Parcelable {
    /* public final static String COLUMN_DATAINFO_ID = "datainfo_id";
 

@@ -4,12 +4,11 @@ package com.robam.roki.ui.form;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.legent.ui.AbsActivity;
-//import com.legent.ui.ext.BaseActivity;
+import com.legent.ui.ext.BaseActivity;
 import com.robam.roki.ui.FormKey;
 
 
-public class WizardActivity extends AbsActivity {
+public class WizardActivity extends BaseActivity {
 
 	/*@Override
 	protected void setContentView() {

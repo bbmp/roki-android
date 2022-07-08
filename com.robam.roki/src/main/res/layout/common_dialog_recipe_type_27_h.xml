@@ -36,7 +36,7 @@ style="@style/common_dialog_root_bg_layout_style"
                     android:layout_gravity="center"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="10dp"
-                    android:text="菜谱播报过程中，无法识别语音指令，请在播报结束后，再使用语音指令。"
+                    android:text="1.菜谱步骤的运行时长会根据不同设备特性自动调整\n\n2.菜谱播报过程中，无法识别语音指令，请在播报结束后，再使用语音指令。"
                     android:textColor="#2A2A2A"
                     android:textSize="14sp" />
 
@@ -46,8 +46,8 @@ style="@style/common_dialog_root_bg_layout_style"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="24dp"
-                    android:text="当前支持的语音指令：\n1.“下一步”/“上一步”\n2.“退出烹饪”\n3.“暂停工作”（仅蒸、烤、微产品支持）\n4.“再说一遍”"
-                    android:lineSpacingExtra ="11dp"
+                    android:text="当前支持的语音指令：\n1.“下一步”/“上一步”\n2.“退出烹饪”\n3.“再说一遍”\n4.“暂停工作（仅蒸烤产品支持）”"
+
                     android:textColor="@color/roki_important_text_color"
                     android:textSize="14sp" />
             </LinearLayout>

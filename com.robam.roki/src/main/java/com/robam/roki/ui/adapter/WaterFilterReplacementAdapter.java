@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.robam.roki.R;
 import com.robam.roki.model.bean.ReplaceFilterCoreParams;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class WaterFilterReplacementAdapter extends RecyclerView.Adapter<WaterFil
     @Override
     public WaterFilterReplacementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_replacement_filter, parent, false);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         WaterFilterReplacementViewHolder viewHolder = new WaterFilterReplacementViewHolder(view);
         return viewHolder;
     }

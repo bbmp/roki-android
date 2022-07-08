@@ -78,10 +78,11 @@ public class Tag extends AbsStorePojo<Long> implements Parcelable{
         return name;
     }
 
-    public boolean isNewest() {
-        int mainVer = SysCfgManager.getInstance().getLocalVersion();
-        return version >= mainVer;
-    }
+    //未调用
+//    public boolean isNewest() {
+//        int mainVer = SysCfgManager.getInstance().getLocalVersion();
+//        return version >= mainVer;
+//    }
 
     public Group getParent() {
         return group;

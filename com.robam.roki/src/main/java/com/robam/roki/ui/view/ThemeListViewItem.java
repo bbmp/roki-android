@@ -98,7 +98,7 @@ public class ThemeListViewItem extends LinearLayout implements View.OnClickListe
 
     public void loadData(RecipeTheme theme) {
         this.theme = theme;
-        ImageUtils.displayImage(getContext(), theme.imageUrl, theme_listitem_img);
+        ImageUtils.displayImage(theme.imageUrl, theme_listitem_img);
         theme_listitem_title.setText(theme.name);
     }
 

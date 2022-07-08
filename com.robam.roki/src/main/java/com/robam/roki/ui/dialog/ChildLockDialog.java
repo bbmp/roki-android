@@ -14,8 +14,10 @@ import com.robam.common.pojos.device.rika.AbsRika;
 import com.robam.common.pojos.device.rika.RikaStatus;
 import com.robam.roki.R;
 import com.robam.roki.ui.view.SlideLockView;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import static android.content.Context.VIBRATOR_SERVICE;
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by rent on 2016/9/30.
@@ -29,7 +31,6 @@ public class ChildLockDialog extends Dialog {
     SlideLockView slideLockView;
     Vibrator mVibrator;
     AbsRika mRika;
-    Context mContext;
     private interface CallBack {
         void OnPositive();
 
@@ -38,7 +39,6 @@ public class ChildLockDialog extends Dialog {
 
     public ChildLockDialog(Context context, int res, CallBack callBack, AbsRika rika) {
         super(context, R.style.Theme_Dialog_FullScreen);
-        mContext = context;
         this.res = res;
         this.callBack = callBack;
         this.mRika = rika;
@@ -46,18 +46,18 @@ public class ChildLockDialog extends Dialog {
     }
 
     void iniiView() {
-        contentView = LayoutInflater.from(mContext)
+        contentView = LayoutInflater.from(cx)
                 .inflate(res, null, false);
         tv_child_lock = contentView.findViewById(R.id.tv_child_lock);
         slideLockView = contentView.findViewById(R.id.slideLockView);
-
+        ScreenAdapterTools.getInstance().loadView(contentView);
         setContentView(contentView);
         setListener();
     }
 
     public void setListener(){
         // 获取系统振动器服务
-        mVibrator = (Vibrator) mContext.getSystemService(VIBRATOR_SERVICE);
+        mVibrator = (Vibrator) cx.getSystemService(VIBRATOR_SERVICE);
         slideLockView.setLockListener(new SlideLockView.OnLockListener() {
             @Override
             public void onOpenLockSuccess() {

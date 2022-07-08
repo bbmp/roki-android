@@ -1,6 +1,7 @@
 package com.robam.roki.ui.page;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,9 @@ public class DeviceWaterPurifierDetailPage extends BasePage implements UIListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle bd = getArguments();
+
+
+
         guid = bd.getString(PageArgumentKey.Guid);
         contentView = inflater.inflate(R.layout.page_waterpurifier_drinking_detail,
                 container, false);

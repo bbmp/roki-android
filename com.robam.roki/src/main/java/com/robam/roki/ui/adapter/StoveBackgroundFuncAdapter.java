@@ -26,10 +26,11 @@ import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.model.bean.StoveBackgroundFunParams;
 import com.robam.roki.utils.DeviceJsonToBeanUtils;
 import com.robam.roki.utils.StoveLevelUtils;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by 14807 on 2018/5/18.
@@ -70,8 +71,8 @@ public class StoveBackgroundFuncAdapter extends RecyclerView.Adapter<StoveBackgr
     @Override
     public StoveBackgroundFuncViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_stove_backgroundfunc_page, parent, false);
-
-        StoveBackgroundFuncViewHolder stoveBackgroundFuncViewHolder = new StoveBackgroundFuncViewHolder(mContext, view);
+        ScreenAdapterTools.getInstance().loadView(view);
+        StoveBackgroundFuncViewHolder stoveBackgroundFuncViewHolder = new StoveBackgroundFuncViewHolder(view);
         //快速关火 的监听
         stoveBackgroundFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,12 +97,12 @@ public class StoveBackgroundFuncAdapter extends RecyclerView.Adapter<StoveBackgr
                     String stoveStatus = StoveLevelUtils.getStoveLevel(leftStatus, mParams);
                     holder.mTvModelName.setText(stoveStatus);
                     if (leftStatus == 0 || leftStatus == 1) {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .load(mDeviceConfigurationFunctions.get(position).backgroundImg)
 //                                .crossFade()
                                 .into(holder.mIvModelImg);
                     } else {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .load(mDeviceConfigurationFunctions.get(position)
                                         .backgroundImgH)
 //                                .crossFade()
@@ -129,13 +130,13 @@ public class StoveBackgroundFuncAdapter extends RecyclerView.Adapter<StoveBackgr
                         holder.mTvModelTime.setText("--");
                     }
                     if (mLeftLevel == 0) {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .load(mDeviceConfigurationFunctions.get(position)
                                         .backgroundImg)
 //                                .crossFade()
                                 .into(holder.mIvModelImg);
                     } else {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .load(mDeviceConfigurationFunctions.get(position)
                                         .backgroundImgH)
 //                                .crossFade()
@@ -150,13 +151,13 @@ public class StoveBackgroundFuncAdapter extends RecyclerView.Adapter<StoveBackgr
                     String stoveStatus = StoveLevelUtils.getStoveLevel(rightStatus, mParams);
                     holder.mTvModelName.setText(stoveStatus);
                     if (rightStatus == 0 || rightStatus == 1) {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .load(mDeviceConfigurationFunctions.get(position)
                                         .backgroundImg)
 //                                .crossFade()
                                 .into(holder.mIvModelImg);
                     } else {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .load(mDeviceConfigurationFunctions.get(position)
                                         .backgroundImgH)
 //                                .crossFade()
@@ -184,13 +185,13 @@ public class StoveBackgroundFuncAdapter extends RecyclerView.Adapter<StoveBackgr
                         holder.mTvModelTime.setText("--");
                     }
                     if (mRightLevel == 0) {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .load(mDeviceConfigurationFunctions.get(position)
                                         .backgroundImg)
 //                                .crossFade()
                                 .into(holder.mIvModelImg);
                     } else {
-                        Glide.with(mContext)
+                        Glide.with(cx)
                                 .load(mDeviceConfigurationFunctions.get(position)
                                         .backgroundImgH)
 //                                .crossFade()
@@ -218,17 +219,15 @@ class StoveBackgroundFuncViewHolder extends RecyclerView.ViewHolder {
     TextView mTvModelName;
     TextView mTvModelTime;
     LinearLayout mItemView;
-    Context mContext;
 
-    public StoveBackgroundFuncViewHolder(Context context, View itemView) {
+    public StoveBackgroundFuncViewHolder(View itemView) {
         super(itemView);
 
-        mContext = context;
         mItemView = itemView.findViewById(R.id.itemView);
         mIvModelImg = itemView.findViewById(R.id.iv_model_img);
         mTvModelName = itemView.findViewById(R.id.tv_model_name);
         mTvModelTime = itemView.findViewById(R.id.tv_model_time);
-        mAnimation = AnimationUtils.loadAnimation(mContext, R.anim.device_rika_clockwise_rotate);
+        mAnimation = AnimationUtils.loadAnimation(cx, R.anim.device_rika_clockwise_rotate);
 
     }
 
@@ -236,7 +235,7 @@ class StoveBackgroundFuncViewHolder extends RecyclerView.ViewHolder {
 
         mAnimation = null;
         if (mAnimation == null) {
-            mAnimation = AnimationUtils.loadAnimation(mContext, R.anim.device_rika_clockwise_rotate);
+            mAnimation = AnimationUtils.loadAnimation(cx, R.anim.device_rika_clockwise_rotate);
             LinearInterpolator lin = new LinearInterpolator();
             mAnimation.setInterpolator(lin);
             mIvModelImg.startAnimation(mAnimation);

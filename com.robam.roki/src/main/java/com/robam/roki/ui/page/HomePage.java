@@ -3,47 +3,33 @@ package com.robam.roki.ui.page;
 import static com.robam.roki.ui.page.SelectThemeDetailPage.TYPE_THEME_BANNER;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.provider.Settings;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
-import android.provider.Settings;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.AccelerateInterpolator;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.aispeech.dui.dds.DDS;
-import com.aispeech.dui.dds.exceptions.DDSNotInitCompleteException;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -51,111 +37,85 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.clj.fastble.BleManager;
+import com.clj.fastble.data.BleDevice;
+import com.clj.fastble.scan.BleScanRuleConfig;
+import com.google.android.material.tabs.TabLayout;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
-import com.google.gson.Gson;
-import com.legent.Callback;
+
 import com.legent.VoidCallback;
+import com.legent.events.BlueLoginSuccessEvent;
+import com.legent.events.PageChangedEvent;
 import com.legent.plat.Plat;
+import com.legent.plat.events.BlueCloseEvent;
 import com.legent.plat.events.ChatNewMsgEvent;
-import com.legent.plat.events.DeviceFindEvent;
 import com.legent.plat.events.FloatHelperEvent;
-import com.legent.plat.events.RecipeShowEvent;
+import com.legent.plat.events.MessageEvent;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.events.UserLogoutEvent;
 import com.legent.plat.pojos.device.DeviceInfo;
-import com.legent.plat.pojos.device.IDevice;
 import com.legent.plat.pojos.dictionary.DeviceType;
-import com.legent.plat.services.ChatService;
-import com.legent.plat.services.CommonService;
 import com.legent.plat.services.DeviceService;
 import com.legent.plat.services.DeviceTypeManager;
 import com.legent.ui.UIService;
-import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.adapters.ExtPageAdapter;
+import com.legent.ui.ext.utils.StatusBarCompat;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.legent.utils.qrcode.ScanQrActivity;
+import com.robam.base.BaseDialog;
 import com.robam.common.events.DeviceEasylinkCompletedEvent;
 import com.robam.common.events.NewBieGuideEvent;
 import com.robam.common.events.ReturnDeviceViewEvent;
-import com.robam.common.events.UMPushInfoEvent;
-import com.robam.common.events.UMPushRecipeEvent;
-import com.robam.common.events.UMPushThemeEvent;
-import com.robam.common.events.UMPushVideoEvent;
-import com.robam.common.pojos.RecipeConsultation;
-import com.robam.common.pojos.RecipeTheme;
-import com.robam.common.pojos.device.fan.IFan;
-import com.robam.common.services.CookbookManager;
-import com.robam.common.ui.BleRssiDevice;
-import com.robam.common.util.RecipeRequestIdentification;
 import com.robam.common.util.StatusBarUtils;
 import com.robam.roki.MobApp;
 import com.robam.roki.R;
 import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
-import com.robam.roki.model.bean.MessageBean;
-import com.robam.roki.observer.DuiUpdateObserver;
+import com.robam.roki.ui.FormKey;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.UIListeners;
-import com.robam.roki.ui.adapter.DialogAdapter;
 import com.robam.roki.ui.adapter3.RvDeviceBluetoothAdapter;
 import com.robam.roki.ui.extension.GlideApp;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.form.RecipeActivity;
 import com.robam.roki.ui.form.RecipeNoDeviceActivity;
-import com.robam.roki.ui.form.RecipePotActivity;
 import com.robam.roki.ui.form.RecipeRRQZActivity;
-import com.robam.roki.ui.view.HomeDeviceView;
+import com.robam.roki.ui.page.login.helper.CmccLoginHelper;
 import com.robam.roki.ui.page.mine.HomeMineView;
+import com.robam.roki.ui.view.HomeDeviceView;
 import com.robam.roki.ui.view.HomeRecipeView32;
 import com.robam.roki.ui.view.HomeTabView;
-import com.robam.roki.ui.view.networkoptimization.BleConnectActivity;
-import com.robam.roki.ui.view.umpush.PushContent;
-import com.robam.roki.ui.view.umpush.UMPushMsg;
-import com.robam.roki.ui.widget.base.BaseDialog;
-import com.robam.roki.ui.widget.layout.NoScrollViewPager;
 import com.robam.roki.utils.DateUtil;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.PermissionsUtils;
 import com.robam.roki.utils.UploadLogFileUtil;
 import com.robam.roki.utils.bubble.BubbleDialog;
-import com.robam.roki.utils.suspendedball.FloatingMagnetView;
-import com.robam.roki.utils.suspendedball.FloatingView;
-import com.robam.roki.utils.suspendedball.MagnetViewListener;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
-import cn.com.heaton.blelibrary.ble.Ble;
-import cn.com.heaton.blelibrary.ble.callback.BleConnectCallback;
-import cn.com.heaton.blelibrary.ble.callback.BleReadCallback;
-import cn.com.heaton.blelibrary.ble.callback.BleScanCallback;
-import cn.com.heaton.blelibrary.ble.callback.BleWriteCallback;
-import cn.com.heaton.blelibrary.ble.model.ScanRecord;
-import cn.com.heaton.blelibrary.ble.utils.Utils;
-import cn.com.heaton.blelibrary.ble.utils.UuidUtils;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-
+import com.robam.widget.layout.NoScrollViewPager;
 import com.yhao.floatwindow.FloatWindow;
 import com.yhao.floatwindow.IFloatWindow;
 import com.yhao.floatwindow.MoveType;
 import com.yhao.floatwindow.Screen;
 import com.yhao.floatwindow.ViewStateListener;
-import com.yhao.floatwindow.ViewStateListenerAdapter;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+import cn.com.heaton.blelibrary.ble.utils.Utils;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import skin.support.content.res.SkinCompatResources;
+import skin.support.utils.SkinStatusBarUtils;
 
 /**
  * Created by sylar on 15/6/4.
@@ -166,17 +126,19 @@ public class HomePage extends AbsDUIPage {
     static public final int TAB_RECIPE = 1;
     static public final int TAB_IP = 2;
     static public final int TAB_PERSONAL = 3;
-    @InjectView(R.id.iv_mask)
-    ImageView mIvMask;
+//    @InjectView(R.id.iv_mask)
+//    ImageView mIvMask;
     Adapter adapter;
     @InjectView(R.id.pager)
     NoScrollViewPager pager;
-    @InjectView(R.id.tabView)
-    HomeTabView tabView;
+//    @InjectView(R.id.tabView)
+//    HomeTabView tabView;
     @InjectView(R.id.rl_dot_container)
     RelativeLayout rlDotContainer;
     @InjectView(R.id.user_dot)
     TextView userDot;
+    @InjectView(R.id.tabLayout)
+    TabLayout tabLayout;
 
     /**
      * '
@@ -185,9 +147,7 @@ public class HomePage extends AbsDUIPage {
     private HomeMineView homeMineView;
     private HomeRecipeView32 homeRecipeView32;
 
-
-    private Ble<BleRssiDevice> ble = Ble.getInstance();
-    private List<BleRssiDevice> bleRssiDevices = new ArrayList<>(); //搜索到的蓝牙列表   rssi为信号强度
+    private List<BleDevice> bleRssiDevices = new ArrayList<>(); //搜索到的蓝牙列表   rssi为信号强度
     private List<BluetoothGattService> gattServices = new ArrayList<>();//蓝牙服务
     /**
      * 蓝牙设备adapter
@@ -197,50 +157,39 @@ public class HomePage extends AbsDUIPage {
      * dialog
      */
     private BaseDialog baseDialog;
+    private BaseDialog blueSetDialog;
+    //获取设备联网列表
+//    List<List<DeviceItemList>> sumDeviceList = new ArrayList<List<DeviceItemList>>();
+
+    /*
+     *每5秒重启一次蓝牙扫描，蓝牙名字需要重启才能变化_0,_1
 
 
     /**
      * 蓝牙搜索回调
      */
-    private BleScanCallback<BleRssiDevice> scanCallback = new BleScanCallback<BleRssiDevice>() {
-        @Override
-        public void onLeScan(final BleRssiDevice device, int rssi, byte[] scanRecord) {
-            synchronized (ble.getLocker()) {
-//                    for (int i = 0; i < bleRssiDevices.size(); i++) {
-//                        BleRssiDevice rssiDevice = bleRssiDevices.get(i);
-//                        if (TextUtils.equals(rssiDevice.getBleAddress(), device.getBleAddress())){
-//                            return;
-//                        }
-//                    }
-                for (BleRssiDevice rssiDevice : bleRssiDevices
-                ) {
-                    if (rssiDevice.getBleAddress().equals(device.getBleAddress())) {
-                        if (rssi < 30) {
-                            return;
-                        } else {
-                            return;
-                        }
+    private Timer mTimer;
+    private TimerTask mTimerTask;
+    private boolean firstScan = true;
+
+    private void timeLoop() {
+        mTimer = new Timer();
+        mTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (BleManager.getInstance().isBlueEnable()) {
+                    if (firstScan) {
+                        firstScan = false;
+                    } else {
+                        BleManager.getInstance().cancelScan();
+                        BleManager.getInstance().destroy();
                     }
-                }
-                device.setScanRecord(ScanRecord.parseFromBytes(scanRecord));
-                device.setRssi(rssi);
-                if (device.getBleName() != null && device.getBleName().contains("ROBAM_RC906")) {
-                    bleRssiDevices.add(device);
-                    deviceBluetoothDialog();
-                    if (rvDeviceAdapter != null) {
-                        rvDeviceAdapter.addData(device);
-                    }
+                    checkBlueStatus();
                 }
             }
-        }
-
-
-        @Override
-        public void onScanFailed(int errorCode) {
-            super.onScanFailed(errorCode);
-            Log.e("yidao", errorCode + "");
-        }
-    };
+        };
+        mTimer.schedule(mTimerTask, 15 * 1000, 15 * 1000);
+    }
 
 
     /**
@@ -254,14 +203,14 @@ public class HomePage extends AbsDUIPage {
                 return;
             }
             if (TAB_DEVICE != pager.getCurrentItem()) {
-                if (tabView != null) {
-                    tabView.setBackgroundDrawable(null);
-                }
-
-                if (tabView != null) {
-                    tabView.setOnTabSelectedCallback(tabCallback);
-                    tabView.selectTab(TAB_DEVICE);
-                }
+//                if (tabView != null) {
+//                    tabView.setBackgroundDrawable(null);
+//                }
+//
+//                if (tabView != null) {
+//                    tabView.setOnTabSelectedCallback(tabCallback);
+//                    tabView.selectTab(TAB_DEVICE);
+//                }
             }
 
         }
@@ -343,34 +292,97 @@ public class HomePage extends AbsDUIPage {
     }
 
     @Override
+    protected void initView() {
+        super.initView();
+        tabLayout.setSelectedTabIndicatorHeight(0);
+        TabLayout.Tab deviceTab = tabLayout.newTab();
+
+        View deviceView = LayoutInflater.from(getContext()).inflate(R.layout.view_home_tab_item, null);
+        ImageView deviceImage = deviceView.findViewById(R.id.imgTab);
+        deviceImage.setImageResource(R.drawable.ic_home_tab_device);
+        TextView deviceTv = deviceView.findViewById(R.id.txtTab);
+        deviceTv.setText(R.string.home_tab_device);
+        deviceTab.setCustomView(deviceView);
+        tabLayout.addTab(deviceTab);
+
+        TabLayout.Tab recipeTab = tabLayout.newTab();
+
+        View recipeView = LayoutInflater.from(getContext()).inflate(R.layout.view_home_tab_item, null);
+        ImageView recipeImage = recipeView.findViewById(R.id.imgTab);
+        recipeImage.setImageResource(R.drawable.ic_home_tab_recipe);
+        TextView recipeTv = recipeView.findViewById(R.id.txtTab);
+        recipeTv.setText(R.string.home_tab_recipe);
+        recipeTab.setCustomView(recipeView);
+        tabLayout.addTab(recipeTab);
+
+        TabLayout.Tab mineTab = tabLayout.newTab();
+
+        View mineView = LayoutInflater.from(getContext()).inflate(R.layout.view_home_tab_item, null);
+        ImageView mineImage = mineView.findViewById(R.id.imgTab);
+        mineImage.setImageResource(R.drawable.ic_home_tab_personal);
+        TextView mineTv = mineView.findViewById(R.id.txtTab);
+        mineTv.setText(R.string.home_tab_personal);
+        mineTab.setCustomView(mineView);
+        tabLayout.addTab(mineTab);
+    }
+
+    @Override
     protected void initData() {
         adapter = new Adapter();
         adapter.loadViews(buildViews());
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(adapter.getCount());
-        if (tabView != null) {
-            tabView.setOnTabSelectedCallback(tabCallback);
-            tabView.selectTab(TAB_RECIPE);
-        }
+//        if (tabView != null) {
+//            tabView.setOnTabSelectedCallback(tabCallback);
+//            tabView.selectTab(TAB_RECIPE);
+//        }
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager));
+        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        pager.setCurrentItem(TAB_RECIPE);
         //日志上传
         try {
             String currentDate = DateUtil.getCurrentDate();
             boolean bool = PreferenceUtils.getBool(currentDate, false);
-            if (!bool && Plat.accountService.isLogon()){
+            if (!bool && Plat.accountService.isLogon()) {
                 UploadLogFileUtil.uploadLog(activity);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
-
-        try {
-         if(!TextUtils.isEmpty(MobApp.id)){
-            SelectThemeDetailPage.show(Long.parseLong(MobApp.id), TYPE_THEME_BANNER);
-            MobApp.id=null;
-         }
-        }catch (Exception e){
-            Log.e("错误",e.getMessage());
+        if (!BleManager.getInstance().isBlueEnable()) {
+//            ToastUtils.showShort("请打开蓝牙！");
+            openBlueset();
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int selfPermission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
+            if (selfPermission == 0) {
+                checkBlueStatus();
+                timeLoop();
+            } else {
+                PermissionsUtils.checkPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION, PermissionsUtils.CODE_BLUE_TOOTH);
+            }
+        } else {
+            checkBlueStatus();
+            timeLoop();
+        }
+        PreferenceUtils.setBool("isShowBluetoothDevice", true);
+
+        //获取设备联网列表
+//        RokiRestHelper.getNetworkDeviceInfoRequest("roki", null, null, new Callback<List<DeviceGroupList>>() {
+//            @Override
+//            public void onSuccess(List<DeviceGroupList> deviceGroupLists) {
+//                for (int i = 0; i < deviceGroupLists.size(); i++) {
+//                    sumDeviceList.add(deviceGroupLists.get(i).getDeviceItemLists());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//        });
+
+
 
     }
 
@@ -379,13 +391,48 @@ public class HomePage extends AbsDUIPage {
      * 检测蓝牙是否打开
      */
     private void checkBlueStatus() {
-        if (!ble.isSupportBle(cx)) {
-//            finish();
-        }
-        if (!ble.isBleEnable()) {
-            ToastUtils.showShort("请打开蓝牙！");
+
+        if (!BleManager.getInstance().isBlueEnable()) {
+            openBlueset();
+
         } else {
             checkGpsStatus();
+        }
+
+    }
+
+    private void openBlueset() {
+        if (blueSetDialog == null) {
+            blueSetDialog = new BaseDialog(cx);
+            blueSetDialog.setContentView(R.layout.dialog_open_bluetooth);
+            blueSetDialog.setCanceledOnTouchOutside(true);
+            blueSetDialog.setGravity(Gravity.CENTER_VERTICAL);
+            blueSetDialog.setWidth(activity.getWindowManager().getDefaultDisplay().getWidth());
+            TextView tv_cancel = (TextView) blueSetDialog.findViewById(R.id.tv_cancel);
+            TextView tv_set = (TextView) blueSetDialog.findViewById(R.id.tv_set);
+
+            blueSetDialog.setCancelable(false);
+
+            tv_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    blueSetDialog.dismiss();
+
+                }
+            });
+            tv_set.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+                    activity.startActivity(intent);
+                    blueSetDialog.dismiss();
+                }
+            });
+            blueSetDialog.show();
+        } else {
+            if (!blueSetDialog.isShowing()) {
+                blueSetDialog.show();
+            }
         }
     }
 
@@ -406,9 +453,136 @@ public class HomePage extends AbsDUIPage {
                     .create()
                     .show();
         } else {
-            ble.startScan(scanCallback);
+            /**
+             * 蓝牙搜索回调
+             */
+            BleScanRuleConfig scanRuleConfig = new BleScanRuleConfig.Builder()
+                    .setAutoConnect(false)      // 连接时的autoConnect参数，可选，默认false
+                    .setScanTimeOut(8000)              // 扫描超时时间，可选，默认10秒
+                    .build();
+            BleManager.getInstance().initScanRule(scanRuleConfig);
+            BleManager.getInstance().scan(new com.clj.fastble.callback.BleScanCallback() {
+                @Override
+                public void onScanStarted(boolean success) {
+                }
+
+                @Override
+                public void onLeScan(com.clj.fastble.data.BleDevice bleDevice) {
+                    if (bleDevice.getName() != null) {
+                        Log.d("20220105", "onLeScan:  " + bleDevice.getName() + "  Rssi:" + bleDevice.getRssi() + "  mac:" + bleDevice.getMac());
+                    }
+                    if (!isHomePage) {
+                        return;
+                    }
+                    if (bleDevice.getName() != null && bleDevice.getName().contains("ROBAM_") && bleDevice.getName().contains("_0")) {
+                        Log.d("20220105", "ROBAM_onLeScan:  " + bleDevice.getName() + "  Rssi:" + bleDevice.getRssi());
+                        if (bleRssiDevices.isEmpty()) {
+                            if (bleDevice.getRssi() > -80) {
+                                bleRssiDevices.add(bleDevice);
+                                deviceBluetoothDialog();
+                                if (rvDeviceAdapter != null) {
+                                    rvDeviceAdapter.addData(bleDevice);
+//                                    rvDeviceAdapter.addData(setBlueDeviceIcon(bleDevice));
+                                }
+                            }
+                        } else {
+                            boolean isExist = false;
+                            for (int i = 0; i < bleRssiDevices.size(); i++) {
+                                if (bleRssiDevices.get(i).getMac().equals(bleDevice.getMac())) {
+                                    isExist = true;
+                                    break;
+                                }
+                            }
+                            if (bleDevice.getRssi() > -80 && !isExist) {
+                                bleRssiDevices.add(bleDevice);
+                                deviceBluetoothDialog();
+                                if (rvDeviceAdapter != null) {
+                                    rvDeviceAdapter.addData(bleDevice);
+
+                                }
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onScanning(com.clj.fastble.data.BleDevice bleDevice) {
+
+                }
+
+                @Override
+                public void onScanFinished(List<BleDevice> scanResultList) {
+                    LogUtils.i("20220321", "scanResultList:" + scanResultList.size());
+                    List<BleDevice> scanDevices = new ArrayList<>();
+                    for (int i = 0; i < scanResultList.size(); i++) {
+                        BleDevice bd;
+                        if (i<scanResultList.size()) {
+                            bd= scanResultList.get(i);
+                        }else{
+                            return;
+                        }
+                        if (bd != null && bd.getName() != null && bd.getName().contains("ROBAM_") && bd.getName().contains("_0")) {
+                            scanDevices.add(bd);
+                        }
+                    }
+                    if (bleRssiDevices.isEmpty()) {
+                        return;
+                    }
+                    if (scanDevices.isEmpty()) {
+                        if (scanCountdis >= 2) {
+                            bleRssiDevices.clear();
+                            if (baseDialog != null && baseDialog.isShowing()) {
+                                baseDialog.dismiss();
+                                scanCountdis = 0;
+                            }
+                        } else {
+                            scanCountdis++;
+                        }
+                        return;
+                    }
+                    for (int i = bleRssiDevices.size() - 1; i > 0; i--) {
+                        boolean isEx = false;
+                        for (int j = 0; j < scanDevices.size(); j++) {
+                            if (bleRssiDevices.get(i).getMac().equals(scanDevices.get(j).getMac())) {
+                                isEx = true;
+                            }
+                            if (j == scanDevices.size() - 1) {
+                                if (!isEx) {
+                                    if (rvDeviceAdapter != null)
+                                        rvDeviceAdapter.remove(bleRssiDevices.get(i));
+                                    rvDeviceAdapter.notifyDataSetChanged();
+                                    bleRssiDevices.remove(i);
+                                }
+                                isEx = false;
+                            }
+                        }
+                    }
+                    if (bleRssiDevices.isEmpty() && scanDevices.isEmpty()) {
+                        LogUtils.i("20220321", "bleRssiDevices:" + bleRssiDevices.size() + "   scanDevices:" + scanDevices);
+                        if (baseDialog != null && baseDialog.isShowing()) {
+                            baseDialog.dismiss();
+                        }
+                    }
+                }
+            });
         }
     }
+
+    int scanCountdis = 0;
+//    private AbsBleDevice setBlueDeviceIcon(BleDevice bleDevice){
+//        AbsBleDevice absBleDevice = new AbsBleDevice(bleDevice.getDevice());
+//        String tag= bleDevice.getName().substring(6,11);
+//        for (int i = 0; i < sumDeviceList.size(); i++) {
+//            List<DeviceItemList> detailList = sumDeviceList.get(i);
+//            for (int j = 0; j < detailList.size(); j++) {
+//                if (detailList.get(j).getName().contains(tag)) {
+//                    absBleDevice.iconUrl=detailList.get(j).iconUrl;
+//                }
+//            }
+//
+//        }
+//        return absBleDevice;
+//    }
 
     //初始化友盟推送获取数据，要发送的页面
 //    private void initUmPushMsgPage() {
@@ -487,8 +661,11 @@ public class HomePage extends AbsDUIPage {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
-//        mTimer.cancel();
-//        task.cancel();
+        BleManager.getInstance().cancelScan();
+        BleManager.getInstance().destroy();
+        //关闭定时任务
+        if (mTimer != null) mTimer.cancel();
+
     }
 
 //    @Subscribe
@@ -538,7 +715,7 @@ public class HomePage extends AbsDUIPage {
 
     @Subscribe
     public void onEvent(DeviceEasylinkCompletedEvent event) {
-        tabView.selectTab(TAB_DEVICE);
+//        tabView.selectTab(TAB_DEVICE);
     }
 
     @Subscribe
@@ -551,71 +728,81 @@ public class HomePage extends AbsDUIPage {
         }
     }
 
+    @Subscribe
+    public void onEvent(BlueCloseEvent event) {
+        BleManager.getInstance().cancelScan();
+        BleManager.getInstance().destroy();
+        if (mTimer != null) mTimer.cancel();
+    }
+
     List<View> buildViews() {
         List<View> views = Lists.newArrayList();
         views.add(new HomeDeviceView(cx, activity));
         homeRecipeView32 = new HomeRecipeView32(cx, activity);
         views.add(homeRecipeView32);
-//        views.add(new HomeIpView(cx));
         homeMineView = new HomeMineView(cx, activity);
         views.add(homeMineView);
         return views;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventUtils.postEvent(new MessageEvent());
+    }
 
     HomeTabView.OnTabSelectedCallback tabCallback = new HomeTabView.OnTabSelectedCallback() {
         @Override
         public void onTabSelected(final int tabIndex) {
-            if (tabView != null) {
-                tabView.setBackgroundDrawable(null);
-            }
+//            if (tabView != null) {
+//                tabView.setBackgroundDrawable(null);
+//            }
             if (pager != null) {
                 pager.setCurrentItem(tabIndex, true);
             }
-            if (Build.VERSION.SDK_INT >= 21) {
-                View decorView = activity.getWindow().getDecorView();
-                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-                activity.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
-                StatusBarUtils.setTextDark(getContext(), true);
-            }
+//            if (Build.VERSION.SDK_INT >= 21) {
+//                View decorView = activity.getWindow().getDecorView();
+//                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//                activity.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+//                StatusBarUtils.setTextDark(getContext(), true);
+//            }
             switch (tabIndex) {
                 case TAB_DEVICE:
 //                  setRootBgRes(R.color.main_background);
-                    tabView.setBackgroundResource(R.color.white);
-                    String newBie = PreferenceUtils.getString("newBie", null);
-                    LogUtils.i("20180823", " newBie:" + newBie);
-                    if (Plat.accountService.isLogon() && DeviceService.getInstance().queryAll().size() > 0) {
-                        mIvMask.setVisibility(View.GONE);
-                        PreferenceUtils.setString("newBie", "new");
-                    } else if (newBie == null && DeviceService.getInstance().queryAll().size() == 0) {
-                        mIvMask.setVisibility(View.VISIBLE);
-                        PreferenceUtils.setString("newBie", "new");
-                    }
-
+//                    tabView.setBackgroundResource(R.color.white);
+//                    String newBie = PreferenceUtils.getString("newBie", null);
+//                    LogUtils.i("20180823", " newBie:" + newBie);
+//                    if (Plat.accountService.isLogon() && DeviceService.getInstance().queryAll().size() > 0) {
+//                        mIvMask.setVisibility(View.GONE);
+//                        PreferenceUtils.setString("newBie", "new");
+//                    } else if (newBie == null && DeviceService.getInstance().queryAll().size() == 0) {
+//                        mIvMask.setVisibility(View.VISIBLE);
+//                        PreferenceUtils.setString("newBie", "new");
+//                    }
                     break;
                 case TAB_RECIPE:
 //                   setRootBgRes(R.color.main_background);
-                    tabView.setBackgroundResource(R.color.white);
-                    mIvMask.setVisibility(View.GONE);
+//                    tabView.setBackgroundResource(R.color.white);
+//                    mIvMask.setVisibility(View.GONE);
 //                    homeRecipeView3.upData();
                     break;
                 case TAB_IP:
                     //R.color.White_90
-                    tabView.setBackgroundResource(R.color.white);
-                    mIvMask.setVisibility(View.GONE);
+//                    tabView.setBackgroundResource(R.color.white);
+//                    mIvMask.setVisibility(View.GONE);
                     break;
                 case TAB_PERSONAL:
                     //R.color.White_90
-                    tabView.setBackgroundResource(R.color.white);
-                    mIvMask.setVisibility(View.GONE);
+//                    tabView.setBackgroundResource(R.color.white);
+//                    mIvMask.setVisibility(View.GONE);
 
-                    if (Build.VERSION.SDK_INT >= 21) {
-                        View decorView = activity.getWindow().getDecorView();
-                        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-                        activity.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
-                        StatusBarUtils.setTextDark(getContext(), true);
-                    }
-//                    homeMineView.getUser();
+//                    if (Build.VERSION.SDK_INT >= 21) {
+//                        View decorView = activity.getWindow().getDecorView();
+//                        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//                        activity.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+//                        StatusBarUtils.setTextDark(getContext(), true);
+//                    }
+                    homeMineView.getUser();
                     break;
                 default:
                     break;
@@ -624,11 +811,11 @@ public class HomePage extends AbsDUIPage {
     };
 
 
-    @OnClick(R.id.iv_mask)
-    public void onViewClicked() {
-        mIvMask.setVisibility(View.GONE);
-        EventUtils.postEvent(new NewBieGuideEvent());
-    }
+//    @OnClick(R.id.iv_mask)
+//    public void onViewClicked() {
+//        mIvMask.setVisibility(View.GONE);
+//        EventUtils.postEvent(new NewBieGuideEvent());
+//    }
 
 
     class Adapter extends ExtPageAdapter {
@@ -662,7 +849,6 @@ public class HomePage extends AbsDUIPage {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-
         if (PermissionsUtils.CODE_HOME_DEVICE_CAMERA == requestCode) {
             for (int i = 0; i < grantResults.length; i++) {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
@@ -673,55 +859,24 @@ public class HomePage extends AbsDUIPage {
                     atv.startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
                 }
             }
-        }
-
-    }
-
-    /**
-     *
-     */
-    public void connectDevice(BleRssiDevice device) {
-        if (bleRssiDevices.size() == 0) {
-            return;
-        }
-        /**
-         * 连接蓝牙
-         */
-        ble.connect(device, new BleConnectCallback<BleRssiDevice>() {
-            @Override
-            public void onConnectionChanged(BleRssiDevice device) {
-                if (device.isConnected()) {
-                    ToastUtils.showShort("已连接");
-                    onSend(device);
-//                    UIService.getInstance().postPage(PageKey.DeviceWifiConnect, null);
-//                    onSend(device);
-                } else if (device.isConnecting()) {
-                    ToastUtils.showShort("连接中...");
-                } else if (device.isDisconnected()) {
-                    ToastUtils.showShort("未连接");
+        } else if (PermissionsUtils.CODE_BLUE_TOOTH == requestCode) {
+            for (int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    timeLoop();
                 }
             }
+        }
 
-            @Override
-            public void onServicesDiscovered(BleRssiDevice device, final BluetoothGatt gatt) {
-                super.onServicesDiscovered(device, gatt);
-                gatt.requestMtu(200);
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        gattServices.clear();
-                        gattServices.addAll(gatt.getServices());
-                    }
-                });
-            }
-        });
     }
+
 
     /**
      * 显示设备
      */
+    private BleDevice item = null;
+
     private void deviceBluetoothDialog() {
-        if (!PreferenceUtils.getBool("isShowBluetoothDevice", true)) {
+        if (!PreferenceUtils.getBool("isShowBluetoothDevice", true) || !isHomePage) {
             return;
         }
         if (baseDialog == null) {
@@ -732,26 +887,52 @@ public class HomePage extends AbsDUIPage {
             baseDialog.setWidth(activity.getWindowManager().getDefaultDisplay().getWidth());
             RecyclerView rvDevice = (RecyclerView) baseDialog.findViewById(R.id.rv_device);
             TextView tv_not_tips = (TextView) baseDialog.findViewById(R.id.tv_not_tips);
+            Button tv_scan_again = (Button) baseDialog.findViewById(R.id.tv_scan_again);
             ImageView iv_close = (ImageView) baseDialog.findViewById(R.id.iv_close);
             rvDevice.setLayoutManager(new LinearLayoutManager(cx, LinearLayoutManager.HORIZONTAL, false));
             rvDeviceAdapter = new RvDeviceBluetoothAdapter();
+
             rvDeviceAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                    BleRssiDevice item = rvDeviceAdapter.getItem(position);
-                    if (item.getBleName().contains("_1")) {
-                        //连接并配网
-                        connectDevice(item);
-                    } else if (item.getBleName().contains("_0")) {
-
+                    item = rvDeviceAdapter.getItem(position);
+//                    connectDevice(item);
+                    if (!Plat.accountService.isLogon()) {
+                        CmccLoginHelper.getInstance().login();
+                        baseDialog.dismiss();
+                        return;
                     }
+                    Bundle bd = new Bundle();
+                    bd.putString(PageArgumentKey.WIFITYPE, FormKey.HOME_WIFITYPE_BLUE);
+                    bd.putParcelable("BleRssiDevice", item);
+                    UIService.getInstance().postPage(PageKey.WifiConnect, bd);
+//                    PreferenceUtils.setBool("isShowBluetoothDevice", false);
+//                    if (mTimer != null) mTimer.cancel();
+//                    BleManager.getInstance().cancelScan();
+//                    BleManager.getInstance().destroy();
+                    baseDialog.dismiss();
 
+                }
+            });
+            baseDialog.setCancelable(false);
+            baseDialog.addOnDismissListener(new BaseDialog.OnDismissListener() {
+                @Override
+                public void onDismiss(BaseDialog baseDialog) {
+                    bleRssiDevices.clear();
+                    rvDeviceAdapter.getData().clear();
+                    rvDeviceAdapter.notifyDataSetChanged();
                 }
             });
             iv_close.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    PreferenceUtils.setBool("isShowBluetoothDevice", false);
+//                    ToastUtils.show("本次不再弹出", Toast.LENGTH_SHORT);
                     baseDialog.dismiss();
+                    BleManager.getInstance().cancelScan();
+                    BleManager.getInstance().destroy();
+                    //关闭定时任务
+                    if (mTimer != null) mTimer.cancel();
                 }
             });
             tv_not_tips.setOnClickListener(new View.OnClickListener() {
@@ -760,6 +941,16 @@ public class HomePage extends AbsDUIPage {
                     baseDialog.dismiss();
                     isShowBluetoothDeviceDialog();
 
+                }
+            });
+            tv_scan_again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    bleRssiDevices.clear();
+                    gattServices.clear();
+                    rvDeviceAdapter.getData().clear();
+                    rvDeviceAdapter.notifyDataSetChanged();
+                    checkGpsStatus();
                 }
             });
             rvDevice.setAdapter(rvDeviceAdapter);
@@ -794,126 +985,40 @@ public class HomePage extends AbsDUIPage {
             }
         });
     }
+
 //    @Subscribe
 //    public void onEvent(DeviceFindEvent deviceFindEvent) {
 //        DeviceInfo deviceInfo = deviceFindEvent.deviceInfo;
-//        Log.e("yidao", "onEvent: DeviceFindEvent"+deviceInfo.guid );
-//        addKettle(deviceInfo);
-//
-//    }
-//    private void addKettle(final DeviceInfo devInfo) {
-//        try {
-//            devInfo.ownerId = Plat.accountService.getCurrentUserId();
-//            if (Strings.isNullOrEmpty(devInfo.name)) {
-//                DeviceType dt = DeviceTypeManager.getInstance().getDeviceType(devInfo.guid);
-//                if (dt != null) {
-//                    devInfo.name = dt.getName();
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
+//        Log.e("yidao", "onEvent: DeviceFindEvent" + deviceInfo.guid);
+//        if(Plat.accountService.isLogon()){
+//            addKettle(deviceInfo);
 //        }
-//        Log.e("yidao", "addKettle: "+devInfo.name);
-//        Log.e("yidao", "addKettle: "+devInfo.guid);
-//        Plat.deviceService.addWithBind(devInfo.guid, devInfo.name,
-//                true, new VoidCallback() {
-//
-//                    @Override
-//                    public void onSuccess() {
-//                        EventUtils.postEvent(new DeviceEasylinkCompletedEvent(devInfo));
-//                        // UIService.getInstance().returnHome();
-//                        try {
-//                            Thread.sleep(1000);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        } finally {
-//                            UIService.getInstance().popBack().popBack().popBack();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Throwable t) {
-//                    }
-//                });
-//
 //    }
 
-    public void onSend(BleRssiDevice device) {
-        BluetoothGattCharacteristic writeChar = null;
-        BluetoothGattCharacteristic readChar = null;
-        for (int i = 0; i < gattServices.size(); i++) {
-            if (gattServices.get(i).getCharacteristic(UUID.fromString(UuidUtils.uuid16To128("fed7"))) != null) {
-                writeChar = gattServices.get(i).getCharacteristic(UUID.fromString(UuidUtils.uuid16To128("fed7")));
-            }
-
-            if (gattServices.get(i).getCharacteristic(UUID.fromString(UuidUtils.uuid16To128("fed8"))) != null) {
-                readChar = gattServices.get(i).getCharacteristic(UUID.fromString(UuidUtils.uuid16To128("fed8")));
-            }
-        }
-        if (writeChar != null) {
-            Map<String, String> wifiInfoMap = new HashMap<String, String>();
-            wifiInfoMap.put("userid", Plat.accountService.getCurrentUserId() + "");
-            wifiInfoMap.put("apptype", "RKIOS");
-            wifiInfoMap.put("appid", CommonService.getInstance().getAppId());
-            wifiInfoMap.put("ssid", "物联研究院");
-            wifiInfoMap.put("pwd", "rokitest2021");
-
-            Gson gson = new Gson();
-            String wifiInfoGson = gson.toJson(wifiInfoMap);
-            Log.e("onEvent", "onSend: " + wifiInfoGson);
-            final BluetoothGattCharacteristic read = readChar;
-            /**
-             * 给设备写入消息
-             */
-            ble.writeByUuid(device, wifiInfoGson.getBytes(), writeChar.getService().getUuid(), writeChar.getUuid(), new BleWriteCallback<BleRssiDevice>() {
-                @Override
-                public void onWriteSuccess(BleRssiDevice device, BluetoothGattCharacteristic characteristic) {
-                    Log.e("onEvent", "onWriteSuccess: ");
-                    if (read != null) {
-                        Log.e("onEvent", "read: ");
-                        ble.readByUuid(device, read.getService().getUuid(), read.getUuid(), new BleReadCallback<BleRssiDevice>() {
-                            @Override
-                            public void onReadSuccess(BleRssiDevice dedvice, BluetoothGattCharacteristic characteristic) {
-                                super.onReadSuccess(dedvice, characteristic);
-                                Log.e("onEvent", "onReadSuccess: ");
-                            }
-
-                            @Override
-                            public void onReadFailed(BleRssiDevice device, int failedCode) {
-                                super.onReadFailed(device, failedCode);
-                                Log.e("onEvent", "onReadFailed: ");
-                            }
-                        });
-                    }
+    private void addKettle(final DeviceInfo devInfo) {
+        try {
+            devInfo.ownerId = Plat.accountService.getCurrentUserId();
+            if (Strings.isNullOrEmpty(devInfo.name)) {
+                DeviceType dt = DeviceTypeManager.getInstance().getDeviceType(devInfo.guid);
+                if (dt != null) {
+                    devInfo.name = dt.getName();
                 }
-
-                @Override
-                public void onWriteFailed(BleRssiDevice device, int failedCode) {
-                    Log.e("onEvent", "onWriteFailed: ");
-                }
-            });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-
-    private void addDeviceaddDevice(String guid) {
-        DeviceInfo info = new DeviceInfo();
-        info.ownerId = Plat.accountService.getCurrentUserId();
-        info.name = DeviceTypeManager.getInstance().getDeviceType(
-                guid).getName();
-        info.guid = guid;
-        Plat.deviceService.addWithBind(info.guid, info.name,
+        Log.e("yidao", "addKettle: " + devInfo.name);
+        Log.e("yidao", "addKettle: " + devInfo.guid);
+        Plat.deviceService.addWithBind(devInfo.guid, devInfo.name,
                 true, new VoidCallback() {
 
                     @Override
                     public void onSuccess() {
-                        ToastUtils.showShort("添加完成");
-                        EventUtils.postEvent(new DeviceEasylinkCompletedEvent(info));
-                        UIService.getInstance().returnHome();
+                        EventUtils.postEvent(new DeviceEasylinkCompletedEvent(devInfo));
                     }
 
                     @Override
                     public void onFailure(Throwable t) {
-                        ToastUtils.showThrowable(t);
                     }
                 });
 
@@ -1000,13 +1105,13 @@ public class HomePage extends AbsDUIPage {
                             @Override
                             public void onMoveAnimEnd() {
                                 Log.d("TAG", "onMoveAnimEnd");
-                                if(FloatWindow.get("RecipeCook")==null){
-                                   return;
+                                if (FloatWindow.get("RecipeCook") == null) {
+                                    return;
                                 }
-                                float x= FloatWindow.get("RecipeCook").getX();
+                                float x = FloatWindow.get("RecipeCook").getX();
                                 if (x == 0) {
                                     ll_float.setBackgroundResource(R.drawable.shape_bg_f5f5f8_left);
-                                }else{
+                                } else {
                                     ll_float.setBackgroundResource(R.drawable.shape_bg_f5f5f8_right);
                                 }
                             }
@@ -1085,5 +1190,39 @@ public class HomePage extends AbsDUIPage {
             Log.d("TAG", "onBackToDesktop");
         }
     };
+
+    private boolean isHomePage = true;
+
+    //页面切换事件可根据pageKey做判断
+    @Subscribe
+    public void onEvent(PageChangedEvent pageChangedEvent) {
+        LogUtils.i("20220224", " pageKey:" + pageChangedEvent.pageKey);
+        if (pageChangedEvent.pageKey.equals("dialogshow")||pageChangedEvent.pageKey.equals("dialogdismiss")) {
+            return;
+        }
+        if (pageChangedEvent.pageKey.equals("Home")) {
+            isHomePage = true;
+        } else {
+            isHomePage = false;
+        }
+    }
+
+    @Subscribe
+    public void onEvent(BlueLoginSuccessEvent loginSuccessEvent) {
+        if (loginSuccessEvent.loginSuccess && item != null) {
+            Bundle bd = new Bundle();
+            bd.putString(PageArgumentKey.WIFITYPE, FormKey.HOME_WIFITYPE_BLUE);
+            bd.putParcelable("BleRssiDevice", item);
+            UIService.getInstance().postPage(PageKey.WifiConnect, bd);
+//            PreferenceUtils.setBool("isShowBluetoothDevice", false);
+//            if (mTimer != null) mTimer.cancel();
+//            BleManager.getInstance().cancelScan();
+//            BleManager.getInstance().destroy();
+            if (baseDialog != null && baseDialog.isShowing()) {
+                baseDialog.dismiss();
+            }
+        }
+    }
+
 }
 

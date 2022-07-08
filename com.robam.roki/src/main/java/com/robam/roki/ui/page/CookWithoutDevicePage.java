@@ -6,11 +6,8 @@
 //import android.view.ViewGroup;
 //
 //import com.legent.Callback;
-//import com.legent.plat.io.cloud.RetrofitCallback;
 //import com.legent.ui.UIService;
 //import com.legent.ui.ext.BasePage;
-//import com.robam.common.io.cloud.Reponses;
-//import com.robam.common.io.cloud.RokiRestHelper;
 //import com.robam.common.pojos.Recipe;
 //import com.robam.common.services.CookbookManager;
 //import com.robam.roki.R;
@@ -35,15 +32,14 @@
 //        ButterKnife.inject(this, view);
 //
 //        long bookId = getArguments().getLong(PageArgumentKey.BookId);
-//        RokiRestHelper.getCookbookById(bookId, Reponses.CookbookResponse.class, new RetrofitCallback<Reponses.CookbookResponse>() {
+//        CookbookManager.getInstance().getCookbookById(bookId, new Callback<Recipe>() {
 //            @Override
-//            public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
-//                if (null != cookbookResponse)
-//                    book = cookbookResponse.cookbook;
+//            public void onSuccess(Recipe cookbook) {
+//                book = cookbook;
 //            }
 //
 //            @Override
-//            public void onFaild(String err) {
+//            public void onFailure(Throwable throwable) {
 //
 //            }
 //        });

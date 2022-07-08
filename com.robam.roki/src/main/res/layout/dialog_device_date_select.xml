@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_400"
+    android:background="@drawable/shape_dialog_bg"
+   >
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_28"
+        android:textColor="@color/text_color_device_category"
+        android:text="计时提醒"
+        android:textSize="@dimen/sp_20" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_44"
+        android:layout_below="@id/tv_1">
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_64"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:text=":"
+            android:textColor="@color/text_select_color"
+            android:gravity="center"
+            android:textSize="@dimen/sp_20"
+            android:background="@drawable/shape_select_time" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_hours"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_minus"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_botton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="@dimen/dp_166"
+            android:layout_height="wrap_content"
+            android:textColor="@color/roki_important_text_color"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:textSize="@dimen/sp_20"
+            android:text="取消"
+            android:background="@drawable/countdown_cancel"/>
+
+        <Button
+            android:id="@+id/btn_complete"
+            android:layout_width="@dimen/dp_166"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_select_color"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:textSize="@dimen/sp_20"
+            android:text="确认"
+            android:background="@drawable/countdown_complete"/>
+    </LinearLayout>
+</RelativeLayout>
+

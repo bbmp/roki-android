@@ -73,6 +73,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/rv_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -102,8 +103,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="10dp">
-
+                android:paddingBottom="10dp"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/btn_curve_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="曲线入口"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview"
                     android:layout_width="match_parent"

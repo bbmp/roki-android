@@ -183,14 +183,14 @@ public class DishWasherMsgMar {
                 msg.putOpt(MsgParams.EventId,aShort);
                 if (aShort==12) {
                     msg.putOpt(MsgParams.waterConsumption,
-                            MsgUtils.getInt(payload, offset++));
+                            MsgUtils.getShort(payload[offset++]));
                     offset++;
 
                     msg.putOpt(MsgParams.powerConsumption,
-                            MsgUtils.getInt(payload, offset++));
+                            MsgUtils.getShort(payload[offset++]));
                 }else{
                     msg.putOpt(MsgParams.EventParam,
-                            MsgUtils.getInt(payload, offset++));
+                            MsgUtils.getShort(payload[offset++]));
                     offset++;
                     offset++;
 

@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.google.common.base.Strings;
 import com.legent.plat.BuildConfig;
@@ -23,9 +22,6 @@ import com.legent.plat.services.DeviceTypeManager;
 import com.legent.pojos.AbsKeyPojo;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 abstract public class AbsDevice extends AbsKeyPojo<String> implements IDevice {
@@ -216,18 +212,12 @@ abstract public class AbsDevice extends AbsKeyPojo<String> implements IDevice {
         return isConnected;
     }
 
-
-
-
-
     @Override
-    public synchronized void setConnected(boolean connected) {
+    public void setConnected(boolean connected) {
 
-
-        LogUtils.i("20170830 test1 before","errorcount::"+errorCountOnCheck+" conencted::"+connected+" isCon::"+isConnected);
         errorCountOnCheck = connected ? 0 : errorCountOnCheck;
         if (Plat.DEBUG)
-            LogUtils.i("20170830 test1 after","errorcount::"+errorCountOnCheck+" conencted::"+connected+" isCon::"+isConnected);
+            LogUtils.i("20170830","errorcount::"+errorCountOnCheck+" conencted::"+connected+" isCon::"+isConnected);
         if (isConnected == connected)
             return;
 
@@ -240,8 +230,6 @@ abstract public class AbsDevice extends AbsKeyPojo<String> implements IDevice {
             LogUtils.logFIleWithTime(String.format("post DeviceConnectionChangedEvent:%s", isConnected));
         }
     }
-
-
 
 
     @Override
@@ -268,55 +256,28 @@ abstract public class AbsDevice extends AbsKeyPojo<String> implements IDevice {
     public void onPolling() {
     }
 
-    private static final String TAG = "AbsDevice";
-    //设置false  循环在不现在
     @Override
     public void onCheckConnection() {
-        Log.e(TAG,"onCheckConnection test1");
-        if (isConnected){
+        if (isConnected) {
             errorCountOnCheck++;
-            if (errorCountOnCheck >= MAX_ERROR_COUNT){
-                //增加一个时间检测，如果4
-//                if (System.currentTimeMillis()-currentTime>8000) {
-                    setConnected(true);
-                    Log.e(TAG, "onCheckConnection test1 false");
-                    writeLog();
-//                }
+            if (errorCountOnCheck >= MAX_ERROR_COUNT) {
+                if (Plat.DEBUG)
+                    LogUtils.i("20170830","errorcount::"+errorCountOnCheck);
+                setConnected(false);
+                writeLog();
             }
         }
-
     }
 
-
-//    private long currentTime=System.currentTimeMillis();
     @Override
     public void onReceivedMsg(Msg msg) {
-        Log.e(TAG,"onReceivedMsg test1");
         LogUtils.i("20180901","msg0000:"+msg.toString());
-//        currentTime=System.currentTimeMillis();
         if (!isConnected){
-            setConnected(true);
+//            setConnected(true);
             writeLog();
         }
-
+        setConnected(true);
     }
-
-    private TimerTask mTimerTask = new TimerTask() {
-        @Override
-        public void run() {
-//            if (curTime == 0) {
-//                curTime = MAX_TIME;
-//            } else {
-//                //计数器，每次减一秒。
-//                curTime -= 1000;
-//            }
-//            Message message = new Message();
-//            message.what = WHAT;
-//            message.obj = curTime;
-//            mHandler.sendMessage(message);
-        }
-    };
-    private Timer mTimer = new Timer();
 
     private  void writeLog() {
         try {

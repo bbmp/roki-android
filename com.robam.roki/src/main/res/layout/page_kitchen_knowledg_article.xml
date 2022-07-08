@@ -8,33 +8,31 @@
 
     <com.legent.ui.ext.views.ExtWebView
         android:id="@+id/webView"
-        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_height="@dimen/dp_44"
         android:background="@color/white">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="45dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
             android:layout_centerVertical="true"
-            android:paddingBottom="2dp"
-            android:paddingTop="2dp"
-            android:src="@drawable/ic_return_selector"/>
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="12dp"
+            android:layout_marginRight="@dimen/dp_20"
             android:contentDescription="@null"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_recipe_detail_share"/>
+            android:src="@mipmap/icon_share"/>
 
     </RelativeLayout>
 </FrameLayout>

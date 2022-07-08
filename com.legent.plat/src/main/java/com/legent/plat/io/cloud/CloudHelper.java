@@ -3,7 +3,6 @@ package com.legent.plat.io.cloud;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.legent.Callback;
 import com.legent.ContextIniter;
 import com.legent.Helper;
@@ -83,25 +82,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit.RetrofitError;
+import retrofit.client.Response;
 import retrofit.http.Query;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import static com.legent.ContextIniter.context;
-
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by sylar on 15/7/23.
  */
 public class CloudHelper {
 
-    public static final String APPLICATION_JSON_ACCEPT_APPLICATION_JSON = "application/json; Accept: application/json";
     static ICloudService svr = getRestfulApi(ICloudService.class);
-
 
     static public <T> T getRestfulApi(Class<T> apiClazz) {
         return RestfulService.getInstance().createApi(apiClazz);
@@ -109,43 +102,21 @@ public class CloudHelper {
 
     // ==========================================================Common Start==========================================================
 
-    public static <T extends RCReponse> void getAppGuid(String appType, String token, String phoneToken, String versionName,
-                                                        Class<T> entity, final RetrofitCallback callback) {
-        String json = new GetAppIdRequest(appType, token, phoneToken, versionName).toString();
-        RequestBody requestBody =
-                RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
-        Call<ResponseBody> call = svr.getAppId(requestBody);
-        enqueue(entity, call, callback);
+    static public String getAppGuid(String appType, String token, String phoneToken, String versionName) {
+        GetAppIdReponse res = svr.getAppId(new GetAppIdRequest(appType, token, phoneToken, versionName));
+        return res != null ? res.appGuid : null;
     }
-    //统一处理回调
-    private static <T extends RCReponse> void enqueue(final Class<T> entity, Call<ResponseBody> call, final RetrofitCallback callback) {
-        call.enqueue(new retrofit2.Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String body = response.body().string();
-                    Gson gson = new Gson();
-                    T object = gson.fromJson(body, entity);
-                    RCReponse rcReponse = object;
-                    if (null != rcReponse && rcReponse.rc == 0) {
-                        if (null != callback) {
-                            callback.onSuccess(object);
-                            return;
-                        }
-                    }
-                    if (null != callback && null != rcReponse)
-                        callback.onFaild(rcReponse.error_description);
-                } catch (Exception e) {
-                    if (null != callback)
-                     callback.onFaild("exception:" + e.getMessage());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                callback.onFaild(throwable.toString());
-            }
-        });
+    static public void getAppGuid(String appType, String token, String phoneToken, String versionName,
+                                  final Callback<String> callback) {
+        svr.getAppId(new GetAppIdRequest(appType, token, phoneToken, versionName),
+                new RCRetrofitCallback<GetAppIdReponse>(callback) {
+                    @Override
+                    protected void afterSuccess(GetAppIdReponse result) {
+                        LogUtils.i("20170926", "result" + result);
+                        callback.onSuccess(result.appGuid);
+                    }
+                });
     }
 
     static public void bindAppGuidAndUser(String appGuid, long userId,
@@ -181,7 +152,7 @@ public class CloudHelper {
                                  VoidCallback callback) {
         String version = null;
         if (IAppType.RKDRD.equals(Plat.appType))
-            version = PackageUtils.getVersionName(context);
+            version = PackageUtils.getVersionName(cx);
         else
             version = String.valueOf(PackageUtils.getAppVersionCode(Plat.app));
         svr.reportLog(new ReportLogRequest(appGuid, version, logType, log),
@@ -395,7 +366,7 @@ public class CloudHelper {
                 });
     }
 
-    public static <T extends RCReponse> void getToken(String loginType
+    public static void getToken(String loginType
             ,String sjhm
             ,String smsCode
             ,String password
@@ -405,11 +376,22 @@ public class CloudHelper {
             ,String client_id
             ,String client_secret
             ,String appType
-            , Class<T> entity, final RetrofitCallback callback) {
+            , final Callback<Reponses.TokenReponse> callback) {
+        svr.getToken(loginType ,sjhm ,smsCode ,password ,accessToken ,refreshToken,openId , client_id ,client_secret ,appType,
+                new RCRetrofitCallback<Reponses.TokenReponse>(callback) {
+                    @Override
+                    protected void afterSuccess(Reponses.TokenReponse result) {
+                        if (result != null) {
+                            callback.onSuccess(result);
+                        }
+                    }
 
-        Call<ResponseBody> call = svr.getToken(loginType ,sjhm ,smsCode ,password ,accessToken ,refreshToken,openId , client_id ,client_secret ,appType);
-        enqueue(entity, call, callback);
-
+                    @Override
+                    public void failure(RetrofitError e) {
+                        super.failure(e);
+//                        callback.onFailure(e);
+                    }
+                });
     }
     /**
      * 判断是否第一次登录
@@ -439,11 +421,26 @@ public class CloudHelper {
      * @param authorization
      * @param callback
      */
-    public static <T extends RCReponse> void getOauth(String authorization,
-                                    Class<T> entity, final RetrofitCallback callback) {
-        Call<ResponseBody> call = svr.getOauth(authorization);
-        enqueue(entity, call, callback);
+    public static void getOauth(String authorization,
+                                    final Callback<User> callback) {
+        svr.getOauth(authorization,
+                new RCRetrofitCallback<LoginReponse>(callback) {
+                    @Override
+                    protected void afterSuccess(LoginReponse result) {
+                        if (result != null) {
+                            if (result.user != null) {
+                                result.user.TGT = result.tgt;
+                                callback.onSuccess(result.user);
+                            }
+                        }
+                    }
 
+                    @Override
+                    public void failure(RetrofitError e) {
+                        super.failure(e);
+                        callback.onFailure(e);
+                    }
+                });
     }
     /**
      * 设置用户密码
@@ -517,13 +514,14 @@ public class CloudHelper {
      * @param userId
      * @param callback
      */
-    public static <T extends RCReponse> void getUser2(long userId, Class<T> entity, final RetrofitCallback callback) {
-        String json = new UserRequest(userId).toString();
-        RequestBody requestBody =
-                RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getUser2(requestBody);
-        enqueue(entity, call, callback);
-
+    public static void getUser2(long userId, final Callback<User> callback) {
+        svr.getUser2(new UserRequest(userId),
+                new RCRetrofitCallback<GetUserReponse>(callback) {
+                    @Override
+                    protected void afterSuccess(GetUserReponse result) {
+                        callback.onSuccess(result.user);
+                    }
+                });
     }
     static public void updateUser(long id, String name, String phone,
                                   String email, boolean gender, VoidCallback callback) {
@@ -568,13 +566,16 @@ public class CloudHelper {
                 });
     }
 
-    public static <T extends RCReponse> void getVerifyCode(String phone, Class<T> entity,
-                                     final RetrofitCallback callback) {
-        String json = new GetVerifyCodeRequest(phone).toString();
-        RequestBody requestBody =
-                RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
-        Call<ResponseBody> call = svr.getVerifyCode(requestBody);
-        enqueue(entity, call, callback);
+    static public void getVerifyCode(String phone,
+                                     final Callback<String> callback) {
+        svr.getVerifyCode(
+                new GetVerifyCodeRequest(phone),
+                new RCRetrofitCallback<GetVerifyCodeReponse>(callback) {
+                    @Override
+                    protected void afterSuccess(GetVerifyCodeReponse result) {
+                        callback.onSuccess(result.verifyCode);
+                    }
+                });
     }
 
     static public void getDynamicPwd(String phone, final Callback<String> callback) {
@@ -813,24 +814,30 @@ public class CloudHelper {
 
     // ----------------------------------------------------------------
 
-    public static <T extends RCReponse> void getDevices(long userId, Class<T> entity,
-                                  final RetrofitCallback callback) {
-        String json = new UserRequest(userId).toString();
-        RequestBody requestBody =
-                RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getDevices(requestBody);
-        enqueue(entity, call, callback);
+    static public void getDevices(long userId,
+                                  final Callback<List<DeviceInfo>> callback) {
 
+        svr.getDevices(new UserRequest(userId),
+                new RCRetrofitCallback<GetDevicesResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(GetDevicesResponse result) {
+                        if (Plat.DEBUG) {
+                            callback.onSuccess(result.devices);
+                        }
+                    }
+
+                });
 
     }
 
-    public static <T extends RCReponse> void getDeviceById(String guid, Class<T> entity,  final RetrofitCallback callback) {
-        String json = new GuidRequest(guid).toString();
-        RequestBody requestBody =
-                RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getDeviceById(requestBody);
-        enqueue(entity, call, callback);
-
+    static public void getDeviceById(String guid, final Callback<DeviceInfo> callback) {
+        svr.getDeviceById(new GuidRequest(guid),
+                new RCRetrofitCallback<GetDevicePesponse>(callback) {
+                    @Override
+                    protected void afterSuccess(GetDevicePesponse result) {
+                        callback.onSuccess(result.device);
+                    }
+                });
     }
 
     static public void getDeviceBySn(String sn, final Callback<DeviceInfo> callback) {
@@ -912,22 +919,35 @@ public class CloudHelper {
     }
 
 
-    public static <T extends RCReponse> void getAllDeviceType(final Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.DeviceTypeRequest().toString();
-        final RequestBody requestBody =
-                RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
-        Call<ResponseBody> call = svr.getAllDeviceType(requestBody);
-        enqueue(entity, call, callback);
+    static public void getAllDeviceType(final Callback callback) {
+        svr.getAllDeviceType(new Requests.DeviceTypeRequest(),
+                new RCRetrofitCallback<Reponses.DeviceTypeResponse>(callback) {
 
+                    @Override
+                    protected void afterSuccess(Reponses.DeviceTypeResponse result) {
+                        callback.onSuccess(result);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError e) {
+                        LogUtils.i("20180612", "e:" + e);
+                    }
+                });
     }
 
-    public static <T extends RCReponse> void getAllDeviceErrorInfo(final Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.DeviceTypeRequest().toString();
-        final RequestBody requestBody =
-                RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
-        Call<ResponseBody> call = svr.getAllDeviceErrorInfo(requestBody);
-        enqueue(entity, call, callback);
+    static public void getAllDeviceErrorInfo(final Callback callback) {
+        svr.getAllDeviceErrorInfo(new RCRetrofitCallback<Reponses.ErrorInfoResponse>(callback) {
 
+            @Override
+            protected void afterSuccess(Reponses.ErrorInfoResponse result) {
+                callback.onSuccess(result);
+            }
+
+            @Override
+            public void failure(RetrofitError e) {
+                LogUtils.i("20180612", "e:" + e);
+            }
+        });
     }
 
     //设备联动查询

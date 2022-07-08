@@ -1,21 +1,21 @@
 package com.robam.roki.ui.page.mine;
 
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.CloudHelper;
-import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UI;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.StringUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
@@ -47,7 +47,9 @@ public class MineBindPhonePage extends MyBasePage<MainActivity> {
     /**
      * 下一步/完成
      */
-    private AppCompatButton btnComplete;
+    private Button btnComplete;
+
+    private ImageView ivBack;
     /**
      * 用户信息
      */
@@ -62,18 +64,17 @@ public class MineBindPhonePage extends MyBasePage<MainActivity> {
     }
     @Override
     protected void initView() {
-        setTitle(R.string.bind_change_phone);
-        getTitleBar().setOnTitleBarListener(this);
+        ivBack = findViewById(R.id.img_back);
         etLoginPhone = (ClearEditText) findViewById(R.id.et_login_phone);
         etPhoneCode = (ClearEditText) findViewById(R.id.et_phone_code);
         cvFindCountdown = (CountdownView) findViewById(R.id.cv_find_countdown);
-        btnComplete = (AppCompatButton) findViewById(R.id.btn_complete);
+        btnComplete = findViewById(R.id.btn_complete);
         InputTextManager.with(getActivity())
                 .addView(etLoginPhone)
                 .addView(etPhoneCode)
                 .setMain(btnComplete)
                 .build();
-        setOnClickListener(btnComplete ,cvFindCountdown);
+        setOnClickListener(btnComplete ,cvFindCountdown, ivBack);
     }
     @Override
     protected void initData() {
@@ -100,6 +101,8 @@ public class MineBindPhonePage extends MyBasePage<MainActivity> {
             }else {
                 ToastUtils.show(R.string.common_code_error_hint);
             }
+        } else if (view.equals(ivBack)) {
+            UIService.getInstance().popBack();
         }
     }
 
@@ -113,22 +116,19 @@ public class MineBindPhonePage extends MyBasePage<MainActivity> {
             return;
         }
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.getVerifyCode(phone, Reponses.GetVerifyCodeReponse.class, new RetrofitCallback<Reponses.GetVerifyCodeReponse>() {
+        Plat.accountService.getVerifyCode(phone, new Callback<String>() {
             @Override
-            public void onSuccess(Reponses.GetVerifyCodeReponse getVerifyCodeReponse) {
+            public void onSuccess(String s) {
+                cvFindCountdown.start();
+                code = s;
                 ProgressDialogHelper.setRunning(cx, false);
-                if (null != getVerifyCodeReponse) {
-                    cvFindCountdown.start();
-                    code = getVerifyCodeReponse.verifyCode;
-
-                    ToastUtils.show(R.string.common_code_send_hint);
-                }
+                ToastUtils.show(R.string.common_code_send_hint);
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(err);
+                ToastUtils.show(t.getMessage());
             }
         });
     }

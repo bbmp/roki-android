@@ -1,179 +1,492 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mine_background"
-    android:orientation="vertical">
-
-
-    <RelativeLayout
+    android:fitsSystemWindows="false"
+    android:orientation="vertical"
+    android:background="@drawable/shape_bg_main">
+    <View
+        android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/img_topbg"
-        android:gravity="center_vertical">
+        android:layout_height="0dp"
+        android:background="@color/mine_logon_bg_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <RelativeLayout
+        android:id="@+id/rl_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status_bar_fix"
+        android:background="@color/mine_logon_bg_color">
+
         <RelativeLayout
-            android:id="@+id/rl_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="20dp"
-            tools:ignore="RtlSymmetry">
+            android:id="@+id/rl_mine_message"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_44"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true">
+
             <ImageView
-                android:id="@+id/iv_photo"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="30dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/headportrait_wdl" />
+                android:id="@+id/home_recipe_img"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:src="@mipmap/ic_my_message" />
+
+            <TextView
+                android:id="@+id/textview_home_device_number"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_14"
+                android:minWidth="@dimen/dp_14"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="@dimen/dp_13"
+                android:layout_marginTop="@dimen/dp_19"
+                android:background="@drawable/shape_notification"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_10"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="@dimen/dp_88"
+            android:layout_height="@dimen/dp_88"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_68"
+            android:scaleType="centerCrop"
+            android:src="@drawable/headportrait_wdl" />
+
+        <LinearLayout
+            android:id="@+id/ll_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_photo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_12"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/not_login"
+                android:textColor="@color/text_color_device_category"
+                android:textSize="@dimen/sp_20" />
+
+            <TextView
+                android:id="@+id/tv_user_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_or_register"
+                android:textColor="@color/text_color_read_number"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_below="@id/ll_login"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_marginStart="15dp"
-                android:layout_toEndOf="@+id/iv_photo"
-                android:gravity="center_vertical"
+                android:id="@+id/ll_curve"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_user_name"
+                    android:id="@+id/tv_curve_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/not_login"
-                    android:textColor="@color/mine_text_color"
-                    android:textSize="16sp" />
+                    android:textColor="#ff61acff"
+                    android:textSize="@dimen/sp_25"
+                    android:text="0" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_13"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_curve" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_2"
+                        android:text="@string/my_cook_line"
+                        android:textColor="@color/text_color_device_category"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:id="@+id/vertical_line1"
+                android:layout_width="1dp"
+                android:layout_height="@dimen/dp_20"
+                android:layout_centerInParent="true"
+                android:background="#D8D8D8"
+                android:visibility="invisible" />
+            <LinearLayout
+                android:id="@+id/ll_work"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_user_phone"
+                    android:id="@+id/tv_work_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/login_or_register"
-                    android:textColor="@color/mine_text_color2"
-                    android:textSize="12sp" />
+                    android:textColor="#ff61acff"
+                    android:textSize="@dimen/sp_25"
+                    tools:text="88" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="@dimen/dp_13"
+                        android:layout_height="@dimen/dp_13"
+                        android:src="@drawable/ic_my_work"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_2"
+                        android:text="我的创作"
+                        android:textColor="@color/text_color_device_category"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
             </LinearLayout>
-        </RelativeLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_edit_info"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/countdown_selector_login"
+            <View
+                android:id="@+id/vertical_line2"
+                android:layout_width="1dp"
+                android:layout_height="@dimen/dp_20"
+                android:layout_centerInParent="true"
+                android:background="#D8D8D8"
+                android:visibility="invisible" />
+            <LinearLayout
+                android:id="@+id/ll_collection"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="@string/edit_info"
-                android:textColor="@drawable/countdown_color_selector" />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_collection_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ff61acff"
+                    android:textSize="@dimen/sp_25"
+                    tools:text="88" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_13"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_collection" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_2"
+                        android:text="我的收藏"
+                        android:textColor="@color/text_color_device_category"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_20"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rl_login"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_20"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_product"
+                app:layout_constraintBottom_toBottomOf="@id/tv_sercie_shop"
+                android:background="@drawable/shape_kitchen_bg_round">
+            </View>
+            <TextView
+                android:id="@+id/tv_product"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_59"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/dp_40"
+                android:text="产品手册"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/text_color_device_category"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_40"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_product"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product"
+
+                android:src="@mipmap/ic_arrow_right" />
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginLeft="@dimen/dp_40"
+                android:layout_marginRight="@dimen/dp_40"
+                android:background="@drawable/shape_divider_bg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_product"/>
+
+            <TextView
+                android:id="@+id/tv_service"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_59"
+                android:layout_marginStart="@dimen/dp_40"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line1"
+                android:gravity="center_vertical"
+                android:text="服务预约"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/text_color_device_category"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_40"
+                app:layout_constraintTop_toTopOf="@id/tv_service"
+                app:layout_constraintBottom_toBottomOf="@id/tv_service"
+                app:layout_constraintRight_toRightOf="parent"
+                android:src="@mipmap/ic_arrow_right"/>
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginLeft="@dimen/dp_40"
+                android:layout_marginRight="@dimen/dp_40"
+                android:background="@drawable/shape_divider_bg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_service"/>
+
+            <TextView
+                android:id="@+id/tv_sercie_shop"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_59"
+                android:layout_marginStart="@dimen/dp_40"
+                android:gravity="center_vertical"
+                android:text="服务商城"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/text_color_device_category"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line2"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_40"
+                android:src="@mipmap/ic_arrow_right"
+                app:layout_constraintTop_toTopOf="@id/tv_sercie_shop"
+                app:layout_constraintBottom_toBottomOf="@id/tv_sercie_shop"
+                app:layout_constraintRight_toRightOf="parent"/>
 
 
-    <com.robam.roki.ui.widget.layout.SettingBar2
-        android:id="@+id/stb_collection"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bar_leftText="@string/my_collect"
-        app:bar_rightIcon="@drawable/icon_more">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:background="@drawable/shape_kitchen_bg_round"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_device_manage"
+                app:layout_constraintBottom_toBottomOf="@id/tv_set">
+            </View>
+            <TextView
+                android:id="@+id/tv_curve_list"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_59"
+                android:layout_marginStart="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_20"
+                android:gravity="center_vertical"
+                android:text="@string/my_curve_list"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/text_color_device_category"
+                app:layout_constraintTop_toBottomOf="@id/tv_sercie_shop"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_40"
+                android:src="@mipmap/ic_arrow_right"
+                app:layout_constraintTop_toTopOf="@id/tv_device_manage"
+                app:layout_constraintBottom_toBottomOf="@id/tv_device_manage"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <View
+                android:id="@+id/line13"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginLeft="@dimen/dp_40"
+                android:layout_marginRight="@dimen/dp_40"
+                android:background="@drawable/shape_divider_bg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_device_manage"/>
+            <TextView
+                android:id="@+id/tv_device_manage"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_59"
+                android:layout_marginStart="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_20"
+                android:gravity="center_vertical"
+                android:text="@string/my_device"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/text_color_device_category"
+                app:layout_constraintTop_toBottomOf="@id/tv_curve_list"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_40"
+                android:src="@mipmap/ic_arrow_right"
+                app:layout_constraintTop_toTopOf="@id/tv_device_manage"
+                app:layout_constraintBottom_toBottomOf="@id/tv_device_manage"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginLeft="@dimen/dp_40"
+                android:layout_marginRight="@dimen/dp_40"
+                android:background="@drawable/shape_divider_bg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_device_manage"/>
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="20dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/icon_collection2" />
-    </com.robam.roki.ui.widget.layout.SettingBar2>
-    >
 
-    <com.robam.roki.ui.widget.layout.SettingBar2
-        android:id="@+id/stb_work"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bar_leftText="@string/my_cook_moments"
-        app:bar_rightIcon="@drawable/icon_more">
+            <TextView
+                android:id="@+id/tv_sale_service"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_59"
+                android:layout_marginStart="@dimen/dp_40"
+                android:gravity="center_vertical"
+                android:text="@string/my_sale_service"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/text_color_device_category"
+                app:layout_constraintTop_toBottomOf="@id/line3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_40"
+                android:src="@mipmap/ic_arrow_right"
+                app:layout_constraintTop_toTopOf="@id/tv_sale_service"
+                app:layout_constraintBottom_toBottomOf="@id/tv_sale_service"
+                app:layout_constraintRight_toRightOf="parent"/>
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="20dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/icon_work" />
-    </com.robam.roki.ui.widget.layout.SettingBar2>
-    <com.robam.roki.ui.widget.layout.SettingBar2
-        android:id="@+id/stb_cook_line"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bar_leftText="@string/my_cook_line"
-        android:visibility="gone"
-        app:bar_rightIcon="@drawable/icon_more" >
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="20dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/icon_cook_line" />
-    </com.robam.roki.ui.widget.layout.SettingBar2>
-    <com.robam.roki.ui.widget.layout.SettingBar2
-        android:id="@+id/stb_device"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bar_leftText="@string/my_device"
-        app:bar_rightIcon="@drawable/icon_more" >
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="20dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/icon_work_1" />
-    </com.robam.roki.ui.widget.layout.SettingBar2>
+            <View
+                android:id="@+id/line4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginLeft="@dimen/dp_40"
+                android:layout_marginRight="@dimen/dp_40"
+                android:background="@drawable/shape_divider_bg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_sale_service"/>
 
-    <com.robam.roki.ui.widget.layout.SettingBar2
-        android:id="@+id/stb_sale_service"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="15dp"
-        app:bar_leftText="@string/my_sale_service"
-        app:bar_rightIcon="@drawable/icon_more" >
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginLeft="20dp"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/icon_serve" />
-</com.robam.roki.ui.widget.layout.SettingBar2>
-    <com.robam.roki.ui.widget.layout.SettingBar2
-        android:id="@+id/stb_about"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bar_leftText="@string/my_about"
-        app:bar_rightIcon="@drawable/icon_more" >
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="20dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/icon_aboutroki" />
-    </com.robam.roki.ui.widget.layout.SettingBar2>
-    <com.robam.roki.ui.widget.layout.SettingBar2
-        android:id="@+id/stb_setting"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bar_leftText="@string/my_setting"
-        app:bar_rightIcon="@drawable/icon_more" >
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="20dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/icon_set" />
-    </com.robam.roki.ui.widget.layout.SettingBar2>
+            <TextView
+                android:id="@+id/tv_about"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_59"
+                android:layout_marginStart="@dimen/dp_40"
+                android:gravity="center_vertical"
+                android:text="@string/my_about"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/text_color_device_category"
+                app:layout_constraintTop_toBottomOf="@id/line4"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_40"
+                android:src="@mipmap/ic_arrow_right"
+                app:layout_constraintTop_toTopOf="@id/tv_about"
+                app:layout_constraintBottom_toBottomOf="@id/tv_about"
+                app:layout_constraintRight_toRightOf="parent"/>
 
-</LinearLayout>
+
+            <View
+                android:id="@+id/line5"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginLeft="@dimen/dp_40"
+                android:layout_marginRight="@dimen/dp_40"
+                android:background="@drawable/shape_divider_bg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_about"/>
+
+            <TextView
+                android:id="@+id/tv_set"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_59"
+                android:layout_marginStart="@dimen/dp_40"
+                android:gravity="center_vertical"
+                android:text="@string/my_setting"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/text_color_device_category"
+                app:layout_constraintTop_toBottomOf="@id/line5"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_40"
+                android:src="@mipmap/ic_arrow_right"
+                app:layout_constraintTop_toTopOf="@id/tv_set"
+                app:layout_constraintBottom_toBottomOf="@id/tv_set"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

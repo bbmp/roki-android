@@ -51,5 +51,15 @@ public class DeviceJsonToBeanUtils {
         return sb.toString();
     }
 
-
+    /**
+     * 将对象转换为 字符串
+     * @param o
+     * @return
+     */
+    public static String getJsonStringByEntity(Object o) {
+        String strJson = "";
+        Gson gson = new Gson();
+        strJson = gson.toJson(o);
+        return strJson;
+    }
 }

@@ -39,7 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginLeft="8dp"
-            android:text="@string/device_steamOvenOne_water_filled_with_water" />
+            android:text="@string/device_steamOvenOne_water_filled_with_water"
+            android:id="@+id/textView7"/>
     </LinearLayout>
 
     <TextView

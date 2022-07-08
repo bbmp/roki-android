@@ -28,6 +28,7 @@ import android.widget.FrameLayout;
 
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.ui.UIService;
@@ -43,6 +44,7 @@ import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.dialog.KitchenSourceShareDialog;
 import com.robam.roki.ui.page.RecipeDetailPage;
+import com.robam.roki.ui.page.kitchenKnowledgepage;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.PermissionsUtils;
 
@@ -73,6 +75,7 @@ public class RWebActivity extends AppActivity {
     private String mShareText;
     private String mVideoUrl;
     private String mShareId;
+    private FirebaseAnalytics firebaseAnalytics;
     private FrameLayout flVideo;
 
     WebChromeClient.CustomViewCallback mCallback ;

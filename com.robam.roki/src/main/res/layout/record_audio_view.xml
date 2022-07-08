@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@drawable/shape_picture_choose_bg"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <EditText
+        android:textColorHint="@color/text_color_gray"
+        android:id="@+id/text_input_et"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/record_model_chang_img"
+        android:background="@null"
+        android:gravity="left|top"
+        android:hint="添加步骤说明"
+        android:paddingLeft="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_5"
+        android:textColor="#1F282D"
+        android:textSize="@dimen/sp_14" />
+
+    <RelativeLayout
+        android:id="@+id/audio_input_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/record_audio_view_info_img"
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_14"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_13"
+            android:src="@mipmap/icon_audio_record"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/press_record_audio_view_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/record_audio_view_info_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_4"
+            android:text="长按录入语音"
+            android:textColor="#1F282D"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rl_audio_recorded_finish"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EFCE17">
+
+        <ImageView
+            android:id="@+id/rl_audio_recorded_delete"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_9"
+            android:layout_marginRight="@dimen/dp_9"
+            android:src="@mipmap/icon_audio_delete" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:id="@+id/recorde_audio_view_state"
+            android:src="@mipmap/icon_audio_image" />
+
+        <TextView
+            android:id="@+id/recorde_audio_view_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_4"
+            android:text="00:00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10" />
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/record_model_chang_img"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/dp_6"
+        android:layout_marginBottom="@dimen/dp_6"
+        android:src="@mipmap/text_input_icon"
+        />
+</RelativeLayout>

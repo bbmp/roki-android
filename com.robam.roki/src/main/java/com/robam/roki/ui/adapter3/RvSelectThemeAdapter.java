@@ -1,6 +1,7 @@
 package com.robam.roki.ui.adapter3;
 
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -39,8 +41,10 @@ public class RvSelectThemeAdapter extends BaseQuickAdapter<Recipe, BaseViewHolde
             .placeholder(R.mipmap.icon_recipe_default)
             .error(R.mipmap.icon_recipe_default)
             .priority(Priority.HIGH)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .transform(new MaskTransformation(R.mipmap.icon_roki_recipe_bg));
+            .skipMemoryCache(true)
+            .format(DecodeFormat.PREFER_RGB_565)
+            .override(350*2, 158*2)
+            .diskCacheStrategy(DiskCacheStrategy.NONE);
 
     private Reponses.ThemeRecipeDetailResponse themeRecipeDetailResponse;
 
@@ -60,10 +64,10 @@ public class RvSelectThemeAdapter extends BaseQuickAdapter<Recipe, BaseViewHolde
             if (holder.getLayoutPosition() == 0) {
                 csl_item.setVisibility(View.VISIBLE);
                 if (themeRecipeDetailResponse != null) {
-                    holder.setText(R.id.tv_read_theme_number, "阅读 " + NumberUtil.converString(themeRecipeDetailResponse.theme.viewCount))
-                            .setText(R.id.tv_collect_theme_number, "收藏 " + NumberUtil.converString(themeRecipeDetailResponse.theme.collectCount)).
-                            setText(R.id.tv_theme_recipe_number, themeRecipeDetailResponse.theme.cookbookSet.size() + "道菜谱")
-                            .setText(R.id.tv_theme_desc, themeRecipeDetailResponse.theme.description);
+                    holder.setText(R.id.tv_read_theme_number, "阅读 " + NumberUtil.converString(themeRecipeDetailResponse.themeRecipeDetail.viewCount))
+//                            .setText(R.id.tv_collect_theme_number, "收藏 " + NumberUtil.converString(themeRecipeDetailResponse.themeRecipeDetail.collectCount))
+                            .setText(R.id.tv_theme_recipe_number, themeRecipeDetailResponse.themeRecipeDetail.recipeList.size() + "道菜谱")
+                            .setText(R.id.tv_theme_desc, themeRecipeDetailResponse.themeRecipeDetail.description);
                 }
 
             } else {
@@ -77,21 +81,28 @@ public class RvSelectThemeAdapter extends BaseQuickAdapter<Recipe, BaseViewHolde
                     .load(recipeUrl)
                     .apply(options)
                     .into(iv_top_week_img);
+            if (!TextUtils.isEmpty(item.video))
+                holder.getView(R.id.iv_play).setVisibility(View.VISIBLE);
+            else
+                holder.getView(R.id.iv_play).setVisibility(View.GONE);
 
-            holder.setText(R.id.tv_recipe_read_number, "" + NumberUtil.converString(item.viewCount))
-                    .setImageResource(R.id.iv_love_recipe, item.collected ? R.drawable.ic_baseline_favorite_24 : R.drawable.ic_baseline_favorite_border_24)
-                    .setVisible(R.id.iv_topic_ranking, false);
+            holder.setText(R.id.tv_recipe_read_number, "热度 " + NumberUtil.converString(item.viewCount));
+            holder.getView(R.id.iv_love_recipe).setSelected(item.collected);
+//                    .setImageResource(R.id.iv_love_recipe, item.collected ? R.drawable.ic_baseline_favorite_24 : R.drawable.ic_baseline_favorite_border_24);
+//                    .setVisible(R.id.iv_topic_ranking, false);
 
-            TextView tvCollection = holder.getView(R.id.tv_recipe_collect_number);
-            ImageView imageView = holder.getView(R.id.img_recipe_collect_number_icon);
+//            TextView tvCollection = holder.getView(R.id.tv_recipe_collect_number);
+//            ImageView imageView = holder.getView(R.id.img_recipe_collect_number_icon);
             List<Dc> dcs = item.getJs_dcs();
             if (dcs != null && dcs.size() != 0) {
 
-                imageView.setImageResource(DeviceNameHelper.getIcon(dcs));
-                tvCollection.setText(DeviceNameHelper.getDeviceName2(dcs));
-
+//                imageView.setImageResource(DeviceNameHelper.getIcon(dcs));
+//                tvCollection.setText(DeviceNameHelper.getDeviceName2(dcs));
+                holder.setVisible(R.id.tv_device_name, true);
+                holder.setText(R.id.tv_device_name, DeviceNameHelper.getDeviceName2(dcs));
             } else {
-                imageView.setImageDrawable(null);
+//                imageView.setImageDrawable(null);
+                holder.setVisible(R.id.tv_device_name, false);
             }
 
 

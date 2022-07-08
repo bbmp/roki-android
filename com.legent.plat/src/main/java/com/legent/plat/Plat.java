@@ -79,6 +79,28 @@ public class Plat {
     }
 
 
+    static public <T> T getCustomApi(Class<T> apiClazz) {
+        return CloudHelper.getRestfulApi(apiClazz);
+    }
+
+
+//    static public void init(Application app, int appDicResid, VoidCallback2 callback) {
+//        Plat.app = app;
+//        ContextIniter.init(app);
+//
+//        AppDic dic = AppDic.load(app, appDicResid);
+//        Plat.appType = dic.commOpt.appType;
+//        Plat.serverOpt = dic.serverOpt;
+//
+//        Plat.channel = dic.getAppChannel();
+//        Plat.deviceFactory = dic.getDeviceFactory();
+//        Plat.appMsgMarshaller = dic.getAppMsgMarshaller();
+//        Plat.appMsgSyncDecider = dic.getAppMsgSyncDecider();
+//        Plat.appNoticeReceiver = dic.getAppNoticeReceiver();
+//
+//        init(callback);
+//    }
+
 
     // for mobile
     static public void init(Application app, String appType,

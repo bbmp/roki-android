@@ -194,8 +194,8 @@ public class SteamOvenDiyDetailPage extends BasePage {
 
     //蒸、烤
     private void sendSteamOvenModel() {
-        if (absSteameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off
-                ||absSteameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait) {
+        if (absSteameOvenOne.powerState == SteamOvenOnePowerStatus.Off
+                ||absSteameOvenOne.powerState == SteamOvenOnePowerStatus.Wait) {
             absSteameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
                 public void onSuccess() {

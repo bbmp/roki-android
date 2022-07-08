@@ -21,15 +21,22 @@ import java.util.List;
  * Created by  2017/8/15.
  * 左上角按钮,右上角按钮，三个滑动滚轮，从底部弹出
  */
-public class DialogType_05 extends BaseDialog {
+public class DialogType_05 extends BaseDialog  {
 
     private TextView mTvCancel;
     private TextView mTvConfirm;
-
+    private TextView mTvDesc;
     public DialogType_05(Context context) {
         super(context);
     }
 
+    @Override
+    public void setContentText(CharSequence desc) {
+
+        if (!"".equals(desc)) {
+            mTvDesc.setText(desc);
+        }
+    }
 
     @Override
     public void initDialog() {
@@ -38,6 +45,7 @@ public class DialogType_05 extends BaseDialog {
         mTvConfirm = rootView.findViewById(R.id.tv_confirm);
         mLoopViewFront = rootView.findViewById(R.id.wheel_view_front);
         mLoopViewCenter = rootView.findViewById(R.id.wheel_view_center);
+        mTvDesc = rootView.findViewById(R.id.tv_desc);
         mLoopViewRear = rootView.findViewById(R.id.wheel_view_rear);
         createDialog(rootView);
     }
@@ -63,6 +71,32 @@ public class DialogType_05 extends BaseDialog {
         mTvConfirm.setText(text);
         setOnOkClickListener(okOnClickListener);
     }
+    @Override
+    public void setWheelViewData(List<String> listFrnot, List<String> listCenter, List<String> listRear,
+                                 String desc, boolean isLoop, int froneIndex, int centerIndex, int rearIndex,
+                                 OnItemSelectedListenerFrone onItemSelectedListenerFrone,
+                                 OnItemSelectedListenerCenter onItemSelectedListenerCenter,
+                                 OnItemSelectedListenerRear onItemSelectedListenerRear) {
+        if (mLoopViewCenter != null && listCenter != null && listCenter.size() != 0) {
+            mLoopViewCenter.setItems(listCenter);
+        } else if (mLoopViewFront != null && mLoopViewRear != null && listFrnot != null &&
+                listFrnot.size() != 0 && listRear != null && listRear.size() != 0) {
+            mLoopViewFront.setItems(listFrnot);
+            mLoopViewRear.setItems(listRear);
+        } else if (mLoopViewFront != null && mLoopViewRear != null && listFrnot != null &&
+                listFrnot.size() != 0 && listRear != null && listRear.size() != 0 && mLoopViewCenter
+                != null && listCenter != null && listCenter.size() != 0) {
+            mLoopViewFront.setItems(listFrnot);
+            mLoopViewCenter.setItems(listCenter);
+            mLoopViewRear.setItems(listRear);
+        }
+        if (!"".equals(desc)) {
+            descText = desc;
+        }
+
+
+    }
+
 
     @Override
     public void setWheelViewData(List<String> listFrnot, List<String> listCenter, List<String> listRear,
@@ -70,6 +104,7 @@ public class DialogType_05 extends BaseDialog {
                                  OnItemSelectedListenerFrone onItemSelectedListenerFrone,
                                  OnItemSelectedListenerCenter onItemSelectedListenerCenter,
                                  OnItemSelectedListenerRear onItemSelectedListenerRear) {
+
 
         if (!isLoop){
             mLoopViewFront.setNotLoop();

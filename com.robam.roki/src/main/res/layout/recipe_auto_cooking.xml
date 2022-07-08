@@ -6,9 +6,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     >
-
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/transparent" />
     <com.hjq.bar.TitleBar
+
         android:id="@+id/tb_title"
+        android:layout_below="@id/status_bar_fix"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#ffffff"
@@ -18,11 +24,13 @@
         app:rightIcon="@mipmap/icon_cook_close"
         app:titleColor="@color/mine_text_color"
         app:titleSize="22sp" />
+
     <FrameLayout
         android:id="@+id/view_add"
-        android:layout_below="@+id/tb_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_below="@+id/tb_title"
+        android:layout_above="@id/ll_roki_speen"/>
     <ImageView
         android:id="@+id/recipe_quit"
         android:visibility="gone"
@@ -35,6 +43,7 @@
         />
 
     <LinearLayout
+        android:id="@+id/ll_foot_tab"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -86,28 +95,32 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/ll_roki_speen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical|right"
-        android:paddingEnd="35dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="35dp"
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal"
+        android:paddingEnd="35dp"
         tools:ignore="RtlHardcoded,RtlSymmetry">
+
         <TextView
             android:id="@+id/tv_roki_message"
             android:layout_width="175dp"
             android:layout_height="38dp"
+            android:background="@drawable/ic_message_bg"
+            android:gravity="center"
             android:paddingStart="10dp"
             android:paddingEnd="6dp"
-            android:gravity="center"
-            android:background="@drawable/ic_message_bg"
-            android:text="你说，ROKI正在听..."/>
+            android:text="你说，ROKI正在听..." />
+
         <ImageView
             android:id="@+id/iv_roki"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_discern"/>
+            android:src="@drawable/ic_discern" />
     </LinearLayout>
 </RelativeLayout>

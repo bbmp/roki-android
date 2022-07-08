@@ -90,7 +90,7 @@ public class RecipeTheme extends AbsStorePojo<Long> implements Serializable, Mul
     public boolean isCollect ;
 
     @JsonProperty("cookbookSet")
-    public List<Recipe> cookbookSet;
+    public List<Recipe> recipeList;
     @Override
     public Long getID() {
         return id;

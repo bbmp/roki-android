@@ -18,13 +18,13 @@ public class AbsMicroWaveMorePage extends AbsDeviceMorePage {
     @Override
     public void subItemOnClick(View v, int position) {
         switch (position){
-            case 0:
+            case 1:
                 UIService.getInstance().postPage(PageKey.Chat);
                 break;
-            case 1:
+            case 2:
                 callAfterSale();
                 break;
-            case 2:
+            case 3:
                 Bundle bd = new Bundle();
                 bd.putString(PageArgumentKey.Guid, mGuid);
                 UIService.getInstance().postPage(PageKey.DeviceInformation, bd);

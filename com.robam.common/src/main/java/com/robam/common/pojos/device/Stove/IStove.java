@@ -4,6 +4,9 @@ package com.robam.common.pojos.device.Stove;
 import com.legent.VoidCallback;
 import com.robam.common.pojos.device.IPauseable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by sylar on 15/7/24.
  */
@@ -59,4 +62,9 @@ public interface IStove extends IPauseable {
      * @param callback
      */
     void setStoveLock(boolean isLock, VoidCallback callback);
+
+
+    public void setAutoTemporaryStep(short OrderNumber, short ArgumentNumber,ArrayList<Short> controlWay,
+                                     ArrayList<Short> tap, ArrayList<Integer> temp, ArrayList<Integer> time, VoidCallback callback);
+     void setAutoTemporarySetting(short OrderNumber,short ControlInstruction,VoidCallback callback);
 }

@@ -3,66 +3,173 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/mine_background"
+    android:background="@drawable/shape_bg_main"
     android:orientation="vertical">
     <View
         android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white" />
-    <com.hjq.bar.TitleBar app:drawableSize="25dp"
-
-        android:id="@+id/tb_title"
+        android:background="@color/transparent" />
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:barStyle="transparent"
-        android:background="#ffffff"
-        app:titleColor="@color/mine_text_color"
-        app:leftIcon="@mipmap/icon_back_black"
-        app:rightSize="18sp" />
-    <com.robam.roki.ui.widget.layout.SettingBar
-        android:layout_marginTop="15dp"
+        android:layout_height="@dimen/dp_44">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/setting_acc_and_sec"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+
+    </RelativeLayout>
+    <RelativeLayout
         android:id="@+id/stb_change_password"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bar_leftText="@string/acc_change_password"
-        app:bar_rightIcon="@drawable/icon_more"
-        />
+        android:layout_height="@dimen/dp_59"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_28"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:background="@drawable/shape_kitchen_bg_round">
 
-    <com.robam.roki.ui.widget.layout.SettingBar
-        android:id="@+id/stb_bind_phone"
-        android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bar_leftText="@string/acc_bind_phone"
-        app:bar_rightColor="@color/mine_text_color3"
-        app:bar_rightIcon="@drawable/icon_more"
-       />
-    <com.robam.roki.ui.widget.layout.SettingBar
-        android:id="@+id/stb_bing_wx"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bar_rightColor="@color/mine_text_color3"
-        app:bar_leftText="@string/acc_bind_wx"
-        app:bar_rightIcon="@drawable/icon_more"
-        />
-    <com.robam.roki.ui.widget.layout.SettingBar
-        android:id="@+id/stb_bind_apple"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bar_rightColor="@color/mine_text_color3"
-        android:visibility="gone"
-        app:bar_leftText="@string/acc_bind_apple"
-        app:bar_rightIcon="@drawable/icon_more"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_59"
+            android:gravity="center_vertical"
+            android:text="@string/acc_change_password"
+            android:textColor="@color/text_color_net_err"
+            android:textSize="@dimen/sp_18" />
+        <TextView
+            android:id="@+id/tv_set_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_toLeftOf="@id/arrow_change_password"
+            android:layout_marginRight="@dimen/dp_4"
+            android:textColor="@color/text_color_net_err"
+            android:textSize="@dimen/sp_16"/>
+        <ImageView
+            android:id="@+id/arrow_change_password"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/ic_arrow_right"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 
-    <com.robam.roki.ui.widget.layout.SettingBar
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_28"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/shape_kitchen_bg_round">
+        <RelativeLayout
+            android:id="@+id/stb_bind_phone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_59"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_59"
+                android:gravity="center_vertical"
+                android:text="@string/acc_bind_phone"
+                android:textColor="@color/text_color_net_err"
+                android:textSize="@dimen/sp_18" />
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_toLeftOf="@id/arrow_bind_phone"
+                android:layout_marginRight="@dimen/dp_4"
+                android:textColor="@color/text_color_net_err"
+                android:textSize="@dimen/sp_16"/>
+            <ImageView
+                android:id="@+id/arrow_bind_phone"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@mipmap/ic_arrow_right"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:background="@drawable/shape_divider_bg"/>
+        <RelativeLayout
+            android:id="@+id/stb_bing_wx"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_59"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_59"
+                android:gravity="center_vertical"
+                android:text="@string/acc_bind_wx"
+                android:textColor="@color/text_color_net_err"
+                android:textSize="@dimen/sp_18" />
+            <TextView
+                android:id="@+id/tv_bind_wx"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_toLeftOf="@id/arrow_bind_wx"
+                android:layout_marginRight="@dimen/dp_4"
+                android:textColor="@color/text_color_net_err"
+                android:textSize="@dimen/sp_16"/>
+            <ImageView
+                android:id="@+id/arrow_bind_wx"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@mipmap/ic_arrow_right"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
         android:id="@+id/stb_logoff"
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bar_leftText="@string/acc_logoff"
-        app:bar_rightIcon="@drawable/icon_more"
-        />
+        android:layout_height="@dimen/dp_59"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_28"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:background="@drawable/shape_kitchen_bg_round">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_59"
+            android:gravity="center_vertical"
+            android:text="@string/acc_logoff"
+            android:textColor="@color/text_color_net_err"
+            android:textSize="@dimen/sp_18" />
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/ic_arrow_right"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 
 </LinearLayout>

@@ -8,11 +8,10 @@
         android:id="@+id/tv_materials_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:textSize="18sp"
-        android:textColor="@color/roki_main_text_color"
+        android:textSize="@dimen/sp_20"
+        android:textColor="@color/text_color_net_err"
         android:textStyle="bold"
         tools:text="食材"/>
 

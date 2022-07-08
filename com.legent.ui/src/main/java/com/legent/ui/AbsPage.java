@@ -44,7 +44,7 @@ abstract public class AbsPage extends Fragment implements IPage {
     protected String title;
 
 
-    private MyHandler handler;
+//    private MyHandler handler;
     protected FragmentActivity activity;
     protected Context cx;
     protected Resources r;
@@ -98,16 +98,16 @@ abstract public class AbsPage extends Fragment implements IPage {
         cx = activity;
         r = cx.getResources();
 
-        handler = new MyHandler(this) {
-            @Override
-            public void handleMessage(Message msg) {
-                if (frm.get() == null) {
-                    return;
-                }
-                processMessage(msg);
-            }
-
-        };
+//        handler = new MyHandler(this) {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                if (frm.get() == null) {
+//                    return;
+//                }
+//                processMessage(msg);
+//            }
+//
+//        };
     }
 
     @Override
@@ -126,7 +126,7 @@ abstract public class AbsPage extends Fragment implements IPage {
     public void onDestroyView() {
         super.onDestroyView();
         EventUtils.unregist(this);
-        handler = null;
+//        handler = null;
         if (rootView != null) {
             MemoryUtils.disposeView(rootView);
         }
@@ -163,7 +163,7 @@ abstract public class AbsPage extends Fragment implements IPage {
     @Override
     public void onDetach() {
         super.onDetach();
-        handler = null;
+//        handler = null;
 //        try {
 //            java.lang.reflect.Field childFragmentManager = null;
 //            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
@@ -210,17 +210,17 @@ abstract public class AbsPage extends Fragment implements IPage {
     }
 
 
-    protected void sendEmptyMessage(int what) {
-        if (handler != null) {
-            handler.sendEmptyMessage(what);
-        }
-    }
-
-    protected void sendMessage(Message msg) {
-        if (handler != null) {
-            handler.sendMessage(msg);
-        }
-    }
+//    protected void sendEmptyMessage(int what) {
+//        if (handler != null) {
+//            handler.sendEmptyMessage(what);
+//        }
+//    }
+//
+//    protected void sendMessage(Message msg) {
+//        if (handler != null) {
+//            handler.sendMessage(msg);
+//        }
+//    }
 
     protected void processMessage(Message msg) {
 

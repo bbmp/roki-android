@@ -7,9 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.PopupWindow;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.legent.Callback;
 import com.legent.Callback2;
 import com.legent.plat.Plat;
@@ -18,10 +15,14 @@ import com.legent.plat.pojos.User;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.popoups.BasePickerPopupWindow;
+import com.legent.ui.ext.popoups.BasePickerPopupWindow2;
+import com.legent.ui.ext.popoups.BasePickerPopupWindow3;
 import com.legent.ui.ext.popoups.BasePickerPopupWindow4;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
+import com.legent.utils.graphic.collection.CircleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.robam.common.Utils;
 import com.robam.common.pojos.OvenUserAction;
 import com.robam.common.pojos.Recipe;
@@ -76,8 +77,13 @@ import com.robam.roki.ui.dialog.StoveSelectAllOffTips;
 import com.robam.roki.ui.dialog.StoveSelectTipsDialog;
 import com.robam.roki.ui.dialog.WaterPurifierSetPeopleDialog;
 import com.robam.roki.ui.form.MainActivity;
+import com.robam.roki.ui.view.CrmAreaWheelView;
+import com.robam.roki.ui.view.DeviceOvenNormalSettingWheelView;
+import com.robam.roki.ui.view.OrderAreaWheelView;
 import com.robam.roki.ui.view.OvenResetWheelView;
+import com.robam.roki.ui.view.SteamovenResetWheelView;
 import com.robam.roki.ui.view.recipeclassify.RecipeFilterPopWindow;
+import com.robam.roki.utils.YouzanUserAttestationUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -87,18 +93,11 @@ import java.util.Map;
  */
 public class Helper {
 
-//    public static DisplayImageOptions DisplayImageOptions_UserFace = new DisplayImageOptions.Builder()
-//            .showImageOnLoading(R.mipmap.ic_user_default_figure)
-//            .showImageForEmptyUri(R.mipmap.ic_user_default_figure)
-//            .showImageOnFail(R.mipmap.ic_user_default_figure).cacheInMemory(true)
-//            .cacheOnDisk(true).displayer(new CircleBitmapDisplayer()).build();
-
-    public static RequestOptions DisplayImageOptions_UserFace = new RequestOptions()
-            .centerCrop()
-            .placeholder(R.mipmap.ic_user_default_figure)
-            .error(R.mipmap.ic_user_default_figure)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .transform(new CircleCrop());
+    public static DisplayImageOptions DisplayImageOptions_UserFace = new DisplayImageOptions.Builder()
+            .showImageOnLoading(R.mipmap.ic_user_default_figure)
+            .showImageForEmptyUri(R.mipmap.ic_user_default_figure)
+            .showImageOnFail(R.mipmap.ic_user_default_figure).cacheInMemory(true)
+            .cacheOnDisk(true).displayer(new CircleBitmapDisplayer()).build();
 
     public static void login(final Activity atv, String account, String pwdMd5) {
         Plat.accountService.login(account, pwdMd5, new Callback<User>() {
@@ -147,7 +146,7 @@ public class Helper {
 
         ToastUtils.showShort("登录成功");
         EventUtils.postEvent(new UserLoginNewEvent());
-
+        YouzanUserAttestationUtils.initYouzanData();
         if (atv instanceof MainActivity) {
             UIService.getInstance().popBack();
         } else {
@@ -157,13 +156,13 @@ public class Helper {
     }
 
     public static void onLoginCompleted(final User user) {
-
+        YouzanUserAttestationUtils.initYouzanData();
         UIService.getInstance().returnHome();
     }
 
 
 
-
+//    未调用
 //    public static void startCook(Context cx, Recipe recipe) {
 //        if (MobileStoveCookTaskService.getInstance().isRunning()) {
 //            ToastUtils.showShort("正在烧菜中,不可同时烧菜!");
@@ -219,6 +218,94 @@ public class Helper {
       //  MobileStoveCookTaskService.getInstance().start(head, recipe);
     }
 
+    public static PopupWindow newCrmAreaPicker(Context cx, final Callback2<CrmArea> callback) {
+        final CrmAreaWheelView view = new CrmAreaWheelView(cx);
+        BasePickerPopupWindow.PickListener listener = new BasePickerPopupWindow.PickListener() {
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onConfirm() {
+                if (callback != null) {
+                    callback.onCompleted(view.getSelected());
+                }
+            }
+        };
+
+        BasePickerPopupWindow pop = new BasePickerPopupWindow(cx, view);
+        pop.setPickListener(listener);
+        return pop;
+    }
+
+
+    public static PopupWindow newOrderAreaPicker(Context cx, final Callback2<String> callback) {
+        final OrderAreaWheelView view = new OrderAreaWheelView(cx);
+        BasePickerPopupWindow.PickListener listener = new BasePickerPopupWindow.PickListener() {
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onConfirm() {
+                if (callback != null) {
+                    callback.onCompleted(view.getSelected());
+                }
+            }
+        };
+
+        BasePickerPopupWindow pop = new BasePickerPopupWindow(cx, view);
+        pop.setPickListener(listener);
+        return pop;
+    }
+
+    public static PopupWindow newSteamOvenTwoSettingPicker(Context cx, final Callback2<DeviceWorkMsg> callback, DeviceWorkMsg msg) {
+        final SteamovenResetWheelView view = new SteamovenResetWheelView(cx, msg.getType());
+        BasePickerPopupWindow2.PickListener listener = new BasePickerPopupWindow2.PickListener() {
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onConfirm() {
+                if (callback != null) {
+                    callback.onCompleted(view.getSelected());
+                }
+            }
+        };
+        BasePickerPopupWindow2 pop = new BasePickerPopupWindow2(cx, view);
+        pop.setPickListener(listener);
+        return pop;
+    }
+
+    public static PopupWindow newOvenTwoSettingPicker(Context cx, final Callback2<NormalModeItemMsg> callback, NormalModeItemMsg msg, final String guid) {
+        final DeviceOvenNormalSettingWheelView view = new DeviceOvenNormalSettingWheelView(cx, msg.getType());
+        BasePickerPopupWindow3.PickListener listener = new BasePickerPopupWindow3.PickListener() {
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onConfirm() {
+                if (callback != null) {
+                    callback.onCompleted(view.getSelected());
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString(PageArgumentKey.Guid, guid);
+                    bundle1.putSerializable("msg", view.getSelected());
+                    UIService.getInstance().postPage(PageKey.DeviceOvenWorking039, bundle1);
+
+                }
+
+            }
+        };
+        BasePickerPopupWindow3 pop = new BasePickerPopupWindow3(cx, view);
+        pop.setPickListener(listener);
+        return pop;
+    }
 
     public static PopupWindow newOvenResetTwoSettingPicker(Context cx, final Callback2<NormalModeItemMsg> callback, NormalModeItemMsg msg) {
         final OvenResetWheelView view = new OvenResetWheelView(cx, msg.getType());

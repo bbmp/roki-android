@@ -86,13 +86,13 @@ public class CookbookManager extends AbsService {
         } else {
             list = new ArrayList<>();
         }
-            list.add(0, word);
+        list.add(0, word);
         if (list.size() >= 5) {
             List subList = list.subList(0, 5);
             ArrayList list2ArrayList = SaveArrayListUtil.getList2ArrayList(subList);
             String key = SaveArrayListUtil.SearchList2String(list2ArrayList);
-            PreferenceUtils.setString(PrefsKey.HistoryKeys,key);
-        }else {
+            PreferenceUtils.setString(PrefsKey.HistoryKeys, key);
+        } else {
             String key = SaveArrayListUtil.SearchList2String(list);
             PreferenceUtils.setString(PrefsKey.HistoryKeys, key);
         }
@@ -116,6 +116,7 @@ public class CookbookManager extends AbsService {
     public void clearHistoryKeyForCookbook() {
         PreferenceUtils.setString(PrefsKey.HistoryKeys, null);
     }
+
     public void saveCookingHistory(Recipe recipe) {
         List<String> list = getCookingHistory();
         list.remove(recipe.name);
@@ -144,15 +145,44 @@ public class CookbookManager extends AbsService {
 
 
     // ------------------------------------------------------------------------------------------------------------------
+//   未调用
+//    public void getProviders(final Callback<List<RecipeProvider>> callback) {
+//
+//        boolean isNewest = SysCfgManager.getInstance().isNewest();
+//        if (isNewest) {
+//            List<RecipeProvider> list = DaoHelper.getAll(RecipeProvider.class);
+//            if (list != null)
+//                Helper.onSuccess(callback, list);
+//            else
+//                ss.getCookbookProviders(callback);
+//        } else {
+//            ss.getCookbookProviders(callback);
+//        }
+//
+//    }
+//
+//    public void getGroups(final Callback<List<Group>> callback) {
+//        boolean isNewest = SysCfgManager.getInstance().isNewest();
+//        if (isNewest) {
+//            List<Group> list = DaoHelper.getAll(Group.class);
+//            if (list != null)
+//                Helper.onSuccess(callback, list);
+//            else
+//                ss.getStoreCategory(callback);
+//        } else {
+//            ss.getStoreCategory(callback);
+//        }
+//
+//    }
 
-
-//    public void getCookbooksByName(final String name,
-//                                   final Callback<CookbooksResponse> callback) {
-//        ss.getCookbooksByName(name, true, new Callback<CookbooksResponse>() {
+//    未调用
+//    public void getGroupsWithoutHome(final Callback<List<Group>> callback) {
+//
+//        getGroups(new Callback<List<Group>>() {
 //
 //            @Override
-//            public void onSuccess(CookbooksResponse result) {
-//                Helper.onSuccess(callback, result);
+//            public void onSuccess(List<Group> result) {
+//                Helper.onSuccess(callback, Group.getGroupsWithoutHome());
 //            }
 //
 //            @Override
@@ -160,10 +190,64 @@ public class CookbookManager extends AbsService {
 //                Helper.onFailure(callback, t);
 //            }
 //        });
+//
 //    }
-//    public void getCookbooksBy(final String name, boolean notNeedSearchHistory,
+//
+//    public void getHomeTags(final int count, final Callback<List<Tag>> callback) {
+//
+//        getGroups(new Callback<List<Group>>() {
+//
+//            @Override
+//            public void onSuccess(List<Group> result) {
+//                Group homeGroup = Group.getHomeGroup();
+//                List<Tag> res = Lists.newArrayList();
+//
+//                if (homeGroup != null) {
+//                    List<Tag> tags = homeGroup.getTags();
+//                    if (tags != null && tags.size() > 0) {
+//                        res = tags.subList(0, Math.min(count, tags.size()));
+//                        Helper.onSuccess(callback, res);
+//                    } else {
+//                        Helper.onSuccess(callback, res);
+//                    }
+//                } else {
+//                    Helper.onSuccess(callback, res);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Helper.onFailure(callback, t);
+//            }
+//        });
+//
+//    }
+//
+//    public void getCookbooksByTag(Tag tag,int pageNo,int pageSize,
+//                                  final Callback<CookbooksResponse> callback) {
+//
+//        if (tag.isNewest()) {
+//            // TinyBook
+//            List<Recipe> books = StoreHelper.getCookooksByTag(tag);
+//
+//            // Recipe3rd
+//            List<Recipe3rd> books2 = StoreHelper.getThirdBooksByTag(tag);
+//
+//            // CookbooksResponse
+//            CookbooksResponse res = new CookbooksResponse();
+//            res.cookbooks = books;
+//            res.cookbooks3rd = books2;
+//
+//            Helper.onSuccess(callback, res);
+//        } else {
+//            ss.getCookbooksByTag(tag.id,pageNo,pageSize, callback);
+//        }
+//    }
+//
+//
+//    public void getCookbooksByName(final String name, boolean contain3rd,
 //                                   final Callback<CookbooksResponse> callback) {
-//        ss.getCookbooksByName(name, true, notNeedSearchHistory ,new Callback<CookbooksResponse>() {
+//        ss.getCookbooksByName(name, contain3rd, new Callback<CookbooksResponse>() {
 //
 //            @Override
 //            public void onSuccess(CookbooksResponse result) {
@@ -177,56 +261,160 @@ public class CookbookManager extends AbsService {
 //            }
 //        });
 //    }
-
-//    public void getHotKeysForCookbook(final Callback<List<String>> callback) {
-//        ss.getHotKeysForCookbook(new Callback<List<String>>() {
 //
+//    public void getChuYuanAcM(int pageNo, int pageSize,  int statusisHistory, final Callback<Reponses.ChuYuanActivityResponse> callback) {
+//        ss.getChuYuanAc(pageNo, pageSize, statusisHistory, new Callback<Reponses.ChuYuanActivityResponse>() {
 //            @Override
-//            public void onSuccess(List<String> result) {
-//                Helper.onSuccess(callback, result);
+//            public void onSuccess(Reponses.ChuYuanActivityResponse chuYuanActivityResponse) {
+//                Helper.onSuccess(callback, chuYuanActivityResponse);
 //            }
 //
 //            @Override
 //            public void onFailure(Throwable t) {
-//                Set<String> keys = PreferenceUtils.getStrings(
-//                        PrefsKey.HotKeys, null);
-//                List<String> result = Lists.newArrayList();
-//                if (keys != null) {
-//                    result.addAll(keys);
-//                }
-//                Helper.onSuccess(callback, result);
+//
 //            }
 //        });
+//
 //    }
+//
+//
+//    public void getYouzanDetailContent(long userId, String type, String telephone,
+//                                       final Callback<Reponses.TokenResponses> callback) {
+//        ss.getYouzanDetailContent(userId, type, telephone, new Callback<Reponses.TokenResponses>() {
+//            @Override
+//            public void onSuccess(Reponses.TokenResponses tokenReponses) {
+//                Helper.onSuccess(callback, tokenReponses);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                LogUtils.i("20170705","ttt:"+t);
+//            }
+//        });
+//
+//    }
+
+    /**
+     * 获取有赞订单数量
+     *
+     * @param userId
+     * @param list
+     * @param callback
+     */
+    public void getYouzanOrders(long userId, String[] list,
+                                final Callback<Reponses.YouzanOrdersReponses> callback) {
+        ss.getYouzanOrders(userId, list, new Callback<Reponses.YouzanOrdersReponses>() {
+
+            @Override
+            public void onSuccess(Reponses.YouzanOrdersReponses result) {
+                Helper.onSuccess(callback, result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                LogUtils.i("20170705", "tt:" + t);
+
+            }
+        });
+
+    }
+
+    public void getMallManagement(final Callback<Reponses.MallManagementResponse> callback) {
+        ss.getMallManagement(new Callback<Reponses.MallManagementResponse>() {
+            @Override
+            public void onSuccess(Reponses.MallManagementResponse mallManagementResponse) {
+                Helper.onSuccess(callback, mallManagementResponse);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Helper.onFailure(callback, t);
+            }
+        });
+    }
+
+    public void getCookbooksByName(final String name,
+                                   final Callback<CookbooksResponse> callback) {
+        ss.getCookbooksByName(name, true, new Callback<CookbooksResponse>() {
+
+            @Override
+            public void onSuccess(CookbooksResponse result) {
+                Helper.onSuccess(callback, result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Helper.onFailure(callback, t);
+            }
+        });
+    }
+
+    public void getCookbooksBy(final String name, boolean notNeedSearchHistory,
+                               final Callback<CookbooksResponse> callback) {
+        ss.getCookbooksByName(name, true, notNeedSearchHistory, new Callback<CookbooksResponse>() {
+
+            @Override
+            public void onSuccess(CookbooksResponse result) {
+                Helper.onSuccess(callback, result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                CookbooksResponse result = StoreHelper.searchByName(name);
+                Helper.onSuccess(callback, result);
+            }
+        });
+    }
+
+    public void getHotKeysForCookbook(final Callback<List<String>> callback) {
+        ss.getHotKeysForCookbook(new Callback<List<String>>() {
+
+            @Override
+            public void onSuccess(List<String> result) {
+                Helper.onSuccess(callback, result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Set<String> keys = PreferenceUtils.getStrings(
+                        PrefsKey.HotKeys, null);
+                List<String> result = Lists.newArrayList();
+                if (keys != null) {
+                    result.addAll(keys);
+                }
+                Helper.onSuccess(callback, result);
+            }
+        });
+    }
 
     /**
      * 灶具
      *
      * @param bookId
-     * @param callback
+     * @param callback 未调用
      */
-    public void getOldCookbookById(final long bookId, final Callback<Recipe> callback) {
-        final Recipe recipe = DaoHelper.getById(Recipe.class, bookId);
-        if (recipe != null && recipe.isNewest() && recipe.hasDetail) {
-            Helper.onSuccess(callback, recipe);
-        } else {
-            ss.getOldCookbookById(bookId, new Callback<Recipe>() {
-                @Override
-                public void onSuccess(Recipe re) {
-                    if (re != null)
-                        Helper.onSuccess(callback, re);
-                    else
-                        Helper.onSuccess(callback, recipe);
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                    Helper.onFailure(callback, t);
-                    Helper.onSuccess(callback, recipe);
-                }
-            });
-        }
-    }
+//    public void getOldCookbookById(final long bookId, final Callback<Recipe> callback) {
+//        final Recipe recipe = DaoHelper.getById(Recipe.class, bookId);
+//        if (recipe != null && recipe.isNewest() && recipe.hasDetail) {
+//            Helper.onSuccess(callback, recipe);
+//        } else {
+//            ss.getOldCookbookById(bookId, new Callback<Recipe>() {
+//                @Override
+//                public void onSuccess(Recipe re) {
+//                    if (re != null)
+//                        Helper.onSuccess(callback, re);
+//                    else
+//                        Helper.onSuccess(callback, recipe);
+//                }
+//
+//                @Override
+//                public void onFailure(Throwable t) {
+//                    Helper.onFailure(callback, t);
+//                    Helper.onSuccess(callback, recipe);
+//                }
+//            });
+//        }
+//    }
 
 
     /**
@@ -236,39 +424,39 @@ public class CookbookManager extends AbsService {
      * @param callback
      */
 
-//    public void getCookbookById(final long bookId, final Callback<Recipe> callback) {
-//        final Recipe recipe = DaoHelper.getById(Recipe.class, bookId);
-//        if (recipe != null && recipe.isNewest() && recipe.hasDetail) {
-//            Helper.onSuccess(callback, recipe);
-//        } else {
-//            ss.getCookbookById(bookId, new Callback<Recipe>() {
-//                @Override
-//                public void onSuccess(Recipe re) {
-//                    if (re != null) {
-//                        Helper.onSuccess(callback, re);
-//                        return;
-//                    }
-//                    if (recipe != null && recipe.hasDetail)
-//                        Helper.onSuccess(callback, recipe);
-//                    else {
-//                        if (callback != null)
-//                            callback.onFailure(new Throwable());
-//                    }
-//
-//                }
-//
-//                @Override
-//                public void onFailure(Throwable t) {
-//                    if (recipe != null && recipe.hasDetail)
-//                        Helper.onSuccess(callback, recipe);
-//                    else {
-//                        if (callback != null)
-//                            callback.onFailure(t);
-//                    }
-//                }
-//            });
-//        }
-//    }
+    public void getCookbookById(final long bookId, final Callback<Recipe> callback) {
+        final Recipe recipe = DaoHelper.getById(Recipe.class, bookId);
+        if (recipe != null && recipe.isNewest() && recipe.hasDetail) {
+            Helper.onSuccess(callback, recipe);
+        } else {
+            ss.getCookbookById(bookId, new Callback<Recipe>() {
+                @Override
+                public void onSuccess(Recipe re) {
+                    if (re != null) {
+                        Helper.onSuccess(callback, re);
+                        return;
+                    }
+                    if (recipe != null && recipe.hasDetail)
+                        Helper.onSuccess(callback, recipe);
+                    else {
+                        if (callback != null)
+                            callback.onFailure(new Throwable());
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    if (recipe != null && recipe.hasDetail)
+                        Helper.onSuccess(callback, recipe);
+                    else {
+                        if (callback != null)
+                            callback.onFailure(t);
+                    }
+                }
+            });
+        }
+    }
 
     public void getTodayCookbooks(final Callback<CookbooksResponse> callback) {
         ss.getTodayCookbooks(new Callback<CookbooksResponse>() {
@@ -295,21 +483,21 @@ public class CookbookManager extends AbsService {
         }
     }
 
-//    public void getFavorityCookbooks(final Callback<CookbooksResponse> callback) {
-//        ss.getFavorityCookbooks(new Callback<CookbooksResponse>() {
-//            @Override
-//            public void onSuccess(CookbooksResponse result) {
-//                lastUpdateTime_favority = Calendar.getInstance().getTimeInMillis();
-//                Helper.onSuccess(callback, result);
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                CookbooksResponse result = StoreHelper.getFavorityList();
-//                Helper.onSuccess(callback, result);
-//            }
-//        });
-//    }
+    public void getFavorityCookbooks(final Callback<CookbooksResponse> callback) {
+        ss.getFavorityCookbooks(new Callback<CookbooksResponse>() {
+            @Override
+            public void onSuccess(CookbooksResponse result) {
+                lastUpdateTime_favority = Calendar.getInstance().getTimeInMillis();
+                Helper.onSuccess(callback, result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                CookbooksResponse result = StoreHelper.getFavorityList();
+                Helper.onSuccess(callback, result);
+            }
+        });
+    }
 
     public void getRecommendCookbooks(final Callback<List<Recipe>> callback) {
         ss.getRecommendCookbooks(new Callback<List<Recipe>>() {
@@ -329,24 +517,25 @@ public class CookbookManager extends AbsService {
 //        }
     }
 
-    public void getGroundingRecipes(int start, int limit, String language, final Callback<List<Recipe>> callback) {
-        ss.getGroundingRecipes(start, limit, language, callback);
-    }
-
-
-    public void getPersonalizedRecipeBooks(long userId, int pageNo, int pageSize, final Callback<List<Recipe>> callback) {
-        ss.getPersonalizedRecipes(userId, pageNo, pageSize, callback);
-    }
+//    未调用
+//    public void getGroundingRecipes(int start, int limit, String language, final Callback<List<Recipe>> callback) {
+//        ss.getGroundingRecipes(start, limit, language, callback);
+//    }
+//
+//
+//    public void getPersonalizedRecipeBooks(long userId, int pageNo, int pageSize, final Callback<List<Recipe>> callback) {
+//        ss.getPersonalizedRecipes(userId, pageNo, pageSize, callback);
+//    }
 
 
     /**
      * 根据设备种类获取所有菜谱手机端
      * 20160630周定钧
      */
-//    public void getGroundingRecipesByDevice(final String dc, final String recipeType, final int start, final int limit, String devicePlat,final Callback<List<Recipe>> callback) {
-//
-//        getGroundingRecipesByDevice(dc, start, limit, recipeType, null,devicePlat, callback);
-//    }
+    public void getGroundingRecipesByDevice(final String dc, final String recipeType, final int start, final int limit, String devicePlat, final Callback<List<Recipe>> callback) {
+
+        getGroundingRecipesByDevice(dc, start, limit, recipeType, null, devicePlat, callback);
+    }
 
 
     private static final String LastGroundRecipes = "LastUpdateKey_Time";
@@ -418,8 +607,7 @@ public class CookbookManager extends AbsService {
      * 根据设备种类获取所有菜谱
      * 20160630周定钧
      */
-    /*
-    public void getGroundingRecipesByDevice(final String dc, final int start, final int limit, final String recipeType, String language,String devicePlat, final Callback<List<Recipe>> callback) {
+    public void getGroundingRecipesByDevice(final String dc, final int start, final int limit, final String recipeType, String language, String devicePlat, final Callback<List<Recipe>> callback) {
 
 //        LogUtils.i("20171114","connectivityManager:"+connectivityManager+ " isAvailable"+!connectivityManager.getActiveNetworkInfo().isAvailable() );
         if (connectivityManager == null || connectivityManager.getActiveNetworkInfo() == null || !connectivityManager.getActiveNetworkInfo().isAvailable()) {
@@ -455,7 +643,7 @@ public class CookbookManager extends AbsService {
                 }
             }
         } else {
-            ss.getGroundingRecipesByDevice(dc, start, limit,recipeType, devicePlat,new Callback<List<Recipe>>() {
+            ss.getGroundingRecipesByDevice(dc, start, limit, recipeType, devicePlat, new Callback<List<Recipe>>() {
                 @Override
                 public void onSuccess(List<Recipe> recipes) {
                     if (recipes != null && recipes.size() > 0) {
@@ -513,15 +701,15 @@ public class CookbookManager extends AbsService {
             });
         }
     }
-*/
+
 
     /**
      * 根据设备种类获取今日菜谱
-     * 20160630周定钧
+     * 20160630周定钧 未调用
      */
-    public void getTodayRecipesByDevice(String dc, final Callback<CookbooksResponse> callback) {
-        ss.getTodayRecipesByDevice(dc, callback);
-    }
+//    public void getTodayRecipesByDevice(String dc, final Callback<CookbooksResponse> callback) {
+//        ss.getTodayRecipesByDevice(dc, callback);
+//    }
 
 
     // ------------------------------------------------------------------------------------------------------------------
@@ -561,10 +749,10 @@ public class CookbookManager extends AbsService {
 
     // ------------------------------------------------------------------------------------------------------------------
 
-//    public void addFavorityCookbooks(final long bookId,
-//                                     final VoidCallback callback) {
-//        ss.addFavorityCookbooks(bookId, callback);
-//    }
+    public void addFavorityCookbooks(final long bookId,
+                                     final VoidCallback callback) {
+        ss.addFavorityCookbooks(bookId, callback);
+    }
 
     public void deleteFavorityCookbooks(final long bookId,
                                         final VoidCallback callback) {
@@ -594,12 +782,12 @@ public class CookbookManager extends AbsService {
 
     }
 
-//    public void getCookbookSearchHistory(long userId, Callback<Reponses.HistoryResponse> callback){
-//        ss.getCookbookSearchHistory(userId,callback);
-//    }
+    public void getCookbookSearchHistory(long userId, Callback<Reponses.HistoryResponse> callback) {
+        ss.getCookbookSearchHistory(userId, callback);
+    }
 
-    public void deleteCookbookSearchHistory(String name,long userId, Callback<Reponses.DeleteHistoryResponse> callback){
-        ss.deleteCookbookSearchHistory(name,userId,callback);
+    public void deleteCookbookSearchHistory(String name, long userId, Callback<Reponses.DeleteHistoryResponse> callback) {
+        ss.deleteCookbookSearchHistory(name, userId, callback);
     }
 
     public void getMyCookAlbumByCookbook(long bookId, Callback<CookAlbum> callback) {
@@ -640,20 +828,20 @@ public class CookbookManager extends AbsService {
         ss.getAccessoryFrequencyForMob(callback);
     }
 
-//    public void getMyCookAlbums(final Callback<List<CookAlbum>> callback) {
-//        ss.getMyCookAlbums(new Callback<List<CookAlbum>>() {
-//            @Override
-//            public void onSuccess(List<CookAlbum> cookAlbums) {
-//                Helper.onSuccess(callback, cookAlbums);
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                List<CookAlbum> cookAlbums = DaoHelper.getAll(CookAlbum.class);
-//                Helper.onSuccess(callback, cookAlbums);
-//            }
-//        });
-//    }
+    public void getMyCookAlbums(final Callback<List<CookAlbum>> callback) {
+        ss.getMyCookAlbums(new Callback<List<CookAlbum>>() {
+            @Override
+            public void onSuccess(List<CookAlbum> cookAlbums) {
+                Helper.onSuccess(callback, cookAlbums);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                List<CookAlbum> cookAlbums = DaoHelper.getAll(CookAlbum.class);
+                Helper.onSuccess(callback, cookAlbums);
+            }
+        });
+    }
 
     public void clearMyCookAlbums(final VoidCallback callback) {
         ss.clearMyCookAlbums(callback);
@@ -663,14 +851,13 @@ public class CookbookManager extends AbsService {
      * 获主题菜谱列表精选专题
      */
     //RENT ADD
-    /*
     public void getThemeRecipes(final Callback<List<RecipeTheme>> callback) {
         //先从网络获取最新的，若失败从底层数据库寻找
         ss.getThemeRecipe(new Callback<List<RecipeTheme>>() {
             @Override
             public void onSuccess(List<RecipeTheme> recipeThemes) {
 //                if (recipeThemes != null && recipeThemes.size() > 0) {
-                    Helper.onSuccess(callback, recipeThemes);
+                Helper.onSuccess(callback, recipeThemes);
 //                    for (RecipeTheme recipeTheme : recipeThemes) {
 //                        recipeTheme.save2db();
 //                    }
@@ -686,7 +873,7 @@ public class CookbookManager extends AbsService {
 
             @Override
             public void onFailure(Throwable t) {
-                Helper.onFailure(callback , t);
+                Helper.onFailure(callback, t);
 //                List<RecipeTheme> themes = DaoHelper.getAll(RecipeTheme.class);
 //                if (themes != null && themes.size() != 0) {
 //                    Helper.onSuccess(callback, themes);
@@ -695,7 +882,7 @@ public class CookbookManager extends AbsService {
 //                }
             }
         });
-    }*/
+    }
 
     public void getThemeRecipes_new(final Callback<List<RecipeTheme>> callback) {
         //先从网络获取最新的，若失败从底层数据库寻找
@@ -728,22 +915,22 @@ public class CookbookManager extends AbsService {
     }
 
 
-//    public void getThemeRecipeDetail(final long themeId, final Callback<Reponses.ThemeRecipeDetailResponse> callback) {
-//        //先从网络获取最新的，若失败从底层数据库寻找
-//        ss.getThemeRecipeDetail(themeId, new Callback<Reponses.ThemeRecipeDetailResponse>() {
-//            @Override
-//            public void onSuccess(Reponses.ThemeRecipeDetailResponse themeRecipeDetailResponse) {
-//                callback.onSuccess(themeRecipeDetailResponse);
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                callback.onFailure(t);
-//
-//            }
-//        });
-//    }
+    public void getThemeRecipeDetail(final long themeId, final Callback<Reponses.ThemeRecipeDetailResponse> callback) {
+        //先从网络获取最新的，若失败从底层数据库寻找
+        ss.getThemeRecipeDetail(themeId, new Callback<Reponses.ThemeRecipeDetailResponse>() {
+            @Override
+            public void onSuccess(Reponses.ThemeRecipeDetailResponse themeRecipeDetailResponse) {
+                callback.onSuccess(themeRecipeDetailResponse);
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onFailure(t);
+
+            }
+        });
+    }
 
     /**
      * 获取首页菜谱视频列表
@@ -887,64 +1074,65 @@ public class CookbookManager extends AbsService {
         });
     }
 
-//    public void getGroundingRecipesByDc(long userId,final String dc,String recipeType,final int start, final int limit,String devicePlat, final Callback<List<Recipe>> callback) {
-//        ss.getGroundingRecipesByDc(userId,dc, recipeType,start,limit,devicePlat, new Callback<List<Recipe>>() {
-//            @Override
-//            public void onSuccess(List<Recipe> recipes) {
-//                if (recipes != null && recipes.size() > 0) {
-//                    for (Recipe recipe : recipes) {
-//                        LogUtils.i("20171114", "recipe:" + recipe);
+    public void getGroundingRecipesByDc(long userId, final String dc, String recipeType, final int start, final int limit, String devicePlat, final Callback<List<Recipe>> callback) {
+        ss.getGroundingRecipesByDc(userId, dc, recipeType, start, limit, devicePlat, new Callback<List<Recipe>>() {
+            @Override
+            public void onSuccess(List<Recipe> recipes) {
+                if (recipes != null && recipes.size() > 0) {
+                    for (Recipe recipe : recipes) {
+                        LogUtils.i("20171114", "recipe:" + recipe);
+                        //这里不需要查询
 //                        Recipe recipe_dao = DaoHelper.getById(Recipe.class, recipe.id);
 //                        LogUtils.i("20171114", "recipe_dao:" + recipe_dao);
 //                        if (recipe_dao == null || !recipe_dao.isNewest()) {
-//                            recipe.hasDetail = false;
+                            recipe.hasDetail = false;
 //                            recipe.tra2Save();
 //                        }
-//                    }
-//                    Helper.onSuccess(callback, recipes);
-//                } else {
-//                    List<Recipe> list = DaoHelper.getAll(Recipe.class);
-//                    ArrayList<Recipe> recipe_dcs = Lists.newArrayList();
-//                    ArrayList<Recipe> recipe_dcs_out = Lists.newArrayList();
-//                    if (list != null)
-//                        for (Recipe recipe : list)
-//                            if (RecipeDeviceHelper.queryIfContainDC(recipe.getJs_dcs(), dc))
-//                                recipe_dcs.add(recipe);
-//                    if (recipe_dcs.size() - 1 >= start) {
-//                        for (int i = start; i < start + limit; i++) {
-//                            if (i >= recipe_dcs.size())
-//                                break;
-//                            if (recipe_dcs.get(i) != null) {
-//                                recipe_dcs_out.add(recipe_dcs.get(i));
-//                            }
-//                        }
-//                    }
-//                    Helper.onSuccess(callback, recipe_dcs_out);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                List<Recipe> list = DaoHelper.getAll(Recipe.class);
-//                ArrayList<Recipe> recipe_dcs = Lists.newArrayList();
-//                ArrayList<Recipe> recipe_dcs_out = Lists.newArrayList();
-//                if (list != null)
-//                    for (Recipe recipe : list)
-//                        if (RecipeDeviceHelper.queryIfContainDC(recipe.getJs_dcs(), dc))
-//                            recipe_dcs.add(recipe);
-//                if (recipe_dcs.size() - 1 >= start) {
-//                    for (int i = start; i < start + limit; i++) {
-//                        if (i >= recipe_dcs.size())
-//                            break;
-//                        if (recipe_dcs.get(i) != null) {
-//                            recipe_dcs_out.add(recipe_dcs.get(i));
-//                        }
-//                    }
-//                }
-//                Helper.onSuccess(callback, recipe_dcs_out);
-//            }
-//        });
-//    }
+                    }
+                    Helper.onSuccess(callback, recipes);
+                } else {
+                    List<Recipe> list = DaoHelper.getAll(Recipe.class);
+                    ArrayList<Recipe> recipe_dcs = Lists.newArrayList();
+                    ArrayList<Recipe> recipe_dcs_out = Lists.newArrayList();
+                    if (list != null)
+                        for (Recipe recipe : list)
+                            if (RecipeDeviceHelper.queryIfContainDC(recipe.getJs_dcs(), dc))
+                                recipe_dcs.add(recipe);
+                    if (recipe_dcs.size() - 1 >= start) {
+                        for (int i = start; i < start + limit; i++) {
+                            if (i >= recipe_dcs.size())
+                                break;
+                            if (recipe_dcs.get(i) != null) {
+                                recipe_dcs_out.add(recipe_dcs.get(i));
+                            }
+                        }
+                    }
+                    Helper.onSuccess(callback, recipe_dcs_out);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                List<Recipe> list = DaoHelper.getAll(Recipe.class);
+                ArrayList<Recipe> recipe_dcs = Lists.newArrayList();
+                ArrayList<Recipe> recipe_dcs_out = Lists.newArrayList();
+                if (list != null)
+                    for (Recipe recipe : list)
+                        if (RecipeDeviceHelper.queryIfContainDC(recipe.getJs_dcs(), dc))
+                            recipe_dcs.add(recipe);
+                if (recipe_dcs.size() - 1 >= start) {
+                    for (int i = start; i < start + limit; i++) {
+                        if (i >= recipe_dcs.size())
+                            break;
+                        if (recipe_dcs.get(i) != null) {
+                            recipe_dcs_out.add(recipe_dcs.get(i));
+                        }
+                    }
+                }
+                Helper.onSuccess(callback, recipe_dcs_out);
+            }
+        });
+    }
 
     // ------------------------------------------------------------------------------------------------------------------
 

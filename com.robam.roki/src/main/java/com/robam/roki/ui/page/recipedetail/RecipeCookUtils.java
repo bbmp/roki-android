@@ -1,8 +1,8 @@
 package com.robam.roki.ui.page.recipedetail;
 
+import com.hjq.toast.ToastUtils;
 import com.legent.plat.Plat;
 import com.legent.plat.pojos.device.IDevice;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.pojos.device.IRokiFamily;
 import com.robam.common.pojos.device.Oven.AbsOven;
 import com.robam.common.pojos.device.Oven.OvenStatus;
@@ -94,7 +94,7 @@ public class RecipeCookUtils {
                 break;
             case "RZKY":
                 AbsSteameOvenOne steamOvenOen = Plat.deviceService.lookupChild(idevice.getGuid().getGuid());
-                if (steamOvenOen.WaterStatus == 1 && (steamOvenOen.workModel > 12 && steamOvenOen.workModel < 23)) {
+                if (steamOvenOen.WaterStatus == 1) {
                     ToastUtils.show(R.string.device_alarm_water_out);
                     return true;
                 }

@@ -3,20 +3,22 @@ package com.robam.roki.ui.page.mine;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.WxCode2Event;
 import com.robam.common.events.WxCodeEvent;
 import com.robam.roki.MobApp;
@@ -32,6 +34,7 @@ import com.robam.roki.ui.widget.layout.SettingBar;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.StringUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.youzan.sdk.YouzanSDK;
 
 
 /**
@@ -43,23 +46,24 @@ public class MineAccAndSecPage extends MyBasePage<MainActivity> {
     /**
      * 修改密码
      */
-    private SettingBar stbChangePassword;
+    private RelativeLayout stbChangePassword;
     /**
      * 绑定手机号
      */
-    private SettingBar stbBindPhone;
+    private RelativeLayout stbBindPhone;
     /**
      * 绑定微信
      */
-    private SettingBar stbBingWx;
-    /**
-     * 绑定Apple Id
-     */
-    private SettingBar stbBindApple;
+    private RelativeLayout stbBingWx;
     /**
      * 注销账户
      */
-    private SettingBar stbLogoff;
+    private RelativeLayout stbLogoff;
+
+    private TextView tvPhone;
+    private TextView tvBindWx;
+    private TextView tvSetPwd;
+    private ImageView ivBack;
     /**
      * 用户信息
      */
@@ -76,14 +80,17 @@ public class MineAccAndSecPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        setTitle(R.string.setting_acc_and_sec);
-        getTitleBar().setOnTitleBarListener(this);
-        stbChangePassword = (SettingBar) findViewById(R.id.stb_change_password);
-        stbBindPhone = (SettingBar) findViewById(R.id.stb_bind_phone);
-        stbBingWx = (SettingBar) findViewById(R.id.stb_bing_wx);
-        stbBindApple = (SettingBar) findViewById(R.id.stb_bind_apple);
-        stbLogoff = (SettingBar) findViewById(R.id.stb_logoff);
-        setOnClickListener(stbChangePassword, stbBindPhone, stbBingWx, stbBindApple, stbLogoff);
+//        setTitle(R.string.setting_acc_and_sec);
+//        getTitleBar().setOnTitleBarListener(this);
+        stbChangePassword = findViewById(R.id.stb_change_password);
+        stbBindPhone = findViewById(R.id.stb_bind_phone);
+        stbBingWx =  findViewById(R.id.stb_bing_wx);
+        stbLogoff = findViewById(R.id.stb_logoff);
+        tvPhone = findViewById(R.id.tv_phone);
+        tvBindWx = findViewById(R.id.tv_bind_wx);
+        tvSetPwd = findViewById(R.id.tv_set_pwd);
+        ivBack = findViewById(R.id.img_back);
+        setOnClickListener(stbChangePassword, stbBindPhone, stbBingWx, stbLogoff, ivBack);
     }
 
     @Override
@@ -97,32 +104,28 @@ public class MineAccAndSecPage extends MyBasePage<MainActivity> {
      */
     public  void getUser() {
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), Reponses.GetUserReponse.class, new RetrofitCallback<Reponses.GetUserReponse>() {
+        CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), new Callback<User>() {
 
             @Override
-            public void onSuccess(Reponses.GetUserReponse getUserReponse) {
+            public void onSuccess(User user) {
                 ProgressDialogHelper.setRunning(cx, false);
-                if (null != getUserReponse) {
-                    User user = getUserReponse.user;
-
-                    MineAccAndSecPage.this.user = user ;
-                    setUser(user);
-                }
+                MineAccAndSecPage.this.user = user ;
+                setUser(user);
             }
 
             @Override
-            public void onFaild(String err) {
-                ToastUtils.show(err);
+            public void onFailure(Throwable t) {
+                ToastUtils.show(t.getMessage());
             }
         });
     }
 
     public void setUser(User user) {
-        stbBindPhone.setRightText(user.getPhone());
-        stbBingWx.setRightText(StringUtil.isEmpty(user.wxNickname) ? "未绑定" : user.wxNickname);
+        tvPhone.setText(user.getPhone());
+        tvBindWx.setText(StringUtil.isEmpty(user.wxNickname) ? "未绑定" : user.wxNickname);
         if (user.hasPassword()){
         }else {
-            stbChangePassword.setRightText("未设置");
+            tvSetPwd.setText("未设置");
         }
     }
 
@@ -144,10 +147,10 @@ public class MineAccAndSecPage extends MyBasePage<MainActivity> {
             } else {
                 sendWxMessage();
             }
-        } else if (view.equals(stbBindApple)) {
-            ToastUtils.show("安卓手机不支持Apple Id的绑定");
         } else if (view.equals(stbLogoff)) {
             UIService.getInstance().postPage(PageKey.MineCancelAccountPage, bd);
+        } else if (view.equals(ivBack)) {
+            UIService.getInstance().popBack();
         }
     }
 
@@ -180,7 +183,7 @@ public class MineAccAndSecPage extends MyBasePage<MainActivity> {
             public void onSuccess(User user) {
                 ToastUtils.show("绑定成功");
 
-                stbBingWx.setRightText(user.wxNickname);
+                tvBindWx.setText(user.wxNickname);
                 ProgressDialogHelper.setRunning(cx, false);
             }
 
@@ -211,7 +214,7 @@ public class MineAccAndSecPage extends MyBasePage<MainActivity> {
                 Plat.accountService.unbind3rd(new VoidCallback() {
                     @Override
                     public void onSuccess() {
-                        stbBingWx.setRightText("未绑定");
+                        tvBindWx.setText("未绑定");
                         ToastUtils.show("解绑成功");
                     }
                     @Override

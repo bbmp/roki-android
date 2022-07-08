@@ -9,6 +9,7 @@ import androidx.annotation.StringRes;
 
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
+import com.robam.roki.R;
 
 /**
  *    desc   : 标题栏意图
@@ -167,4 +168,5 @@ public interface TitleBarAction extends OnTitleBarListener {
         }
         return null;
     }
+
 }

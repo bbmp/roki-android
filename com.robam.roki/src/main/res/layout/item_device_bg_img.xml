@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_310"
+    android:layout_height="@dimen/dp_310"
+    android:background="@drawable/shape_bg_main">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_device_img"
+            android:layout_width="@dimen/dp_310"
+            android:layout_height="@dimen/dp_310"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY" />
+
+</RelativeLayout>
+

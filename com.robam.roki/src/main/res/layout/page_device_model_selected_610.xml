@@ -68,6 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/tv_steam_unit"
                 android:textSize="16sp"
                 android:text="°C"
                 android:textColor="@color/c30"
@@ -92,6 +93,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content">
             <TextView
+
+                android:id="@+id/ll_add"
                 android:textSize="@dimen/text_saie_20"
                 android:text="下管温度"
                 android:textColor="@color/c30"
@@ -162,20 +165,20 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical">
-        <com.robam.roki.ui.widget.layout.SettingBar
+        <com.robam.widget.layout.SettingBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_bg_white_15dp"
             app:bar_leftText="预约">
 
-            <com.robam.roki.ui.widget.view.SwitchButton
+            <com.robam.widget.view.SwitchButton
                 android:id="@+id/sb_order_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginHorizontal="15dp" />
-        </com.robam.roki.ui.widget.layout.SettingBar>
-        <com.robam.roki.ui.widget.layout.SettingBar
+        </com.robam.widget.layout.SettingBar>
+        <com.robam.widget.layout.SettingBar
             android:id="@+id/stb_order"
             android:visibility="gone"
             android:background="@drawable/shape_bg_white_15dp"

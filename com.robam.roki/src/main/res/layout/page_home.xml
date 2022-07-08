@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
         android:longClickable="true"
         android:orientation="vertical">
-        <com.robam.roki.ui.widget.layout.NoScrollViewPager
+        <com.robam.widget.layout.NoScrollViewPager
             android:id="@+id/pager"
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
@@ -20,21 +23,23 @@
         <RelativeLayout
             android:id="@+id/rl_dot_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/main_tab_background">
 
-
-            <com.robam.roki.ui.view.HomeTabView
-                android:id="@+id/tabView"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white_02" />
+                app:tabSelectedTextColor="@null">
+
+            </com.google.android.material.tabs.TabLayout>
 
             <TextView
                 android:id="@+id/user_dot"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
-                android:layout_alignRight="@id/tabView"
-                android:layout_alignTop="@id/tabView"
+                android:layout_alignRight="@id/tabLayout"
+                android:layout_alignTop="@id/tabLayout"
                 android:layout_marginRight="42dp"
                 android:layout_marginTop="2dp"
                 android:background="@drawable/shape_red_dot"
@@ -45,12 +50,12 @@
     </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/iv_mask"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@mipmap/img_newbie_mask" />
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_mask"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:scaleType="fitXY"-->
+<!--        android:src="@mipmap/img_newbie_mask" />-->
 
     <include
         layout="@layout/page_dui"

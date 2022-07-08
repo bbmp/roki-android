@@ -57,7 +57,12 @@ public class RokiMsgSyncDecider implements IAppMsgSyncDecider {
         } else if (Utils.isWaterPurifier(devGuid)) {
             res = waterPurifier.getPairsKey(msg);
         } else if (Utils.isSteamOvenMsg(devGuid)) {
-            res = steamOvenOneDecider.getPairsKey(msg);
+            if (Utils.isSteamOvenMsgNew(devGuid)){
+                //DB620 新协议
+                res =  newCommonTreatyDecider.getPairsKey(msg);
+            }else {
+                res = steamOvenOneDecider.getPairsKey(msg);
+            }
         } else if (Utils.isRikaMsg(devGuid)) {
             res = mRokiDecider.getPairsKey(msg);
         }else if (Utils.isCooker(devGuid)){
@@ -112,6 +117,9 @@ public class RokiMsgSyncDecider implements IAppMsgSyncDecider {
             addPairsKey(MsgKeys.SetPowerOn_Req,MsgKeys.SetPowerOn_Rep);
             addPairsKey(MsgKeys.setTimePowerOff_Req, MsgKeys.setTimePowerOff_Rep);
             addPairsKey(MsgKeys.setPowerOff_Look_Req, MsgKeys.setPowerOff_Look_Rep);
+            addPairsKey(MsgKeys.setAutoTemporarySetting_Look_Rep, MsgKeys.setAutoTemporarySetting_Look_Res);
+
+            addPairsKey(MsgKeys.setAutoTemporaryStep_Look_Rep, MsgKeys.setAutoTemporaryStep_Look_Res);
           //  addPairsKey(MsgKeys.Set_Oven_More_Cook, MsgKeys.Get_Oven_More_Cook);
         }
     }
@@ -122,6 +130,11 @@ public class RokiMsgSyncDecider implements IAppMsgSyncDecider {
             addPairsKey(MsgKeys.GetPotTemp_Req, MsgKeys.SetPotTemp_Rep);
             addPairsKey(MsgKeys.SetPotCom_Req, MsgKeys.GetPotCom_Rep);
             addPairsKey(MsgKeys.SetPotSwitch_Req, MsgKeys.GetPotSwitch_Rep);
+            //添加无人锅智能互动
+            addPairsKey(MsgKeys.POT_INTERACTION_Req, MsgKeys.POT_INTERACTION_Rep);
+            //无人锅温控P档菜谱下发
+            addPairsKey(MsgKeys.POT_P_MENU_Req, MsgKeys.POT_P_MENU_Rep);
+
         }
     }
 

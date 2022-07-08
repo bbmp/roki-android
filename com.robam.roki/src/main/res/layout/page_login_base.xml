@@ -3,29 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/login_background"
+    android:background="@drawable/shape_bg_main"
     android:gravity="center_horizontal"
     android:orientation="vertical">
     <View
         android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white" />
-    <com.hjq.bar.TitleBar app:drawableSize="25dp"
-        android:id="@+id/tb_title"
+        android:background="@color/transparent" />
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:barStyle="transparent"
-        app:leftIcon="@mipmap/icon_back_black"
-        app:rightColor="@color/login_text_color"
-        app:rightSize="16sp" />
+        android:layout_height="@dimen/dp_44">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
+
+    </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginVertical="30dp"
+        android:id="@+id/iv_login_logo"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        android:layout_marginTop="@dimen/dp_52"
         android:src="@mipmap/logo_roki" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_50"
+        android:layout_marginRight="@dimen/dp_50"
+        app:tabSelectedTextColor="@null"
+        app:tabIndicatorColor="@color/text_color_net_err">
 
+    </com.google.android.material.tabs.TabLayout>
     <com.robam.roki.ui.widget.layout.NoScrollViewPager
         android:id="@+id/vp_login"
         android:layout_width="match_parent"
@@ -35,8 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <CheckBox
@@ -48,13 +63,13 @@
             android:scaleX="0.7"
             android:scaleY="0.7" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/user_login_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/roki_priviacy_agreement_title"
-            android:textColor="@color/login_text_color"
+            android:textColor="@color/text_color_net_err"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -76,12 +91,12 @@
             android:layout_width="60dp"
             android:layout_weight="1" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:text="@string/login_other"
-            android:textColor="@color/black50" />
+            android:textColor="@color/text_color_touch_retry" />
 
         <View
             style="@style/HorizontalLineStyle"
@@ -94,12 +109,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.robam.roki.ui.widget.view.ScaleImageView
+        <ImageView
             android:id="@+id/iv_login_wechat"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_52"
+            android:layout_height="@dimen/dp_52"
             android:layout_marginHorizontal="30dp"
             android:layout_marginVertical="20dp"
-            app:srcCompat="@mipmap/logo_wechat" />
+            android:src="@mipmap/logo_wechat" />
     </LinearLayout>
 </LinearLayout>

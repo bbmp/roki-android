@@ -13,6 +13,44 @@ import java.util.Map;
  * @author r210190
  */
 public class DeviceNameHelper {
+    public static String getDeviceName3(String dcs){
+        if (dcs==null){
+            return "";
+        }
+        StringBuilder deviceNames = new StringBuilder();
+//        for (int i = 0 ; i < dcs.size() ; i ++){
+//            if (i >0){
+//                deviceNames.append("/");
+//            }
+//            if (i >= 2){
+//                return deviceNames.append("...").toString();
+//            }
+            switch (dcs) {
+                case IDeviceType.RRQZ:
+                    deviceNames.append("灶具");
+                    break;
+                case IDeviceType.RDCZ:
+                    deviceNames.append("灶具");
+                    break;
+                case IDeviceType.RDKX:
+                    deviceNames.append("烤箱");
+                    break;
+                case IDeviceType.RZQL:
+                    deviceNames.append("蒸箱");
+                    break;
+
+                case IDeviceType.RZKY:
+                    deviceNames.append(IDeviceType.RZKY_ZN);
+                    break;
+                case IDeviceType.RWBL:
+                    deviceNames.append(IDeviceType.RWBL_ZN);
+                    break;
+                default:
+                    break;
+            }
+//        }
+        return deviceNames.toString() ;
+    }
 
     public static String getDeviceName(List<Dc> dcs){
         StringBuilder deviceNames = new StringBuilder();

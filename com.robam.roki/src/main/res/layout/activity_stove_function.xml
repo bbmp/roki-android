@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_bg_main">
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#00ffffff" />
+    <RelativeLayout
+        android:layout_below="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/title"
+            layout="@layout/title_layout_device_mian" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_device_img"
+            android:layout_width="@dimen/dp_310"
+            android:layout_height="@dimen/dp_310"
+            android:layout_below="@+id/title"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY" />
+
+
+        <TextView
+            android:id="@+id/tv_device_connected"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_36"
+            android:layout_below="@id/title"
+            android:background="@color/device_new_connected"
+            android:gravity="center"
+            android:visibility="visible"
+            android:text="@string/device_new_connected"
+            android:textSize="@dimen/sp_12" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_function"
+            android:layout_below="@id/iv_device_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+

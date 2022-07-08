@@ -131,7 +131,7 @@
                 android:id="@+id/tv_content_center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_line_gray"
+                android:background="@drawable/shape_line_gray_night"
                 android:gravity="bottom"
                 android:textColor="@color/c11"
                 android:textSize="16sp"

@@ -46,10 +46,15 @@ public class RecipeActivity extends BaseRokiActivity {
                 .putExtras(bd)
                 .putExtra("Guid",guid)
                 .putExtra("step",step)
+                .putExtra("hasHeat", false)
                 .putExtra("is_vh_switching" , true )
                 .putExtra("imgLarge" , imgLarge )
         );
     }
+
+
+
+
 
     @Override
     protected String createFormKey() {

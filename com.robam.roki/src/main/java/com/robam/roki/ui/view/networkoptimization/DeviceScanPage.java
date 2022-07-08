@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +25,8 @@ import com.robam.common.pojos.DeviceGroupList;
 import com.robam.common.pojos.NetWorkingSteps;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageKey;
+import com.robam.roki.ui.form.MainActivity;
+import com.robam.roki.ui.page.login.MyBasePage;
 import com.zzhoujay.richtext.ImageHolder;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.callback.ImageFixCallback;
@@ -38,11 +41,12 @@ import butterknife.OnClick;
  * Created by zhoudingjun on 2016/12/14.
  */
 
-public class DeviceScanPage extends HeadPage {
+public class DeviceScanPage extends MyBasePage<MainActivity> {
     private final static int SCANNIN_GREQUEST_CODE = 100;
     String NetImgUrls;
     String displayType;
     String buttonTxt;
+    String strDeviceName;
 
     @InjectView(R.id.background)
     ImageView mBackground;
@@ -54,20 +58,46 @@ public class DeviceScanPage extends HeadPage {
     TextView tip;
 
     @InjectView(R.id.btn_scan)
-    TextView mBtnScan;
+    Button mBtnScan;
+    private TextView tv_add_device_name;
 
-    @Override
-    protected View onCreateContentView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
-        NetImgUrls = getArguments().getString("NetImgUrl");
-        displayType = getArguments().getString("displayType");
-        View view = layoutInflater.inflate(R.layout.view_connect_scan, viewGroup, false);
-        ButterKnife.inject(this, view);
-        return view;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @OnClick(R.id.btn_scan)
+    public void onClickLight() {
+//        Activity atv = UIService.getInstance().getTop().getActivity();
+//        Intent intent = new Intent();
+//        intent.setClass(atv, ScanQrActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        atv.startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
+        if (TextUtils.equals(buttonTxt, "确定")) {
+            UIService.getInstance().popBack();
+        } else {
+            UIService.getInstance().postPage(PageKey.WifiConnect);
+        }
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.view_connect_scan;
+    }
+
+    @Override
+    protected void initView() {
+        NetImgUrls = getArguments().getString("NetImgUrl");
+        displayType = getArguments().getString("displayType");
+        strDeviceName = getArguments().getString("strDeviceName");
+        tv_add_device_name = findViewById(R.id.tv_add_device_name);
+        tv_add_device_name.setText(strDeviceName);
+    }
+
+    @Override
+    protected void initData() {
         RokiRestHelper.getNetworkDeviceStepsRequest(displayType, new Callback<List<NetWorkingSteps>>() {
 
             @Override
@@ -116,24 +146,9 @@ public class DeviceScanPage extends HeadPage {
         });
     }
 
-    @OnClick(R.id.btn_scan)
-    public void onClickLight() {
-//        Activity atv = UIService.getInstance().getTop().getActivity();
-//        Intent intent = new Intent();
-//        intent.setClass(atv, ScanQrActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        atv.startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
-        if (TextUtils.equals(buttonTxt, "确定")) {
-            UIService.getInstance().popBack();
-        } else {
-            UIService.getInstance().postPage(PageKey.WifiConnect);
-        }
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.reset(this);
     }
 
 }

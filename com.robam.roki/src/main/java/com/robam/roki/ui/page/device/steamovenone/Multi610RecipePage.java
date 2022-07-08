@@ -1,38 +1,30 @@
 package com.robam.roki.ui.page.device.steamovenone;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.chad.library.adapter.base.listener.OnItemChildLongClickListener;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.common.base.Objects;
-import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
-import com.hjq.bar.TitleBar;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.io.device.msg.Msg;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
-import com.legent.ui.IForm;
 import com.legent.ui.UIService;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
@@ -42,9 +34,7 @@ import com.robam.common.io.device.MsgParams;
 import com.robam.common.io.device.TerminalType;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
-import com.robam.common.util.StatusBarUtils;
 import com.robam.roki.R;
-import com.robam.roki.db.model.CookingStepsModel;
 import com.robam.roki.db.model.RecipeBean;
 import com.robam.roki.db.model.RecipeStepBean;
 import com.robam.roki.ui.PageArgumentKey;
@@ -55,15 +45,10 @@ import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.page.login.MyBasePage;
 import com.robam.roki.utils.StringUtil;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.litepal.LitePal;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author r210190
@@ -292,8 +277,8 @@ public class Multi610RecipePage extends MyBasePage<MainActivity> {
     }
 
     private void steam_on() {
-        if (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait
+        if (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait
         ) {
             steameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override

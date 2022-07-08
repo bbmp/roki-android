@@ -1,6 +1,7 @@
 package com.robam.roki.ui.adapter3;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,11 +14,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnItemLongClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.legent.plat.Plat;
 import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.Requests;
 import com.robam.roki.R;
 import com.robam.roki.db.model.RecipeBean;
 import com.robam.roki.db.model.RecipeStepBean;
+import com.robam.roki.ui.dialog.ImageShareDialog;
+import com.robam.roki.ui.mdialog.RecipteMutiShareDialog;
 import com.robam.roki.ui.widget.layout.SettingBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -44,13 +48,39 @@ public class RvMultiRecipeAdapter extends BaseQuickAdapter<Reponses.multiRecipeL
     @Override
     protected void convert(@NotNull BaseViewHolder holder, Reponses.multiRecipeList item) {
         ImageView iv_select = holder.getView(R.id.iv_select);
+        List<RecipeStepBean> recipeStepList = new ArrayList<>();
+        holder.getView(R.id.txt_share).setOnClickListener(v -> {
+            String url="https://h5.myroki.com/distkitch/index.html#/lineViewsFromRokiApp?avatar="
+                    +Plat.accountService.getCurrentUser().figureUrl+"&name="+Plat.accountService.getCurrentUser().name+"&id="
+                    + item.id;
+                RecipteMutiShareDialog mRecipeMultipleShareDialog = new RecipteMutiShareDialog(getContext(), item.name, recipeStepList, url,
+                        item.deviceGuid);
+                mRecipeMultipleShareDialog.create();
+                mRecipeMultipleShareDialog.show();
+
+
+                ImageShareDialog.show(getContext(), url, item.name, item.id
+                ).setDialog(mRecipeMultipleShareDialog).setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        mRecipeMultipleShareDialog.dismiss();
+                    }
+                });
+
+
+
+        });
         if (item != null) {
+
+
+//            holder.getView(R.id.txt_share).setVisibility(View.INVISIBLE);
+
             if (holder.getLayoutPosition() == selectPosition) {
-                iv_select.setImageResource(R.mipmap.icon_choice_multi);
+                iv_select.setImageResource(R.mipmap.privacy_selected_3x);
             } else {
                 iv_select.setImageResource(R.mipmap.icon_choice_multi_nomal);
             }
-            List<RecipeStepBean> recipeStepList = new ArrayList<>();
+
             int totaTime = 0;
             if (item.multiStepDtoList != null && item.multiStepDtoList.size() > 0) {
 
@@ -61,14 +91,14 @@ public class RvMultiRecipeAdapter extends BaseQuickAdapter<Reponses.multiRecipeL
 //                    listItem.setRecipe_id(item.id);
 //                    listItem.setFunction_params();
 //                    listItem.setId();
-                    listItem.setInset_time(Long.parseLong(item.multiStepDtoList.get(i).time));
-                    listItem.setTime(Integer.parseInt(item.multiStepDtoList.get(i).time));
+//                    listItem.setInset_time(Long.parseLong(item.multiStepDtoList.get(i).time));
+                    listItem.setTime(item.multiStepDtoList.get(i).getTime(item.deviceGuid));
                     listItem.setSteam_flow(Integer.parseInt(item.multiStepDtoList.get(i).steamQuantity));
                     listItem.setTemperature(Integer.parseInt(item.multiStepDtoList.get(i).temperature));
                     listItem.setTemperature2(Integer.parseInt(item.multiStepDtoList.get(i).downTemperature));
 //                    listItem.setWork_mode();
                     recipeStepList.add(listItem);
-                    totaTime += Long.parseLong(item.multiStepDtoList.get(i).time);
+                    totaTime += item.multiStepDtoList.get(i).getTime(item.deviceGuid);
                 }
             }
 
@@ -85,25 +115,13 @@ public class RvMultiRecipeAdapter extends BaseQuickAdapter<Reponses.multiRecipeL
 //                    }
 //                }
 //            });
-            TextView tv_item_name = (TextView) holder.getView(R.id.tv_item_name);
+            TextView tv_item_name = holder.getView(R.id.tv_item_name);
             tv_item_name.setText(item.name);
-            TextView tv_right = (TextView) holder.getView(R.id.tv_right);
-//            tv_right.setText("共" + strings[recipeStepList.size()] + "段" + " " + totaTime + "min");
+            TextView tv_right = holder.getView(R.id.tv_right);
             tv_right.setText(totaTime + "min");
             addChildClickViewIds(R.id.tv_right);
-//            tv_right.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (onSelectListener != null) {
-//                        onSelectListener.onSelect(holder.getLayoutPosition());
-//                    }
-//                }
-//            });
-
-//            addChildLongClickViewIds(R.id.stb_step_top);
             RecyclerView rv610Step = (RecyclerView) holder.getView(R.id.rv_610_step);
             rv610Step.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-//            rv610Step.setLayoutManager(new GridLayoutManager(getContext(), 2));
             Rv610RecipeStepAdapter rv610StepAdapter = new Rv610RecipeStepAdapter();
             rv610Step.setAdapter(rv610StepAdapter);
             rv610StepAdapter.addData(recipeStepList);
@@ -129,7 +147,6 @@ public class RvMultiRecipeAdapter extends BaseQuickAdapter<Reponses.multiRecipeL
 
             View v_del = holder.getView(R.id.tv_del);
             if (holder.getLayoutPosition() == delPosition) {
-//                holder.setVisible(R.id.tv_del , holder.getLayoutPosition() == selectPosition ? true : false);
                 v_del.setVisibility(View.VISIBLE);
             } else {
                 v_del.setVisibility(View.GONE);

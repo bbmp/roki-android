@@ -108,6 +108,7 @@
 
 
         <ImageView
+            android:id="@+id/oven_normal_ctrl_view3_img"
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"

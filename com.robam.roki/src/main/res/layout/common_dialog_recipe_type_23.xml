@@ -24,7 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="温馨提示"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20"
+                android:textColor="@color/text_color_net_err"/>
         </LinearLayout>
 
         <TextView
@@ -37,7 +38,8 @@
             android:letterSpacing="0.08"
             tools:text="9877777777777777777777777777777777"
             android:scrollbars="vertical"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_color_net_err"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,19 +51,23 @@
             <Button
                 android:id="@+id/common_dialog_cancel_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
                 android:layout_weight="0.5"
-                android:background="@drawable/countdown_selector"
+                android:background="@drawable/countdown_selector_3"
+                android:textColor="@color/text_color_online"
+                android:textSize="@dimen/sp_20"
                 android:gravity="center"
                 android:text="取消" />
 
             <Button
                 android:id="@+id/common_dialog_ok_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:background="@drawable/button_round_selector"
+                android:textColor="@color/text_color_exit_login"
+                android:textSize="@dimen/sp_20"
                 android:layout_margin="10dp"
                 android:layout_weight="0.5"
                 android:layout_gravity="center"

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/waterpurifier_alarm"
+    android:baselineAligned="false">
+
+    <ImageView
+        android:id="@+id/water_leak"
+        android:layout_marginTop="68dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/img_waterpurifier_no_water"
+        />
+    <LinearLayout
+        android:id="@+id/water_ll"
+        android:layout_below="@id/water_leak"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/img_waterpurifier_nowater"
+            />
+
+        <TextView
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="未检测到水源"
+            android:textColor="#ffffff"
+            />
+
+    </LinearLayout>
+
+        <TextView
+            android:id="@+id/water_text1"
+            android:layout_below="@id/water_ll"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请重新开启净水器的进水阀，"
+            android:textSize="12sp"
+            android:textColor="#fe0e0e"
+            />
+
+
+    <TextView
+        android:layout_below="@id/water_text1"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="或直接拨打一键售后。"
+        android:textSize="12sp"
+        android:textColor="#fe0e0e"
+        />
+
+
+    <Button
+        android:id="@+id/water_alarm_btn"
+        android:layout_width="171dp"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:text="一键售后"
+        android:textSize="15sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:background="#f55821"
+        />
+
+</RelativeLayout>

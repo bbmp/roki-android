@@ -38,6 +38,7 @@
 
 
     <View
+        android:id="@+id/view_id"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp"
         android:layout_width="match_parent"

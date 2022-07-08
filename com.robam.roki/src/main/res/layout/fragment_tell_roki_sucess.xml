@@ -19,6 +19,7 @@
  />
 
     <TextView
+        android:id="@+id/tv_submit_sucess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -29,6 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_tell_roki_sucess" />
 
     <TextView
+        android:id="@+id/tv_roki_accept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

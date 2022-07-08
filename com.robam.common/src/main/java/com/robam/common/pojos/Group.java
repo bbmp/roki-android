@@ -39,7 +39,7 @@ public class Group extends AbsStorePojo<Long> {
     private ForeignCollection<Tag> db_tags;
 
     @JsonProperty("cookbookTags")
-    private List<Tag> cookbookTags;
+    private List<Tag> js_tags;
 
   /*  @DatabaseField(foreign = true, columnName = COLUMN_recipeCook)
     public Recipe cookbook;
@@ -57,12 +57,12 @@ public class Group extends AbsStorePojo<Long> {
 		}
 		return list;*/
         if (db_tags != null && db_tags.size() > 0) {
-            cookbookTags = Lists.newArrayList(db_tags);
+            js_tags = Lists.newArrayList(db_tags);
         }
-        if (cookbookTags == null) {
-            cookbookTags = Lists.newArrayList();
+        if (js_tags == null) {
+            js_tags = Lists.newArrayList();
         }
-        return cookbookTags;
+        return js_tags;
     }
 
     @Override
@@ -84,8 +84,8 @@ public class Group extends AbsStorePojo<Long> {
     public void save2db() {
         super.save2db();
 
-        if (cookbookTags != null) {
-            for (Tag tag : cookbookTags) {
+        if (js_tags != null) {
+            for (Tag tag : js_tags) {
                 tag.group = this;
                 tag.save2db();
             }
@@ -102,28 +102,28 @@ public class Group extends AbsStorePojo<Long> {
         super.delete(id);
     }
 
-
-    static public Group getHomeGroup() {
-        try {
-            Dao<Group, Long> dao = DaoService.getInstance().getDao(Group.class);
-            QueryBuilder<Group, Long> qb = dao.queryBuilder();
-            qb.where().eq(FIELD_TYPE, HOME_GROUP_TYPE);
-            return qb.queryForFirst();
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    static public List<Group> getGroupsWithoutHome() {
-        try {
-            Dao<Group, Long> dao = DaoService.getInstance().getDao(Group.class);
-            QueryBuilder<Group, Long> qb = dao.queryBuilder();
-            qb.where().ne(FIELD_TYPE, HOME_GROUP_TYPE);
-            List<Group> list = qb.query();
-            return list;
-        } catch (Exception e) {
-            return Lists.newArrayList();
-        }
-    }
+//   未调用
+//    static public Group getHomeGroup() {
+//        try {
+//            Dao<Group, Long> dao = DaoService.getInstance().getDao(Group.class);
+//            QueryBuilder<Group, Long> qb = dao.queryBuilder();
+//            qb.where().eq(FIELD_TYPE, HOME_GROUP_TYPE);
+//            return qb.queryForFirst();
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
+//
+//    static public List<Group> getGroupsWithoutHome() {
+//        try {
+//            Dao<Group, Long> dao = DaoService.getInstance().getDao(Group.class);
+//            QueryBuilder<Group, Long> qb = dao.queryBuilder();
+//            qb.where().ne(FIELD_TYPE, HOME_GROUP_TYPE);
+//            List<Group> list = qb.query();
+//            return list;
+//        } catch (Exception e) {
+//            return Lists.newArrayList();
+//        }
+//    }
 
 }

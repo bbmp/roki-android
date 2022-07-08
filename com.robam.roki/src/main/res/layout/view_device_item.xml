@@ -1,81 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
-    android:layout_width="170dp"
-    android:layout_height="95dp"
-    android:background="@drawable/shape_device_status_bg"
-    android:orientation="horizontal">
+    android:layout_width="@dimen/dp_167"
+    android:layout_height="@dimen/dp_123"
+    android:background="@drawable/shape_kitchen_bg_round">
 
-
-    <ImageView
-
-        android:id="@+id/iv_offline_prompt"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="4dp" />
 
     <ImageView
         android:id="@+id/iv_alram"
-        android:layout_width="25dp"
-        android:layout_height="14dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_14"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/dp_4"
+        android:layout_marginTop="@dimen/dp_4"
         android:scaleType="fitXY"
         android:src="@mipmap/ic_gas_list_alarm"
         android:visibility="gone" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toRightOf="@id/imgDevice"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-4dp"
-            android:text="油烟机"
-            android:textColor="@color/c55"
-            android:textSize="15sp" />
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:maxEms="7"
+        android:ellipsize="end"
+        android:text="油烟机大点的"
+        android:textColor="@color/text_color_device"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/dp_13"
+        android:layout_marginLeft="@dimen/dp_16"/>
 
-        <TextView
-            android:id="@+id/txtDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
-            android:text="Cooker Hood"
-            android:textColor="@color/c55"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/txtModel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="8700"
-            android:textColor="@color/c55"
-            android:textSize="12sp" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_offline_prompt"
+        android:layout_width="@dimen/dp_4"
+        android:layout_height="@dimen/dp_4"
+        app:layout_constraintTop_toBottomOf="@id/txtTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_online"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:baselineAlignBottom="true"
+        android:background="@drawable/bg_device_online"/>
+    <ImageView
+        android:id="@+id/iv_loading_status"
+        android:layout_width="@dimen/dp_12"
+        android:layout_height="@dimen/dp_12"
+        app:layout_constraintTop_toBottomOf="@id/txtTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_2"
+        android:visibility="gone"/>
+    <TextView
+        android:maxLines="1"
+        android:id="@+id/tv_online"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cooker"
+        android:textColor="@color/text_color_online"
+        android:layout_marginLeft="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_2"
+        android:textSize="@dimen/sp_10"
+        app:layout_constraintTop_toBottomOf="@id/txtTitle"
+        app:layout_constraintLeft_toRightOf="@id/iv_offline_prompt"/>
 
     <ImageView
         android:id="@+id/imgDevice"
-        android:layout_width="80dp"
-        android:layout_height="78dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
+        android:layout_width="@dimen/dp_63"
+        android:layout_height="@dimen/dp_51"
+        android:layout_marginRight="@dimen/dp_18"
+        android:layout_marginBottom="@dimen/dp_18"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_home_device_fan"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        />
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

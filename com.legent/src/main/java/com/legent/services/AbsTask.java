@@ -115,7 +115,7 @@ abstract public class AbsTask<Result> implements IAsyncTask<Result> {
 				.submit(callable);
 
 		// 设置监控回调
-		Futures.addCallback(future, callback);
+		com.google.common.util.concurrent.Futures.addCallback(future, callback );
 		return future;
 	}
 

@@ -27,7 +27,10 @@ import java.util.Comparator;
 import java.util.List;
 
 public class WifiUtils {
-
+    //蓝牙设备搜索超时
+    static public final int BlueScanTimeOut = 15000;
+    //蓝牙设备连接超时
+    static public final int BlueConnectTimeOut = 60;
     static public final int CipherType_NONE = 1;
     static public final int CipherType_WEP = 2;
     static public final int CipherType_WAPE_PSK = 3;

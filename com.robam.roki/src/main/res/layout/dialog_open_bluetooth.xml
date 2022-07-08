@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:background="@drawable/shape_diglog_bg_splash"
+    android:layout_margin="@dimen/dp_30"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="提示"
+        android:textColor="@color/text_color_net_err"
+        android:textSize="@dimen/sp_20"
+        android:layout_marginTop="30dp"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ROKI需要开启蓝牙，以便发现附近设备。"
+        android:textColor="@color/text_color_net_err"
+        android:textSize="@dimen/sp_16"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="34dp">
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="118dp"
+            android:layout_height="40dp"
+            android:text="取消"
+            android:gravity="center"
+            android:textColor="@color/text_color_online"
+            android:textSize="@dimen/sp_20"
+            android:background="@drawable/countdown_selector_3" />
+        <TextView
+            android:id="@+id/tv_set"
+            android:layout_width="118dp"
+            android:layout_height="40dp"
+            android:text="去设置"
+            android:gravity="center"
+            android:textColor="@color/text_color_exit_login"
+            android:textSize="@dimen/sp_20"
+            android:background="@drawable/button_round_selector"
+            android:layout_marginLeft="30dp"/>
+    </LinearLayout>
+
+</LinearLayout>
+

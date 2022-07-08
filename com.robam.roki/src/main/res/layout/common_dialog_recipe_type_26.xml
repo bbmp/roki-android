@@ -6,8 +6,8 @@
         android:background="@drawable/shape_diglog_bg_splash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
         android:orientation="vertical">
 
         <LinearLayout
@@ -23,8 +23,8 @@
                 android:layout_marginBottom="5dp"
                 android:paddingTop="30dp"
                 android:text="@string/is_delete_toast"
-                android:textColor="@color/roki_important_text_color"
-                android:textSize="18sp" />
+                android:textColor="@color/text_color_net_err"
+                android:textSize="@dimen/sp_20" />
             <TextView
                 android:id="@+id/common_dialog_title_text"
                 android:layout_width="wrap_content"
@@ -35,8 +35,8 @@
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="@string/user_Whether_not_login"
-                android:textColor="@color/roki_important_text_color"
-                android:textSize="16sp" />
+                android:textColor="@color/text_color_net_err"
+                android:textSize="@dimen/sp_16" />
 
         </LinearLayout>
 
@@ -45,7 +45,6 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_marginTop="20dp"
-            android:minHeight="60dp"
             android:orientation="horizontal">
 
             <Button
@@ -54,8 +53,8 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:layout_weight="0.5"
-                android:textSize="16sp"
-                android:textColor="#B3B3B3"
+                android:textSize="@dimen/sp_20"
+                android:textColor="@color/text_color_online"
                 android:background="@drawable/countdown_selector_3"
                 android:text="取消" />
            <TextView
@@ -65,11 +64,11 @@
                 android:id="@+id/common_dialog_ok_btn"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color_exit_login"
                 android:background="@drawable/button_round_selector"
                 android:layout_gravity="center"
                 android:layout_weight="0.5"
-                android:textSize="16sp"
+                android:textSize="@dimen/sp_20"
                 android:text="确定" />
         </LinearLayout>
     </LinearLayout>

@@ -5,8 +5,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,6 +28,7 @@ import com.legent.Callback;
 import com.legent.Callback2;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.utils.EventUtils;
@@ -77,19 +80,19 @@ public class AbsDeviceWaterPurifierPage<WaterPurifier extends AbsWaterPurifier> 
     @InjectView(R.id.scrollView)
     WaterPurifierScrollView scrollView;
     @InjectView(R.id.waterpurifier_background) //设置背景颜色
-            LinearLayout waterpurifier_background;
+    LinearLayout waterpurifier_background;
     @InjectView(R.id.water_title_background)
     RelativeLayout water_title_background;
     @InjectView(R.id.waterpurifier_belowtitle_background)
     RelativeLayout waterpurifier_belowtitle_background;
     @InjectView(R.id.img_retrun)//标题栏
-            ImageView img_retrun;//返回图标
+    ImageView img_retrun;//返回图标
     @InjectView(R.id.water_more)//更多
-            ImageView water_more;
+    ImageView water_more;
     @InjectView(R.id.water_disconnectHintView)//断网提示
-            View water_disconnectHintView;
+    View water_disconnectHintView;
     @InjectView(R.id.water_btn_people)//设置家庭人数
-            TextView water_btn_people;
+    TextView water_btn_people;
     @InjectView(R.id.water_set_time)
     LinearLayout water_set_time;
     @InjectView(R.id.water_none)
@@ -236,6 +239,13 @@ public class AbsDeviceWaterPurifierPage<WaterPurifier extends AbsWaterPurifier> 
     protected IRokiDialog mRokiDialog = null;
     WaterPurifiyHistogramView waterPurifiy_history_view;
 
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (guid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            water_title.setText(name);
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //获取净水器guid
@@ -266,6 +276,11 @@ public class AbsDeviceWaterPurifierPage<WaterPurifier extends AbsWaterPurifier> 
             water_title.setText("净水机J320");
         } else if ("RJ321".equals(guid.substring(0, 5))) {
             water_title.setText("净水机J321");
+        }
+        if (purifier.getName() == null || purifier.getName().equals(purifier.getCategoryName()) ){
+            water_title.setText(purifier.getDispalyType());
+        }else {
+            water_title.setText(purifier.getName());
         }
         mWaveHelper = new WaveHelper(content_wave);
         mWaveHelper.start();

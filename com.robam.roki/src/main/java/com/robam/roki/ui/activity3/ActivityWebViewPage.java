@@ -3,73 +3,48 @@ package com.robam.roki.ui.activity3;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
-import android.util.Base64;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.UiThread;
 import androidx.core.content.ContextCompat;
 
-import com.bumptech.glide.Glide;
 import com.google.common.eventbus.Subscribe;
-import com.google.common.io.BaseEncoding;
-import com.legent.VoidCallback;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.plat.Plat;
+import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.events.UserLoginNewEvent;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.ui.ext.views.ExtWebView;
 import com.legent.utils.LogUtils;
 import com.robam.common.events.WxCodeShareEvent;
-import com.robam.common.services.CookbookManager;
 import com.robam.roki.MobApp;
 import com.robam.roki.R;
-import com.robam.roki.factory.RokiDialogFactory;
-import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.dialog.H5ActivityShareDialog;
-import com.robam.roki.ui.dialog.KitchenSourceShareDialog;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.page.login.MyBasePage;
 import com.robam.roki.ui.page.login.helper.CmccLoginHelper;
-import com.robam.roki.utils.ApiSecurityExample;
-import com.robam.roki.utils.DialogUtil;
+import com.legent.plat.ApiSecurityExample;
 import com.robam.roki.utils.PermissionsUtils;
-import com.robam.roki.utils.ToolUtils;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.ExecutionException;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -111,13 +86,16 @@ public class ActivityWebViewPage extends MyBasePage<MainActivity> {
     private String mActiveUrl;
     private String mShareImgUrl;
     private String mShareTitle;
+    private String shareContText;
     private String mShareText;
     private String mVideoUrl;
     private String mShareId;
+    private FirebaseAnalytics firebaseAnalytics;
     private CmccLoginHelper instance;
     private String H5Key;
     private String loginEvenType = null;
     private boolean isLogin = false;
+    private String title;
 //    @Nullable
 //    @Override
 //    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -184,12 +162,14 @@ public class ActivityWebViewPage extends MyBasePage<MainActivity> {
     @Override
     public void onResume() {
         super.onResume();
+        firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+        firebaseAnalytics.setCurrentScreen(getActivity(), "厨房知识页", null);
     }
 
     private void initPage() {
         mShareImgUrl = getArguments().getString("Share_Img");
-        String title = getArguments().getString(PageArgumentKey.title);
-
+        title = getArguments().getString(PageArgumentKey.title);
+        shareContText = getArguments().getString("shareContText");
         boolean logon = Plat.accountService.isLogon();
         Long userId = Plat.accountService.getCurrentUserId();
         if (logon) {
@@ -294,29 +274,20 @@ public class ActivityWebViewPage extends MyBasePage<MainActivity> {
                 String urlData = "shareUserId=" + shareUserId + "&timestamp=" + timestamp;
                 String sign = ApiSecurityExample.hmacSha256ToURLEncoder("Robam@2022*03", urlData);
                 String shareUrl = url + "?shareUserId=" + shareUserId + "&sign=" + sign + "&timestamp=" + timestamp;
-                String contText;
-                if (H5Key != null && H5Key.equals("special_act")) {
-                    mShareTitle = "ROBAM x AWE | 你有一个惊喜盲盒待领！";
-                    contText = "ROKI 喊你来拆惊喜盲盒，赢超多好礼。";
-                } else {
-                    mShareTitle = tvTitle.getText().toString();
-                    contText = " ";
-                }
-
                 if (PermissionsUtils.CODE_KITCHEN_SHARE_ACTIVE == requestCode) {
                     if (H5Key != null && H5Key.equals("special_act")) {
-                        H5ActivityShareDialog.show(cx, shareUrl, mShareImgUrl, mShareTitle, contText);
+                        H5ActivityShareDialog.show(cx, shareUrl, mShareImgUrl, title, shareContText);
 
                     } else {
-                        H5ActivityShareDialog.show(cx, url, mShareImgUrl, mShareTitle, contText);
+                        H5ActivityShareDialog.show(cx, url, mShareImgUrl, title, shareContText);
 
                     }
                 } else if (PermissionsUtils.CODE_KITCHEN_SHARE_VIDEO == requestCode) {
                     if (H5Key != null && H5Key.equals("special_act")) {
-                        H5ActivityShareDialog.show(cx, shareUrl, mShareImgUrl, mShareTitle, contText);
+                        H5ActivityShareDialog.show(cx, shareUrl, mShareImgUrl, title, shareContText);
 
                     } else {
-                        H5ActivityShareDialog.show(cx, url, mShareImgUrl, mShareTitle, contText);
+                        H5ActivityShareDialog.show(cx, url, mShareImgUrl, title, shareContText);
 
                     }
                 }
@@ -378,23 +349,23 @@ public class ActivityWebViewPage extends MyBasePage<MainActivity> {
             String urlData = "shareUserId=" + shareUserId + "&timestamp=" + timestamp;
             String sign = ApiSecurityExample.hmacSha256ToURLEncoder("Robam@2022*03", urlData);
             String shareUrl = url + "?userId=&shareUserId=" + shareUserId + "&terminal=null&sign=" + sign + "&timestamp=" + timestamp;
-            String contText;
-            if (H5Key != null && H5Key.equals("special_act")) {
-                mShareTitle = "ROBAM x AWE | 你有一个惊喜盲盒待领！";
-                contText = "ROKI 喊你来拆惊喜盲盒，赢超多好礼。";
-            } else {
-                mShareTitle = tvTitle.getText().toString();
-                contText = " ";
-            }
+//            String contText;
+//            if (H5Key != null && H5Key.equals("special_act")) {
+//                mShareTitle = "【ROBAM】您有一个惊喜盲盒待领取!";
+//                contText = "ROKI喊你来拆惊喜盲盒，赢超多精彩好礼!";
+//            } else {
+//                mShareTitle = tvTitle.getText().toString();
+//                contText = " ";
+//            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 int selfPermission = ContextCompat.checkSelfPermission(cx, Manifest.permission.READ_EXTERNAL_STORAGE);
                 if (selfPermission == 0) {
-                    H5ActivityShareDialog.show(cx, shareUrl, mShareImgUrl, mShareTitle, contText);
+                    H5ActivityShareDialog.show(cx, shareUrl, mShareImgUrl, title, shareContText);
                 } else {
                     PermissionsUtils.checkPermission(cx, Manifest.permission.READ_EXTERNAL_STORAGE, PermissionsUtils.CODE_KITCHEN_SHARE_ACTIVE);
                 }
             } else {
-                H5ActivityShareDialog.show(cx, shareUrl, mShareImgUrl, mShareTitle, contText);
+                H5ActivityShareDialog.show(cx, shareUrl, mShareImgUrl, title, shareContText);
             }
         }
 
@@ -435,7 +406,7 @@ public class ActivityWebViewPage extends MyBasePage<MainActivity> {
      * 登录成功事件
      */
     @Subscribe
-    public void onEvent(UserLoginNewEvent userLoginNewEvent) {
+    public void onEvent(UserLoginEvent userLoginNewEvent) {
 //        evKitchenKnowledgAct.clearHistory();
 //        initPage();
        if(isLogin){

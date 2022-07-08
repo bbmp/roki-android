@@ -22,6 +22,7 @@ import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.BackgroundFunc;
@@ -115,6 +116,13 @@ public class AbsDishWasherBasePage extends BasePage {
     private String guideUrl;
     private String userExplainTitle;
 
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            dishWasherName.setText(name);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -268,7 +276,7 @@ public class AbsDishWasherBasePage extends BasePage {
     }
 
     private void getDataMethod() {
-        CloudHelper.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
+        Plat.deviceService.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
             @Override
             public void onSuccess(Reponses.DeviceResponse deviceResponse) {
                 if (deviceResponse == null) return;
@@ -329,8 +337,9 @@ public class AbsDishWasherBasePage extends BasePage {
                 Glide.with(cx).load(viewBackgroundImg).diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(ivAbsDishWasherBg);
             }
-            dishWasherName.setText(deviceResponse.title);
-
+//            dishWasherName.setText(deviceResponse.title);
+            dishWasherName.setText(absDishWasher.getName() == null || absDishWasher.getName().equals(absDishWasher.getCategoryName()) ?
+                    absDishWasher.getDispalyType() : absDishWasher.getName());
             MainFunc mainFunc = deviceResponse.modelMap.mainFunc;
             mainList = mainFunc.deviceConfigurationFunctions;
             if (mainList.size() > 1) {
@@ -732,8 +741,6 @@ public class AbsDishWasherBasePage extends BasePage {
                 t.printStackTrace();
             }
         });
-
-
     }
 
     private void showDataView(Reponses.GetHistoryDataResponse historyDataResponse) {

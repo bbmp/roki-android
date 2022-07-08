@@ -2,6 +2,7 @@ package com.robam.roki.ui.page;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,19 +23,19 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.events.UserLoginEvent;
-import com.legent.plat.io.cloud.RetrofitCallback;
-import com.legent.plat.pojos.RCReponse;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
+import com.legent.ui.ext.utils.StatusBarCompat;
 import com.legent.utils.LogUtils;
 import com.legent.utils.TimeUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.AbsRecipe;
@@ -63,17 +65,10 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
     @InjectView(R.id.xrv_top_recipe)
     RecyclerView rvTopRecipe;
 
-    @InjectView(R.id.iv_top_week_title_bg)
-    ImageView ivTopWeekTitleBg;
 
     @InjectView(R.id.tv_top_week_back)
-    TextView tvTopWeekBack;
+    ImageView tvTopWeekBack;
 
-    @InjectView(R.id.tv_top_week_toolbar_title)
-    TextView tvTopWeekToolBarTitle;
-
-    private Toolbar topWeekToolbar;
-    private AppBarLayout appBarLayout;
     private int pageNo = 0;
     private int pageSize = 10;
     /**
@@ -103,13 +98,11 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        setStateBarTransparent();
-        appBarLayout = findViewById(R.id.top_week_appbar);
-        topWeekToolbar = (Toolbar) findViewById(R.id.top_week_toolbar);
+//        setStateBarTransparent();
         rvTopRecipe.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         emptyView = LinearLayout.inflate(cx, R.layout.view_emoji_empty, null);
         tvDesc = (TextView) emptyView.findViewById(R.id.txtDesc);
-        setAvatorChange();
+
     }
 
     @Override
@@ -184,22 +177,20 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
                 });
             } else {
                 ProgressDialogHelper.setRunning(cx, true);
-                RokiRestHelper.addFavorityCookbooks(recipe.id, RCReponse.class, new RetrofitCallback<RCReponse>() {
+                CookbookManager.getInstance().addFavorityCookbooks(recipe.id, new VoidCallback() {
                     @Override
-                    public void onSuccess(RCReponse rcReponse) {
+                    public void onSuccess() {
                         ProgressDialogHelper.setRunning(cx, false);
-                        if (null != rcReponse) {
-                            ToastUtils.show("收藏成功");
-                            recipe.setIsCollected(true);
-                            recipe.collectCount = recipe.collectCount + 1;
-                            rvTopWeekAdapter.setData(position, recipe);
-                        }
+                        ToastUtils.show("收藏成功");
+                        recipe.setIsCollected(true);
+                        recipe.collectCount = recipe.collectCount + 1;
+                        rvTopWeekAdapter.setData(position, recipe);
                     }
 
                     @Override
-                    public void onFaild(String err) {
+                    public void onFailure(Throwable t) {
                         ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.show(err);
+                        ToastUtils.show(t.getMessage());
                     }
                 });
             }
@@ -224,23 +215,22 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
     private void getWeekRecipeTops() {
         String weekTime = TimeUtils.getlastWeekTime();
         LogUtils.i(TAG, "weekTime:" + weekTime);
-        RokiRestHelper.getWeekTops(weekTime, pageNo, pageSize, Reponses.WeekTopsResponse.class, new RetrofitCallback<Reponses.WeekTopsResponse>() {
+        RokiRestHelper.getWeekTops(weekTime, pageNo, pageSize, new Callback<List<Recipe>>() {
             @Override
-            public void onSuccess(Reponses.WeekTopsResponse weekTopsResponse) {
+            public void onSuccess(final List<Recipe> recipes) {
                 LogUtils.i(TAG, "getWeekTops onSuccess");
-                if (null != weekTopsResponse) {
-                    List<Recipe> recipes = weekTopsResponse.payload;
-                    if (recipes == null || recipes.size() == 0) {
-                        rvTopWeekAdapter.getLoadMoreModule().loadMoreEnd();
-                        return;
-                    }
-                    collectData(recipes, absRecipes);
+                if (recipes == null || recipes.size() == 0) {
+                    rvTopWeekAdapter.getLoadMoreModule().loadMoreEnd();
+                    return;
                 }
+
+                collectData(recipes, absRecipes);
             }
 
             @Override
-            public void onFaild(String err) {
-                LogUtils.i(TAG, "onFailure " + err);
+            public void onFailure(Throwable t) {
+                LogUtils.i(TAG, "onFailure " + t.toString());
+                rvTopWeekAdapter.getLoadMoreModule().loadMoreFail();
             }
         });
 
@@ -251,8 +241,8 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
      */
     protected void getCollectRecipe() {
 
-        RokiRestHelper.getFavorityCookbooks(Reponses.CookbooksResponse.class,
-                new RetrofitCallback<Reponses.CookbooksResponse>() {
+        CookbookManager.getInstance().getFavorityCookbooks(
+                new Callback<Reponses.CookbooksResponse>() {
                     @Override
                     public void onSuccess(Reponses.CookbooksResponse result) {
                          absRecipes = new ArrayList<>();
@@ -268,8 +258,9 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
                     }
 
                     @Override
-                    public void onFaild(String err) {
-                        ToastUtils.show(err);
+                    public void onFailure(Throwable t) {
+                        rvTopWeekAdapter.getLoadMoreModule().loadMoreFail();
+                        ToastUtils.show(t.getMessage());
                     }
                 });
     }
@@ -302,12 +293,7 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (Build.VERSION.SDK_INT >= 21){
-            View decorView = activity.getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-            StatusBarUtils.setTextDark(getContext() ,true);
-        }
+
     }
 
     static class TopWeekRecipeViewHolder extends RecyclerView.ViewHolder {
@@ -333,32 +319,8 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
 
     @OnClick(R.id.tv_top_week_back)
     public void topWeekBack() {
-        StatusBarUtils.setColor(getActivity(), getResources().getColor(R.color.white));
+//        StatusBarUtils.setColor(getActivity(), getResources().getColor(R.color.white));
         UIService.getInstance().popBack();
-    }
-
-    /**
-     * 渐变toolbar背景
-     */
-    private void setAvatorChange() {
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                //verticalOffset始终为0以下的负数
-                float percent = (Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange());
-                LogUtils.i(TAG, "percent:" + percent);
-                topWeekToolbar.setBackgroundColor(changeAlpha(Color.WHITE, percent));
-                if (percent > 0.8) {
-                    tvTopWeekToolBarTitle.setVisibility(View.VISIBLE);
-                    tvTopWeekBack.setBackground(getContext().getDrawable(R.mipmap.icon_back_black));
-                    StatusBarUtils.setTextDark(cx, true);
-                } else {
-                    tvTopWeekToolBarTitle.setVisibility(View.INVISIBLE);
-                    tvTopWeekBack.setBackground(getContext().getDrawable(R.mipmap.icon_back_white));
-                    StatusBarUtils.setTextDark(cx, false);
-                }
-            }
-        });
     }
 
     /**
@@ -397,8 +359,8 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
      */
     protected void getCollectRecipe2() {
 
-        RokiRestHelper.getFavorityCookbooks(Reponses.CookbooksResponse.class,
-        new RetrofitCallback<Reponses.CookbooksResponse>() {
+        CookbookManager.getInstance().getFavorityCookbooks(
+                new Callback<Reponses.CookbooksResponse>() {
                     @Override
                     public void onSuccess(Reponses.CookbooksResponse result) {
                         absRecipes = new ArrayList<>();
@@ -422,11 +384,11 @@ public class TopWeekPage extends MyBasePage<MainActivity> {
                         rvTopWeekAdapter.setData(position , recipe);
                     }
 
-            @Override
-            public void onFaild(String err) {
-                ToastUtils.show(err);
-            }
-        });
+                    @Override
+                    public void onFailure(Throwable t) {
+                        ToastUtils.show(t.getMessage());
+                    }
+                });
     }
 
 }

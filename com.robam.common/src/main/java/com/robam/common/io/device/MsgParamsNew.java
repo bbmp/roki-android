@@ -42,10 +42,20 @@ public interface MsgParamsNew {
     String setOrderMinutes  = "setOrderMinutes" ;
     String setOrderMinutesKey  = "setOrderMinutesKey" ;
     String setOrderMinutesLength  = "setOrderMinutesLength" ;
+    String setOrderMinutes01="setOrderMinutes01";
+    String setOrderMinutes02="setOrderMinutes02";
+    String setOrderMinutes03="setOrderMinutes03";
+    String setOrderMinutes04="setOrderMinutes04";
     /**
      * 剩余预约时间
      */
     String orderLeftMinutes = "orderLeftMinutes" ;
+    String orderRightMinutes = "orderRightMinutes" ;
+    String orderLeftMinutes1 = "orderLeftMinutes1" ;
+    String orderRightMinutes1 = "orderRightMinutes1" ;
+    String orderMinutesLength="orderMinutesLength";
+    //剩余预约时间 秒
+    String orderLeftTime = "orderLeftTime" ;
     /**
      * 故障码
      */
@@ -98,6 +108,7 @@ public interface MsgParamsNew {
      * 菜谱编号
      */
     String recipeId = "recipeId" ;
+    String recipeId01 = "recipeId01" ;
     String recipeIdKey = "recipeIdKey" ;
     String recipeIdLength = "recipeIdLength" ;
     /**
@@ -107,6 +118,7 @@ public interface MsgParamsNew {
     String recipeSetMinutesH = "recipeSetMinutesH" ;
     String recipeSetMinutesKey = "recipeSetMinutesKey" ;
     String recipeSetMinutesLength = "recipeSetMinutesLength" ;
+
     /**
      * 当前温度 上温度
      */
@@ -120,6 +132,7 @@ public interface MsgParamsNew {
      */
     String totalRemainSeconds = "totalRemainSeconds" ;
     String totalRemainSeconds2 = "totalRemainSeconds2" ;
+    String totalRemain = "totalRemain" ;
     /**
      * 除垢请求标识
      */
@@ -172,6 +185,10 @@ public interface MsgParamsNew {
      * 首段设置的时间
      */
     String setTime = "setTime" ;
+    String setTime0b = "setTime0b" ;
+    String setTime1b = "setTime1b" ;
+    String setTime2b = "setTime2b" ;
+    String setTime3b = "setTime3b" ;
     String setTimeH = "setTimeH" ;
     String setTimeKey = "setTimeKey" ;
     String setTimeLength = "setTimeLength" ;
@@ -360,4 +377,23 @@ public interface MsgParamsNew {
      * 报警状态 灶具
      */
     String stove_faultCode2 = "stove_faultCode2" ;
+    String userid = "userid";
+
+
+    /**
+     * (首段)微波档
+     * 位
+     */
+    String microWaveLevelCtrl  = "microWaveLevelCtrl" ;
+    String microWaveLevelCtrlKey  = "microWaveLevelCtrlKey" ;
+    String microWaveLevelLength  = "microWaveLevelLength" ;
+    String microWaveLevelCtrl01  = "microWaveLevelCtrl01" ;
+
+    /**
+     * 复热模式重量
+     *
+     */
+    String microWaveWeightCtrl  = "microWaveWeightCtrl" ;
+    String microWaveWeightCtrlKey  = "microWaveWeightCtrlKey" ;
+    String microWaveWeightLength  = "microWaveWeightLength" ;
 }

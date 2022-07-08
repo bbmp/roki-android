@@ -139,6 +139,10 @@ public class CookerUpdateDevicePage extends BasePage {
     @Override
     public void onResume() {
         super.onResume();
+        if (absCooker.getDt()!=null) {
+
+            MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(),absCooker.getDt()+":固件升级页",null);
+        }
     }
 
     private void initView() {

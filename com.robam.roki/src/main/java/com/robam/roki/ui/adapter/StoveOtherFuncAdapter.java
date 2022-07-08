@@ -29,7 +29,8 @@ import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
-
+import com.robam.roki.ui.page.device.steamovenone.AbsSteamOvenWorkingCurve925VView;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +38,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by 14807 on 2018/5/18.
@@ -81,8 +83,8 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         if (OTHER_VIEW == viewType) {
             View view = mInflater.inflate(R.layout.item_otherfunc_page, parent, false);
-
-            StoveOtherFuncViewHolder stoveOtherFuncViewHolder = new StoveOtherFuncViewHolder(mContext, view);
+            ScreenAdapterTools.getInstance().loadView(view);
+            StoveOtherFuncViewHolder stoveOtherFuncViewHolder = new StoveOtherFuncViewHolder(view);
             //灶具下面的监听
             stoveOtherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -93,7 +95,7 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return stoveOtherFuncViewHolder;
         } else if (MAIN_VIEW == viewType) {
             View view = mInflater.inflate(R.layout.item_stove_mainfunc_page, parent, false);
-
+            ScreenAdapterTools.getInstance().loadView(view);
             final StoveMainFuncViewHolder stoveMainFuncViewHolder = new StoveMainFuncViewHolder(view);
             //童锁的监听
             stoveMainFuncViewHolder.mIvModelImg.setOnClickListener(new View.OnClickListener() {
@@ -111,10 +113,10 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     private void onItemEvent(View v) {
-        if (!mStove.isConnected()) {
-            DeviceOfflinePrompt();
-            return;
-        }
+//        if (!mStove.isConnected()) {
+//            DeviceOfflinePrompt();
+//            return;
+//        }
         String tag = v.getTag().toString();
         if ("auxiliaryShutdown".equals(tag)) {
             for (int i = 0; i < mDatas.size(); i++) {
@@ -191,11 +193,23 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             bundle.putString(PageArgumentKey.platformCode, platformCode);
             bundle.putString(PageArgumentKey.Guid, mStove.getGuid().getGuid());
             UIService.getInstance().postPage(PageKey.RecipeCategoryList, bundle);
-        } else {
+        } else if ("curve".equals(tag)) {
+            onClickOpenCurve.onClickOpenCurve();
+        }
+        else {
             //TODO
         }
     }
+    public interface OnClickOpenCurve {
 
+        void onClickOpenCurve();
+
+    }
+    public OnClickOpenCurve onClickOpenCurve;
+
+    public void setOnClickOpenCurve(OnClickOpenCurve onClickOpenCurve) {
+        this.onClickOpenCurve = onClickOpenCurve;
+    }
     private void DeviceOfflinePrompt() {
         ToastUtils.showShort(R.string.device_connected);
     }
@@ -206,7 +220,7 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             StoveOtherFuncViewHolder stoveOtherFuncViewHolder = (StoveOtherFuncViewHolder) holder;
             if (mDatas != null && mDatas.size() > 0) {
                 if ("auxiliaryShutdown".equals(mDatas.get(position).functionCode)) {
-                    Glide.with(mContext)
+                    Glide.with(cx)
                             .load(mDatas.get(position).backgroundImg)
 //                            .crossFade()
                             .into(stoveOtherFuncViewHolder.mImageView);
@@ -214,7 +228,7 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     stoveOtherFuncViewHolder.mTvDesc.setText(mDatas.get(position).msg);
 
                 } else if ("timedOff".equals(mDatas.get(position).functionCode)) {
-                    Glide.with(mContext)
+                    Glide.with(cx)
                             .load(mDatas.get(position).backgroundImg)
 //                            .crossFade()
                             .into(stoveOtherFuncViewHolder.mImageView);
@@ -226,17 +240,17 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         if (leftTime < rightTime && leftStatus == StoveStatus.Working) {
                             String strLeftTime = TimeUtils.secToHourMinSec(leftTime);
                             stoveOtherFuncViewHolder.startAnimation();
-                            stoveOtherFuncViewHolder.mTvWorkName.setText(strLeftTime + mContext.getString(R.string.device_stove_off_left_burner));
+                            stoveOtherFuncViewHolder.mTvWorkName.setText(strLeftTime + cx.getString(R.string.device_stove_off_left_burner));
                             stoveOtherFuncViewHolder.mTvWorkName.setVisibility(View.VISIBLE);
                             stoveOtherFuncViewHolder.mLlDefaultText.setVisibility(View.GONE);
-                            stoveOtherFuncViewHolder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                            stoveOtherFuncViewHolder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                         } else if (rightTime < leftTime && rightStatus == StoveStatus.Working) {
                             String strRightTime = TimeUtils.secToHourMinSec(rightTime);
                             stoveOtherFuncViewHolder.startAnimation();
-                            stoveOtherFuncViewHolder.mTvWorkName.setText(strRightTime + mContext.getString(R.string.device_stove_off_right_burner));
+                            stoveOtherFuncViewHolder.mTvWorkName.setText(strRightTime + cx.getString(R.string.device_stove_off_right_burner));
                             stoveOtherFuncViewHolder.mTvWorkName.setVisibility(View.VISIBLE);
                             stoveOtherFuncViewHolder.mLlDefaultText.setVisibility(View.GONE);
-                            stoveOtherFuncViewHolder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                            stoveOtherFuncViewHolder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                         }
                     } else if (leftTime == 0 && rightTime == 0 || leftStatus == StoveStatus.Off && rightStatus == StoveStatus.Off
                             || leftStatus == StoveStatus.StandyBy && rightStatus == StoveStatus.StandyBy) {
@@ -249,17 +263,17 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } else if (leftTime != 0 && leftStatus == StoveStatus.Working && rightTime == 0) {
                         String strLeftTime = TimeUtils.secToHourMinSec(leftTime);
                         stoveOtherFuncViewHolder.startAnimation();
-                        stoveOtherFuncViewHolder.mTvWorkName.setText(strLeftTime + mContext.getString(R.string.device_stove_off_left_burner));
+                        stoveOtherFuncViewHolder.mTvWorkName.setText(strLeftTime + cx.getString(R.string.device_stove_off_left_burner));
                         stoveOtherFuncViewHolder.mTvWorkName.setVisibility(View.VISIBLE);
                         stoveOtherFuncViewHolder.mLlDefaultText.setVisibility(View.GONE);
-                        stoveOtherFuncViewHolder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                        stoveOtherFuncViewHolder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     } else if (rightTime != 0 && rightStatus == StoveStatus.Working && leftTime == 0) {
                         String strRightTime = TimeUtils.secToHourMinSec(rightTime);
                         stoveOtherFuncViewHolder.startAnimation();
-                        stoveOtherFuncViewHolder.mTvWorkName.setText(strRightTime + mContext.getString(R.string.device_stove_off_right_burner));
+                        stoveOtherFuncViewHolder.mTvWorkName.setText(strRightTime + cx.getString(R.string.device_stove_off_right_burner));
                         stoveOtherFuncViewHolder.mTvWorkName.setVisibility(View.VISIBLE);
                         stoveOtherFuncViewHolder.mLlDefaultText.setVisibility(View.GONE);
-                        stoveOtherFuncViewHolder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                        stoveOtherFuncViewHolder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     } else {
                         stoveOtherFuncViewHolder.stopAnimation();
                         stoveOtherFuncViewHolder.mTvName.setText(mDatas.get(position).functionName);
@@ -269,14 +283,21 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     }
 
                 } else if ("remindingFire".equals(mDatas.get(position).functionCode)) {
-                    Glide.with(mContext)
+                    Glide.with(cx)
                             .load(mDatas.get(position).backgroundImg)
 //                            .crossFade()
                             .into(stoveOtherFuncViewHolder.mImageView);
                     stoveOtherFuncViewHolder.mTvName.setText(mDatas.get(position).functionName);
                     stoveOtherFuncViewHolder.mTvDesc.setText(mDatas.get(position).msg);
                 } else if ("automaticCooking".equals(mDatas.get(position).functionCode)) {
-                    Glide.with(mContext)
+                    Glide.with(cx)
+                            .load(mDatas.get(position).backgroundImg)
+//                            .crossFade()
+                            .into(stoveOtherFuncViewHolder.mImageView);
+                    stoveOtherFuncViewHolder.mTvName.setText(mDatas.get(position).functionName);
+                    stoveOtherFuncViewHolder.mTvDesc.setText(mDatas.get(position).msg);
+                }else if ("curve".equals(mDatas.get(position).functionCode)) {
+                    Glide.with(cx)
                             .load(mDatas.get(position).backgroundImg)
 //                            .crossFade()
                             .into(stoveOtherFuncViewHolder.mImageView);
@@ -290,7 +311,7 @@ public class StoveOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             StoveMainFuncViewHolder stoveMainFuncViewHolder = (StoveMainFuncViewHolder) holder;
             stoveMainFuncViewHolder.mTvModelName.setText(mDatas.get(position).functionName);
             if (mDatas != null && mDatas.size() > 0) {
-                Glide.with(mContext)
+                Glide.with(cx)
                         .load(mDatas.get(position).backgroundImg)
 //                        .crossFade()
                         .into(stoveMainFuncViewHolder.mIvModelImg);
@@ -330,12 +351,10 @@ class StoveOtherFuncViewHolder extends RecyclerView.ViewHolder {
     LinearLayout mLlDefaultText;
     ImageView mStateShow;
     AlphaAnimation mAlphaAnimation;
-    Context mContext;
 
-    public StoveOtherFuncViewHolder(Context context, View itemView) {
+    public StoveOtherFuncViewHolder(View itemView) {
         super(itemView);
 
-        mContext = context;
         mTvName = itemView.findViewById(R.id.tv_name);
         mImageView = itemView.findViewById(R.id.iv_view);
         mTvWorkName = itemView.findViewById(R.id.tv_work_name);
@@ -349,7 +368,7 @@ class StoveOtherFuncViewHolder extends RecyclerView.ViewHolder {
 
         mAlphaAnimation = null;
         if (mAlphaAnimation == null) {
-            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(mContext, R.anim.device_rika_dot_alpha);
+            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(cx, R.anim.device_rika_dot_alpha);
             LinearInterpolator lin = new LinearInterpolator();
             mAlphaAnimation.setInterpolator(lin);
             mStateShow.startAnimation(mAlphaAnimation);

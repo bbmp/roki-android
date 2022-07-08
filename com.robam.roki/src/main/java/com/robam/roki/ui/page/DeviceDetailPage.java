@@ -2,23 +2,26 @@ package com.robam.roki.ui.page;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import androidx.annotation.Nullable;
-import android.view.LayoutInflater;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeleteChildDeviceEvent;
-import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.plat.pojos.device.AbsDevice;
 import com.legent.plat.pojos.device.AbsDeviceHub;
@@ -27,10 +30,7 @@ import com.legent.plat.pojos.device.IDevice;
 import com.legent.plat.pojos.dictionary.DeviceType;
 import com.legent.plat.services.DeviceTypeManager;
 import com.legent.ui.UIService;
-import com.legent.ui.ext.BasePage;
-import com.legent.ui.ext.adapters.ExtBaseAdapter;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
-import com.legent.ui.ext.views.NestedListView;
 import com.legent.ui.ext.views.TitleBar;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
@@ -40,7 +40,6 @@ import com.robam.common.events.DeviceDeleteEvent;
 import com.robam.common.pojos.device.IRokiFamily;
 import com.robam.common.pojos.device.Pot.Pot;
 import com.robam.common.pojos.device.Stove.Stove;
-import com.robam.common.pojos.device.fan.AbsFan;
 import com.robam.common.pojos.device.gassensor.GasSensor;
 import com.robam.roki.R;
 import com.robam.roki.factory.RokiDialogFactory;
@@ -64,9 +63,9 @@ import butterknife.OnClick;
 public class DeviceDetailPage extends MyBasePage<MainActivity> {
 
     @InjectView(R.id.deviceListView)
-    NestedListView deviceListView;
+    RecyclerView deviceListView;
     @InjectView(R.id.userListView)
-    NestedListView userListView;
+    RecyclerView userListView;
 
     DeviceAdapter deviceAdapter;
     UserAdapter userAdapter;
@@ -121,6 +120,8 @@ public class DeviceDetailPage extends MyBasePage<MainActivity> {
         }
 
         regsitRightView();
+        deviceListView.setLayoutManager(new LinearLayoutManager(getContext()));
+        userListView.setLayoutManager(new LinearLayoutManager(getContext()));
         deviceAdapter = new DeviceAdapter();
         userAdapter = new UserAdapter();
 
@@ -163,12 +164,22 @@ public class DeviceDetailPage extends MyBasePage<MainActivity> {
             id = deviceHub.getID();
         }
         LogUtils.i("20180817", "devices::" + devices.toString());
-        deviceAdapter.loadData(devices);
+        deviceAdapter.setList(devices);
+        deviceAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter baseQuickAdapter, @NonNull View view, int i) {
+                switch (view.getId()) {
+                    case R.id.tv_delete:
+                        isDeleteToast(i);
+                        break;
+                }
+            }
+        });
         long ownerId = Plat.accountService.getCurrentUserId();
-        CloudHelper.getDeviceUsers(ownerId, id, new Callback<List<User>>() {
+        Plat.deviceService.getDeviceUsers(ownerId, id, new Callback<List<User>>() {
             @Override
             public void onSuccess(List<User> users) {
-                userAdapter.loadData(users);
+                userAdapter.setList(users);
             }
 
             @Override
@@ -291,143 +302,82 @@ public class DeviceDetailPage extends MyBasePage<MainActivity> {
         onUnbind();
     }
 
+    void showData(BaseViewHolder baseViewHolder, IDevice device) {
+        DeviceGuid dg = device.getGuid();
+        DeviceType dt = DeviceTypeManager.getInstance().getDeviceType(dg.getGuid());
 
-    class DeviceAdapter extends ExtBaseAdapter<IDevice> {
+        String dispalyType = device.getDispalyType();
+        baseViewHolder.setText(R.id.txtDeviceType, dispalyType);
+        baseViewHolder.setText(R.id.txtDevice, device.getCategoryName() + cx.getString(R.string.detail));
+        baseViewHolder.setText(R.id.txtBid, device.getBid());
+        baseViewHolder.setText(R.id.txtOtaVer, String.valueOf(device.getVersion()));
 
-        @Override
-        public View getView(final int position, View convertView, final ViewGroup parent) {
 
-            final ViewHolder vh;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(cx).inflate(R.layout.view_device_detail, parent, false);
-                vh = new ViewHolder(convertView);
-                convertView.setTag(vh);
+        TextView tvDelete = baseViewHolder.getView(R.id.tv_delete);
+        if (Utils.isFan(device.getID())) {
+            tvDelete.setVisibility(View.GONE);
+
+        } else if (Utils.isStove(device.getID())) {
+            tvDelete.setVisibility(View.VISIBLE);
+
+        } else if (Utils.isPot(device.getID())) {
+            tvDelete.setVisibility(View.VISIBLE);
+
+
+        } else if (Utils.isGasSensor(device.getID())) {
+            if (falg) {
+                tvDelete.setVisibility(View.INVISIBLE);
             } else {
-                vh = (ViewHolder) convertView.getTag();
+                tvDelete.setVisibility(View.VISIBLE);
             }
 
-            final IDevice dev = list.get(position);
-            vh.showData(dev);
-            vh.mTvDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    isDeleteToast(dev, list, position);
-                }
-            });
-            return convertView;
         }
 
+        if (Utils.isSteam(device.getID())) {//蒸箱
+            tvDelete.setVisibility(View.GONE);
+        } else if (Utils.isMicroWave(device.getID())) {//微波炉
+            tvDelete.setVisibility(View.GONE);
+        } else if (Utils.isOven(device.getID())) {//烤箱
+            tvDelete.setVisibility(View.GONE);
 
-        class ViewHolder {
-            @InjectView(R.id.imgDevice)
-            ImageView imgDevice;
-            @InjectView(R.id.txtDevice)
-            TextView txtDevice;
-            @InjectView(R.id.txtDeviceType)
-            TextView txtDeviceType;
-            @InjectView(R.id.txtBid)
-            TextView txtBid;
-            @InjectView(R.id.txtOtaVer)
-            TextView txtOtaVer;
-            @InjectView(R.id.tv_delete)
-            Button mTvDelete;
+        } else if (Utils.isWaterPurifier(device.getID())) {//净水器
+            tvDelete.setVisibility(View.GONE);
+        } else if (Utils.isSterilizer(device.getID())) {//消毒柜
+            tvDelete.setVisibility(View.GONE);
+        } else if (Utils.isSteamOvenMsg(device.getID())) {//一体机
+            tvDelete.setVisibility(View.GONE);
+        } else if (Utils.isRikaMsg(device.getID())) {//RIKA
+            tvDelete.setVisibility(View.GONE);
+        }else if (Utils.isDishWasher(device.getID())){//洗碗机
+            tvDelete.setVisibility(View.GONE);
 
-            ViewHolder(View view) {
-                ButterKnife.inject(this, view);
-            }
+        }else if (Utils.isHidKitMsg(device.getID())){
+            tvDelete.setVisibility(View.GONE);
+        }
 
-            void showData(IDevice device) {
-                DeviceGuid dg = device.getGuid();
-                DeviceType dt = DeviceTypeManager.getInstance().getDeviceType(dg.getGuid());
+    }
 
-                String dispalyType = device.getDispalyType();
-                txtDeviceType.setText(dispalyType);
-                txtDevice.setText(device.getCategoryName() + cx.getString(R.string.detail));
-                txtBid.setText(device.getBid());
-                txtOtaVer.setText(String.valueOf(device.getVersion()));
+    class DeviceAdapter extends BaseQuickAdapter<IDevice, BaseViewHolder> {
 
-                if (Utils.isFan(device.getID())) {
-                    mTvDelete.setVisibility(View.GONE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_detail_fan);
-                } else if (Utils.isStove(device.getID())) {
-                    mTvDelete.setVisibility(View.VISIBLE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_detail_stove);
-                } else if (Utils.isPot(device.getID())) {
-                    mTvDelete.setVisibility(View.VISIBLE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_detail_pot);
+        public DeviceAdapter() {
+            super(R.layout.view_device_detail);
+        }
 
-                } else if (Utils.isGasSensor(device.getID())) {
-                    if (falg) {
-                        mTvDelete.setVisibility(View.INVISIBLE);
-                    } else {
-                        mTvDelete.setVisibility(View.VISIBLE);
-                    }
+        @Override
+        protected void convert(@NonNull BaseViewHolder baseViewHolder, IDevice iDevice) {
+            showData(baseViewHolder, iDevice);
 
-                    imgDevice.setImageResource(R.mipmap.ic_device_gas);
-                }
-
-                if (Utils.isSteam(device.getID())) {//蒸箱
-                    mTvDelete.setVisibility(View.GONE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_zhengxiang);
-                } else if (Utils.isMicroWave(device.getID())) {//微波炉
-                    mTvDelete.setVisibility(View.GONE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_weibolu);
-                } else if (Utils.isOven(device.getID())) {//烤箱
-                    mTvDelete.setVisibility(View.GONE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_kaoxiang);
-                } else if (Utils.isWaterPurifier(device.getID())) {//净水器
-                    mTvDelete.setVisibility(View.GONE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_jingshuiji);
-                } else if (Utils.isSterilizer(device.getID())) {//消毒柜
-                    mTvDelete.setVisibility(View.GONE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_xiaodugui);
-                } else if (Utils.isSteamOvenMsg(device.getID())) {//一体机
-                    mTvDelete.setVisibility(View.GONE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_yitiji);
-                } else if (Utils.isRikaMsg(device.getID())) {//RIKA
-                    mTvDelete.setVisibility(View.GONE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_detail_rika);
-                }else if (Utils.isDishWasher(device.getID())){//洗碗机
-                    mTvDelete.setVisibility(View.GONE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_detail_washer);
-
-                }else if (Utils.isHidKitMsg(device.getID())){
-                    mTvDelete.setVisibility(View.GONE);
-                    imgDevice.setImageResource(R.mipmap.ic_device_voice);
-                }
-
-            }
         }
     }
 
-    private void isDeleteToast(final IDevice device, final List list, final int position) {
+    private void isDeleteToast(final int position) {
         final IRokiDialog deleteDialog = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_TYPE_00);
         deleteDialog.setTitleText(R.string.is_delete_content);
         deleteDialog.setOkBtn(R.string.ok_btn, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteDialog.dismiss();
-                if (Utils.isStove(device.getID())) {
-                    Stove stove = (Stove) device;
-                    AbsFan parent = (AbsFan) stove.getParent();
-                    parent.delPotDevice(stove.getGuid().getGuid());
-                    list.remove(position);
-                    deviceAdapter.notifyDataSetChanged();
-                } else if (Utils.isGasSensor(device.getID())) {
-                    GasSensor gasSensor = (GasSensor) device;
-                    AbsFan parent = (AbsFan) gasSensor.getParent();
-                    parent.delPotDevice(gasSensor.getGuid().getGuid());
-                    list.remove(position);
-                    deviceAdapter.notifyDataSetChanged();
-                } else if (Utils.isPot(device.getID())) {
-                    if (list.size() > position) {
-                        Pot pot = (Pot) device;
-                        AbsFan parent = (AbsFan) pot.getParent();
-                        parent.delPotDevice(pot.getGuid().getGuid());
-                        list.remove(position);
-                        deviceAdapter.notifyDataSetChanged();
-                    }
-                }
+                deviceAdapter.removeAt(position);
 
             }
         });
@@ -440,40 +390,18 @@ public class DeviceDetailPage extends MyBasePage<MainActivity> {
         deleteDialog.show();
     }
 
-    class UserAdapter extends ExtBaseAdapter<User> {
+    class UserAdapter extends BaseQuickAdapter<User, BaseViewHolder> {
+
+        public UserAdapter() {
+            super(R.layout.view_device_user_item);
+        }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder vh;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(cx).inflate(R.layout.view_device_user_item, parent, false);
-                vh = new ViewHolder(convertView);
-                convertView.setTag(vh);
-            } else {
-                vh = (ViewHolder) convertView.getTag();
-            }
-
-            User user = list.get(position);
-            vh.showData(user);
-            return convertView;
+        protected void convert(@NonNull BaseViewHolder baseViewHolder, User user) {
+            baseViewHolder.setText(R.id.txtUserName, user.name);
+            baseViewHolder.setText(R.id.txtDesc, user.phone);
         }
 
-
-        class ViewHolder {
-            @InjectView(R.id.txtUserName)
-            TextView txtUserName;
-            @InjectView(R.id.txtDesc)
-            TextView txtDesc;
-
-            ViewHolder(View view) {
-                ButterKnife.inject(this, view);
-            }
-
-            void showData(User user) {
-                txtUserName.setText(user.nickname);
-                txtDesc.setText(user.phone);
-            }
-        }
     }
 
 }

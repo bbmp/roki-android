@@ -138,6 +138,12 @@ public interface MsgKeys {
 
     short setPowerOff_Look_Rep = 167;
 
+
+    /**
+     * 灶自动控温步骤设置
+     */
+    short setAutoTemporaryStep_Look_Rep=169;
+    short setAutoTemporaryStep_Look_Res=170;
     // -------------------------------------------------------------------------------油烟机
     short getGasSensor = 128;
 
@@ -653,14 +659,14 @@ public interface MsgKeys {
     short Get_Oven_Light_Rep = 163;
 
     /*
-    * 设置烤箱多段烹饪
-    */
+     * 设置烤箱多段烹饪
+     */
 
     short Set_Oven_More_Cook = 164;
 
     /*
-    * 设置烤箱多段烹饪回复
-    */
+     * 设置烤箱多段烹饪回复
+     */
 
     short Get_Oven_More_Cook = 165;
     // ------------------------------------------------------------------------------净水器  by rentao 20151214
@@ -727,12 +733,12 @@ public interface MsgKeys {
     short GetPotCom_Rep = 145;
 
     /**
-     * 干烧预警及烟锅联动上报开关设置
+     * 干烧预警开关设置查询
      */
     short SetPotSwitch_Req = 146;
 
     /**
-     * 干烧预警及烟锅联动上报开关设置回复
+     * 干烧预警开关查询回复
      */
     short GetPotSwitch_Rep = 147;
 
@@ -750,6 +756,25 @@ public interface MsgKeys {
      * 温控锅按键键值上报
      */
     short PotKey_Report = 141;
+
+    /**
+     * 无人锅温控P档菜谱下发
+     */
+    short POT_P_MENU_Req = 148;
+    /**
+     * 无人锅温控P档菜谱下发回复
+     */
+    short POT_P_MENU_Rep = 149;
+
+    /**
+     * 温控锅智能互动
+     */
+    short POT_INTERACTION_Req = 153;
+
+    /**
+     * 温控锅智能互动回复
+     */
+    short POT_INTERACTION_Rep = 154;
 
     /**
      * 温控锅添加设备指令
@@ -1011,7 +1036,7 @@ public interface MsgKeys {
     short getRikaIntelSet_Rep = 155;
 
 
-     /*-------------------------------火鸡电磁炉------------------------*/
+    /*-------------------------------火鸡电磁炉------------------------*/
 
 
     /**
@@ -1246,6 +1271,13 @@ public interface MsgKeys {
      * 历史报警上报
      */
     short getDeviceHistoryAlarmEventReport = 198;
+
+
+    /**
+     * 灶自动控温控制设置
+     */
+    short setAutoTemporarySetting_Look_Rep = 171;
+    short setAutoTemporarySetting_Look_Res = 172;
 
     /**
      * 属性查询 烟机（针对集成灶设备需要分开查询）

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.VoidCallback;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.legent.ui.UIService;
@@ -304,6 +305,10 @@ public class StoveBurnWithoutWaterPage extends AbsDeviceBasePage {
         super.onResume();
         if (stove==null) {
             return;
+        }
+        if (stove.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), stove.getDt() + ":防干烧设定页", null);
         }
     }
 

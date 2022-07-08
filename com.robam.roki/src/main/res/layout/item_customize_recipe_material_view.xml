@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/shape_kitchen_bg_round"
+    android:layout_marginTop="@dimen/dp_3"
+    android:layout_marginBottom="@dimen/dp_3"
+    android:id="@+id/item_customize_recipe_view_material"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MissingDefaultResource">
+
+
+    <TextView
+        android:id="@+id/item_customize_recipe_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_28"
+        android:background="#08FFFFFF"
+        android:text="鸡蛋"
+        android:textColor="@color/text_color_notification_bg"
+        android:textSize="@dimen/sp_15" />
+
+    <TextView
+        android:id="@+id/item_customize_recipe_notify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+
+        android:visibility="gone"
+
+        android:layout_toLeftOf="@+id/item_customize_recipe_number"
+        android:text="用量"
+        android:textColor="#8020292E" />
+
+    <EditText
+        android:textColor="@color/circle_color_progress"
+        android:id="@+id/item_customize_recipe_number"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_toLeftOf="@+id/item_customize_recipe_unit"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="number"
+
+        android:textSize="@dimen/sp_15" />
+
+    <TextView
+        android:id="@+id/item_customize_recipe_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_12"
+        android:layout_toLeftOf="@+id/item_customize_img"
+        android:text="个"
+        android:textColor="@color/text_color_notification_bg"
+
+
+        />
+
+    <ImageView
+        android:id="@+id/item_customize_img"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_25"
+        android:src="@mipmap/icon_recipe_choose" />
+
+</RelativeLayout>

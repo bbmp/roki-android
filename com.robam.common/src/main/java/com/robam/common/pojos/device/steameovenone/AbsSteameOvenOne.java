@@ -4,7 +4,6 @@ package com.robam.common.pojos.device.steameovenone;
 import android.util.Log;
 
 import com.legent.VoidCallback;
-import com.legent.io.msgs.collections.BytesMsg;
 import com.legent.plat.Plat;
 import com.legent.plat.io.RCMsgCallbackWithVoid;
 import com.legent.plat.io.device.msg.Msg;
@@ -29,8 +28,6 @@ import com.robam.common.events.SteamOvenOpenDoorSteamEvent;
 import com.robam.common.io.device.MsgKeys;
 import com.robam.common.io.device.MsgParams;
 import com.robam.common.io.device.TerminalType;
-
-import java.util.List;
 
 import static com.robam.common.io.device.MsgParams.ArgumentNumber;
 import static com.robam.common.io.device.MsgParams.SteameOvenOrderTime_hour;
@@ -57,43 +54,54 @@ public class AbsSteameOvenOne extends AbsDeviceHub implements ISteamOvenOne {
     static final public short Event_SteameOven_open_begain_work_Reset = 20;            //开始工作事件
 
 
-    public short powerStatus;
-    public short worknStatus;
-    public short powerOnStatus;
-    public short alarm = 0;
-    public short temp; // 当前温度
+    //610 & 620
+   public short powerState;
+    public short workState;
     public short time; // 当前剩余时
+    public short setTime;
+    public short order_left_time_min;
+    public short order_left_time_hour;
+    public short WaterStatus;
+    public short recipeId;//菜谱ID
+    public short steam;//蒸汽
+    public short setTempDownValue;//设置下温度
+    public short currentTempDownValue;//实时下温度
+    public short setUpTemp;//设置上温度
+    public short weatherDescalingValue;//是否需要除垢
+    public short doorStatusValue;//是否开门
+
+    public short CpStepValue; //步骤
+    ///610
+    public short powerOnStatus;
+     public short alarm = 0;
+    public short temp; // 当前温度
+
     public short light;//灯光控制
     public short leftTime;//烤叉旋转
     public int unShortLeftTime;
     public short workModel;//工作模式
     public short setTemp;
-    public short setTime;
+
     public short setTimeH;
     public short ordertime_min;
     public short ordertime_hour;
-    public short order_left_time_min;
-    public short order_left_time_hour;
-    public short WaterStatus;
+
     public short autoMode;//自动模式
     public short CpStep;//自动模式介
-    public short recipeId;//菜谱ID
+
     public short recipeStep;//菜谱步骤
     public short argument;//参数个数
     public short SectionOfTheStep;//多段烹饪步（906）
-    public short steam;//蒸汽
-    public short setTempDownValue;//设置下温度
-    public short currentTempDownValue;//实时下温度
-    public short setTempUpValue;//设置上温度
+
     public short currentTempUpValue;//实时温度
     protected short terminalType = TerminalType.getType();
     public short multiSumStep;//多段总段数（906）
     public short modelType;//模式类型
-    public short CpStepValue;
+
     public short SteamValue;
     public short SteamOvenAutoRecipeModeValue;
     public short AutoRecipeModeValue;
-
+//
     public short setSteameOvenBasicMode;
     public short SteameOvenSetTemp;
     public short SteameOvenSetTime;
@@ -110,9 +118,9 @@ public class AbsSteameOvenOne extends AbsDeviceHub implements ISteamOvenOne {
     public short MultiStepCurrentStepsValue;//当前步骤（其他机型）
     public short SteameOvenPreFlagValue;
     public short SteameOvenPreFlag;//(906)
-    public short weatherDescalingValue;//是否需要除垢
+
     public short eventId;
-    public short doorStatusValue;//是否开门
+
 
     public AbsSteameOvenOne(DeviceInfo devInfo) {
         super(devInfo);
@@ -127,6 +135,8 @@ public class AbsSteameOvenOne extends AbsDeviceHub implements ISteamOvenOne {
             Msg reqMsg = newReqMsg(MsgKeys.getSteameOvenStatus_Req);
             reqMsg.putOpt(MsgParams.TerminalType, terminalType);   // 控制端类型区分
             sendMsg(reqMsg, null);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -136,7 +146,7 @@ public class AbsSteameOvenOne extends AbsDeviceHub implements ISteamOvenOne {
     @Override
     public void onStatusChanged() {
         if (Plat.DEBUG) {
-            LogUtils.i("steamovenone_st", "multiSumStep:" + multiSumStep + " powerStatus:" + powerStatus + " powerOnStatus:" + powerOnStatus + " worknStatus:" + worknStatus
+            LogUtils.i("steamovenone_st", "multiSumStep:" + multiSumStep + " powerStatus:" + powerState + " powerOnStatus:" + powerOnStatus + " worknStatus:" + workState
                     + " SectionOfTheStep:" + SectionOfTheStep + " alarm:" + alarm + " workModel:" + workModel + " setTime:" + setTime + " leftTime:" + leftTime + " setTemp:" + setTemp + " temp:"
                     + temp + " setTempDownValue:" + setTempDownValue + " currentTempDownValue:" + currentTempDownValue + " light:" + light + " WaterStatus:" + WaterStatus
                     + " modelType:" + modelType);
@@ -150,6 +160,9 @@ public class AbsSteameOvenOne extends AbsDeviceHub implements ISteamOvenOne {
 
         int key = msg.getID();
         switch (key) {
+
+
+
             case MsgKeys.SteameOven_Noti:
                 AbsSteameOvenOne.this.eventId = (short) msg.optInt(MsgParams.EventId);
 
@@ -266,9 +279,16 @@ public class AbsSteameOvenOne extends AbsDeviceHub implements ISteamOvenOne {
 
                 break;
             case MsgKeys.getSteameOvenStatus_Rep:
-                this.powerStatus = (short) msg.optInt(MsgParams.SteameOvenStatus);
+                this.powerState = (short) msg.optInt(MsgParams.SteameOvenStatus);
                 this.powerOnStatus = (short) msg.optInt(MsgParams.SteameOvenPowerOnStatus);
-                this.worknStatus = (short) msg.optInt(MsgParams.SteameOvenWorknStatus);
+                this.workState = (short) msg.optInt(MsgParams.SteameOvenWorknStatus);
+
+//                this.powerStatus = (short) msg.optInt(MsgParams.SteameOvenStatus);
+//                this.powerOnStatus = (short) msg.optInt(MsgParams.SteameOvenPowerOnStatus);
+//                this.worknStatus = (short) msg.optInt(MsgParams.SteameOvenWorknStatus);
+//                this.alarm = (short) msg.optInt(MsgParams.SteameOvenAlarm);
+
+
                 this.alarm = (short) msg.optInt(MsgParams.SteameOvenAlarm);
                 this.workModel = (short) msg.optInt(MsgParams.SteameOvenMode);
                 this.temp = (short) msg.optInt(MsgParams.SteameOvenTemp);
@@ -305,9 +325,9 @@ public class AbsSteameOvenOne extends AbsDeviceHub implements ISteamOvenOne {
                 this.setTimeH = (short) msg.optInt(MsgParams.time_H_Value);
                 onStatusChanged();
 
-                LogUtils.i("20171113", "SteamOvenOne:" + this.getClass().hashCode() + " worknStatus:" + worknStatus + " powerOnStatus:" + powerOnStatus + " leftTime:" + leftTime + " alarm:" + alarm +
+                LogUtils.i("20171113", "SteamOvenOne:" + this.getClass().hashCode() + " worknStatus:" + workState + " powerOnStatus:" + powerOnStatus + " leftTime:" + leftTime + " alarm:" + alarm +
                         " workModel:" + workModel + " setTemp:" + setTemp + " temp:" + temp + " setTime:" + setTime + " time:" + time + " ordertime_hour:" + ordertime_hour + " ordertime_min:" + ordertime_min
-                        + " autoMode:" + autoMode + " powerStatus:" + powerStatus + " light:" + light + " modelType:" + modelType + " ordertime_hour:" + ordertime_hour + " ordertime_min:" + ordertime_min);
+                        + " autoMode:" + autoMode + " powerStatus:" + powerState + " light:" + light + " modelType:" + modelType + " ordertime_hour:" + ordertime_hour + " ordertime_min:" + ordertime_min);
                 break;
             default:
                 break;
@@ -415,9 +435,9 @@ public class AbsSteameOvenOne extends AbsDeviceHub implements ISteamOvenOne {
                 protected void afterSuccess(Msg resMsg) {
                     LogUtils.i("20180126", "success");
                     Log.i("20171023", "setStatus:" + (System.currentTimeMillis() - curtime));
-                    AbsSteameOvenOne.this.powerStatus = powerStatus;
+                    AbsSteameOvenOne.this.powerState = powerStatus;
                     AbsSteameOvenOne.this.powerOnStatus = SteamOvenOnePowerOnStatus.OperatingState;
-                    AbsSteameOvenOne.this.worknStatus = SteamOvenOneWorkStatus.NoStatus;
+                    AbsSteameOvenOne.this.workState = SteamOvenOneWorkStatus.NoStatus;
                     onStatusChanged();
                 }
             });
@@ -431,7 +451,7 @@ public class AbsSteameOvenOne extends AbsDeviceHub implements ISteamOvenOne {
                                     final short powerOnStatus, VoidCallback callback) {
         try {
             Msg msg = newReqMsg(MsgKeys.setSteameOvenStatusControl_Req);
-            msg.putOpt(MsgParams.TerminalType, terminalType);
+//            msg.putOpt(MsgParams.TerminalType, terminalType);
             msg.putOpt(MsgParams.UserId, getSrcUser());
             msg.putOpt(MsgParams.SteameOvenStatus, powerStatus);
             msg.putOpt(MsgParams.SteameOvenPowerOnStatus, powerOnStatus);
@@ -507,9 +527,9 @@ public class AbsSteameOvenOne extends AbsDeviceHub implements ISteamOvenOne {
                 protected void afterSuccess(Msg resMsg) {
 
                     Log.i("20180731", "setRunMode:" + (System.currentTimeMillis() - curtime));
-                    AbsSteameOvenOne.this.powerStatus = SteamOvenOnePowerStatus.On;
+                    AbsSteameOvenOne.this.powerState = SteamOvenOnePowerStatus.On;
                     AbsSteameOvenOne.this.powerOnStatus = SteamOvenOnePowerOnStatus.WorkingStatus;
-                    AbsSteameOvenOne.this.worknStatus = SteamOvenOneWorkStatus.PreHeat;
+                    AbsSteameOvenOne.this.workState = SteamOvenOneWorkStatus.PreHeat;
                     AbsSteameOvenOne.this.workModel = mode;
                     AbsSteameOvenOne.this.setTemp = setTempUp;
                     if (setTime > 255) {
@@ -857,6 +877,9 @@ public class AbsSteameOvenOne extends AbsDeviceHub implements ISteamOvenOne {
             e.printStackTrace();
         }
     }
+
+
+
 
 
     @Override

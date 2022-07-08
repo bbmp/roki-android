@@ -1,6 +1,7 @@
 package com.robam.common.pojos;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 import com.j256.ormlite.dao.ForeignCollection;
@@ -25,6 +26,7 @@ import java.util.List;
  *
  * @author sylar
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CookStep extends AbsStorePojo<Long> implements Serializable , MultiItemEntity {
 
     public final static String COLUMN_BOOK_ID = "book_id";

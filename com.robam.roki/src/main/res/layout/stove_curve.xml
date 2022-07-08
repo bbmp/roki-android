@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/whitesmoke"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_9"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24"/>
+
+        <TextView
+            android:id="@+id/tv_device_model_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textColor="@color/c41"
+            android:textSize="@dimen/sp_20" />
+
+    </RelativeLayout>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_16"
+            android:background="@drawable/shape_bg_white_8dp_night">
+
+            <TextView
+                android:id="@+id/tv_choice_gear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="选择档位"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
+            <LinearLayout
+                android:id="@+id/ll_time_gear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/tv_choice_gear"
+                android:layout_marginTop="@dimen/dp_8">
+                <TextView
+                    android:id="@+id/tv_cook_time"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="0：00"
+                    android:textSize="@dimen/sp_20"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/tv_gear_name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="P0"
+                    android:textSize="@dimen/sp_20"
+                    android:gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/ll_time_gear"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_8">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="烹饪时长"
+                    android:textSize="@dimen/sp_20"
+                    android:gravity="center"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="当前档位"
+                    android:textSize="@dimen/sp_20"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:background="@drawable/shape_bg_white_8dp_night">
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/cook_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/tv_chart_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0:00"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_dot_line"
+                android:layerType="software"
+                android:layout_marginTop="42dp"
+                android:layout_marginBottom="30dp"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/img_add_step"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/add"
+                android:visibility="gone"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_finish"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_48"
+            android:text="完成烹饪"
+            android:textSize="@dimen/sp_18"
+            android:textColor="@color/common_button_background"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/shape_bg_white_999dp"
+            android:layout_marginTop="@dimen/dp_16"/>
+        <ImageView
+            android:id="@+id/iv_recipe_speaking"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"
+            android:layout_height="40dp" />
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/tv_press"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_48"
+            android:text="按住说话"
+            android:textSize="@dimen/dp_18"
+            android:textColor="@color/c06"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/shape_bg_white_999dp"
+            android:layout_marginTop="@dimen/dp_2"/>
+    </LinearLayout>
+</ScrollView>
+
+</LinearLayout>

@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -30,9 +31,15 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  * des 精选专题列表adapter
  */
 public class RvThemeAdapter extends BaseQuickAdapter<RecipeTheme, BaseViewHolder> {
-    private MultiTransformation multiTop = new MultiTransformation<>(new CenterCrop(),
-            new RoundedCornersTransformation(20, 0,
-                    RoundedCornersTransformation.CornerType.TOP));
+//    private MultiTransformation multiTop = new MultiTransformation<>(new CenterCrop(),
+//            new RoundedCornersTransformation(20, 0,
+//                    RoundedCornersTransformation.CornerType.TOP));
+    private RequestOptions options = new RequestOptions()
+        .centerCrop()
+        .placeholder(R.mipmap.img_default)
+        .error(R.mipmap.img_default)
+        .format(DecodeFormat.PREFER_RGB_565)
+        .override(350*2, 215*2);
 
     public RvThemeAdapter() {
         super(R.layout.item_theme_recipe);
@@ -48,14 +55,14 @@ public class RvThemeAdapter extends BaseQuickAdapter<RecipeTheme, BaseViewHolder
             }
             holder.setText(R.id.tv_theme_recipe_name, item.name)
                     .setText(R.id.tv_theme_recipe_desc, item.subName)
-                    .setText(R.id.tv_theme_recipe_number, i+ "道菜谱")
-                .setImageResource(R.id.iv_love_theme , item.isCollect ? R.drawable.ic_baseline_favorite_24 : R.drawable.ic_baseline_favorite_border_24)
-            ;
+                    .setText(R.id.tv_theme_recipe_number, i+ "道菜谱");
+//                .setImageResource(R.id.iv_love_theme , item.isCollect ? R.drawable.ic_baseline_favorite_24 : R.drawable.ic_baseline_favorite_border_24);
+            holder.getView(R.id.iv_love_theme).setSelected(item.isCollect);
 
             ImageView iv_theme_item_img = (ImageView) holder.getView(R.id.iv_theme_item_img);
             GlideApp.with(getContext())
                     .load(item.imageUrl)
-                    .apply(RequestOptions.bitmapTransform(multiTop))
+                    .apply(options)
                     .into(iv_theme_item_img);
         }
     }

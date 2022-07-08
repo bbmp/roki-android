@@ -10,9 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.StringRes;
 
-
+import com.robam.base.BaseDialog;
 import com.robam.roki.R;
-import com.robam.roki.ui.widget.base.BaseDialog;
 
 /**
 

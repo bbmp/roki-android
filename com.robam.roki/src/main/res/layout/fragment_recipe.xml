@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f5f8"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/rl_recipe_search"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="36dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/shape_conner_recipe_search_bg"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+            <ImageView
+                android:id="@+id/iv_recipe_search"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:src="@mipmap/ic_recipe_search" />
+
+            <EditText
+                android:id="@+id/et_recipe_search"
+                style="@style/RokiTipsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_toRightOf="@+id/iv_recipe_search"
+                android:background="@null"
+                android:focusable="false"
+                android:hint="今天想做什么好吃的？"
+                android:inputType="text|textMultiLine"
+                android:paddingStart="13dp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_recipe_voice"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="20dp"
+            android:src="@mipmap/ic_home_tab_recipe_voice"
+            />
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp_38"
+            android:layout_height="@dimen/dp_38">
+
+            <ImageView
+
+                android:id="@+id/home_recipe_img"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_18"
+                android:src="@mipmap/notice" />
+
+            <TextView
+                android:visibility="gone"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_11"
+                android:background="@drawable/shape_notification"
+                  android:id="@+id/textview_home_device_number"
+                android:gravity="center"
+                android:text="99+"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_8" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srl_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_home_recipe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ImageView
+            android:id="@+id/iv_to_top"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            android:src="@drawable/button_totop"
+            android:layout_marginBottom="40dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</LinearLayout>
+
+

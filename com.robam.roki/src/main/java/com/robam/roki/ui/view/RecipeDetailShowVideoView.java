@@ -19,6 +19,7 @@ import com.robam.roki.ui.adapter3.JZMediaIjk;
 import com.robam.roki.ui.extension.GlideApp;
 import com.robam.roki.ui.video.JzvdStdRoundVolume;
 import com.robam.roki.ui.widget.view.PlayerView;
+import com.robam.roki.utils.IjkPlayerView;
 
 import java.util.List;
 

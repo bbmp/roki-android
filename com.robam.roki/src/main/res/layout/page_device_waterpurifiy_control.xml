@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.robam.roki.ui.view.WaterPurifierScrollView
+        android:id="@+id/waterpage_ctrl_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#3DB3D0"
+            android:orientation="vertical">
+            <!-- 标题栏 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:layout_gravity="top"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/img_waterpurifiy_return" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_vertical"
+                    android:text="净水器"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+            <!--设备与手机断开连接，请检查设备-->
+            <include
+                android:id="@+id/watercontrol_disconnectHintView"
+                layout="@layout/view_device_disconnect_hint"
+                android:layout_width="match_parent"
+                android:layout_height="22dp" />
+            <View
+                android:id="@+id/watercontrol_none"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:visibility="gone"/>
+
+            <!-- 中间部分 -->
+
+            <RelativeLayout
+                android:id="@+id/water_normal_content"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="43dp">
+                <!-- 水壶 -->
+                <ImageView
+                    android:id="@+id/water_normal_content_kettle"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="45dp"
+                    android:src="@mipmap/page_device_waterpurifiy_kettel" />
+
+                <!--中间圆圈文字部分-->
+                <TextView
+                    android:id="@+id/water_normal_content_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="16sp"
+                    android:layout_above="@id/water_normal_content_kettle"
+                    android:layout_marginBottom="10dp"
+                    android:text="制水中......"
+                    android:textColor="#ffffff" />
+                <!-- 圆圈部分 -->
+
+                <ImageView
+                    android:id="@+id/water_normal_content_circle"
+                    android:layout_width="240dp"
+                    android:layout_height="240dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/img_waterpurifiy_circle" />
+                <!--制水完成字样-->
+                <TextView
+                    android:id="@+id/water_normal_content_finish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="45dp"
+                    android:text="制水已完成"
+                    android:textColor="#ffffff"
+                    android:textSize="22sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
+            <!-- 水纹底部 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--壶选择-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_alignParentTop="true"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp">
+                    <!-- 一壶 -->
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp">
+
+                        <TextView
+                            android:id="@+id/water_one_kettel_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="1壶"
+                            android:textColor="#ffffff"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/water_one_kettel_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/selector_waterpurifier_kettel" />
+                    </RelativeLayout>
+                    <!-- 1/2壶 -->
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp">
+
+                        <TextView
+                            android:id="@+id/water_half_kettel_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="1/2壶"
+                            android:textColor="#ffffff"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/water_half_kettel_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/selector_waterpurifier_kettel" />
+                    </RelativeLayout>
+                    <!-- 1/3壶 -->
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp">
+
+                        <TextView
+                            android:id="@+id/water_one_third_kettel_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="1/3壶"
+                            android:textColor="#ffffff"
+                            android:textSize="14sp" />
+
+
+                        <ImageView
+                            android:id="@+id/water_one_third_kettel_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/selector_waterpurifier_kettel" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <com.robam.roki.ui.view.WaterPurifiyDynamicWave
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp" />
+                <!--远程制水-->
+                <Button
+                    android:id="@+id/water_clean_btn"
+                    android:layout_width="140dp"
+                    android:layout_height="55dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="150dp"
+                    android:background="#22708d"
+                    android:text="远程制水"
+                    android:textColor="#ffffff"
+                    android:textSize="26sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </com.robam.roki.ui.view.WaterPurifierScrollView>
+</RelativeLayout>

@@ -52,7 +52,7 @@ public class RikaProMode2Adapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.mode_oven_pro_show, null);
+            convertView = mLayoutInflater.inflate(R.layout.mode_oven_pro_clean_show, null);
             holder = new ViewHolder();
             holder.iv = (ImageView) convertView.findViewById(R.id.ivl);
             holder.tv = (TextView) convertView.findViewById(R.id.tvnel);
@@ -63,7 +63,8 @@ public class RikaProMode2Adapter extends BaseAdapter {
         }
         holder.tv.setText(params.get(position).functionName);
         if (isClean) {
-            Glide.with(cx).load("http://roki-test.oss-cn-qingdao.aliyuncs.com/device/function/ebaebeae-2b73-4d12-9f62-8b8e57588237").into(holder.iv);
+//            Glide.with(cx).load("http://roki-test.oss-cn-qingdao.aliyuncs.com/device/function/ebaebeae-2b73-4d12-9f62-8b8e57588237").into(holder.iv);
+            Glide.with(cx).load(params.get(position).backgroundImg).into(holder.iv);
         } else {
             Glide.with(cx).load(params.get(position).backgroundImg).into(holder.iv);
         }

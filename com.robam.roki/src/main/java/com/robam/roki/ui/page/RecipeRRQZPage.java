@@ -44,6 +44,7 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.StringUtils;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.speech.SpeechManager;
+import com.robam.base.BaseDialog;
 import com.robam.common.events.StoveStatusChangedEvent;
 import com.robam.common.pojos.CookStep;
 import com.robam.common.pojos.Recipe;
@@ -59,7 +60,6 @@ import com.robam.roki.ui.form.RecipeActivity;
 import com.robam.roki.ui.page.login.MyBasePage;
 import com.robam.roki.ui.view.RecipeDetailAutoView;
 import com.robam.roki.ui.view.RecipeDetailView;
-import com.robam.roki.ui.widget.base.BaseDialog;
 import com.robam.roki.utils.DeviceSelectUtils;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.common.util.StoveSendCommandUtils;
@@ -196,6 +196,9 @@ public class RecipeRRQZPage extends AbsDUIPage {
             public void onClick(View v) {
                 getActivity().getIntent().putExtra("step", step);
                 getActivity().getIntent().putExtra("is_vh_switching", true);
+                if(currentTime!=0){
+                    getActivity().getIntent().putExtra("currentTime", currentTime);
+                }
                 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -328,7 +331,12 @@ public class RecipeRRQZPage extends AbsDUIPage {
             is_vh_switching = false;
             totalTime = cookStep.getParamByCodeName(stove.getDp(), "needTime");
             LogUtils.i("20171228", "totalTime::" + totalTime);
-            currentTime = totalTime;
+
+            currentTime = getActivity().getIntent().getIntExtra("currentTime", 0);
+            if(currentTime==0){
+                currentTime = totalTime;
+            }
+
             startCountdown(currentTime);
         }
     }
@@ -456,6 +464,7 @@ public class RecipeRRQZPage extends AbsDUIPage {
                 recipeDetailView.onfreshViewRevert(prestep);
                 step = position;
                 recipeDetailView.onfresh(step);
+                getActivity().getIntent().putExtra("currentTime", 0);
                 next();
                 dialog.dismiss();
                 //myHandler.sendEmptyMessage(1);

@@ -1,12 +1,12 @@
 package com.robam.roki.ui.page.device.hidkit;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +15,15 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.hjq.bar.OnTitleBarListener;
+import com.hjq.bar.TitleBar;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.Reponses;
+import com.legent.plat.events.DeviceConnectionChangedEvent;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.services.RestfulService;
 import com.legent.ui.UIService;
@@ -29,6 +33,7 @@ import com.legent.utils.JsonUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.Utils;
+import com.robam.common.events.HidKitStatusChangedEvent;
 import com.robam.common.events.NewestVersionEvent;
 import com.robam.common.events.TheUpgradeHidKitEvent;
 import com.robam.common.pojos.device.hidkit.AbsHidKit;
@@ -61,8 +66,8 @@ import butterknife.OnClick;
 public class HidKitDeviceMorePage extends BasePage {
 
 
-    @InjectView(R.id.iv_back)
-    ImageView mIvBack;
+    @InjectView(R.id.tb_title)
+    TitleBar tbTitle;
     @InjectView(R.id.recyclerView_more)
     RecyclerView mRecyclerViewMore;
     private AbsMoreAdapter mMoreAdapter;
@@ -78,8 +83,13 @@ public class HidKitDeviceMorePage extends BasePage {
     private IRokiDialog dialogFailed;
     private Timer timer;
     private TimerTask timerTask;
-    private String downloadUrl = "http://roki.oss-cn-hangzhou.aliyuncs.com/KC306.json";
-//    private String downloadUrl = "https://roki-test.oss-cn-qingdao.aliyuncs.com/KC306.json";//测试环境
+    private String KC306_downloadUrl = "http://roki.oss-cn-hangzhou.aliyuncs.com/KC306.json";
+    private String KM310_downloadUrl = "http://roki.oss-cn-hangzhou.aliyuncs.com/KM310.json";
+    private String KC306_fileName = "KC306.json";
+    private String KM310_fileName = "KM310.json";
+    //    private String downloadUrl = "https://roki-test.oss-cn-qingdao.aliyuncs.com/KC306.json";//测试环境
+    private boolean connected;
+
 
     protected Handler mHandler = new Handler() {
         @Override
@@ -87,6 +97,9 @@ public class HidKitDeviceMorePage extends BasePage {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    if (downDialog != null && downDialog.isShow()) {
+                        downDialog.dismiss();
+                    }
                     if (null != dialogFailed && !dialogFailed.isShow()) {
                         dialogFailed.setCanceledOnTouchOutside(false);
                         dialogFailed.setTitleText(R.string.dialog_update_failed);
@@ -104,8 +117,25 @@ public class HidKitDeviceMorePage extends BasePage {
                             public void onClick(View v) {
                                 dialogFailed.dismiss();
                                 stopUpdateTask();
-//                                    startUpdateTask();
-                                dealWithVersion();
+//                                dealWithVersion();
+                                if ((mIDevice != null && !mIDevice.isConnected()) || !connected) {
+                                    ToastUtils.showShort(R.string.oven_dis_con);
+                                    return;
+                                }
+                                ((AbsHidKit) mIDevice).setHidKitStatusCombined((short) 1, (short) 2, (short) 1, (short) 1, new VoidCallback() {
+                                    @Override
+                                    public void onSuccess() {
+//                        mHandler.sendEmptyMessage(100);
+                                        startUpdateTask();
+                                        LogUtils.i("20201111", " onSuccess:");
+                                    }
+
+                                    @Override
+                                    public void onFailure(Throwable t) {
+                                        stopUpdateTask();
+                                        LogUtils.i("20201111", " onFailure:" + t);
+                                    }
+                                });
                             }
                         });
                         dialogFailed.show();
@@ -131,6 +161,11 @@ public class HidKitDeviceMorePage extends BasePage {
             return;
         }
         mIDevice = Plat.deviceService.lookupChild(mGuid);
+
+        if (mIDevice.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), mIDevice.getDt() + ":更多页", null);
+        }
     }
 
     @Override
@@ -159,7 +194,22 @@ public class HidKitDeviceMorePage extends BasePage {
         if (null == dialogFailed) {
             dialogFailed = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_UPDATE_FAILED);
         }
+        tbTitle.setOnTitleBarListener(new OnTitleBarListener() {
+            @Override
+            public void onLeftClick(View view) {
+                UIService.getInstance().popBack();
+            }
 
+            @Override
+            public void onTitleClick(View view) {
+
+            }
+
+            @Override
+            public void onRightClick(View view) {
+
+            }
+        });
     }
 
     private void initData() {
@@ -214,7 +264,7 @@ public class HidKitDeviceMorePage extends BasePage {
                 callAfterSale();
                 break;
             case 3:
-                if (mIDevice != null && !mIDevice.isConnected()) {
+                if ((mIDevice != null && !mIDevice.isConnected()) || !connected) {
                     ToastUtils.showShort(R.string.oven_dis_con);
                     return;
                 }
@@ -239,8 +289,12 @@ public class HidKitDeviceMorePage extends BasePage {
 
             case 4:
                 Bundle b = new Bundle();
-                String dt = mGuid.substring(0, 5);
-                b.putString(PageArgumentKey.Guid, dt);
+                b.putString("displayType", mGuid.substring(0, 5));
+                if (mGuid.contains("KC306")) {
+                    b.putString(PageArgumentKey.Guid, mGuid.substring(0, 5));
+                } else {
+                    b.putString(PageArgumentKey.Guid, mGuid);
+                }
                 UIService.getInstance().postPage(PageKey.WifiConnect, b);
                 break;
             default:
@@ -275,11 +329,7 @@ public class HidKitDeviceMorePage extends BasePage {
         ButterKnife.reset(this);
     }
 
-    @OnClick(R.id.iv_back)
-    public void onViewClicked() {
 
-        UIService.getInstance().popBack();
-    }
 
     @Subscribe
     public void onEvent(TheUpgradeHidKitEvent event) {
@@ -296,8 +346,34 @@ public class HidKitDeviceMorePage extends BasePage {
         }
     }
 
+    @Subscribe
+    public void onEvent(HidKitStatusChangedEvent event) {
+        LogUtils.i("20220408","HidKitStatusChangedEvent:"+mIDevice.isConnected());
+        if (mIDevice == null || !Objects.equal(mIDevice.getID(), event.pojo.getID()))
+            return;
+        mIDevice = (IDevice) event.pojo;
+        connected = mIDevice.isConnected();
+
+    }
+    @Subscribe
+    public void onEvent(DeviceConnectionChangedEvent event) {
+        if (event.device.getID().equals(mGuid)) {
+            connected = event.isConnected;
+            LogUtils.i("20220408","DeviceConnectionChangedEvent:"+connected);
+
+        }
+    }
+
     private void dealWithVersion() {
-        RestfulService.getInstance().downFile(downloadUrl, "KC306.json", new Callback<Uri>() {
+        String downloadUrl = "", fileName = "";
+        if (mGuid.contains("KC306")) {
+            downloadUrl = KC306_downloadUrl;
+            fileName = KC306_fileName;
+        } else if (mGuid.contains("KM310")) {
+            downloadUrl = KM310_downloadUrl;
+            fileName = KM310_fileName;
+        }
+        RestfulService.getInstance().downFile(downloadUrl, fileName, new Callback<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 if (uri != null) {
@@ -305,6 +381,22 @@ public class HidKitDeviceMorePage extends BasePage {
                     try {
                         HidKitUpdateBean hidKitUpdateBean = JsonUtils.json2Pojo(kc306Json, HidKitUpdateBean.class);
                         versionNum = hidKitUpdateBean.getVersion().getValue();
+                        String getVersion = versionNum;
+                        AbsHidKit defaultHidKit = Utils.getDefaultHidKit();
+                        int version = defaultHidKit.getVersion();
+                        if (getVersion != null && version >= Integer.parseInt(getVersion)) {
+                            final IRokiDialog dialogByType = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_UPDATE_COMPLETION);
+                            dialogByType.setCanceledOnTouchOutside(false);
+                            dialogByType.setContentText(R.string.dialog_newest_version);
+                            dialogByType.show();
+                            dialogByType.setOkBtn(R.string.dialog_affirm_text, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialogByType.dismiss();
+                                }
+                            });
+                            return;
+                        }
                         final String desc = hidKitUpdateBean.getDesc().getValue();
                         mDesc = desc;
                         dialog = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_DISCOVER_NEW_VERSION);
@@ -320,11 +412,6 @@ public class HidKitDeviceMorePage extends BasePage {
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
-                                downDialog = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_DOWN_NEW_VERSION);
-                                downDialog.setTitleText(R.string.dialog_discover_new_version);
-                                downDialog.setContentText(mDesc);
-                                downDialog.setCanceledOnTouchOutside(false);
-                                downDialog.show();
                                 if (!mIDevice.isConnected()) {
                                     ToastUtils.showShort(R.string.oven_dis_con);
                                     return;
@@ -365,6 +452,12 @@ public class HidKitDeviceMorePage extends BasePage {
      */
 
     private void startUpdateTask() {
+        downDialog = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_DOWN_NEW_VERSION);
+        downDialog.setTitleText(R.string.dialog_discover_new_version);
+        downDialog.setContentText(mDesc);
+        downDialog.setCanceledOnTouchOutside(false);
+        downDialog.setCancelable(false);
+        downDialog.show();
         if (dialog != null && dialog.isShow()) {
             dialog.dismiss();
         }
@@ -383,10 +476,10 @@ public class HidKitDeviceMorePage extends BasePage {
                 if (downDialog != null && downDialog.isShow()) {
                     if (i >= 100) {
                         downDialog.setProgress(99);
-                    }else {
+                    } else {
                         downDialog.setProgress(i);
                     }
-                    if (i >= 300) {
+                    if (i >= 180) {
                         //三分钟算超时
                         mHandler.sendEmptyMessage(0);
                     } else {
@@ -421,4 +514,5 @@ public class HidKitDeviceMorePage extends BasePage {
         }
 
     }
+
 }

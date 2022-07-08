@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 import com.j256.ormlite.dao.ForeignCollection;
@@ -29,6 +30,7 @@ import java.util.concurrent.Callable;
  *
  * @author sylar
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Recipe extends AbsRecipe implements Serializable, MultiItemEntity {
     public static final String FOREIGN_COLUMNNAME_ID = "PreStep_ID";
     static final public String COLUMN_isCollected = "COLUMN_isCollected";
@@ -149,6 +151,8 @@ public class Recipe extends AbsRecipe implements Serializable, MultiItemEntity {
     @ForeignCollectionField()
     private ForeignCollection<Dc> db_dcs;
 
+    public float length_width ;
+
     public List<Dc> getJs_dcs() {
         if (db_dcs != null && db_dcs.size() > 0) {
             js_dcs = Lists.newArrayList(db_dcs);
@@ -265,6 +269,10 @@ public class Recipe extends AbsRecipe implements Serializable, MultiItemEntity {
 
     public boolean isNewest() {
         return Calendar.getInstance().getTimeInMillis() - lastUpgradeTime <= CookbookManager.UpdatePeriod;
+    }
+
+    public void getDetail(Callback<Recipe> callback) {
+        CookbookManager.getInstance().getCookbookById(id, callback);
     }
 
 
@@ -431,21 +439,21 @@ public class Recipe extends AbsRecipe implements Serializable, MultiItemEntity {
 
     /**
      * 事物删除
-     * 如若删除自己 id 为0
+     * 如若删除自己 id 为0  未调用
      */
-    public void tra2Del(final long id) {
-        try {
-            TransactionManager.callInTransaction(DaoService.getInstance().getCurrentDbHelper().getConnectionSource(),
-                    new Callable<Boolean>() {
-                        public Boolean call() throws Exception {
-                            delete(id);
-                            return true;
-                        }
-                    });
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void tra2Del(final long id) {
+//        try {
+//            TransactionManager.callInTransaction(DaoService.getInstance().getCurrentDbHelper().getConnectionSource(),
+//                    new Callable<Boolean>() {
+//                        public Boolean call() throws Exception {
+//                            delete(id);
+//                            return true;
+//                        }
+//                    });
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     public void setTrue(boolean aTrue) {

@@ -129,6 +129,9 @@ public class DeviceMoreCookPage extends BasePage {
         if (absCooker==null) {
             return;
         }
+        if (absCooker.getDt() != null) {
+            MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), absCooker.getDt() + ":更多页", null);
+        }
     }
 
     private void initView() {

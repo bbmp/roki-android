@@ -34,7 +34,8 @@ import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.RemoveManOrsymbolUtil;
 import com.robam.roki.utils.StringConstantsUtil;
-
+import com.umeng.commonsdk.debug.E;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,10 +121,11 @@ public class DeviceFanVentilationPage extends BasePage {
             }
         }
     };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fan_ventilation, container, false);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         Bundle bd = getArguments();
         mDates = bd == null ? null : (List<DeviceConfigurationFunctions>) bd.getSerializable(PageArgumentKey.List);
         fan = bd == null ? null : (AbsFan) bd.getSerializable(PageArgumentKey.Bean);
@@ -247,9 +249,9 @@ public class DeviceFanVentilationPage extends BasePage {
                 if (mSheClockTimeDialog != null && mSheClockTimeDialog.isShow()) {
                     mSheClockTimeDialog.dismiss();
                     setTimeFusion(hourList.get(hourList.size() - 1), minList.get(minList.size() - 1));
-                    if (isNewProtocol){
+                    if (isNewProtocol) {
                         setWeekParams();
-                    }else {
+                    } else {
                         setSmartParams();
                     }
                 }
@@ -347,7 +349,7 @@ public class DeviceFanVentilationPage extends BasePage {
     }
 
     private void setWeekParams() {
-        LogUtils.i("20190731","setWeekParams");
+        LogUtils.i("20190731", "setWeekParams");
         if (fan == null) {
             return;
         }
@@ -360,14 +362,16 @@ public class DeviceFanVentilationPage extends BasePage {
         mFanStatusComposite.WeeklyVentilationDate_Hour = Short.parseShort(mTvTime.getTag(R.id.tag_weekly_ventilation_date_hour).toString());
         mFanStatusComposite.WeeklyVentilationDate_Minute = Short.parseShort(mTvTime.getTag(R.id.tag_weekly_ventilation_date_minute).toString());
         List<Integer> listKey = new ArrayList<>();
-        listKey.add(6); listKey.add(7);
-        fan.setFanCombo(mFanStatusComposite, (short) 2,listKey, new VoidCallback() {
+        listKey.add(6);
+        listKey.add(7);
+        fan.setFanCombo(mFanStatusComposite, (short) 2, listKey, new VoidCallback() {
             @Override
             public void onSuccess() {
                 ToastUtils.showShort(R.string.device_sterilizer_succeed);
                 recovery_flag = false;
                 redSmartConfig();
             }
+
             @Override
             public void onFailure(Throwable t) {
             }
@@ -391,12 +395,13 @@ public class DeviceFanVentilationPage extends BasePage {
         fan.setSmartConfig(new SmartParams(), new VoidCallback() {
             @Override
             public void onSuccess() {
-                LogUtils.i("20191031222","sp.IsTimingVentilation:::"+sp.IsTimingVentilation);
+                LogUtils.i("20191031222", "sp.IsTimingVentilation:::" + sp.IsTimingVentilation);
 //                setOnOffStatusForText(sp.IsTimingVentilation);
                 sp = new SmartParams();
                 ToastUtils.showShort(R.string.device_sterilizer_succeed);
                 recovery_flag = false;
             }
+
             @Override
             public void onFailure(Throwable t) {
                 ToastUtils.showThrowable(t);
@@ -406,30 +411,35 @@ public class DeviceFanVentilationPage extends BasePage {
 
     //出厂刷新
     private void refresh(FanStatusComposite fanStatusComposite) {
-        if (fanStatusComposite == null) return;
-        if (mChkIsInternalDays!=null) {
-            if (fanStatusComposite.IsTimingVentilation == 1) {
-                mChkIsInternalDays.setChecked(true);
-            } else {
-                mChkIsInternalDays.setChecked(false);
+        try {
+            if (fanStatusComposite == null) return;
+            if (mChkIsInternalDays != null) {
+                if (fanStatusComposite.IsTimingVentilation == 1) {
+                    mChkIsInternalDays.setChecked(true);
+                } else {
+                    mChkIsInternalDays.setChecked(false);
+                }
             }
-        }
-        if (mChkIsInternalDays!=null) {
-            if (fanStatusComposite.IsWeeklyVentilation == 1) {
-                mChkIsInternalDays.setChecked(true);
-            } else {
-                mChkIsInternalDays.setChecked(false);
+            if (mChkIsInternalDays != null) {
+                if (fanStatusComposite.IsWeeklyVentilation == 1) {
+                    mChkIsInternalDays.setChecked(true);
+                } else {
+                    mChkIsInternalDays.setChecked(false);
+                }
             }
-        }
 
-        mTvDay.setText(String.valueOf(fanStatusComposite.TimingVentilationPeriod));
+            mTvDay.setText(String.valueOf(fanStatusComposite.TimingVentilationPeriod));
 
-        if (fanStatusComposite.WeeklyVentilationDate_Week >= 1 && fanStatusComposite.WeeklyVentilationDate_Week <= 7) {
-            mTvWeek.setText(mWeek.get(fanStatusComposite.WeeklyVentilationDate_Week - 1));
+
+            if (fanStatusComposite.WeeklyVentilationDate_Week >= 1 && fanStatusComposite.WeeklyVentilationDate_Week <= 7) {
+                mTvWeek.setText(mWeek.get(fanStatusComposite.WeeklyVentilationDate_Week - 1));
+            }
+            setTimeFusion(fanStatusComposite.WeeklyVentilationDate_Hour,
+                    fanStatusComposite.WeeklyVentilationDate_Minute);
+            setOnOffStatusForText(fanStatusComposite.IsTimingVentilation == 1 ? true : false);
+        } catch (Exception e) {
+            e.getMessage();
         }
-        setTimeFusion(fanStatusComposite.WeeklyVentilationDate_Hour,
-                fanStatusComposite.WeeklyVentilationDate_Minute);
-        setOnOffStatusForText(fanStatusComposite.IsTimingVentilation == 1 ? true : false);
     }
 
     private void setOnOffStatusForText(boolean tf) {
@@ -458,9 +468,9 @@ public class DeviceFanVentilationPage extends BasePage {
 
         setTimeFusion(sp.WeeklyVentilationDate_Hour,
                 sp.WeeklyVentilationDate_Minute);
-        if (isNewProtocol){
+        if (isNewProtocol) {
             setWeekParams();
-        }else {
+        } else {
             setSmartParams();
         }
     }

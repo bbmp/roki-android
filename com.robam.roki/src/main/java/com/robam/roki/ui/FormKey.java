@@ -15,4 +15,10 @@ public class FormKey {
 	public final static String RecipeCookNoDeviceForm = "RecipeCookNoDevice";
     public final static String TopWeekForm = "TopWeekForm";
 
+    public final static String HOME_WIFITYPE_BLUE = "HOME_WIFITYPE_BLUE";
+
+	/**
+	 * 临时的Activity 为了兼容之前的写法
+	 */
+	public final static String Temporary = "Temporary";
 }

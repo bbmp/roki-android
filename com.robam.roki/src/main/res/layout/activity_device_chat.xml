@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_bg_main"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#00ffffff" />
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/title_layout_device_function"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+
+        />
+
+    <ListView
+        android:id="@+id/listview"
+        style="@style/common_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:overScrollMode="never"
+        android:listSelector="@color/Transparent"/>
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_88"
+        android:background="@color/chat_send_bg"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/edtSend"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginLeft="9dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_send_content_edit_bg"
+            android:hint="@string/my_sale_problem"
+            android:paddingLeft="25dp"
+            android:scrollHorizontally="false"
+            android:textColor="@color/text_color_net_err"
+            android:textColorHint="@color/text_color_search"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/txtSend"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="0.2"
+            android:background="@drawable/shape_button_bg"
+            android:gravity="center"
+            android:text="@string/my_sale_send"
+            android:textColor="@color/text_color_exit_login"
+            android:textSize="@dimen/sp_20"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

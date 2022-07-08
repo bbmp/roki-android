@@ -1,84 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="@drawable/shape_bg_main"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/ll_title"
+    <View
+        android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:background="@color/transparent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="45dp"
-            android:layout_height="35dp"
-            android:paddingBottom="2dp"
-            android:paddingTop="2dp"
-            android:src="@drawable/ic_return_selector_01"/>
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingRight="45dp"
-            android:text="@string/my_sale_consulting"
-            android:textColor="@color/black"
-            android:textSize="18sp"/>
+            android:layout_centerInParent="true"
+            android:text="客服"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
 
+    </RelativeLayout>
 
-    </LinearLayout>
-
-        <ListView
-            android:id="@+id/listview"
-            style="@style/common_listview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:overScrollMode="never"
-            android:listSelector="@color/Transparent"/>
+    <ListView
+        android:id="@+id/listview"
+        style="@style/common_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:overScrollMode="never"
+        android:listSelector="@color/Transparent"/>
 
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
-        android:layout_height="59.5dp"
-        android:background="@color/white"
+        android:layout_height="@dimen/dp_88"
+        android:background="@color/chat_send_bg"
         android:orientation="horizontal"
-        android:padding="9.5dp">
+        android:gravity="center_vertical">
 
         <EditText
             android:id="@+id/edtSend"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/dp_44"
             android:layout_marginLeft="9dp"
             android:layout_weight="1"
             android:background="@drawable/shape_send_content_edit_bg"
             android:hint="@string/my_sale_problem"
             android:paddingLeft="25dp"
             android:scrollHorizontally="false"
-            android:textColor="@color/c52"
-            android:textColorHint="@color/c58"
+            android:textColor="@color/text_color_net_err"
+            android:textColorHint="@color/text_color_search"
             android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/txtSend"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/dp_44"
             android:layout_marginLeft="5dp"
             android:layout_weight="0.2"
-            android:background="@drawable/shape_yellow_send_bg"
+            android:background="@drawable/shape_button_bg"
             android:gravity="center"
             android:text="@string/my_sale_send"
-            android:textColor="@color/c11"
-            android:textSize="16sp"/>
+            android:textColor="@color/text_color_exit_login"
+            android:textSize="@dimen/sp_20"/>
 
     </LinearLayout>
 

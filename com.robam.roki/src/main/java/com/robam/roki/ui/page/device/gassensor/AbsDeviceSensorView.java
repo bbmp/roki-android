@@ -17,9 +17,11 @@ import android.widget.Toast;
 
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.utils.LogUtils;
@@ -92,6 +94,15 @@ public class AbsDeviceSensorView extends BasePage {
     IRokiDialog iRokiDialogAlarmType_01 = null;//一级报警
 //    private Tracker tracker;
 
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            tvDeviceModelName.setText(name);
+        }
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
@@ -113,6 +124,11 @@ public class AbsDeviceSensorView extends BasePage {
         if (gasSensor==null) {
             return;
         }
+        if (gasSensor.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), gasSensor.getDt(), null);
+        }
+
 }
 
     protected void initView() {

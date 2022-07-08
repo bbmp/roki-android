@@ -3,11 +3,13 @@ package com.robam.roki.ui.page.device.oven;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2019/8/27.
  */
 
-public class CookBookTag implements Parcelable {
+public class CookBookTag implements Serializable {
 
     public long id;
     public String functionCode;
@@ -32,17 +34,7 @@ public class CookBookTag implements Parcelable {
         functionParams = in.readString();
     }
 
-    public static final Creator<CookBookTag> CREATOR = new Creator<CookBookTag>() {
-        @Override
-        public CookBookTag createFromParcel(Parcel in) {
-            return new CookBookTag(in);
-        }
 
-        @Override
-        public CookBookTag[] newArray(int size) {
-            return new CookBookTag[size];
-        }
-    };
 
     public CookbookGroup getParent() {
         return group;
@@ -137,17 +129,5 @@ public class CookBookTag implements Parcelable {
         this.functionParams = functionParams;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
-        dest.writeString(this.functionCode);
-        dest.writeString(this.functionName);
-        dest.writeString(this.deviceCategory);
-        dest.writeString(this.deviceType);
-    }
 }

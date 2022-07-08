@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true"
+    android:layout_centerInParent="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/shape_mask_round"
+    android:text="11111"
+    android:textSize="@dimen/sp_14"
+    android:textColor="#FFFFFF"
+    android:gravity="center"
+    android:layout_width="100dp"
+    android:layout_height="100dp">
+
+</TextView>

@@ -18,6 +18,7 @@ import com.robam.roki.ui.view.wheelview.LoopView;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by Administrator on 2017/8/14.

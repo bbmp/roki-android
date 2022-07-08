@@ -1,105 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@color/mine_white_background">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_96"
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@drawable/shape_kitchen_bg_round"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/device_hid_kit_supported_model"
-                android:textColor="#999999"
-                android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="@string/device_hid_kit_supported_model"
+                    android:textColor="@color/text_color_device_category"
+                    android:textSize="@dimen/sp_18" />
 
+                <TextView
+                    android:id="@+id/tv_model_dt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/device_hidkit_bg_other_title"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/dp_8"
+                    android:paddingVertical="@dimen/dp_2"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/sp_16"
+                    tools:text="ddddddddddd" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_model_dt"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/shape_hid_kit_radius_bg"
-                android:gravity="left|center"
-                android:minHeight="46.5dp"
-                android:paddingLeft="12dp"
-                android:paddingTop="6dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="6dp"
-                android:text="ddddddddddd"
-                android:textColor="#222222"
-                android:textSize="16sp" />
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@drawable/shape_kitchen_bg_round"
+                android:orientation="vertical">
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/device_hid_kit_said_to_it"
-                android:textColor="#999999"
-                android:textSize="14sp" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/shape_hid_kit_radius_bg"
-                android:paddingLeft="12dp"
-                android:paddingTop="6dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="6dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="@string/device_hid_kit_said_to_it"
+                    android:textColor="@color/text_color_device_category"
+                    android:textSize="@dimen/sp_18" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycle_said_content"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_20" />
 
+            </LinearLayout>
 
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/device_hid_kit_local_recipes"
-                android:textColor="#999999"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_recipe_name"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="60.5dp"
-                android:background="@drawable/shape_hid_kit_radius_bg"
-                android:gravity="left|center"
-                android:minHeight="46.5dp"
-                android:paddingLeft="12dp"
-                android:paddingTop="6dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="6dp"
-                android:text="ddddddddddd"
-                android:textColor="#222222"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:background="@drawable/shape_kitchen_bg_round"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="@string/device_hid_kit_local_recipes"
+                    android:textColor="@color/text_color_device_category"
+                    android:textSize="@dimen/sp_18" />
+
+                <TextView
+                    android:id="@+id/tv_recipe_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_20"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:background="@drawable/device_hidkit_bg_other_title"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/dp_8"
+                    android:paddingVertical="@dimen/dp_2"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/sp_16"
+                    tools:text="ddddddddddd" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

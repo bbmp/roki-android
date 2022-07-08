@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.RemoteException;
+import android.util.Log;
 
 import com.legent.plat.Plat;
 import com.legent.plat.constant.IAppType;
@@ -16,6 +17,7 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.api.AlarmUtils;
 
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by sylar on 15/7/25.
@@ -42,6 +44,8 @@ public class DevicePollingReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context cx, Intent i) {
         try {
+
+            Log.e(TAG,"AppPollingTask+onReceive");
             onPolling();
         } catch (Exception e) {
             LogUtils.logFIleWithTime("轮询出错:" + e.getMessage());
@@ -64,55 +68,69 @@ public class DevicePollingReceiver extends BroadcastReceiver {
     }
 
 
+    ReentrantLock rtLock = new ReentrantLock();
     /**
      * 轮训任务
      */
     protected Runnable AppPollingTask = new Runnable() {
 
+        private long time=0;
         @Override
         public void run() {
-            onPolling();
-        }
+
+
+                onPolling();
+
+            }
+
     };
 
+    private static final String TAG = "DevicePollingReceiver";
+    long time=System.currentTimeMillis();
     void onPolling() {
-        if (Plat.LOG_FILE_ENABLE) {
-            LogUtils.logFIleWithTime("开始轮询");
-            LogUtils.i("test","开始轮询:true");
-        }
-        //熄屏状态下禁止轮询
-        if (Plat.appType.equals(IAppType.RKDRD)) {
-            if (!ScreenPowerService.getInstance().isScreenOn()) {
 
-                return;
-            }
-            LogUtils.i("2020061101","isScreenOn:false");
-        }
-
-        List<IDevice> devices = Plat.deviceService.queryAll();
-        if (devices != null && devices.size() > 0) {
-            for (IDevice dev : devices) {
-                if (IDeviceType.RYYJ.equals(dev.getDc())) {
-                    if (Plat.fanGuid != null && !Plat.fanGuid.getID().equals(dev.getGuid().getID()))
-                        continue;
+        if (System.currentTimeMillis()-time>2*1000){
+            time=System.currentTimeMillis();
+//        Log.e(TAG,"AppPollingTask"+Thread.currentThread().getName());
+                Log.e(TAG, ScreenPowerService.getInstance().isScreenOn() + "---" + "okokokokok" + Thread.currentThread().getName());
+                if (Plat.LOG_FILE_ENABLE) {
+                    LogUtils.logFIleWithTime("开始轮询");
+                    LogUtils.i("test", "开始轮询:true");
                 }
-                onPolling(dev);
-                if (dev instanceof IDeviceHub) {
-                    IDeviceHub hub = (IDeviceHub) dev;
-                    List<IDevice> children = hub.getChildren();
-                    if (children != null && children.size() > 0) {
-                        for (IDevice device : children) {
-                            LogUtils.i("20190215","device::"+device.getGuid());
-                            onPolling(device);
+                //熄屏状态下禁止轮询
+                if (Plat.appType.equals(IAppType.RKDRD)) {
+                    if (!ScreenPowerService.getInstance().isScreenOn()) {
+
+                        return;
+                    }
+                    LogUtils.i("2020061101", "isScreenOn:false");
+                }
+
+                List<IDevice> devices = Plat.deviceService.queryAll();
+                if (devices != null && devices.size() > 0) {
+                    for (IDevice dev : devices) {
+                        if (IDeviceType.RYYJ.equals(dev.getDc())) {
+                            if (Plat.fanGuid != null && !Plat.fanGuid.getID().equals(dev.getGuid().getID()))
+                                continue;
+                        }
+                        onPolling(dev);
+                        if (dev instanceof IDeviceHub) {
+                            IDeviceHub hub = (IDeviceHub) dev;
+                            List<IDevice> children = hub.getChildren();
+                            if (children != null && children.size() > 0) {
+                                for (IDevice device : children) {
+                                    LogUtils.i("20190215", "device::" + device.getGuid());
+                                    onPolling(device);
+                                }
+                            }
                         }
                     }
                 }
-            }
         }
     }
 
     void onPolling(IDevice device) {
-
+        Log.e(TAG,"+++"+device.getGuid()+"-----"+device.getDt()+"==="+device.getDc());
         if (IDeviceType.RRQZ.equals(device.getDeviceType().getDc()) || IDeviceType.RDCZ.equals(device.getDeviceType().getDc())
                 ||  IDeviceType.RPOT.equals(device.getDeviceType().getDc()) || IDeviceType.RZNG.equals(device.getDeviceType().getDc())) {
             device.onPolling();

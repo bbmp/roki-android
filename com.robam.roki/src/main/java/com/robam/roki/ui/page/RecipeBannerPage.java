@@ -12,15 +12,12 @@
 //import com.google.common.collect.Lists;
 //import com.google.common.collect.Ordering;
 //import com.legent.Callback;
-//import com.legent.plat.io.cloud.RetrofitCallback;
 //import com.legent.ui.UIService;
 //import com.legent.ui.ext.BasePage;
 //import com.legent.ui.ext.adapters.ExtPageAdapter;
 //import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 //import com.legent.utils.api.ToastUtils;
 //import com.legent.utils.graphic.ImageUtils;
-//import com.robam.common.io.cloud.Reponses;
-//import com.robam.common.io.cloud.RokiRestHelper;
 //import com.robam.common.pojos.AbsRecipe;
 //import com.robam.common.pojos.Material;
 //import com.robam.common.pojos.Recipe;
@@ -168,19 +165,17 @@
 //                showData(recipe);
 //            } else {
 //                ProgressDialogHelper.setRunning(cx, true);
-//                RokiRestHelper.getCookbookById(recipe.id, Reponses.CookbookResponse.class, new RetrofitCallback<Reponses.CookbookResponse>() {
+//                CookbookManager.getInstance().getCookbookById(recipe.id, new Callback<Recipe>() {
 //                    @Override
-//                    public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
-//                        if (null != cookbookResponse) {
-//                            ProgressDialogHelper.setRunning(cx, false);
-//                            showData(cookbookResponse.cookbook);
-//                        }
+//                    public void onSuccess(Recipe book) {
+//                        ProgressDialogHelper.setRunning(cx, false);
+//                        showData(book);
 //                    }
 //
 //                    @Override
-//                    public void onFaild(String err) {
+//                    public void onFailure(Throwable t) {
 //                        ProgressDialogHelper.setRunning(cx, false);
-//                        ToastUtils.showShort(err);
+//                        ToastUtils.showThrowable(t);
 //                    }
 //                });
 //            }
@@ -189,7 +184,7 @@
 //        void showData(Recipe book) {
 //            if (book == null) return;
 //            this.recipe = book;
-//            ImageUtils.displayImage(cx, book.imgPoster, imgRecipe);
+//            ImageUtils.displayImage(book.imgPoster, imgRecipe);
 //            txtTitle.setText(book.name);
 //            txtDesc.setText(book.desc);
 //            difficultyView.setDifficulty(book.difficulty);

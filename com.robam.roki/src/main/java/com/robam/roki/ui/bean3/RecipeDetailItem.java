@@ -10,6 +10,7 @@ import com.robam.common.pojos.Materials;
 import com.robam.common.pojos.PreSubStep;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.pojos.device.fan.IFan;
+import com.robam.roki.net.request.bean.AlumListBean;
 
 import java.util.List;
 
@@ -50,6 +51,12 @@ public class RecipeDetailItem implements MultiItemEntity {
      */
     public static final int RECIPE = 5;
 
+
+    /**
+     * 晒厨艺
+     */
+    public static final int SHOW = 9;
+
     /**
      * 视频横板
      */
@@ -89,6 +96,10 @@ public class RecipeDetailItem implements MultiItemEntity {
      */
     public List<Recipe> recipes;
 
+    public AlumListBean mAlumListBean;
+
+
+
     @Override
     public int getItemType() {
         return itemType;
@@ -122,6 +133,12 @@ public class RecipeDetailItem implements MultiItemEntity {
         this.materials = materials;
     }
 
+
+    public RecipeDetailItem(AlumListBean mAlumListBean) {
+        this.itemType = SHOW;
+        this.mAlumListBean = mAlumListBean;
+    }
+
 //    public RecipeDetailItem(List<CookStep> cookSteps) {
 //        this.itemType = STEPS;
 //        this.cookSteps = cookSteps;
@@ -140,11 +157,10 @@ public class RecipeDetailItem implements MultiItemEntity {
 //        }
         if (cookStep.stepVideo != null && !cookStep.stepVideo.isEmpty()) {
             this.itemType = STEPS_VIDEO;
-            this.cookStep = cookStep;
         } else {
             this.itemType = STEPS;
-            this.cookStep = cookStep;
         }
+        this.cookStep = cookStep;
     }
 
     public RecipeDetailItem(PreSubStep preSubStep) {

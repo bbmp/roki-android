@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebViewFragment;
 import android.widget.Toast;
 
 import com.google.common.eventbus.Subscribe;
@@ -33,23 +34,26 @@ import com.legent.events.AppVisibleEvent;
 import com.legent.events.ChangeLoginErrorEvent;
 import com.legent.plat.Plat;
 import com.legent.plat.events.FloatHelperEvent;
+import com.legent.plat.events.MessageEvent;
 import com.legent.plat.events.UserLogoutEvent;
 import com.legent.plat.io.cloud.CloudHelper;
-import com.legent.plat.io.cloud.RetrofitCallback;
+import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.User;
 import com.legent.plat.pojos.device.DeviceInfo;
-import com.legent.ui.AbsActivity;
 import com.legent.ui.UIService;
-//import com.legent.ui.ext.BaseActivity;
+import com.legent.ui.ext.BaseActivity;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.PackageUtils;
 import com.legent.utils.api.PreferenceUtils;
 import com.legent.utils.api.ToastUtils;
+import com.robam.common.RobamApp;
 import com.robam.common.events.AbsCookerAlarmEvent;
+import com.robam.common.events.CookBookEvent;
 import com.robam.common.events.Detailevnet;
 import com.robam.common.events.DeviceEasylinkCompletedEvent;
 import com.robam.common.events.DishWasherAlarmEvent;
+import com.robam.common.events.GameEvent;
 import com.robam.common.events.IntegStoveAlarmEvent;
 import com.robam.common.events.IntegStoveEvent;
 import com.robam.common.events.MicroWaveAlarmEvent;
@@ -61,7 +65,7 @@ import com.robam.common.events.SteamAlarmEvent;
 import com.robam.common.events.SteriAlarmEvent;
 import com.robam.common.events.StoveAlarmEvent;
 import com.robam.common.events.WaterPurifiyAlarmEvent;
-import com.robam.common.io.cloud.Reponses;
+import com.robam.common.events.WebUrlEvent;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.io.device.RokiDeviceFactory;
 import com.robam.common.io.device.RokiMsgMarshaller;
@@ -77,8 +81,11 @@ import com.robam.common.pojos.device.cook.AbsCooker;
 import com.robam.common.pojos.device.dishWasher.AbsDishWasher;
 import com.robam.common.pojos.device.integratedStove.IntegratedStoveConstant;
 import com.robam.common.pojos.device.integratedStove.SteamOvenEventEnum;
+import com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum;
 import com.robam.common.pojos.device.microwave.AbsMicroWave;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
+import com.robam.roki.MobApp;
+import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOneNew;
 import com.robam.roki.R;
 import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
@@ -87,20 +94,44 @@ import com.robam.roki.ui.FormKey;
 import com.robam.roki.ui.Helper;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
+import com.robam.roki.ui.activity3.NotificationWebActivity;
+import com.robam.roki.ui.activity3.RandomRecipeActivity;
+import com.robam.roki.ui.activity3.SelectThemeDetailActivity;
+import com.robam.roki.ui.activity3.WebActivity;
+import com.robam.roki.ui.activity3.recipedetail.RecipeDetailActivity;
+import com.robam.roki.ui.appStatus.AppStatus;
+import com.robam.roki.ui.appStatus.AppStatusManager;
+import com.robam.roki.ui.dialog.FreshAlbum;
 import com.robam.roki.ui.page.SelectThemeDetailPage;
+import com.robam.roki.ui.page.WebAdvertPage;
+import com.robam.roki.ui.page.recipedetail.RecipeDetailPage;
 import com.robam.roki.ui.view.umpush.UMPushMsg;
 import com.robam.roki.utils.AlarmDataUtils;
 import com.robam.roki.utils.DialogUtil;
+import com.zlw.main.recorderlib.RecordManager;
+import com.zlw.main.recorderlib.recorder.RecordConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import tv.danmaku.ijk.media.player.pragma.DebugLog;
 
+import static com.legent.ContextIniter.context;
 import static com.legent.plat.services.ResultCodeManager.EC_RC_Success;
+import static com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum.BEIKAO;
+import static com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum.EXP;
+import static com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum.FENGBEIKAO;
+import static com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum.FENGSHANKAO;
+import static com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum.JIANKAO;
+import static com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum.KONGQIZHA;
+import static com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum.QIANGSHAOKAO;
+import static com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum.SHAOKAO;
+import static com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum.WEIBOKAO;
 import static com.robam.roki.MobApp.APP_TYPE;
 import static com.robam.roki.ui.page.SelectThemeDetailPage.TYPE_THEME_BANNER;
+import static com.robam.roki.ui.page.device.steamovenone.AbsDeviceSteamOvenOne620Page.isForeground;
 
-public class MainActivity extends AbsActivity {
+public class MainActivity extends BaseActivity {
     public static Activity activity;
     private ActivityManager manager;
     private int i = 0;
@@ -113,6 +144,9 @@ public class MainActivity extends AbsActivity {
         atv.startActivity(new Intent(atv, MainActivity.class));
         atv.finish();
     }
+
+
+
 
     private static final String TAG = "MainActivity";
     @Override
@@ -131,6 +165,9 @@ public class MainActivity extends AbsActivity {
     protected String createFormKey() {
         return FormKey.MainForm;
     }
+
+
+
 
 
     @Subscribe
@@ -156,10 +193,52 @@ public class MainActivity extends AbsActivity {
 
 
     @Subscribe
+    public void onEvent(FreshAlbum event) {
+        context.sendBroadcast(
+               new Intent(
+                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                    Uri.parse("file://" + event.getPath())
+                )
+            );
+
+    }
+
+    @Subscribe
     public void onEvent(Detailevnet event) {
         Log.e("----","----");
 //        AlarmDataUtils.rikaAlarmStatus(event.mRika, event.mAlarmCodeBean);
-        SelectThemeDetailPage.show(event.id, TYPE_THEME_BANNER);
+//        SelectThemeDetailPage.show(event.id, TYPE_THEME_BANNER);
+//        SelectThemeDetailActivity.
+//        SelectThemeDetailActivity.
+
+        Intent intent =new  Intent(this, SelectThemeDetailActivity.class);
+        intent.putExtra(PageArgumentKey.Id,event.id);
+        intent.putExtra(PageArgumentKey.ThemeType, SelectThemeDetailPage.TYPE_THEME_BANNER);
+        startActivity(intent);
+    }
+    @Subscribe
+    public void onEvent(CookBookEvent event){
+//        RecipeDetailPage.show(event.id,0);
+        Intent intent = new
+                Intent(this, RecipeDetailActivity.class);
+        intent.putExtra(
+                PageArgumentKey.Id,
+                event.id
+        );
+        startActivity(intent);
+    }
+    @Subscribe
+    public void onEvent(GameEvent gameEvent){
+        startActivity(new Intent(this, RandomRecipeActivity.class));
+    }
+
+
+    @Subscribe
+    public void onEvent(WebUrlEvent event){
+//        WebActivity.start(this,event.url);
+        Log.e("NOTIFICATIONACTION" , event.url + "\n" + event.secondTitle+ "\n" + event.forwardImageUrl+ "\n" + event.title);
+        NotificationWebActivity.start(this,event.url,event.secondTitle,event.forwardImageUrl,event.title);
+
     }
 
     /**
@@ -231,10 +310,24 @@ public class MainActivity extends AbsActivity {
         if (!isTopActivity()){
             return;
         }
-        AbsSteameOvenOne steameOvenOne = event.steameOvenOne;
-        short alarms = event.alarmId;
-        LogUtils.i("202012071057", "alarms::" + alarms);
-        AlarmDataUtils.steamOvenOneAlarmStatus(steameOvenOne, alarms);
+        boolean isNoShow=false;
+        if (event.steameOvenOne instanceof AbsSteameOvenOneNew){
+            AbsSteameOvenOneNew steameOvenOne = (AbsSteameOvenOneNew) event.steameOvenOne;
+            short alarms = event.alarmId;
+
+
+
+            if (event.steameOvenOne.getDt().contains("920")&&isForeground(this,"SteamOvenCookCurveActivity")){
+                return;
+            }
+            AlarmDataUtils.steamOvenOneAlarmStatus(steameOvenOne, alarms,isNoShow);
+
+        }else {
+            AbsSteameOvenOne steameOvenOne = event.steameOvenOne;
+            short alarms = event.alarmId;
+            LogUtils.i("202012071057", "alarms::" + alarms);
+            AlarmDataUtils.steamOvenOneAlarmStatus(steameOvenOne, alarms,isNoShow);
+        }
     }
 
     @Subscribe
@@ -300,7 +393,10 @@ public class MainActivity extends AbsActivity {
     protected void onCreate(Bundle savedState) {
         super.onCreate(savedState);
 
-
+        RecordManager.getInstance().init(RobamApp.getInstance(),true);
+        RecordConfig mRecordConfig=new RecordConfig();
+        mRecordConfig.setFormat(RecordConfig.RecordFormat.MP3);
+        RecordManager.getInstance().changeRecordConfig(mRecordConfig);
         activity = MainActivity.this;
         Plat.activtiyContext = activity;
         manager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
@@ -309,27 +405,91 @@ public class MainActivity extends AbsActivity {
         PreferenceUtils.setBool(
                 PageArgumentKey.IsFirst, false);
         PreferenceUtils.setBool(PageArgumentKey.IsFirst, false);
-        RokiRestHelper.getNetworkDeviceInfoRequest("roki", null, null, Reponses.NetworkDeviceInfoResponse.class, new RetrofitCallback<Reponses.NetworkDeviceInfoResponse>() {
+        RokiRestHelper.getNetworkDeviceInfoRequest("roki", null, null, new Callback<List<DeviceGroupList>>() {
             @Override
-            public void onSuccess(Reponses.NetworkDeviceInfoResponse networkDeviceInfoResponse) {
-                if (null != networkDeviceInfoResponse && null != networkDeviceInfoResponse.deviceGroupList) {
-                    groupList = networkDeviceInfoResponse.deviceGroupList;
-                    for (int i = 0; i < groupList.size(); i++) {
-                        deviceList.add(groupList.get(i).getDeviceItemLists());
-                    }
+            public void onSuccess(List<DeviceGroupList> deviceGroupLists) {
+                groupList = deviceGroupLists;
+                for (int i = 0; i < groupList.size(); i++) {
+                    deviceList.add(groupList.get(i).getDeviceItemLists());
                 }
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
 
             }
         });
     }
 
+    //解决OPPO第一次初始化网络权限造成Mqtt失败的问题
+    private void initPlat() {
+        Plat.init(getApplication(), APP_TYPE,
+                new RokiDeviceFactory(),
+                new RokiMsgMarshaller(),
+                new RokiMsgSyncDecider(),
+                new RokiNoticeReceiver(),
+                new VoidCallback2() {
+                    @Override
+                    public void onCompleted() {
+                        AppService.getInstance().init(getApplication());
+                    }
+                });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        try {
+            if(!TextUtils.isEmpty(MobApp.id)){
+
+                Intent intent =new  Intent(this, SelectThemeDetailActivity.class);
+                intent.putExtra(PageArgumentKey.Id,Long.parseLong(MobApp.id));
+                intent.putExtra(PageArgumentKey.ThemeType, SelectThemeDetailPage.TYPE_THEME_BANNER);
+                startActivity(intent);
+//                SelectThemeDetailPage.show(Long.parseLong(MobApp.id), TYPE_THEME_BANNER);
+                MobApp.id=null;
+            }
+
+
+            if(!TextUtils.isEmpty(MobApp.Game)){
+
+                startActivity(new Intent(this, RandomRecipeActivity.class));
+                MobApp.Game=null;
+            }
+
+
+            if(!TextUtils.isEmpty(MobApp.cookId)){
+                Intent intent = new
+                        Intent(this, RecipeDetailActivity.class);
+                intent.putExtra(
+                        PageArgumentKey.Id,
+                        Long.parseLong(MobApp.cookId)
+                );
+                startActivity(intent);
+//                SelectThemeDetailPage.show(Long.parseLong(MobApp.id), TYPE_THEME_BANNER);
+                MobApp.cookId=null;
+            }
+
+
+            if(!TextUtils.isEmpty(MobApp.h5Url)){
+                if (MobApp.secondTitle != null){
+                    EventUtils.postEvent(new WebUrlEvent(MobApp.h5Url,MobApp.secondTitle,MobApp.img, MobApp.title));
+                    MobApp.secondTitle = null ;
+                    MobApp.h5Url=null;
+                    MobApp.img=null;
+                    MobApp.title=null;
+                }else {
+                    WebActivity.start(this,MobApp.h5Url);
+                    MobApp.h5Url=null;
+                }
+
+            }
+
+
+
+        }catch (Exception e){
+            Log.e("错误",e.getMessage());
+        }
         //            AlarmDataUtils.onResume();
 //        EventUtils.postEvent(new AppVisibleEvent(true));
 //        try {
@@ -341,6 +501,7 @@ public class MainActivity extends AbsActivity {
 //            }
 //        }catch (Exception e){
 //        }
+        EventUtils.postEvent(new MessageEvent());
         EventUtils.postEvent(new FloatHelperEvent(false,99));
 
     }
@@ -474,10 +635,10 @@ public class MainActivity extends AbsActivity {
             ToastUtils.show("添加设备失败", Toast.LENGTH_SHORT);
             return;
         }
-        CloudHelper.getDeviceBySn(sn, new Callback<DeviceInfo>() {
+        Plat.deviceService.getDeviceBySn(sn, new Callback<DeviceInfo>() {
             @Override
             public void onSuccess(final DeviceInfo deviceInfo) {
-                CloudHelper.bindDevice(owner.getID(), deviceInfo.getID(), deviceInfo.getName(), false, new VoidCallback() {
+                Plat.deviceService.bindDevice(owner.getID(), deviceInfo.getID(), deviceInfo.getName(), false, new VoidCallback() {
                     @Override
                     public void onSuccess() {
                         ToastUtils.showShort(R.string.add_device_failure);
@@ -545,31 +706,26 @@ public class MainActivity extends AbsActivity {
             return;
         }
         String guid = sn.substring(4);
-        CloudHelper.getDeviceById(guid, com.legent.plat.io.cloud.Reponses.GetDevicePesponse.class, new RetrofitCallback<com.legent.plat.io.cloud.Reponses.GetDevicePesponse>() {
-
+        CloudHelper.getDeviceById(guid, new Callback<DeviceInfo>() {
             @Override
-            public void onSuccess(com.legent.plat.io.cloud.Reponses.GetDevicePesponse getDevicePesponse) {
-                if (null != getDevicePesponse) {
-                    DeviceInfo deviceInfo = getDevicePesponse.device;
-                    CloudHelper.bindDevice(owner.getID(), deviceInfo.getID(), deviceInfo.getName(), false, new VoidCallback() {
-                        @Override
-                        public void onSuccess() {
-                            ToastUtils.showShort(R.string.add_device_failure);
-                            EventUtils.postEvent(new DeviceEasylinkCompletedEvent(deviceInfo));
-                            UIService.getInstance().returnHome();
-                        }
+            public void onSuccess(final DeviceInfo deviceInfo) {
+                Plat.deviceService.bindDevice(owner.getID(), deviceInfo.getID(), deviceInfo.getName(), false, new VoidCallback() {
+                    @Override
+                    public void onSuccess() {
+                        ToastUtils.showShort(R.string.add_device_failure);
+                        EventUtils.postEvent(new DeviceEasylinkCompletedEvent(deviceInfo));
+                        UIService.getInstance().returnHome();
+                    }
 
-                        @Override
-                        public void onFailure(Throwable t) {
-                            ToastUtils.showThrowable(t);
-                        }
-                    });
-                }
+                    @Override
+                    public void onFailure(Throwable t) {
+                        ToastUtils.showThrowable(t);
+                    }
+                });
             }
 
             @Override
-            public void onFaild(String err) {
-
+            public void onFailure(Throwable t) {
             }
         });
     }
@@ -583,9 +739,9 @@ public class MainActivity extends AbsActivity {
             boolean logu = PreferenceUtils.getBool("logout", false);
             if (logu) {
                 String token = PreferenceUtils.getString("token", null);
-                CloudHelper.otherLogin("wx", "RKDRD", null, token, new Callback<com.legent.plat.io.cloud.Reponses.OtherLoginResponse>() {
+                CloudHelper.otherLogin("wx", "RKDRD", null, token, new Callback<Reponses.OtherLoginResponse>() {
                     @Override
-                    public void onSuccess(com.legent.plat.io.cloud.Reponses.OtherLoginResponse user3In) {
+                    public void onSuccess(Reponses.OtherLoginResponse user3In) {
                         if (!user3In.user.binded) {
                             Bundle bundle = new Bundle();
                             bundle.putString("openId", user3In.user.thirdInfos.openId);

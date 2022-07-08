@@ -1,89 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mine_background"
+    android:background="@drawable/shape_bg_main"
     android:orientation="vertical">
     <View
         android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/white" />
-    <com.hjq.bar.TitleBar app:drawableSize="25dp"
-        android:id="@+id/tb_title"
+        android:layout_height="1dp"
+        android:background="@color/transparent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        app:layout_constraintTop_toBottomOf="@id/status_bar_fix"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#ffffff"
-        app:barStyle="transparent"
-        app:leftIcon="@mipmap/icon_back_black"
-        app:rightSize="18sp"
-        app:titleColor="@color/mine_text_color" />
+        android:layout_height="@dimen/dp_44">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_marginStart="20dp"
-            android:gravity="center"
-            android:textColor="#CCCCCC"
-            android:background="@drawable/bind_phone_background_2"
-            android:textSize="12sp"
-            android:textStyle="bold|italic"
-            android:text="1" />
-        <androidx.appcompat.widget.AppCompatTextView
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#CCCCCC"
-            android:textSize="15sp"
-            android:layout_marginStart="5dp"
-            android:text="验证原手机号" />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_centerInParent="true"
+            android:text="@string/bind_change_phone"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_28"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rl_title">
+        <TextView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:layout_marginStart="20dp"
             android:gravity="center"
-            android:textColor="@color/mine_text_color"
+            android:textColor="#ffffff"
             android:background="@drawable/bind_phone_background"
             android:textSize="12sp"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
+            android:text="1" />
+        <View android:layout_width="@dimen/dp_108"
+            android:layout_height="@dimen/dp_2"
+            android:background="@drawable/shape_divider_bg"/>
+        <TextView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:background="@drawable/bind_phone_background"
+            android:textSize="12sp"
+            android:textStyle="bold"
             android:text="2" />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/mine_text_color"
-            android:textSize="15sp"
-            android:layout_marginStart="5dp"
-            android:text="验证新手机号" />
-    </LinearLayout>
 
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_old_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color_net_err"
+        android:textSize="@dimen/sp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="验证原手机号"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_bind"
+        app:layout_constraintRight_toLeftOf="@id/tv_new_phone"/>
+    <TextView
+        android:id="@+id/tv_new_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color_net_err"
+        android:textSize="@dimen/sp_16"
+        android:text="验证新手机号"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_old_phone"
+        app:layout_constraintLeft_toRightOf="@id/tv_old_phone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_bind"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp_28"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/shape_kitchen_bg_round"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_old_phone">
 
         <com.robam.roki.ui.widget.view.ClearEditText
             android:id="@+id/et_login_phone"
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/white"
+            android:layout_height="@dimen/dp_59"
             android:hint="@string/common_phone_input_hint2"
             android:inputType="textVisiblePassword"
             android:singleLine="true"
             app:regexType="mobile" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@drawable/shape_divider_bg"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/dp_59"
             android:layout_marginTop="1dp"
-            android:background="@color/white"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <com.robam.roki.ui.widget.view.ClearEditText
                 android:id="@+id/et_phone_code"
@@ -100,15 +140,17 @@
                 style="@style/CountdownViewStyle_Login"
                 android:layout_height="30dp" />
         </LinearLayout>
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_complete"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="35dp"
-            android:text="@string/login_set_complete" />
     </LinearLayout>
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_complete"
+        android:textColor="@color/text_color_exit_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:textSize="@dimen/sp_20"
+        android:text="@string/login_set_complete"
+        android:background="@drawable/shape_button_bg"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

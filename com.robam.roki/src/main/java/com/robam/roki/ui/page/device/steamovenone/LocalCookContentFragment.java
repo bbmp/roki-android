@@ -2,7 +2,6 @@ package com.robam.roki.ui.page.device.steamovenone;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +18,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
-import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.CloudHelper;
-import com.legent.plat.io.cloud.Reponses;
 import com.legent.ui.UIService;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
@@ -38,7 +34,6 @@ import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.adapter.CommonItemDecoration;
 import com.robam.roki.ui.adapter.LocalBookAdapter;
 import com.robam.roki.ui.adapter3.Rv610LocalRecipe2Adapter;
-import com.robam.roki.ui.adapter3.Rv610LocalRecipeAdapter;
 import com.robam.roki.ui.dialog.AbsSettingDialog;
 import com.robam.roki.ui.page.device.oven.CookBookTag;
 import com.robam.roki.utils.DialogUtil;
@@ -69,7 +64,7 @@ public class LocalCookContentFragment extends Fragment {
         LocalCookContentFragment fragment = new LocalCookContentFragment();
         if (tags != null) {
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("tags", tags);
+            bundle.putSerializable("tags", tags);
             bundle.putString(PageArgumentKey.Guid, guid);
             bundle.putString(PageArgumentKey.descaling, needDescalingParams);
             fragment.setArguments(bundle);
@@ -82,7 +77,7 @@ public class LocalCookContentFragment extends Fragment {
         LocalCookContentFragment fragment = new LocalCookContentFragment();
         if (tags != null) {
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("tags", tags);
+            bundle.putSerializable("tags", tags);
             bundle.putString(PageArgumentKey.Guid, guid);
             bundle.putString(PageArgumentKey.descaling, needDescalingParams);
             bundle.putString(PageArgumentKey.dt, dt);
@@ -95,7 +90,7 @@ public class LocalCookContentFragment extends Fragment {
         LocalCookContentFragment fragment = new LocalCookContentFragment();
         if (tags != null) {
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("tags", tags);
+            bundle.putSerializable("tags", tags);
             bundle.putString(PageArgumentKey.Guid, guid);
             bundle.putString(PageArgumentKey.descaling, needDescalingParams);
             bundle.putString(PageArgumentKey.dt, dt);
@@ -116,7 +111,7 @@ public class LocalCookContentFragment extends Fragment {
         rv_view = view.findViewById(R.id.rv_view);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            tags = bundle.getParcelableArrayList("tags");
+            tags = (ArrayList<CookBookTag>) bundle.getSerializable("tags");
             guid = bundle.getString(PageArgumentKey.Guid);
             needDescalingParams = bundle.getString(PageArgumentKey.descaling);
             dt = bundle.getString(PageArgumentKey.dt);
@@ -241,8 +236,8 @@ public class LocalCookContentFragment extends Fragment {
 
 
     public void sendCommand(final int setTime) {
-        if (absSteameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                absSteameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait
+        if (absSteameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                absSteameOvenOne.powerState == SteamOvenOnePowerStatus.Wait
         ) {
             absSteameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override

@@ -16,10 +16,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.BackgroundFunc;
@@ -114,6 +116,13 @@ public class SterilizerBasePage extends BasePage {
     @InjectView(R.id.main_lock_show)
     LinearLayout mainLockShow;
     private List<DeviceConfigurationFunctions> hideFunctions;
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            ovenName.setText(name);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -169,6 +178,10 @@ public class SterilizerBasePage extends BasePage {
         if (absSterilizer == null) {
             return;
         }
+        if (absSterilizer.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), absSterilizer.getDt(), null);
+        }
     }
 
     String version = null;
@@ -221,7 +234,7 @@ public class SterilizerBasePage extends BasePage {
     }
 
     private void getDataMethod() {
-        CloudHelper.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
+        Plat.deviceService.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
             @Override
             public void onSuccess(Reponses.DeviceResponse deviceResponse) {
                 if (deviceResponse == null) return;
@@ -252,7 +265,9 @@ public class SterilizerBasePage extends BasePage {
             String backgroundImg = deviceResponse.viewBackgroundImg;
             String deviceType = deviceResponse.deviceType;
             Glide.with(cx).load(backgroundImg).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivOvenBg);
-            ovenName.setText(deviceResponse.title);
+            ovenName.setText( absSterilizer.getName() == null
+                    || absSterilizer.getName().equals(absSterilizer.getCategoryName() ) ?
+                    absSterilizer.getDispalyType() : absSterilizer.getName());
             hideFunctions = deviceResponse.modelMap.hideFunc.deviceConfigurationFunctions;
 
             MainFunc mainFunc = deviceResponse.modelMap.mainFunc;

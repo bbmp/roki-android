@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_bg"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_68"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingStart="@dimen/dp_20"
+    android:paddingEnd="@dimen/dp_20">
+
+
+
+    <TextView
+        android:id="@+id/tv_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_toStartOf="@+id/tv_more_desc"
+        android:textColor="@color/text_color_device_category"
+        android:textSize="@dimen/sp_20"
+        tools:text="假日模式" />
+
+    <TextView
+        android:id="@+id/tv_more_desc"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_toStartOf="@+id/iv_right"
+        android:gravity="right"
+        android:textColor="@color/text_color_device_category"
+        android:textSize="@dimen/sp_16"
+        tools:text="假日模式" />
+
+
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/icon_right_device" />
+
+
+    <TextView
+        android:id="@+id/tv_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/line_mode" />
+</RelativeLayout>

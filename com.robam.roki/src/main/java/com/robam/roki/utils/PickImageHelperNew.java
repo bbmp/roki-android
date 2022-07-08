@@ -17,8 +17,8 @@ import com.google.common.eventbus.Subscribe;
 import com.legent.events.ActivityResultOnPageEvent;
 import com.legent.events.PageChangedEvent;
 import com.legent.utils.EventUtils;
+import com.robam.base.BaseDialog;
 import com.robam.roki.ui.mdialog.MenuDialog;
-import com.robam.roki.ui.widget.base.BaseDialog;
 
 import java.io.File;
 import java.io.FileNotFoundException;

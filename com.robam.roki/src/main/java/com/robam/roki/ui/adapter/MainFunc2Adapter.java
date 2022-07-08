@@ -20,10 +20,11 @@ import com.robam.common.pojos.device.integratedStove.AbsIntegratedStove;
 import com.robam.common.pojos.device.rika.AbsRika;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by 14807 on 2018/4/8.
@@ -86,7 +87,7 @@ public class MainFunc2Adapter extends BaseAdapter {
             viewHolder = new MainFuncViewHolder();
             // 给xml布局文件创建java对象
             convertView = mInflater.inflate(R.layout.item_fan_backgroundfunc_page, null);
-
+            ScreenAdapterTools.getInstance().loadView(convertView);
             // 指向布局文件内部组件
             viewHolder.mItemView = convertView.findViewById(R.id.itemView);
             viewHolder.mIvModelImg = convertView.findViewById(R.id.iv_model_img);
@@ -99,7 +100,7 @@ public class MainFunc2Adapter extends BaseAdapter {
         }
         // 获取数据显示在各组件
         viewHolder.mTvModelName.setText(mDeviceConfigurationFunctions.get(position).functionName);
-        Glide.with(mContext)
+        Glide.with(cx)
                 .load(mDeviceConfigurationFunctions.get(position).backgroundImg)
 //                .crossFade()
                 .into(viewHolder.mIvModelImg);

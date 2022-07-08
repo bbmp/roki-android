@@ -14,7 +14,7 @@ import com.robam.common.services.StoreService;
 
 import java.util.List;
 
-import static com.legent.ContextIniter.context;
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by as on 2017-02-20.
@@ -85,7 +85,36 @@ public class RecipeUtils {
         return "";
 
     }
+    /**
+     * 获取菜谱展示图片
+     *
+     * @param recipe
+     * @return
+     */
+    public static String getRecipe2ImgUrl(AbsRecipe recipe) {
+        if (recipe instanceof Recipe) {
+            Recipe rokiRecipe = (Recipe) recipe;
+            if (rokiRecipe.imgPoster != null) {
+                return rokiRecipe.imgPoster;
+            }
+            if (rokiRecipe.imgLarge != null && !rokiRecipe.imgLarge.isEmpty()) {
+                return rokiRecipe.imgLarge;
+            }
 
+            if (rokiRecipe.imgMedium != null && !rokiRecipe.imgMedium.isEmpty()) {
+                return rokiRecipe.imgMedium;
+            }
+
+            if (rokiRecipe.imgSmall != null && !rokiRecipe.imgSmall.isEmpty()) {
+                return rokiRecipe.imgSmall;
+            }
+
+
+        }
+
+        return "";
+
+    }
     /**
      * 获取菜谱展示图片（中图）
      *
@@ -145,6 +174,35 @@ public class RecipeUtils {
         return list != null && list.size() > 0;
     }
 
+    public static void getRecipeDetailFromDBOrNET(long id, final VoidCallback3 callback3) throws Exception {
+        if (id == 0)
+            throw new NullPointerException();
+        Recipe recipe = null;
+        try {
+            recipe = DaoHelper.getById(Recipe.class, id);
+        } catch (Exception e) {
+        } finally {
+            if (recipe != null && recipe.hasDetail && ifRecipeContainStep(recipe)) {
+                callback3.onCompleted(recipe);
+            } else {
+                ProgressDialogHelper.setRunning(cx, true);
+                StoreService.getInstance().getCookbookById(id, new Callback<Recipe>() {
+                    @Override
+                    public void onSuccess(Recipe recipe) {
+                        callback3.onCompleted(recipe);
+                        ProgressDialogHelper.setRunning(cx, false);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        callback3.onCompleted(null);
+                        ProgressDialogHelper.setRunning(cx, false);
+                    }
+                });
+            }
+        }
+
+    }
 
 
 }

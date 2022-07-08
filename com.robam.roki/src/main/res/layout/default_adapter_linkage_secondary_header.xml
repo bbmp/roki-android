@@ -21,17 +21,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+    <View
+        android:id="@+id/view_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_16"/>
     <TextView
         android:id="@+id/secondary_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="厨电"
-        style="@style/RokiMainText"
         android:gravity="left"
-        android:textSize="16sp"
-        android:textColor="#666666"
-        android:paddingStart="12dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/text_color_net_err"
+        android:paddingStart="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_12"
         android:singleLine="true" />
+    <View
+        android:id="@+id/view_footer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_8"
+        android:visibility="gone"/>
 </LinearLayout>

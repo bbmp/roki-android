@@ -21,6 +21,9 @@ public class TimeUtils {
     public static final SimpleDateFormat SDF_TIME = new SimpleDateFormat(
             "HH:mm:ss", Locale.getDefault());
 
+    public static final SimpleDateFormat SDF_TIME_2 = new SimpleDateFormat(
+            "HH:mm", Locale.getDefault());
+
     private TimeUtils() {
         throw new AssertionError();
     }
@@ -206,6 +209,44 @@ public class TimeUtils {
                     return hour + ":" + min + ":0" + sec;
                 else
                     return hour + ":" + min + ":" + sec;
+            }
+        }
+
+    }
+
+
+    /**
+     * @param seconds 传入秒
+     * @return 返回“00：00”格式
+     */
+    public static String secToHourMin(int seconds) {
+        short hour = (short) (seconds / 3600);
+        short min = (short) ((seconds % 3600) / 60);
+        short sec = (short) (seconds % 60);
+
+        if (hour < 10) {
+            if (min < 10) {
+                if (sec < 10)
+                    return "0" + min + ":0" + sec;
+                else
+                    return "0" + min + ":" + sec;
+            } else {
+                if (sec < 10)
+                    return  min + ":0" + sec;
+                else
+                    return  min + ":" + sec;
+            }
+        } else {
+            if (min < 10) {
+                if (sec < 10)
+                    return "0" + min + ":0" + sec;
+                else
+                    return  "0" + min + ":" + sec;
+            } else {
+                if (sec < 10)
+                    return  min + ":0" + sec;
+                else
+                    return  min + ":" + sec;
             }
         }
 

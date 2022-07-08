@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listview"
+    android:background="@color/c09"
+    style="@style/common_listview"
+    android:divider="@drawable/shape_trolley_material_item_divider"
+    android:dividerHeight="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />

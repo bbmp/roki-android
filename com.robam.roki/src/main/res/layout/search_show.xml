@@ -7,7 +7,7 @@
     android:background="@drawable/shape_conner_recipe_search_bg"
     android:padding="5dp"
     android:text="红烧肉"
-    style="@style/RokiMainText"
-    android:textColor="@color/roki_general_text_color">
+    android:textColor="@color/text_color_net_err"
+    android:textSize="@dimen/sp_16">
 
 </TextView>

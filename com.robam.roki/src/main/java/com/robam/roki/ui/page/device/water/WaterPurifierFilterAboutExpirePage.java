@@ -18,7 +18,7 @@ import com.robam.common.pojos.device.WaterPurifier.AbsWaterPurifier;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,7 +74,7 @@ public class WaterPurifierFilterAboutExpirePage extends BasePage {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_filter_about_expire, container, false);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         ButterKnife.inject(this, view);
         initData();
         return view;

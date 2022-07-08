@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+<!--    <com.baoyz.swipemenulistview.SwipeMenuListView-->
+<!--        android:id="@+id/listview"-->
+<!--        style="@style/common_listview"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:divider="@drawable/shape_transparent"-->
+<!--        android:dividerHeight="4dp" />-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.robam.roki.ui.view.TrolleyThirdPlatView
+            android:id="@+id/thirdPlatView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+
+        <com.robam.roki.ui.view.TrolleyFreeView
+            android:id="@+id/freeView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
+
+
+    </FrameLayout>
+</LinearLayout>

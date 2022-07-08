@@ -7,23 +7,19 @@ import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
-import com.legent.ui.UI;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.utils.LogUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.SteamOvenOneStatusChangedEvent;
 import com.robam.common.pojos.DeviceType;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
@@ -109,11 +105,11 @@ public class DeviceSteameOvenC906HomePage extends BasePage {
         }
         mDisconnectHintView.setVisibility(event.isConnected ? View.INVISIBLE : View.VISIBLE);
         if (event.isConnected) {
-            if (steameOvenC906.powerStatus == SteamOvenOnePowerStatus.Off) {
+            if (steameOvenC906.powerState == SteamOvenOnePowerStatus.Off) {
 //                mIvSwitchClose.setVisibility(View.GONE);
                 mIvSwitchOpen.setVisibility(View.VISIBLE);
 
-            } else if (steameOvenC906.powerStatus == SteamOvenOnePowerStatus.On) {
+            } else if (steameOvenC906.powerState == SteamOvenOnePowerStatus.On) {
                 closeSteamOvenOneIcon();
                 mIvSwitchOpen.setVisibility(View.VISIBLE);
 //                mIvSwitchClose.setVisibility(View.GONE);
@@ -122,11 +118,11 @@ public class DeviceSteameOvenC906HomePage extends BasePage {
             }
         } else {
             openSteamOvenOneIcon();
-            if (steameOvenC906.powerStatus == SteamOvenOnePowerStatus.Off) {
+            if (steameOvenC906.powerState == SteamOvenOnePowerStatus.Off) {
                 mIvSwitchClose.setVisibility(View.VISIBLE);
                 mIvSwitchOpen.setVisibility(View.GONE);
                 mRlWaterTankOffLine.setVisibility(View.VISIBLE);
-            } else if (steameOvenC906.powerStatus == SteamOvenOnePowerStatus.On) {
+            } else if (steameOvenC906.powerState == SteamOvenOnePowerStatus.On) {
                 mIvSwitchOpen.setVisibility(View.GONE);
                 mIvSwitchClose.setVisibility(View.VISIBLE);
                 mRlWaterTankOffLine.setVisibility(View.VISIBLE);
@@ -154,7 +150,7 @@ public class DeviceSteameOvenC906HomePage extends BasePage {
             mIvWaterClose.setImageResource(R.mipmap.device_img_water_tank_off_line);
         }
 
-        if (event.pojo.powerStatus == SteamOvenOnePowerStatus.Off) {
+        if (event.pojo.powerState == SteamOvenOnePowerStatus.Off) {
             openSteamOvenOneIcon();
         } else if (event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.Pause
                 || event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.Order ||
@@ -209,9 +205,9 @@ public class DeviceSteameOvenC906HomePage extends BasePage {
 
     //根据状态展示图标
     private void initStatusShow() {
-        if (steameOvenC906.powerStatus == SteamOvenOnePowerStatus.Off) {
+        if (steameOvenC906.powerState == SteamOvenOnePowerStatus.Off) {
             openSteamOvenOneIcon();
-        } else if (steameOvenC906.powerStatus == SteamOvenOnePowerStatus.On) {
+        } else if (steameOvenC906.powerState == SteamOvenOnePowerStatus.On) {
             closeSteamOvenOneIcon();
         }
         mDisconnectHintView.setVisibility(steameOvenC906.isConnected() ? View.INVISIBLE : View.VISIBLE);
@@ -374,7 +370,7 @@ public class DeviceSteameOvenC906HomePage extends BasePage {
             startNoticeDialog.setToastShowTime(DialogUtil.LENGTH_CENTER);
             startNoticeDialog.show();
         }
-        if (steameOvenC906.powerStatus == SteamOvenOnePowerStatus.Off ) {
+        if (steameOvenC906.powerState == SteamOvenOnePowerStatus.Off ) {
             steameOvenC906.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
                 public void onSuccess() {
@@ -385,8 +381,8 @@ public class DeviceSteameOvenC906HomePage extends BasePage {
                 public void onFailure(Throwable t) {
                 }
             });
-        } else if (steameOvenC906.powerStatus == SteamOvenOnePowerStatus.On ||
-                steameOvenC906.powerStatus == SteamOvenOnePowerStatus.Wait) {
+        } else if (steameOvenC906.powerState == SteamOvenOnePowerStatus.On ||
+                steameOvenC906.powerState == SteamOvenOnePowerStatus.Wait) {
             steameOvenC906.setSteameOvenStatus_Off(new VoidCallback() {
                 @Override
                 public void onSuccess() {
@@ -454,7 +450,7 @@ public class DeviceSteameOvenC906HomePage extends BasePage {
             startNoticeDialog.setToastShowTime(DialogUtil.LENGTH_CENTER);
             startNoticeDialog.show();
             return false;
-        } else if (steameOvenC906.powerStatus == SteamOvenOnePowerStatus.Off) {
+        } else if (steameOvenC906.powerState == SteamOvenOnePowerStatus.Off) {
             startNoticeDialog.setContentText(R.string.open_device);
             startNoticeDialog.setToastShowTime(DialogUtil.LENGTH_CENTER);
             startNoticeDialog.show();

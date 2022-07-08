@@ -42,7 +42,7 @@
                 android:layout_height="36dp"
                 android:layout_marginLeft="8dp"
                 android:text="ROKI"
-                android:textColor="#1d1d1d"
+                android:textColor="@color/text_color_net_err"
                 android:textSize="16sp" />
         </LinearLayout>
 

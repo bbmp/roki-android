@@ -1,6 +1,7 @@
 package com.robam.roki.ui.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -12,6 +13,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.common.base.Objects;
@@ -26,6 +29,7 @@ import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.PreferenceUtils;
 import com.legent.utils.api.ToastUtils;
+import com.robam.common.pojos.Recipe;
 import com.robam.common.pojos.device.IRokiFamily;
 import com.robam.common.pojos.device.Oven.AbsOven;
 import com.robam.common.pojos.device.Oven.OvenStatus;
@@ -44,6 +48,7 @@ import com.robam.common.pojos.device.dishWasher.AbsDishWasher;
 import com.robam.common.pojos.device.dishWasher.DishWasherStatus;
 import com.robam.common.pojos.device.fan.AbsFan;
 import com.robam.common.pojos.device.fan.FanStatus;
+import com.robam.common.pojos.device.fan.IFan;
 import com.robam.common.pojos.device.gassensor.GasSensor;
 import com.robam.common.pojos.device.hidkit.AbsHidKit;
 import com.robam.common.pojos.device.integratedStove.AbsIntegratedStove;
@@ -52,12 +57,23 @@ import com.robam.common.pojos.device.microwave.MicroWaveStatus;
 import com.robam.common.pojos.device.rika.AbsRika;
 import com.robam.common.pojos.device.rika.RikaStatus;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
+import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOneNew;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatus;
+import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatusNew;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
+import com.robam.roki.ui.activity3.device.base.DeviceBaseActivity;
+import com.robam.roki.ui.activity3.device.dishwasher.DishWorkActivity;
+import com.robam.roki.ui.activity3.device.dishwasher.DishWssherFunctionActivity;
+import com.robam.roki.ui.activity3.device.fan.FanFunctionActivity;
+import com.robam.roki.ui.activity3.device.hidkit.HidKitFunctionActivity;
+import com.robam.roki.ui.activity3.device.pot.PotFunctionActivity;
+import com.robam.roki.ui.activity3.device.steamoven.SteamOvenFunctionActivity;
+import com.robam.roki.ui.activity3.device.stove.StoveFunctionActivity;
 import com.robam.roki.ui.page.device.integratedStove.SteamOvenHelper;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
@@ -68,20 +84,21 @@ import butterknife.OnClick;
 public class DeviceNewItemView extends FrameLayout {
 
     @InjectView(R.id.layout)
-    RelativeLayout layout;
+    ConstraintLayout layout;
     @InjectView(R.id.txtTitle)
     TextView txtTitle;
-    @InjectView(R.id.txtDesc)
-    TextView txtDesc;
     @InjectView(R.id.imgDevice)
     ImageView imgDevice;
-    @InjectView(R.id.txtModel)
-    TextView txtModel;
-    IDevice device;
+
+    public IDevice device;
     @InjectView(R.id.iv_offline_prompt)
     ImageView mIvOfflinePrompt;
+    @InjectView(R.id.iv_loading_status)
+    ImageView mIvLoadingStatus;
     @InjectView(R.id.iv_alram)
     ImageView ivAlarm;
+    @InjectView(R.id.tv_online)
+    TextView tvOnline;
 
     Context cx;
 
@@ -107,7 +124,12 @@ public class DeviceNewItemView extends FrameLayout {
 //
 //            }
 
-            mIvOfflinePrompt.setImageResource(img_deviceId);
+//            mIvOfflinePrompt.setImageResource(img_deviceId);
+            mIvOfflinePrompt.setVisibility(View.VISIBLE);
+            mIvOfflinePrompt.setBackgroundResource(R.drawable.bg_device_offline);
+            tvOnline.setVisibility(View.VISIBLE);
+            tvOnline.setText("离线");
+            mIvLoadingStatus.setVisibility(View.GONE);
         }
     };
 
@@ -123,11 +145,23 @@ public class DeviceNewItemView extends FrameLayout {
 
 
     long currentTime=System.currentTimeMillis();
-    public void setImageDeviceOfflinePrompt(int img_deviceId) {
+    public void setImageDeviceOfflinePrompt(boolean connected) {
         this.img_deviceId=img_deviceId;
 //        mIvOfflinePrompt.setImageResource(img_deviceId);
-        Glide.with(getContext()).asGif().load(R.drawable.m_smart_loading2).into(mIvOfflinePrompt);
-        countDownTimer.start();
+        if (connected) {
+            mIvOfflinePrompt.setVisibility(View.VISIBLE);
+            mIvOfflinePrompt.setBackgroundResource(R.drawable.bg_device_online);
+            tvOnline.setVisibility(View.VISIBLE);
+            tvOnline.setText("在线");
+            mIvLoadingStatus.setVisibility(View.GONE);
+            countDownTimer.cancel();
+        } else {
+            mIvOfflinePrompt.setVisibility(View.GONE);
+            tvOnline.setVisibility(View.GONE);
+            mIvLoadingStatus.setVisibility(View.VISIBLE);
+            Glide.with(getContext()).asGif().load(R.drawable.m_smart_loading2).into(mIvLoadingStatus);
+            countDownTimer.start();
+        }
     }
 
     public void setImgDeviceAlarm(int img) {
@@ -140,16 +174,6 @@ public class DeviceNewItemView extends FrameLayout {
         LogUtils.i("20171028", "deviceName:" + deviceName);
         txtTitle.setText(deviceName);
 
-    }
-
-    public void setTxtDeviceDesc(String deviceDesc) {
-        txtDesc.setText(deviceDesc);
-    }
-
-    public void setTxtModel(String deviceModel) {
-        if (!TextUtils.isEmpty(deviceModel)) {
-            txtModel.setText(deviceModel);
-        }
     }
 
     public void setDevice(IDevice device) {
@@ -194,7 +218,7 @@ public class DeviceNewItemView extends FrameLayout {
         View view = LayoutInflater.from(cx).inflate(R.layout.view_device_item,
                 this, true);
         if (!view.isInEditMode()) {
-
+            ScreenAdapterTools.getInstance().loadView(view);
             ButterKnife.inject(this, view);
         }
     }
@@ -262,12 +286,27 @@ public class DeviceNewItemView extends FrameLayout {
             else {
                 pageKey = PageKey.DeviceFanOther;
             }
-            UIService.getInstance().postPage(pageKey, bd);
+            if (device.getGuid().getGuid().contains("5010")){
+                Intent intent = new Intent(cx, FanFunctionActivity.class);
+                intent.putExtra(DeviceBaseActivity.BUNDLE , bd);
+                cx.startActivity(intent);
+            }else {
+                UIService.getInstance().postPage(pageKey, bd);
+            }
         } else if (device instanceof Pot) {
-            Bundle bd = new Bundle();
-            bd.putString(PageArgumentKey.Guid, device.getID());
-            pageKey = PageKey.AbsDevicePot;
-            UIService.getInstance().postPage(pageKey, bd);
+            if(device.getDt().equals(IRokiFamily.R0001)){
+                Bundle bd = new Bundle();
+                bd.putString(PageArgumentKey.Guid, device.getID());
+                pageKey = PageKey.AbsDevicePot;
+                UIService.getInstance().postPage(pageKey, bd);
+            }else if(device.getDt().equals(IRokiFamily.R0004)){
+                Bundle bd = new Bundle();
+                bd.putString(PageArgumentKey.Guid, device.getID());
+                Intent intent = new Intent(cx, PotFunctionActivity.class);
+                intent.putExtra(DeviceBaseActivity.BUNDLE , bd);
+                cx.startActivity(intent);
+            }
+
         } else if (device instanceof Stove) {
             Bundle bd = new Bundle();
             bd.putString(PageArgumentKey.Guid, device.getID());
@@ -296,6 +335,12 @@ public class DeviceNewItemView extends FrameLayout {
                     pageKey = PageKey.DeviceStove;
                     bd.putString(PageArgumentKey.deviceCategory, IDeviceType.RRQZ);
                     UIService.getInstance().postPage(pageKey, bd);
+                    break;
+                case IRokiFamily.R9B010:
+
+                    Intent intent = new Intent(cx, StoveFunctionActivity.class);
+                    intent.putExtra(DeviceBaseActivity.BUNDLE , bd);
+                    cx.startActivity(intent);
                     break;
                 default:
                     pageKey = PageKey.DeviceStove;
@@ -391,26 +436,51 @@ public class DeviceNewItemView extends FrameLayout {
             bd.putString(PageArgumentKey.Guid, device.getID());
             LogUtils.i("202010241056", "id:::" + device.getID());
             LogUtils.i("202012071728", "device.isConnected():::" + device.isConnected());
-            if (!device.isConnected()) {
-                bd.putShort(PageArgumentKey.from, (short) 1);
-                UIService.getInstance().postPage(PageKey.AbsDeviceSteamOvenOne, bd);
+            if (device.getGuid().getGuid().contains("CQ920")){
+                Intent intent = new Intent(cx, SteamOvenFunctionActivity.class);
+                intent.putExtra(DeviceBaseActivity.BUNDLE , bd);
+                cx.startActivity(intent);
+                return;
+            }
+            if (device instanceof AbsSteameOvenOneNew){
+                if (!device.isConnected()) {
+                    bd.putShort(PageArgumentKey.from, (short) 1);
+                    UIService.getInstance().postPage(PageKey.AbsDeviceSteamOvenOne620, bd);
 
-            }else{
-                switch (((AbsSteameOvenOne) device).powerOnStatus) {
-                    case SteamOvenOnePowerOnStatus.WorkingStatus:
-                    case SteamOvenOnePowerOnStatus.Order:
-                    case SteamOvenOnePowerOnStatus.Pause:
-                        bd.putShort(PageArgumentKey.from, (short) 2);
-                        UIService.getInstance().postPage(PageKey.AbsDeviceSteamOvenOne, bd);
-                        break;
-                    default:
-                        bd.putShort(PageArgumentKey.from, (short) 1);
-                        UIService.getInstance().postPage(PageKey.AbsDeviceSteamOvenOne, bd);
-                        break;
+                } else {
+                    switch (((AbsSteameOvenOne) device).powerState) {
+                        case SteamOvenOnePowerOnStatusNew.workPause:
+                        case SteamOvenOnePowerOnStatusNew.preWorkHeat:
+                        case SteamOvenOnePowerOnStatusNew.noWork:
+                            bd.putShort(PageArgumentKey.from, (short) 2);
+                            UIService.getInstance().postPage(PageKey.AbsDeviceSteamOvenOne620, bd);
+                            break;
+                        default:
+                            bd.putShort(PageArgumentKey.from, (short) 1);
+                            UIService.getInstance().postPage(PageKey.AbsDeviceSteamOvenOne620, bd);
+                            break;
+                    }
+                }
+            }else {
+                if (!device.isConnected()) {
+                    bd.putShort(PageArgumentKey.from, (short) 1);
+                    UIService.getInstance().postPage(PageKey.AbsDeviceSteamOvenOne, bd);
+
+                } else {
+                    switch (((AbsSteameOvenOne) device).powerOnStatus) {
+                        case SteamOvenOnePowerOnStatus.WorkingStatus:
+                        case SteamOvenOnePowerOnStatus.Order:
+                        case SteamOvenOnePowerOnStatus.Pause:
+                            bd.putShort(PageArgumentKey.from, (short) 2);
+                            UIService.getInstance().postPage(PageKey.AbsDeviceSteamOvenOne, bd);
+                            break;
+                        default:
+                            bd.putShort(PageArgumentKey.from, (short) 1);
+                            UIService.getInstance().postPage(PageKey.AbsDeviceSteamOvenOne, bd);
+                            break;
+                    }
                 }
             }
-
-
 
         } else if (device instanceof AbsRika) {
             Bundle bd = new Bundle();
@@ -466,15 +536,31 @@ public class DeviceNewItemView extends FrameLayout {
             bd.putString(PageArgumentKey.Guid, device.getID());
             bd.putString(PageArgumentKey.deviceCategory, IDeviceType.RXWJ);
 
+
+
             switch (((AbsDishWasher) device).powerStatus) {
                 case 0://关机
                 case 1://待机
+                    if (device.getDt().equals("WB737") ||device.getDt().equals("WB752")  ){
+                        Intent intent = new Intent(cx, DishWssherFunctionActivity.class);
+                        intent.putExtra(DeviceBaseActivity.BUNDLE , bd);
+                        cx.startActivity(intent);
+                        return;
+                    }
                     bd.putInt(PageArgumentKey.From, 1);
                     UIService.getInstance().postPage(PageKey.AbsDishWasher, bd);
+
+
                     break;
                 case 2://工作中
                 case 3://暂停
                 case 4://结束
+                    if (device.getDt().equals("WB737") ||device.getDt().equals("WB752")  ){
+                        Intent intent = new Intent(cx, DishWorkActivity.class);
+                        intent.putExtra(DeviceBaseActivity.BUNDLE , bd);
+                        cx.startActivity(intent);
+                        return;
+                    }
                     bd.putInt(PageArgumentKey.From, 0);
                     UIService.getInstance().postPage(PageKey.AbsDishWasher, bd);
                     break;
@@ -487,8 +573,13 @@ public class DeviceNewItemView extends FrameLayout {
             Bundle bd = new Bundle();
             bd.putString(PageArgumentKey.Guid, device.getID());
             bd.putString(PageArgumentKey.deviceCategory, IDeviceType.RCBH);
+            if (device.getDt().equals("KM310")){
+                Intent intent = new Intent(cx, HidKitFunctionActivity.class);
+                intent.putExtra(DeviceBaseActivity.BUNDLE , bd);
+                cx.startActivity(intent);
+                return;
+            }
             UIService.getInstance().postPage(PageKey.AbsHidKitDevicePage, bd);
-
         }
     }
 
@@ -527,21 +618,17 @@ public class DeviceNewItemView extends FrameLayout {
             }
             switch ((((AbsSteamoven) event.pojo).status)) {
                 case SteamStatus.Working:
+                case SteamStatus.PreHeat:
                     setSelected(true);
                     break;
                 case SteamStatus.Off:
+                case SteamStatus.Wait:
                     setSelected(false);
                     break;
                 case SteamStatus.On:
                     setSelected(true);
                     break;
                 case SteamStatus.Pause:
-                    setSelected(true);
-                    break;
-                case SteamStatus.Wait:
-                    setSelected(false);
-                    break;
-                case SteamStatus.PreHeat:
                     setSelected(true);
                     break;
                 case SteamStatus.Order:
@@ -653,13 +740,21 @@ public class DeviceNewItemView extends FrameLayout {
                 return;
             }
 
-
-            if (SteamOvenOnePowerStatus.Off == ((AbsSteameOvenOne) event.pojo).powerStatus) {
-                setSelected(false);
-            } else {
-                setSelected(true);
+            if (event.pojo instanceof AbsSteameOvenOneNew){
+                if (SteamOvenOnePowerStatus.Off_NEW == ((AbsSteameOvenOneNew) event.pojo).powerState
+//                        || SteamOvenOnePowerStatus.AWAIT == ((AbsSteameOvenOneNew) event.pojo).powerState
+                ) {
+                    setSelected(false);
+                } else {
+                    setSelected(true);
+                }
+            }else {
+                if (SteamOvenOnePowerStatus.Off == ((AbsSteameOvenOne) event.pojo).powerState) {
+                    setSelected(false);
+                } else {
+                    setSelected(true);
+                }
             }
-
         } else if (event.pojo instanceof AbsRika) {
             if (!Objects.equal(((AbsRika) event.pojo).getID(), device.getID())) {
                 return;
@@ -707,14 +802,20 @@ public class DeviceNewItemView extends FrameLayout {
                     setSelected(false);
                 }
             } else if (IRokiFamily.RIKAY.equals(((AbsRika) event.pojo).getDp())) {
-
-                short steamOvenWorkStatus = ((AbsRika) event.pojo).steamOvenWorkStatus;
                 short rikaFanWorkStatus = ((AbsRika) event.pojo).rikaFanWorkStatus;
-                short rikaFanPower = ((AbsRika) event.pojo).rikaFanPower;
-                if (RikaStatus.FAN_ON == rikaFanWorkStatus && rikaFanPower != 0
-                        || RikaStatus.STEAMOVEN_RUN == steamOvenWorkStatus || RikaStatus.STEAMOVEN_STOP == steamOvenWorkStatus
-                        || RikaStatus.STEAMOVEN_PREHEAT == steamOvenWorkStatus || RikaStatus.FAN_AWAIT == rikaFanWorkStatus
-                        || RikaStatus.FAN_DELAY_OFF == rikaFanWorkStatus ){
+                short sterilWorkStatus = ((AbsRika) event.pojo).sterilWorkStatus;
+                short stoveHeadLeftWorkStatus = ((AbsRika) event.pojo).stoveHeadLeftWorkStatus;
+                short stoveHeadRightWorkStatus = ((AbsRika) event.pojo).stoveHeadRightWorkStatus;
+                if (RikaStatus.FAN_ON == rikaFanWorkStatus
+                        || RikaStatus.FAN_AWAIT == rikaFanWorkStatus || RikaStatus.FAN_DELAY_OFF == rikaFanWorkStatus
+                        || RikaStatus.STOVE_WORK == stoveHeadLeftWorkStatus || RikaStatus.STOVE_WORK == stoveHeadRightWorkStatus
+                        || RikaStatus.STERIL_ON == sterilWorkStatus || RikaStatus.STERIL_DISIDFECT == sterilWorkStatus
+                        || RikaStatus.STERIL_CLEAN == sterilWorkStatus || RikaStatus.STERIL_DRYING == sterilWorkStatus
+                        || RikaStatus.STERIL_PRE == sterilWorkStatus || RikaStatus.STERIL_DEGERMING == sterilWorkStatus
+                        || RikaStatus.STERIL_INTELLIGENT_DETECTION == sterilWorkStatus || RikaStatus.STERIL_INDUCTION_STERILIZATION == sterilWorkStatus
+                        || RikaStatus.STERIL_WARM_DISH == sterilWorkStatus || RikaStatus.STERIL_APPOINATION == sterilWorkStatus
+                        || RikaStatus.STERIL_APPOINATION_DRYING == sterilWorkStatus || RikaStatus.STERIL_APPOINATION_CLEAN == sterilWorkStatus
+                        || RikaStatus.STERIL_COER_DISIDFECT == sterilWorkStatus) {
                     setSelected(true);
                 } else {
                     setSelected(false);

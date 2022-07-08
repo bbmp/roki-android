@@ -40,14 +40,56 @@ public class OvenExpParamBean {
          * desc : {"value":"Exp专业烘焙","paramType":"String"}
          */
 
+        /**
+         * {"cmd":192,"param":{"cmd":{"value":"192","paramType":"String"},
+         * "model":{"value":"14","paramType":"String"},
+         * "upTemp":{"value":[100,200,1],"paramType":"section"},
+         * "upTempDefault":{"value":"180","paramType":"String"},"downTemp":{"value":[100,200,1],"paramType":"section"},
+         * "downTempDefault":{"value":"160","paramType":"String"},"setTime":{"value":[1,120,1],"paramType":"section"},
+         * "defaultSetTime":{"value":"30","paramType":"String"},
+         * "tempDiff":{"value":"20","paramType":"String"},
+         * "tempStart":{"value":"120","paramType":"String"},
+         * "tempMin":{"value":"100","paramType":"String"},
+         * "desc":{"value":"该功能可自行控制上下层加热温度，满足客户多样化烘烤及口感","paramType":"String"},"allTimeUse":"1"}}
+         */
+
         private CmdBean cmd;
         private ModelBean model;
         private UpTempBean upTemp;
         private UpTempDefaultBean upTempDefault;
         private DownTempBean downTemp;
         private DownTempDefaultBean downTempDefault;
+        private MinuteBean setTime;
+
         private MinuteBean minute;
+
+        public MinuteBean getMinute() {
+            return minute;
+        }
+
+        public void setMinute(MinuteBean minute) {
+            this.minute = minute;
+        }
+
+        public MinuteBean getSetTime() {
+            return setTime;
+        }
+
+        public void setSetTime(MinuteBean setTime) {
+            this.setTime = setTime;
+        }
+
         private MinuteDefaultBean minuteDefault;
+        private MinuteDefaultBean defaultSetTime;
+
+        public MinuteDefaultBean getDefaultSetTime() {
+            return defaultSetTime;
+        }
+
+        public void setDefaultSetTime(MinuteDefaultBean defaultSetTime) {
+            this.defaultSetTime = defaultSetTime;
+        }
+
         private TempDiffBean tempDiff;
         private TempStartBean tempStart;
         private TempMinBean tempMin;
@@ -101,13 +143,9 @@ public class OvenExpParamBean {
             this.downTempDefault = downTempDefault;
         }
 
-        public MinuteBean getMinute() {
-            return minute;
-        }
 
-        public void setMinute(MinuteBean minute) {
-            this.minute = minute;
-        }
+
+
 
         public MinuteDefaultBean getMinuteDefault() {
             return minuteDefault;

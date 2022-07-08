@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/mine_white_background"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity3.device.steamoven.SteamWorkActivity">
+
+    <include
+        android:id="@+id/title_bar_steam_work"
+        android:background="@color/mine_white_background"
+        layout="@layout/include_title_bar"/>
+
+    <LinearLayout
+        android:background="@color/mine_white_background"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_18"
+        android:layout_below="@+id/title_bar_steam_work"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+
+            android:background="@color/mine_white_background"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+
+                android:id="@+id/act_steam_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_24"
+                android:gravity="center"
+                android:text="模式"
+                android:textColor="@color/text_holiday_desc" />
+
+            <TextView
+
+                android:id="@+id/act_steam_mode_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/act_steam_mode"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_marginBottom="@dimen/dp_27"
+                android:text="保温"
+                android:textSize="@dimen/sp_24" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/act_steam_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_24"
+                android:gravity="center"
+                android:text="温度"
+                android:textColor="@color/text_holiday_desc" />
+
+            <TextView
+                android:id="@+id/act_steam_temp_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/act_steam_temp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_6"
+                android:text="50"
+                android:textSize="@dimen/sp_24" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+
+                android:id="@+id/act_steam_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_24"
+                android:gravity="center"
+                android:text="时间" />
+
+            <TextView
+                android:id="@+id/act_steam_time_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/act_steam_time"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_6"
+                android:text="30min"
+                android:textColor="@color/text_holiday_desc"
+                android:textSize="@dimen/sp_24" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginBottom="@dimen/dp_28"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+
+            android:textColor="@color/text_color_online"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_btn_bg_new_steam_left"
+            android:text="结束工作" />
+
+        <Button
+            android:id="@+id/act_steam_pause"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_btn_bg_new_steam_right"
+            android:text="暂停" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

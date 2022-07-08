@@ -3,5 +3,6 @@
 
     <item name="default_background" type="drawable">@color/default_background</item>
     <item name="default_background_title" type="drawable">@color/default_background_title</item>
+    <item name="default_background_content" type="drawable">@color/default_background_content</item>
 
 </resources>

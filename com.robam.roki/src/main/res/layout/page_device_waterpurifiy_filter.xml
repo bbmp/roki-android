@@ -6,6 +6,7 @@
 
 
     <LinearLayout
+        android:id="@+id/waterfilter_bottom"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_alignParentBottom="true"
@@ -129,6 +130,7 @@
             <!-- PP -->
 
             <LinearLayout
+                android:id="@+id/waterfiliter_pp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -183,6 +185,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/water_lvxin_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -209,6 +212,7 @@
             <!-- CTO -->
 
             <LinearLayout
+                android:id="@+id/waterfiliter_cto"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -292,6 +296,7 @@
             <!-- RO1 -->
 
             <LinearLayout
+                android:id="@+id/waterfiliter_ro1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -356,6 +361,7 @@
             <!-- RO2 -->
 
             <LinearLayout
+                android:id="@+id/waterfiliter_ro2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">

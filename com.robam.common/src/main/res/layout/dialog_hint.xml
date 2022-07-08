@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="290dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+        android:background="#eeeff0" >
+
+        <ImageView
+            android:id="@+id/imgHint"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="26dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/ic_success" />
+
+        <TextView
+            android:id="@+id/txtHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/imgHint"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="20dp"
+            android:textSize="13sp"
+            android:textColor="#575757"
+            android:text="您的请求已发送至服务器，请耐心等待ROKI售后的主动回拨" />
+
+    </RelativeLayout>
+
+</FrameLayout>

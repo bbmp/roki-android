@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".ui.page.device.steamovenone.steamovenone920.LocalCookbook620Activity">
+
+
+    <include
+        android:id="@+id/rl_title_bar"
+        layout="@layout/include_title_bar" />
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_42"
+        android:id="@+id/title_bar"
+
+        android:layout_below="@+id/rl_title_bar"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabBackground="@color/transparent"
+            app:tabGravity="fill"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed"
+            app:tabPaddingBottom="-1dp"
+            app:tabPaddingEnd="-1dp"
+            app:tabPaddingStart="-1dp"
+            app:tabPaddingTop="-1dp"
+            app:tabRippleColor="@color/transparent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.tabs.TabLayout
+
+                    android:id="@+id/tab_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    app:tabGravity="center"
+                    app:tabIndicatorColor="#FFF2B33E"
+                    app:tabIndicatorHeight="2dp"
+                    app:tabSelectedTextColor="#80222222"
+                    app:tabTextColor="#80222222" />
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/local_cookbook_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_bar" />
+
+</RelativeLayout>

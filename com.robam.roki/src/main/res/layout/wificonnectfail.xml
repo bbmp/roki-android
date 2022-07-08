@@ -2,34 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+    android:background="@drawable/shape_bg_main"
     >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/dp_44">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="45dp"
-            android:layout_height="35dp"
-            android:paddingBottom="2dp"
-            android:paddingTop="2dp"
-            android:src="@drawable/ic_return_selector"/>
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:maxLines="1"
-            android:paddingRight="42dp"
+            android:layout_centerInParent="true"
             android:text="@string/wifi_comm_fail"
-            android:textColor="@color/black"
-            android:textSize="16sp"/>
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,7 +43,7 @@
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
             android:text="@string/page_wifi_connect_fail_1"
-            android:textColor="#111111"
+            android:textColor="@color/text_color_net_err"
             android:textSize="16sp"/>
 
         <TextView
@@ -59,10 +56,11 @@
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
             android:text="@string/page_wifi_connect_fail_2"
-            android:textColor="#111111"
+            android:textColor="@color/text_color_net_err"
             android:textSize="16sp"/>
 
         <TextView
+            android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
@@ -72,7 +70,7 @@
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
             android:text="@string/page_wifi_connect_fail_3"
-            android:textColor="#111111"
+            android:textColor="@color/text_color_net_err"
             android:textSize="16sp"/>
 
 
@@ -86,7 +84,7 @@
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
             android:text="@string/page_wifi_connect_fail_4"
-            android:textColor="#111111"
+            android:textColor="@color/text_color_net_err"
             android:textSize="16sp"/>
 
 
@@ -100,7 +98,7 @@
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
             android:text="@string/page_wifi_connect_fail_5"
-            android:textColor="#111111"
+            android:textColor="@color/text_color_net_err"
             android:textSize="16sp"/>
     </LinearLayout>
 
@@ -114,29 +112,28 @@
         <TextView
             android:id="@+id/try_again"
             android:layout_width="0dp"
-            android:layout_height="37.5dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="5.5dp"
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
             android:layout_weight="1"
-            android:background="@drawable/shape_wifi_btn_for_one_bg"
+            android:background="@drawable/countdown_selector_3"
             android:gravity="center"
             android:text="@string/try_one_more_time"
-            android:textColor="@color/black"
-            android:textSize="16sp"/>
+            android:textColor="@color/text_color_online"
+            android:textSize="@dimen/sp_20"/>
 
 
         <TextView
             android:id="@+id/service_online"
             android:layout_width="0dp"
-            android:layout_height="37.5dp"
-            android:layout_marginLeft="5.5dp"
-            android:layout_marginRight="25dp"
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginRight="@dimen/dp_20"
             android:layout_weight="1"
-            android:background="@drawable/shape_wifi_btn_bg"
+            android:background="@drawable/button_round_selector"
             android:gravity="center"
             android:text="@string/call_service"
-            android:textColor="@color/black"
-            android:textSize="16sp"/>
+            android:textColor="@color/text_color_exit_login"
+            android:textSize="@dimen/sp_20"/>
 
 
     </LinearLayout>

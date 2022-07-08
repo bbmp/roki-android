@@ -205,7 +205,7 @@ public class DeviceSteameC906WorkingPage extends BasePage {
                 }
                 return;
             }
-            if (steameOvenC906.worknStatus == SteamOvenOneWorkStatus.Working) {
+            if (steameOvenC906.workState == SteamOvenOneWorkStatus.Working) {
                 mTime--;
             }
         }
@@ -226,21 +226,21 @@ public class DeviceSteameC906WorkingPage extends BasePage {
 
     @Subscribe
     public void onEvent(SteamOvenOneStatusChangedEvent event) {
-        LogUtils.i("20180627","event::"+event.pojo.worknStatus);
+        LogUtils.i("20180627","event::"+event.pojo.workState);
 //        if (steameOvenC906 == null || !Objects.equal(steameOvenC906.getID(), event.pojo.getID()) || mTimer != null || training_lock)
 //            return;
 
 
-        if (steameOvenC906.worknStatus == SteamOvenOneWorkStatus.PreHeat) {
+        if (steameOvenC906.workState == SteamOvenOneWorkStatus.PreHeat) {
             setPreHeatModel();
-        } else if (steameOvenC906.worknStatus == SteamOvenOneWorkStatus.Working) {
+        } else if (steameOvenC906.workState == SteamOvenOneWorkStatus.Working) {
             setWorkMode();
         } else if (steameOvenC906.powerOnStatus == SteamOvenOnePowerOnStatus.Pause) {
             setPauseMolde();
         } else if (steameOvenC906.powerOnStatus == SteamOvenOnePowerOnStatus.Order) {
             setOrderMolde();
-        } else if (steameOvenC906.powerStatus == SteamOvenOnePowerStatus.Off ||
-                steameOvenC906.powerStatus == SteamOvenOnePowerStatus.On) {
+        } else if (steameOvenC906.powerState == SteamOvenOnePowerStatus.Off ||
+                steameOvenC906.powerState == SteamOvenOnePowerStatus.On) {
             if (isRunningForeground())
                 back();
         }

@@ -2,11 +2,14 @@ package com.robam.roki.ui.page.device.pot;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +22,7 @@ import com.google.common.eventbus.Subscribe;
 import com.legent.plat.Plat;
 import com.legent.plat.constant.IDeviceType;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.BackgroundFunc;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -87,9 +91,20 @@ public class AbsDevicePotPage<Device extends Pot> extends DeviceCatchFilePage {
     ImageView mIvLowPower;
     @InjectView(R.id.tv_low_power)
     TextView mTvLowPower;
+    @InjectView(R.id.btn_curve_entry)
+    Button btn_curve_entry;
+
     private PotOilTempParams mPotOilTempParams;
     private PotOtherFuncAdapter mPotOtherFuncAdapter;
     private List<DeviceConfigurationFunctions> mDeviceConfigurationFunctions;
+
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            mTvDeviceModelName.setText(name);
+        }
+    }
 
     @Subscribe
     public void onEvent(PotStatusChangedEvent event) {
@@ -157,6 +172,15 @@ public class AbsDevicePotPage<Device extends Pot> extends DeviceCatchFilePage {
         ButterKnife.inject(this, view);
         initData();
         mSpv.setProgress((int) pot.tempUp);
+        btn_curve_entry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundleCurve = new Bundle();
+                bundleCurve.putSerializable(PageArgumentKey.Bean, pot);
+                bundleCurve.putSerializable(PageArgumentKey.List, (Serializable) mDeviceConfigurationFunctions);
+                UIService.getInstance().postPage(PageKey.DevicePotCurve, bundleCurve);
+            }
+        });
         return view;
     }
 
@@ -167,7 +191,8 @@ public class AbsDevicePotPage<Device extends Pot> extends DeviceCatchFilePage {
                 pot = (Device) mDevice;
             }
             ModelMap modelMap = deviceResponse.modelMap;
-            mTvDeviceModelName.setText(deviceResponse.title);
+//            mTvDeviceModelName.setText(deviceResponse.title);
+            mTvDeviceModelName.setText(pot.getName() == null ||  pot.getName().equals(pot.getCategoryName()) ? pot.getDispalyType() : pot.getName());
             Glide.with(cx).load(deviceResponse.viewBackgroundImg).into(mIvBg);
             //电量  温度描述
             BackgroundFunc backgroundFunc = modelMap.backgroundFunc;
@@ -264,6 +289,16 @@ public class AbsDevicePotPage<Device extends Pot> extends DeviceCatchFilePage {
                 bundleDry.putSerializable(PageArgumentKey.Bean, pot);
                 bundleDry.putSerializable(PageArgumentKey.List, (Serializable) mDeviceConfigurationFunctions);
                 UIService.getInstance().postPage(PageKey.DevicePotFanDry, bundleDry);
+                break;
+            case "curve":
+//                if (!pot.isConnected()) {
+//                    ToastUtils.showLong(R.string.device_new_connected);
+//                    return;
+//                }
+                Bundle bundleCurve = new Bundle();
+                bundleCurve.putSerializable(PageArgumentKey.Bean, pot);
+                bundleCurve.putSerializable(PageArgumentKey.List, (Serializable) mDeviceConfigurationFunctions);
+                UIService.getInstance().postPage(PageKey.DevicePotCurve, bundleCurve);
                 break;
         }
 

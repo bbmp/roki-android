@@ -10,9 +10,12 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.common.eventbus.Subscribe;
 import com.legent.ui.UIService;
 import com.legent.utils.LogUtils;
@@ -55,7 +59,7 @@ public class LoginPageBase extends MyBasePage<UserActivity> implements ViewPager
     /**
      * 第三方登录 微信
      */
-    private ScaleImageView iv_login_wechat;
+    private ImageView iv_login_wechat;
     /**
      * 登录pager
      */
@@ -71,7 +75,7 @@ public class LoginPageBase extends MyBasePage<UserActivity> implements ViewPager
     /**
      * 认证文字
      */
-    private AppCompatTextView loginAuthentication;
+    private TextView loginAuthentication;
     /**
      * 当前position
      */
@@ -87,6 +91,10 @@ public class LoginPageBase extends MyBasePage<UserActivity> implements ViewPager
     private String code;
     private boolean isCmccLogin;
 
+    private ImageView ivBack;
+
+    private TabLayout tabLayout;
+
 
     @Override
     protected int getLayoutId() {
@@ -97,15 +105,17 @@ public class LoginPageBase extends MyBasePage<UserActivity> implements ViewPager
     protected void initView() {
         instance = this;
 //        StatusBarUtils.setColor(cx ,Color.WHITE);
-        setRightTitle(R.string.login_password);
-        getTitleBar().setOnTitleBarListener(this);
-        iv_login_wechat = (ScaleImageView) findViewById(R.id.iv_login_wechat);
+//        setRightTitle(R.string.login_password);
+//        getTitleBar().setOnTitleBarListener(this);
+        ivBack = findViewById(R.id.img_back);
+        tabLayout = findViewById(R.id.tabLayout);
+        iv_login_wechat = findViewById(R.id.iv_login_wechat);
         ll_login_other = (LinearLayout) findViewById(R.id.ll_login_other);
         cb_accept_roki_privacy = (CheckBox) findViewById(R.id.cb_accept_roki_privacy);
-        loginAuthentication = (AppCompatTextView) findViewById(R.id.user_login_register);
+        loginAuthentication = findViewById(R.id.user_login_register);
         vp_login = (NoScrollViewPager) findViewById(R.id.vp_login);
         vp_login.addOnPageChangeListener(this);
-        setOnClickListener(iv_login_wechat);
+        setOnClickListener(iv_login_wechat, ivBack);
         //初始化同意认证提示
         initLoginRegister();
         if (!MobApp.mWxApi.isWXAppInstalled()) {
@@ -113,24 +123,60 @@ public class LoginPageBase extends MyBasePage<UserActivity> implements ViewPager
             iv_login_wechat.setVisibility(View.GONE);
         }
 
+        TabLayout.Tab codeTab = tabLayout.newTab();
+        View codeView = LayoutInflater.from(getContext()).inflate(R.layout.view_login_tab_item, null);
+        TextView codeTv = codeView.findViewById(R.id.txtTab);
+        codeTv.setText(R.string.login_code);
+        codeTab.setCustomView(codeView);
+        tabLayout.addTab(codeTab);
+
+        TabLayout.Tab passTab = tabLayout.newTab();
+        View passView = LayoutInflater.from(getContext()).inflate(R.layout.view_login_tab_item, null);
+        TextView passTv = passView.findViewById(R.id.txtTab);
+        passTv.setText(R.string.login_password);
+        passTab.setCustomView(passView);
+        tabLayout.addTab(passTab);
+
+        //为了点击缩放
+        iv_login_wechat.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {//放大图片
+                    v.setScaleX(1.2f);
+                    v.setScaleY(1.2f);
+                } else if (event.getAction() == MotionEvent.ACTION_UP
+                        || event.getAction() == MotionEvent.ACTION_CANCEL) {//恢复原状
+                    v.setScaleX(1.0f);
+                    v.setScaleY(1.0f);
+
+                }
+                return false;
+            }
+        });
     }
 
     @Override
     protected void initData() {
         int right_title_id = (getArguments() != null) ? getArguments().getInt("right_title_id", 0) : 0;
-        if (right_title_id == 0 || right_title_id == R.string.login_password) {
-            setRightTitle(R.string.login_password);
-            mPagerAdapter = new FragmentPagerAdapter<>(this);
-            mPagerAdapter.addFragment(LoginCodePage.newInstance(), getResources().getString(R.string.login_password));
-            mPagerAdapter.addFragment(LoginPasswordPage.newInstance(), getResources().getString(R.string.login_code));
-            vp_login.setAdapter(mPagerAdapter);
-        } else {
-            setRightTitle(R.string.login_code);
-            mPagerAdapter = new FragmentPagerAdapter<>(this);
-            mPagerAdapter.addFragment(LoginPasswordPage.newInstance(), getResources().getString(R.string.login_code));
-            mPagerAdapter.addFragment(LoginCodePage.newInstance(), getResources().getString(R.string.login_password));
-            vp_login.setAdapter(mPagerAdapter);
-        }
+        mPagerAdapter = new FragmentPagerAdapter<>(this);
+        mPagerAdapter.addFragment(LoginCodePage.newInstance(), getResources().getString(R.string.login_code));
+        mPagerAdapter.addFragment(LoginPasswordPage.newInstance(), getResources().getString(R.string.login_password));
+        vp_login.setAdapter(mPagerAdapter);
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(vp_login));
+        vp_login.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+//        if (right_title_id == 0 || right_title_id == R.string.login_password) {
+//            setRightTitle(R.string.login_password);
+//            mPagerAdapter = new FragmentPagerAdapter<>(this);
+//            mPagerAdapter.addFragment(LoginCodePage.newInstance(), getResources().getString(R.string.login_password));
+//            mPagerAdapter.addFragment(LoginPasswordPage.newInstance(), getResources().getString(R.string.login_code));
+//            vp_login.setAdapter(mPagerAdapter);
+//        } else {
+//            setRightTitle(R.string.login_code);
+//            mPagerAdapter = new FragmentPagerAdapter<>(this);
+//            mPagerAdapter.addFragment(LoginPasswordPage.newInstance(), getResources().getString(R.string.login_code));
+//            mPagerAdapter.addFragment(LoginCodePage.newInstance(), getResources().getString(R.string.login_password));
+//            vp_login.setAdapter(mPagerAdapter);
+//        }
         if (getBundle()!=null){
             isCmccLogin = getBundle().getBoolean("isCmccLogin", false);
         }
@@ -147,6 +193,8 @@ public class LoginPageBase extends MyBasePage<UserActivity> implements ViewPager
             }
             LogUtils.i("20171023", "code!=null");
             sendWxMessage();
+        } else if (view == ivBack) {
+            doBack();
         }
     }
 
@@ -230,7 +278,7 @@ public class LoginPageBase extends MyBasePage<UserActivity> implements ViewPager
             @Override
             public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setColor(Color.parseColor("#EFCE17"));
+                ds.setColor(Color.parseColor("#61ACFF"));
                 ds.setUnderlineText(false);
             }
         }, 6, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -247,7 +295,7 @@ public class LoginPageBase extends MyBasePage<UserActivity> implements ViewPager
             @Override
             public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setColor(Color.parseColor("#EFCE17"));
+                ds.setColor(Color.parseColor("#61ACFF"));
                 ds.setUnderlineText(false);
             }
         }, 17, 23, Spanned.SPAN_INCLUSIVE_INCLUSIVE);

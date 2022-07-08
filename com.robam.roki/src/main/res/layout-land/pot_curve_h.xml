@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_9"
+            android:src="@mipmap/icon_back_black" />
+
+        <LinearLayout
+            android:id="@+id/ll_time_gear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_9"
+            android:layout_toRightOf="@id/iv_back"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_cook_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--℃"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:id="@+id/tv_gear_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:text="P0"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_18" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_device_model_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="烹饪"
+            android:textColor="@color/c41"
+            android:textSize="@dimen/sp_20" />
+
+        <Button
+            android:id="@+id/btn_screen_switch"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginRight="@dimen/dp_8"
+            android:background="@mipmap/ic_h_v"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginRight="16dp">
+
+        <TextView
+            android:id="@+id/tv_cook_time_cx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:text="烹饪时长:"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/tv_cook_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_cook_time_cx"
+            android:text="00:00:00"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_14" />
+
+    </RelativeLayout>
+
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/cook_chart"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="38dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_status_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="44dp"
+            android:text="记录中"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_curve_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_curve_mark"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:src="@mipmap/ic_curve_mark" />
+
+            <TextView
+                android:id="@+id/tv_curve_mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="标记步骤"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_finish"
+            android:layout_width="115dp"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_main_color_10dp_bg"
+            android:gravity="center"
+            android:text="结束烹饪"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

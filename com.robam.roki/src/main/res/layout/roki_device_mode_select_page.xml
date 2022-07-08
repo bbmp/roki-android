@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background">
+    <include layout="@layout/roki_device_toolbar"/>
+    <com.robam.roki.ui.page.device.oven.MyGridView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_bg_white_8dp_night"
+        android:id="@+id/mgv_steam_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="4" />
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_bg_white_8dp_night"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center"
+            android:textSize="@dimen/text_saie_20"
+            android:layout_marginRight="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/center"
+            android:text="温度\n°C" />
+        <View
+            android:layout_centerHorizontal="true"
+            android:id="@+id/center"
+            android:layout_width="1dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:textSize="@dimen/text_saie_20"
+            android:layout_marginLeft="40dp"
+            android:text="时间\nmin"
+            android:layout_toRightOf="@+id/center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <View
+            android:layout_marginTop="10dp"
+            android:id="@+id/line"
+            android:layout_below="@+id/center"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+        <com.robam.roki.ui.view.wheelview.LoopView
+            android:layout_toLeftOf="@+id/center"
+            android:id="@+id/temp_wheel"
+            android:layout_below="@+id/line"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"/>
+        <com.robam.roki.ui.view.wheelview.LoopView
+            android:layout_toRightOf="@+id/center"
+            android:id="@+id/time_wheel"
+            android:layout_below="@+id/line"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

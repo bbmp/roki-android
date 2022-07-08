@@ -27,6 +27,7 @@ import com.robam.common.pojos.device.IRokiFamily;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
+import com.robam.roki.ui.dialog.WaterPurifierAlarmDialog;
 
 import java.util.ArrayList;
 
@@ -114,6 +115,7 @@ public class DeviceWaterPurifiyFilterShowPage extends BasePage {
     @InjectView(R.id.waterfiliter_purebar)
     ViewGroup waterfiliter_purebar;
 
+    public WaterPurifierAlarmDialog dlg;
     private View contentView;
     private int id;//滤芯id
     private String name;//滤芯名称

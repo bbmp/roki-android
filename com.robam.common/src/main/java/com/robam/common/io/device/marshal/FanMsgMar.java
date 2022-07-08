@@ -14,6 +14,7 @@ import com.robam.common.pojos.device.IRokiFamily;
 import org.json.JSONException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.robam.common.io.device.MsgParams.StoveShutDelay;
@@ -229,6 +230,8 @@ public class FanMsgMar {
 
                 int OverTempProtectSwitchKey = msg.optInt(MsgParams.OverTempProtectSwitchKey);
                 int OverTempProtectSetKey = msg.optInt(MsgParams.OverTempProtectSetKey);
+                int cruiseKey = msg.optInt(MsgParams.CruiseKey);
+                int fanStoveKey = msg.optInt(MsgParams.fanStoveKey);
 
                 if (arg > 0) {
 
@@ -383,6 +386,24 @@ public class FanMsgMar {
                         buf.put((byte) ((overTempProtectSet >> 8) & 0Xff));
 
                     }
+
+                    if (cruiseKey == 17){
+                        b = (byte) msg.optInt(MsgParams.CruiseKey);
+                        buf.put(b);
+                        b = (byte) msg.optInt(MsgParams.CruiseLength);
+                        buf.put(b);
+                        b = (byte) msg.optInt(MsgParams.CruiseValue);
+                        buf.put(b);
+                    }
+                    //灶具最小火力烟机自动控制
+                    if (fanStoveKey == 18){
+                        b = (byte) msg.optInt(MsgParams.fanStoveKey);
+                        buf.put(b);
+                        b = (byte) msg.optInt(MsgParams.fanStoveLength);
+                        buf.put(b);
+                        b = (byte) msg.optInt(MsgParams.fanStoveValue);
+                        buf.put(b);
+                    }
                 }
                 break;
 
@@ -458,7 +479,9 @@ public class FanMsgMar {
 
                 } else {
                     if (msg.isIncoming()) {
-                        if (TextUtils.equals(msg.getSource().getDeviceTypeId(), "68A0S") || TextUtils.equals(msg.getSource().getDeviceTypeId(), "R68A0") || TextUtils.equals(msg.getSource().getDeviceTypeId(), "8235S")) {
+                        if (TextUtils.equals(msg.getSource().getDeviceTypeId(), "68A0S")
+                                || TextUtils.equals(msg.getSource().getDeviceTypeId(), "R68A0")
+                                || TextUtils.equals(msg.getSource().getDeviceTypeId(), "8235S")) {
                             setArgument(msg, payload, offset++, true);
                         } else {
                             setArgument(msg, payload, offset++, false);
@@ -526,12 +549,13 @@ public class FanMsgMar {
                 //取可变参数值
                 while (argument1 > 0) {
                     short argument_key = MsgUtils.getShort(payload[offset++]);
+                    short lenth = MsgUtils.getShort(payload[offset++]);
                     switch (argument_key) {
                         case 1:
                             msg.putOpt(MsgParams.Key,
                                     argument_key);
                             msg.putOpt(MsgParams.Length,
-                                    MsgUtils.getShort(payload[offset++]));
+                                    lenth);
                             msg.putOpt(MsgParams.R8230SFrySwitch,
                                     MsgUtils.getShort(payload[offset++]));
                             msg.putOpt(MsgParams.R8230SFryTime,
@@ -541,7 +565,7 @@ public class FanMsgMar {
                             msg.putOpt(MsgParams.Key,
                                     argument_key);
                             msg.putOpt(MsgParams.Length,
-                                    MsgUtils.getShort(payload[offset++]));
+                                    lenth);
                             msg.putOpt(MsgParams.FanCupOilSwitch,
                                     MsgUtils.getShort(payload[offset++]));
                             break;
@@ -549,7 +573,7 @@ public class FanMsgMar {
                             msg.putOpt(MsgParams.Key,
                                     argument_key);
                             msg.putOpt(MsgParams.Length,
-                                    MsgUtils.getShort(payload[offset++]));
+                                    lenth);
                             msg.putOpt(MsgParams.FanReducePower,
                                     MsgUtils.getShort(payload[offset++]));
                             break;
@@ -557,7 +581,7 @@ public class FanMsgMar {
                             msg.putOpt(MsgParams.Key,
                                     argument_key);
                             msg.putOpt(MsgParams.Length,
-                                    MsgUtils.getShort(payload[offset++]));
+                                    lenth);
                             msg.putOpt(MsgParams.gesture,
                                     MsgUtils.getShort(payload[offset++]));
                             break;
@@ -566,7 +590,7 @@ public class FanMsgMar {
                             msg.putOpt(MsgParams.Key,
                                     argument_key);
                             msg.putOpt(MsgParams.Length,
-                                    MsgUtils.getShort(payload[offset++]));
+                                    lenth);
                             msg.putOpt(MsgParams.OverTempProtectSwitch,
                                     MsgUtils.getShort(payload[offset++]));
                             break;
@@ -575,17 +599,28 @@ public class FanMsgMar {
                             msg.putOpt(MsgParams.Key,
                                     argument_key);
                             msg.putOpt(MsgParams.Length,
-                                    MsgUtils.getShort(payload[offset++]));
+                                    lenth);
 
                             //msg.putOpt(MsgParams.OverTempProtectSet,
                             //        MsgUtils.getShort(payload[offset++]));
                             msg.putOpt(MsgParams.OverTempProtectSet,
                                     MsgUtils.getShort(payload, offset++));
                             offset++;
+                            break;
+                        case 7:
 
-
+                            msg.putOpt(MsgParams.Key,
+                                    argument_key);
+                            Log.e("fanStoveAuto"  ,"---Key--" +  argument_key) ;
+                            msg.putOpt(MsgParams.Length,
+                                    lenth);
+                            Log.e("fanStoveAuto"  ,"---Length--" +  lenth) ;
+                            Log.e("fanStoveAuto"  ,"---payload--" + Arrays.toString(payload) +"\n" + offset) ;
+                            msg.putOpt(MsgParams.fanStoveAuto, payload[(offset++)]);
+                            Log.e("fanStoveAuto"  ,"-----" +  msg.optInt(MsgParams.fanStoveAuto)) ;
                             break;
                         default:
+                            offset+=lenth;
                             break;
                     }
                     argument1--;
@@ -736,8 +771,14 @@ public class FanMsgMar {
                     msg.putOpt(MsgParams.OverTempProtectStatus,
                             MsgUtils.getShort(payload[offset++]));
                     break;
+                    //20220505新增 变速巡航
+                case 15:
+                    msg.putOpt(MsgParams.CRUISE,
+                            MsgUtils.getShort(payload[offset++]));
+                    break;
 
                 default:
+                    offset += argument_length;
                     break;
             }
             argument--;

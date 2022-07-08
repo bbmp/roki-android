@@ -36,12 +36,16 @@ import com.robam.roki.ui.dialog.type.DialogType_24;
 import com.robam.roki.ui.dialog.type.DialogType_25;
 import com.robam.roki.ui.dialog.type.DialogType_26;
 import com.robam.roki.ui.dialog.type.DialogType_27;
+import com.robam.roki.ui.dialog.type.DialogType_29;
+import com.robam.roki.ui.dialog.type.DialogType_30;
+import com.robam.roki.ui.dialog.type.DialogType_H_Finish_Work;
 import com.robam.roki.ui.dialog.type.DialogType_Time;
 import com.robam.roki.ui.dialog.type.DialogUpdateCompletion;
 import com.robam.roki.ui.dialog.type.DialogUpdateFailed;
 import com.robam.roki.ui.dialog.type.Dialog_Type_27;
 import com.robam.roki.utils.DialogUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,6 +58,8 @@ public class RokiDialogFactory {
 
     public static IRokiDialog createDialogByType(Context context, int dialogType) {
         IRokiDialog rokiDialog = null;
+
+//        ArrayList<String>
         switch (dialogType) {
             case DialogUtil.DIALOG_TYPE_00:
                 rokiDialog = new DialogType_0(context);
@@ -155,6 +161,15 @@ public class RokiDialogFactory {
             case DialogUtil.DIALOG_TYPE_TIME:
                 rokiDialog = new DialogType_Time(context);
                 break;
+            case DialogUtil.DIALOG_TYPE_TIME_EXTEND:
+                rokiDialog = new DialogType_29(context);
+                break;
+            case DialogUtil.DIALOG_CHOICE_STOVE:
+                rokiDialog = new DialogType_30(context);
+                break;
+            case DialogUtil.DIALOG_H_FINISH_WORK:
+                rokiDialog = new DialogType_H_Finish_Work(context);
+                break;
             default:
                 break;
         }
@@ -171,6 +186,13 @@ public class RokiDialogFactory {
         Dialog_Type_27 rokiDialog = null;
 
         rokiDialog = new Dialog_Type_27(context , deviceConfigurationFunctions ,onItemClickListener);
+
+        return rokiDialog;
+    }
+    public static DialogType_30 createDialogType_30(Context context) {
+        DialogType_30 rokiDialog = null;
+
+        rokiDialog = new DialogType_30(context );
 
         return rokiDialog;
     }

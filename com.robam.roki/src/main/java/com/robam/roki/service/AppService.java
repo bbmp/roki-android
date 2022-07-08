@@ -10,9 +10,6 @@ import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceLoadCompletedEvent;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.events.UserLogoutEvent;
-import com.legent.plat.io.cloud.CloudHelper;
-import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.device.DeviceGroupInfo;
 import com.legent.plat.pojos.device.DeviceInfo;
 import com.legent.plat.pojos.device.IDevice;
@@ -81,6 +78,24 @@ public class AppService extends AbsService {
         onLoadDevice();
     }
 
+    private void onLoadGroup() {
+        if (userId == 0) return;
+        ds.getDeviceGroups(userId, new Callback<List<DeviceGroupInfo>>() {
+
+            @Override
+            public void onSuccess(List<DeviceGroupInfo> groups) {
+                if (groups != null) {
+                    ds.batchAddGroup(groups);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+    }
 
     DeviceInfo deviceInfo1;
 
@@ -98,46 +113,44 @@ public class AppService extends AbsService {
         //deviceInfo1.setCategoryName("电烤箱");
         //deviceInfo1.ver=39;
 
-        CloudHelper.getDevices(userId, Reponses.GetDevicesResponse.class, new RetrofitCallback<Reponses.GetDevicesResponse>() {
+        ds.getDevices(userId, new Callback<List<DeviceInfo>>() {
 
             @Override
-            public void onSuccess(Reponses.GetDevicesResponse getDevicesResponse) {
-                if (null != getDevicesResponse) {
-                    List<DeviceInfo> deviceInfoList = getDevicesResponse.devices;
-                    List<IDevice> devices = Lists.newArrayList();
-                    //暂时注释
-                    if (deviceInfoList != null) {
-                        IDevice defaultFan = null;
-                        //result.add(deviceInfo1);
-                        for (DeviceInfo deviceInfo : deviceInfoList) {
-                            boolean isFan = Utils.isFan(deviceInfo.guid);
+            public void onSuccess(List<DeviceInfo> result) {
+
+                List<IDevice> devices = Lists.newArrayList();
+                //暂时注释
+                if (result != null) {
+                    IDevice defaultFan = null;
+                     //result.add(deviceInfo1);
+                    for (DeviceInfo deviceInfo : result) {
+                        boolean isFan = Utils.isFan(deviceInfo.guid);
 //                        if (isFan && defaultFan != null) {
 //                            continue;
 //                        }
-                            LogUtils.i("20190624", "deviceInfo::" + deviceInfo.getID() + "   bid:" + deviceInfo.bid);
-                            IDevice dev = RokiDeviceFactory.generateModel(deviceInfo);
-                            devices.add(dev);
-                            if (isFan) {
-                                defaultFan = dev;
-                            }
+                        LogUtils.i("20190624", "deviceInfo::" + deviceInfo.getID() + "   bid:" + deviceInfo.bid);
+                        IDevice dev = RokiDeviceFactory.generateModel(deviceInfo);
+                        devices.add(dev);
+                        if (isFan) {
+                            defaultFan = dev;
                         }
-                        LogUtils.out("roki_rent:" + devices.toString() + " ll");
-                        ds.clear();
-                        ds.batchAdd(devices);
-                        EventUtils.postEvent(new DeviceLoadCompletedEvent());
-                        if (defaultFan != null) {
-                            ds.setDefault(defaultFan);
-                        }
-                    } else {
-                        ds.clear();
-                        EventUtils.postEvent(new DeviceLoadCompletedEvent());
                     }
+                    LogUtils.out("roki_rent:" + devices.toString() + " ll");
+                    ds.clear();
+                    ds.batchAdd(devices);
+                    EventUtils.postEvent(new DeviceLoadCompletedEvent());
+                    if (defaultFan != null) {
+                        ds.setDefault(defaultFan);
+                    }
+                } else {
+                    ds.clear();
+                    EventUtils.postEvent(new DeviceLoadCompletedEvent());
                 }
             }
 
             @Override
-            public void onFaild(String err) {
-
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
             }
         });
     }

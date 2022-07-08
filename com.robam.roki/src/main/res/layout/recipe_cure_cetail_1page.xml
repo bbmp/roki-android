@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/include_title_bar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@+id/title_bar"
+
+        android:layout_above="@+id/recipe_cure_detail_step_start_cook"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/recipe_cure_detail_img"
+        android:layout_marginTop="@dimen/dp_20"
+
+        android:layout_marginRight="@dimen/dp_21"
+        android:layout_marginLeft="@dimen/dp_21"
+        android:layout_marginBottom="@dimen/dp_21"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_248">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_20"
+            android:src="@drawable/shape_icon_save_bg" />
+
+        <TextView
+            android:layout_marginBottom="@dimen/dp_3"
+            android:layout_marginRight="@dimen/dp_10"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            android:id="@+id/recipe_cure_detail_collection_txt"
+            android:text="收藏 28k"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginBottom="@dimen/dp_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_toLeftOf="@+id/recipe_cure_detail_collection_txt"
+            android:text="收藏 28k"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12" />
+
+
+    </RelativeLayout>
+
+       <TextView
+           android:id="@+id/recipe_cure_detail_introduce"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/recipe_cure_detail_img"
+           android:layout_marginLeft="@dimen/dp_21"
+           android:layout_marginRight="@dimen/dp_21"
+           android:text="菜谱介绍豆腐能促进生长发育、改善缺铁性贫血、增强记忆力、缓解疲劳，解热、镇痛增加食欲、帮助消化净化血液等功效。"
+           android:textColor="#1F282D"
+           android:textSize="@dimen/sp_14"></TextView>
+
+       <TextView
+           android:id="@+id/recipe_cure_detail_introduce_device"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/recipe_cure_detail_introduce"
+           android:layout_marginLeft="@dimen/dp_21"
+           android:layout_marginTop="@dimen/dp_29"
+           android:layout_marginRight="@dimen/dp_21"
+           android:lineSpacingExtra="@dimen/dp_5"
+           android:text="设备：蒸烤炸一体机\n时间：1 h 23 min\n难度：简单"
+           android:textColor="#1F282D" />
+
+       <TextView
+           android:id="@+id/recipe_cure_detail_food_title"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/recipe_cure_detail_introduce_device"
+           android:layout_marginLeft="@dimen/dp_21"
+           android:layout_marginTop="@dimen/dp_25"
+
+           android:text="食材"
+           android:textColor="#1F282D"
+           android:textSize="@dimen/dp_18" />
+
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/recipe_cure_detail_food_list"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/recipe_cure_detail_food_title"
+           android:layout_marginLeft="@dimen/dp_21"
+           android:layout_marginTop="@dimen/dp_12"
+           android:layout_marginRight="@dimen/dp_21" />
+
+       <TextView
+           android:id="@+id/recipe_cure_detail_food_add"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/recipe_cure_detail_food_list"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="@dimen/dp_12"
+           android:text="添加食材"
+           android:textColor="#1F282D"
+           android:textSize="@dimen/sp_18" />
+
+       <TextView
+           android:id="@+id/recipe_cure_detail_sean_title"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/recipe_cure_detail_food_add"
+           android:layout_marginLeft="@dimen/dp_21"
+           android:layout_marginTop="@dimen/dp_12"
+           android:text="佐料"
+           android:textColor="#1F282D"
+           android:textSize="@dimen/dp_18" />
+
+
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/recipe_cure_detail_sean_list"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/recipe_cure_detail_sean_title"
+           android:layout_marginLeft="@dimen/dp_21"
+           android:layout_marginTop="@dimen/dp_12"
+           android:layout_marginRight="@dimen/dp_21" />
+
+
+       <TextView
+           android:id="@+id/recipe_cure_detail_sean_add"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/recipe_cure_detail_sean_list"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="@dimen/dp_12"
+           android:text="添加佐料"
+           android:textColor="#1F282D"
+           android:textSize="@dimen/sp_18" />
+
+       <TextView
+           android:id="@+id/recipe_cure_detail_panty_title"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/recipe_cure_detail_sean_add"
+           android:layout_marginLeft="@dimen/dp_21"
+           android:layout_marginTop="@dimen/dp_12"
+           android:text="备菜"
+           android:textColor="#1F282D"
+           android:textSize="@dimen/dp_18" />
+
+
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/recipe_cure_detail_step_list"
+           android:layout_marginLeft="@dimen/dp_21"
+           android:layout_marginTop="@dimen/dp_12"
+           android:layout_marginRight="@dimen/dp_21"
+           android:layout_below="@+id/recipe_cure_detail_panty_title"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
+   </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:layout_marginTop="@dimen/dp_20"
+        android:id="@+id/recipe_cure_detail_step_start_cook"
+        android:background="@drawable/shape_icon_save_bg"
+        android:text="开始烹饪"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_alignParentBottom="true"
+        style="@style/style_button_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"/>
+</RelativeLayout>

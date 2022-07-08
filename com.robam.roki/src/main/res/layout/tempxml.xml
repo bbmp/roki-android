@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.legent.ui.ext.views.TitleBar
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/pull_refresh_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ptrAnimationStyle="flip"
+        app:ptrMode="both">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="6dp">
+            <!--添加油烟机电磁灶View-->
+            <com.robam.roki.ui.view.DeviceAddView
+                android:id="@+id/addView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <!--油烟机 电磁灶-->
+            <LinearLayout
+                android:id="@+id/devicesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+                <!--断网提示-->
+                <include layout="@layout/view_device_disconnect_hint" />
+                <!--油烟机-->
+                <com.robam.roki.ui.view.DeviceItemView
+                    android:id="@+id/fanView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <!--电磁灶-->
+                <com.robam.roki.ui.view.DeviceItemView
+                    android:id="@+id/stoveView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="3">
+                <!--消毒柜 烤箱-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <com.robam.roki.ui.view.DeviceAddSterilizerView
+                        android:id="@+id/add_sterilizer_View"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:description="Sterilizer"
+                        app:title="消毒柜" />
+
+                    <com.robam.roki.ui.view.DeviceUnlistedItemView
+                        android:id="@+id/sterilizer_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:description="Sterilizer"
+                        app:title="消毒柜" />
+
+                    <com.robam.roki.ui.view.DeviceOvenView
+                        android:id="@+id/deviceOven"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+                <!--蒸汽炉 微波炉-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="1">
+
+                    <com.robam.roki.ui.view.DeviceSteamView
+                        android:id="@+id/device2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <com.robam.roki.ui.view.DeviceMicrowaveView
+                        android:id="@+id/deviceMicrowave"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+</LinearLayout>

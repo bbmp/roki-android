@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
@@ -104,6 +105,10 @@ public class OrderSterilizerPage extends BasePage implements CompoundButton.OnCh
             return;
         }
         IDevice iDevice = Plat.deviceService.lookupChild(guid);
+        if (iDevice.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), iDevice.getDt() + ":预约峰谷电消毒页", null);
+        }
     }
 
     private void initView() {

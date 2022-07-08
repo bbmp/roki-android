@@ -1,15 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_marginStart="@dimen/dp_20"
+    android:layout_marginEnd="@dimen/dp_20"
+    android:layout_marginTop="@dimen/dp_20"
+    android:layout_height="@dimen/dp_225"
+    android:background="@drawable/shape_kitchen_bg_round">
 
-    <!--图片和图标-->
-    <ImageView
-        android:id="@+id/iv_img"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/img_default"/>
+        <!--图片和图标-->
+        <com.legent.ui.ext.views.RoundImageView
+            android:id="@+id/iv_img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_158"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/img_default"
+            app:riv_left_top_corner_radius="@dimen/dp_10"
+            app:riv_right_top_corner_radius="@dimen/dp_10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/home_recipe_tv_recipename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:text="@string/not_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_img"
+            app:layout_constraintBottom_toTopOf="@id/home_recipe_tv_collect2"
+            android:textSize="@dimen/sp_18"
+            android:textColor="@color/text_color_net_err"/>
+
+<!--        <TextView-->
+<!--            android:id="@+id/home_recipe_tv_collect"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/num"-->
+<!--            android:textColor="#ffff3f3f"-->
+<!--            android:layout_marginStart="@dimen/dp_16"-->
+<!--            android:textSize="@dimen/sp_12"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/home_recipe_tv_recipename"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+        <TextView
+            android:id="@+id/home_recipe_tv_collect2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/num"
+            android:textColor="#ffff3f3f"
+            android:textSize="@dimen/sp_12"
+            android:layout_marginLeft="@dimen/dp_16"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_recipe_tv_recipename"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+        <ImageView
+            android:id="@+id/iv_collection"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@drawable/ic_recipe_favority_black_shape"
+            android:layout_marginRight="@dimen/dp_24"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_img"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_collection_select"-->
+<!--            android:layout_width="@dimen/dp_24"-->
+<!--            android:layout_height="@dimen/dp_24"-->
+<!--            android:src="@drawable/ic_recipe_favority_black_shape"-->
+<!--            android:visibility="gone"-->
+<!--            android:layout_marginRight="@dimen/dp_24"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/iv_img"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="@dimen/dp_16"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintRight_toRightOf="@id/iv_img"
+            app:layout_constraintBottom_toBottomOf="@id/iv_img"/>
+
+        <ImageView
+            android:id="@+id/iv_play"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@mipmap/tag_video"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="@id/iv_img"
+            app:layout_constraintTop_toTopOf="@id/iv_img"/>
+        <!--文字描述和收藏-->
+    <TextView
+        android:id="@+id/tv_device_name_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_13"
+        android:text="device"
+        android:textSize="@dimen/sp_10"
+        android:paddingLeft="@dimen/dp_7"
+        android:paddingTop="@dimen/dp_2"
+        android:paddingBottom="@dimen/dp_2"
+        android:paddingRight="@dimen/dp_7"
+        android:textColor="#ffffffff"
+        android:visibility="visible"
+        android:background="@drawable/bg_recipe_device"
+        app:layout_constraintLeft_toLeftOf="@id/iv_img"
+        app:layout_constraintBottom_toBottomOf="@id/iv_img"/>
+
+
+    <TextView
+        android:id="@+id/tv_device_name_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_13"
+        android:text="device"
+        android:textSize="@dimen/sp_10"
+        android:paddingLeft="@dimen/dp_7"
+        android:paddingTop="@dimen/dp_2"
+        android:paddingBottom="@dimen/dp_2"
+        android:paddingRight="@dimen/dp_7"
+        android:textColor="#ffffffff"
+        android:visibility="visible"
+        android:background="@drawable/bg_recipe_device"
+        app:layout_constraintLeft_toRightOf="@id/tv_device_name_one"
+        app:layout_constraintBottom_toBottomOf="@id/iv_img"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

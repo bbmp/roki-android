@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -19,7 +20,6 @@ import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
 import com.legent.VoidCallback2;
 import com.legent.plat.events.ClickRecipeEvent;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.DialogHelper;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -27,8 +27,6 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.api.DisplayUtils;
 import com.legent.utils.api.ToastUtils;
 import com.legent.utils.graphic.ImageUtils;
-import com.robam.common.io.cloud.Reponses;
-import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.AbsRecipe;
 import com.robam.common.pojos.Dc;
 import com.robam.common.pojos.Recipe;
@@ -71,6 +69,8 @@ public class RecipeGridItemVIew extends FrameLayout {
 
     @InjectView(R.id.tv_view_count)
     TextView tvViewCount;
+    @InjectView(R.id.iv_play)
+    ImageView ivPlay;
 
     Context cx;
     AbsRecipe book;
@@ -197,6 +197,10 @@ public class RecipeGridItemVIew extends FrameLayout {
                      .into(imgDish);
              imgSrcLogo.setImageResource(R.mipmap.ic_recipe_roki_logo);
              imgSrcLogo.setVisibility(GONE);
+             if (!TextUtils.isEmpty(b.video))
+                 ivPlay.setVisibility(View.VISIBLE);
+             else
+                 ivPlay.setVisibility(View.GONE);
          } else {
              LogUtils.i("20190214", "Recipe3rd:" + book.type);
              Recipe3rd b = (Recipe3rd) book;
@@ -207,7 +211,7 @@ public class RecipeGridItemVIew extends FrameLayout {
 
              RecipeProvider provider = b.getProvider();
              if (provider != null) {
-                 ImageUtils.displayImage(getContext(), provider.logoUrl, imgSrcLogo);
+                 ImageUtils.displayImage(provider.logoUrl, imgSrcLogo);
              }
          }
     }
@@ -245,26 +249,22 @@ public class RecipeGridItemVIew extends FrameLayout {
 
             LogUtils.i("20180830"," recipe.id:" + recipe.id);
 
-            RokiRestHelper.getCookbookById(recipe.id, Reponses.CookbookResponse.class, new RetrofitCallback<Reponses.CookbookResponse>() {
+            CookbookManager.getInstance().getCookbookById(recipe.id, new Callback<Recipe>() {
                 @Override
-                public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
-                    if (null != cookbookResponse) {
-                        ProgressDialogHelper.setRunning(cx, false);
-                        Recipe recipe = cookbookResponse.cookbook;
-                        if (modelType == RecipeGridView.Model_Favority){
-                            RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_FAVORITY);
-                        }else if (modelType == RecipeGridView.Model_Search){
-                            RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_SEARCE);
-                        }else if(modelType == RecipeGridView.Model_History){
-                            RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_ALL);
-                        }else {
-                            RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_SORTED);
-                        }
+                public void onSuccess(Recipe recipe) {
+                    ProgressDialogHelper.setRunning(cx, false);
+                    if (modelType == RecipeGridView.Model_Favority){
+                        RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_FAVORITY);
+                    }else if (modelType == RecipeGridView.Model_Search){
+                        RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_SEARCE);
+                    }else if(modelType == RecipeGridView.Model_History){
+                        RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_ALL);
+                    }else {
+                        RecipeDetailPage.show(null,recipe.id,RecipeDetailPage.unKnown, RecipeRequestIdentification.RECIPE_SORTED);
                     }
                 }
-
                 @Override
-                public void onFaild(String err) {
+                public void onFailure(Throwable t) {
                     ProgressDialogHelper.setRunning(cx, false);
                     ToastUtils.showShort("菜谱不存在或已下架");
                 }

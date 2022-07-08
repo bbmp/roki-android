@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.PowerManager;
+import android.util.Log;
 
 import com.google.common.base.Objects;
 import com.legent.events.ScreenPowerChangedEvent;
@@ -64,7 +65,8 @@ public class ScreenPowerService extends AbsService {
     public boolean isScreenOn() {
         PowerManager pm = (PowerManager) cx
                 .getSystemService(Context.POWER_SERVICE);
-        boolean flag = pm.isScreenOn();
+        //使用新的非法
+        boolean flag = pm.isInteractive();
         return flag;
     }
 
@@ -107,11 +109,14 @@ public class ScreenPowerService extends AbsService {
         cx.unregisterReceiver(receiver);
     }
 
+
     private BroadcastReceiver receiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent in) {
             String inAction = in.getAction();
+            Log.e(TAG,"BroadcastReceiver"+"---"+inAction);
+
             if (Objects.equal(inAction, Intent.ACTION_SCREEN_OFF)) {
                 EventUtils.postEvent(new ScreenPowerChangedEvent(OFF));
             } else if (Objects.equal(inAction, Intent.ACTION_SCREEN_ON)) {

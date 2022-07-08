@@ -10,12 +10,14 @@ import com.legent.utils.graphic.ImageUtils;
 
 public class ContextIniter {
 
+    public static Context cx;
     public static Context context;
 
     public static void init(Context cx,String appFlag) {
-        if (context == null) {
+        if (ContextIniter.cx == null) {
+            ContextIniter.cx = cx;
             context = cx;
-//            ImageUtils.init(cx,appFlag);
+            ImageUtils.init(cx,appFlag);
             ToastUtils.init(cx);
             ResourcesUtils.init(cx);
             PreferenceUtils.init(cx);

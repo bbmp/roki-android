@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff5f5f5"
+    android:background="@drawable/shape_bg_main"
     android:fitsSystemWindows="false"
     android:orientation="vertical"
    >
@@ -10,69 +10,66 @@
         android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white" />
+        android:background="@color/transparent" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/White"
+        android:layout_height="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
             android:layout_centerVertical="true"
-            android:layout_marginStart="14dp"
-            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+            android:src="@mipmap/ic_arrow_back" />
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/layoutSearch"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginEnd="30dp"
-            android:layout_weight="1"
-            android:background="@drawable/shape_conner_recipe_search_bg"
-            android:gravity="center_vertical">
+            android:background="@drawable/shape_kitchen_bg_round">
 
             <ImageView
                 android:id="@+id/imgSearch"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginStart="10dp"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_8"
                 android:contentDescription="@null"
+                android:layout_centerVertical="true"
                 android:src="@mipmap/ic_recipe_search" />
 
             <EditText
                 android:id="@+id/edtSearch"
-                style="@style/RokiMainText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
                 android:background="@null"
                 android:ems="10"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:hint="@string/search_hint"
                 android:imeOptions="actionSearch"
-                android:inputType="text|textMultiLine"
-                android:textColorHint="@color/roki_tips_text_color"/>
+                android:textColorHint="@color/text_color_search"
+                android:textColor="@color/text_color_device_category"
+                android:textSize="@dimen/sp_16"
+                android:layout_toRightOf="@id/imgSearch"
+                android:layout_toLeftOf="@id/iv_cancel"/>
 
 
             <ImageView
                 android:id="@+id/iv_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_8"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/icon_delete_history" />
-        </LinearLayout>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/button_delete" />
+        </RelativeLayout>
 
 
     </LinearLayout>
@@ -82,7 +79,10 @@
         android:id="@+id/rv_search_recipe"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_12"/>
 
 </LinearLayout>
 

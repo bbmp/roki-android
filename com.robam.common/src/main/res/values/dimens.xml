@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="pop_triangle_width">7dp</dimen>
+    <dimen name="pop_triangle_height">5dp</dimen>
+    <dimen name="recipe_pop_width">152dp</dimen>
+    <dimen name="recipe_pop_height">165dp</dimen>
+    <dimen name="setting_pop_width">82dp</dimen>
+
 </resources>

@@ -59,42 +59,139 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.widget.ImageView;
-import android.widget.SimpleCursorTreeAdapter;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.legent.utils.api.DisplayUtils;
 import com.legent.utils.api.StorageUtils;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
 
 public class ImageUtils {
 
+    public static DisplayImageOptions defaultOptions = getDefaultBuilder()
+            .build();
+
+    static ImageLoader loader = ImageLoader.getInstance();
+
+    public static void init(Context cx, String app) {
+        if (loader.isInited())
+            return;
+
+        File cacheDir = StorageUtils.getCachDir(cx);
+        int maxWidth = DisplayUtils.getScreenWidthPixels(cx) / 2;
+        int maxHeight = DisplayUtils.getScreenHeightPixels(cx) / 2;
+
+        ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(cx);
+        builder.memoryCache(new WeakMemoryCache());
+        builder.defaultDisplayImageOptions(defaultOptions);
+        builder.threadPriority(Thread.NORM_PRIORITY - 2);
+        builder.diskCache(new UnlimitedDiskCache(cacheDir));//任涛 ImageLoader改成1.9.5 UnlimitedDiscCache 改为 UnlimitedDiskCache
+        builder.denyCacheImageMultipleSizesInMemory();// 拒绝缓存同一图片，有不同的大小
+        builder.threadPoolSize(5);
+        builder.diskCacheExtraOptions(maxWidth, maxHeight, null);
+        if (app != null && app.equals("RKPAD"))
+            builder.threadPoolSize(3) // default
+                    .threadPriority(Thread.NORM_PRIORITY - 1) // default
+                    .tasksProcessingOrder(QueueProcessingType.FIFO) // default
+                    .memoryCache(new LruMemoryCache(15 * 1024 * 1024))
+                    .memoryCacheSize(15 * 1024 * 1024)
+                    .memoryCacheSizePercentage(13) // default
+                    .diskCacheSize(25 * 1024 * 1024)
+                    .diskCacheFileCount(50)
+                    .diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
+                    .imageDownloader(new BaseImageDownloader(cx)) // default
+                    .imageDecoder(new BaseImageDecoder(true)) // default
+                    .defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
+                    .writeDebugLogs();
+        ImageLoaderConfiguration config = builder.build();
+        loader.init(config);
+    }
+
+    public static DisplayImageOptions.Builder getDefaultBuilder() {
+        DisplayImageOptions.Builder builder = new DisplayImageOptions.Builder();
+        builder.bitmapConfig(Config.RGB_565);
+        builder.imageScaleType(ImageScaleType.IN_SAMPLE_INT);
+       // builder.displayer(new RoundedBitmapDisplayer(20));
+        builder.cacheInMemory(false);
+        builder.cacheOnDisk(true);
+        builder.showImageForEmptyUri(null);
+        builder.showImageOnFail(null);
+        builder.showImageOnLoading(null);
+        return builder;
+    }
+
     // -------displayImage
-    public static void displayImage(Context context, int resId, ImageView view) {
-//        loader.displayImage(uri, view);
-        Glide.with(context).load(resId).into(view);
+
+    public static void displayImage(String uri, ImageView view) {
+        loader.displayImage(uri, view);
     }
 
-    public static void displayImage(Context context, String uri, ImageView view) {
-//        loader.displayImage(uri, view);
-        Glide.with(context).load(uri).into(view);
+    public static void displayImage(String uri, ImageView view,
+                                    DisplayImageOptions options) {
+        loader.displayImage(uri, view, options);
     }
 
-    public static void displayImage(Context context, String uri, ImageView view,
-                                    RequestOptions options) {
-//        loader.displayImage(uri, view, options);
-        Glide.with(context).load(uri).apply(options).into(view);
+    public static void displayImage(String uri, ImageView view,
+                                    ImageLoadingListener listener) {
+        loader.displayImage(uri, view, listener);
     }
 
+    public static void displayImage(String uri, ImageView view,
+                                    DisplayImageOptions options, ImageLoadingListener listener) {
+        loader.displayImage(uri, view, options, listener);
+    }
 
     // -------loadImage
 
-    public static void loadImage(Context context, String uri, CustomTarget customTarget) {
-//        loader.loadImage(uri, listener);
-        Glide.with(context).asBitmap().load(uri).into(customTarget);
+    public static void loadImage(String uri, ImageLoadingListener listener) {
+        loader.loadImage(uri, listener);
+    }
+
+    public static void loadImage(String uri, DisplayImageOptions options,
+                                 ImageLoadingListener listener) {
+        loader.loadImage(uri, options, listener);
+    }
+
+    public static void loadImage(String uri, ImageSize targetImageSize,
+                                 ImageLoadingListener listener) {
+        loader.loadImage(uri, targetImageSize, listener);
+    }
+
+    public static void loadImage(String uri, ImageSize targetImageSize,
+                                 DisplayImageOptions options, ImageLoadingListener listener) {
+        loader.loadImage(uri, targetImageSize, options, listener);
+    }
+
+    // -------loadImageSync
+
+    public static Bitmap loadImageSync(String uri) {
+        return loader.loadImageSync(uri);
+    }
+
+    public static Bitmap loadImageSync(String uri, DisplayImageOptions options) {
+        return loader.loadImageSync(uri, options);
+    }
+
+    public static Bitmap loadImageSync(String uri, ImageSize targetImageSize) {
+        return loader.loadImageSync(uri, targetImageSize, defaultOptions);
+    }
+
+    public static Bitmap loadImageSync(String uri, ImageSize targetImageSize,
+                                       DisplayImageOptions options) {
+        return loader.loadImageSync(uri, targetImageSize, options);
     }
 
     // -------image uri

@@ -119,7 +119,7 @@ public class RecipeDetailCookstepView extends FrameLayout {
 
             void showData(CookStep step, String imgUrl) {
                 imgStep.setImageDrawable(null);
-                ImageUtils.displayImage(getContext(), imgUrl, imgStep);
+                ImageUtils.displayImage(imgUrl, imgStep);
 
                 txtStepDesc.setText(step.desc);
                 txtStepIndex.setText(String.valueOf(step.order));

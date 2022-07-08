@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:id="@+id/view_status_bar_fix_mirco"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White">
+
+        <ImageView
+            android:id="@+id/iv_micro_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24"/>
+
+        <TextView
+            android:id="@+id/tv_device_model_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textColor="@color/c41"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_micro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:background="@drawable/shape_bg_white_15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="5dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_top_power_micro"
+                android:textSize="@dimen/text_saie_20"
+                android:text="功率"
+                android:textColor="@color/c30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_top_power_micro_unit"
+                android:textSize="16sp"
+                android:text="°C"
+                android:textColor="@color/c30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="#e1e1e1"/>
+
+            <com.robam.roki.ui.view.wheelview.LoopView
+                android:id="@+id/wheel_view_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_min"
+
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_top_power_time"
+                android:textSize="@dimen/text_saie_20"
+                android:text="时间"
+                android:textColor="@color/c30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textSize="16sp"
+                android:text="min"
+                android:textColor="@color/c30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="#e1e1e1"/>
+            <com.robam.roki.ui.view.wheelview.LoopView
+                android:id="@+id/wheel_view_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_weight_micro"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_top_weight"
+                android:textSize="@dimen/text_saie_20"
+                android:text="重量"
+                android:textColor="@color/c30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_top_weight_unit"
+                android:textSize="16sp"
+                android:text="min"
+                android:textColor="@color/c30"
+                android:paddingBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="#e1e1e1"/>
+            <com.robam.roki.ui.view.wheelview.LoopView
+                android:id="@+id/wheel_view_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_mode_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="30dp"
+        android:gravity="center_vertical"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        />
+    <LinearLayout
+        android:id="@+id/ll_order_micro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bg_white_15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical">
+        <com.robam.widget.layout.SettingBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_bg_white_15dp"
+            app:bar_leftText="预约">
+
+            <com.robam.widget.view.SwitchButton
+                android:id="@+id/sb_order_switch_micro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginHorizontal="15dp" />
+        </com.robam.widget.layout.SettingBar>
+        <com.robam.widget.layout.SettingBar
+            android:id="@+id/stb_order_micro"
+            android:visibility="gone"
+            android:background="@drawable/shape_bg_white_15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bar_leftText="今天12:00开始烹饪"
+            app:bar_rightIcon="@drawable/icon_more"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_start"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="#FFFFFF"
+        android:text="开始" />
+</LinearLayout>

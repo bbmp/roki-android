@@ -5,24 +5,21 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatButton;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.google.common.base.Strings;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.CloudHelper;
-import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.services.AccountService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.StringUtils;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.roki.R;
 import com.robam.roki.ui.form.UserActivity;
 import com.robam.roki.ui.page.login.helper.LoginHelper;
 import com.robam.roki.ui.widget.view.ClearEditText;
 import com.robam.roki.ui.widget.view.CountdownView;
 import com.robam.roki.utils.StringUtil;
-import com.robam.roki.utils.ToolUtils;
 
 
 /**
@@ -88,7 +85,7 @@ public class LoginCodePage extends MyBasePage<UserActivity> {
 
     @Override
     public void onClick(View view) {
-        ToolUtils.hideSoftInput(activity);
+        KeyboardUtils.hideSoftInput(activity);
         if (view == cv_find_countdown){
             getCode();
         }else if (view == btn_login_commit){
@@ -141,25 +138,25 @@ public class LoginCodePage extends MyBasePage<UserActivity> {
             return;
         }
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.getVerifyCode(phone, Reponses.GetVerifyCodeReponse.class, new RetrofitCallback<Reponses.GetVerifyCodeReponse>() {
+        getVerifyCode(phone, new Callback<String>() {
             @Override
-            public void onSuccess(Reponses.GetVerifyCodeReponse getVerifyCodeReponse) {
+            public void onSuccess(String s) {
                 ProgressDialogHelper.setRunning(cx, false);
-                if (null != getVerifyCodeReponse) {
-                    code = getVerifyCodeReponse.verifyCode ;
-                    ToastUtils.show( cx.getString(R.string.weixin_login_send_msg));
-                    cv_find_countdown.start();
-                }
+                code = s ;
+                ToastUtils.show( cx.getString(R.string.weixin_login_send_msg));
+                cv_find_countdown.start();
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(err);
+                ToastUtils.show(t.getMessage());
             }
         });
 
     }
-
+    private  void getVerifyCode(String phone, Callback<String> callback) {
+        Plat.accountService.getVerifyCode(phone, callback);
+    }
 
 }

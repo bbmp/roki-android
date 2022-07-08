@@ -11,10 +11,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +27,6 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.common.base.Objects;
@@ -40,6 +42,7 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.TimeUtils;
 import com.legent.utils.api.PreferenceUtils;
 import com.legent.utils.api.ToastUtils;
+import com.robam.base.BaseDialog;
 import com.robam.common.events.FanStatusChangedEvent;
 import com.robam.common.events.KitchenCleanEvent;
 import com.robam.common.events.KitchenCleanGearChangeEvent;
@@ -58,10 +61,13 @@ import com.robam.roki.model.bean.FanKitchenCleanParams;
 import com.robam.roki.model.bean.FanMainParams;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
+import com.robam.roki.ui.activity3.device.base.DeviceBaseFuntionActivity;
+import com.robam.roki.ui.activity3.device.fan.FanLinkageActivity;
+import com.robam.roki.ui.activity3.device.fan.adapter.RvPickerAdapter;
 import com.robam.roki.ui.dialog.AbsFanTimingDialog;
 import com.robam.roki.ui.form.MainActivity;
+import com.robam.roki.ui.mdialog.PickerLayoutManager;
 import com.robam.roki.utils.DialogUtil;
-import com.robam.roki.utils.NoDoubleClickUtils;
 import com.robam.roki.utils.TestDatas;
 import com.robam.roki.utils.ToolUtils;
 
@@ -72,6 +78,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+import static com.legent.ContextIniter.cx;
 import static com.robam.roki.ui.adapter.FanBackgroundFuncAdapter.timeRemindingIsSend;
 
 
@@ -111,6 +118,7 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     FanStatusComposite fanStatusComposite = new FanStatusComposite();
 
     boolean isFeelPower = false;
+    private RvPickerAdapter rvPickerAdapter;
 
     public FanOtherFuncAdapter(Context context, List<DeviceConfigurationFunctions> dates, AbsFan fan) {
         mContext = context;
@@ -122,7 +130,6 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-
     @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
 
@@ -131,6 +138,9 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
+                    if ("5010S".equals(fan.getDt())) {
+                        return;
+                    }
                     kitchenClean(msg.arg1);
                     break;
                 case 2:
@@ -231,8 +241,6 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-
-
     @Subscribe
     public void onEvent(DeviceConnectionChangedEvent event) {
         if (fan == null || !Objects.equal(fan.getID(), event.device.getID()))
@@ -256,7 +264,7 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 count_clean = 0;
             }
 
-            if ("8235S".equals(fan.getDt())||"R68A0".equals(fan.getDt())||"68A0S".equals(fan.getDt())) {
+            if ("8235S".equals(fan.getDt()) || "R68A0".equals(fan.getDt()) || "68A0S".equals(fan.getDt())) {
                 if (fan.timeWork == 0) {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -294,13 +302,13 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             notifyItemChanged(3, 1);
         }
         //判断是否发送168指令 如果发送 走这个判断 其他计时都是本地判断
-        if (timeRemindingIsSend){
+        if (timeRemindingIsSend) {
             short pollingTime = fan.periodicallyRemainingTime;
             //轮询时间和本地时间相等
             if (remindSoupNoticeDialog != null && remindSoupNoticeDialog.isShow()) {
                 pollingTime = 0;
             }
-            if(isCountdown && count_remind == -1){
+            if (isCountdown && count_remind == -1) {
                 pollingTime = 0;
             }
 
@@ -325,6 +333,11 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (count_remind > 0) {
             PreferenceUtils.setBool("isCountdownFan", true);
         }
+    }
+
+    public void setFan(AbsFan fan) {
+        this.fan = fan;
+        notifyItemChanged(0);
     }
 
     @Subscribe
@@ -370,20 +383,20 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 });
                 remindSoupNoticeDialog.show();
 
-                NotificationManager notificationManager = NotificationManagerUtil.getInstance(mContext);
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
+                NotificationManager notificationManager = NotificationManagerUtil.getInstance(cx);
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(cx);
                 mBuilder.setContentTitle("ROKI智能烹饪")//设置通知栏标题
                         .setContentText("计时时间已到，请注意查看关火！") //设置通知栏显示内容
                         .setTicker("计时提醒") //通知首次出现在通知栏，带上升动画效果的
                         .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
-                        .setChannelId(mContext.getPackageName()) //必须添加（Android 8.0） 【唯一标识】
+                        .setChannelId(cx.getPackageName()) //必须添加（Android 8.0） 【唯一标识】
                         .setPriority(Notification.PRIORITY_DEFAULT) //设置该通知优先级
                         .setOngoing(false)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
                         .setDefaults(Notification.DEFAULT_ALL)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
                         //Notification.DEFAULT_ALL  Notification.DEFAULT_SOUND 添加声音 // requires VIBRATE permission
                         .setSmallIcon(R.mipmap.ic_recipe_roki_logo);//设置通知小ICON
-                Intent it = new Intent(mContext, MainActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, it, 0);
+                Intent it = new Intent(cx, MainActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(cx, 0, it, 0);
                 mBuilder.setContentIntent(pendingIntent);
                 Notification notification = mBuilder.build();
                 notification.flags = Notification.FLAG_AUTO_CANCEL;
@@ -412,7 +425,7 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (OTHER_VIEW == viewType) {
             View view = mInflater.inflate(R.layout.item_fan_otherfunc_page, parent, false);
-            FanOtherFuncViewHolder fanOtherFuncViewHolder = new FanOtherFuncViewHolder(mContext, view);
+            FanOtherFuncViewHolder fanOtherFuncViewHolder = new FanOtherFuncViewHolder(view);
             //烟机下面横条的点击事件
             fanOtherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -463,18 +476,34 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
             //解决滑动错乱的问题 直接关闭复用
             fanOtherFuncViewHolder.setIsRecyclable(false);
-            String count_clean_time = TimeUtils.secToHourMinSec((short) count_clean);
-            if (mDates != null && mDates.size() > 0) {
-                Glide.with(mContext).load(mDates.get(position).backgroundImg).transition(withCrossFade()).into(fanOtherFuncViewHolder.mImageView);
-                if ("kitchenCleanup".equals(mDates.get(position).functionCode)) {
-                    StringBuilder cleanTime = new StringBuilder(count_clean_time);
-                    cleanTime.append(mContext.getString(R.string.fan_complete_clean)).append(mDates.get(position).functionName);
+            String count_clean_time;
+            count_clean_time = TimeUtils.secToHourMinSec((short) count_clean);
+            //新增 设备返回的计时
+            int count_clean_time2 = fan.ventilationRemainingTime;
+            if (fan.getDt().equals("5010S")) {
+//                count_clean = fan.ventilationRemainingTime ;
+                count_clean_time = TimeUtils.secToHourMinSec(count_clean_time2);
+            }
 
-                    if (count_clean > 0) {
-                        fanOtherFuncViewHolder.startAnimation();
-                        fanOtherFuncViewHolder.mLlDefaultText.setVisibility(View.GONE);
-                        fanOtherFuncViewHolder.mTvRunWorkText.setVisibility(View.VISIBLE);
-                        fanOtherFuncViewHolder.mTvRunWorkText.setText(cleanTime);
+            if (mDates != null && mDates.size() > 0) {
+                Glide.with(cx).load(mDates.get(position).backgroundImg).transition(withCrossFade()).into(fanOtherFuncViewHolder.mImageView);
+                fanOtherFuncViewHolder.mTvName.setText(mDates.get(position).functionName);
+                fanOtherFuncViewHolder.mTvDesc.setText(mDates.get(position).msg);
+                if ("kitchenCleanup".equals(mDates.get(position).functionCode)) {
+                    StringBuilder cleanTime;
+
+                    cleanTime = new StringBuilder(count_clean_time);
+
+                    cleanTime.append(cx.getString(R.string.fan_complete_clean)).append(mDates.get(position).functionName);
+
+                    if (count_clean > 0 || (fan.getDt().equals("5010S") && count_clean_time2 > 0)) {
+                        if (!cleanTime.toString().contains("00:00:00")) {
+                            fanOtherFuncViewHolder.startAnimation();
+                            fanOtherFuncViewHolder.mLlDefaultText.setVisibility(View.GONE);
+                            fanOtherFuncViewHolder.mTvRunWorkText.setVisibility(View.VISIBLE);
+
+                            fanOtherFuncViewHolder.mTvRunWorkText.setText(cleanTime);
+                        }
 
                     } else {
                         fanOtherFuncViewHolder.stopAnimation();
@@ -491,7 +520,7 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                         if (fan.periodicallyRemainingTime > 0) {
                             remind_time = new StringBuilder(count_remind_time);
-                            remind_time.append(mContext.getString(R.string.fan_complete_clean)).append(mDates.get(position).functionName);
+                            remind_time.append(cx.getString(R.string.fan_complete_clean)).append(mDates.get(position).functionName);
                             fanOtherFuncViewHolder.mTvRunWorkText.setText(remind_time);
 
                             fanOtherFuncViewHolder.startAnimation();
@@ -508,7 +537,7 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     } else {
                         if (count_remind > 0) {
                             remind_time = new StringBuilder(count_remind_time);
-                            remind_time.append(mContext.getString(R.string.fan_complete_clean)).append(mDates.get(position).functionName);
+                            remind_time.append(cx.getString(R.string.fan_complete_clean)).append(mDates.get(position).functionName);
                             fanOtherFuncViewHolder.mTvRunWorkText.setText(remind_time);
 
                             fanOtherFuncViewHolder.startAnimation();
@@ -552,6 +581,9 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 } else if ("gestureControl".equals(mDates.get(position).functionCode)) {
                     fanOtherFuncViewHolder.mTvName.setText(mDates.get(position).functionName);
                     fanOtherFuncViewHolder.mTvDesc.setText(mDates.get(position).msg);
+                } else if ("smokeStoveAutoPower".equals(mDates.get(position).functionCode)) {
+                    fanOtherFuncViewHolder.mTvName.setText(mDates.get(position).functionName);
+                    fanOtherFuncViewHolder.mTvDesc.setText(mDates.get(position).msg);
                 }
             }
             fanOtherFuncViewHolder.mItemView.setTag(mDates.get(position).functionCode);
@@ -564,35 +596,35 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 mainFuncViewHolder.mTvModelName.setText(mDates.get(position).functionName);
                 if ("fry".equals(mDates.get(position).functionCode)) {
                     if (mLevel > AbsFan.PowerLevel_3 && mLevel <= AbsFan.PowerLevel_6) {
-                        Glide.with(mContext).load(mDates.get(position).backgroundImgH).transition(withCrossFade()).
+                        Glide.with(cx).load(mDates.get(position).backgroundImgH).transition(withCrossFade()).
                                 into(mainFuncViewHolder.mIvModelImg);
                     } else {
-                        Glide.with(mContext).load(mDates.get(position).backgroundImg).transition(withCrossFade()).
+                        Glide.with(cx).load(mDates.get(position).backgroundImg).transition(withCrossFade()).
                                 into(mainFuncViewHolder.mIvModelImg);
                     }
                 } else if ("decoct".equals(mDates.get(position).functionCode)) {
                     if (mLevel == AbsFan.PowerLevel_3) {
-                        Glide.with(mContext).load(mDates.get(position).backgroundImgH).transition(withCrossFade()).
+                        Glide.with(cx).load(mDates.get(position).backgroundImgH).transition(withCrossFade()).
                                 into(mainFuncViewHolder.mIvModelImg);
                     } else {
-                        Glide.with(mContext).load(mDates.get(position).backgroundImg).transition(withCrossFade()).
+                        Glide.with(cx).load(mDates.get(position).backgroundImg).transition(withCrossFade()).
                                 into(mainFuncViewHolder.mIvModelImg);
                     }
                 } else if ("stew".equals(mDates.get(position).functionCode)) {
                     if (mLevel == AbsFan.PowerLevel_1 || mLevel == AbsFan.PowerLevel_2) {
-                        Glide.with(mContext).load(mDates.get(position).backgroundImgH).transition(withCrossFade()).
+                        Glide.with(cx).load(mDates.get(position).backgroundImgH).transition(withCrossFade()).
                                 into(mainFuncViewHolder.mIvModelImg);
                     } else {
-                        Glide.with(mContext).load(mDates.get(position).backgroundImg).transition(withCrossFade()).
+                        Glide.with(cx).load(mDates.get(position).backgroundImg).transition(withCrossFade()).
                                 into(mainFuncViewHolder.mIvModelImg);
                     }
                 } else if ("smokeFeeling".equals(mDates.get(position).functionCode)) {
                     LogUtils.i("20191026123456", mDates.get(position).backgroundImg);
                     if (isFeelPower) {
-                        Glide.with(mContext).load(mDates.get(position).backgroundImgH).transition(withCrossFade()).
+                        Glide.with(cx).load(mDates.get(position).backgroundImgH).transition(withCrossFade()).
                                 into(mainFuncViewHolder.mIvModelImg);
                     } else {
-                        Glide.with(mContext).load(mDates.get(position).backgroundImg).transition(withCrossFade()).
+                        Glide.with(cx).load(mDates.get(position).backgroundImg).transition(withCrossFade()).
                                 into(mainFuncViewHolder.mIvModelImg);
                     }
 
@@ -621,8 +653,10 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return OTHER_VIEW;
         }
     }
+
     private static final int MIN_CLICK_DELAY_TIME = 500;
     private static long lastClickTime;
+
     private void ItemEvent(View v) {
         if (!fan.isConnected()) {
             DeviceOfflinePrompt();
@@ -638,11 +672,12 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 //炒
                 case "fry":
 
-                    if((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
+
+                    if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
                         // 超过点击间隔后再将lastClickTime重置为当前点击时间
                         lastClickTime = curClickTime;
 
-                        LogUtils.i("20200610","点击炒");
+                        LogUtils.i("20200610", "点击炒");
 
                         if (fan != null) {
                             ToolUtils.logEvent(fan.getDt(), "炒", "roki_设备");
@@ -653,15 +688,14 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
 
 
-
                     break;
                 //煎
                 case "decoct":
-                    if((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
+                    if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
                         // 超过点击间隔后再将lastClickTime重置为当前点击时间
                         lastClickTime = curClickTime;
 
-                        LogUtils.i("20200610","点击煎");
+                        LogUtils.i("20200610", "点击煎");
 
                         if (fan != null) {
                             ToolUtils.logEvent(fan.getDt(), "煎", "roki_设备");
@@ -677,11 +711,11 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     break;
                 //炖
                 case "stew":
-                    if((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
+                    if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
                         // 超过点击间隔后再将lastClickTime重置为当前点击时间
                         lastClickTime = curClickTime;
 
-                        LogUtils.i("20200610","点击炖");
+                        LogUtils.i("20200610", "点击炖");
 
                         if (fan != null) {
                             ToolUtils.logEvent(fan.getDt(), "炖", "roki_设备");
@@ -709,10 +743,6 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             e.printStackTrace();
         }
     }
-
-
-
-
 
 
     private void setFanFeelPower() {
@@ -760,9 +790,9 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             if (count_clean != 0 && fan.level == AbsFan.PowerLevel_1) {
 
-                if (fan.level == 2 && sing.equals("stew")|| fan.level == 1 && sing.equals("stew")){
+                if (fan.level == 2 && sing.equals("stew") || fan.level == 1 && sing.equals("stew")) {
                     setLevel_0(position);
-                }else{
+                } else {
                     fan.setFanLevel(level, new VoidCallback() {
                         @Override
                         public void onSuccess() {
@@ -779,7 +809,6 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     });
 
                 }
-
 
 
                 return;
@@ -895,7 +924,7 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else if ("cleanLock".equals(tag)) {
             cleanLock();
             //手势控制
-        }else if ("gestureControl".equals(tag)) {
+        } else if ("gestureControl".equals(tag)) {
             String title = null;
             for (int i = 0; i < mDates.size(); i++) {
                 if ("gestureControl".equals(mDates.get(i).functionCode)) {
@@ -904,6 +933,13 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
             gestureControl(title);
 
+        } else if ("smokeStoveAutoPower".equals(tag)) {
+            toCruise();
+        } else if ("smokeLinkage".equals(tag)) {
+            //新增联动功能 5010S开始
+            linkage();
+        }else if ("setLinkageTime".equals(tag)) {
+            selectTime();
         }
     }
 
@@ -914,7 +950,7 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return;
         }
 
-        final IRokiDialog dialog = RokiDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_10);
+        final IRokiDialog dialog = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_TYPE_10);
         dialog.setTitleText("清洗锁定");
         dialog.setContentText("是否确认打开清洗锁定？");
         dialog.show();
@@ -1051,6 +1087,88 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         UIService.getInstance().postPage(PageKey.DeviceFanDryCleaning, bd);
     }
 
+    /**
+     * 联动功能 新增
+     */
+    private void linkage() {
+        if (!fan.isConnected()) {
+            DeviceOfflinePrompt();
+            return;
+        }
+        Bundle bd = new Bundle();
+        bd.putString(PageArgumentKey.Guid, fan.getGuid().getGuid());
+        for (DeviceConfigurationFunctions mDate : mDates) {
+            if(mDate.functionCode.equals("smokeLinkage")){
+                bd.putSerializable(DeviceBaseFuntionActivity.FUNCTION, mDate);
+            }
+        }
+        Intent intent = new Intent(cx, FanLinkageActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(DeviceBaseFuntionActivity.BUNDLE , bd);
+        cx.startActivity(intent);
+    }
+    /**
+     * 选择蒸烤一体机
+     */
+    public void selectTime(){
+        BaseDialog delayedShutDialog = new BaseDialog(mContext);
+        delayedShutDialog.setContentView(R.layout.dialog_device_delayed_shut);
+        delayedShutDialog.setCanceledOnTouchOutside(true);
+        delayedShutDialog.setGravity(Gravity.BOTTOM);
+        delayedShutDialog.setWidth(((AppCompatActivity)mContext).getWindowManager().getDefaultDisplay().getWidth());
+        RecyclerView rvDevice = (RecyclerView) delayedShutDialog.findViewById(R.id.rv_device);
+
+        PickerLayoutManager manager = new PickerLayoutManager.Builder(mContext)
+//                .setMaxItem(3)
+                .setScale(0.3f)
+                .setOnPickerListener(new PickerLayoutManager.OnPickerListener() {
+                    @Override
+                    public void onPicked(RecyclerView recyclerView, int position) {
+                        Log.e("position" , "---------"+position);
+                        rvPickerAdapter.setIndex(position);
+                    }
+                })
+                .build();
+        rvDevice.setLayoutManager(manager);
+        //设置功能区块间距
+//        rvDevice.addItemDecoration(new VerticalItemDecoration(18, mContext));
+        //device adapter
+         rvPickerAdapter = new RvPickerAdapter(mContext);
+        rvDevice.setAdapter(rvPickerAdapter);
+        manager.scrollToPosition(Integer.MAX_VALUE / 2);
+        rvPickerAdapter.setIndex(Integer.MAX_VALUE / 2);
+        //设置数据
+        rvPickerAdapter.addItem(1);
+        rvPickerAdapter.addItem(2);
+        rvPickerAdapter.addItem(3);
+        rvPickerAdapter.addItem(4);
+        rvPickerAdapter.addItem(5);
+        delayedShutDialog.show();
+
+
+        delayedShutDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getId() == R.id.btn_cancel){
+                    delayedShutDialog.dismiss();
+                }else if (view.getId() == R.id.btn_complete){
+                    delayedShutDialog.dismiss();
+                    fan.setDelayedShut(rvPickerAdapter.getItem(rvPickerAdapter.getIndex()), new VoidCallback() {
+                        @Override
+                        public void onSuccess() {
+                            ToastUtils.showShort("设置成功");
+
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+                    });
+                }
+            }
+        } ,R.id.btn_complete, R.id.btn_cancel);
+    }
 
     //烟灶联动跳转
     private void smokeStoveLinkage() {
@@ -1070,6 +1188,19 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
+    /**
+     * 巡航跳转
+     */
+    private void toCruise() {
+        if (!fan.isConnected()) {
+            DeviceOfflinePrompt();
+            return;
+        }
+        Bundle bd = new Bundle();
+        bd.putSerializable(PageArgumentKey.List, (Serializable) mDates);
+        bd.putSerializable(PageArgumentKey.Bean, fan);
+        UIService.getInstance().postPage(PageKey.DeviceFanCruisePage, bd);
+    }
 
     //其他通风换气跳转
     // 5915假日模式
@@ -1266,7 +1397,6 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-
     //开启计时
     void startCountDown(final Integer pos) {
         if (timer_remind != null) {
@@ -1286,7 +1416,7 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }, 0, 1000);
     }
 
-    public void closeTask(){
+    public void closeTask() {
         if (timer_remind != null) {
             timer_remind.cancel();
             timer_remind = null;
@@ -1326,21 +1456,21 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     //关闭计时提醒广播
     private void stopBroadcastReceiver() {
-        AlarmManager alarmManager = AlarmManagerUtil.getInstance(mContext);
-        Intent intent = new Intent(mContext, Fan8700alarmReceiver.class);
+        AlarmManager alarmManager = AlarmManagerUtil.getInstance(cx);
+        Intent intent = new Intent(cx, Fan8700alarmReceiver.class);
         intent.setAction("Fan8700alarmReceiver");
         intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(cx, 0, intent, 0);
         alarmManager.cancel(pendingIntent);
     }
 
     //开启计时提醒广播
     private void startBroadcastReceiver(long time) {
-        AlarmManager alarmManager = AlarmManagerUtil.getInstance(mContext);
-        Intent intent = new Intent(mContext, Fan8700alarmReceiver.class);
+        AlarmManager alarmManager = AlarmManagerUtil.getInstance(cx);
+        Intent intent = new Intent(cx, Fan8700alarmReceiver.class);
         intent.setAction("Fan8700alarmReceiver");
         intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(cx, 0, intent, 0);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
     }
 
@@ -1368,6 +1498,57 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             DeviceOfflinePrompt();
             return;
         }
+        if (fan.getDt().equals("5010S")) {
+            if (fan.ventilationRemainingTime == 0) {
+                mRokiDialog = RokiDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_15);
+                List<DeviceConfigurationFunctions> kitchenData = getKitchenData();
+                ArrayList<String> names = Lists.newArrayList();
+                for (int i = 0; i < kitchenData.size(); i++) {
+                    String functionName = kitchenData.get(i).functionName;
+                    names.add(functionName);
+                }
+                mRokiDialog.setWheelViewData(null, names, null, kitchenData, false, 0, 0, 0, null, new OnItemSelectedListenerCenter() {
+                    @Override
+                    public void onItemSelectedCenter(String contentCenter) {
+                        Message msg = mHandler.obtainMessage();
+                        msg.what = 3;
+                        msg.arg1 = pos;
+                        msg.obj = contentCenter;
+                        mHandler.sendMessage(msg);
+                    }
+                }, null);
+
+                mRokiDialog.show();
+            } else {
+                final IRokiDialog dialogByType = RokiDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_10);
+                dialogByType.setTitleText(R.string.close_work);
+                dialogByType.setContentText(cx.getString(R.string.device_close_work));
+                dialogByType.setOkBtn(R.string.ok_btn, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogByType.dismiss();
+                        fan.setFanStatus(AbsFan.PowerLevel_0, new VoidCallback() {
+                            @Override
+                            public void onSuccess() {
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+                            }
+                        });
+                    }
+                });
+                dialogByType.setCancelBtn(R.string.can_btn, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogByType.dismiss();
+                    }
+                });
+                dialogByType.show();
+            }
+            return;
+        }
+
         if (!PreferenceUtils.containKey(CLEAN_REMIND)) {
             mRokiDialog = RokiDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_15);
             List<DeviceConfigurationFunctions> kitchenData = getKitchenData();
@@ -1391,7 +1572,7 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else {
             final IRokiDialog dialogByType = RokiDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_10);
             dialogByType.setTitleText(R.string.close_work);
-            dialogByType.setContentText(mContext.getString(R.string.device_close_work));
+            dialogByType.setContentText(cx.getString(R.string.device_close_work));
             dialogByType.setOkBtn(R.string.ok_btn, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1515,7 +1696,6 @@ public class FanOtherFuncAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 class FanOtherFuncViewHolder extends RecyclerView.ViewHolder {
 
-    Context mContext;
     ImageView mImageView;
     TextView mTvDesc;
     TextView mTvName;
@@ -1525,10 +1705,9 @@ class FanOtherFuncViewHolder extends RecyclerView.ViewHolder {
     ImageView mStateShow;
     AlphaAnimation mAlphaAnimation;
 
-    public FanOtherFuncViewHolder(Context context, View itemView) {
+    public FanOtherFuncViewHolder(View itemView) {
         super(itemView);
 
-        mContext = context;
         mTvName = (TextView) itemView.findViewById(R.id.tv_name);
         mTvRunWorkText = (TextView) itemView.findViewById(R.id.tv_run_work_text);
         mImageView = (ImageView) itemView.findViewById(R.id.iv_view);
@@ -1542,7 +1721,7 @@ class FanOtherFuncViewHolder extends RecyclerView.ViewHolder {
         mStateShow.setImageResource(R.drawable.shape_rika_round_yellow_dot);
         mAlphaAnimation = null;
         if (mAlphaAnimation == null) {
-            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(mContext, R.anim.device_rika_dot_alpha);
+            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(cx, R.anim.device_rika_dot_alpha);
             LinearInterpolator lin = new LinearInterpolator();
             mAlphaAnimation.setInterpolator(lin);
             mStateShow.startAnimation(mAlphaAnimation);

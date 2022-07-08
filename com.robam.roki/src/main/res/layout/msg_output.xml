@@ -12,7 +12,7 @@
         android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/roki_general_text_color"
+        android:textColor="#ffffff"
         android:background="@drawable/bg_msg_output"
         android:layout_marginStart="20dp"
         tools:text="..." />

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback2;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
@@ -95,6 +96,10 @@ public class MicroWaveModelSelectedPage extends BasePage {
         super.onResume();
         if (mMicroWave==null) {
             return;
+        }
+        if (mMicroWave.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), mMicroWave.getDt() + ":微模式页", null);
         }
     }
 

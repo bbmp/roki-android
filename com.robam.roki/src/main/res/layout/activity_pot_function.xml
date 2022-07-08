@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_bg_main">
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#00ffffff" />
+    <RelativeLayout
+        android:layout_below="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include
+            android:id="@+id/title"
+            layout="@layout/title_layout_device_mian"/>
+        <RelativeLayout
+            android:id="@+id/rl_top_view"
+            android:layout_width="@dimen/dp_310"
+            android:layout_height="@dimen/dp_310"
+            android:layout_below="@+id/title"
+            android:layout_centerHorizontal="true">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_device_img"
+                android:layout_width="@dimen/dp_310"
+                android:layout_height="@dimen/dp_310"
+                android:scaleType="fitXY"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/ll_pot_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <TextView
+                    android:id="@+id/tv_pot_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="65"
+                    android:textColor="@color/text_color_device_category"
+                    android:textSize="@dimen/sp_50" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:text="℃"
+                    android:textColor="@color/text_color_device_category"
+                    android:textSize="@dimen/sp_20" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_pot_context"
+                android:layout_width="@dimen/dp_158"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_pot_temp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_8"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/text_color_device_category"
+                android:textSize="@dimen/sp_12" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_device_connected"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_36"
+            android:layout_below="@id/title"
+            android:background="@color/device_new_connected"
+            android:gravity="center"
+            android:text="@string/device_new_connected"
+            android:textSize="@dimen/sp_12"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/tv_low_power"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_36"
+            android:layout_below="@id/title"
+            android:background="@color/device_new_connected"
+            android:gravity="center_vertical"
+            android:text="@string/pot_low_power_tips"
+            android:textSize="@dimen/sp_12"
+            android:drawableRight="@mipmap/icon_turn_left"
+            android:paddingLeft="@dimen/dp_20"
+            android:visibility="invisible"/>
+        <TextView
+            android:id="@+id/tv_cooking_records"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_36"
+            android:layout_below="@id/title"
+            android:background="@color/device_new_connected"
+            android:gravity="center_vertical"
+            android:text="2022.06.13您有一份烹饪记录待查看"
+            android:textSize="@dimen/sp_12"
+            android:paddingLeft="@dimen/dp_20"
+            android:drawableRight="@mipmap/icon_turn_left"
+            android:visibility="invisible"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_function"
+            android:layout_below="@id/rl_top_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+

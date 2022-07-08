@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.plat.Plat;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.ui.UIService;
@@ -104,6 +105,8 @@ public class DeviceFanOilDetailPage extends BasePage {
         if (iDevice.getDt() == null) {
             return;
         }
+        FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+        firebaseAnalytics.setCurrentScreen(getActivity(), iDevice.getDt(), null);
 
     }
 }

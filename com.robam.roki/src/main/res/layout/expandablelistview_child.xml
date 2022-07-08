@@ -11,7 +11,7 @@
         android:textSize="20sp" />
     <View
         android:layout_below="@+id/gridChildView"
-        android:background="@color/expandablelistview_background"
+        android:background="@color/alivc_barrage_switch_background"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
         android:layout_width="match_parent"

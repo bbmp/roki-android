@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_30">
+
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/include_add_food_material_txt_name"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:textSize="@dimen/sp_18"
+        android:textColor="#801F282D"
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+
+        android:singleLine="true"
+        android:paddingLeft="@dimen/dp_4"
+        android:layout_gravity="center_vertical"
+        android:background="@null"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/text_color_gray"
+        android:id="@+id/include_add_food_material_txt"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/include_add_food_material_number_title_txt"
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:text=""
+        android:textColor="#801F282D"
+        android:textSize="@dimen/sp_18" />
+
+    <EditText
+        android:textColor="@color/text_color_gray"
+        android:textSize="@dimen/sp_18"
+        android:maxLength="6"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:inputType="number"
+        android:layout_marginLeft="@dimen/dp_9"
+        android:layout_gravity="center_vertical"
+        android:background="@null"
+        android:id="@+id/include_add_food_material_dosage_et"
+        android:hint=""
+        android:gravity="center"
+
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:textColor="@color/text_color_gray"
+        android:background="@null"
+        android:textSize="@dimen/sp_18"
+        android:id="@+id/include_add_food_material_dosage_unit"
+        android:layout_marginLeft="@dimen/dp_9"
+        android:layout_gravity="center_vertical"
+        android:drawableRight="@mipmap/icon_show_info"
+
+        android:layout_marginRight="@dimen/dp_27"
+        android:text="g"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

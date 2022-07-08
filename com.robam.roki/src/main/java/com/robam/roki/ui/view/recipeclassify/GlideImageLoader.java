@@ -3,11 +3,20 @@ package com.robam.roki.ui.view.recipeclassify;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.legent.utils.graphic.ImageUtils;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.robam.roki.R;
 import com.robam.roki.ui.extension.GlideApp;
+import com.robam.roki.ui.view.NewRoundBitmapDisplayer;
+import com.robam.roki.ui.view.PicassoRoundTransform;
+import com.robam.roki.ui.view.RoundTransformation;
+import com.squareup.picasso.Picasso;
 //import com.youth.banner.loader.ImageLoader;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;

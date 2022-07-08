@@ -11,6 +11,7 @@ import com.robam.roki.utils.StringConstantsUtil;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by 14807 on 2018/2/7.
@@ -93,17 +94,82 @@ public class HelperRikaData {
         }
     }
 
-    public static int getMinGap(String orderDate) {
-        String currentTime = DateUtil.getCurrentTime(DateUtil.PATTERN);
-        int orderMin = Integer.parseInt(orderDate.substring(orderDate.length() - 2, orderDate.length()));
-        int currentMin = Integer.parseInt(currentTime.substring(currentTime.length() - 2, orderDate.length()));
+    public static int getMinGap620(String orderDate) {
+        String currentTime = DateUtil.getCurrentTime(DateUtil.PATTERN_TIME);
+        int orderSecond = Integer.parseInt(orderDate.substring(orderDate.length() - 2));
+        int currentSecond = Integer.parseInt(currentTime.substring(currentTime.length() -2));
+//        String s=;
+//        String ss=;
+        int orderMin = Integer.parseInt(orderDate.substring(3,5));
+
+        int currentMin =  Integer.parseInt(currentTime.substring(3,5));
+
+
         int orderHours = Integer.parseInt(orderDate.substring(0, 2));
         int currentHours = Integer.parseInt(currentTime.substring(0, 2));
-        if (orderMin - currentMin < 0) {
-            return orderMin + 60 - currentMin;
-        } else {
-            return orderMin - currentMin;
+        int hours=0;
+        if (DateUtil.compareTime(currentTime, orderDate, DateUtil.PATTERN_TIME) == 1) {
+            if (orderMin - currentMin < 0) {
+                hours= (orderHours + 23 - currentHours)*60+(orderMin-currentMin)+60;
+            } else {
+                hours= (orderHours + 24 - currentHours)*60+(currentMin-orderMin);
+            }
+        }else{
+            if (orderMin - currentMin < 0) {
+                hours= (orderHours - currentHours - 1)+(orderMin-currentMin)+60;
+            } else {
+                hours= (orderHours - currentHours)*60+(orderMin-currentMin);
+            }
         }
+        if (orderSecond<currentSecond){
+            hours=hours*60-(orderSecond+60-currentSecond);
+        }else{
+            hours=hours*60-(currentSecond-orderSecond);
+        }
+        return hours;
+    }
+
+    public static int getMinGap(String orderDate) {
+        String currentTime = DateUtil.getCurrentTime(DateUtil.PATTERN);
+        int orderMin = Integer.parseInt(orderDate.substring(orderDate.length() - 2));
+        int currentMin = Integer.parseInt(currentTime.substring(currentTime.length() - 2, orderDate.length()));
+//        int orderHours = Integer.parseInt(orderDate.substring(0, 2));
+//        int currentHours = Integer.parseInt(currentTime.substring(0, 2));
+
+//        int hours=0;
+//        if (DateUtil.compareTime(currentTime, orderDate, DateUtil.PATTERN) == 1) {
+//            if (orderMin - currentMin < 0) {
+//                hours= (orderHours + 23 - currentHours)*60+(orderMin-currentMin)+60;
+//            } else {
+//                hours= (orderHours + 24 - currentHours)*60+(currentMin-orderMin);
+//            }
+//        }else{
+//            if (orderMin - currentMin < 0) {
+//                hours= (orderHours - currentHours - 1)*60+(orderMin-currentMin)+60;
+//            } else {
+//                hours= (orderHours - currentHours)*60+(orderMin-currentMin);
+//            }
+//        }
+
+        int hours=0;
+        if (DateUtil.compareTime(currentTime, orderDate, DateUtil.PATTERN) == 1) {
+            if (orderMin - currentMin < 0) {
+                 hours  =   orderMin - currentMin + 60;;
+            } else {
+                hours= currentMin - orderMin;
+            }
+        }else{
+            if (orderMin < currentMin) {
+                hours  =   orderMin - currentMin + 60;
+//                hours= (orderHours - currentHours - 1)*60+(orderMin-currentMin)+60;
+            } else {
+                hours  =    orderMin - currentMin;
+//                hours= (orderHours - currentHours)*60+(orderMin-currentMin);
+            }
+        }
+
+
+        return hours;
 
     }
 
@@ -119,7 +185,15 @@ public class HelperRikaData {
         }
         return mins;
     }
-
+//    public static List<String> getPowerData(List<Integer> powerList) {
+//        List<String> powers = Lists.newArrayList();
+//        for (Integer integer : powerList) {
+//            powers.add(integer.toString());
+//        }
+//        return powers;
+//
+//
+//    }
     //RIKA获取温度
     public static List<String> getTempData(List<Integer> tempList) {
         List<String> temps = Lists.newArrayList();

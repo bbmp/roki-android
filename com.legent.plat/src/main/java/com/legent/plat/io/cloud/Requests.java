@@ -9,8 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import retrofit.http.Field;
-
 /**
  * Created by sylar on 15/7/23.
  */

@@ -206,7 +206,10 @@ public class SlideLockView extends TextView {
         this.mLockListener = lockListener;
     }
 
-
+    public void loadImg(String img, String imgH) {
+        Bitmap bitmap = ImageUtils.loadImageSync(img);
+        Bitmap bitmapH = ImageUtils.loadImageSync(imgH);
+    }
 
     public interface OnLockListener {
         void onOpenLockSuccess();

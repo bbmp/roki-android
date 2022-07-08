@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.legent.plat.pojos.device.MainFunc;
@@ -101,7 +101,10 @@ public class AbsHidKitDevicePage<HidKit extends AbsHidKit> extends DeviceCatchFi
     @InjectView(R.id.seek_bar)
     SeekBar seekBar;
     private String[] deviceParam;
-    private String downloadUrl = "http://roki.oss-cn-hangzhou.aliyuncs.com/KC306.json";
+    private String KC306_downloadUrl = "http://roki.oss-cn-hangzhou.aliyuncs.com/KC306.json";
+    private String KM310_downloadUrl = "http://roki.oss-cn-hangzhou.aliyuncs.com/KM310.json";
+    private String KC306_fileName = "KC306.json";
+    private String KM310_fileName = "KM310.json";
 //private String downloadUrl = "https://roki-test.oss-cn-qingdao.aliyuncs.com/KC306.json";//测试环境
 
     public static String kc306Json;
@@ -118,12 +121,19 @@ public class AbsHidKitDevicePage<HidKit extends AbsHidKit> extends DeviceCatchFi
     private boolean connected;
 
 
-//    @Subscribe
+    //    @Subscribe
 //    public void onEvent(NewVersionHidKitEvent event) {
 //        PreferenceUtils.setBool(PageArgumentKey.isShow, false);
 //        LogUtils.i("20201110", "newVersion_val:" + event.newVersion_val);
 //        downJsonVersion(event.newVersion_val);
 //    }
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event) {
+        if (mGuid.equals(event.device.getGuid().getGuid())) {
+            String name = event.device.getName();
+            tvDeviceModelName.setText(name);
+        }
+    }
 
     @Subscribe
     public void onEvent(TheUpgradeHidKitEvent event) {
@@ -134,20 +144,19 @@ public class AbsHidKitDevicePage<HidKit extends AbsHidKit> extends DeviceCatchFi
 
     @Subscribe
     public void onEvent(HidKitStatusChangedEvent event) {
-
         if (mHidKit == null || !Objects.equal(mHidKit.getID(), event.pojo.getID()))
             return;
         mHidKit = (HidKit) event.pojo;
         connected = mHidKit.isConnected();
         wifiState();
-
     }
 
     @Subscribe
     public void onEvent(DeviceConnectionChangedEvent event) {
-        connected = event.isConnected;
-        LogUtils.i("20201125", "connected:" + connected);
-        wifiState();
+        if (event.device.getID().equals(mGuid)) {
+            connected = event.isConnected;
+            wifiState();
+        }
     }
 
     @Override
@@ -174,8 +183,15 @@ public class AbsHidKitDevicePage<HidKit extends AbsHidKit> extends DeviceCatchFi
     }
 
     private void downJsonVersion() {
-
-        RestfulService.getInstance().downFile(downloadUrl, "KC306.json", new Callback<Uri>() {
+        String downloadUrl = "", fileName = "";
+        if (mGuid.contains("KC306")) {
+            downloadUrl = KC306_downloadUrl;
+            fileName = KC306_fileName;
+        } else if (mGuid.contains("KM310")) {
+            downloadUrl = KM310_downloadUrl;
+            fileName = KM310_fileName;
+        }
+        RestfulService.getInstance().downFile(downloadUrl, fileName, new Callback<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 LogUtils.i("20201111", " uri:" + uri);
@@ -270,12 +286,11 @@ public class AbsHidKitDevicePage<HidKit extends AbsHidKit> extends DeviceCatchFi
             @Override
             public void onFailure(Throwable t) {
                 LogUtils.i("20190614", " t:" + t.toString());
-               mHandler.sendEmptyMessage(2);
+                mHandler.sendEmptyMessage(2);
             }
         });
 
     }
-
 
 
     private void initListener() {
@@ -333,7 +348,8 @@ public class AbsHidKitDevicePage<HidKit extends AbsHidKit> extends DeviceCatchFi
             }
 
             ModelMap modelMap = obj.modelMap;
-            tvDeviceModelName.setText(obj.title);
+//            tvDeviceModelName.setText(obj.title);
+            tvDeviceModelName.setText(mHidKit.getName() == null ||  mHidKit.getName().equals(mHidKit.getCategoryName())? mHidKit.getDispalyType() : mHidKit.getName());
             mViewBackgroundImg = obj.viewBackgroundImg;
             LogUtils.i("20180815", " mViewBackgroundImg:" + mViewBackgroundImg);
             Glide.with(cx).load(mViewBackgroundImg).into(ivBg);
@@ -382,11 +398,13 @@ public class AbsHidKitDevicePage<HidKit extends AbsHidKit> extends DeviceCatchFi
             e.printStackTrace();
         }
     }
+
     //Unicode转中文方法
     private static String decodeUtf8Str(String xstr) throws UnsupportedEncodingException {
 
-        return URLDecoder.decode(xstr.replaceAll("\\\\x" , "%") , "utf-8");
+        return URLDecoder.decode(xstr.replaceAll("\\\\x", "%"), "utf-8");
     }
+
     private void otherFuncItemEvent(View view) {
 
         DeviceConfigurationFunctions functions = (DeviceConfigurationFunctions) view.getTag(R.id.tag_hid_kit_other_func_key);
@@ -400,6 +418,10 @@ public class AbsHidKitDevicePage<HidKit extends AbsHidKit> extends DeviceCatchFi
             UIService.getInstance().postPage(PageKey.SmartHome, bundleOnlyAtHome);
         } else if ("storyVideo".equals(code) || "reminders".equals(code) || "knowledge".equals(code)
                 || "lifeAssistant".equals(code)) {
+            Bundle bundleStoryVideo = new Bundle();
+            bundleStoryVideo.putSerializable(PageArgumentKey.Bean, functions);
+            UIService.getInstance().postPage(PageKey.HidKitHomeOther, bundleStoryVideo);
+        }else {
             Bundle bundleStoryVideo = new Bundle();
             bundleStoryVideo.putSerializable(PageArgumentKey.Bean, functions);
             UIService.getInstance().postPage(PageKey.HidKitHomeOther, bundleStoryVideo);
@@ -511,13 +533,14 @@ public class AbsHidKitDevicePage<HidKit extends AbsHidKit> extends DeviceCatchFi
             case 3://升级中...
                 if (downDialog != null && downDialog.isShow()) {
                     if (i >= 100) {
-                        i = 99;
+                        downDialog.setProgress(99);
+                    } else {
+                        downDialog.setProgress(i);
                     }
-                    downDialog.setProgress(i);
-                    if(i>=30){
+                    if (i >= 300) {
                         //三分钟算超时
-                        switchStatus(2);
-                    }else {
+                        mHandler.sendEmptyMessage(0);
+                    } else {
                         i += 1;
                     }
                 }

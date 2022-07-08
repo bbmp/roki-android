@@ -12,3 +12,5 @@ captures/
 */dex-cache/*
 .externalNativeBuild/
 com.robam.roki/release/
+.DS_Store
+.DS_Store

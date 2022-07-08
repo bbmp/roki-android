@@ -37,15 +37,15 @@ import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.airbnb.lottie.LottieAnimationView;
+
+import com.robam.base.action.ActivityAction;
 import com.robam.roki.R;
-import com.robam.roki.ui.page.login.action.ActivityAction;
-import com.robam.roki.ui.widget.layout.SimpleLayout;
-
-
+import com.robam.widget.layout.SimpleLayout;
 import java.io.File;
 import java.util.Formatter;
 import java.util.Locale;
 
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 /**
  *    time   : 2019/02/16

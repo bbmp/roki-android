@@ -54,6 +54,7 @@
             />
 
         <TextView
+            android:id="@+id/waterfilter_intro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -66,6 +67,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/waterfilter_intro3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"

@@ -1,8 +1,11 @@
 package com.robam.roki.ui.page;
 
+
+
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -20,7 +23,6 @@ import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.UserUpdatedEvent;
-import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
@@ -38,6 +40,7 @@ import com.robam.roki.ui.view.UserGenderView;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.PermissionsUtils;
 import com.robam.roki.utils.PickImageHelperTwo;
+import com.youzan.sdk.YouzanSDK;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -144,6 +147,7 @@ public class UserInfoPage extends BasePage {
                 dialog.dismiss();
                 PreferenceUtils.setBool("logout",false);
                 Plat.accountService.logout(null);
+                YouzanSDK.userLogout(cx);
 
                 UIService.getInstance().popBack();
             }
@@ -166,7 +170,7 @@ public class UserInfoPage extends BasePage {
 
     void showUser(User user) {
 
-        txtName.setText(Strings.isNullOrEmpty(user.nickname) ? user.phone : user.nickname);
+        txtName.setText(Strings.isNullOrEmpty(user.name) ? user.phone : user.name);
         txtEmail.setText(Strings.isNullOrEmpty(user.email) ? "请设置邮箱" : user.email);
         txtPhone.setText(Strings.isNullOrEmpty(user.phone) ? "请设置手机" : user.phone);
         txtPwd.setText(user.hasPassword() ? "修改密码" : "请设置密码");
@@ -184,11 +188,11 @@ public class UserInfoPage extends BasePage {
         if (Strings.isNullOrEmpty(figure))
             imgFigure.setImageResource(R.mipmap.ic_user_default_figure);
         else
-            ImageUtils.displayImage(cx, figure, imgFigure, Helper.DisplayImageOptions_UserFace);
+            ImageUtils.displayImage(figure, imgFigure, Helper.DisplayImageOptions_UserFace);
     }
 
     void setGender(final boolean gender) {
-        CloudHelper.updateUser(user.id, user.nickname, user.phone, user.email, gender, new VoidCallback() {
+        Plat.accountService.updateUser(user.id, user.name, user.phone, user.email, gender, new VoidCallback() {
             @Override
             public void onSuccess() {
                 user.gender = gender;
@@ -227,6 +231,11 @@ public class UserInfoPage extends BasePage {
                             ToastUtils.showThrowable(t);
                         }
                     });
+        }
+
+        @Override
+        public void onPickComplete(String bmp) {
+
         }
     };
 

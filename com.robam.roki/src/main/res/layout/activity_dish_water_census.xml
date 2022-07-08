@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/mine_white_background">
+        <View
+            android:id="@+id/status_bar_fix"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#00ffffff" />
+        <include
+            android:id="@+id/title"
+            layout="@layout/title_layout_device_function"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_20"
+            android:layout_marginTop="@dimen/dp_44"
+            android:textColor="@color/text_color_device_category"
+            android:text="累计节约水资源" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/text_color_gray"
+            android:text="累计节约水资源" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_134"
+            android:gravity="center"
+            >
+
+                <TextView
+                    android:id="@+id/tv_water_vol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cook_chart_blue"
+                    android:textSize="96sp"
+                    tools:text="100" />
+                <TextView
+                    android:layout_toEndOf="@+id/tv_water_vol"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="@color/cook_chart_blue"
+                    android:text="L" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_water_vol_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_color_gray"
+            android:text="累计节约水资源" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_136"
+            android:background="@drawable/shape_kitchen_bg_round"
+            android:layout_marginTop="@dimen/dp_58"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="累计节约水资源"
+                    android:textColor="@color/text_color_device_category"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:id="@+id/tv_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:textColor="@color/text_color_device_category"
+                    android:textSize="@dimen/sp_20"
+                    tools:text="23次" />
+
+                <TextView
+                    android:id="@+id/tv_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="@dimen/dp_20"
+                    android:background="@color/line_mode" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_28"
+                    android:text="最后一次耗水量"
+                    android:textColor="@color/text_color_device_category"
+                    android:textSize="@dimen/sp_20" />
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/text_color_gray"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_12"
+                    android:layout_alignParentBottom="true"
+                    android:text="2022-02-02" />
+
+                <TextView
+                    android:id="@+id/tv_water_vol_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:textColor="@color/text_color_device_category"
+                    android:textSize="@dimen/sp_20"
+                    android:layout_alignParentBottom="true"
+                    tools:text="12L" />
+        </RelativeLayout>
+</LinearLayout>
+

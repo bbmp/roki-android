@@ -34,6 +34,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -116,6 +117,11 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 //    private int tabBackgroundResId = R.drawable.background_tab;
 
     private Locale locale;
+    boolean isMargins=false;
+    //单独设置是否要设置边距
+    public void setMargins( boolean isMargins){
+        this.isMargins=isMargins;
+    }
 
     public PagerSlidingTabStrip(Context context) {
         this(context, null);
@@ -289,6 +295,11 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
                 TextView tab = (TextView) v;
                 tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, tabTextSize);
+                if (isMargins) {
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    layoutParams.setMargins(16, 0, 16, 0);
+                    tab.setLayoutParams(layoutParams);
+                }
 //				tab.setTypeface(tabTypeface, tabTypefaceStyle);
                 tab.setTextColor(tabTextColor);
 

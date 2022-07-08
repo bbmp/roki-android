@@ -20,6 +20,7 @@
         android:src="@mipmap/ic_item_device_add" />
 
     <LinearLayout
+        android:id="@+id/ll_sterilizer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

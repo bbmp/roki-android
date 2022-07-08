@@ -33,7 +33,7 @@ import com.robam.roki.R;
 import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.utils.DialogUtil;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -164,7 +164,7 @@ public class AbsSteamOvenWorking906View extends FrameLayout {
 
     public void initView() {
         View view = LayoutInflater.from(cx).inflate(R.layout.abs_steamoven_906_working_page, this, true);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         if (!view.isInEditMode()) {
             ButterKnife.inject(this, view);
         }
@@ -352,14 +352,14 @@ public class AbsSteamOvenWorking906View extends FrameLayout {
             commonMode();
         }
 
-        if (steameOvenOne.worknStatus == SteamOvenOneWorkStatus.PreHeat &&
+        if (steameOvenOne.workState == SteamOvenOneWorkStatus.PreHeat &&
                 steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus) {
             heatMode();
-        } else if (steameOvenOne.worknStatus == SteamOvenOneWorkStatus.Working &&
+        } else if (steameOvenOne.workState == SteamOvenOneWorkStatus.Working &&
                 steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus) {
             runMode();
         } else if (steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.Pause &&
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.On) {
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.On) {
             pauseMode();
         } else if (steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.Order) {
             orderMode();
@@ -514,7 +514,7 @@ public class AbsSteamOvenWorking906View extends FrameLayout {
             public void onClick(View view) {
                 if (closedialog.isShow()) {
                     closedialog.dismiss();
-                    if (steameOvenOne.powerStatus == SteamOvenOnePowerOnStatus.Order || steameOvenOne.powerStatus == SteamOvenOnePowerOnStatus.WorkingStatus) {
+                    if (steameOvenOne.powerState == SteamOvenOnePowerOnStatus.Order || steameOvenOne.powerState == SteamOvenOnePowerOnStatus.WorkingStatus) {
                         steameOvenOne.setSteameOvenStatus(SteamOvenOnePowerStatus.On, SteamOvenOnePowerOnStatus.OperatingState, null);
                     } else
                         steameOvenOne.setSteameOvenStatus(SteamOvenOnePowerStatus.Off, SteamOvenOnePowerOnStatus.OperatingState, null);

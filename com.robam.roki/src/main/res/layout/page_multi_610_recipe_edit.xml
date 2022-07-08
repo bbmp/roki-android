@@ -21,6 +21,7 @@
         app:title="详情"
         app:rightSize="18sp" />
     <TextView
+        android:id="@+id/name_title"
         android:layout_margin="8dp"
         android:text="@string/device_recipe_name"
         android:textSize="18sp"
@@ -40,16 +41,18 @@
         android:layout_height="45dp">
     </EditText>
     <RelativeLayout
+        android:id="@+id/step_title"
         android:layout_margin="8dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
-            android:text="@string/device_multi_step"
-            android:textSize="18sp"
-            android:textColor="@color/common_text_color"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/device_multi_step"
+            android:textColor="@color/common_text_color"
+            android:textSize="18sp" />
         <TextView
             android:id="@+id/tv_info"
             android:layout_marginEnd="8dp"

@@ -57,4 +57,9 @@ public class DeviceConfigurationFunctions extends AbsPojo implements Serializabl
     @JsonProperty("msg")
     public String msg;
 
+    /**
+     * 顺序字段
+     */
+    public int order;
+
 }

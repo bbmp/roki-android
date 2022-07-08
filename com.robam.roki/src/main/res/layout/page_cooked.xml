@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.page.curve.RecipeSuccessPage">
+    <include
+        android:id="@+id/pag_cooked_title_bar"
+        layout="@layout/include_title_bar"/>
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/page_btn_bottom_ll"
+        android:layout_below="@+id/pag_cooked_title_bar">
+
+        <com.google.android.material.appbar.AppBarLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/page_cooked_preview_title_ctl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/pag_cooked_preview_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+
+                        android:layout_marginTop="@dimen/dp_27"
+
+                        android:src="@mipmap/icon_recipe_add_line" />
+
+
+                    <TextView
+                        android:id="@+id/pag_cooked_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/pag_cooked_preview_img"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:gravity="center_horizontal"
+                        android:hint="烹饪曲线已生成"
+                        android:textColor="#000"
+                        android:textColorHint="#66686C"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/page_add_cook_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/pag_cooked_line"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_horizontal"
+                        android:text="请补充烹饪步骤，复刻美味更加快捷"
+                        android:textColor="#66686C"
+                        android:textSize="12sp" />
+
+                    <EditText
+
+                        android:id="@+id/page_edit_line_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_41"
+                        android:layout_below="@+id/page_add_cook_line"
+                        android:layout_marginStart="@dimen/dp_21"
+                        android:layout_marginTop="@dimen/dp_21"
+                        android:layout_marginEnd="@dimen/dp_21"
+                        android:layout_marginBottom="@dimen/dp_21"
+                        android:background="@drawable/shape_input_curve_et"
+                        android:paddingLeft="@dimen/dp_18"
+                        android:text="给烹饪曲线加个名字吧" />
+
+                    <RelativeLayout
+                        android:id="@+id/add_dished_prepare_by_step_page_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_89"
+                        android:layout_below="@+id/page_edit_line_name"
+                        android:layout_marginLeft="@dimen/dp_21"
+                        android:layout_marginRight="@dimen/dp_21"
+                        android:background="@drawable/shape_input_curve_et">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_31"
+                            android:layout_height="@dimen/dp_31"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp_8"
+                            android:layout_toLeftOf="@+id/add_dished_prepare_by_step_page_btn"
+                            android:src="@mipmap/icon_add_picture" />
+
+                        <TextView
+
+                            android:id="@+id/add_dished_prepare_by_step_page_btn"
+
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+
+
+                            android:gravity="center"
+                            android:text="添加备菜步骤"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="@dimen/dp_21"
+
+                android:layout_marginTop="19dp"
+                android:layout_marginRight="@dimen/dp_21"
+                android:text="悬浮" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_21"
+            android:background="@color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+                android:id="@+id/page_cooked_data_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_28"
+
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="@color/white"
+        android:id="@+id/page_btn_bottom_ll"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:background="@drawable/shape_icon_bg"
+            android:visibility="gone"
+            android:layout_marginRight="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_32"
+            android:layout_weight="1"
+            android:textSize="@dimen/dp_24"
+            android:text="结束烹饪"
+            android:id="@+id/act_end_recipe_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:visibility="gone"
+            android:background="@drawable/shape_icon_save_bg"
+            android:layout_marginRight="@dimen/dp_32"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_weight="1"
+
+            android:textSize="@dimen/dp_24"
+            android:text="暂停"
+            android:id="@+id/act_recipe_pause_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+
+            android:textSize="@dimen/sp_24"
+            android:textColor="#333333"
+            android:layout_marginLeft="@dimen/dp_52"
+            android:layout_marginRight="@dimen/dp_52"
+            android:background="@drawable/shape_icon_save_bg"
+            android:id="@+id/page_btn_cooked_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="保存烹饪曲线" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

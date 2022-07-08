@@ -472,7 +472,7 @@ public abstract class AbsDUIPage extends MyBasePage<MainActivity> implements Dui
             }
         }
     }
-
+/*
     @Override
     protected void setStateBarFixer2() {
         if (rootView != null) {
@@ -480,7 +480,7 @@ public abstract class AbsDUIPage extends MyBasePage<MainActivity> implements Dui
             if (mStateBarFixer != null) {
                 mStateBarFixer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         getStatusBarHeight(getActivity())));
-                mStateBarFixer.setBackgroundColor(Color.WHITE);
+//                mStateBarFixer.setBackgroundColor(Color.WHITE);
             } else {
 //                Class<? extends BasePage> aClass = getClass();
 //                LogUtils.i("class_name" , aClass.getName());
@@ -490,4 +490,6 @@ public abstract class AbsDUIPage extends MyBasePage<MainActivity> implements Dui
             }
         }
     }
+
+ */
 }

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/white"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/title_bar_prepared_by_step"
+        layout="@layout/include_title_bar"/>
+
+  <androidx.core.widget.NestedScrollView
+      android:background="@color/white"
+      android:id="@+id/dishes_prepared_by_step_scrollview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_above="@+id/btn_save_dishes_prepared_by_step"
+      android:layout_below="@+id/title_bar_prepared_by_step">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp_24"
+          android:layout_marginTop="@dimen/dp_24"
+          android:text="菜谱封面"
+          android:textColor="#1F282D"
+          android:textSize="@dimen/sp_24" />
+
+
+      <ImageView
+
+          android:id="@+id/page_choose_pick_image"
+          android:layout_width="match_parent"
+          android:layout_height="200dp"
+          android:layout_marginLeft="@dimen/dp_24"
+          android:layout_marginTop="@dimen/dp_6"
+          android:layout_marginRight="@dimen/dp_24"
+          android:src="@drawable/default_ptr_rotate"
+          android:text="点击上传图片" />
+      <RelativeLayout
+          android:layout_marginTop="@dimen/dp_23"
+          android:layout_marginBottom="@dimen/dp_23"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp_110">
+
+        <EditText
+            android:id="@+id/page_choose_pick_image_introduction"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_87"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_24"
+            android:background="@drawable/shape_input_curve_et"
+            android:gravity="top|left"
+            android:hint="写一点这道菜背后的故事吧！"
+            android:maxLength="100"
+            android:padding="@dimen/dp_12"
+            android:textColor="#333"
+            android:textColorHint="#1F282D"
+            android:textSize="18sp" />
+
+        <TextView
+            android:textSize="@dimen/sp_10"
+            android:textColor="#1F282D"
+            android:layout_marginRight="@dimen/dp_34"
+            android:layout_marginBottom="@dimen/dp_33"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="100字以内"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+      </RelativeLayout>
+
+
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp_24"
+          android:layout_marginTop="@dimen/dp_21"
+          android:text="食材"
+          android:textColor="#1F282D"
+          android:textSize="@dimen/sp_18" />
+
+      <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+          android:id="@+id/page_dishes_prepare_list_by_step_food"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+
+      <TextView
+          android:id="@+id/page_add_food_material"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:drawableRight="@mipmap/icon_audio_input"
+          android:gravity="center"
+          android:text="添加食材"
+          android:textColor="#1F282D"
+          android:textSize="@dimen/dp_18" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp_24"
+          android:layout_marginTop="@dimen/dp_21"
+          android:text="佐料"
+          android:textColor="#1F282D"
+          android:textSize="@dimen/sp_18" />
+
+      <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+          android:id="@+id/page_dishes_prepare_list_by_step_seasoning"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:drawableRight="@mipmap/icon_audio_input"
+          android:id="@+id/page_add_food_seasoning"
+          android:textColor="#1F282D"
+          android:textSize="@dimen/dp_18"
+          android:text="添加佐料" />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp_24"
+          android:layout_marginTop="@dimen/dp_21"
+          android:text="备菜"
+          android:textColor="#1F282D"
+          android:textSize="@dimen/sp_18" />
+      <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+          android:id="@+id/page_dishes_prepare_list_by_step"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+
+      <TextView
+          android:drawableRight="@mipmap/icon_audio_input"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:id="@+id/page_add_food_view_btn"
+          android:textColor="#1F282D"
+          android:textSize="@dimen/dp_18"
+          android:text="添加步骤" />
+
+
+    </LinearLayout>
+  </androidx.core.widget.NestedScrollView>
+
+  <Button
+      android:id="@+id/btn_save_dishes_prepared_by_step"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_marginLeft="@dimen/dp_52"
+      android:layout_marginRight="@dimen/dp_52"
+      android:layout_marginBottom="@dimen/dp_26"
+      android:background="@drawable/shape_icon_save_bg"
+      android:text="保存"
+      android:textColor="#000"
+      android:textSize="@dimen/dp_18" />
+
+</RelativeLayout>

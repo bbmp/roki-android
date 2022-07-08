@@ -129,6 +129,9 @@ public interface Reponses {
 
     class LoginReponse extends RCReponse {
 
+        @JsonProperty("tgt")
+        public String tgt;
+
         @JsonProperty("user")
         public User user;
     }
@@ -254,12 +257,7 @@ public interface Reponses {
         public String msg;
 
         @JsonProperty("map")
-        public Map<String, DeviceInfo> map;
-
-        class DeviceInfo {
-            String dp;
-            String dc;
-        }
+        public Map deviceTypes;
     }
 
     class ErrorInfoResponse extends RCReponse{

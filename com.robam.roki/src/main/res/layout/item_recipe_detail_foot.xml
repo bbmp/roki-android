@@ -3,9 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingStart="16dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginBottom="120dp"
+    android:layout_marginTop="@dimen/dp_40"
     android:orientation="vertical"
     tools:ignore="RtlSymmetry">
 
@@ -13,14 +11,14 @@
         android:id="@+id/tv_recipe_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/sp_20"
         android:textStyle="bold"
-        android:layout_marginBottom="17dp"
-        android:textColor="@color/roki_main_text_color"
+        android:textColor="@color/text_color_net_err"
         android:text="大家都在做"/>
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/rv_recipe"
+        android:layout_marginTop="@dimen/dp_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

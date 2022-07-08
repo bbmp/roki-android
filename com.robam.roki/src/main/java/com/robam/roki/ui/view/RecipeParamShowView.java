@@ -168,8 +168,10 @@ public class RecipeParamShowView extends FrameLayout {
             modeShow.setText("风量");
             //火力
             paramCode paramTemp = map.get("stoveGear");
-            tempture.setText("P" + paramTemp.value);
-            temptureShow.setText("火力");
+            if(paramTemp!=null){
+                tempture.setText("P" + paramTemp.value);
+                temptureShow.setText("火力");
+            }
 
             //时间
             paramCode needTime = map.get("needTime");

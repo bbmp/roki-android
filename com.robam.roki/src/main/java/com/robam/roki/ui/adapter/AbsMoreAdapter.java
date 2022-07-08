@@ -1,7 +1,7 @@
 package com.robam.roki.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.robam.roki.R;
 import com.robam.roki.model.bean.DeviceMoreBean;
+import com.robam.roki.ui.widget.layout.SettingBar;
 
 
 import java.util.List;
@@ -55,27 +56,39 @@ public class AbsMoreAdapter extends RecyclerView.Adapter<AbsMoreViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(AbsMoreViewHolder holder, final int position) {
+    public void onBindViewHolder(AbsMoreViewHolder holder, @SuppressLint("RecyclerView")  int position) {
         if (mDatas != null && mDatas.size() > 0){
             holder.mTvName.setText(mDatas.get(position).getName());
             holder.mItemView.setTag(mDatas.get(position));
+            holder.stbMore.setLeftText(mDatas.get(position).getName());
+            holder.stbMore.setTag(mDatas.get(position));
             if (mDatas.get(position).getType()==1) {
                 holder.mImageView.setImageResource(mDatas.get(position).getImageRes());
             }else{
                 Glide.with(mContext).load(mDatas.get(position).getImageUrl()).into(holder.mImageView);
             }
 
+            if (position == 0){
+                holder.stbMore.setRightText(mDatas.get(position).getDeviceName());
+            }
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (onItemRecycleClickLister!=null){
+//                    onItemRecycleClickLister.onItemClick(v,position);
+//                }
+//            }
+//        });
+        holder.stbMore.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 if (onItemRecycleClickLister!=null){
-                    onItemRecycleClickLister.onItemClick(v,position);
+                    onItemRecycleClickLister.onItemClick(view,position);
                 }
             }
         });
-
     }
 
     @Override
@@ -93,6 +106,7 @@ class AbsMoreViewHolder extends RecyclerView.ViewHolder {
     TextView mTvName;
     FrameLayout mItemView;
     TextView text;
+    SettingBar stbMore ;
     public AbsMoreViewHolder(View itemView) {
         super(itemView);
 
@@ -100,6 +114,8 @@ class AbsMoreViewHolder extends RecyclerView.ViewHolder {
         mImageView = itemView.findViewById(R.id.iv_icon);
         mItemView = itemView.findViewById(R.id.itemView);
         text = itemView.findViewById(R.id.text);
+        stbMore = itemView.findViewById(R.id.stb_more);
+
     }
 
 }

@@ -1,17 +1,22 @@
 package com.robam.roki.ui.page.mine;
 
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.hjq.toast.ToastUtils;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
@@ -19,8 +24,8 @@ import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.page.login.MyBasePage;
 import com.robam.roki.ui.page.login.helper.CmccLoginHelper;
 import com.robam.roki.ui.page.login.manger.InputTextManager;
+import com.robam.roki.ui.widget.view.ClearEditText;
 import com.robam.roki.ui.widget.view.PasswordEditText;
-import com.robam.roki.utils.ToolUtils;
 
 
 /**
@@ -32,23 +37,24 @@ public class MineChangePasswordPage extends MyBasePage<MainActivity> {
     /**
      * 原密码
      */
-    private PasswordEditText etPasswordOld;
+    private ClearEditText etPasswordOld;
     /**
      * 新密码
      */
-    private PasswordEditText etPasswordNew1;
+    private ClearEditText etPasswordNew1;
     /**
      * 新密码
      */
-    private PasswordEditText etPasswordNew2;
+    private ClearEditText etPasswordNew2;
     /**
      * 完成
      */
-    private AppCompatButton btnComplete;
+    private Button btnComplete;
     /**
      * 忘记密码
      */
-    private AppCompatButton btnForgetPassword;
+    private TextView btnForgetPassword;
+    private ImageView ivBack;
     /**
      * 用户信息
      */
@@ -62,14 +68,13 @@ public class MineChangePasswordPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        setTitle(R.string.acc_change_password);
-        getTitleBar().setOnTitleBarListener(this);
-        etPasswordOld = (PasswordEditText) findViewById(R.id.et_password_old);
-        etPasswordNew1 = (PasswordEditText) findViewById(R.id.et_password_new1);
-        etPasswordNew2 = (PasswordEditText) findViewById(R.id.et_password_new_2);
+        ivBack = findViewById(R.id.img_back);
+        etPasswordOld = findViewById(R.id.et_password_old);
+        etPasswordNew1 = findViewById(R.id.et_password_new1);
+        etPasswordNew2 = findViewById(R.id.et_password_new_2);
         btnComplete = (AppCompatButton) findViewById(R.id.btn_complete);
-        btnForgetPassword = (AppCompatButton) findViewById(R.id.btn_forget_password);
-        setOnClickListener(btnComplete, btnForgetPassword);
+        btnForgetPassword = findViewById(R.id.btn_forget_password);
+        setOnClickListener(btnComplete, btnForgetPassword, ivBack);
     }
 
     @Override
@@ -86,11 +91,13 @@ public class MineChangePasswordPage extends MyBasePage<MainActivity> {
 
     @Override
     public void onClick(View view) {
-        ToolUtils.hideSoftInput(activity);
+        KeyboardUtils.hideSoftInput(activity);
         if (view.equals(btnComplete)) {
             onConfirm();
         } else if (view.equals(btnForgetPassword)) {
             UIService.getInstance().postPage(PageKey.MineForgetPasswordPage ,getBundle());
+        } else if (view.equals(ivBack)) {
+            UIService.getInstance().popBack();
         }
     }
 

@@ -4,9 +4,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.legent.Callback;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.utils.LogUtils;
-import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.pojos.RecipeTheme;
@@ -105,29 +103,25 @@ public class TagRecipeFragment extends MyBasePage<MainActivity> {
     private void loadRecipeData() {
         Long cookBookTagId = tagRecipe.getCookbookTagId() == null ? null : (Long) (tagRecipe.getCookbookTagId());
         LogUtils.i(TAG, "pageNo:" + pageNo + " pageSize:" + pageSize + " cookBookTagId:" + cookBookTagId + " type:" + tagRecipe.getType());
-        RokiRestHelper.getbyTagOtherCooks(cookBookTagId, false, pageNo, pageSize, tagRecipe.getType(), null,
-                Reponses.PersonalizedRecipeResponse.class, new RetrofitCallback<Reponses.PersonalizedRecipeResponse>() {
-                    @Override
-                    public void onSuccess(Reponses.PersonalizedRecipeResponse personalizedRecipeResponse) {
-                        if (null != personalizedRecipeResponse) {
-                            List<Recipe> recipes = personalizedRecipeResponse.cookbooks;
-                            if (recipes == null || recipes.size() == 0 ) {
-                                LogUtils.i(TAG, " recipes isEmpty!");
-                                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
-                            }else {
-                                List<ThemeRecipeMultipleItem> themeRecipeMultipleItemList = new ArrayList<>();
-                                for (Recipe recipe : recipes) {
-                                    themeRecipeMultipleItemList.add(new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_RECIPE_MSG_TEXT, recipe));
-                                }
-                                settingData(themeRecipeMultipleItemList);
-                            }
-                        }
+        RokiRestHelper.getbyTagOtherCooks(cookBookTagId, false, pageNo, pageSize, tagRecipe.getType(), new Callback<List<Recipe>>() {
+            @Override
+            public void onSuccess(List<Recipe> recipes) {
+                if (recipes == null || recipes.size() == 0 ) {
+                    LogUtils.i(TAG, " recipes isEmpty!");
+                    rvRecipeThemeAdapter.getLoadMoreModule().loadMoreEnd();
+                }else {
+                    List<ThemeRecipeMultipleItem> themeRecipeMultipleItemList = new ArrayList<>();
+                    for (Recipe recipe : recipes) {
+                        themeRecipeMultipleItemList.add(new ThemeRecipeMultipleItem(ThemeRecipeMultipleItem.IMG_RECIPE_MSG_TEXT, recipe));
                     }
+                    settingData(themeRecipeMultipleItemList);
+                }
+            }
 
-                    @Override
-                    public void onFaild(String err) {
-                        rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
-                    }
+            @Override
+            public void onFailure(Throwable t) {
+                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
+            }
         });
     }
 
@@ -136,20 +130,17 @@ public class TagRecipeFragment extends MyBasePage<MainActivity> {
      */
     public void getByTagOtherThemes() {
         Long cookBookTagId = tagRecipe.getCookbookTagId() == null ? null : (Long) (tagRecipe.getCookbookTagId());
-        RokiRestHelper.getByTagOtherThemes(cookBookTagId, false, 0, 30, tagRecipe.getType(),
-                Reponses.RecipeThemeResponse.class, new RetrofitCallback<Reponses.RecipeThemeResponse>() {
-                    @Override
-                    public void onSuccess(Reponses.RecipeThemeResponse recipeThemeResponse) {
-                        if (null != recipeThemeResponse && null != recipeThemeResponse.items) {
-                            recipeThemeList.addAll(recipeThemeResponse.items) ;
-                            loadRecipeData();
-                        }
-                    }
+        RokiRestHelper.getByTagOtherThemes(cookBookTagId, false, 0, 30, tagRecipe.getType(), new Callback<List<RecipeTheme>>() {
+            @Override
+            public void onSuccess(List<RecipeTheme> recipeThemes) {
+                recipeThemeList.addAll(recipeThemes) ;
+                loadRecipeData();
+            }
 
-                    @Override
-                    public void onFaild(String err) {
-                        rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
-                    }
+            @Override
+            public void onFailure(Throwable t) {
+                rvRecipeThemeAdapter.getLoadMoreModule().loadMoreFail();
+            }
         });
 
     }

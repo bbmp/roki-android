@@ -21,6 +21,7 @@ import com.robam.roki.factory.RokiDialogFactory;
 import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.utils.DialogUtil;
+import com.youzan.sdk.YouzanSDK;
 
 
 public class SettingPage extends BasePage implements OnClickListener{
@@ -84,7 +85,7 @@ public class SettingPage extends BasePage implements OnClickListener{
                 dialog.dismiss();
                 PreferenceUtils.setBool("logout",false);
                 Plat.accountService.logout(null);
-
+                YouzanSDK.userLogout(cx);
                 UIService.getInstance().popBack();
             }
         });

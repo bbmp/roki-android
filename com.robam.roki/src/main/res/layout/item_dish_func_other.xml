@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_bg"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_64"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingStart="@dimen/dp_20"
+    android:paddingEnd="@dimen/dp_20">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_model_img"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_centerVertical="true"
+        tools:src="@mipmap/icon_more" />
+
+    <TextView
+        android:id="@+id/tv_model_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_toStartOf="@+id/tv_model_desc"
+        android:layout_toEndOf="@id/iv_model_img"
+        android:textColor="@color/text_color_device_category"
+        android:textSize="@dimen/sp_20"
+        tools:text="假日模式" />
+
+    <TextView
+        android:id="@+id/tv_model_desc"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_toStartOf="@+id/iv_right"
+        android:textColor="@color/text_select_color"
+        android:gravity="right"
+        android:textSize="@dimen/sp_16"
+        tools:text="假日模式" />
+
+
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/icon_right_device" />
+
+
+
+</RelativeLayout>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/device_board_bg"
+    android:paddingBottom="62px"
+    android:paddingLeft="60px"
+    android:paddingRight="70px"
+    android:paddingTop="46px"
+    android:stretchColumns="*">
+
+    <TableRow android:paddingBottom="36px">
+
+        <com.robam.roki.ui.view.OvenNormalModeItemView
+            android:id="@+id/chickenWingItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:imgSource="@drawable/ic_device_oven_chicken_wing"
+            app:title="鸡翅" />
+
+        <ImageView
+            android:layout_width="94px"
+            android:layout_height="86px"
+            android:src="@mipmap/ic_device_oven_leanline_white" />
+
+        <com.robam.roki.ui.view.OvenNormalModeItemView
+            android:id="@+id/cakeItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            app:imgSource="@drawable/ic_device_oven_cake"
+            app:title="蛋糕" />
+
+        <ImageView
+            android:layout_width="94px"
+            android:layout_height="86px"
+            android:src="@mipmap/ic_device_oven_leanline_white" />
+
+        <com.robam.roki.ui.view.OvenNormalModeItemView
+            android:id="@+id/breadItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            app:imgSource="@drawable/ic_device_oven_bread"
+            app:title="面包" />
+    </TableRow>
+
+    <TableRow android:paddingBottom="36px">
+
+        <com.robam.roki.ui.view.OvenNormalModeItemView
+            android:id="@+id/streakyPorkItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:imgSource="@drawable/ic_device_oven_streaky_pork"
+            app:title="五花肉" />
+
+        <ImageView
+            android:layout_width="94px"
+            android:layout_height="86px"
+            android:src="@mipmap/ic_device_oven_leanline_white" />
+
+        <com.robam.roki.ui.view.OvenNormalModeItemView
+            android:id="@+id/steakItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            app:imgSource="@drawable/ic_device_oven_steak"
+            app:title="牛排" />
+
+        <ImageView
+            android:layout_width="94px"
+            android:layout_height="86px"
+            android:src="@mipmap/ic_device_oven_leanline_white" />
+
+        <com.robam.roki.ui.view.OvenNormalModeItemView
+            android:id="@+id/pisaItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            app:imgSource="@drawable/ic_device_oven_pisa"
+            app:title="披萨" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="3dp">
+
+        <com.robam.roki.ui.view.OvenNormalModeItemView
+            android:id="@+id/seafoodItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:imgSource="@drawable/ic_device_oven_seafood"
+            app:title="海鲜" />
+
+        <ImageView
+            android:layout_width="94px"
+            android:layout_height="86px"
+            android:src="@mipmap/ic_device_oven_leanline_white" />
+
+        <com.robam.roki.ui.view.OvenNormalModeItemView
+            android:id="@+id/cookieItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            app:imgSource="@drawable/ic_device_oven_cookie"
+            app:title="饼干" />
+
+        <ImageView
+            android:layout_width="94px"
+            android:layout_height="86px"
+            android:src="@mipmap/ic_device_oven_leanline_white" />
+
+        <com.robam.roki.ui.view.OvenNormalModeItemView
+            android:id="@+id/vegetableItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:imgSource="@drawable/ic_device_oven_vegetable"
+            app:title="蔬菜" />
+    </TableRow>
+</TableLayout>

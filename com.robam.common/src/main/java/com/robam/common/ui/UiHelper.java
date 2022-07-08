@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.RetrofitCallback;
-import com.legent.plat.pojos.RCReponse;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.DialogHelper;
 import com.legent.utils.EventUtils;
@@ -17,7 +15,6 @@ import com.legent.utils.api.NetworkUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.R;
 import com.robam.common.events.HomeRecipeViewEvent;
-import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.AbsRecipe;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.services.CookbookManager;
@@ -142,28 +139,26 @@ public class UiHelper {
                     }
                 });
             } else {
-                RokiRestHelper.addFavorityCookbooks(book.id, RCReponse.class, new RetrofitCallback<RCReponse>() {
+                cm.addFavorityCookbooks(book.id, new VoidCallback() {
                     @Override
-                    public void onSuccess(RCReponse rcReponse) {
-                        if (null != rcReponse) {
-                            if (imageView != null) {
-                                imageView.setImageResource(R.drawable.ic_baseline_favorite_24);
-                            }
-                            if (textView != null) {
-                                textView.setText("收藏 " + (book.collectCount));
-                            }
-                            book.collected = true;
-                            book.setTrue(true);
-                            ToastUtils.showShort("收藏成功");
-                            EventUtils.postEvent(new HomeRecipeViewEvent(HomeRecipeViewEvent.RecipeFavoriteChange));
-                            EventUtils.postEvent(new HomeRecipeViewEvent(HomeRecipeViewEvent.RecipeDetailPageBackToTheme));
+                    public void onSuccess() {
+                        if (imageView != null) {
+                            imageView.setImageResource(R.drawable.ic_baseline_favorite_24);
                         }
+                        if (textView != null) {
+                            textView.setText("收藏 " + (book.collectCount));
+                        }
+                        book.collected = true;
+                        book.setTrue(true);
+                        ToastUtils.showShort("收藏成功");
+                        EventUtils.postEvent(new HomeRecipeViewEvent(HomeRecipeViewEvent.RecipeFavoriteChange));
+                        EventUtils.postEvent(new HomeRecipeViewEvent(HomeRecipeViewEvent.RecipeDetailPageBackToTheme));
                     }
 
                     @Override
-                    public void onFaild(String err) {
-                        ToastUtils.showShort(err);
-                        LogUtils.i(TAG, err);
+                    public void onFailure(Throwable t) {
+                        ToastUtils.showShort(t.getMessage());
+                        LogUtils.i(TAG, t.getMessage());
                     }
                 });
 

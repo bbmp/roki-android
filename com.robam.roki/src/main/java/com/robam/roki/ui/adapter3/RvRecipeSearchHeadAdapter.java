@@ -1,11 +1,13 @@
 package com.robam.roki.ui.adapter3;
 
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
@@ -38,8 +40,9 @@ public class RvRecipeSearchHeadAdapter extends BaseQuickAdapter<AbsRecipe, BaseV
             .placeholder(R.mipmap.icon_recipe_default) //预加载图片
             .error(R.mipmap.icon_recipe_default) //加载失败图片
             .priority(Priority.HIGH) //优先级
-            .diskCacheStrategy(DiskCacheStrategy.ALL) //缓存
-            .transform(new CenterCrop() ,new MaskTransformation(R.mipmap.icon_roki_recipe_bg)); //圆角
+            .format(DecodeFormat.PREFER_RGB_565)
+            .diskCacheStrategy(DiskCacheStrategy.ALL); //缓存
+//            .transform(new CenterCrop() ,new MaskTransformation(R.mipmap.icon_roki_recipe_bg)); //圆角
 
 
 //    public RvRecipeSearchHeadAdapter() {
@@ -70,21 +73,21 @@ public RvRecipeSearchHeadAdapter() {
 
 
             Recipe recipe = (Recipe) item ;
-            TextView tv_recipe_read_number = (TextView) holder.getView(R.id.tv_recipe_read_number);
-            ImageView imageView=holder.getView(R.id.img_collection_number);
-            TextView tvCollection = (TextView) holder.getView(R.id.tv_collection_number);
+//            ImageView imageView=holder.getView(R.id.img_collection_number);
+//            TextView tvCollection = (TextView) holder.getView(R.id.tv_collection_number);
             List<Dc> dcs = ((Recipe)item).getJs_dcs();
             if (dcs != null && dcs.size() != 0&&!((Recipe) item).getCookbookType().equals("10")) {
-                tvCollection.setText(DeviceNameHelper.getDeviceName2(dcs));
-                imageView.setImageDrawable( UiUtils.getResources().getDrawable(DeviceNameHelper.getIcon(dcs), null));
+                holder.setVisible(R.id.tv_device_name, true);
+                holder.setText(R.id.tv_device_name, DeviceNameHelper.getDeviceName2(dcs));
             } else {
-//                imageView.setImageDrawable(null);
-                Drawable drawable = UiUtils.getResources().getDrawable(R.drawable.hot, null);
-                imageView.setImageDrawable( drawable);
-                tv_recipe_read_number.setVisibility(View.GONE);
-                holder.setText(R.id.tv_collection_number, NumberUtil.converString(recipe.viewCount));
-                holder.setVisible(R.id.img_recipe_read_number,false);
+                holder.setVisible(R.id.tv_device_name, false);
+//                holder.setText(R.id.tv_collection_number, NumberUtil.converString(recipe.viewCount));
+//                holder.setVisible(R.id.img_recipe_read_number,false);
             }
+            if (!TextUtils.isEmpty(recipe.video))
+                holder.getView(R.id.iv_play).setVisibility(View.VISIBLE);
+            else
+                holder.getView(R.id.iv_play).setVisibility(View.GONE);
         }
     }
 

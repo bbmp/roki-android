@@ -29,6 +29,7 @@ public class RCMsgCallback implements MsgCallback {
                     RCException e = (RCException) ExceptionHelper.newRCException(rc);
                     e.setTag(resMsg);
                     Helper.onFailure(callback, e);
+                    afterFailure(resMsg);
                 } else {
                     afterSuccess(resMsg);
                 }
@@ -51,6 +52,9 @@ public class RCMsgCallback implements MsgCallback {
      * @param result
      */
     protected void afterSuccess(Msg resMsg) {
+
+    }
+    protected void afterFailure(Msg resMsg) {
 
     }
 }

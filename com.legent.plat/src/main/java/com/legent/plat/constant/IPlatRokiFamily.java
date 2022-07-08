@@ -103,7 +103,7 @@ public interface IPlatRokiFamily {
      * 燃气灶
      */
     String R9W851 = "9W851";
-
+    String R9B010 = "9B010";
     /**
      * 燃气灶   add by zhaiyuanyi
      */
@@ -239,6 +239,15 @@ public interface IPlatRokiFamily {
      */
     String R0001 = "R0001";
 
+    /**
+     * 二代温控锅
+     */
+    String R0004 = "R0004";
+
+    /**
+     * 无人锅
+     */
+    String KP100 = "KP100";
 
     String RQZ01 = "RQZ01";
     String RQZ02 = "RQZ02";

@@ -13,8 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.legent.plat.io.cloud.RetrofitCallback;
-import com.robam.common.io.cloud.Reponses;
+import com.legent.ui.ext.utils.StatusBarCompat;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.page.ClassifyTagRecipePage;
@@ -37,7 +36,6 @@ import com.robam.common.pojos.Tag;
 import com.robam.roki.MobApp;
 import com.robam.roki.R;
 import com.robam.roki.model.bean.RecipeTagGroupItem;
-import com.robam.roki.ui.page.AbsPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +43,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import skin.support.content.res.SkinCompatResources;
 
 /**
  * 全部智能菜谱
@@ -91,6 +90,7 @@ public class RecipeClassifyPage extends MyBasePage<MainActivity> {
     @Override
     protected void initData() {
         getRecipeClassifyData();
+        MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), "菜谱分+类页", null);
     }
 
 
@@ -110,43 +110,42 @@ public class RecipeClassifyPage extends MyBasePage<MainActivity> {
 
     //获取菜谱分类数据
     private void getRecipeClassifyData() {
-        RokiRestHelper.getStoreCategory(Reponses.StoreCategoryResponse.class, new RetrofitCallback<Reponses.StoreCategoryResponse>() {
+        RokiRestHelper.getStoreCategory(new Callback<List<Group>>() {
             @Override
-            public void onSuccess(Reponses.StoreCategoryResponse storeCategoryResponse) {
-                if (null != storeCategoryResponse) {
-                    List<Group> result = storeCategoryResponse.cookbookTagGroups;
-                    LogUtils.i(TAG, "result:" + result.toString());
-                    groups.clear();
-                    groups = result;
-                    recipeTagGroupItemList = new ArrayList<>();
-                    if (result != null) {
-                        for (Group group : result) {
-                            group.save2db();
-                            RecipeTagGroupItem recipeTagGroupItem = new RecipeTagGroupItem(true, group.name.substring(0, 2));
-                            recipeTagGroupItem.isHeader = true;
-                            recipeTagGroupItem.header = group.name.substring(0, 2);
-                            recipeTagGroupItemList.add(recipeTagGroupItem);
-                            LogUtils.i(TAG, "group name:" + group.name + " type:" + group.type + " group toString :" + group.toString());
-                            for (Tag recipeTag : group.getTags()) {
-                                RecipeTagGroupItem.ItemInfo itemInfo = new RecipeTagGroupItem.ItemInfo(group.name.substring(0, 2), group.name.substring(0, 2), recipeTag.id, recipeTag.imageUrl, recipeTag.name);
-                                itemInfo.setTitle(group.name.substring(0, 2));
-                                itemInfo.setGroup(group.name.substring(0, 2));
-                                itemInfo.setName(recipeTag.name);
-                                itemInfo.setId(recipeTag.id);
-                                itemInfo.setType(group.type);
-                                RecipeTagGroupItem recipeTagGroupItem1 = new RecipeTagGroupItem(itemInfo);
-                                recipeTagGroupItem1.isHeader = false;
-                                recipeTagGroupItemList.add(recipeTagGroupItem1);
-                            }
+            public void onSuccess(List<Group> result) {
+                LogUtils.i(TAG, "result:" + result.toString());
+                groups.clear();
+                groups = result;
+                recipeTagGroupItemList = new ArrayList<>();
+                if (result != null) {
+                    for (Group group : result) {
+                        //不写数据库
+//                        group.save2db();
+                        RecipeTagGroupItem recipeTagGroupItem = new RecipeTagGroupItem(true, group.name.substring(0, 2));
+                        recipeTagGroupItem.isHeader = true;
+                        recipeTagGroupItem.header = group.name.substring(0, 2);
+                        recipeTagGroupItemList.add(recipeTagGroupItem);
+                        LogUtils.i(TAG, "group name:" + group.name + " type:" + group.type + " group toString :" + group.toString());
+                        for (Tag recipeTag : group.getTags()) {
+                            RecipeTagGroupItem.ItemInfo itemInfo = new RecipeTagGroupItem.ItemInfo(group.name.substring(0, 2), group.name.substring(0, 2), recipeTag.id, recipeTag.imageUrl, recipeTag.name);
+                            itemInfo.setTitle(group.name.substring(0, 2));
+                            itemInfo.setGroup(group.name.substring(0, 2));
+                            itemInfo.setName(recipeTag.name);
+                            itemInfo.setId(recipeTag.id);
+                            itemInfo.setType(group.type);
+                            RecipeTagGroupItem recipeTagGroupItem1 = new RecipeTagGroupItem(itemInfo);
+                            recipeTagGroupItem1.isHeader = false;
+                            recipeTagGroupItemList.add(recipeTagGroupItem1);
                         }
                     }
-                    linkageRecyclerView.init(recipeTagGroupItemList, new ElemeLinkagePrimaryAdapterConfig(), new ElemeLinkageSecondaryAdapterConfig());
-                    linkageRecyclerView.setGridMode(true);
                 }
+                linkageRecyclerView.init(recipeTagGroupItemList, new ElemeLinkagePrimaryAdapterConfig(), new ElemeLinkageSecondaryAdapterConfig());
+                linkageRecyclerView.setGridMode(true);
+
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
 
             }
         });
@@ -184,8 +183,10 @@ public class RecipeClassifyPage extends MyBasePage<MainActivity> {
             tvTitle.setText(title.substring(0, 2));
 //            tvTitle.setBackgroundColor(mContext.getResources().getColor(
 //                    selected ? com.robam.roki.ui.view.linkrecipetag.R.color.colorPurple : com.robam.roki.ui.view.linkrecipetag.R.color.colorWhite));
+            int target = SkinCompatResources.getInstance().getTargetResId(mContext, R.color.text_color_net_err);
+            target = (target != 0)?target:R.color.text_color_net_err;
             tvTitle.setTextColor(ContextCompat.getColor(mContext,
-                    selected ? R.color.roki_main_color : R.color.roki_general_text_color));
+                    selected ? R.color.text_select_color : target));
             tvTitle.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
             tvTitle.setFocusable(selected);
             tvTitle.setFocusableInTouchMode(selected);
@@ -270,6 +271,5 @@ public class RecipeClassifyPage extends MyBasePage<MainActivity> {
 
         }
     }
-
 
 }

@@ -7,18 +7,16 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.LogUtils;
 import com.legent.utils.StringUtils;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.form.MainActivity;
@@ -27,6 +25,7 @@ import com.robam.roki.ui.page.login.manger.InputTextManager;
 import com.robam.roki.ui.widget.view.ClearEditText;
 import com.robam.roki.ui.widget.view.CountdownView;
 import com.robam.roki.utils.StringUtil;
+import com.youzan.sdk.YouzanSDK;
 
 
 /**
@@ -136,7 +135,7 @@ public class MineCancelAccountPage2 extends MyBasePage<MainActivity> {
                     PreferenceUtils.setBool("logout", false);
                     PreferenceUtils.clear();
                     Plat.accountService.logout(null);
-
+                    YouzanSDK.userLogout(cx);
                     UIService.getInstance().popBack();
                 }
 
@@ -160,21 +159,19 @@ public class MineCancelAccountPage2 extends MyBasePage<MainActivity> {
             return;
         }
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.getVerifyCode(phone, Reponses.GetVerifyCodeReponse.class, new RetrofitCallback<Reponses.GetVerifyCodeReponse>() {
+        Plat.accountService.getVerifyCode(phone, new Callback<String>() {
             @Override
-            public void onSuccess(Reponses.GetVerifyCodeReponse getVerifyCodeReponse) {
+            public void onSuccess(String s) {
+                cvFindCountdown.start();
+                code = s;
                 ProgressDialogHelper.setRunning(cx, false);
-                if (null != getVerifyCodeReponse) {
-                    cvFindCountdown.start();
-                    code = getVerifyCodeReponse.verifyCode;
-                    ToastUtils.show(R.string.common_code_send_hint);
-                }
+                ToastUtils.show(R.string.common_code_send_hint);
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(err);
+                ToastUtils.show(t.getMessage());
             }
         });
     }

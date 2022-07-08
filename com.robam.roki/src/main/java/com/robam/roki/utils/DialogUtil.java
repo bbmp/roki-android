@@ -124,6 +124,19 @@ public class DialogUtil {
     public static final int LENGTH_LONG = 6;
 
     /**
+     * 加时
+     */
+    public static final int DIALOG_TYPE_TIME_EXTEND = 1029;
+
+    /**
+     * 选择灶头
+     */
+    public static final int DIALOG_CHOICE_STOVE = 1030;
+    /**
+     * 横屏结束工作
+     */
+    public static final int DIALOG_H_FINISH_WORK = 1031;
+    /**
      * 获取内容应该显示的宽度(px)
      */
     public static int getContentWidth(Context context) {

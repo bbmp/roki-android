@@ -9,12 +9,11 @@ import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 
-//import com.legent.ui.ext.BaseActivity;
-import com.legent.ui.AbsActivity;
+import com.legent.ui.ext.BaseActivity;
 import com.robam.roki.ui.FormKey;
 
 
-public class CountDownDialog extends AbsActivity {
+public class CountDownDialog extends BaseActivity {
 
     static public void start(Activity atv) {
         Intent intent=new Intent(atv, CountDownDialog.class);

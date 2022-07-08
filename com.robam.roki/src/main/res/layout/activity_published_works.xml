@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@drawable/shape_bg_main"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity3.recipedetail.PublishedWorksActivity">
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/transparent" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/status_bar_fix">
+    <include layout="@layout/include_title_bar"/>
+
+    <RelativeLayout
+
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/act_publish_list_edit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_122"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_20"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="跟大家分享下你下厨的心得吧～"
+            android:textColor="@color/text_color_touch_retry"
+            android:textColorHint="@color/text_color_touch_retry"
+            android:textSize="@dimen/sp_16" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/act_publish_work_image_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/act_publish_list_edit"
+
+            android:layout_marginBottom="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginRight="@dimen/dp_20" />
+
+    </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_publish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:background="@drawable/shape_auto_button_bg"
+        android:text="发布"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_20"
+        android:visibility="visible" />
+</RelativeLayout>

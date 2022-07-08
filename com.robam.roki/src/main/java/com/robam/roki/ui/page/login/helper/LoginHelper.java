@@ -6,21 +6,20 @@ import android.util.Log;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.common.base.MoreObjects;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.Helper;
 import com.legent.VoidCallback;
+import com.legent.events.BlueLoginSuccessEvent;
 import com.legent.plat.Plat;
-import com.legent.plat.constant.IAppType;
 import com.legent.plat.events.UserLoginNewEvent;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.EventUtils;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.form.MainActivity;
 
@@ -48,8 +47,7 @@ public class LoginHelper {
         ){
         cx = activity ;
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.getToken("mobilePassword", sjhm, "", password, "", "", "","roki_client", "test", IAppType.RKDRD,
-                Reponses.TokenReponse.class, new RetrofitCallback<Reponses.TokenReponse>() {
+        Plat.accountService.getToken("mobilePassword", sjhm, "", password, "", "", "", new Callback<Reponses.TokenReponse>() {
             @Override
             public void onSuccess(Reponses.TokenReponse tokenReponse) {
                 String access_token = tokenReponse.token_type + " " + tokenReponse.access_token;
@@ -58,11 +56,11 @@ public class LoginHelper {
             }
 
             @Override
-            public void onFaild(String err) {
-                ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(err);
-            }
+            public void onFailure(Throwable t) {
 
+                ProgressDialogHelper.setRunning(cx, false);
+                ToastUtils.show(t.getMessage());
+            }
         });
     }
 
@@ -77,8 +75,7 @@ public class LoginHelper {
     ){
         cx = activity ;
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.getToken("mobileSmsCode", sjhm, smsCode, "", "", "", "","roki_client", "test", IAppType.RKDRD,
-                Reponses.TokenReponse.class, new RetrofitCallback<Reponses.TokenReponse>() {
+        Plat.accountService.getToken("mobileSmsCode", sjhm, smsCode, "", "", "", "", new Callback<Reponses.TokenReponse>() {
             @Override
             public void onSuccess(Reponses.TokenReponse tokenReponse) {
                 String access_token = tokenReponse.token_type + " " + tokenReponse.access_token;
@@ -87,11 +84,10 @@ public class LoginHelper {
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(err);
+                ToastUtils.show(t.getMessage());
             }
-
         });
     }
 
@@ -179,8 +175,7 @@ public class LoginHelper {
     public static void getToken(String loginType , String sjhm, String smsCode
             , String accessToken , String openId ){
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.getToken(loginType, sjhm, smsCode, "", accessToken, "", openId,"roki_client", "test", IAppType.RKDRD,
-                Reponses.TokenReponse.class, new RetrofitCallback<Reponses.TokenReponse>() {
+        Plat.accountService.getToken(loginType, sjhm, smsCode, "", accessToken, "", openId, new Callback<Reponses.TokenReponse>() {
             @Override
             public void onSuccess(Reponses.TokenReponse tokenReponse) {
                 String access_token = tokenReponse.token_type + " " + tokenReponse.access_token;
@@ -189,9 +184,9 @@ public class LoginHelper {
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(err);
+                ToastUtils.show(t.getMessage());
             }
         });
     }
@@ -205,22 +200,21 @@ public class LoginHelper {
     public static void getTokenBindPhone(String loginType , String sjhm, String smsCode
             , String accessToken , String openId ){
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.getToken(loginType, sjhm, smsCode, "", accessToken, "", openId,"roki_client", "test", IAppType.RKDRD,
-                Reponses.TokenReponse.class, new RetrofitCallback<Reponses.TokenReponse>() {
-                    @Override
-                    public void onSuccess(Reponses.TokenReponse tokenReponse) {
-                        String access_token = tokenReponse.token_type + " " + tokenReponse.access_token;
-                        Log.i("LOGIN", "access_token--------------------" + access_token);
+        Plat.accountService.getToken(loginType, sjhm, smsCode, "", accessToken, "", openId, new Callback<Reponses.TokenReponse>() {
+            @Override
+            public void onSuccess(Reponses.TokenReponse tokenReponse) {
+                String access_token = tokenReponse.token_type + " " + tokenReponse.access_token;
+                Log.i("LOGIN", "access_token--------------------" + access_token);
 //                getOauth(access_token);
-                        isFirstLogin(access_token);
-                    }
+                isFirstLogin(access_token);
+            }
 
-                    @Override
-                    public void onFaild(String err) {
-                        ProgressDialogHelper.setRunning(cx, false);
-                        ToastUtils.show(err);
-                    }
-                });
+            @Override
+            public void onFailure(Throwable t) {
+                ProgressDialogHelper.setRunning(cx, false);
+                ToastUtils.show(t.getMessage());
+            }
+        });
     }
 
     /**
@@ -243,7 +237,7 @@ public class LoginHelper {
             public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
                 Log.i("LOGIN", t.getMessage());
-                ToastUtils.showThrowable(t);
+                ToastUtils.show(t);
             }
         });
     }
@@ -253,24 +247,21 @@ public class LoginHelper {
      * @param access_token
      */
     public static void getOauth(final String access_token , boolean isFirstLogin) {
-        CloudHelper.getOauth( access_token, Reponses.LoginReponse.class, new RetrofitCallback<Reponses.LoginReponse>() {
+        CloudHelper.getOauth( access_token, new Callback<User>() {
             @Override
-            public void onSuccess(Reponses.LoginReponse loginReponse) {
-                if (null != loginReponse) {
-                    User user = loginReponse.user;
-                    if (user != null){
-                        //获取详细信息，性别 ，生日等
-                        getUser2(user.id  ,isFirstLogin ,access_token) ;
-                    }else {
-                        ToastUtils.show("登录获取用户信息失败");
-                    }
+            public void onSuccess(User user) {
+                if (user != null){
+                    //获取详细信息，性别 ，生日等
+                    getUser2(user.id  ,isFirstLogin ,access_token) ;
+                }else {
+                    ToastUtils.show("登录获取用户信息失败");
                 }
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(err);
+                ToastUtils.show(t.getMessage());
             }
         });
     }
@@ -279,24 +270,21 @@ public class LoginHelper {
      * @param access_token
      */
     public static void getOauth(final String access_token) {
-        CloudHelper.getOauth(access_token, Reponses.LoginReponse.class, new RetrofitCallback<Reponses.LoginReponse>() {
+        CloudHelper.getOauth( access_token, new Callback<User>() {
             @Override
-            public void onSuccess(Reponses.LoginReponse loginReponse) {
-                if (null != loginReponse) {
-                    User user = loginReponse.user;
-                    if (user != null){
-                        //获取详细信息，性别 ，生日等
-                        getUser2(user.id );
-                    }else {
-                        ToastUtils.show("登录获取用户信息失败");
-                    }
+            public void onSuccess(User user) {
+                if (user != null){
+                    //获取详细信息，性别 ，生日等
+                    getUser2(user.id );
+                }else {
+                    ToastUtils.show("登录获取用户信息失败");
                 }
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(err);
+                ToastUtils.show(t.getMessage());
             }
         });
     }
@@ -305,26 +293,21 @@ public class LoginHelper {
      * @param userId
      */
     public static void getUser2(final long userId) {
-        CloudHelper.getUser2(userId, Reponses.GetUserReponse.class, new RetrofitCallback<Reponses.GetUserReponse>() {
+        CloudHelper.getUser2(userId, new Callback<User>() {
 
             @Override
-            public void onSuccess(Reponses.GetUserReponse getUserReponse) {
+            public void onSuccess(User user) {
+                Plat.accountService.mapUsers.put(userId, user);
                 ProgressDialogHelper.setRunning(cx, false);
-                if (null != getUserReponse) {
-                    User user = getUserReponse.user;
-                    Plat.accountService.mapUsers.put(userId, user);
-
-                    Log.i("LOGIN", "user--------------------" + user.toString());
-                    onLoginCompleted(user, false);
-                }
+                Log.i("LOGIN", "user--------------------" + user.toString());
+                onLoginCompleted(user, false);
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(err);
+                ToastUtils.show(t.getMessage());
             }
-
         });
     }
     /**
@@ -332,24 +315,21 @@ public class LoginHelper {
      * @param userId
      */
     public static void getUser2(final long userId ,boolean isFirst ,  String access_token) {
-        CloudHelper.getUser2(userId, Reponses.GetUserReponse.class, new RetrofitCallback<Reponses.GetUserReponse>() {
+        CloudHelper.getUser2(userId, new Callback<User>() {
 
             @Override
-            public void onSuccess(Reponses.GetUserReponse getUserReponse) {
-                if (null != getUserReponse) {
-                    User user = getUserReponse.user;
-                    user.authorization = access_token ;
-                    Plat.accountService.mapUsers.put(userId, user);
-                    ProgressDialogHelper.setRunning(cx, false);
-                    Log.i("LOGIN", "user--------------------" + user.toString());
-                    onLoginCompleted(user, isFirst);
-                }
+            public void onSuccess(User user) {
+                user.authorization = access_token ;
+                Plat.accountService.mapUsers.put(userId, user);
+                ProgressDialogHelper.setRunning(cx, false);
+                Log.i("LOGIN", "user--------------------" + user.toString());
+                onLoginCompleted(user, isFirst);
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.show(err);
+                ToastUtils.show(t.getMessage());
             }
         });
     }
@@ -376,5 +356,6 @@ public class LoginHelper {
                 CmccLoginHelper.getInstance().quitAuthActivity();
             }
         }
+        EventUtils.postEvent(new BlueLoginSuccessEvent(true));
     }
 }

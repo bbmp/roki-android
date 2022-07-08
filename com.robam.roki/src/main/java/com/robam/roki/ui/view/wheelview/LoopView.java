@@ -559,7 +559,9 @@ public class LoopView extends View {
 
                 if (!mIsLoop) {
                     float top = -mInitPosition * itemHeight;
-                    float bottom = (mItems.size() - 1 - mInitPosition) * itemHeight;
+                    float bottom=0;
+                    if (!mItems.isEmpty())
+                        bottom = (mItems.size() - 1 - mInitPosition) * itemHeight;
 
                     if (mTotalScrollY < top) {
                         mTotalScrollY = (int) top;

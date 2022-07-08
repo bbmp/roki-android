@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_marginTop="@dimen/dp_4"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+
+        android:id="@+id/item_recipe_detail_food_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_31"
+        android:layout_marginTop="@dimen/dp_8"
+        android:text="豆腐"
+
+        android:textColor="@color/text_color_device"
+        android:textSize="@dimen/sp_16" />
+
+
+    <TextView
+        android:id="@+id/item_recipe_detail_food_txt_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_221"
+        android:text="400g"
+        android:textColor="@color/text_color_device"
+        android:textSize="@dimen/sp_16" />
+
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/item_recipe_detail_food_img"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_35"
+        android:src="@mipmap/icon_delete" />
+</RelativeLayout>

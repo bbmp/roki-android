@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.page.device.steamovenone.steamovenone620.ui.CreateRecipeActivity">
+
+    <include layout="@layout/include_title_bar"/>
+    <RelativeLayout
+        android:layout_margin="@dimen/dp_11"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_223">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:hint="添加菜谱名称"
+            android:textColor="#E2E2E2"
+            android:textSize="@dimen/sp_30"
+            android:layout_marginLeft="@dimen/dp_110"
+            android:layout_width="@dimen/dp_181"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_54">
+
+        <TextView
+            android:textSize="@dimen/sp_18"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:layout_centerVertical="true"
+            android:textColor="#20292E"
+            android:text="食材"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <ImageView
+
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_14"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_14"/>
+
+    </RelativeLayout>
+
+    <View
+        android:background="#F8F8F8"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_4"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_54">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:text="烹饪步骤"
+            android:textColor="#20292E"
+            android:textSize="@dimen/sp_18" />
+
+
+        <ImageView
+
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_14"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_14"/>
+
+    </RelativeLayout>
+
+    <View
+        android:background="#F8F8F8"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_4"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_54">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:text="烹饪设备"
+            android:textColor="#20292E"
+            android:textSize="@dimen/sp_18" />
+
+
+        <TextView
+
+            android:textColor="#474747"
+            android:text="大厨蒸烤一体机·DB610"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_28"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+    <View
+        android:background="#F8F8F8"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_4"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_54">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:text="烹饪记录"
+            android:textColor="#20292E"
+            android:textSize="@dimen/sp_18" />
+
+
+        <TextView
+
+            android:textColor="#474747"
+
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_28"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginLeft="@dimen/dp_24"
+        android:textSize="@dimen/sp_12"
+        android:textColor="#424242"
+        android:text="带*为必填项"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+
+        <TextView
+
+            android:textColor="@color/white"
+            android:background="#B4B4B4"
+            android:id="@+id/act_recipe_preview"
+            android:layout_centerVertical="true"
+            android:text="预览"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_width="@dimen/dp_104"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_12"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/dp_14"
+
+            android:layout_centerVertical="true"
+            android:background="#B4B4B4"
+            android:textColor="@color/white"
+            android:id="@+id/act_recipe_save"
+            android:text="保存菜谱"
+            android:layout_width="@dimen/dp_224"
+            android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+</LinearLayout>

@@ -19,6 +19,7 @@
         android:background="@color/common_divide_background" />
 
     <LinearLayout
+        android:id="@+id/layoutName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"

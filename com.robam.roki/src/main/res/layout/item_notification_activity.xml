@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/item_notification_activity_rl"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:textSize="@dimen/sp_12"
+        android:id="@+id/item_notification_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="3月17 10:58"
+        android:textColor="@color/text_color_touch_retry" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_notification_time"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="@drawable/shape_kitchen_bg_round">
+
+        <TextView
+            android:id="@+id/item_activity_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="一体机"
+            android:textColor="@color/text_color_net_err"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+        <ImageView
+
+            android:id="@+id/item_notification_activity_image"
+            android:layout_width="@dimen/dp_63"
+            android:layout_height="@dimen/dp_63"
+            android:layout_below="@+id/item_activity_name"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/item_notification_activity_introduce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_activity_name"
+
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_16"
+            android:layout_toRightOf="@+id/item_notification_activity_image"
+            android:ellipsize="end"
+            android:maxEms="70"
+            android:maxLines="2"
+            android:text="您的一体机CQ906水箱ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd缺"
+            android:textColor="@color/text_color_touch_retry"
+            android:textSize="@dimen/sp_14" />
+
+        <View
+            android:id="@+id/item_notification_activity_unread_logo"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_8"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_18"
+            android:background="@drawable/shape_notification" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp_7"
+            android:layout_marginBottom="@dimen/dp_2"
+            android:layout_toRightOf="@+id/item_notification_activity_image"
+            android:layout_alignBottom="@+id/item_notification_activity_image">
+            <TextView
+                android:id="@+id/item_notification_activity_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="查看详情  "
+                android:textColor="@color/text_color_online"
+                android:textSize="@dimen/sp_12"
+                android:visibility="visible"/>
+            <ImageView
+                android:layout_width="@dimen/dp_6"
+                android:layout_height="@dimen/dp_10"
+                android:src="@mipmap/ic_arrow_right"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:roki="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/selector_rika_item_bg"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/c41"
+            android:textSize="20sp"
+            tools:text="虚拟场景模式" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:visibility="gone"
+        android:background="@color/white"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_47">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/page_local_cookbook_cloud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="云端"
+            android:textColor="#80222222"
+            android:textSize="@dimen/sp_15" />
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_44"
+            android:layout_toLeftOf="@+id/page_local_cookbook_cloud"
+            android:text="本地"
+            android:textColor="#80222222"
+            android:textSize="@dimen/sp_15" />
+
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_44"
+            android:textColor="#80222222"
+            android:textSize="@dimen/sp_15"
+            android:layout_toRightOf="@+id/page_local_cookbook_cloud"
+            android:text="自定义"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <com.robam.roki.ui.widget.view.PagerSlidingTabStrip
+        android:id="@+id/id_tab"
+        roki:pstsShouldExpand="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        roki:pstsIndicatorColor="@color/c02"
+        roki:pstsSelectedTabTextColor="@color/c02"
+        roki:pstsSelectedTabTextSize="@dimen/sp_15"
+        roki:pstsTabTextColor="@color/white"
+        android:background="@color/white"
+        roki:pstsTabTextSize="8sp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:background="@color/c54"
+        android:id="@+id/title_recycle_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_marginTop="@dimen/dp_10"
+        android:id="@+id/id_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+</LinearLayout>

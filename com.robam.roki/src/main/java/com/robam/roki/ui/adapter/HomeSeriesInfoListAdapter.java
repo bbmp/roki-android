@@ -20,7 +20,7 @@ import com.legent.utils.LogUtils;
 import com.robam.common.pojos.SeriesInfo;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -56,7 +56,7 @@ public class HomeSeriesInfoListAdapter extends RecyclerView.Adapter<SeriesInfoLi
     @Override
     public SeriesInfoListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_series_list_page, parent, false);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         SeriesInfoListViewHolder seriesInfoListViewHolder = new SeriesInfoListViewHolder(view);
         seriesInfoListViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override

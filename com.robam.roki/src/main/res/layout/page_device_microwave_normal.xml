@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llMicrowavePage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -31,6 +32,7 @@
 
 
             <TextView
+                android:id="@+id/mic_txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -39,6 +41,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/mic_txtDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -83,6 +86,7 @@
         layout="@layout/view_device_disconnect_hint" />
 
     <RelativeLayout
+        android:id="@+id/mic_rlNoticeStart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp"
@@ -90,6 +94,7 @@
         android:orientation="vertical">
 
         <TableLayout
+            android:id="@+id/mic_tableLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="5dp"
@@ -113,6 +118,7 @@
                     android:src="@mipmap/ic_device_microwave_normal_quickheating_yellow" />
 
                 <LinearLayout
+                    android:id="@+id/mic_quickheat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

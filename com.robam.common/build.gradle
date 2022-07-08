@@ -28,17 +28,16 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    api 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
     api project(':com.legent.ui')
-//    api project(':com.legent.utils.qrcode')
+    api project(':com.legent.utils.qrcode')
     api project(':com.legent.utils.speech')
-//    api 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
-//    api project(':com.legent.plat')
+    api 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+    api project(':com.legent.plat')
     api deps.butterknife
-//    implementation 'com.android.support:multidex:1.0.2'
-//    api "com.alibaba:fastjson:1.1.67.android"
+    implementation 'com.android.support:multidex:1.0.2'
+    api "com.alibaba:fastjson:1.1.67.android"
     api 'cn.com.superLei:blelibrary:3.2.0'
-    api 'com.squareup.retrofit2:retrofit:2.1.0'
-    api 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.5.2'
 }

@@ -134,7 +134,7 @@
                     android:id="@+id/tv_temp"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shape_line_gray"
+                    android:background="@drawable/shape_line_gray_night"
                     android:gravity="center"
                     tools:text="280"
                     android:textColor="@color/c11"

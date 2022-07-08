@@ -63,9 +63,12 @@ public abstract class BasePage extends AbsPage {
         if (rootView != null){
             View mStateBarFixer = rootView.findViewById(R.id.status_bar_fix);
             if (mStateBarFixer != null){
-                mStateBarFixer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        getStatusBarHeight(getActivity())));
-                mStateBarFixer.setBackgroundColor(Color.WHITE);
+                ViewGroup.LayoutParams layoutParams = mStateBarFixer.getLayoutParams();
+                layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                layoutParams.height = getStatusBarHeight(getActivity());
+                mStateBarFixer.setLayoutParams(layoutParams);
+//          根布局只能是linearlayout,太局限
+//                mStateBarFixer.setBackgroundColor(Color.WHITE);
             }else {
                 Class<? extends BasePage> aClass = getClass();
                 LogUtils.i("class_name" , aClass.getName());

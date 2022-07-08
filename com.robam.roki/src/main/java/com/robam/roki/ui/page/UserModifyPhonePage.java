@@ -7,7 +7,6 @@ import com.google.common.base.Objects;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
@@ -32,7 +31,7 @@ public class UserModifyPhonePage extends  AbsVerifyCodePage{
     void onConfirm(final String phone, String verifyCode) {
 
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.updateUser(user.id, user.nickname, phone, user.email, user.gender, new VoidCallback() {
+        Plat.accountService.updateUser(user.id, user.name, phone, user.email, user.gender, new VoidCallback() {
             @Override
             public void onSuccess() {
                 ProgressDialogHelper.setRunning(cx, false);
@@ -57,7 +56,7 @@ public class UserModifyPhonePage extends  AbsVerifyCodePage{
         }
         LogUtils.i("20170512","phone:"+phone);
         ProgressDialogHelper.setRunning(cx, true);
-        CloudHelper.isExisted(phone,
+        Plat.accountService.isExisted(phone,
                 new Callback<Boolean>() {
 
                     @Override

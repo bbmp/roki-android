@@ -20,6 +20,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
+
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
@@ -49,10 +50,10 @@ import com.robam.roki.ui.dialog.type.DialogType_Time;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.page.login.MyBasePage;
 import com.robam.roki.ui.view.wheelview.LoopView;
-import com.robam.roki.ui.widget.layout.SettingBar;
-import com.robam.roki.ui.widget.view.SwitchButton;
 import com.robam.roki.utils.DateUtil;
 import com.robam.roki.utils.ToolUtils;
+import com.robam.widget.layout.SettingBar;
+import com.robam.widget.view.SwitchButton;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -226,7 +227,7 @@ public class SteamOven610ModelSelectedPage extends MyBasePage<MainActivity> {
                 llOrder.setVisibility(View.GONE);
             }
             mRecyclerView.setLayoutManager(new GridLayoutManager(cx, 4, RecyclerView.VERTICAL, false));
-            mDeviceModelAdapter = new Rv610ModeAdapter(cx);
+            mDeviceModelAdapter = new Rv610ModeAdapter();
             mRecyclerView.setAdapter(mDeviceModelAdapter);
             mDeviceModelAdapter.addData(mDeviceSelectModelList);
             mDeviceModelAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -255,13 +256,13 @@ public class SteamOven610ModelSelectedPage extends MyBasePage<MainActivity> {
         }
         switch (mTitle) {
             case "蒸模式":
-
+                MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), mSteamOvenOne.getDt() + ":蒸模式页", null);
                 break;
             case "烤模式":
-
+                MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), mSteamOvenOne.getDt() + ":烤模式页", null);
                 break;
             case "空气炸":
-
+                MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), mSteamOvenOne.getDt() + ":模式页", null);
                 break;
         }
 
@@ -385,8 +386,11 @@ public class SteamOven610ModelSelectedPage extends MyBasePage<MainActivity> {
                         LogUtils.i("position", "-----" + position);
 
 
-                        List<String> tempDataEXPCentener = HelperRikaData.getTempDataEXPCentener(tempDown, HelperRikaData.getTempData3(tempUp).get(position));
-                        wheelFront2.setItems(tempDataEXPCentener);
+                        if (HelperRikaData.getTempData3(tempUp).size()>position) {
+                            List<String> tempDataEXPCentener =
+                                    HelperRikaData.getTempDataEXPCentener(tempDown, HelperRikaData.getTempData3(tempUp).get(position));
+                            wheelFront2.setItems(tempDataEXPCentener);
+                        }
                         wheelFront2.setCurrentPosition(0);
                         if (position >= 20) {
 //                            wheelFront2.setItems(HelperRikaData.getTempData3(tempDown));
@@ -561,7 +565,7 @@ public class SteamOven610ModelSelectedPage extends MyBasePage<MainActivity> {
             ToolUtils.logEvent(mSteamOvenOne.getDt(), "开始一体机" + mTitle + "温度时间工作:" + functionName + ":" + newTemp + ":" + newTime, "roki_设备");
         }
         assert mSteamOvenOne != null;
-        if (mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.Off) {
+        if (mSteamOvenOne.powerState == SteamOvenOnePowerStatus.Off) {
             mSteamOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
                 public void onSuccess() {

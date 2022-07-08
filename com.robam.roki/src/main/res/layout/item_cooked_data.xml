@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/mine_white_background"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/item_cooked_data_view"
+        android:background="@color/mine_white_background"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_20">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mine_white_background">
+
+            <TextView
+                android:id="@+id/item_time_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:text="0:00"
+                android:textColor="@color/text_color_device"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_item_bg_rl"
+            android:orientation="vertical">
+
+            <RelativeLayout
+
+                android:id="@+id/time_cooked_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:layout_below="@+id/item_time_page">
+
+                <ImageView
+                    android:id="@+id/time_cooked_icon"
+                    android:layout_width="@dimen/dp_21"
+                    android:layout_height="@dimen/dp_21"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_9"
+                    android:layout_marginTop="@dimen/dp_9"
+                    android:layout_marginBottom="@dimen/dp_12"
+                    android:src="@mipmap/icon_cuvre_step"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/item_mark_point_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_9"
+                    android:layout_toRightOf="@+id/time_cooked_icon"
+                    android:background="@null"
+                    android:text="111111"
+                    android:textColor="@color/text_color_device"
+                    android:textSize="@dimen/sp_16" />
+
+                <!--        <ImageView-->
+                <!--            android:id="@+id/item_edit_target_img"-->
+
+                <!--           android:visibility="gone"-->
+                <!--            android:layout_width="wrap_content"-->
+                <!--            android:layout_height="wrap_content"-->
+                <!--            android:layout_centerVertical="true"-->
+                <!--            android:layout_marginLeft="@dimen/dp_8"-->
+                <!--            android:layout_toRightOf="@+id/item_mark_point_txt"-->
+                <!--            android:src="@mipmap/icon_edit_target" />-->
+
+                <ImageView
+                    android:id="@+id/item_mark_visual"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_16"
+
+                    android:src="@mipmap/icon_steam_cruve_show" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+
+
+                android:id="@+id/ll_show_data_introduce_view"
+
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_100"
+                android:layout_below="@+id/time_cooked_title"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/item_time_and_temper_ll"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_110"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_11"
+                    android:layout_marginBottom="@dimen/dp_11"
+                    android:layout_weight="2"
+                    android:background="@drawable/shape_curve_item_bg"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+
+                        android:id="@+id/item_cooked_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_16"
+                        android:layout_marginTop="@dimen/dp_6"
+                        android:layout_marginRight="@dimen/dp_15"
+                        android:background="@drawable/layer_list_textview_under_line"
+                        android:gravity="center"
+                        android:text="02:00"
+                        android:textColor="#1F282D"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/item_cooked_temp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/item_cooked_time"
+                        android:layout_marginTop="@dimen/dp_9"
+                        android:gravity="center"
+                        android:text="温度\n100℃"
+                        android:textColor="#801F282D"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+
+
+                    android:id="@+id/item_time_and_temper_rl"
+                    android:layout_width="@dimen/dp_114"
+                    android:layout_height="@dimen/dp_110"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_11"
+                    android:layout_marginBottom="@dimen/dp_11"
+                    android:layout_toRightOf="@+id/item_time_and_temper_ll"
+                    android:background="@drawable/shape_picture_choose_bg">
+
+                    <ImageView
+                        android:id="@+id/item_cooked_add_pic"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp_26"
+
+                        android:src="@mipmap/icon_add_picture"
+                        android:visibility="gone" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/item_cooked_add_pic"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="@dimen/dp_7"
+                        android:text="点击上传图片"
+                        android:textColor="@color/text_color_gray"
+                        android:textSize="@dimen/sp_14" />
+
+                    <ImageView
+
+                        android:id="@+id/item_cooked_add_pic_show_all"
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY" />
+
+                    <ImageView
+
+                        android:id="@+id/item_cooked_add_pic_close"
+                        android:layout_width="@dimen/dp_14"
+                        android:layout_height="@dimen/dp_14"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/dp_6"
+                        android:layout_marginRight="@dimen/dp_6"
+                        android:src="@mipmap/button_delete"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+
+                <com.robam.roki.utils.audio.RecordAudioAndTextView
+                    android:id="@+id/item_cooked_add_audio"
+                    android:layout_width="@dimen/dp_186"
+                    android:layout_height="@dimen/dp_110"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_11"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginBottom="@dimen/dp_11"
+                    android:layout_toRightOf="@+id/item_time_and_temper_rl"
+                    android:layout_weight="1" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/item_cooked_data_view"
+        android:layout_width="@dimen/dp_8"
+        android:layout_height="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+
+        android:background="@drawable/shape_circle_process" />
+
+    <TextView
+        android:layout_width="@dimen/dp_1"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_cooked_data_view"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:background="#1A000000" />
+</RelativeLayout>

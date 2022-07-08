@@ -8,22 +8,21 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.common.base.Objects;
+import com.hjq.toast.ToastUtils;
 import com.legent.ui.ext.dialogs.AbsDialog;
-import com.legent.utils.api.ToastUtils;
 import com.legent.utils.api.ViewUtils;
 import com.legent.utils.graphic.BitmapUtils;
 import com.legent.utils.graphic.ImageUtils;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.robam.common.Utils;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.util.RecipeUtils;
 import com.robam.roki.R;
@@ -46,9 +45,6 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 import static com.robam.roki.ui.dialog.RecipeThemeShareDialog.TEXT;
 import static com.robam.roki.ui.dialog.RecipeThemeShareDialog.encodeAsBitmap;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 /**
  * Created by sylar on 15/6/15.
  */
@@ -60,6 +56,12 @@ public class CookbookRandomShareDialog extends AbsDialog {
 
     static public void show(Context cx, Recipe book) {
         cookbookShareDialog = new CookbookRandomShareDialog(cx, book);
+        cookbookShareDialog.show();
+    }
+
+
+    static public void show(Context cx, String img_path) {
+        cookbookShareDialog = new CookbookRandomShareDialog(cx, img_path);
         cookbookShareDialog.show();
     }
 
@@ -76,6 +78,13 @@ public class CookbookRandomShareDialog extends AbsDialog {
         super(cx, R.style.Theme_Dialog_kit_share);
         ViewUtils.setBottmScreen(cx, this);
         this.book = book;
+    }
+
+
+    public CookbookRandomShareDialog(Context cx, String img_path) {
+        super(cx, R.style.Theme_Dialog_kit_share);
+        ViewUtils.setBottmScreen(cx, this);
+        this.img_path = img_path;
     }
 
 
@@ -105,7 +114,7 @@ public class CookbookRandomShareDialog extends AbsDialog {
                 shareImg(WechatMoments.NAME);
             }
         }catch (Exception e){
-            ToastUtils.showShort("菜谱数据获取失败，请重试");
+            ToastUtils.show("菜谱数据获取失败，请重试");
             dismiss();
         }
     }
@@ -119,7 +128,7 @@ public class CookbookRandomShareDialog extends AbsDialog {
                 shareImg(Wechat.NAME);
             }
         }catch (Exception e){
-            ToastUtils.showShort("菜谱数据获取失败，请重试");
+            ToastUtils.show("菜谱数据获取失败，请重试");
             dismiss();
         }
 
@@ -134,7 +143,7 @@ public class CookbookRandomShareDialog extends AbsDialog {
                 shareImg(QQ.NAME);
             }
         }catch (Exception e){
-            ToastUtils.showShort("菜谱数据获取失败，请重试");
+            ToastUtils.show("菜谱数据获取失败，请重试");
             dismiss();
         }
 
@@ -179,7 +188,7 @@ public class CookbookRandomShareDialog extends AbsDialog {
     //将连接copy到剪切板
     private void copyUrl() {
         if (book == null){
-            ToastUtils.showShort("获取菜谱失败，请检查网络");
+            ToastUtils.show("获取菜谱失败，请检查网络");
             dismiss();
             return;
         }
@@ -205,28 +214,37 @@ public class CookbookRandomShareDialog extends AbsDialog {
 //        }else{
 //            imgUrl = book.imgSmall;
 //        }
-        newLogbitmap = compressBitmap(R.mipmap.img_share_r, 25, 25);
+        newLogbitmap = compressBitmap(R.mipmap.img_share_r, Utils.dip2px(getContext(), 25), Utils.dip2px(getContext(), 25));
         String viewUrl = book.getViewUrl();
         link_url = String.format(viewUrl, book.id);
-        encodeBitmap = encodeAsBitmap(link_url);
-        Bitmap beicaibackground = BitmapFactory.decodeResource(cx.getResources(), R.mipmap.u17);
-        final Bitmap backBitmap = BitmapUtils.zoomBySize(beicaibackground, 310, 103);
+        encodeBitmap = encodeAsBitmap(getContext(), link_url);
+
         if (StringUtil.isEmpty(imgUrl)){
             share(platKey, null);
             return;
         }
         if (platKey.equals(Dingding.NAME)){
-            ImageUtils.loadImage(cx, imgUrl, new CustomTarget<Bitmap>() {
+            ImageUtils.loadImage(imgUrl, new ImageLoadingListener() {
+
 
                 @Override
-                public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
+                public void onLoadingStarted(String s, View view) {
 
-                    if (bitmap == null) {
+                }
+
+                @Override
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String s, View view, Bitmap loadedImage) {
+                    maxBitmap = loadedImage;
+                    if (maxBitmap == null) {
                         share(platKey, null);
                         return;
                     }
-                    maxBitmap = BitmapUtils.zoomBySize(bitmap, 300, 300);
-
+                    // modify wang 22/04/19
                     if (maxBitmap != null) {
                         img_path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "img.png";
                         FileOutputStream out = null;
@@ -241,36 +259,44 @@ public class CookbookRandomShareDialog extends AbsDialog {
                 }
 
                 @Override
-                public void onLoadCleared(@Nullable Drawable drawable) {
+                public void onLoadingCancelled(String s, View view) {
 
                 }
             });
         }else {
-            ImageUtils.loadImage(cx, imgUrl, new CustomTarget<Bitmap>() {
+            ImageUtils.loadImage(imgUrl, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+                }
 
                 @Override
-                public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                }
 
-                    if (bitmap == null) {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    maxBitmap = loadedImage;
+                    if (maxBitmap == null) {
                         share(platKey, null);
                         return;
                     }
-                    maxBitmap = BitmapUtils.zoomBySize(bitmap, 300, 300);
-
+                    // modify wang 22/04/19
                     if (maxBitmap != null) {
+                        Bitmap beicaibackground = BitmapFactory.decodeResource(cx.getResources(), R.mipmap.u17);
+                        final Bitmap backBitmap = BitmapUtils.zoomBySize(beicaibackground, maxBitmap.getWidth(), Utils.dip2px(getContext(), 100));
                         Canvas canvasBackBitmap = new Canvas(backBitmap);
                         canvasBackBitmap.drawBitmap(backBitmap, new Matrix(), null);
-                        canvasBackBitmap.drawBitmap(encodeBitmap, 0, 3, null);
+                        canvasBackBitmap.drawBitmap(encodeBitmap, 0, 0, null);
                         Paint paintRecipeName = new Paint();
                         paintRecipeName.setColor(0xff000000);
                         paintRecipeName.setAntiAlias(true);
-                        paintRecipeName.setTextSize(16);
-                        canvasBackBitmap.drawText(book.name, 100, 46, paintRecipeName);
+                        paintRecipeName.setTextSize(Utils.sp2px(getContext(), 14));
+                        canvasBackBitmap.drawText(book.name, Utils.dip2px(getContext(), 100), Utils.dip2px(getContext(), 46), paintRecipeName);
                         Paint paintText = new Paint();
                         paintText.setColor(0xff6d6d6d);
-                        paintText.setTextSize(12);
+                        paintText.setTextSize(Utils.sp2px(getContext(), 9));
                         paintText.setAntiAlias(true);
-                        canvasBackBitmap.drawText(TEXT, 100, 73, paintText);
+                        canvasBackBitmap.drawText(TEXT, Utils.dip2px(getContext(), 100), Utils.dip2px(getContext(), 73), paintText);
                         resultBitmap = BitmapUtils.add2Bitmap(maxBitmap, backBitmap);
                         Canvas canvas = new Canvas(resultBitmap);
                         canvas.drawBitmap(resultBitmap, new Matrix(), null);
@@ -292,7 +318,7 @@ public class CookbookRandomShareDialog extends AbsDialog {
                 }
 
                 @Override
-                public void onLoadCleared(@Nullable Drawable drawable) {
+                public void onLoadingCancelled(String imageUri, View view) {
 
                 }
             });

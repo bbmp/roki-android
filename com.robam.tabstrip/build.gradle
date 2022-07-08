@@ -1,8 +1,7 @@
 apply plugin: 'android-library'
 
 dependencies {
-//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    api 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }
 
 android {

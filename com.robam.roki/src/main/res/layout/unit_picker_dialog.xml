@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@drawable/shape_dialog_bg"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_marginTop="@dimen/dp_43"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/dp_24"
+        android:textColor="#333333"
+        android:text="单位"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.contrarywind.view.WheelView
+        android:id="@+id/unit_picker_dialog_wheel_view"
+        android:layout_marginTop="@dimen/dp_13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        style="@style/style_button_confirm"
+
+        android:id="@+id/unit_picker_dialog_wheel_btn_confirm"
+        android:background="@drawable/shape_icon_save_bg"
+        android:text="保存"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"/>
+
+
+    <Button
+        android:id="@+id/unit_picker_dialog_wheel_btn_cancel"
+        android:layout_marginBottom="@dimen/dp_14"
+        style="@style/style_button_cancel"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@drawable/shape_icon_bg_radius_23"
+        android:text="取消"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"/>
+</LinearLayout>

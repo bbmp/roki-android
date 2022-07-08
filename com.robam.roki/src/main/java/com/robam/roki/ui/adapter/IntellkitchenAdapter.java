@@ -13,7 +13,7 @@ import com.legent.utils.LogUtils;
 import com.robam.common.pojos.CookingKnowledge;
 import com.robam.roki.R;
 import com.robam.roki.listener.OnRecyclerViewItemClickListener;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
@@ -40,15 +40,10 @@ public class IntellkitchenAdapter extends RecyclerView.Adapter<KitchenHolder> {
     @Override
     public KitchenHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_kitchen_view, parent, false);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         final KitchenHolder kitchenHolder = new KitchenHolder(view);
 
-        kitchenHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnRecyclerViewItemClickListener.onItemClick(v);
-            }
-        });
+        kitchenHolder.itemView.setOnClickListener(v -> mOnRecyclerViewItemClickListener.onItemClick(v));
         return kitchenHolder;
     }
 

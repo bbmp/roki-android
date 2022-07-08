@@ -1,10 +1,13 @@
 package com.robam.roki.ui.page.login;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +21,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
+import com.legent.plat.events.MessageEvent;
 import com.legent.ui.UIService;
+import com.legent.ui.ext.BaseActivity;
 import com.legent.ui.ext.BasePage;
+import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.robam.common.util.StatusBarUtils;
 import com.robam.roki.R;
@@ -38,7 +45,7 @@ import retrofit.http.PUT;
  *
  * @author hxw
  */
-public abstract class MyBasePage<T> extends BasePage implements TitleBarAction , ClickAction {
+public abstract class MyBasePage<T extends BaseActivity> extends BasePage implements TitleBarAction , ClickAction {
 
     /** 标题栏对象 */
     private TitleBar mTitleBar;
@@ -46,6 +53,19 @@ public abstract class MyBasePage<T> extends BasePage implements TitleBarAction ,
     protected boolean mLoading;
     /** 根布局 */
     private View mRootView;
+    /** Activity 对象 */
+    private T mActivity;
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        // 获得全局的 Activity
+        if (requireActivity() instanceof BaseActivity){
+            mActivity = (T) requireActivity();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     @Nullable
     @Override
@@ -58,8 +78,9 @@ public abstract class MyBasePage<T> extends BasePage implements TitleBarAction ,
         mLoading = false;
         mRootView = inflater.inflate(getLayoutId(), container, false);
         ButterKnife.inject(this, mRootView);
+
         initView();
-        setStateBarFixer();
+//        setStateBarFixer();
         return mRootView;
     }
 
@@ -76,6 +97,8 @@ public abstract class MyBasePage<T> extends BasePage implements TitleBarAction ,
      * 初始化数据
      */
     protected abstract void initData();
+
+
 
     /**
      * 根据资源 id 获取一个 View 对象
@@ -183,16 +206,20 @@ public abstract class MyBasePage<T> extends BasePage implements TitleBarAction ,
         }
         return mTitleBar;
     }
-
     /**
      * 设置状态栏占位
      */
     protected void setStateBarFixer(){
         View mStateBarFixer = findViewById(R.id.status_bar_fix);
         if (mStateBarFixer != null){
-            mStateBarFixer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    getStatusBarHeight(getActivity())));
-            mStateBarFixer.setBackgroundColor(getResources().getColor(R.color.white));
+            ViewGroup.LayoutParams layoutParams = mStateBarFixer.getLayoutParams();
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            layoutParams.height = getStatusBarHeight(getActivity());
+            mStateBarFixer.setLayoutParams(layoutParams);
+//          根布局只能是linearlayout,太局限
+//            mStateBarFixer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+//                    getStatusBarHeight(getActivity())));
+//            mStateBarFixer.setBackgroundColor(getResources().getColor(R.color.white));
         }
     }
 
@@ -201,9 +228,12 @@ public abstract class MyBasePage<T> extends BasePage implements TitleBarAction ,
         if (rootView != null){
             View mStateBarFixer = rootView.findViewById(com.legent.ui.R.id.status_bar_fix);
             if (mStateBarFixer != null){
-                mStateBarFixer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        getStatusBarHeight(getActivity())));
-                mStateBarFixer.setBackgroundColor(Color.WHITE);
+                ViewGroup.LayoutParams layoutParams = mStateBarFixer.getLayoutParams();
+                layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                layoutParams.height = getStatusBarHeight(getActivity());
+                mStateBarFixer.setLayoutParams(layoutParams);
+//          根布局只能是linearlayout,太局限
+//                mStateBarFixer.setBackgroundColor(Color.WHITE);
             }else {
 //                Class<? extends BasePage> aClass = getClass();
 //                LogUtils.i("class_name" , aClass.getName());
@@ -224,5 +254,37 @@ public abstract class MyBasePage<T> extends BasePage implements TitleBarAction ,
 //            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 //            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
 //        }
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("删除","onDestroy");
+
+        EventUtils.postEvent(new MessageEvent());
+    }
+
+    /**
+     * 获取绑定的 Activity，防止出现 getActivity 为空
+     */
+    public T getAttachActivity() {
+        return mActivity;
+    }
+
+    /**
+     * startActivityForResult 方法优化
+     */
+
+    public void startActivityForResult(Class<? extends Activity> clazz, BaseActivity.OnActivityCallback callback) {
+        getAttachActivity().startActivityForResult(clazz, callback);
+    }
+
+    public void startActivityForResult(Intent intent, BaseActivity.OnActivityCallback callback) {
+        getAttachActivity().startActivityForResult(intent, null, callback);
+    }
+
+    public void startActivityForResult(Intent intent, Bundle options, BaseActivity.OnActivityCallback callback) {
+        getAttachActivity().startActivityForResult(intent, options, callback);
     }
 }

@@ -31,7 +31,6 @@ import com.fasterxml.jackson.annotation.JacksonInject;
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.FloatHelperEvent;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
@@ -39,7 +38,6 @@ import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.DisplayUtils;
 import com.legent.utils.api.ToastUtils;
-import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.util.RecipeUtils;
@@ -221,37 +219,47 @@ public class RandomRecipePage extends MyBasePage<MainActivity> {
         }
     }
     private void checkRandomCookBook() {
-        RokiRestHelper.getRamdomCookBook(1, Reponses.ThumbCookbookResponse.class, new RetrofitCallback<Reponses.ThumbCookbookResponse>() {
+        RokiRestHelper.getRamdomCookBook(1, new Callback<List<Recipe>>() {
             @Override
-            public void onSuccess(Reponses.ThumbCookbookResponse thumbCookbookResponse) {
-                if (null != thumbCookbookResponse && null != thumbCookbookResponse.cookbooks) {
-                    List<Recipe> recipes = thumbCookbookResponse.cookbooks;
-                    ramdomRecipe = recipes.get(0);
-                    recipeLargeUrl = ramdomRecipe.imgMedium;
-                    LogUtils.i(TAG, "recipeLargeUrl:" + recipeLargeUrl);
-                    if (llRecipeSelect == null){
-                        return;
-                    }
-                    llRecipeSelect.setVisibility(View.VISIBLE);
-                    randomRecipeBtn.setVisibility(View.GONE);
-                    tvRecipeGameContent.setVisibility(View.GONE);
-
-                    tvRandom.setText( ramdomRecipe.name );
-                    tvTodayWhichRecipe.setVisibility(View.GONE);
-                    cl_user_game.setVisibility(View.VISIBLE);
-
-                    GlideApp.with(getContext())
-                            .load(recipeLargeUrl)
-                            .placeholder(R.mipmap.ic_user_default_figure)
-                            .apply(RequestOptions.circleCropTransform())
-                            .error(R.mipmap.ic_user_default_figure)
-                            .into(randomRecipeImg);
-                    randomRecipeImg.startAnimation(rotateAnimation);
+            public void onSuccess(List<Recipe> recipes) {
+                ramdomRecipe = recipes.get(0);
+                 recipeLargeUrl = ramdomRecipe.imgMedium;
+                LogUtils.i(TAG, "recipeLargeUrl:" + recipeLargeUrl);
+                if (llRecipeSelect == null){
+                    return;
                 }
+                llRecipeSelect.setVisibility(View.VISIBLE);
+                randomRecipeBtn.setVisibility(View.GONE);
+//                tvRecipeGameContent.setText("“ 决定了，今天做" + ramdomRecipe.name + "”");
+                tvRecipeGameContent.setVisibility(View.GONE);
+//                tvRandom.setText("“ 决定了，今天做" + ramdomRecipe.name + "”");
+                tvRandom.setText( ramdomRecipe.name );
+                tvTodayWhichRecipe.setVisibility(View.GONE);
+                cl_user_game.setVisibility(View.VISIBLE);
+//                tvUserName.setText(Plat.accountService.getCurrentUser().name);
+                GlideApp.with(getContext())
+                        .load(recipeLargeUrl)
+                        .placeholder(R.mipmap.ic_user_default_figure)
+                        .apply(RequestOptions.circleCropTransform())
+                        .error(R.mipmap.ic_user_default_figure)
+                        .into(randomRecipeImg);
+                randomRecipeImg.startAnimation(rotateAnimation);
+//                GlideApp.with(getContext())
+//                        .load(Plat.accountService.getCurrentUser().figureUrl)
+//                        .placeholder(R.mipmap.ic_user_default_figure)
+//                        .apply(RequestOptions.circleCropTransform())
+//                        .error(R.mipmap.ic_user_default_figure)
+//                        .into(ivUserHead);
+//                randomRecipeImg.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        RecipeDetailPage.show(ramdomRecipe.id, ramdomRecipe.sourceType);
+//                    }
+//                });
             }
 
             @Override
-            public void onFaild(String err) {
+            public void onFailure(Throwable t) {
                 GlideApp.with(getContext())
                         .load(R.mipmap.ic_user_default_figure)
                         .placeholder(R.mipmap.ic_user_default_figure)

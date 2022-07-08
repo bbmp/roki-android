@@ -35,7 +35,7 @@ public class User extends AbsKeyPojo<Long> implements Parcelable {
      * 用户昵称
      */
     @JsonProperty("nickname")
-    public String nickname;
+    public String name;
     /**
      * 性别
      */
@@ -65,7 +65,7 @@ public class User extends AbsKeyPojo<Long> implements Parcelable {
     @JsonProperty("binded")
     public boolean binded;
     @JsonProperty("birthday")
-    public long birthday ;
+    public Date birthday ;
     @JsonProperty("wxNickname")
     public String wxNickname ;
     @JsonProperty("appleIdBinded")
@@ -95,7 +95,7 @@ public class User extends AbsKeyPojo<Long> implements Parcelable {
 
     private User(Parcel in) {
         this.id = in.readLong();
-        this.nickname = in.readString();
+        this.name = in.readString();
         this.gender = in.readByte() != 0;
         this.email = in.readString();
         this.phone = in.readString();
@@ -135,12 +135,12 @@ public class User extends AbsKeyPojo<Long> implements Parcelable {
 
     @Override
     public String getName() {
-        return nickname;
+        return name;
     }
 
     @Override
     public void setName(String name) {
-        this.nickname = name;
+        this.name = name;
     }
 
     public String getAccount() {
@@ -204,7 +204,7 @@ public class User extends AbsKeyPojo<Long> implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
-        dest.writeString(this.nickname);
+        dest.writeString(this.name);
         dest.writeByte(gender ? (byte) 1 : (byte) 0);
         dest.writeString(this.email);
         dest.writeString(this.phone);

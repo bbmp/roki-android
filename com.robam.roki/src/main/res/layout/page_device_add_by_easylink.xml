@@ -63,6 +63,7 @@
             android:layout_marginTop="15dp">
 
             <RelativeLayout
+                android:id="@+id/pnlFlash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -90,6 +91,7 @@
 
 
             <TextView
+                android:id="@+id/txtOrder2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

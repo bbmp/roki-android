@@ -39,12 +39,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+
         roki:pstsIndicatorColor="@color/c02"
         roki:pstsSelectedTabTextColor="@color/c02"
-        roki:pstsSelectedTabTextSize="17sp"
+        roki:pstsSelectedTabTextSize="16sp"
         roki:pstsTabTextColor="@color/white"
         android:background="@color/white"
-        roki:pstsTabTextSize="17sp" />
+
+        roki:pstsTabTextSize="8sp" />
 
 
     <androidx.viewpager.widget.ViewPager

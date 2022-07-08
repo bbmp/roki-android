@@ -4,7 +4,15 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +20,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.common.eventbus.Subscribe;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.dialogs.DialogHelper;
@@ -28,7 +36,6 @@ import com.legent.utils.api.DisplayUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.HomeRecipeViewEvent;
 import com.robam.common.io.cloud.Reponses;
-import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.RecipeTheme;
 import com.robam.common.services.CookbookManager;
 import com.robam.common.services.StoreService;
@@ -42,6 +49,7 @@ import com.robam.roki.ui.view.RecipeGridTitleView;
 import com.robam.roki.ui.view.RecipeGridView;
 import com.robam.roki.ui.view.ThemeListViewItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -55,26 +63,13 @@ import butterknife.OnClick;
 
 public class AbsThemeRecipeListGridPage extends MyBasePage<MainActivity> {
     //未收藏显示
-    @InjectView(R.id.emptyView)
-    EmojiEmptyView emptyView;
-    RecipeGridTitleView gridView;
-    @InjectView(R.id.img_back)
-    ImageView imgBack;
 
-    /*@InjectView(R.id.listview)//主题listview
-            ThemeListView listView;*/
+    private ViewPager viewPager;//中间显示内容
+    private TabLayout tabLayout;//顶部导航
+    private TextView tvDelete;
 
-//
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.abs_page_recipetheme_listgrid, container,false);
-//
-//
-//        EventUtils.regist(this);
-//        ButterKnife.inject(this, view);
-//        return view;
-//    }
+    private List<String> titles = new ArrayList<>();//标题
+    private List<Fragment> fragments = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -83,27 +78,43 @@ public class AbsThemeRecipeListGridPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        EventUtils.regist(this);
-        gridView = findViewById(R.id.gridView);
+        viewPager = findViewById(R.id.view_pager);
+        tabLayout = findViewById(R.id.tab_layout);
+        tvDelete = findViewById(R.id.tv_delete);
 
+        fragments.add(new AbsCollectRecipeThemePage());
+        fragments.add(new AbsCollectRecipePage());
+        titles.add("主题菜单");
+        titles.add("菜谱");
+
+        //添加tab标签
+        for (int i=0;i<titles.size();i++){
+            tabLayout.addTab(tabLayout.newTab().setText(titles.get(i)));
+        }
+        //添加设置适配器
+        viewPager.setAdapter(new CollectViewPagerAdapter(getParentFragmentManager()));
+        //把TabLayout与ViewPager关联起来
+        tabLayout.setupWithViewPager(viewPager);
+        setOnClickListener(R.id.tv_delete, R.id.img_back);
     }
 
     @Override
     protected void initData() {
-        if (!rootView.isInEditMode()) {
-            emptyView.setText(getTextWhenEmpty());
-            init();
-        }
+//        if (!rootView.isInEditMode()) {
+//            emptyView.setText(getTextWhenEmpty());
+//            init();
+//        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), "我的收藏页", null);
     }
 
     private void init() {
-        regsitRightView();//清空按钮
-        initThemeData();//获取收藏主题
+//        regsitRightView();//清空按钮
+//        initThemeData();//获取收藏主题
     }
 
     @Subscribe
@@ -111,101 +122,13 @@ public class AbsThemeRecipeListGridPage extends MyBasePage<MainActivity> {
         init();
     }
 
-    /**
-     * 获取菜谱数据
-     */
-    protected void initRecipeData() {
-        ProgressDialogHelper.setRunning(cx, true);
-        RokiRestHelper.getFavorityCookbooks(Reponses.CookbooksResponse.class,
-                new RetrofitCallback<Reponses.CookbooksResponse>() {
-
-                    @Override
-                    public void onSuccess(Reponses.CookbooksResponse result) {
-                        ProgressDialogHelper.setRunning(cx, false);
-                        if (result == null || ((result.cookbooks == null || (result.cookbooks.size() == 0))
-                                && (result.cookbooks3rd == null || result.cookbooks3rd.size() == 0))) {
-                            if (theme_flag == null || theme_flag.size() == 0) {
-                                emptyView.setVisibility(View.VISIBLE);
-                            }
-                            gridView.loadData(RecipeGridView.Model_Favority, null, null);
-                            return;
-                        }
-                        if (emptyView != null){
-                            emptyView.setVisibility(View.GONE);
-                        }
-                        if (gridView !=null){
-                            gridView.loadData(RecipeGridView.Model_Favority, result.cookbooks, result.cookbooks3rd);
-                        }
-
-                    }
-
-                    @Override
-                    public void onFaild(String err) {
-                        ProgressDialogHelper.setRunning(cx, false);
-                        gridView.setVisibility(View.GONE);
-                        ToastUtils.show(err);
-                    }
-                });
-    }
-
-    private List<RecipeTheme> theme_flag;
-
-    /**
-     * 获取收藏的主题
-     */
-    private void initThemeData() {
-//        ProgressDialogHelper.setRunning(cx, true);
-        RokiRestHelper.getMyFavoriteThemeRecipeList_new(Reponses.RecipeThemeResponse3.class, new RetrofitCallback<Reponses.RecipeThemeResponse3>() {
-            @Override
-            public void onSuccess(Reponses.RecipeThemeResponse3 recipeThemeResponse3) {
-                if (null != recipeThemeResponse3) {
-                    List<RecipeTheme> recipeThemes = recipeThemeResponse3.recipeThemes;
-                    theme_flag = recipeThemes;
-                    if (recipeThemes == null || recipeThemes.size() == 0) {
-                        //.setVisibility(View.GONE);
-                        gridView.removeHeaderView(linearLayout);
-                        initRecipeData();
-                        return;
-                    }
-                    if (emptyView != null && gridView != null){
-                        emptyView.setVisibility(View.GONE);
-                        //listView.loadData(recipeThemes);
-                        gridView.addHeaderView(loadHeadView(recipeThemes));
-                        initRecipeData();
-                    }
-                }
-            }
-
-            @Override
-            public void onFaild(String err) {
-                theme_flag = null;
-                gridView.removeHeaderView(linearLayout);
-                initRecipeData();
-            }
-        });
-    }
-
-    LinearLayout linearLayout;
-
-    /**
-     * 设置头部主题列表
-     */
-    public LinearLayout loadHeadView(List<RecipeTheme> recipeThemes) {
-        if (recipeThemes == null || recipeThemes.size() == 0) return null;
-        gridView.removeHeaderView(linearLayout);
-        linearLayout = (LinearLayout) LayoutInflater.from(cx).inflate(R.layout.view_recipe_myfavorite_title,null, false);
-        TextView title = linearLayout.findViewById(R.id.myfavorite_title);
-        title.setText("主题");
-        for (RecipeTheme re : recipeThemes) {
-            ThemeListViewItem themeListViewItem = new ThemeListViewItem(cx);
-            themeListViewItem.loadData(re);
-            //设置分割线
-            View divider = new View(cx);
-            divider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DisplayUtils.dip2px(cx, 5)));
-            linearLayout.addView(divider);
-            linearLayout.addView(themeListViewItem);
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.img_back)
+            UIService.getInstance().popBack();
+        else if (view.getId() == R.id.tv_delete) {
+            onClear();
         }
-        return linearLayout;
     }
 
     protected String getTextWhenEmpty() {
@@ -242,16 +165,16 @@ public class AbsThemeRecipeListGridPage extends MyBasePage<MainActivity> {
     /**
      * 初始化右上角清空按钮
      */
-    void regsitRightView() {
-        TextView txtView = TitleBar.newTitleTextView(cx, "清空", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!emptyView.isShown())
-                    onClear();
-            }
-        });
-        txtView.setTextColor(Color.rgb(255, 180, 0));
-    }
+//    void regsitRightView() {
+//        TextView txtView = TitleBar.newTitleTextView(cx, "清空", new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!emptyView.isShown())
+//                    onClear();
+//            }
+//        });
+//        txtView.setTextColor(Color.rgb(255, 180, 0));
+//    }
 
     @Override
     public void onDestroyView() {
@@ -259,37 +182,35 @@ public class AbsThemeRecipeListGridPage extends MyBasePage<MainActivity> {
         ButterKnife.reset(this);
     }
 
-    @OnClick(R.id.img_back)
-    public void onViewClicked() {
 
-        UIService.getInstance().popBack();
-    }
-
-//    @Subscribe
-//    public void onEvent(PageBackEvent event) {
-//        if ("SelectThemeDetailPage".equals(event.getPageName())){
-//            if (Plat.accountService.isLogon()){
-//                initThemeData();
-//            }
-//        }
-//        if ("RecipeDetailPage".equals(event.getPageName())){
-//            if (Plat.accountService.isLogon()){
-//                initRecipeData();
-//            }
-//        }
-//    }
     @Subscribe
     public void onEvent(PageBackEvent event) {
-        if ("SelectThemeDetailPage".equals(event.getPageName())||"RecipeDetailPage".equals(event.getPageName())){
-            if (Build.VERSION.SDK_INT >= 21) {
-                View decorView = activity.getWindow().getDecorView();
-                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-                activity.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
-                StatusBarUtils.setTextDark(getContext(), true);
-            }
-            if (Plat.accountService.isLogon()){
-                initThemeData();
-            }
+
+    }
+
+    class CollectViewPagerAdapter extends FragmentStatePagerAdapter {
+
+
+        public CollectViewPagerAdapter(@NonNull FragmentManager fm) {
+            super(fm);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles.get(position);
         }
     }
+
 }

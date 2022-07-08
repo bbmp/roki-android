@@ -2,11 +2,12 @@ package com.robam.roki.ui.page.login;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.widget.AppCompatButton;
+import com.blankj.utilcode.util.KeyboardUtils;
+import com.hjq.toast.ToastUtils;
 import com.legent.plat.pojos.User;
 import com.legent.plat.services.AccountService;
 import com.legent.utils.StringUtils;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.roki.R;
 import com.robam.roki.ui.form.UserActivity;
 import com.robam.roki.ui.page.login.helper.LoginHelper;
@@ -14,7 +15,6 @@ import com.robam.roki.ui.page.login.manger.InputTextManager;
 import com.robam.roki.ui.widget.view.ClearEditText;
 import com.robam.roki.ui.widget.view.PasswordEditText;
 import com.robam.roki.utils.StringUtil;
-import com.robam.roki.utils.ToolUtils;
 
 
 /**
@@ -30,7 +30,7 @@ public class LoginPasswordPage extends MyBasePage<UserActivity> {
     /**
      * 密码
      */
-    private PasswordEditText et_password;
+    private ClearEditText et_password;
     /**
      * 提交登录
      */
@@ -50,7 +50,7 @@ public class LoginPasswordPage extends MyBasePage<UserActivity> {
     @Override
     protected void initView() {
         et_login_phone = (ClearEditText) findViewById(R.id.et_login_phone);
-        et_password = (PasswordEditText) findViewById(R.id.et_password);
+        et_password = (ClearEditText) findViewById(R.id.et_password);
         btn_login_commit = (AppCompatButton) findViewById(R.id.btn_login_commit);
 //        InputTextManager.with(getActivity())
 //                .addView(et_login_phone)
@@ -62,7 +62,7 @@ public class LoginPasswordPage extends MyBasePage<UserActivity> {
 
     @Override
     public void onClick(View view) {
-        ToolUtils.hideSoftInput(activity);
+        KeyboardUtils.hideSoftInput(activity);
         if (view == btn_login_commit){
             login() ;
         }

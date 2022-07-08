@@ -1,12 +1,16 @@
 package com.robam.roki.ui.page.device.steamovenone;
 
+import static com.robam.common.io.device.MsgParams.ArgumentNumber;
+
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,23 +42,37 @@ import com.robam.common.io.cloud.Requests;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.io.device.MsgKeys;
 import com.robam.common.io.device.MsgParams;
+import com.robam.common.io.device.MsgParamsNew;
 import com.robam.common.io.device.TerminalType;
 import com.robam.common.pojos.Recipe;
+import com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
+import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOneNew;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
 import com.robam.roki.R;
 import com.robam.roki.db.model.RecipeBean;
 import com.robam.roki.db.model.RecipeStepBean;
+import com.robam.roki.factory.RokiDialogFactory;
+import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.adapter3.Rv610RecipeAdapter;
 import com.robam.roki.ui.adapter3.Rv610StepAdapter;
 import com.robam.roki.ui.adapter3.RvMultiRecipeAdapter;
 import com.robam.roki.ui.form.MainActivity;
+import com.robam.roki.ui.page.device.integratedStove.SteamOvenHelper;
 import com.robam.roki.ui.page.login.MyBasePage;
+import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.StringUtil;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
@@ -71,7 +89,7 @@ public class MultiListRecipePage extends MyBasePage<MainActivity> {
     /**
      * 菜谱adapter
      */
-    private RecyclerView rv610Recipe;
+    private SwipeMenuRecyclerView rv610Recipe;
     /**
      * 开始
      */
@@ -92,6 +110,42 @@ public class MultiListRecipePage extends MyBasePage<MainActivity> {
 //    private RecipeBean recipeBean;
     private Reponses.multiRecipeList recipeBean;
 
+    String needDescalingParams;
+    IRokiDialog dialogByType;
+    private void descalingDialog() {
+        if (dialogByType == null) {
+            dialogByType = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_TYPE_02);
+        }
+        if (dialogByType.isShow()) {
+            return;
+        }
+        String descalingTitle = null;
+        String descalingContent = null;
+        String descalingButton = null;
+        try {
+            if (!"".equals(needDescalingParams)) {
+                JSONObject jsonObject = new JSONObject(needDescalingParams);
+                JSONObject needDescaling = jsonObject.getJSONObject("needDescaling");
+                descalingTitle = needDescaling.getString("title");
+                descalingContent = needDescaling.getString("content");
+                descalingButton = needDescaling.getString("positiveButton");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        dialogByType.setTitleText(descalingTitle);
+        dialogByType.setContentText(descalingContent);
+        final IRokiDialog finalDialogByType = dialogByType;
+        dialogByType.setOkBtn(descalingButton, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalDialogByType != null) {
+                    finalDialogByType.dismiss();
+                }
+            }
+        });
+        dialogByType.show();
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.page_multi_recipe_list;
@@ -102,10 +156,35 @@ public class MultiListRecipePage extends MyBasePage<MainActivity> {
     protected void initView() {
         getTitleBar().setOnTitleBarListener(this);
         recipeName = (EditText) findViewById(R.id.recipe_name);
-        rv610Recipe = (RecyclerView) findViewById(R.id.rv_610_recipe);
+        rv610Recipe = (SwipeMenuRecyclerView) findViewById(R.id.rv_610_recipe);
         btnAutomatic = (AppCompatButton) findViewById(R.id.btn_automatic);
         rv610Recipe.setLayoutManager(new LinearLayoutManager(cx, RecyclerView.VERTICAL, false));
         rvMultiRecipeAdapter = new RvMultiRecipeAdapter();
+
+
+        SwipeMenuCreator menuCreator= (swipeMenu, rightMenu, i) -> {
+            SwipeMenuItem deleteItem =new SwipeMenuItem(getContext());
+            deleteItem.setBackground(getResources().getDrawable(R.drawable.layer_list_delete_drawable))
+                    .setTextColor(Color.WHITE) // 文字颜色。
+                    .setTextSize(15) // 文字大小。
+                    .setWidth(140).setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+            rightMenu.addMenuItem(deleteItem);
+        };
+        SwipeMenuItemClickListener mMenuItemClickListener =
+                new SwipeMenuItemClickListener(){
+
+                    @Override
+                    public void onItemClick(SwipeMenuBridge swipeMenuBridge) {
+
+
+                        swipeMenuBridge.closeMenu();
+                        int adapterPosition = swipeMenuBridge.getAdapterPosition(); // RecyclerView的Item的position。
+                        long id1 = rvMultiRecipeAdapter.getItem(adapterPosition).id;
+                        deleteMultiRecipe((int) id1,adapterPosition);
+                    }
+                };
+        rv610Recipe.setSwipeMenuItemClickListener(mMenuItemClickListener);
+        rv610Recipe.setSwipeMenuCreator(menuCreator);
         rv610Recipe.setAdapter(rvMultiRecipeAdapter);
 
         recipeName.setInputType(InputType.TYPE_CLASS_TEXT
@@ -153,18 +232,18 @@ public class MultiListRecipePage extends MyBasePage<MainActivity> {
                     bundle.putSerializable("Item", rvMultiRecipeAdapter.getItem(position));
                     UIService.getInstance().postPage(PageKey.MultiAddEditDetailPage, bundle);
                 } else if (view.getId() == R.id.tv_del) {
-                    deleteMultiRecipe((int) rvMultiRecipeAdapter.getItem(position).id, position);
+//                    deleteMultiRecipe((int) rvMultiRecipeAdapter.getItem(position).id, position);
                 }
             }
         });
         rvMultiRecipeAdapter.addChildLongClickViewIds(R.id.stb_step_top);
 
-        rvMultiRecipeAdapter.addOnLeftTouchListener(new Rv610StepAdapter.OnLeftTouchListener() {
-            @Override
-            public void onLeftTouch(int position) {
-                rvMultiRecipeAdapter.setDelPosition(position);
-            }
-        });
+//        rvMultiRecipeAdapter.addOnLeftTouchListener(new Rv610StepAdapter.OnLeftTouchListener() {
+//            @Override
+//            public void onLeftTouch(int position) {
+//                rvMultiRecipeAdapter.setDelPosition(position);
+//            }
+//        });
 
         rvMultiRecipeAdapter.addOnSelectListener(new RvMultiRecipeAdapter.OnSelectListener() {
 
@@ -181,7 +260,6 @@ public class MultiListRecipePage extends MyBasePage<MainActivity> {
         });
         setOnClickListener(btnAutomatic);
         btnAutomatic.setEnabled(false);
-
         View head_view = LinearLayout.inflate(cx, R.layout.head_multi_recipe, null);
         rvMultiRecipeAdapter.addHeaderView(head_view);
         head_view.setOnClickListener(new View.OnClickListener() {
@@ -196,16 +274,18 @@ public class MultiListRecipePage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initData() {
-//        List<RecipeBean> recipeBeans = LitePal.where("device = ? and  user_id = ?", "D610", Plat.accountService.getCurrentUserId() + "").find(RecipeBean.class);
-//        if(recipeBeans!=null&&recipeBeans.size()>0){
-//            getLocalRecipe(recipeBeans);
-//        }
-//        rvMultiRecipeAdapter.addData(recipeBeans);
         Bundle bd = getArguments();
         guid = bd == null ? null : bd.getString(PageArgumentKey.Guid);
         steameOvenOne = Plat.deviceService.lookupChild(guid);
         mDatas = bd == null ? null : (List<DeviceConfigurationFunctions>) bd.getSerializable(PageArgumentKey.List);
         title = bd == null ? null : bd.getString(PageArgumentKey.title);
+        needDescalingParams= bd == null ? null : bd.getString(PageArgumentKey.descaling);
+        List<RecipeBean> recipeBeans = LitePal.where("device = ? and  user_id = ?", "D610", Plat.accountService.getCurrentUserId() + "").find(RecipeBean.class);
+        LogUtils.i("20220407","共："+recipeBeans.size()+"道多段菜谱");
+
+        if (recipeBeans != null && recipeBeans.size() > 0) {
+            getLocalRecipe(recipeBeans);
+        }
 
         userId = Plat.accountService.getCurrentUserId();
         getRecipeData();
@@ -223,13 +303,148 @@ public class MultiListRecipePage extends MyBasePage<MainActivity> {
     @Override
     public void onClick(View view) {
         if (view == btnAutomatic) {
-            steam_on();
+
+            if (steameOvenOne instanceof AbsSteameOvenOneNew){
+                setSteamOvenOneMultiStepMode620((AbsSteameOvenOneNew)steameOvenOne);
+            }else {
+                steam_on();
+            }
         }
     }
 
+    private void setSteamOvenOneMultiStepMode620(AbsSteameOvenOneNew steameOvenOne ) {
+
+        if (!SteamOvenHelper.isDoorState(steameOvenOne.doorState)){
+            com.hjq.toast.ToastUtils.show("门未关好，请检查并确认关好门");
+            return;
+
+        }
+
+        List<Reponses.saveMultiRecipeList> recipeStepList = recipeBean.multiStepDtoList;
+        if (recipeStepList==null){
+            ToastUtils.show("多段添加不能少于2步",Toast.LENGTH_LONG);
+            return;
+        }
+        //多段是否含有需要用水箱的
+
+        if (recipeStepList.size()<=1){
+            ToastUtils.show("多段添加不能少于2步",Toast.LENGTH_LONG);
+            return;
+        }
+        boolean isWater = false ;
+        for (Reponses.saveMultiRecipeList step :
+                recipeStepList) {
+            if (SteamOvenHelper.isWater(SteamOvenModeEnum.match(Integer.parseInt(step.modelCode)))) {
+                isWater = true ;
+            }
+        }
+        if (isWater) {
+            if (SteamOvenHelper.isDescale(steameOvenOne.descaleFlag)) {
+//                com.hjq.toast.ToastUtils.show("设备需要除垢后才能继续工作，请先除垢");
+
+                descalingDialog();
+                return ;
+            }
+            if (!SteamOvenHelper.isWaterBoxState(steameOvenOne.waterBoxState)) {
+                com.hjq.toast.ToastUtils.show("水箱已弹出，请检查水箱状态");
+                return ;
+            }
+            if (!SteamOvenHelper.isWaterLevelState(steameOvenOne.waterLevelState)) {
+                com.hjq.toast.ToastUtils.show("水箱缺水，请加水");
+                return  ;
+            }
+        }
+        if (recipeStepList != null && recipeStepList.size() != 0) {
+            try {
+                Msg msg = steameOvenOne.newReqMsg(MsgKeys.setDeviceAttribute_Req);
+//                msg.putOpt(MsgParams.TerminalType, steameOvenOne.terminalType);
+//                msg.putOpt(UserId, steameOvenOne.getSrcUser());
+//                msg.putOpt(MsgParams.categoryCode , IntegratedStoveConstant.STEAME_OVEN_ONE);
+                msg.putOpt(ArgumentNumber, recipeStepList.size()*5+3);
+                msg.putOpt(MsgParamsNew.type , 2) ;
+                //一体机电源控制
+                msg.putOpt(MsgParamsNew.powerCtrlKey, 2);
+                msg.putOpt(MsgParamsNew.powerCtrlLength, 1);
+                msg.putOpt(MsgParamsNew.powerCtrl, 1);
+                //一体机工作控制
+                msg.putOpt(MsgParamsNew.workCtrlKey, 4);
+                msg.putOpt(MsgParamsNew.workCtrlLength, 1);
+                msg.putOpt(MsgParamsNew.workCtrl, 1);
+                //预约时间
+//                msg.putOpt(MsgParamsNew.setOrderMinutesKey, 5);
+//                msg.putOpt(MsgParamsNew.setOrderMinutesLength, 1);
+//                msg.putOpt(MsgParamsNew.setOrderMinutes, 0);
+                //段数
+                msg.putOpt(MsgParamsNew.sectionNumberKey, 100) ;
+                msg.putOpt(MsgParamsNew.sectionNumberLength, 1) ;
+                msg.putOpt(MsgParamsNew.sectionNumber, recipeStepList.size() ) ;
+//                msg.putOpt(MsgParamsNew.sectionNumber, recipeStepList.size() ) ;
+                for (int i = 0; i < recipeStepList.size(); i++) {
+                    Reponses.saveMultiRecipeList bean = recipeStepList.get(i);
+                    //模式
+                    msg.putOpt(MsgParamsNew.modeKey + i, 101 + i *10  ) ;
+                    msg.putOpt(MsgParamsNew.modeLength + i, 1) ;
+                    msg.putOpt(MsgParamsNew.mode + i,Integer.parseInt( bean.modelCode)) ;
+                    //温度上温度
+                    msg.putOpt(MsgParamsNew.setUpTempKey + i  , 102 + i *10 );
+                    msg.putOpt(MsgParamsNew.setUpTempLength + i, 1);
+                    msg.putOpt(MsgParamsNew.setUpTemp + i ,Integer.parseInt(bean.temperature));
+
+                    msg.putOpt(MsgParamsNew.setDownTempKey + i  , 103 + i *10 );
+                    msg.putOpt(MsgParamsNew.setDownTempLength + i, 1);
+                    msg.putOpt(MsgParamsNew.setDownTemp + i ,Integer.parseInt(bean.downTemperature));
+
+                    //时间
+//                    int time =Integer.parseInt(bean.time)*60;
+                    int time =bean.getTime(guid) * 60;
+                    msg.putOpt(MsgParamsNew.setTimeKey + i , 104 + i *10 );
+                    msg.putOpt(MsgParamsNew.setTimeLength + i, 1);
+                    short lowTime = time > 255 ? (short) (time & 0Xff):(short)time;
+//                    final short lowTime = time > 255 ? (short) (time & 0Xff):(short)time;
+                    if (time<=255){
+                        msg.putOpt(MsgParamsNew.setTime0b+i, lowTime);
+                    }else{
+                        msg.putOpt(MsgParamsNew.setTimeKey+i, 104 + i *10);
+                        msg.putOpt(MsgParamsNew.setTimeLength+i, 2);
+                        short ltime = (short)(time & 0xff);
+                        msg.putOpt(MsgParamsNew.setTime0b+i, ltime);
+                        short htime = (short) ((time >> 8) & 0Xff);
+                        msg.putOpt(MsgParamsNew.setTime1b+i, htime);
+                    }
+//                    msg.putOpt(MsgParamsNew.setTime + i, bean.getTime()*60);
+                    //蒸汽量
+                    msg.putOpt(MsgParamsNew.steamKey + i, 106 + i *10 );
+                    msg.putOpt(MsgParamsNew.steamLength + i , 1);
+                    msg.putOpt(MsgParamsNew.steam + i, Integer.parseInt(bean.steamQuantity));
+                }
+
+
+                steameOvenOne.setSteamOvenOneMultiStepMode(msg, new VoidCallback() {
+                    @Override
+                    public void onSuccess() {
+                        UIService.getInstance().popBack();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+
+
+
+    }
+
     private void steam_on() {
-        if (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait
+        if (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait
         ) {
             steameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
@@ -299,9 +514,9 @@ public class MultiListRecipePage extends MyBasePage<MainActivity> {
                     msg.putOpt(MsgParams.SteameOvenSectionOfTheStep_Length + i, 9);//段步骤 value
                     msg.putOpt(MsgParams.SteameOvenMode + i, recipeStepList.get(i - 1).modelCode);//第一段 mode
                     msg.putOpt(MsgParams.SteameOvenTemp + i, recipeStepList.get(i - 1).temperature);
-                    msg.putOpt(MsgParams.SteameOvenTime + i, recipeStepList.get(i - 1).time);
+                    msg.putOpt(MsgParams.SteameOvenTime + i, recipeStepList.get(i - 1).getTime(guid));
                     msg.putOpt(MsgParams.SteameOvenTemp2 + i, recipeStepList.get(i - 1).downTemperature);//
-                    msg.putOpt(MsgParams.SteameOvenTime2 + i, recipeStepList.get(i - 1).time);//
+                    msg.putOpt(MsgParams.SteameOvenTime2 + i, recipeStepList.get(i - 1).getTime(guid));//
                 }
                 steameOvenOne.setSteamOvenOneMultiStepMode(msg, new VoidCallback() {
                     @Override
@@ -329,7 +544,7 @@ public class MultiListRecipePage extends MyBasePage<MainActivity> {
     }
 
     private void getRecipeData() {
-        RokiRestHelper.getMultiRecipe(userId + "", 0, 100, new Callback<Reponses.MultiRecipeResponse>() {
+        RokiRestHelper.getMultiRecipe(userId + "", 0, 100, steameOvenOne.getDt() ,new Callback<Reponses.MultiRecipeResponse>() {
             @Override
             public void onSuccess(Reponses.MultiRecipeResponse recipes) {
                 if (recipes.datas != null && recipes.datas.size() > 0) {
@@ -347,104 +562,64 @@ public class MultiListRecipePage extends MyBasePage<MainActivity> {
     }
 
     private void deleteMultiRecipe(int id, int position) {
-        RokiRestHelper.deleteMultiRecipe(id,  new Callback<RCReponse>() {
+        RokiRestHelper.deleteMultiRecipe(id, new Callback<RCReponse>() {
             @Override
             public void onSuccess(RCReponse recipes) {
-                ToastUtils.show("删除成功");
+                com.hjq.toast.ToastUtils.show("删除成功");
                 rvMultiRecipeAdapter.removeAt(position);
                 rvMultiRecipeAdapter.setDelPosition(-1);
             }
 
             @Override
             public void onFailure(Throwable t) {
-                ToastUtils.show("删除失败");
+                com.hjq.toast.ToastUtils.show("删除失败");
             }
         });
     }
 
-    private void getLocalRecipe(List<RecipeBean> recipeBeans ) {
-        for (int i = 0;i<recipeBeans.size()-1;i++){
+    private void getLocalRecipe(List<RecipeBean> recipeBeans) {
+        for (int i = 0; i < recipeBeans.size(); i++) {
             recipeBeans.get(i).getRecipe_id();
-            List<RecipeStepBean> RecipeStepBeans = LitePal.where("recipeBean_id = ?" , recipeBeans.get(i).getId()+"" ).find(RecipeStepBean.class);
-            int times = LitePal.where("recipeBean_id = ?" , recipeBeans.get(i).getId()+"" ).sum(RecipeStepBean.class , "time" ,int.class);
-
+            List<RecipeStepBean> RecipeStepBeans = LitePal.where("recipeBean_id = ?", recipeBeans.get(i).getId() + "").find(RecipeStepBean.class);
+//            int times = LitePal.where("recipeBean_id = ?", recipeBeans.get(i).getId() + "").sum(RecipeStepBean.class, "time", int.class);
+            saveMultiRecipe(RecipeStepBeans, recipeBeans.get(i).getRecipe_names());
+            LogUtils.i("20220407","共："+recipeBeans.size()+"道菜谱，第"+i+"道菜："+recipeBeans.get(i).getRecipe_names());
         }
-
-
-//        Requests.saveMultiRecipeRequest reqBody = new Requests.saveMultiRecipeRequest();
-//        reqBody.userId = Plat.accountService.getCurrentUserId();
-//        reqBody.name = recipeName.getText().toString();
-//        reqBody.deviceGuid = mGuid;
-//        if (recipeId != -1) {
-//            reqBody.id = recipeId;
-//        }
-//        for (int i = 0; i < rv610StepAdapter.getItemCount() - 1; i++) {
-//            Requests.saveMultiRecipeList item = new Requests.saveMultiRecipeList();
-//            item.downTemperature = rv610StepAdapter.getItem(i).getTemperature2() + "";
-////                item.modelCode = rv610StepAdapter.getItem(i).getFunction_code();
-//            item.modelCode = rv610StepAdapter.getItem(i).getWork_mode() + "";
-//            item.modelName = rv610StepAdapter.getItem(i).getFunction_name();
-//            item.no = i + 1 + "";
-//            item.steamQuantity = rv610StepAdapter.getItem(i).getSteam_flow() + "";
-//            item.temperature = rv610StepAdapter.getItem(i).getTemperature() + "";
-//            item.time = rv610StepAdapter.getItem(i).getTime() + "";
-//            multiStepDtoList.add(item);
-//        }
-//        reqBody.multiStepDtoList = multiStepDtoList;
-//        RokiRestHelper.saveMultiRecipe(reqBody, new Callback<RCReponse>() {
-//            @Override
-//            public void onSuccess(RCReponse recipes) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//
-//            }
-//        });
+        LitePal.deleteAll(RecipeBean.class, "device = ? and  user_id = ?", "D610", Plat.accountService.getCurrentUserId() + "");
+//        LitePal.deleteAll(RecipeBean.class);
+        getRecipeData();
     }
 
-    private void saveMultiRecipe(List<RecipeBean> recipeBeans ) {
-        for (int i = 0;i<recipeBeans.size()-1;i++){
-            recipeBeans.get(i).getRecipe_id();
-            List<RecipeStepBean> RecipeStepBeans = LitePal.where("recipeBean_id = ?" , recipeBeans.get(i).getId()+"" ).find(RecipeStepBean.class);
-            int times = LitePal.where("recipeBean_id = ?" , recipeBeans.get(i).getId()+"" ).sum(RecipeStepBean.class , "time" ,int.class);
-
+    private void saveMultiRecipe(List<RecipeStepBean> recipeBeans, String name) {
+        Requests.saveMultiRecipeRequest reqBody = new Requests.saveMultiRecipeRequest();
+        reqBody.userId = Plat.accountService.getCurrentUserId();
+        reqBody.name = name;
+        reqBody.deviceGuid = guid;
+        List<Requests.saveMultiRecipeList> multiStepDtoList = new ArrayList<>();
+        for (int i = 0; i < recipeBeans.size(); i++) {
+            Requests.saveMultiRecipeList item = new Requests.saveMultiRecipeList();
+            item.downTemperature = recipeBeans.get(i).getTemperature2() + "";
+            item.modelCode = recipeBeans.get(i).getWork_mode() + "";
+            item.modelName = recipeBeans.get(i).getFunction_name();
+            item.no = i + 1 + "";
+            item.steamQuantity = recipeBeans.get(i).getSteam_flow() + "";
+            item.temperature = recipeBeans.get(i).getTemperature() + "";
+            item.time = recipeBeans.get(i).getTime() + "";
+            multiStepDtoList.add(item);
         }
+        reqBody.multiStepDtoList = multiStepDtoList;
 
+        RokiRestHelper.saveMultiRecipe(reqBody, new Callback<RCReponse>() {
+            @Override
+            public void onSuccess(RCReponse recipes) {
 
-//        Requests.saveMultiRecipeRequest reqBody = new Requests.saveMultiRecipeRequest();
-//        reqBody.userId = Plat.accountService.getCurrentUserId();
-//        reqBody.name = recipeName.getText().toString();
-//        reqBody.deviceGuid = mGuid;
-//        if (recipeId != -1) {
-//            reqBody.id = recipeId;
-//        }
-//        for (int i = 0; i < rv610StepAdapter.getItemCount() - 1; i++) {
-//            Requests.saveMultiRecipeList item = new Requests.saveMultiRecipeList();
-//            item.downTemperature = rv610StepAdapter.getItem(i).getTemperature2() + "";
-////                item.modelCode = rv610StepAdapter.getItem(i).getFunction_code();
-//            item.modelCode = rv610StepAdapter.getItem(i).getWork_mode() + "";
-//            item.modelName = rv610StepAdapter.getItem(i).getFunction_name();
-//            item.no = i + 1 + "";
-//            item.steamQuantity = rv610StepAdapter.getItem(i).getSteam_flow() + "";
-//            item.temperature = rv610StepAdapter.getItem(i).getTemperature() + "";
-//            item.time = rv610StepAdapter.getItem(i).getTime() + "";
-//            multiStepDtoList.add(item);
-//        }
-//        reqBody.multiStepDtoList = multiStepDtoList;
-//        RokiRestHelper.saveMultiRecipe(reqBody, new Callback<RCReponse>() {
-//            @Override
-//            public void onSuccess(RCReponse recipes) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//
-//            }
-//        });
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
-
 
 }

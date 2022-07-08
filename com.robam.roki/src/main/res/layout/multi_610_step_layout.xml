@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="3dp"
+    android:layout_below="@+id/step_1_layout"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:id="@+id/step_2_layout"
+    android:layout_width="match_parent"
+    android:layout_height="45dp">
+
+    <TextView
+        android:textSize="18sp"
+        android:text="第几段"
+        android:layout_marginLeft="8dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginRight="8dp"
+        android:textSize="18sp"
+        android:id="@+id/step_info"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+    </TextView>
+</LinearLayout>

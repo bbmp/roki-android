@@ -13,10 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.google.common.base.Strings;
 import com.legent.Callback;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.AbsDialog;
 import com.legent.utils.LogUtils;
@@ -43,7 +43,6 @@ import com.robam.roki.ui.page.RecipeDetailPage;
 import com.robam.roki.ui.view.RecipeSearchTitleView;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.MotherListUtils;
-import com.robam.roki.utils.ToolUtils;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -145,8 +144,8 @@ public class RecipeSearchDialog extends AbsDialog {
 
     void initData() {
         long userId = Plat.accountService.getCurrentUserId();
-        RokiRestHelper.getCookbookSearchHistory(userId, Reponses.HistoryResponse.class,
-                new RetrofitCallback<Reponses.HistoryResponse>() {
+        CookbookManager.getInstance().getCookbookSearchHistory(userId,
+                new Callback<Reponses.HistoryResponse>() {
                     @Override
                     public void onSuccess(Reponses.HistoryResponse historyResponse) {
                         if (historyResponse == null) {
@@ -156,92 +155,85 @@ public class RecipeSearchDialog extends AbsDialog {
                     }
 
                     @Override
-                    public void onFaild(String err) {
-                        LogUtils.i("20180418", " t:" + err);
+                    public void onFailure(Throwable t) {
+                        LogUtils.i("20180418", " t:" + t);
                     }
                 });
 
-        RokiRestHelper.getStoreCategory(Reponses.StoreCategoryResponse.class, new RetrofitCallback<Reponses.StoreCategoryResponse>() {
+        RokiRestHelper.getStoreCategory(new Callback<List<Group>>() {
             @Override
-            public void onSuccess(Reponses.StoreCategoryResponse storeCategoryResponse) {
-                if (null != storeCategoryResponse) {
-                    List<Group> result = storeCategoryResponse.cookbookTagGroups;
-                    if (result == null || result.size() == 0) {
-                        return;
-                    }
-                    for (int i = 0; i < result.size(); i++) {
-                        if (cx.getString(R.string.maternal_and_child_series).equals
-                                (result.get(i).getName())) {
-                            List<Tag> tags = result.get(i).getTags();
-                            int pageNo=0;
-                            int pageSize =20;
-                            for (Tag tag : tags) {
-                                RokiRestHelper.getCookbooksByTag(tag.getID(),pageNo,pageSize, new Callback<Reponses.CookbooksResponse>() {
+            public void onSuccess(List<Group> result) {
+                if (result == null || result.size() == 0) {
+                    return;
+                }
+                for (int i = 0; i < result.size(); i++) {
+                    if (cx.getString(R.string.maternal_and_child_series).equals
+                            (result.get(i).getName())) {
+                        List<Tag> tags = result.get(i).getTags();
+                        int pageNo=0;
+                        int pageSize =20;
+                        for (Tag tag : tags) {
+                            RokiRestHelper.getCookbooksByTag(tag.getID(),pageNo,pageSize, new Callback<Reponses.CookbooksResponse>() {
 
-                                    @Override
-                                    public void onSuccess(Reponses.CookbooksResponse cookbooksResponse) {
-                                        List<Recipe> cookbooks = cookbooksResponse.cookbooks;
-                                        if (cookbooks != null && cookbooks.size() > 0) {
-                                            for (int i = 0; i < cookbooks.size(); i++) {
-                                                mRecipeNames.add(cookbooks.get(i));
-                                            }
-                                            addData(mRecipeNames);
+                                @Override
+                                public void onSuccess(Reponses.CookbooksResponse cookbooksResponse) {
+                                    List<Recipe> cookbooks = cookbooksResponse.cookbooks;
+                                    if (cookbooks != null && cookbooks.size() > 0) {
+                                        for (int i = 0; i < cookbooks.size(); i++) {
+                                            mRecipeNames.add(cookbooks.get(i));
                                         }
+                                        addData(mRecipeNames);
                                     }
+                                }
 
-                                    @Override
-                                    public void onFailure(Throwable t) {
+                                @Override
+                                public void onFailure(Throwable t) {
 
-                                        ToastUtils.showThrowable(t);
-                                    }
-                                });
-                            }
+                                    ToastUtils.showThrowable(t);
+                                }
+                            });
                         }
                     }
                 }
             }
 
             @Override
-            public void onFaild(String err) {
-
+            public void onFailure(Throwable t) {
             }
         });
 
-        RokiRestHelper.getHotKeysForCookbook(Reponses.HotKeysForCookbookResponse.class,
-                new RetrofitCallback<Reponses.HotKeysForCookbookResponse>() {
+        CookbookManager.getInstance().getHotKeysForCookbook(
+                new Callback<List<String>>() {
 
                     @Override
-                    public void onSuccess(Reponses.HotKeysForCookbookResponse hotKeysForCookbookResponse) {
-                        if (null != hotKeysForCookbookResponse) {
-                            List<String> result = hotKeysForCookbookResponse.hotKeys;
-                            if (result == null || result.size() == 0) {
-                                return;
-                            }
-                            id_recommend.setAdapter(new TagAdapter<String>(result) {
-                                @Override
-                                public View getView(FlowLayout parent, int position, String s) {
-                                    TextView tv = (TextView) LayoutInflater.from(cx).inflate(R.layout.search_show,
-                                            id_recommend, false);
-                                    tv.setText(s);
-                                    return tv;
-                                }
-                            });
-                            id_recommend.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-                                @Override
-                                public boolean onTagClick(View view, int position, FlowLayout parent) {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString(PageArgumentKey.text, result.get(position));
-                                    UIService.getInstance().postPage(PageKey.RecipeSearch, bundle);
-                                    CookbookManager.getInstance().saveHistoryKeysForCookbook(result.get(position));
-                                    dismiss();
-                                    return true;
-                                }
-                            });
+                    public void onSuccess(final List<String> result) {
+                        if (result == null || result.size() == 0) {
+                            return;
                         }
+                        id_recommend.setAdapter(new TagAdapter<String>(result) {
+                            @Override
+                            public View getView(FlowLayout parent, int position, String s) {
+                                TextView tv = (TextView) LayoutInflater.from(cx).inflate(R.layout.search_show,
+                                        id_recommend, false);
+                                tv.setText(s);
+                                return tv;
+                            }
+                        });
+                        id_recommend.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+                            @Override
+                            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(PageArgumentKey.text, result.get(position));
+                                UIService.getInstance().postPage(PageKey.RecipeSearch, bundle);
+                                CookbookManager.getInstance().saveHistoryKeysForCookbook(result.get(position));
+                                dismiss();
+                                return true;
+                            }
+                        });
                     }
 
                     @Override
-                    public void onFaild(String err) {
+                    public void onFailure(Throwable t) {
 
                     }
                 });
@@ -355,7 +347,7 @@ public class RecipeSearchDialog extends AbsDialog {
 
     @OnClick(R.id.iv_delete_search_history)
     public void onDeleteSearchHistory() {
-        ToolUtils.hideSoftInput((Activity) cx);
+        KeyboardUtils.hideSoftInput((Activity) cx);
         final IRokiDialog dialog = RokiDialogFactory.createDialogByType(cx, DialogUtil.DIALOG_TYPE_26);
         dialog.setTitleText("确定要删除搜索记录吗？");
         dialog.show();

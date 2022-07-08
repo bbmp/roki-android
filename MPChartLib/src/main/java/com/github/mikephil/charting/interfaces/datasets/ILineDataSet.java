@@ -2,9 +2,13 @@ package com.github.mikephil.charting.interfaces.datasets;
 
 import android.graphics.DashPathEffect;
 
+import com.github.mikephil.charting.data.DataDescriptBean;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IFillFormatter;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Philpp Jahoda on 21/10/15.
@@ -106,4 +110,18 @@ public interface ILineDataSet extends ILineRadarDataSet<Entry> {
      * @return
      */
     boolean isDrawCirclesLast();
+
+    /**
+     * 需设置 isDrawCirclesEnabled 为true
+     * 指定位置集合画园
+     * list中Entry X表示位置，Y为是否实心1实心 2空心
+     */
+    List<Entry> appointList();
+    List<DataDescriptBean> operationList();
+    /**
+     * 指定位置显示特殊值
+     * list中Entry X表示位置，Y为显示的内容
+     */
+    List<Entry> specialValueList();
+
 }

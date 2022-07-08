@@ -2,6 +2,7 @@ package com.robam.common.io.cloud;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.j256.ormlite.stmt.query.In;
 import com.legent.plat.Plat;
 import com.legent.plat.pojos.AbsPostRequest;
 import com.legent.utils.LogUtils;
@@ -9,14 +10,32 @@ import com.robam.common.events.AbsBookRefreshEvent;
 import com.robam.common.pojos.CookStepDetails;
 import com.robam.common.pojos.CrmProduct;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import retrofit.http.Field;
 
 /**
  * Created by sylar on 15/7/31.
  */
 public interface Requests {
+
+
+    class NewCurrentLiveRequests extends AbsPostRequest {
+
+        @JsonProperty("stutas")
+        public int stutas;
+
+        @JsonProperty("isTop")
+        public int isTop;
+
+        public NewCurrentLiveRequests(int stutas, int isTop) {
+            this.stutas = stutas;
+            this.isTop = isTop;
+        }
+    }
 
     class StoreRequest extends AbsPostRequest {
         @JsonProperty("storeId")
@@ -35,12 +54,12 @@ public interface Requests {
             this.userId = userId;
         }
 
-//        @Override
-//        public String toString() {
-//            return "UserRequest{" +
-//                    "userId=" + userId +
-//                    '}';
-//        }
+        @Override
+        public String toString() {
+            return "UserRequest{" +
+                    "userId=" + userId +
+                    '}';
+        }
     }
 
 
@@ -319,7 +338,7 @@ public interface Requests {
 
     class GetCookbooksByNameRequest extends AbsPostRequest {
         @JsonProperty("userId")
-        public long userId;
+        public Long userId;
         @JsonProperty("name")
         public String name;
 
@@ -331,21 +350,34 @@ public interface Requests {
 
         public GetCookbooksByNameRequest(String name, String contain3rd, long userId) {
             this.name = name;
+
             this.contain3rd = contain3rd;
-            this.userId = userId;
+            if (Plat.accountService.isLogon()) {
+                this.userId = Plat.accountService.getCurrentUserId();
+            }else{
+                this.userId=null;
+            }
         }
 
         public GetCookbooksByNameRequest(String name, String contain3rd, long userId, boolean notNeedSearchHistory) {
             this.name = name;
             this.contain3rd = contain3rd;
-            this.userId = userId;
+            if (Plat.accountService.isLogon()) {
+                this.userId = Plat.accountService.getCurrentUserId();
+            }else{
+                this.userId=null;
+            }
             this.notNeedSearchHistory = notNeedSearchHistory;
         }
 
         public GetCookbooksByNameRequest(String name, String contain3rd, long userId, boolean notNeedSearchHistory,boolean needStatisticCookbook) {
             this.name = name;
             this.contain3rd = contain3rd;
-            this.userId = userId;
+            if (Plat.accountService.isLogon()) {
+                this.userId = Plat.accountService.getCurrentUserId();
+            }else{
+                this.userId=null;
+            }
             this.notNeedSearchHistory = notNeedSearchHistory;
             this.needStatisticCookbook = needStatisticCookbook;
         }
@@ -509,6 +541,138 @@ public interface Requests {
         }
     }
 
+    class CookingCurveSaveRequest extends UserRequest {
+
+        @JsonProperty("deviceCategoryCode")
+        public String deviceCategoryCode;
+
+        @JsonProperty("deviceGuid")
+        public String deviceGuid;
+
+        @JsonProperty("devicePlatformCode")
+        public String devicePlatformCode;
+
+        @JsonProperty("deviceTypeCode")
+        public String deviceTypeCode;
+
+        @JsonProperty("id")
+        public int id;
+
+        @JsonProperty("mode")
+        public String mode;
+
+        @JsonProperty("modeName")
+        public String modeName;
+
+        @JsonProperty("setTemp")
+        public String setTemp;
+
+        @JsonProperty("setTime")
+        public String setTime;
+        //0左 1右灶
+        @JsonProperty("headId")
+        public Integer headId;
+
+        public CookingCurveSaveRequest(long userId, String deviceCategoryCode, String deviceGuid, String devicePlatformCode, String deviceTypeCode, int id, String mode, String modeName, String setTemp, String setTime) {
+            super(userId);
+            this.deviceCategoryCode = deviceCategoryCode;
+            this.deviceGuid = deviceGuid;
+            this.devicePlatformCode = devicePlatformCode;
+            this.deviceTypeCode = deviceTypeCode;
+            this.id = id;
+            this.mode = mode;
+            this.modeName = modeName;
+            this.setTemp = setTemp;
+            this.setTime = setTime;
+        }
+
+        public CookingCurveSaveRequest(long userId, String deviceGuid, int id, String mode, String setTemp, String setTime) {
+            super(userId);
+            this.deviceGuid = deviceGuid;
+            this.id = id;
+            this.mode = mode;
+            this.setTemp = setTemp;
+            this.setTime = setTime;
+        }
+
+
+        public CookingCurveSaveRequest(long userId, String deviceGuid, int id, String mode, String setTemp, String setTime,Integer headId) {
+            super(userId);
+            this.deviceGuid = deviceGuid;
+            this.id = id;
+            this.mode = mode;
+            this.setTemp = setTemp;
+            this.setTime = setTime;
+            this.headId = headId;
+        }
+    }
+
+    class CookingCurveQueryRequest  {
+
+        @JsonProperty("id")
+        public String id;
+
+        @JsonProperty("deviceGuid")
+        public String deviceGuid;
+
+        public CookingCurveQueryRequest(String deviceGuid) {
+            this.deviceGuid = deviceGuid;
+        }
+        public CookingCurveQueryRequest(String id,String deviceGuid) {
+            this.id = id;
+            this.deviceGuid = deviceGuid;
+        }
+
+    }
+    class CookingCurveMarkStepRequest  {
+
+        @JsonProperty("id")
+        public String id;
+
+        @JsonProperty("stepDtoList")
+        public List<CookingCurveMarkStepList> stepDtoList;
+
+        public CookingCurveMarkStepRequest(String id, List<CookingCurveMarkStepList> stepDtoList) {
+            this.id = id;
+            this.stepDtoList = stepDtoList;
+        }
+    }
+    class CookingCurveMarkStepList {
+
+        @JsonProperty("curveCookbookId")
+        public String curveCookbookId;
+
+        @JsonProperty("markName")
+        public String markName;
+
+        @JsonProperty("markTemp")
+        public String markTemp;
+
+        @JsonProperty("markTime")
+        public String markTime;
+
+        public CookingCurveMarkStepList(String curveCookbookId, String markName, String markTemp, String markTime) {
+            this.curveCookbookId = curveCookbookId;
+            this.markName = markName;
+            this.markTemp = markTemp;
+            this.markTime = markTime;
+        }
+    }
+
+    class CookingCurveUpdateCurveState  {
+        //记录ID
+        @JsonProperty("id")
+        public String id;
+        // 1-继续；2-暂停, 3-结束
+        @JsonProperty("state")
+        public String state;
+
+        public CookingCurveUpdateCurveState(String id,String state) {
+            this.id = id;
+            this.state = state;
+        }
+
+    }
     class GetCookAlbumsRequest extends UserBookRequest {
 
         @JsonProperty("start")
@@ -975,6 +1139,8 @@ public interface Requests {
         public int type;
         @JsonProperty("excludeCookIds")
         public List<Long> excludeCookIds;
+        @JsonProperty("userId")
+        public Long userId;
 
 
         public TagOtherCooksRequest(Long cookbookTagId, boolean needStatisticCookbook, int pageNo, int pageSize, int type) {
@@ -983,6 +1149,12 @@ public interface Requests {
             this.pageNo = pageNo;
             this.pageSize = pageSize;
             this.type = type;
+            if (Plat.accountService.isLogon()){
+                this.userId=Plat.accountService.getCurrentUserId();
+            }else{
+                this.userId=null;
+            }
+
         }
 
         public TagOtherCooksRequest(Long cookbookTagId, boolean needStatisticCookbook, int pageNo, int pageSize, int type, List<Long> excludeCookIds) {
@@ -992,6 +1164,11 @@ public interface Requests {
             this.pageSize = pageSize;
             this.type = type;
             this.excludeCookIds = excludeCookIds;
+            if (Plat.accountService.isLogon()){
+                this.userId=Plat.accountService.getCurrentUserId();
+            }else{
+                this.userId=null;
+            }
         }
     }
 
@@ -1009,13 +1186,13 @@ public interface Requests {
         @JsonProperty("needStatisticCookbook")
         public boolean needStatisticCookbook = false;
 
-
         public TagCooksRequest(Long cookbookTagId, int pageNo, int pageSize) {
             this.cookbookTagId = cookbookTagId;
             this.pageNo = pageNo;
             this.pageSize = pageSize;
         }
     }
+
 
     class saveMultiRecipeRequest extends AbsPostRequest {
         @JsonProperty("deviceGuid")
@@ -1452,6 +1629,130 @@ public interface Requests {
         public deleteRecipeDiyCookbook(Long id) {
             this.id = id;
         }
+    }
+    //更新烹饪曲线
+
+
+    class cookingCurveDto implements Serializable {
+        public  ArrayList<curvePrepareStepDtoList> curvePrepareStepDtoList=new ArrayList();
+        public   ArrayList<curveStepDtoList> curveStepDtoList=new ArrayList();
+        public   ArrayList<curveMaterialDtoList> curveMaterialDtoList=new ArrayList();
+        public  String    deviceCategoryCode="";
+        public String    deviceParams="";
+        public  String    devicePlatformCode="";
+        public  String    deviceTypeCode="";
+        public  String    difficulty="";
+        public  String    id="";
+        public  String    imageCover="";
+        public  String    introduction="";
+        public  String    name="";
+        public  String    needTime="";
+        public  String    temperatureCurveParams="";
+        public  String    time="";
+
+
+        public cookingCurveDto() {
+
+
+        }
+
+
+    }
+    class updateCurveStepRequest implements Serializable  {
+        public  ArrayList<curvePrepareStepDtoList> curvePrepareStepDtoList =new  ArrayList<curvePrepareStepDtoList>();
+
+
+
+        public   ArrayList<curveStepDtoList> curveStepDtoList = new ArrayList();
+        public   ArrayList<curveMaterialDtoList> curveMaterialDtoList  = new ArrayList() ;
+        public  String    deviceCategoryCode="";
+        public String    deviceParams="";
+        public  String    devicePlatformCod="";
+        public  String    deviceTypeCode="";
+        public  String    difficulty="";
+        public  String    id="";
+        public  String    imageCover="";
+        public  String    introduction="";
+        public  String    name="";
+        public  String    needTime="";
+        public  String    temperatureCurveParams;
+        public  String    time;
+
+
+        public updateCurveStepRequest() {
+
+
+        }
+    }
+
+
+
+    class curveMaterialDtoList implements Serializable {
+
+        @JsonProperty("materialId")
+      public   int materialId=1;
+
+        @JsonProperty("materialType")
+      public   int materialType=1;
+
+        @JsonProperty("unitId")
+        public  int unitId=1;
+
+        @JsonProperty("weight")
+        public  int weight=1;
+
+        public curveMaterialDtoList(int materialId, int materialType, int unitId, int weight) {
+            this.materialId = materialId;
+            this.materialType = materialType;
+            this.unitId = unitId;
+            this.weight = weight;
+        }
+    }
+
+    class curvePrepareStepDtoList implements Serializable {
+        @JsonProperty("description")
+       public String description="";
+
+        @JsonProperty("id")
+        public int id=1;
+
+        @JsonProperty("imageUrl")
+        public String imageUrl="";
+
+        @JsonProperty("voiceUrl")
+        public String voiceUrl="";
+
+        @JsonProperty("no")
+        public  int no=1;
+
+        public curvePrepareStepDtoList() {
+        }
+    }
+
+    public class curveStepDtoList  implements Serializable {
+
+          @JsonProperty("curveCookbookId")
+         public int curveCookbookId=1;
+          @JsonProperty("curveStageParams")
+          public String curveStageParams="";
+          @JsonProperty("description")
+          public String description="";
+          @JsonProperty("id")
+          public String id="";
+          @JsonProperty("imageUrl")
+          public String imageUrl="";
+          @JsonProperty("markName")
+          public String markName="";
+          @JsonProperty("markTime")
+          public  String markTime="";
+          @JsonProperty("voiceUrl")
+          public String voiceUrl="";
+
+          public boolean isShow=false;
+
+    }
+    class queryCurveStepRequest{
+
     }
 
     class deleteMultiRecipe {

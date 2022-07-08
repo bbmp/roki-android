@@ -264,7 +264,7 @@ public class SoftAPConnectConfirmPage extends BasePage {
         for (ScanResult scanResult : mWifiList) {
             Log.d(TAG, "scanWifiInfo: scanResult.SSID = " + scanResult.SSID);
             if (scanResult.SSID.contains(MXHCIP_LIGHT_WIFI_SSID)) {
-                mGuid = "5915T" + scanResult.SSID.substring(12);
+                mGuid = "5915T" + scanResult.SSID.substring(10);
                 while (mGuid.length() < 17) {
                     mGuid = mGuid + "0";
                 }

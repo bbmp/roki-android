@@ -124,10 +124,10 @@ public class SteamOvenModelSelectedPage extends BasePage {
             return;
         switch (mTitle) {
             case "蒸模式":
-
+                MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), mSteamOvenOne.getDt() + ":蒸模式页", null);
                 break;
             case "烤模式":
-
+                MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), mSteamOvenOne.getDt() + ":烤模式页", null);
                 break;
         }
 
@@ -243,7 +243,7 @@ public class SteamOvenModelSelectedPage extends BasePage {
                     ToolUtils.logEvent(mSteamOvenOne.getDt(), "开始一体机"+mTitle+"温度时间工作:" + functionName + ":" + newTemp + ":" + newTime, "roki_设备");
                 }
                 assert mSteamOvenOne != null;
-                if (mSteamOvenOne.powerStatus == SteamOvenOnePowerStatus.Off) {
+                if (mSteamOvenOne.powerState == SteamOvenOnePowerStatus.Off) {
                     mSteamOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                         @Override
                         public void onSuccess() {

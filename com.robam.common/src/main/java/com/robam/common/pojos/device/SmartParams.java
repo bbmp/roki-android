@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 /**
  * Created by sylar on 15/6/10.
+ *
+ * des : 烟机只能设定状态
  */
 public class SmartParams implements Serializable {
 
@@ -77,6 +79,10 @@ public class SmartParams implements Serializable {
     public short R8230S_Time = 3;
 
     public short gesture = 1;//0 _ 是关 1 _ 是开
+    /**
+     * 灶具最小火力持续5分联动烟机最小档(烟机自动)
+     */
+    public short fanStoveAuto = 0 ;
 
     @Override
     public String toString() {

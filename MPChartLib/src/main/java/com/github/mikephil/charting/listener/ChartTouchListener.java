@@ -141,6 +141,7 @@ public abstract class ChartTouchListener<T extends Chart<?>> extends GestureDete
      */
     protected static float distance(float eventX, float startX, float eventY, float startY) {
         float dx = eventX - startX;
+//        float dx = eventX - startX*2;
         float dy = eventY - startY;
         return (float) Math.sqrt(dx * dx + dy * dy);
     }

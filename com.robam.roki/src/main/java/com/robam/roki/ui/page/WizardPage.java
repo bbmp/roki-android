@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.legent.Callback;
 import com.legent.plat.constant.IAppType;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.adapters.ExtPageAdapter;
@@ -27,9 +28,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class WizardPage extends MyBasePage<WizardActivity> {
 
@@ -40,49 +38,49 @@ public class WizardPage extends MyBasePage<WizardActivity> {
     CirclePageIndicator indicator;
     private String[] images;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-
-
-
-        View view = inflater.inflate(R.layout.page_wizard, container, false);
-        ButterKnife.inject(this, view);
-        boolean connect = NetworkUtils.isConnect(cx);
-        if (connect){
-            inidData();
-        } else {
-            ExtPageAdapter adapter = new ExtPageAdapter();
-            pager.setAdapter(adapter);
-            indicator.setViewPager(pager);
-            List<View> views = buildViews();
-            adapter.loadViews(views);
-        }
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (images != null){
-                    if (position == images.length -1){
-                        indicator.setVisibility(View.GONE);
-                    }else {
-                        indicator.setVisibility(View.VISIBLE);
-                    }
-                }
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        return view;
-    }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater,
+//                             ViewGroup container, Bundle savedInstanceState) {
+//
+//
+//
+//        View view = inflater.inflate(R.layout.page_wizard, container, false);
+//        ButterKnife.inject(this, view);
+//        boolean connect = NetworkUtils.isConnect(cx);
+//        if (connect){
+//            inidData();
+//        } else {
+//            ExtPageAdapter adapter = new ExtPageAdapter();
+//            pager.setAdapter(adapter);
+//            indicator.setViewPager(pager);
+//            List<View> views = buildViews();
+//            adapter.loadViews(views);
+//        }
+//        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                if (images != null){
+//                    if (position == images.length -1){
+//                        indicator.setVisibility(View.GONE);
+//                    }else {
+//                        indicator.setVisibility(View.VISIBLE);
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
+//        return view;
+//    }
 
     @Override
     protected int getLayoutId() {
@@ -109,10 +107,12 @@ public class WizardPage extends MyBasePage<WizardActivity> {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == images.length -1){
-                    indicator.setVisibility(View.GONE);
-                }else {
-                    indicator.setVisibility(View.VISIBLE);
+                if (images!=null&&images.length>0) {
+                    if (position == images.length - 1) {
+                        indicator.setVisibility(View.GONE);
+                    } else {
+                        indicator.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
@@ -130,23 +130,17 @@ public class WizardPage extends MyBasePage<WizardActivity> {
 
     private void inidData() {
         StoreService.getInstance().getAppStartImages(IAppType.RKDRD, new Callback<Reponses.AppStartImgResponses>() {
-
             @Override
-            public void onResponse(Call<Reponses.AppStartImgResponses> call, Response<Reponses.AppStartImgResponses> response) {
-                Reponses.AppStartImgResponses appStartImgResponses = response.body();
-                if (null != appStartImgResponses && null != appStartImgResponses.images) {
-                    images = appStartImgResponses.images;
-                    List<View> views = buildViews(images);
-                    ExtPageAdapter adapter = new ExtPageAdapter();
-                    pager.setAdapter(adapter);
-                    indicator.setViewPager(pager);
-                    adapter.loadViews(views);
-                }
+            public void onSuccess(Reponses.AppStartImgResponses appStartImgResponses) {
+                images = appStartImgResponses.images;
+                List<View> views = buildViews(images);
+                ExtPageAdapter adapter = new ExtPageAdapter();
+                pager.setAdapter(adapter);
+                indicator.setViewPager(pager);
+                adapter.loadViews(views);
             }
-
             @Override
-            public void onFailure(Call<Reponses.AppStartImgResponses> call, Throwable throwable) {
-
+            public void onFailure(Throwable t) {
             }
         });
     }
@@ -158,7 +152,7 @@ public class WizardPage extends MyBasePage<WizardActivity> {
         for (int i = 0; i < images.length; i++) {
             ImageView imageView = new ImageView(cx);
             imageView.setScaleType(ScaleType.CENTER_CROP);
-            ImageUtils.displayImage(cx, images[i], imageView);
+            ImageUtils.displayImage(images[i], imageView);
             if (images.length - 1 == i) {
                 views.add(wizardView);
             } else {
@@ -178,8 +172,10 @@ public class WizardPage extends MyBasePage<WizardActivity> {
         view1.setScaleType(ScaleType.CENTER_CROP);
         view2.setScaleType(ScaleType.CENTER_CROP);
 
-        ImageUtils.displayImage(cx, R.mipmap.img_wizard_1, view1);
-        ImageUtils.displayImage(cx, R.mipmap.img_wizard_2, view2);
+        ImageUtils.displayImage(
+                ImageUtils.fromDrawable(R.mipmap.img_wizard_1), view1);
+        ImageUtils.displayImage(
+                ImageUtils.fromDrawable(R.mipmap.img_wizard_2), view2);
 
         views.add(view1);
         views.add(view2);

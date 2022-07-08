@@ -7,8 +7,7 @@
 
 
     <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         layout="@layout/recipe_card_view_show"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

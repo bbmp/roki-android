@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/mine_white_background"
+    android:orientation="vertical">
+
+
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#00ffffff" />
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/title_layout_device_function"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/shape_kitchen_bg_round"
+        android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_89">
+        <TextView
+            android:id="@+id/tv_func"
+            android:text="设置免打扰"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_18"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+
+        <com.robam.widget.view.SwitchButton
+            android:id="@+id/sb_disturb"
+            tools:ignore="MissingClass,RelativeOverlap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20" />
+
+        <TextView
+            android:text="在您所选时间段内，可关闭工作提示音。"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_6"
+            android:layout_below="@id/tv_func"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/sp_12" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_dishturb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_mode" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_89">
+
+            <TextView
+                android:id="@+id/tv_func_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_18"
+                android:textColor="@color/text_color_device_category"
+                android:textSize="@dimen/sp_16"
+                android:text="开始时间" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_func_1"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_6"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/sp_12"
+                android:text="设置免打扰开始时间" />
+
+            <TextView
+                android:id="@+id/tv_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_18"
+                android:layout_toStartOf="@+id/iv_right"
+                android:textColor="@color/text_select_color"
+                android:textSize="@dimen/sp_16"
+                tools:text="22:00" />
+
+            <ImageView
+                android:id="@+id/iv_right"
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="@dimen/dp_22"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/dp_18"
+                android:src="@mipmap/icon_right_device" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_mode" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_89">
+
+            <TextView
+                android:id="@+id/tv_func_2"
+                android:text="结束时间"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_18"
+                android:textColor="@color/text_color_device_category"
+                android:textSize="@dimen/sp_20" />
+
+
+
+            <TextView
+                android:text="设置免打扰结束时间"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_below="@id/tv_func_2"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/tv_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_18"
+                android:layout_toStartOf="@+id/iv_right2"
+                android:textColor="@color/text_select_color"
+                android:textSize="@dimen/sp_16"
+                tools:text="22:00" />
+
+            <ImageView
+                android:id="@+id/iv_right2"
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="@dimen/dp_22"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/dp_18"
+                android:src="@mipmap/icon_right_device" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

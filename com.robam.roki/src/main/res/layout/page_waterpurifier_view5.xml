@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        >
+
+        <!-- 圆圈数字 -->
+
+        <TextView
+            android:id="@+id/waterfilter_circle"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="53dp"
+            android:background="@drawable/shape_white_circular"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="#3DB3D0"
+            android:textSize="16sp" />
+        <!-- 铝棒名称 -->
+
+        <TextView
+            android:id="@+id/waterfilter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="UF超滤膜滤芯"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <!-- 铝棒简介 -->
+    <TextView
+        android:id="@+id/waterfilter_intro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="2dp"
+        android:lines="3"
+        android:paddingLeft="51dp"
+        android:paddingRight="51dp"
+        android:text="过滤精度在0.001-0.02毫米之间，可以把不同分子量的物质分级分离，保留对人体有益的矿物质元素。"
+        android:textColor="#ffffff"
+        android:textSize="15sp" />
+
+</LinearLayout>

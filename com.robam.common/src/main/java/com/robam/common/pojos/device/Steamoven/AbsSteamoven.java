@@ -107,6 +107,7 @@ public class AbsSteamoven extends AbsDeviceHub implements ISteamoven {
 
     @Override
     public void onReceivedMsg(Msg msg) {
+        Log.e("发动","test1");
         setConnected(true);
         try {
             int key = msg.getID();

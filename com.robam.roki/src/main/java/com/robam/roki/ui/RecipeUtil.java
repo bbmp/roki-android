@@ -27,7 +27,6 @@ import com.robam.common.pojos.device.steameovenone.SteamOvenOneModel;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatus;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOneWorkStatus;
-import com.robam.roki.ui.page.RecipeStepPage;
 import com.robam.roki.ui.view.RecipeStepDetailView;
 
 import java.util.HashMap;
@@ -137,27 +136,27 @@ public class RecipeUtil {
     /**
      * 设置设备预下发指令
      */
-    public static void setDevicePreSetModel(Context cx, RecipeStepPage stepPage, int current_PageItemIndex, Callback<Integer> callback) {
-        //LogUtils.out(current_PageItemIndex + "");
-        RecipeStepDetailView recipeStepDetailView = (RecipeStepDetailView) stepPage.adapter.getViews().get(current_PageItemIndex);
-        if (DeviceType.RDKX.equals(recipeStepDetailView.category)) {
-            //recipeStepDetailView.deviceInfo.dp;
-            if (true) {//将来再次判断设备平台对应的指令发送形式
-                setOvenPreSetModel(recipeStepDetailView, callback);
-            }
-        } else if (DeviceType.RZQL.equals(recipeStepDetailView.category)) {
-            if (true) {//将来再次判断设备平台对应的指令发送形式
-                setSteamPreSetModel(recipeStepDetailView, callback);
-            }
-
-        } else if (DeviceType.RWBL.equals(recipeStepDetailView.category)) {
-            if (true) {//将来再次判断设备平台对应的指令发送形式
-                setMicrowavePreSetModel(recipeStepDetailView, callback);
-            }
-        } else if (DeviceType.RZKY.equals(recipeStepDetailView.category)) {
-            setSteamAndOvenPreSetModel(recipeStepDetailView, callback);
-        }
-    }
+//    public static void setDevicePreSetModel(Context cx, RecipeStepPage stepPage, int current_PageItemIndex, Callback<Integer> callback) {
+//        //LogUtils.out(current_PageItemIndex + "");
+//        RecipeStepDetailView recipeStepDetailView = (RecipeStepDetailView) stepPage.adapter.getViews().get(current_PageItemIndex);
+//        if (DeviceType.RDKX.equals(recipeStepDetailView.category)) {
+//            //recipeStepDetailView.deviceInfo.dp;
+//            if (true) {//将来再次判断设备平台对应的指令发送形式
+//                setOvenPreSetModel(recipeStepDetailView, callback);
+//            }
+//        } else if (DeviceType.RZQL.equals(recipeStepDetailView.category)) {
+//            if (true) {//将来再次判断设备平台对应的指令发送形式
+//                setSteamPreSetModel(recipeStepDetailView, callback);
+//            }
+//
+//        } else if (DeviceType.RWBL.equals(recipeStepDetailView.category)) {
+//            if (true) {//将来再次判断设备平台对应的指令发送形式
+//                setMicrowavePreSetModel(recipeStepDetailView, callback);
+//            }
+//        } else if (DeviceType.RZKY.equals(recipeStepDetailView.category)) {
+//            setSteamAndOvenPreSetModel(recipeStepDetailView, callback);
+//        }
+//    }
 
     private static void setSteamAndOvenPreSetModel(RecipeStepDetailView recipeStepDetailView, final Callback<Integer> callback) {
         AbsSteameOvenOne steamAndOven = Utils.getDefaultSteameOven();
@@ -190,9 +189,9 @@ public class RecipeUtil {
                 return;
             }
             final Map<String, paramCode> paramMap = recipeStepDetailView.paramMap;
-            if (steamOven.powerStatus == SteamOvenOnePowerStatus.On && steamOven.powerOnStatus != SteamOvenOnePowerOnStatus.WorkingStatus) {
+            if (steamOven.powerState == SteamOvenOnePowerStatus.On && steamOven.powerOnStatus != SteamOvenOnePowerOnStatus.WorkingStatus) {
                 sendCommand(steamOven, paramMap, callback);
-            } else if (steamOven.powerStatus == SteamOvenOnePowerStatus.Wait || steamOven.powerStatus == SteamOvenOnePowerStatus.Off) {
+            } else if (steamOven.powerState == SteamOvenOnePowerStatus.Wait || steamOven.powerState == SteamOvenOnePowerStatus.Off) {
                 steamOven.setSteameOvenStatus_on(new VoidCallback() {
                     @Override
                     public void onSuccess() {
@@ -508,58 +507,58 @@ public class RecipeUtil {
     /**
      * 设置设备开始指令
      */
-    public static void setDeviceStatusModel(Context cx, short status, RecipeStepPage stepPage, Callback<Integer> callback) {
-        try {
-            RecipeStepDetailView recipeStepDetailView = stepPage.working_recipeStepDetailView;
-            if (recipeStepDetailView == null) return;
-            LogUtils.i("20171122", "status::" + status);
-            LogUtils.i("20171122", "category:" + recipeStepDetailView.category);
-            if (DeviceType.RDKX.equals(recipeStepDetailView.category)) {
-                //recipeStepDetailView.deviceInfo.dp;
-                if (true) {//将来再次判断设备平台对应的指令发送形式
-                    if (status == RecipeUtil.WORKING)
-                        status = OvenStatus.Working;
-                    else if (status == RecipeUtil.PAUSE)
-                        status = OvenStatus.Pause;
-                    else if (status == RecipeUtil.OFF)
-                        status = OvenStatus.Off;
-                    setOvenStatusModel(recipeStepDetailView.type, status, callback);
-                }
-            } else if (DeviceType.RZQL.equals(recipeStepDetailView.category)) {
-                if (true) {//将来再次判断设备平台对应的指令发送形式
-                    if (status == RecipeUtil.WORKING)
-                        status = SteamStatus.Working;
-                    else if (status == RecipeUtil.PAUSE)
-                        status = SteamStatus.Pause;
-                    else if (status == RecipeUtil.OFF)
-                        status = SteamStatus.Off;
-                    setSteamStatusModel(recipeStepDetailView.type, status, callback);
-                }
-            } else if (DeviceType.RWBL.equals(recipeStepDetailView.category)) {
-                if (true) {//将来再次判断设备平台对应的指令发送形式
-                    if (status == RecipeUtil.WORKING)
-                        status = MicroWaveStatus.Run;
-                    else if (status == RecipeUtil.PAUSE)
-                        status = MicroWaveStatus.Pause;
-                    else if (status == RecipeUtil.OFF)
-                        status = RecipeUtil.MICROOFF;
-                    setMicroStatusModel(recipeStepDetailView.type, status, callback);
-                }
-            } else if (DeviceType.RZKY.equals(recipeStepDetailView.category)) {
-                LogUtils.i("20171122", "status::" + status);
-                if (status == SteamOvenOnePowerOnStatus.WorkingStatus)
-                    status = SteamOvenOnePowerOnStatus.WorkingStatus;
-                if (status == SteamOvenOnePowerOnStatus.Pause)
-                    status = SteamOvenOnePowerOnStatus.Pause;
-                if (status == SteamOvenOnePowerStatus.RecipeOff)
-                    status = SteamOvenOnePowerStatus.RecipeOff;
-
-                setSteamAndOvenStatusModel(recipeStepDetailView.type, status, callback);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void setDeviceStatusModel(Context cx, short status, RecipeStepPage stepPage, Callback<Integer> callback) {
+//        try {
+//            RecipeStepDetailView recipeStepDetailView = stepPage.working_recipeStepDetailView;
+//            if (recipeStepDetailView == null) return;
+//            LogUtils.i("20171122", "status::" + status);
+//            LogUtils.i("20171122", "category:" + recipeStepDetailView.category);
+//            if (DeviceType.RDKX.equals(recipeStepDetailView.category)) {
+//                //recipeStepDetailView.deviceInfo.dp;
+//                if (true) {//将来再次判断设备平台对应的指令发送形式
+//                    if (status == RecipeUtil.WORKING)
+//                        status = OvenStatus.Working;
+//                    else if (status == RecipeUtil.PAUSE)
+//                        status = OvenStatus.Pause;
+//                    else if (status == RecipeUtil.OFF)
+//                        status = OvenStatus.Off;
+//                    setOvenStatusModel(recipeStepDetailView.type, status, callback);
+//                }
+//            } else if (DeviceType.RZQL.equals(recipeStepDetailView.category)) {
+//                if (true) {//将来再次判断设备平台对应的指令发送形式
+//                    if (status == RecipeUtil.WORKING)
+//                        status = SteamStatus.Working;
+//                    else if (status == RecipeUtil.PAUSE)
+//                        status = SteamStatus.Pause;
+//                    else if (status == RecipeUtil.OFF)
+//                        status = SteamStatus.Off;
+//                    setSteamStatusModel(recipeStepDetailView.type, status, callback);
+//                }
+//            } else if (DeviceType.RWBL.equals(recipeStepDetailView.category)) {
+//                if (true) {//将来再次判断设备平台对应的指令发送形式
+//                    if (status == RecipeUtil.WORKING)
+//                        status = MicroWaveStatus.Run;
+//                    else if (status == RecipeUtil.PAUSE)
+//                        status = MicroWaveStatus.Pause;
+//                    else if (status == RecipeUtil.OFF)
+//                        status = RecipeUtil.MICROOFF;
+//                    setMicroStatusModel(recipeStepDetailView.type, status, callback);
+//                }
+//            } else if (DeviceType.RZKY.equals(recipeStepDetailView.category)) {
+//                LogUtils.i("20171122", "status::" + status);
+//                if (status == SteamOvenOnePowerOnStatus.WorkingStatus)
+//                    status = SteamOvenOnePowerOnStatus.WorkingStatus;
+//                if (status == SteamOvenOnePowerOnStatus.Pause)
+//                    status = SteamOvenOnePowerOnStatus.Pause;
+//                if (status == SteamOvenOnePowerStatus.RecipeOff)
+//                    status = SteamOvenOnePowerStatus.RecipeOff;
+//
+//                setSteamAndOvenStatusModel(recipeStepDetailView.type, status, callback);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * 设置烤箱指令开始工作   callback 0 成功，1 指令发送失败，2 下发参数失败,请检查设备,3 设备已离线
@@ -644,7 +643,7 @@ public class RecipeUtil {
             return;
         }
         if (status == SteamOvenOnePowerOnStatus.WorkingStatus) {
-            if (steamOven.powerStatus != SteamOvenOnePowerStatus.On && steamOven.worknStatus != SteamOvenOneWorkStatus.PreHeat && steamOven.worknStatus != SteamOvenOneWorkStatus.Working) {
+            if (steamOven.powerState != SteamOvenOnePowerStatus.On && steamOven.workState != SteamOvenOneWorkStatus.PreHeat && steamOven.workState != SteamOvenOneWorkStatus.Working) {
                 callback.onSuccess(2);
                 return;
             }
@@ -654,7 +653,7 @@ public class RecipeUtil {
                 return;
             }
         }
-        LogUtils.i("20171122", "steamOven::" + steamOven.powerStatus + " " + status);
+        LogUtils.i("20171122", "steamOven::" + steamOven.powerState + " " + status);
         if (status == SteamOvenOnePowerStatus.RecipeOff) {
             steamOven.setSteameOvenStatus(SteamOvenOnePowerStatus.Off, SteamOvenOnePowerOnStatus.NoStatus, new VoidCallback() {
                 @Override
@@ -668,7 +667,7 @@ public class RecipeUtil {
                 }
             });
         } else {
-            steamOven.setSteameOvenStatus(steamOven.powerStatus, status, new VoidCallback() {
+            steamOven.setSteameOvenStatus(steamOven.powerState, status, new VoidCallback() {
                 @Override
                 public void onSuccess() {
                     callback.onSuccess(0);

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -20,6 +21,7 @@ import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.views.CheckBoxView;
 import com.legent.utils.JsonUtils;
 import com.legent.utils.api.ToastUtils;
+import com.robam.base.BaseDialog;
 import com.robam.common.events.IntegStoveStatusChangedEvent;
 import com.robam.common.pojos.device.integratedStove.AbsIntegratedStove;
 import com.robam.common.pojos.device.integratedStove.IntegStoveStatus;
@@ -34,7 +36,6 @@ import com.robam.roki.model.bean.IntegratedStoveLinkageParams;
 import com.robam.roki.model.bean.RikaSteamLinkageParams;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.mdialog.MessageDialog;
-import com.robam.roki.ui.widget.base.BaseDialog;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.ToolUtils;
 
@@ -282,6 +283,10 @@ public class DeviceIntegStoveLinkagePage extends BasePage {
         super.onResume();
         if (mIntegratedStove == null) {
             return;
+        }
+        if (mIntegratedStove.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), mIntegratedStove.getDt() + ":烟灶联动页", null);
         }
     }
 

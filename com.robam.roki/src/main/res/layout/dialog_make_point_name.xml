@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@drawable/shape_dialog_bg"
+
+
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_20"
+        android:textSize="@dimen/sp_24"
+        android:textColor="#000"
+        android:gravity="center"
+        android:text="标记步骤名称"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:textColor="#000"
+        android:paddingLeft="@dimen/dp_21"
+        android:textSize="@dimen/sp_18"
+        android:layout_marginTop="@dimen/dp_13"
+        android:background="@drawable/shape_input_curve_et"
+        android:id="@+id/dialog_make_point_name_et"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"/>
+
+    <Button
+        android:background="@drawable/shape_icon_save_bg"
+        android:layout_marginRight="@dimen/dp_60"
+        android:layout_marginLeft="@dimen/dp_60"
+        android:textSize="@dimen/sp_24"
+        android:textColor="#000"
+        android:layout_marginTop="@dimen/dp_43"
+        android:id="@+id/dialog_btn_save"
+        android:text="保存"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_marginBottom="@dimen/dp_23"
+        android:layout_marginRight="@dimen/dp_60"
+        android:layout_marginLeft="@dimen/dp_60"
+        android:textSize="@dimen/sp_24"
+        android:textColor="#000"
+        android:background="@drawable/shape_icon_bg"
+        android:layout_marginTop="@dimen/dp_8"
+        android:id="@+id/dialog_btn_cancel"
+        android:text="取消"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

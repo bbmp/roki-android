@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,107 +7,84 @@
     android:fitsSystemWindows="false"
     tools:ignore="RtlHardcoded">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/select_theme_appbar"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?colorPrimary"
-            app:expandedTitleMarginBottom="94dp"
-            app:expandedTitleTextAppearance="@style/CollapsingTextAppearance.Inverse"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-            <ImageView
-                android:id="@+id/iv_select_theme_title_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="220dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/img_default"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/select_theme_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="26dp"
-                android:background="@null"
-                app:layout_collapseMode="pin">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/tv_select_theme_back"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/icon_back" />
-
-                    <TextView
-                        android:id="@+id/tv_select_theme_toolbar_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:textColor="@color/roki_important_text_color"
-                        android:textSize="18sp"
-                        tools:text="上周TOP榜单" />
-
-                    <ImageView
-                        android:id="@+id/imgFavority"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="55dp"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/ic_recipe_favority_shape" />
-
-                    <ImageView
-                        android:id="@+id/imgShare"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="12dp"
-                        android:scaleType="centerInside"
-                        android:src="@mipmap/icon_share" />
-                </RelativeLayout>
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srl_theme"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_top_week_2"
+        android:layout_height="0dp"
         android:scrollbars="none"
-        app:behavior_overlapTop="30dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/xrv_select_theme_recipe"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_top_week_2"
-            android:scrollbars="none"
-            android:visibility="visible"
-            app:behavior_overlapTop="30dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_theme_desc" />
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_select_theme_title_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_240"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/img_default" />
+                //这里为了换肤
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_alignTop="@id/xrv_select_theme_recipe"
+                    android:layout_alignBottom="@id/xrv_select_theme_recipe"
+                    android:background="@drawable/shape_top_round_bg"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/xrv_select_theme_recipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:visibility="visible"
+                    android:layout_marginTop="@dimen/dp_210"/>
+            </RelativeLayout>
+        </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <View
+        android:id="@+id/status_bar_fix"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/transparent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status_bar_fix">
+        <ImageView
+            android:id="@+id/tv_select_theme_back"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
+
+        <ImageView
+            android:id="@+id/imgFavority"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_60"
+            android:src="@drawable/ic_recipe_favority_black_shape" />
+
+        <ImageView
+            android:id="@+id/imgShare"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icon_share" />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

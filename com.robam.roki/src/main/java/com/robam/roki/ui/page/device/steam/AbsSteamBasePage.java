@@ -17,10 +17,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.BackgroundFunc;
@@ -112,6 +114,14 @@ public class AbsSteamBasePage extends BasePage {
     public String needDescalingParams;
     private List<FunctionsTop4> top4s;
 
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            ovenName.setText(name);
+        }
+    }
+
 
     Handler handler = new Handler() {
         @Override
@@ -141,6 +151,10 @@ public class AbsSteamBasePage extends BasePage {
     @Override
     public void onResume() {
         super.onResume();
+        if (dt != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), dt, null);
+        }
     }
 
     private void initData() {
@@ -282,7 +296,7 @@ public class AbsSteamBasePage extends BasePage {
 
 
     private void getDataMethod() {
-        CloudHelper.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
+        Plat.deviceService.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
             @Override
             public void onSuccess(Reponses.DeviceResponse deviceResponse) {
                 if (deviceResponse == null) return;
@@ -310,7 +324,8 @@ public class AbsSteamBasePage extends BasePage {
         try {
             String backgroundImg = deviceResponse.viewBackgroundImg;
             Glide.with(cx).load(backgroundImg).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivOvenBg);
-            ovenName.setText(deviceResponse.title);
+//            ovenName.setText(deviceResponse.title);
+            ovenName.setText(steam.getName() == null || steam.getName().equals(steam.getCategoryName()) ? steam.getDispalyType(): steam.getName());
             BackgroundFunc bgFunc = deviceResponse.modelMap.backgroundFunc;
             bgFunList = bgFunc.deviceConfigurationFunctions;
             if (bgFunList.size() != 0) {

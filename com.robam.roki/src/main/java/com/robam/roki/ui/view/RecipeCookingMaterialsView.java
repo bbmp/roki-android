@@ -166,7 +166,7 @@ public class RecipeCookingMaterialsView extends FrameLayout {
             txtValue.setText(String.format("%s%s", material.weight, material.unit));
 
             img.setImageDrawable(null);
-            ImageUtils.displayImage(getContext(), material.imgUrl, img);
+            ImageUtils.displayImage(material.imgUrl, img);
         }
 
         boolean isMatchTipTime(int tipTime) {

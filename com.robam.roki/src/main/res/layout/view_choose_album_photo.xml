@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@drawable/shape_kitchen_bg_round"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/view_choose_album"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/add"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"/>
+
+
+    <ImageView
+
+
+        android:id="@+id/view_choose_image_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/view_choose_text_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_choose_album"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_30"
+        android:textColor="@color/text_color_online"
+        android:textSize="@dimen/sp_10" />
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:id="@+id/img_recipe_icon_delete"
+        android:src="@mipmap/item_recipe_delete_icon"
+        android:layout_width="@dimen/dp_22"
+        android:layout_height="@dimen/dp_22"/>
+</RelativeLayout>

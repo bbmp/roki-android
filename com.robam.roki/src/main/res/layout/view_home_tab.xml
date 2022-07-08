@@ -5,11 +5,10 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal"
-    android:paddingBottom="2dp"
-    android:paddingLeft="18dp"
-    android:paddingRight="18dp"
-    android:paddingTop="8dp"
-    android:background="@color/white_02">
+    android:paddingBottom="@dimen/dp_30"
+    android:paddingLeft="@dimen/dp_18"
+    android:paddingRight="@dimen/dp_18"
+    android:paddingTop="@dimen/dp_10">
 
     <com.robam.roki.ui.view.HomeTabItemView
         android:id="@+id/tab1"

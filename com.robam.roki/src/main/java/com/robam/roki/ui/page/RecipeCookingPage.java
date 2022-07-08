@@ -14,7 +14,6 @@ import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.constant.IAppType;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.adapters.ExtPageAdapter;
@@ -23,8 +22,6 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.Utils;
 import com.robam.common.events.ShareRecipePictureEvent;
-import com.robam.common.io.cloud.Reponses;
-import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.CookStep;
 import com.robam.common.pojos.CookStepDetails;
 import com.robam.common.pojos.Recipe;
@@ -248,30 +245,24 @@ public class RecipeCookingPage extends BasePage {
     void initData(long bookId) {
 
         ProgressDialogHelper.setRunning(cx, true);
-        RokiRestHelper.getCookbookById(bookId, Reponses.CookbookResponse.class,
-                new RetrofitCallback<Reponses.CookbookResponse>() {
+        CookbookManager.getInstance().getCookbookById(bookId,
+                new Callback<Recipe>() {
 
-            @Override
-            public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
-                if (null != cookbookResponse) {
-                    ProgressDialogHelper.setRunning(cx, false);
-                    initPages(cookbookResponse.cookbook);
-                }
-            }
-
-            @Override
-            public void onFaild(String err) {
-                ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.showShort(err);
-            }
-
-        });
+                    @Override
+                    public void onSuccess(Recipe cookbook) {
+                        ProgressDialogHelper.setRunning(cx, false);
+                        initPages(cookbook);
+                    }
+                    @Override
+                    public void onFailure(Throwable t) {
+                        ProgressDialogHelper.setRunning(cx, false);
+                        ToastUtils.showThrowable(t);
+                    }
+                });
 
     }
 
     void initPages(Recipe cookbook) {
-        if (null == cookbook)
-            return;
         book = cookbook;
         List<View> views = Lists.newArrayList();
         List<CookStep> list =  book.getJs_cookSteps();

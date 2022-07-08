@@ -24,7 +24,6 @@ import com.legent.plat.Plat;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
-import com.legent.utils.LogUtils;
 import com.robam.common.events.SteamOvenOneAlarmEvent;
 import com.robam.common.events.SteamOvenOneStatusChangedEvent;
 import com.robam.common.events.SteamOvenOneWorkFinishEvent;
@@ -248,20 +247,20 @@ public class DeviceOvenC906WorkingPage extends BasePage {
     public void onEvent(SteamOvenOneStatusChangedEvent event) {
         if (steameOvenC906 == null || !Objects.equal(steameOvenC906.getID(), event.pojo.getID()))
             return;
-        if (event.pojo.worknStatus == SteamOvenOneWorkStatus.PreHeat &&
+        if (event.pojo.workState == SteamOvenOneWorkStatus.PreHeat &&
                 event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus) {
             setPreHeatModel();
-        } else if (event.pojo.worknStatus == SteamOvenOneWorkStatus.Working &&
+        } else if (event.pojo.workState == SteamOvenOneWorkStatus.Working &&
         event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus) {
             setWorkMode();
         } else if (event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.Pause &&
-                event.pojo.powerStatus == SteamOvenOnePowerStatus.On) {
+                event.pojo.powerState == SteamOvenOnePowerStatus.On) {
             setPauseMolde();
         } else if (event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.Order) {
             setOrderMolde();
-        } else if (event.pojo.powerStatus == SteamOvenOnePowerStatus.Off) {
+        } else if (event.pojo.powerState == SteamOvenOnePowerStatus.Off) {
             back();
-        } else if (event.pojo.powerStatus == SteamOvenOnePowerStatus.On && !steameOvenC906.isConnected()) {
+        } else if (event.pojo.powerState == SteamOvenOnePowerStatus.On && !steameOvenC906.isConnected()) {
             back();
         } else if (event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.AlarmStatus) {
             setPauseMolde();

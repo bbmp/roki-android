@@ -1,6 +1,7 @@
 package com.robam.common.io.device.marshal;
 
 import com.google.common.collect.Lists;
+import com.j256.ormlite.stmt.query.In;
 import com.legent.plat.io.device.msg.Msg;
 import com.legent.plat.io.device.msg.MsgUtils;
 import com.robam.common.io.device.MsgKeys;
@@ -8,6 +9,7 @@ import com.robam.common.io.device.MsgParams;
 import com.robam.common.pojos.device.Stove.Stove;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,9 +22,10 @@ public class StoveMsgMar {
         byte b;
         String str;
         short s;
+
+        //组装
         // 电磁灶
         switch (key) {
-
             case MsgKeys.GetStoveStatus_Req:
                 b = (byte) msg.optInt(MsgParams.TerminalType);
                 buf.put(b);
@@ -110,11 +113,77 @@ public class StoveMsgMar {
                 b= (byte) msg.optInt(MsgParams.ArgumentNumber);
                 buf.put(b);
                 break;
+
+
+            /**
+             * //  msg.putOpt(MsgParams.AutoTemporaryKey, i);
+             *     msg.putOpt(MsgParams.AutoTemporaryLength, 6);
+             *     msg.putOpt(MsgParams.AutoTemporaryControlWay, controlWay);
+             *     msg.putOpt(MsgParams.AutoTemporaryControlTap, tap);
+             *     msg.putOpt(MsgParams.AutoTemporaryControlTemp, temp);
+             *     msg.putOpt(MsgParams.AutoTemporaryControlTime, time);
+             */
+            case MsgKeys.setAutoTemporaryStep_Look_Rep:
+                b= (byte) msg.optInt(MsgParams.TerminalType);
+                buf.put(b);
+                b= (byte) msg.optInt(MsgParams.headOrderNumber);
+                buf.put(b);
+                b= (byte) msg.optInt(MsgParams.ArgumentNumber);
+                buf.put(b);
+                 ArrayList<Short> controlWay= (ArrayList<Short>) msg.opt(MsgParams.AutoTemporaryControlWay);
+                ArrayList<Short> tap = (ArrayList<Short>) msg.opt(MsgParams.AutoTemporaryControlTap);
+                ArrayList<Integer> temp = (ArrayList<Integer>) msg.opt(MsgParams.AutoTemporaryControlTemp);
+                ArrayList<Integer> time = (ArrayList<Integer>) msg.opt(MsgParams.AutoTemporaryControlTime);
+                for (int i=0;i<controlWay.size();++i){
+                    b= (byte) (i+1);
+                    buf.put(b);
+                    b= 6;
+                    buf.put(b);
+                    b= controlWay.get(i).byteValue();
+                    buf.put(b);
+                    b= tap.get(i).byteValue();
+                    buf.put(b);
+
+
+                    final short lowTemp = temp.get(i) > 255 ? (short) (temp.get(i).intValue() & 0Xff):(short)(temp.get(i)).intValue();
+                    buf.put((byte)lowTemp);
+                    if (temp.get(i)>255){
+                        short highTemp = (short) ((temp.get(i) >> 8) & 0Xff);
+                        buf.put((byte)highTemp);
+                    }else{
+                        buf.put((byte) 0);
+                    }
+//                    b= temp.get(i).byteValue();
+//                    buf.put(b);
+
+
+
+                    final short lowTime = time.get(i) > 255 ? (short) (time.get(i).intValue() & 0Xff):(short)(time.get(i)).intValue();
+                    buf.put((byte)lowTime);
+                    if (temp.get(i)>255){
+                        short highTime = (short) ((time.get(i) >> 8) & 0Xff);
+                        buf.put((byte)highTime);
+                    }else{
+                        buf.put((byte) 0);
+                    }
+
+                }
+                break;
             case MsgKeys.setPowerOff_Look_Req:
                 b = (byte) msg.optInt(MsgParams.TerminalType);
                 buf.put(b);
                 break;
 
+
+            case MsgKeys.setAutoTemporarySetting_Look_Rep:
+                b = (byte) msg.optInt(MsgParams.TerminalType);
+                buf.put(b);
+                b = (byte) msg.optInt(MsgParams.headOrderNumber);
+                buf.put(b);
+                b = (byte) msg.optInt(MsgParams.ControlInstruction);
+                buf.put(b);
+
+                break;
             default:
                 break;
         }
@@ -124,6 +193,16 @@ public class StoveMsgMar {
         int offset = 0;
         // 电磁灶
         switch (key) {
+            case MsgKeys.setAutoTemporarySetting_Look_Res:
+                msg.putOpt(MsgParams.RC,
+                        MsgUtils.getShort(payload[offset++]));
+                break;
+            case MsgKeys.setAutoTemporaryStep_Look_Res:
+                msg.putOpt(MsgParams.RC,
+                        MsgUtils.getShort(payload[offset++]));
+
+                break;
+
             case MsgKeys.GetStoveStatus_Rep:
                 int num = MsgUtils.getShort(payload[offset++]);
                 msg.putOpt(MsgParams.IhNum, num);
@@ -155,11 +234,32 @@ public class StoveMsgMar {
                         offset += valueLen;
                     } else if (paramsKey == 67) {
                         valueLen = MsgUtils.getShort(payload[offset++]);
-                        list.get(0).workTime = MsgUtils.getShort(payload, offset);
-                        offset += valueLen;
+                        list.get(0).workTime = MsgUtils.getShort(payload, offset++);
+                        offset += 1;
                     } else if (paramsKey == 68) {
                         valueLen = MsgUtils.getShort(payload[offset++]);
-                        list.get(1).workTime = MsgUtils.getShort(payload, offset);
+                        list.get(0).workTime = MsgUtils.getShort(payload, offset++);
+                        offset += 1;
+                    }else if (paramsKey==69){
+                        valueLen = MsgUtils.getShort(payload[offset++]);
+//                        short leftTemp = MsgUtils.getShort(payload[offset++]);
+//                        msg.putOpt(MsgParams.LeftTemp,
+//                                leftTemp);
+
+                        msg.putOpt(MsgParams.LeftTemp,
+                                MsgUtils.getFloat(payload, offset++));
+                        offset += 3;
+                    }else if (paramsKey==70){
+                        valueLen = MsgUtils.getShort(payload[offset++]);
+//                        short rightTemp = MsgUtils.getShort(payload[offset++]);
+//                        msg.putOpt(MsgParams.RightTemp,
+//                                rightTemp);
+                        msg.putOpt(MsgParams.RightTemp,
+                                MsgUtils.getFloat(payload, offset++));
+                        offset += 3;
+                    }
+                    else {
+                        valueLen = MsgUtils.getShort(payload[offset++]);
                         offset += valueLen;
                     }
                 }
@@ -234,6 +334,7 @@ public class StoveMsgMar {
                 msg.putOpt(MsgParams.AutoPowerOffTimeForFive,MsgUtils.getShort(payload,offset++));
                 offset++;
                 break;
+
 
             default:
                 break;

@@ -2,12 +2,7 @@ package com.robam.common.io.cloud;
 
 import android.graphics.Bitmap;
 
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.legent.Callback;
 import com.legent.Helper;
 import com.legent.VoidCallback;
@@ -15,8 +10,6 @@ import com.legent.plat.Plat;
 import com.legent.plat.exceptions.ExceptionHelper;
 import com.legent.plat.io.RCRetrofitCallback;
 import com.legent.plat.io.RCRetrofitCallbackWithVoid;
-import com.legent.plat.io.cloud.CloudHelper;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.RCReponse;
 import com.legent.utils.LogUtils;
 import com.legent.utils.graphic.BitmapUtils;
@@ -78,7 +71,6 @@ import com.robam.common.pojos.CookStepDetails;
 import com.robam.common.pojos.CrmCustomer;
 import com.robam.common.pojos.CrmProduct;
 import com.robam.common.pojos.DeviceGroupList;
-import com.robam.common.pojos.DicGroupDto;
 import com.robam.common.pojos.Group;
 import com.robam.common.pojos.MaintainInfo;
 import com.robam.common.pojos.MaterialFrequency;
@@ -86,10 +78,10 @@ import com.robam.common.pojos.Materials;
 import com.robam.common.pojos.NetWorkingSteps;
 import com.robam.common.pojos.OrderContacter;
 import com.robam.common.pojos.OrderInfo;
-import com.robam.common.pojos.PayLoadCookBook;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.pojos.RecipeProvider;
 import com.robam.common.pojos.RecipeTheme;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.RequestBody;
 
 import org.eclipse.jetty.util.MultiPartInputStream;
@@ -99,29 +91,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.MediaType;
-import okhttp3.ResponseBody;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.http.PUT;
-import retrofit2.Call;
 
 public class RokiRestHelper {
 
-    public static final String
-            APPLICATION_JSON_ACCEPT_APPLICATION_JSON = "application/json; Accept: application/json";
-    private static Gson gson = new Gson();
     private static final String TAG = "RokiRestHelper";
-    static IRokiRestService svr = CloudHelper.getRestfulApi(IRokiRestService.class);//Plat.getCustomApi(IRokiRestService.class);
+    static IRokiRestService svr = Plat.getCustomApi(IRokiRestService.class);
 
+    static public void getStoreVersion(final Callback<Integer> callback) {
+        svr.getStoreVersion(new StoreRequest("roki"),
+                new RCRetrofitCallback<StoreVersionResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(StoreVersionResponse result) {
+                        callback.onSuccess(result.version);
+                    }
+                });
+    }
 
     //用户登陆时会触发
-    public static <T extends RCReponse> void getStoreCategory(Class<T> entity, final RetrofitCallback callback) {
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), "{}}");
-        Call<ResponseBody> call = svr.getStoreCategory(requestBody);
-        enqueue(entity, call, callback);
+    static public void getStoreCategory(final Callback<List<Group>> callback) {
 
+        svr.getStoreCategory(new RCRetrofitCallback<StoreCategoryResponse>(
+                callback) {
+            @Override
+            protected void afterSuccess(StoreCategoryResponse result) {
+//                for (int i=0;i<result.groups.size();i++){
+//                    result.groups.get(i).save2db();
+//                }
+                callback.onSuccess(result.groups);
+            }
+        });
     }
 
     //用户登陆时会触发
@@ -151,29 +151,26 @@ public class RokiRestHelper {
                 });
     }
 
-//    static public void getCookbooksByName(String name, Boolean contain3rd,
-//                                          final Callback<CookbooksResponse> callback) {
-//        svr.getCookbooksByName(,
-//                new RCRetrofitCallback<CookbooksResponse>(callback) {
-//                    @Override
-//                    protected void afterSuccess(CookbooksResponse result) {
-//                        callback.onSuccess(result);
-//                    }
-//                });
-//    }
+    static public void getCookbooksByName(String name, Boolean contain3rd,
+                                          final Callback<CookbooksResponse> callback) {
+        svr.getCookbooksByName(new GetCookbooksByNameRequest(name, contain3rd ? "true" : null, Plat.accountService.isLogon() ? Plat.accountService.getCurrentUserId() : 0),
+                new RCRetrofitCallback<CookbooksResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(CookbooksResponse result) {
+                        callback.onSuccess(result);
+                    }
+                });
+    }
 
-    public static <T extends RCReponse> void getCookbooksByName(String name, Boolean contain3rd, boolean notNeedSearchHistory, Class<T> entity,
-                                          final RetrofitCallback callback) {
-        String json;
-        if (notNeedSearchHistory)
-            json = new GetCookbooksByNameRequest(name, contain3rd ? "true" : null, Plat.accountService.isLogon() ? Plat.accountService.getCurrentUserId() : 0, notNeedSearchHistory,true).toString();
-        else
-            json = new GetCookbooksByNameRequest(name, contain3rd ? "true" : null, Plat.accountService.isLogon() ? Plat.accountService.getCurrentUserId() : 0).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getCookbooksByName(requestBody);
-        enqueue(entity, call, callback);
-
+    static public void getCookbooksByName(String name, Boolean contain3rd, boolean notNeedSearchHistory,
+                                          final Callback<CookbooksResponse> callback) {
+        svr.getCookbooksByName(new GetCookbooksByNameRequest(name, contain3rd ? "true" : null, Plat.accountService.isLogon() ? Plat.accountService.getCurrentUserId() : 0, notNeedSearchHistory,true),
+                new RCRetrofitCallback<CookbooksResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(CookbooksResponse result) {
+                        callback.onSuccess(result);
+                    }
+                });
     }
 
     /**
@@ -245,25 +242,39 @@ public class RokiRestHelper {
      * @param randomNum
      * @param callback
      */
-    public static <T extends RCReponse> void getRamdomCookBook(int randomNum, Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.RamdomCookBookRequest(randomNum).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getRamdomCookBook(requestBody);
-        enqueue(entity, call, callback);
+    static public void getRamdomCookBook(int randomNum, final Callback<List<Recipe>> callback) {
+        svr.getRamdomCookBook(new Requests.RamdomCookBookRequest(randomNum), new RCRetrofitCallback<Reponses.ThumbCookbookResponse>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.ThumbCookbookResponse result) {
+                Helper.onSuccess(callback, result.cookbooks);
+            }
 
+            @Override
+            public void failure(RetrofitError e) {
+                super.failure(e);
+                LogUtils.i("Personalize", "failure: " + e.toString());
+            }
+        });
     }
 
     /**
      * 菜谱周排名
      */
-    public static <T extends RCReponse> void getWeekTops(String weekTime, int pageNo, int pageSize, Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.WeekTopsRequest(weekTime, pageNo, pageSize).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getWeekTops(requestBody);
-        enqueue(entity, call, callback);
+    static public void getWeekTops(String weekTime, int pageNo, int pageSize, final Callback<List<Recipe>> callback) {
+        svr.getWeekTops(new Requests.WeekTopsRequest(weekTime, pageNo, pageSize), new RCRetrofitCallback<Reponses.WeekTopsResponse>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.WeekTopsResponse result) {
+                super.afterSuccess(result);
+                Helper.onSuccess(callback, result.payload);
+            }
 
+            @Override
+            public void failure(RetrofitError e) {
+                super.failure(e);
+                LogUtils.i("Personalize", "failure: " + e.toString());
+            }
+
+        });
     }
 
     /**
@@ -317,8 +328,9 @@ public class RokiRestHelper {
         });
     }
 
-    public static void upLoad(String type, MultiPartInputStream.MultiPart params, final Callback<Reponses.UploadRepones> callback) {
-        svr.upLoad(type, params, new RCRetrofitCallback<Reponses.UploadRepones>(callback) {
+    public static void upLoad(String type , MultiPartInputStream.MultiPart params ,
+                              final Callback<Reponses.UploadRepones> callback){
+        svr.upLoad(type ,params ,new RCRetrofitCallback<Reponses.UploadRepones>(callback){
             @Override
             public void failure(RetrofitError e) {
                 super.failure(e);
@@ -336,52 +348,62 @@ public class RokiRestHelper {
     /**
      * 获取某个标签或推荐或周上新的分页菜谱
      */
-//    static public void getbyTagOtherCooks(Long cookbookTagId, boolean needStatisticCookbook, int pageNo, int pageSize, int type, final Callback<List<Recipe>> callback) {
-//        svr.getbyTagOtherCooks(new Requests.TagOtherCooksRequest(cookbookTagId, needStatisticCookbook, pageNo, pageSize, type), new RCRetrofitCallback<Reponses.PersonalizedRecipeResponse>(callback) {
-//            @Override
-//            protected void afterSuccess(Reponses.PersonalizedRecipeResponse result) {
-//                Helper.onSuccess(callback, result.cookbooks);
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError e) {
-//                super.failure(e);
-//                LogUtils.i("Personalize", "failure: " + e.toString());
-//            }
-//        });
-//    }
+    static public void getbyTagOtherCooks(Long cookbookTagId, boolean needStatisticCookbook, int pageNo, int pageSize, int type, final Callback<List<Recipe>> callback) {
+        svr.getbyTagOtherCooks(new Requests.TagOtherCooksRequest(cookbookTagId, needStatisticCookbook, pageNo, pageSize, type), new RCRetrofitCallback<Reponses.PersonalizedRecipeResponse>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.PersonalizedRecipeResponse result) {
+                Helper.onSuccess(callback, result.cookbooks);
+            }
+
+            @Override
+            public void failure(RetrofitError e) {
+                super.failure(e);
+                LogUtils.i("Personalize", "failure: " + e.toString());
+            }
+        });
+    }
 
     /**
      * 获取某个标签或推荐或周上新的分页菜谱(随机并排除)
      */
-    public static <T extends RCReponse> void getbyTagOtherCooks(Long cookbookTagId, boolean needStatisticCookbook, int pageNo, int pageSize, int type, List<Long> excludeCookIds, Class<T> entity,
-                                                                final RetrofitCallback callback) {
-        String json = new Requests.TagOtherCooksRequest(cookbookTagId, needStatisticCookbook, pageNo, pageSize, type, excludeCookIds).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getbyTagOtherCooks(requestBody);
-        enqueue(entity, call, callback);
+    static public void getbyTagOtherCooks(Long cookbookTagId, boolean needStatisticCookbook, int pageNo, int pageSize, int type, List<Long> excludeCookIds, final Callback<List<Recipe>> callback) {
+        svr.getbyTagOtherCooks(new Requests.TagOtherCooksRequest(cookbookTagId, needStatisticCookbook, pageNo, pageSize, type, excludeCookIds), new RCRetrofitCallback<Reponses.PersonalizedRecipeResponse>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.PersonalizedRecipeResponse result) {
+                Helper.onSuccess(callback, result.cookbooks);
+            }
 
+            @Override
+            public void failure(RetrofitError e) {
+                super.failure(e);
+                LogUtils.i("Personalize", "failure: " + e.toString());
+            }
+        });
     }
 
     /**
      * 获取某个标签或推荐或周上新的分页菜谱
      */
-    public static <T extends RCReponse> void getCookbookByTag(Long cookbookTagId, int pageNo, int pageSize, Class<T> entity,
-                                                              final RetrofitCallback callback) {
-        String json = new Requests.TagCooksRequest(cookbookTagId, pageNo, pageSize).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getCookbookByTag(requestBody);
-        enqueue(entity, call, callback);
+    static public void getCookbookByTag(Long cookbookTagId, int pageNo, int pageSize, final Callback<List<Recipe>> callback) {
+        svr.getCookbookByTag(new Requests.TagCooksRequest(cookbookTagId, pageNo, pageSize), new RCRetrofitCallback<Reponses.PersonalizedRecipeResponse>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.PersonalizedRecipeResponse result) {
+                Helper.onSuccess(callback, result.cookbooks);
+            }
 
+            @Override
+            public void failure(RetrofitError e) {
+                super.failure(e);
+                LogUtils.i("Personalize", "failure: " + e.toString());
+            }
+        });
     }
 
     /**
      * 查询用户关联多段菜谱列表
      */
-    static public void getMultiRecipe(String userId, int pageNo, int pageSize, final Callback<Reponses.MultiRecipeResponse> callback) {
-        svr.getMultiRecipe(userId, pageNo, pageSize, new RCRetrofitCallback<Reponses.MultiRecipeResponse>(callback) {
+    static public void getMultiRecipe(String userId, int pageNo, int pageSize, String deviceType , final Callback<Reponses.MultiRecipeResponse> callback) {
+        svr.getMultiRecipe(userId, pageNo, pageSize, deviceType ,new RCRetrofitCallback<Reponses.MultiRecipeResponse>(callback) {
             @Override
             protected void afterSuccess(Reponses.MultiRecipeResponse result) {
                 Helper.onSuccess(callback, result);
@@ -454,13 +476,20 @@ public class RokiRestHelper {
     /**
      * 获取某个标签或推荐或周上新的主题
      */
-    public static <T extends RCReponse> void getByTagOtherThemes(Long cookbookTagId, boolean needStatisticCookbook, int pageNo, int pageSize, int type,
-                                                                 Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.TagOtherThemesRequest(cookbookTagId, needStatisticCookbook, pageNo, pageSize, type).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getByTagOtherThemes(requestBody);
-        enqueue(entity, call, callback);
+    static public void getByTagOtherThemes(Long cookbookTagId, boolean needStatisticCookbook, int pageNo, int pageSize, int type, final Callback<List<RecipeTheme>> callback) {
+        svr.getByTagOtherThemes(new Requests.TagOtherThemesRequest(cookbookTagId, needStatisticCookbook, pageNo, pageSize, type), new RCRetrofitCallback<Reponses.RecipeThemeResponse>(callback) {
+
+            @Override
+            protected void afterSuccess(Reponses.RecipeThemeResponse result) {
+                Helper.onSuccess(callback, result.recipeThemes);
+            }
+
+            @Override
+            public void failure(RetrofitError e) {
+                super.failure(e);
+                LogUtils.i("Personalize", "failure: " + e.toString());
+            }
+        });
     }
 
     /**
@@ -472,15 +501,19 @@ public class RokiRestHelper {
      * @param themeId
      * @param callback
      */
-    public static <T extends RCReponse> void getCookBookBythemeId(String lang, long limit, int start, int themeId,
-                                                                  Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.CookbookbythemeIdRequest(lang, limit, start, themeId).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getCookBookBythemeId(requestBody);
+    static public void getCookBookBythemeId(String lang, long limit, int start, int themeId, final Callback<List<Recipe>> callback) {
+        svr.getCookBookBythemeId(new Requests.CookbookbythemeIdRequest(lang, limit, start, themeId), new RCRetrofitCallback<Reponses.PersonalizedRecipeResponse>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.PersonalizedRecipeResponse result) {
+                Helper.onSuccess(callback, result.cookbooks);
+            }
 
-        enqueue(entity, call, callback);
-
+            @Override
+            public void failure(RetrofitError e) {
+                super.failure(e);
+                LogUtils.i("Personalize", "failure: " + e.toString());
+            }
+        });
     }
 
     /**
@@ -507,13 +540,18 @@ public class RokiRestHelper {
     }
 
 
-    public static <T extends RCReponse> void getIsCollectBook(long userId, long cookbookId, Class<T>entity, final RetrofitCallback callback) {
-        String json = new Requests.IsCollectRequest(userId, cookbookId).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getIsCollectBook(requestBody);
-        enqueue(entity, call, callback);
+    static public void getIsCollectBook(long userId, long cookbookId, final Callback<Reponses.IsCollectBookResponse> callback) {
+        svr.getIsCollectBook(new Requests.IsCollectRequest(userId, cookbookId), new RCRetrofitCallback<Reponses.IsCollectBookResponse>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.IsCollectBookResponse result) {
+                Helper.onSuccess(callback, result);
+            }
 
+            @Override
+            public void failure(RetrofitError e) {
+                super.failure(e);
+            }
+        });
     }
 
 
@@ -566,11 +604,13 @@ public class RokiRestHelper {
     /**
      * 获取主题菜谱列表精选专题
      */
-    public static <T extends RCReponse> void getThemeRecipeList(Class<T> entity, final RetrofitCallback callback) {
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), "{}");
-        Call<ResponseBody> call = svr.setGetThemeRecipeList(requestBody);
-        enqueue(entity, call, callback);
+    static public void getThemeRecipeList(final Callback<Reponses.RecipeThemeResponse> callback) {
+        svr.setGetThemeRecipeList(new RCRetrofitCallback<Reponses.RecipeThemeResponse>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.RecipeThemeResponse result) {
+                callback.onSuccess(result);
+            }
+        });
     }
 
 
@@ -583,13 +623,14 @@ public class RokiRestHelper {
         });
     }
 
-    public static <T extends RCReponse> void getThemeRecipeDetail(final long themeId, Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.ThemeRecipeDetailRequest(themeId).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getThemeRecipeDetail(requestBody);
-        enqueue(entity, call, callback);
-
+    static public void getThemeRecipeDetail(final long themeId, final Callback<Reponses.ThemeRecipeDetailResponse> callback) {
+        svr.getThemeRecipeDetail(new Requests.ThemeRecipeDetailRequest(themeId), new RCRetrofitCallback<Reponses.ThemeRecipeDetailResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(Reponses.ThemeRecipeDetailResponse result) {
+                        callback.onSuccess(result);
+                    }
+                }
+        );
     }
 
     /**
@@ -604,11 +645,14 @@ public class RokiRestHelper {
         });
     }
 
-    public static <T extends RCReponse> void getMyFavoriteThemeRecipeList_new(Class<T> entity, final RetrofitCallback callback) {
+    static public void getMyFavoriteThemeRecipeList_new(final Callback<Reponses.RecipeThemeResponse3> callback) {
         LogUtils.i("20161021", getUserId() + "");
-        Call<ResponseBody> call = svr.getMyFavoriteThemeRecipeList_new(getUserId()+"");
-        enqueue(entity, call, callback);
-
+        svr.getMyFavoriteThemeRecipeList_new(getUserId() + "", new RCRetrofitCallback<Reponses.RecipeThemeResponse3>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.RecipeThemeResponse3 result) {
+                callback.onSuccess(result);
+            }
+        });
     }
 
     /**
@@ -662,13 +706,13 @@ public class RokiRestHelper {
     /**
      * 主题收藏
      */
-    public static <T extends RCReponse> void setCollectOfTheme(final long themeId, Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.ThemeCollectRequest(getUserId(), themeId).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.setSetCollectOfTheme(requestBody);
-        enqueue(entity, call, callback);
-
+    static public void setCollectOfTheme(final long themeId, final Callback<Reponses.CollectStatusRespone> callback) {
+        svr.setSetCollectOfTheme(new Requests.ThemeCollectRequest(getUserId(), themeId), new RCRetrofitCallback<Reponses.CollectStatusRespone>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.CollectStatusRespone result) {
+                callback.onSuccess(result);
+            }
+        });
     }
 
     /**
@@ -710,13 +754,13 @@ public class RokiRestHelper {
     /**
      * 获取设备菜谱封面
      */
-    public static <T extends RCReponse> void getDeviceRecipeImg(String dc, Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.CategoryRecipeImgRequest(dc).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getDeviceRecipeImg(requestBody);
-        enqueue(entity, call, callback);
-
+    static public void getDeviceRecipeImg(String dc, final Callback<Reponses.CategoryRecipeImgRespone> callback) {
+        svr.getDeviceRecipeImg(new Requests.CategoryRecipeImgRequest(dc), new RCRetrofitCallback<Reponses.CategoryRecipeImgRespone>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.CategoryRecipeImgRespone result) {
+                callback.onSuccess(result);
+            }
+        });
     }
 
     /**
@@ -766,24 +810,29 @@ public class RokiRestHelper {
                 });
     }
 
-    public static <T extends RCReponse> void getHotKeysForCookbook(Class<T> entity,
-            final RetrofitCallback callback) {
-
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), "{}");
-        Call<ResponseBody> call = svr.getHotKeysForCookbook(requestBody);
-        enqueue(entity, call, callback);
-
+    static public void getHotKeysForCookbook(
+            final Callback<List<String>> callback) {
+        svr.getHotKeysForCookbook(new RCRetrofitCallback<HotKeysForCookbookResponse>(
+                callback) {
+            @Override
+            protected void afterSuccess(HotKeysForCookbookResponse result) {
+                LogUtils.i("RecipeBook", "result:" + result.toString());
+                callback.onSuccess(result.hotKeys);
+            }
+        });
     }
 
 
-    public static <T extends RCReponse> void getCookbookById(long cookbookId,
-                                                             final Class<T> entity, final RetrofitCallback callback) {
-        String json = new UserBookRequest(getUserId(), cookbookId).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getCookbookById(requestBody);
-        enqueue(entity, call, callback);
+    static public void getCookbookById(long cookbookId,
+                                       final Callback<Recipe> callback) {
+        svr.getCookbookById(new UserBookRequest(getUserId(), cookbookId),
+                new RCRetrofitCallback<CookbookResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(CookbookResponse result) {
+                        LogUtils.i("20170415", "result15:" + result.toString());
+                        callback.onSuccess(result.cookbook);
+                    }
+                });
     }
 
     static public void getCookbookSteps(long cookbookId, String categoryCode, String platCode, final Callback<List<CookStep>> callback) {
@@ -839,45 +888,71 @@ public class RokiRestHelper {
     /**
      * App启动时图片
      */
-    static public void getAppStartImages(String appType, final retrofit2.Callback<Reponses.AppStartImgResponses> callback) {
-        String json = new Requests.GetAppStartImg(appType).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
-        Call<Reponses.AppStartImgResponses> call = svr.getAppStartImages(requestBody);
-        call.enqueue(callback);
+    static public void getAppStartImages(String appType, final Callback<Reponses.AppStartImgResponses> callback) {
+        svr.getAppStartImages(new Requests.GetAppStartImg(appType),
+                new RCRetrofitCallback<Reponses.AppStartImgResponses>(callback) {
+
+                    @Override
+                    protected void afterSuccess(Reponses.AppStartImgResponses result) {
+                        callback.onSuccess(result);
+                    }
+
+                });
     }
 
     /**
      * App启动时广告图片
      */
-    public static <T extends RCReponse> void getAppAdvertImg(Class<T> entity, final RetrofitCallback callback) {
-        String json = new Reponses.AppAdvertImgResponses().toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
-        Call<ResponseBody> call = svr.getAppAdvertImg(requestBody);
+    static public void getAppAdvertImg(final Callback<Reponses.AppAdvertImgResponses> callback) {
+        svr.getAppAdvertImg(new RCRetrofitCallback<Reponses.AppAdvertImgResponses>(callback) {
 
-        enqueue(entity, call, callback);
+            @Override
+            protected void afterSuccess(Reponses.AppAdvertImgResponses result) {
+                callback.onSuccess(result);
+            }
+
+        });
     }
 
     //获取厨房知识列表
-    public static <T extends RCReponse> void getCookingKnowledge(String typeCode, int isActive, String lable, int pageNo, int pageSize,
-                                           final Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.CookingKnowledgeRequest(typeCode, isActive, lable, pageNo, pageSize).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
-        Call<ResponseBody> call = svr.getCookingKnowledge(requestBody);
-        enqueue(entity, call, callback);
+    static public void getCookingKnowledge(String typeCode, int isActive, String lable, int pageNo, int pageSize,
+                                           final Callback<Reponses.CookingKnowledgeResponse> callback) {
+        svr.getCookingKnowledge(new Requests.CookingKnowledgeRequest(typeCode, isActive, lable, pageNo, pageSize),
+                new RCRetrofitCallback<Reponses.CookingKnowledgeResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(Reponses.CookingKnowledgeResponse result) {
+                        LogUtils.i("20170607", "result:" + result);
+                        callback.onSuccess(result);
+                    }
+                });
+
 
     }
 
 
-    public static <T extends RCReponse> void getCookbookById(long cookbookId, String entranceCode, String needStepsInfo,
-                                       Class<T> entity, final RetrofitCallback callback) {
-        String json = new UserBookRequest(getUserId(), cookbookId, entranceCode, needStepsInfo).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getNewCookbookById(requestBody);
-        enqueue(entity, call, callback);
+    //增加统计
+    static public void getCookbookById(long cookbookId, String entranceCode,
+                                       final Callback<Recipe> callback) {
+        svr.getCookbookById(new UserBookRequest(getUserId(), cookbookId, entranceCode),
+                new RCRetrofitCallback<CookbookResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(CookbookResponse result) {
+                        LogUtils.i("20170415", "result15:" + result.toString());
+                        callback.onSuccess(result.cookbook);
+                    }
+                });
+    }
+
+    static public void getCookbookById(long cookbookId, String entranceCode, String needStepsInfo,
+                                       final Callback<Recipe> callback) {
+        svr.getNewCookbookById(new UserBookRequest(getUserId(), cookbookId, entranceCode, needStepsInfo),
+                new RCRetrofitCallback<CookbookResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(CookbookResponse result) {
+                        LogUtils.i("20170415", "result15:" + result.toString());
+                        callback.onSuccess(result.cookbook);
+                    }
+                });
     }
 
     /**
@@ -888,17 +963,17 @@ public class RokiRestHelper {
      * @param needStepsInfo
      * @param callback
      */
-//    public static void getCookbookById2(long cookbookId, String entranceCode, String needStepsInfo,
-//                                        final Callback<CookbookResponse> callback) {
-//        svr.getNewCookbookById(new UserBookRequest(getUserId(), cookbookId, entranceCode, needStepsInfo),
-//                new RCRetrofitCallback<CookbookResponse>(callback) {
-//                    @Override
-//                    protected void afterSuccess(CookbookResponse result) {
-////                        LogUtils.i("20170415", "result15:" + result.toString());
-//                        callback.onSuccess(result);
-//                    }
-//                });
-//    }
+    public static void getCookbookById2(long cookbookId, String entranceCode, String needStepsInfo,
+                                        final Callback<CookbookResponse> callback) {
+        svr.getNewCookbookById(new UserBookRequest(getUserId(), cookbookId, entranceCode, needStepsInfo),
+                new RCRetrofitCallback<CookbookResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(CookbookResponse result) {
+//                        LogUtils.i("20170415", "result15:" + result.toString());
+                        callback.onSuccess(result);
+                    }
+                });
+    }
 
     static public void getRecipeOfThmem(long userId, String[] strings, final Callback<List<Recipe>> callback) {
         svr.getRecipeOfThemeList(new Requests.GetReicpeOfTheme(userId, strings),
@@ -1083,25 +1158,106 @@ public class RokiRestHelper {
                 });
     }
 
-    // -------------------------------------------------------------------------------
+    /**
+     * 开始工作保存烹饪曲线记录
+     */
+    static public void cookingCurveSave(String deviceGuid, int id, String mode, String setTemp, String setTime,int headId,
+                                        final Callback<com.robam.common.io.cloud.Reponses.CookingCurveSaveRes> callback) {
+        svr.cookingCurveSave(new Requests.CookingCurveSaveRequest(getUserId(), deviceGuid, id, mode, setTemp, setTime,headId),
 
-    public static <T extends RCReponse> void getFavorityCookbooks(Class<T> entity,
-            final RetrofitCallback callback) {
-        String json = new UserRequest(getUserId()).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getFavorityCookbooks(requestBody);
-        enqueue(entity, call, callback);
+                new RCRetrofitCallback<com.robam.common.io.cloud.Reponses.CookingCurveSaveRes>(callback) {
+                    @Override
+                    protected void afterSuccess(com.robam.common.io.cloud.Reponses.CookingCurveSaveRes result) {
+                        super.afterSuccess(result);
+                        Helper.onSuccess(callback, result);
+                    }
 
+                    @Override
+                    public void failure(RetrofitError e) {
+                        super.failure(e);
+                        LogUtils.i("Personalize", "failure: " + e.toString());
+                    }
+                });
     }
 
-    public static <T extends RCReponse> void addFavorityCookbooks(long cookbookId, Class<T> entity, RetrofitCallback callback) {
-        String json = new UserBookRequest(getUserId(), cookbookId).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.addFavorityCookbooks(requestBody);
-        enqueue(entity, call, callback);
+    /**
+     * 烹饪曲线菜谱查询
+     */
+    static public void cookingCurvequery(String id,
+                                         final Callback<com.robam.common.io.cloud.Reponses.CookingCurveQueryRes> callback) {
+        svr.cookingCurvequery(new Requests.CookingCurveQueryRequest(id),
+                new RCRetrofitCallback<com.robam.common.io.cloud.Reponses.CookingCurveQueryRes>(callback) {
+                    @Override
+                    protected void afterSuccess(com.robam.common.io.cloud.Reponses.CookingCurveQueryRes result) {
+                        super.afterSuccess(result);
+                        Helper.onSuccess(callback, result);
+                    }
 
+                    @Override
+                    public void failure(RetrofitError e) {
+                        super.failure(e);
+                        LogUtils.i("Personalize", "failure: " + e.toString());
+                    }
+                });
+    }
+    /**
+     * 烹饪曲线标记步骤
+     */
+    static public void cookingCurveMarkStep(String id,List<Requests.CookingCurveMarkStepList> stepDtoList,
+                                         final Callback<Reponses.CookingCurveMarkStepRequest> callback) {
+        svr.cookingCurveMarkStep(new Requests.CookingCurveMarkStepRequest(id,stepDtoList),
+                new RCRetrofitCallback<Reponses.CookingCurveMarkStepRequest>(callback) {
+                    @Override
+                    protected void afterSuccess(Reponses.CookingCurveMarkStepRequest result) {
+                        super.afterSuccess(result);
+                        Helper.onSuccess(callback, result);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError e) {
+                        super.failure(e);
+                        LogUtils.i("Personalize", "failure: " + e.toString());
+                    }
+                });
+    }
+    /**
+     * 烹饪曲线继续/暂停
+     */
+    static public void cookingCurveUpdateCurveState(String id,String state,
+                                         final Callback<RCReponse> callback) {
+        svr.cookingCurveUpdateCurveState(new Requests.CookingCurveUpdateCurveState(id,state),
+                new RCRetrofitCallback<RCReponse>(callback) {
+                    @Override
+                    protected void afterSuccess(RCReponse result) {
+                        super.afterSuccess(result);
+                        Helper.onSuccess(callback, result);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError e) {
+                        super.failure(e);
+                        LogUtils.i("Personalize", "failure: " + e.toString());
+                    }
+                });
+    }
+
+    // -------------------------------------------------------------------------------
+
+    static public void getFavorityCookbooks(
+            final Callback<CookbooksResponse> callback) {
+        svr.getFavorityCookbooks(new UserRequest(getUserId()),
+                new RCRetrofitCallback<CookbooksResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(CookbooksResponse result) {
+                        callback.onSuccess(result);
+                    }
+                });
+    }
+
+    static public void addFavorityCookbooks(long cookbookId,
+                                            VoidCallback callback) {
+        svr.addFavorityCookbooks(new UserBookRequest(getUserId(), cookbookId),
+                new RCRetrofitCallbackWithVoid<RCReponse>(callback));
     }
 
     static public void deleteFavorityCookbooks(long cookbookId,
@@ -1162,14 +1318,15 @@ public class RokiRestHelper {
      * 根据设备种类获取所有菜谱
      * 20160630周定钧
      */
-    public static <T extends RCReponse> void getGroundingRecipesByDevice(String dc, String recipeType, int start, int limit,
-                                                   Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.getGroundingRecipesByDeviceRequest(dc, recipeType, start, limit).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getGroundingRecipesByDevice(requestBody);
-        enqueue(entity, call, callback);
-
+    static public void getGroundingRecipesByDevice(String dc, String recipeType, int start, int limit,
+                                                   final Callback<List<Recipe>> callback) {
+        svr.getGroundingRecipesByDevice(new Requests.getGroundingRecipesByDeviceRequest(dc, recipeType, start, limit),
+                new RCRetrofitCallback<ThumbCookbookResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(ThumbCookbookResponse result) {
+                        Helper.onSuccess(callback, result.cookbooks);
+                    }
+                });
     }
 
     // -------------------------------------------------------------------------------
@@ -1190,13 +1347,13 @@ public class RokiRestHelper {
     }
 
     //获取搜索记录
-    public static <T extends RCReponse> void getCookbookSearchHistory(long userId, Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.CookbookSearchHistory(userId).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getCookbookSearchHistory(requestBody);
-        enqueue(entity, call, callback);
-
+    static public void getCookbookSearchHistory(long userId, final Callback<Reponses.HistoryResponse> callback) {
+        svr.getCookbookSearchHistory(new Requests.CookbookSearchHistory(userId), new RCRetrofitCallback<Reponses.HistoryResponse>(callback) {
+            @Override
+            protected void afterSuccess(Reponses.HistoryResponse result) {
+                Helper.onSuccess(callback, result);
+            }
+        });
     }
 
     //删除搜索记录
@@ -1270,12 +1427,13 @@ public class RokiRestHelper {
                 new RCRetrofitCallbackWithVoid<RCReponse>(callback));
     }
 
-    public static <T extends RCReponse> void getMyCookAlbums(Class<T> entity, final RetrofitCallback callback) {
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), "{}");
-        Call<ResponseBody> call = svr.getMyCookAlbums(requestBody);
-        enqueue(entity, call, callback);
-
+    static public void getMyCookAlbums(final Callback<List<CookAlbum>> callback) {
+        svr.getMyCookAlbums(new UserRequest(getUserId()), new RCRetrofitCallback<AlbumsResponse>(callback) {
+            @Override
+            protected void afterSuccess(AlbumsResponse result) {
+                Helper.onSuccess(callback, result.cookAlbums);
+            }
+        });
     }
 
     static public void clearMyCookAlbums(final VoidCallback callback) {
@@ -1532,42 +1690,17 @@ public class RokiRestHelper {
 
 
     //联网优化接口
-    public static <T extends RCReponse> void getNetworkDeviceInfoRequest(String vendor, String dc, String dt,
-                                                  final Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.GetNetworkDeviceInfoRequest(vendor, dc, dt).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse("application/json; Accept: application/json"), json);
-        Call<ResponseBody> call = svr.getNetworkDeviceInfo(requestBody);
-        enqueue(entity, call, callback);
-    }
-
-    private static <T extends RCReponse> void enqueue(final Class<T> entity, Call<ResponseBody> call, final RetrofitCallback callback) {
-        call.enqueue(new retrofit2.Callback<ResponseBody>() {
+    static public void getNetworkDeviceInfoRequest(String vendor, String dc, String dt,
+                                                   final Callback<List<DeviceGroupList>> callback) {
+        svr.getNetworkDeviceInfo(new Requests.GetNetworkDeviceInfoRequest(vendor, dc, dt), new retrofit.Callback<Reponses.NetworkDeviceInfoResponse>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                try {
-                    String body = response.body().string();
-
-                    T object = gson.fromJson(body, entity);
-                    RCReponse rcReponse = object;
-                    if (null != rcReponse && rcReponse.rc == 0) {
-                        if (null != callback) {
-                            callback.onSuccess(object);
-                            return;
-                        }
-                    }
-                    if (null != callback && null != rcReponse)
-                        callback.onFaild(rcReponse.error_description);
-                } catch (Exception e) {
-                    if (null != callback)
-                        callback.onFaild("exception:" + e.getMessage());
-                }
+            public void success(Reponses.NetworkDeviceInfoResponse networkDeviceInfoResponse, Response response) {
+                callback.onSuccess(networkDeviceInfoResponse.deviceGroupList);
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                if (null != callback)
-                    callback.onFaild("exception:" + throwable.getMessage());
+            public void failure(RetrofitError error) {
+                callback.onFailure(error);
             }
         });
     }
@@ -1669,14 +1802,54 @@ public class RokiRestHelper {
         });
     }
 
-    public static <T extends RCReponse> void getGroundingRecipesByDc(long userId, String dc, String recipeType, int start, int limit, String devicePlat,
-                                                                     Class<T> entity, final RetrofitCallback callback) {
-        String json = new Requests.getGroundingRecipesByDeviceRequest(userId, dc, recipeType, start, limit, devicePlat).toString();
-        okhttp3.RequestBody requestBody =
-                okhttp3.RequestBody.create(MediaType.parse(APPLICATION_JSON_ACCEPT_APPLICATION_JSON), json);
-        Call<ResponseBody> call = svr.getGroundingRecipesByDevice(requestBody);
-        enqueue(entity, call, callback);
 
+    /**
+     * 掌厨获取栏目内容列表
+     */
+    static public void getSeriesInfoList(int pageNo, int pageSize,
+                                         final Callback<Reponses.SeriesInfoLisResponse> callback) {
+        svr.getSeriesInfoList(new Requests.SeriesInfoListRequest(pageNo, pageSize),
+                new retrofit.Callback<Reponses.SeriesInfoLisResponse>() {
+                    @Override
+                    public void success(Reponses.SeriesInfoLisResponse seriesInfoLisResponse, Response response) {
+                        callback.onSuccess(seriesInfoLisResponse);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        callback.onFailure(error);
+                    }
+                });
+    }
+
+
+    /**
+     * 掌厨获取单个课程详情
+     */
+    static public void getCourseDetail(String seriesId, String orderNo,
+                                       final Callback<Reponses.CourseDetailReponse> callback) {
+        svr.getCourseDetail(new Requests.CourseDetailRequest(seriesId, orderNo),
+                new retrofit.Callback<Reponses.CourseDetailReponse>() {
+                    @Override
+                    public void success(Reponses.CourseDetailReponse courseDetailReponse, Response response) {
+                        callback.onSuccess(courseDetailReponse);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        callback.onFailure(error);
+                    }
+                });
+    }
+
+    public static void getGroundingRecipesByDc(long userId, String dc, String recipeType, int start, int limit, String devicePlat, final Callback<List<Recipe>> callback) {
+        svr.getGroundingRecipesByDevice(new Requests.getGroundingRecipesByDeviceRequest(userId, dc, recipeType, start, limit, devicePlat),
+                new RCRetrofitCallback<ThumbCookbookResponse>(callback) {
+                    @Override
+                    protected void afterSuccess(ThumbCookbookResponse result) {
+                        Helper.onSuccess(callback, result.cookbooks);
+                    }
+                });
     }
 
 
@@ -1784,4 +1957,59 @@ public class RokiRestHelper {
     }
 
 
+
+    //删除烹饪曲线步骤
+   public static  void deleteCurveStep(int id, final Callback<Reponses.CurveStepDelete> callback) {
+        svr.setDeleteCurve(id, new retrofit.Callback<Reponses.CurveStepDelete>() {
+            @Override
+            public void success(Reponses.CurveStepDelete curveStepDelete, Response response) {
+                callback.onSuccess(curveStepDelete);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                callback.onFailure(retrofitError);
+            }
+        });
+
+    }
+
+
+    //更新菜单
+
+    public static  void updateCurveStep(Requests.cookingCurveDto cookingCurveDto,
+                                        final Callback<Reponses.CurveStepDelete> callback){
+        Gson gson=new Gson();
+        String obj = gson.toJson(cookingCurveDto);
+        RequestBody mRe=  RequestBody.create(MediaType.parse("application/json; charset=utf-8"),obj);
+        svr.setUpdateCurve(mRe, new retrofit.Callback<Reponses.CurveStepDelete>() {
+            @Override
+            public void success(Reponses.CurveStepDelete curveStepDelete, Response response) {
+                callback.onSuccess(curveStepDelete);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                callback.onFailure(retrofitError);
+            }
+        });
+
+
+    }
+
+
+    public static  void queryCurveStep(int id,final Callback<Reponses.CurveStepDelete> callback){
+
+        svr.setQueryCurve(id, new retrofit.Callback<Reponses.CurveStepDelete>() {
+            @Override
+            public void success(Reponses.CurveStepDelete curveStepDelete, Response response) {
+                callback.onSuccess(curveStepDelete);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                callback.onFailure(retrofitError);
+            }
+        });
+    }
 }

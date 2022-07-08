@@ -28,13 +28,13 @@ import butterknife.OnClick;
  */
 
 public class StoveSelectAllOffTips extends AbsDialog {
-    public interface AllOffTipsDialogLister{
+    public interface AllOffTipsDialogLister {
         void onConfirm(Integer stoveHeadId);
     }
 
     private AllOffTipsDialogLister lister;
 
-    public void setAllOffTipsDialogLister(AllOffTipsDialogLister lister){
+    public void setAllOffTipsDialogLister(AllOffTipsDialogLister lister) {
         this.lister = lister;
     }
 
@@ -64,14 +64,14 @@ public class StoveSelectAllOffTips extends AbsDialog {
     }
 
     static public StoveSelectAllOffTips show(Context cx, Stove stove) {
-        dlg = new StoveSelectAllOffTips(cx,stove);
+        dlg = new StoveSelectAllOffTips(cx, stove);
         Window win = dlg.getWindow();
         WindowManager wm = (WindowManager) cx.getSystemService(Context.WINDOW_SERVICE);
         int screenHeight = wm.getDefaultDisplay().getHeight();
         win.setGravity(Gravity.BOTTOM);  //此处可以设置dialog显示的位置
         WindowManager.LayoutParams wl = win.getAttributes();
         wl.width = WindowManager.LayoutParams.MATCH_PARENT;
-        wl.height = screenHeight/2;
+        wl.height = screenHeight / 2;
         win.setAttributes(wl);
         dlg.show();
         return dlg;
@@ -107,23 +107,29 @@ public class StoveSelectAllOffTips extends AbsDialog {
 
     @Subscribe
     public void onEvent(StoveStatusChangedEvent event) {
-        LogUtils.i("2018122","event:"+event.pojo.getDp()+" "+event.pojo.rightHead.level);
+        LogUtils.i("2018122", "event:" + event.pojo.getDp() + " " + event.pojo.rightHead.level);
         if (!TextUtils.equals(stove.getGuid().getGuid(), event.pojo.getGuid().getGuid())) {
             return;
         }
-        if (DeviceType.RRQZ.equals(stove.getDp())){
-            if (stove.leftHead != null && (stove.leftHead.status == StoveStatus.Working&&stove.leftHead.level>=1)) {
+        if (DeviceType.RRQZ.equals(stove.getDp())) {
+            if (stove.leftHead != null && (stove.leftHead.status == StoveStatus.Working && stove.leftHead.level >= 1)) {
                 startCook(stove.leftHead);
-            } else if (stove.rightHead != null && (stove.rightHead.status == StoveStatus.Working&&stove.rightHead.level>=1)) {
+            } else if (stove.rightHead != null && (stove.rightHead.status == StoveStatus.Working && stove.rightHead.level >= 1)) {
                 startCook(stove.rightHead);
             }
-        }else if(IRokiFamily.RQZ02.equals(stove.getDp())){
-            if (stove.leftHead != null && (stove.leftHead.status !=StoveStatus.Off&&stove.leftHead.level>=1)) {
-                startCook(stove.leftHead);
-            } else if (stove.rightHead != null && (stove.rightHead.status !=StoveStatus.Off&&stove.rightHead.level>=1)) {
-                startCook(stove.rightHead);
+        } else if (IRokiFamily.RQZ02.equals(stove.getDp())) {
+            if (IRokiFamily.R9B010.equals(stove.getDt())) {//9B010只支持右灶
+                if (stove.rightHead != null && (stove.rightHead.status != StoveStatus.Off && stove.rightHead.level >= 1)) {
+                    startCook(stove.rightHead);
+                }
+            } else {
+                if (stove.leftHead != null && (stove.leftHead.status != StoveStatus.Off && stove.leftHead.level >= 1)) {
+                    startCook(stove.leftHead);
+                } else if (stove.rightHead != null && (stove.rightHead.status != StoveStatus.Off && stove.rightHead.level >= 1)) {
+                    startCook(stove.rightHead);
+                }
             }
-        }else{
+        } else {
             if (stove.leftHead != null && stove.leftHead.status == StoveStatus.StandyBy) {
                 startCook(stove.leftHead);
             } else if (stove.rightHead != null && stove.rightHead.status == StoveStatus.StandyBy) {

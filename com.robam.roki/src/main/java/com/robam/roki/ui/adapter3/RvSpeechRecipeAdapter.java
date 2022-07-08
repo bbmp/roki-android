@@ -25,8 +25,12 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  * des 语音搜索菜谱成功 菜谱adapter
  */
 public class RvSpeechRecipeAdapter extends BaseQuickAdapter<Recipe , BaseViewHolder> {
-    private MultiTransformation options = new MultiTransformation<>(new CenterCrop(),
-            new RoundedCornersTransformation(30, 0));
+    private RequestOptions options = new RequestOptions()
+            .centerCrop()
+            .placeholder(R.mipmap.img_default) //预加载图片
+            .error(R.mipmap.img_default) //加载失败图片
+            .priority(Priority.HIGH) //优先级
+            .diskCacheStrategy(DiskCacheStrategy.NONE); //缓存
 
 
     public RvSpeechRecipeAdapter() {
@@ -41,7 +45,7 @@ public class RvSpeechRecipeAdapter extends BaseQuickAdapter<Recipe , BaseViewHol
             String recipeUrl = RecipeUtils.getRecipeImgUrl(item);
             GlideApp.with(getContext())
                     .load(recipeUrl)
-                    .apply(RequestOptions.bitmapTransform(options))
+                    .apply(options)
                     .into(ivTagRecipe);
         }
     }

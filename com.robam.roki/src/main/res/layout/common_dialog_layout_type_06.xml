@@ -8,6 +8,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/rl_link_window"
         android:layout_width="150dp"
         android:layout_height="160dp"
         android:background="@drawable/shape_link_window"
@@ -22,6 +23,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tv_con"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"

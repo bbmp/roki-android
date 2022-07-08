@@ -1,0 +1,45 @@
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_44"
+    android:gravity="center"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:src="@mipmap/ic_arrow_back" />
+
+    <TextView
+
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/my_about"
+        android:textColor="@color/text_color_device_category"
+        android:textSize="@dimen/sp_20" />
+
+    <TextView
+        android:textSize="@dimen/sp_14"
+
+        android:gravity="center"
+        android:textColor="#ff61acff"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_centerVertical="true"
+        android:id="@+id/txt_edit"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/img_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_12" />
+
+</RelativeLayout>

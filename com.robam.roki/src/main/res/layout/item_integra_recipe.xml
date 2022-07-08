@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl_610_recipe"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_bg_white_15dp"
+    android:layout_marginStart="13dp"
+    android:layout_marginEnd="13dp"
+    android:layout_marginTop="10dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <com.robam.roki.ui.widget.layout.SettingBar
+                android:id="@+id/stb_step_top"
+                android:background="@drawable/shape_bg_white_8dp_night"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:bar_rightIcon="@drawable/icon_more"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_610_step"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_del"
+            android:visibility="gone"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/shape_bg_white_15dp_right"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:text="删除"/>
+        <!--    <TextView-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="1dp"-->
+        <!--        android:background="#D7D7D7"/>-->
+
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_select"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_select_610"/>
+</RelativeLayout>

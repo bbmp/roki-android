@@ -1,17 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 导航菜谱 -->
+    <string name="lastStep">已到最后一步,是否退出</string>
 
     <!-- 油烟机运行状态 -->
+    <string name="fan_state_off">关</string>
+    <string name="fan_state_on">开</string>
 
     <!-- 电磁灶运行状态 -->
+    <string name="stove_state_off">关机</string>
+    <string name="stove_state_standby">待机</string>
+    <string name="stove_state_working">工作中</string>
 
     <!-- 电磁灶预警 -->
+    <string name="stove_warm_none">无预警</string>
+    <string name="stove_warm_0">内部故障，请申请售后</string>
+    <string name="stove_warm_1">没有锅具或未用电磁炉适配锅，请使用正确的锅具</string>
+    <string name="stove_warm_2">风扇转动异常，请申请售后</string>
+    <string name="stove_warm_3">电压不稳定，请稍后使用</string>
+    <string name="stove_warm_4">电压不稳定，请稍后使用</string>
+    <string name="stove_warm_5">使用时间太长，请稍后使用</string>
+    <string name="stove_warm_6">内部故障，请申请售后</string>
+    <string name="stove_warm_7">移出保护</string>
+    <string name="stove_warm_8">内部故障，请申请售后</string>
+    <string name="stove_warm_9">内部故障，请申请售后</string>
+    <string name="stove_warm_10">底壳过热</string>
+    <string name="stove_warm_11">--</string>
+    <string name="stove_warm_12">--</string>
+    <string name="stove_warm_13">内部故障，请申请售后</string>
+    <string name="stove_warm_14">--</string>
+    <string name="stove_warm_15">功能完成</string>
 
     <!-- RC代码-ROKI业务模块 -->
+    <string name="rc_64">电磁灶报警，不允许操作</string>
+    <string name="rc_65">平板关机状态，不允许操作</string>
+    <string name="rc_5001">已加入今日菜单，不能重复添加</string>
+    <string name="rc_5002">已经收藏，不能重复收藏</string>
+    <string name="rc_5003">食材对应的分量不合法</string>
+    <string name="rc_5004">食材格式不合法</string>
+    <string name="rc_5005">食材不存在</string>
+    <string name="rc_5006">食材单位不存在</string>
+    <string name="rc_5007">菜谱不存在或者未上架</string>
+    <string name="rc_5008">删除图片出错</string>
+    <string name="rc_5009">上传图片出错</string>
+    <string name="rc_5010">烧菜相册不存在</string>
+    <string name="rc_5011">不是烧菜相册的拥有者</string>
+    <string name="rc_5012">用户已经点过赞</string>
+    <string name="rc_5101">重复申请（售后申请）</string>
+    <string name="rc_5102">售后申请缺少手机信息</string>
+    <string name="rc_5103">售后申请缺少设备信息</string>
+    <string name="rc_5104">售后服务请求失败</string>
+    <string name="rc_5105">您已预约过本服务！请前往【个人】栏查看。</string>
+    <string name="rc_5200">已经是最新版本库</string>
+    <string name="rc_5201">没购买设备用户只能免费配送一次</string>
+    <string name="rc_5202">当天对没购买设备用户免费配送次数已达上限</string>
+    <string name="rc_5203">已购买设备用户一周只能配送一次</string>
+    <string name="rc_5204">每个订单最多3个菜</string>
     <!-- ===========================================设备指令RC代码 =========================================== -->
     <!-- service -->
     <!-- discover service -->
+    <string name="dicover_searching">正在搜索设备,请稍候&#8230;</string>
+    <string name="dicover_not_found">搜索失败，没有发现设备。</string>
 
     <!-- app update service -->
     <string name="update_title">版本更新</string>

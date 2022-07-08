@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="#F5F5F5"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="3dp">
+        <!--头像文字时间-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+            <!--头像-->
+            <com.robam.common.ui.views.RoundedImageView1
+                android:id="@+id/recipe_dynamic_imgv_headic"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_recipe_headicon_roki" />
+            <!--名称-->
+            <TextView
+                android:id="@+id/recipe_dynamic_tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="12dp"
+                android:text="匿名"
+                android:textColor="#CA5C31"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+            <!--时间-->
+            <TextView
+                android:id="@+id/recipe_dynamic_tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#999691"
+                android:textSize="12sp" />
+        </LinearLayout>
+        <!--描述-->
+        <TextView
+            android:id="@+id/recipe_dynamic_tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:ellipsize="end"
+            android:maxLines="10"
+            android:text=" "
+            android:textColor="#373632"
+            android:textSize="14sp" />
+        <!--晒图-->
+        <ImageView
+            android:id="@+id/recipe_dynamic_imgv_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop" />
+        <!--菜谱名和赞-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/recipe_dynamic_ll_torecipe"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="3dp">
+                <!--名称-->
+                <TextView
+                    android:id="@+id/recipe_dynamic_tv_recipename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无名称"
+                    android:textColor="#404040"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <!--向右箭头-->
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_red_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/recipe_dynamic_ll_torecipe"
+                android:gravity="center_vertical">
+                <!--赞数量-->
+                <TextView
+                    android:id="@+id/recipe_dynamic_tv_praisenum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="0人"
+                    android:textColor="#CA5C31"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="赞"
+                    android:textColor="#978e8e"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+                <!--赞图(手势图)-->
+                <ImageView
+                    android:id="@+id/recipe_dynamic_imgv_praiseimg"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="15dp"
+                    android:gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_prasie_no"
+                    android:tag="no" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</FrameLayout>

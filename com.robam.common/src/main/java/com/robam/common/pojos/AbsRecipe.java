@@ -237,115 +237,115 @@ abstract public class AbsRecipe extends AbsStorePojo<Long> {
     }
 
     /**
-     * 菜谱详情收藏和取消使用
+     * 菜谱详情收藏和取消使用   未调用
      */
-    static public void setIsFavority(long recipeId, boolean value) {
-        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
-        if (recipe != null) {
-            recipe.setIsFavority(value);
-            recipe.collectCount = value ? recipe.collectCount + 1 : recipe.collectCount - 1;
-            DaoHelper.update(recipe);
-        }
-
-        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
-        if (recipe3rd != null) {
-            recipe3rd.setIsFavority(value);
-            recipe3rd.collectCount = value ? recipe3rd.collectCount + 1 : recipe3rd.collectCount - 1;
-            DaoHelper.update(recipe3rd);
-        }
-    }
-
-
-    static public void setIsRecommend(long recipeId, boolean value) {
-        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
-        if (recipe != null) {
-            recipe.setIsRecommend(value);
-        }
-        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
-        if (recipe3rd != null) {
-            recipe3rd.setIsRecommend(value);
-        }
-    }
-
-    /*
-     设置是否是灶具菜谱
-     */
-    static public void setIsStoveRecipe(long recipeId, boolean value) {
-        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
-        if (recipe != null) {
-            recipe.setIsStoveRecipe(value);
-        }
-        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
-        if (recipe3rd != null) {
-            recipe3rd.setIsStoveRecipe(value);
-        }
-    }
-
-    /*
- 设置是否是烤箱菜谱
- */
-    static public void setIsOvenRecipe(long recipeId, boolean value) {
-        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
-        if (recipe != null) {
-            recipe.setIsOvenRecipe(value);
-        }
-        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
-        if (recipe3rd != null) {
-            recipe3rd.setIsOvenRecipe(value);
-        }
-    }
-
-
-    /*
-   设置是否是蒸汽炉菜谱
-    */
-    static public void setIsSteamRecipe(long recipeId, boolean value) {
-        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
-        if (recipe != null) {
-            recipe.setIsSteamRecipe(value);
-        }
-        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
-        if (recipe3rd != null) {
-            recipe3rd.setIsSteamRecipe(value);
-        }
-    }
-
-    /*
-    设置是否是微波炉菜谱
-     */
-    static public void setIsMicroRecipe(long recipeId, boolean value) {
-        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
-        if (recipe != null) {
-            recipe.setIsMicroRecipe(value);
-        }
-        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
-        if (recipe3rd != null) {
-            recipe3rd.setIsMicroRecipe(value);
-        }
-    }
-
-
-    public void SetDeviceRecipe(long recipeId, String deviceList) {
-        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
-        if (deviceList != null && recipe != null) {
-            String[] devices = deviceList.split(",");
-            for (int i = 0; i < devices.length; i++) {
-                if (devices[i].equals(DeviceType.RRQZ)) {
-                    recipe.setIsStoveRecipe(true);
-                }
-                if (devices[i].equals(DeviceType.RDKX)) {
-                    recipe.setIsOvenRecipe(true);
-                }
-                if (devices[i].equals(DeviceType.RWBL)) {
-                    recipe.setIsMicroRecipe(true);
-                }
-                if (devices[i].equals(DeviceType.RZQL)) {
-                    recipe.setIsSteamRecipe(true);
-                }
-            }
-        }
-
-    }
+//    static public void setIsFavority(long recipeId, boolean value) {
+//        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
+//        if (recipe != null) {
+//            recipe.setIsFavority(value);
+//            recipe.collectCount = value ? recipe.collectCount + 1 : recipe.collectCount - 1;
+//            DaoHelper.update(recipe);
+//        }
+//
+//        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
+//        if (recipe3rd != null) {
+//            recipe3rd.setIsFavority(value);
+//            recipe3rd.collectCount = value ? recipe3rd.collectCount + 1 : recipe3rd.collectCount - 1;
+//            DaoHelper.update(recipe3rd);
+//        }
+//    }
+//
+//
+//    static public void setIsRecommend(long recipeId, boolean value) {
+//        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
+//        if (recipe != null) {
+//            recipe.setIsRecommend(value);
+//        }
+//        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
+//        if (recipe3rd != null) {
+//            recipe3rd.setIsRecommend(value);
+//        }
+//    }
+//
+//    /*
+//     设置是否是灶具菜谱
+//     */
+//    static public void setIsStoveRecipe(long recipeId, boolean value) {
+//        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
+//        if (recipe != null) {
+//            recipe.setIsStoveRecipe(value);
+//        }
+//        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
+//        if (recipe3rd != null) {
+//            recipe3rd.setIsStoveRecipe(value);
+//        }
+//    }
+//
+//    /*
+// 设置是否是烤箱菜谱
+// */
+//    static public void setIsOvenRecipe(long recipeId, boolean value) {
+//        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
+//        if (recipe != null) {
+//            recipe.setIsOvenRecipe(value);
+//        }
+//        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
+//        if (recipe3rd != null) {
+//            recipe3rd.setIsOvenRecipe(value);
+//        }
+//    }
+//
+//
+//    /*
+//   设置是否是蒸汽炉菜谱
+//    */
+//    static public void setIsSteamRecipe(long recipeId, boolean value) {
+//        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
+//        if (recipe != null) {
+//            recipe.setIsSteamRecipe(value);
+//        }
+//        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
+//        if (recipe3rd != null) {
+//            recipe3rd.setIsSteamRecipe(value);
+//        }
+//    }
+//
+//    /*
+//    设置是否是微波炉菜谱
+//     */
+//    static public void setIsMicroRecipe(long recipeId, boolean value) {
+//        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
+//        if (recipe != null) {
+//            recipe.setIsMicroRecipe(value);
+//        }
+//        Recipe3rd recipe3rd = DaoHelper.getById(Recipe3rd.class, recipeId);
+//        if (recipe3rd != null) {
+//            recipe3rd.setIsMicroRecipe(value);
+//        }
+//    }
+//
+//
+//    public void SetDeviceRecipe(long recipeId, String deviceList) {
+//        Recipe recipe = DaoHelper.getById(Recipe.class, recipeId);
+//        if (deviceList != null && recipe != null) {
+//            String[] devices = deviceList.split(",");
+//            for (int i = 0; i < devices.length; i++) {
+//                if (devices[i].equals(DeviceType.RRQZ)) {
+//                    recipe.setIsStoveRecipe(true);
+//                }
+//                if (devices[i].equals(DeviceType.RDKX)) {
+//                    recipe.setIsOvenRecipe(true);
+//                }
+//                if (devices[i].equals(DeviceType.RWBL)) {
+//                    recipe.setIsMicroRecipe(true);
+//                }
+//                if (devices[i].equals(DeviceType.RZQL)) {
+//                    recipe.setIsSteamRecipe(true);
+//                }
+//            }
+//        }
+//
+//    }
 
 
     // -------------------------------------------------------------------------------

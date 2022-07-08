@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mine_white_background_night">#212A3B</color>
+	<color name="mine_logon_bg_color_night">#0dffffff</color>
+    <color name="text_color_net_err_night">#ffffffff</color>
+    <color name="text_color_touch_retry_night">#73ffffff</color>
+    <color name="text_color_kitchen_night">#e6ffffff</color>
+    <color name="main_tab_background_night">#e613161d</color>
+	<color name="text_color_tab_night">#ffbbbbbb</color>
+    <color name="text_color_device_night">#ffffffff</color>
+    <color name="text_color_online_night">#a6ffffff</color>
+	<color name="text_color_device_category_night">#ffffffff</color>
+	<color name="text_color_read_number_night">#99ffffff</color>
+    <color name="text_color_search_night">#4dffffff</color>
+    <color name="text_color_exit_login_night">#ffffffff</color>
+    <color name="text_color_notification_bg_night">#4dffffff</color>
+    <color name="text_holiday_desc_night">#73FFFFFF</color>
+    <color name="line_mode_night">#2BFFFFFF</color>
+    <color name="text_color_login_night">#26ffffff</color>
+    <color name="chat_send_bg_night">#0dffffff</color>
+    <color name="text_select_color_night">#FFFFFF</color>
+    <color name="text_color_gray_night">#73FFFFFF</color>
+    <color name="common_dialog_btn_normal_bg_blue_night">#ff489eff</color>
+
+    <color name="mine_white_second_background_night">#0DFFFFFF</color>
+
+    <color name="recipe_start_btn_night">#FF325074</color>
+
+
+    <color name="steam_btn_left_bg_night">#FF384253</color>
+    <color name="steam_btn_right_bg_night">#FF335074</color>
+    <color name="steam_btn_left_text_color_night">#FFFFFFFF</color>
+    <color name="steam_btn_right_text_color_night">#FFFFFFFF</color>
+
+
+    <color name="recipe_list_bg_night">#FF202733</color>
+
+    <color name="circle_color_night">#1AFFFFFF</color>
+    <color name="circle_color_progress_night">#4DFFFFFF</color>
+    <color name="line_cook_chart_night">#0dffffff</color>
+
+
+    <color name="recipe_list_title_night">#000000</color>
+
+
+    <color name="text_et_color_night">#4DFFFFFF</color>
+    <color name="steam_work_item_bg_night">#0DFFFFFF</color>
+</resources>

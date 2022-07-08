@@ -48,6 +48,7 @@ import com.robam.roki.listener.IRokiDialog;
 import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.extension.GlideApp;
+import com.robam.roki.utils.DateUtil;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.StringUtil;
 
@@ -194,6 +195,7 @@ public class IntegratedStoveWorkPage extends BasePage {
         //菜谱模式
         mTvDeviceModelName.setText(integratedStove.getDt());
         if (integratedStove.recipeId != 0) {
+            mLlMult.setVisibility(View.GONE);
             setRecipeMode();
             ll_rika_z.setVisibility(View.GONE);
             tv_recipe.setVisibility(View.VISIBLE);
@@ -252,6 +254,8 @@ public class IntegratedStoveWorkPage extends BasePage {
                 }
                 return;
             }
+
+
             mTvModelContent.setText(value);
             mTvTempContent.setText(integratedStove.setUpTemp + "℃");
             int setTime = integratedStove.setTimeH * 256 + integratedStove.setTime;
@@ -365,7 +369,20 @@ public class IntegratedStoveWorkPage extends BasePage {
                     .into(iv_pause);
 //            iv_pause.setImageResource(R.drawable.ic_start_ytj);
             fl_add_steam.setVisibility(View.INVISIBLE);
-        } else if (steamWorkStatus == IntegStoveStatus.workState_complete) {
+        } else if (steamWorkStatus == IntegStoveStatus.workState_order){
+            int orderLeftTime = integratedStove.orderLeftMinutes;
+            mTvWorkStateName.setText(R.string.workState_order);
+            mTvWorkStateName.setTextSize(16);
+            String leftOrderTime = DateUtil.secForMatTime(orderLeftTime);
+            mTvWorkDec.setText( leftOrderTime);
+            mTvWorkDec.setTextSize(30);
+            mFlRunStop.setVisibility(View.VISIBLE);
+            tv_pause.setText("立即启动");
+            GlideApp.with(cx).load(integratedStove.workingPauseHUrl == null ? R.drawable.ic_start_ytj : integratedStove.workingPauseHUrl)
+                    .placeholder(R.drawable.ic_start_ytj)
+                    .error(R.drawable.ic_start_ytj)
+                    .into(iv_pause);
+        }else if (steamWorkStatus == IntegStoveStatus.workState_complete) {
             stopAnimation();
             mTvWorkStateName.setText(R.string.device_finish);
             mTvWorkStateName.setTextSize(26);
@@ -537,8 +554,10 @@ public class IntegratedStoveWorkPage extends BasePage {
     @OnClick(R.id.fl_pause)
     public void onMFlPauseClicked() {
 
-        //暂停状态
-        if (SteamOvenHelper.isPause(integratedStove.workState)) {
+        //暂停状态 、预约状态
+        if (SteamOvenHelper.isPause(integratedStove.workState)
+                || SteamOvenHelper.isOrder(integratedStove.workState)
+        ) {
             //需要水的模式
             if (SteamOvenHelper.isWater(SteamOvenModeEnum.match(integratedStove.mode)) || SteamOvenHelper.isRecipeWater(needWater)) {
                 if (SteamOvenHelper.isDescale(integratedStove.descaleFlag)) {
@@ -554,17 +573,29 @@ public class IntegratedStoveWorkPage extends BasePage {
                     return;
                 }
             }
+            integratedStove.setSteamWorkStatus(SteamOvenHelper.isPause(integratedStove.workState) ? IntegStoveStatus.workCtrl_continue : IntegStoveStatus.workCtrl_start, (short) 4, new VoidCallback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                }
+            });
+        }else {
+            integratedStove.setSteamWorkStatus( IntegStoveStatus.workCtrl_time_out, (short) 4, new VoidCallback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                }
+            });
         }
-        integratedStove.setSteamWorkStatus(SteamOvenHelper.isPause(integratedStove.workState) ? IntegStoveStatus.workCtrl_continue : IntegStoveStatus.workCtrl_time_out, (short) 4, new VoidCallback() {
-            @Override
-            public void onSuccess() {
 
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-            }
-        });
     }
 
     @OnClick(R.id.fl_run_stop)

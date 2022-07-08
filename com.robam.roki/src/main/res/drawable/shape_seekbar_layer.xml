@@ -18,7 +18,7 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <solid android:color="#F9BF42"/>
+                <solid android:color="@color/cook_chart_blue"/>
             </shape>
         </clip>
     </item>

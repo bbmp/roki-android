@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_margin="10dp"
+    android:background="@drawable/shape_item_curve_bg"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/item_cooking_share_where"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="13dp"
+        android:layout_marginRight="28dp"
+        android:text="分享来自"
+        android:textColor="#000"
+        android:textSize="@dimen/sp_8" />
+
+    <com.robam.roki.ui.view.RoundImageView
+        android:id="@+id/item_cooking_curve_image_head"
+        android:layout_width="@dimen/dp_64"
+        android:layout_height="@dimen/dp_64"
+        android:layout_marginLeft="@dimen/dp_19"
+        android:layout_marginTop="@dimen/dp_25"
+        android:scaleType="fitXY"
+        android:src="@mipmap/roki_user"
+        app:radiu="@dimen/dp_32"
+        app:type="circle" />
+
+    <TextView
+        android:id="@+id/item_cooking_curve_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_cooking_curve_image_head"
+        android:layout_marginLeft="@dimen/dp_23"
+        android:layout_marginTop="@dimen/dp_4"
+        android:text="时间"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+
+
+        android:id="@+id/item_cooking_curve_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_102"
+        android:layout_marginTop="@dimen/dp_27"
+        android:text="竹损炖排骨"
+
+        android:textColor="#000"
+        android:textSize="@dimen/sp_18" />
+
+    <TextView
+        android:id="@+id/item_cooking_curve_device_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_cooking_curve_name"
+        android:layout_marginLeft="@dimen/dp_102"
+        android:text="排骨"
+        android:textColor="#000"
+        android:textSize="@dimen/sp_14" />
+
+    <ImageView
+        android:id="@+id/item_image_cooking_curve_device_working_time"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:layout_below="@+id/item_cooking_curve_device_version"
+        android:layout_marginLeft="@dimen/dp_102"
+        android:src="@mipmap/icon_recipe_stating" />
+
+    <TextView
+        android:id="@+id/item_cooking_curve_device_working_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_cooking_curve_device_version"
+        android:layout_marginLeft="@dimen/dp_9"
+        android:layout_toRightOf="@+id/item_image_cooking_curve_device_working_time"
+
+
+        android:paddingLeft="@dimen/dp_5"
+        android:text="排骨"
+        android:textColor="#000"
+        android:textSize="@dimen/sp_14" />
+    <RelativeLayout
+
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+             android:id="@+id/item_cooking_curve_line_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="时间" />
+
+        <TextView
+            android:text="蒸烤一体机"
+            android:layout_toRightOf="@+id/item_cooking_curve_line_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/dp_118"
+        android:layout_below="@+id/item_image_cooking_curve_device_working_time"
+
+        android:layout_marginBottom="@dimen/dp_9"
+        android:layout_marginTop="@dimen/dp_18"
+        android:layout_width="match_parent"
+        android:layout_marginRight="@dimen/dp_14"
+        android:layout_height="@dimen/dp_34">
+        <Button
+
+            android:background="@drawable/shape_icon_bg"
+            android:textSize="@dimen/sp_14"
+            android:id="@+id/item_cooking_curve_line_share"
+            android:text="分享"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:layout_marginLeft="@dimen/dp_6"
+            android:background="@drawable/shape_icon_bg"
+            android:textSize="@dimen/sp_14"
+            android:id="@+id/item_cooking_curve_line_get_step"
+            android:text="查看步骤"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/item_cooking_curve_line_get_staring"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_7"
+            android:layout_weight="1"
+            android:background="@drawable/shape_icon_bg"
+            android:text="烹饪"
+            android:textSize="@dimen/sp_14" />
+
+
+    </LinearLayout>
+</RelativeLayout>

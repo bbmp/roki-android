@@ -1,19 +1,21 @@
 package com.robam.roki.ui.page.mine;
 
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.hjq.toast.ToastUtils;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
-import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.roki.R;
 import com.robam.roki.ui.Helper;
 import com.robam.roki.ui.PageArgumentKey;
@@ -22,9 +24,9 @@ import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.page.login.MyBasePage;
 import com.robam.roki.ui.page.login.helper.CmccLoginHelper;
 import com.robam.roki.ui.page.login.manger.InputTextManager;
+import com.robam.roki.ui.widget.view.ClearEditText;
 import com.robam.roki.ui.widget.view.PasswordEditText;
 import com.robam.roki.utils.StringUtil;
-import com.robam.roki.utils.ToolUtils;
 
 
 /**
@@ -37,15 +39,15 @@ public class MineSettingPasswordPage extends MyBasePage<MainActivity> {
     /**
      * 新密码
      */
-    private PasswordEditText etPasswordNew1;
+    private ClearEditText etPasswordNew1;
     /**
      * 新密码
      */
-    private PasswordEditText etPasswordNew2;
+    private ClearEditText etPasswordNew2;
     /**
      * 完成
      */
-    private AppCompatButton btnComplete;
+    private Button btnComplete;
     /**
      * 用户信息
      */
@@ -56,6 +58,8 @@ public class MineSettingPasswordPage extends MyBasePage<MainActivity> {
     boolean hasPwd;
     private String verifyCode;
 
+    private ImageView ivBack;
+
     @Override
     protected int getLayoutId() {
         return R.layout.page_mine_setting_password;
@@ -63,12 +67,13 @@ public class MineSettingPasswordPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        setTitle(R.string.acc_change_password);
-        getTitleBar().setOnTitleBarListener(this);
-        etPasswordNew1 = (PasswordEditText) findViewById(R.id.et_password_new1);
-        etPasswordNew2 = (PasswordEditText) findViewById(R.id.et_password_new_2);
+//        setTitle(R.string.acc_change_password);
+//        getTitleBar().setOnTitleBarListener(this);
+        ivBack = findViewById(R.id.img_back);
+        etPasswordNew1 = findViewById(R.id.et_password_new1);
+        etPasswordNew2 = findViewById(R.id.et_password_new_2);
         btnComplete = (AppCompatButton) findViewById(R.id.btn_complete);
-        setOnClickListener(btnComplete);
+        setOnClickListener(btnComplete, ivBack);
 //        InputTextManager.with(getActivity())
 //                .addView(etPasswordNew1)
 //                .addView(etPasswordNew2)
@@ -85,9 +90,11 @@ public class MineSettingPasswordPage extends MyBasePage<MainActivity> {
 
     @Override
     public void onClick(View view) {
-        ToolUtils.hideSoftInput(activity);
+        KeyboardUtils.hideSoftInput(activity);
         if (view.equals(btnComplete)) {
             onConfirm();
+        } else if (view.equals(ivBack)) {
+            UIService.getInstance().popBack();
         }
     }
 
@@ -114,7 +121,7 @@ public class MineSettingPasswordPage extends MyBasePage<MainActivity> {
         final String pwdMd5 = User.encryptPassword(pwd);
         ProgressDialogHelper.setRunning(cx, true);
 
-        CloudHelper.resetPasswordByPhone(phone, pwdMd5, verifyCode, new VoidCallback() {
+        Plat.accountService.resetPasswordByPhone(phone, pwdMd5, verifyCode, new VoidCallback() {
             @Override
             public void onSuccess() {
                 ProgressDialogHelper.setRunning(cx, false);
@@ -129,7 +136,7 @@ public class MineSettingPasswordPage extends MyBasePage<MainActivity> {
             @Override
             public void onFailure(Throwable t) {
                 ProgressDialogHelper.setRunning(cx, false);
-                ToastUtils.showThrowable(t);
+                ToastUtils.show(t);
             }
         });
     }

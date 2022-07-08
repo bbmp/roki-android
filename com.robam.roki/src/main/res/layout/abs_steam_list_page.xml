@@ -39,7 +39,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@mipmap/ic_device_add" />
+            android:background="@mipmap/ic_device_add_night" />
 
     </RelativeLayout>
 
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:src="@mipmap/ic_device_add" />
+                android:src="@mipmap/ic_device_add_night" />
 
             <TextView
                 android:layout_width="wrap_content"

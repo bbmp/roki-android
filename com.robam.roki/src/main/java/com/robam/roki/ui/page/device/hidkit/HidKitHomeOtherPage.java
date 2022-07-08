@@ -18,7 +18,7 @@ import com.legent.utils.JsonUtils;
 import com.robam.roki.R;
 import com.robam.roki.model.bean.HidKitHomeOtherParams;
 import com.robam.roki.ui.PageArgumentKey;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +104,7 @@ public class HidKitHomeOtherPage extends BasePage {
         public HidKitHomeOtherViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             View view = LayoutInflater.from(getContext()).inflate(R.layout.item_hidkit_home_other, parent, false);
-
+            ScreenAdapterTools.getInstance().loadView(view);
             HidKitHomeOtherViewHolder hidKitHomeOtherViewHolder = new HidKitHomeOtherViewHolder(view);
             return hidKitHomeOtherViewHolder;
         }

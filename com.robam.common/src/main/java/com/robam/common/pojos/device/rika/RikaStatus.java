@@ -147,5 +147,6 @@ public interface RikaStatus {
 
     short STEAMOVEN_PREHEAT = 9;//预热状态
 
+    int SUBSET_OFF_COUNT = 3;
 
 }

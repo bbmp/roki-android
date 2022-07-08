@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -145,6 +146,10 @@ public class DeviceFanStoveLinkagePage extends BasePage {
         if (fan==null) {
             return;
         }
+        if (fan.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), fan.getDt() + ":烟灶联动页", null);
+        }
     }
 
     private void initDate(List<DeviceConfigurationFunctions> dates) {
@@ -275,8 +280,11 @@ public class DeviceFanStoveLinkagePage extends BasePage {
         sp.IsPowerLinkage = mChkIsInternalDays.isChecked();
         sp.IsLevelLinkage = mChkIsInternalDays.isChecked();
         sp.IsShutdownLinkage = mChkIsInternalDays.isChecked();
-        sp.ShutdownDelay = Short.parseShort(RemoveManOrsymbolUtil.getRemoveString(mTvMinute.getText().toString()));
-
+        if (mTvMinute.getText()!= null
+                && mTvMinute.getText().toString() != null
+                && mTvMinute.getText().toString().length() !=0){
+            sp.ShutdownDelay = Short.parseShort(RemoveManOrsymbolUtil.getRemoveString(mTvMinute.getText().toString()));
+        }
         fan.setSmartConfig(sp, new VoidCallback() {
 
             @Override
@@ -299,20 +307,22 @@ public class DeviceFanStoveLinkagePage extends BasePage {
     private void refresh(FanStatusComposite fanStatusComposite) {
 
         if (fanStatusComposite == null) return;
-        if (fanStatusComposite.IsPowerLinkage == 1) {
-            mChkIsInternalDays.setChecked(true);
-        } else {
-            mChkIsInternalDays.setChecked(false);
-        }
-        if (fanStatusComposite.IsLevelLinkage == 1) {
-            mChkIsInternalDays.setChecked(true);
-        } else {
-            mChkIsInternalDays.setChecked(false);
-        }
-        if (fanStatusComposite.IsShutdownLinkage == 1) {
-            mChkIsInternalDays.setChecked(true);
-        } else {
-            mChkIsInternalDays.setChecked(false);
+        if (mChkIsInternalDays != null){
+            if (fanStatusComposite.IsPowerLinkage == 1) {
+                mChkIsInternalDays.setChecked(true);
+            } else {
+                mChkIsInternalDays.setChecked(false);
+            }
+            if (fanStatusComposite.IsLevelLinkage == 1) {
+                mChkIsInternalDays.setChecked(true);
+            } else {
+                mChkIsInternalDays.setChecked(false);
+            }
+            if (fanStatusComposite.IsShutdownLinkage == 1) {
+                mChkIsInternalDays.setChecked(true);
+            } else {
+                mChkIsInternalDays.setChecked(false);
+            }
         }
 
         if (fanStatusComposite.IsShutdownLinkage == 1) {

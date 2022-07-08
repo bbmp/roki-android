@@ -45,6 +45,7 @@ import com.robam.roki.ui.PageArgumentKey;
 import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.utils.ToolUtils;
+import com.robam.roki.utils.YouzanUserAttestationUtils;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import butterknife.ButterKnife;
@@ -97,6 +98,7 @@ public class UserLoginPage extends BasePage {
     @Override
     public void onResume() {
         super.onResume();
+        MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), "账号登录页", null);
     }
 
     @Override
@@ -245,7 +247,7 @@ public class UserLoginPage extends BasePage {
                 } else {
                     LogUtils.i("20180523", "user::" + user3In.user.password);
                     Plat.accountService.onLogin(user3In.user);
-
+                    YouzanUserAttestationUtils.initYouzanData();
                     if (activity instanceof MainActivity) {
                         UIService.getInstance().popBack();
                     } else {

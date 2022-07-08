@@ -101,7 +101,7 @@ abstract public class HeadPage extends AbsPage {
         if (mStateBarFixer != null) {
             mStateBarFixer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     getStatusBarHeight(getActivity())));
-            mStateBarFixer.setBackgroundColor(Color.WHITE);
+//            mStateBarFixer.setBackgroundColor(Color.WHITE);
         }
     }
 

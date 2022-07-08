@@ -84,7 +84,11 @@ public class SendCommandUtils implements IsendCommand {
     @Override
     public void onPause() {
         if (IDeviceType.RZKY.equals(iDevice.getDc())) {
-            status = 1;
+            if (iDevice.getDt().equals("DB620")||iDevice.getDt().equals("CQ920")){
+                status=2;
+            }else {
+                status = 1;
+            }
         } else {
             status = RecipeNewUtils.PAUSE;
         }
@@ -112,9 +116,11 @@ public class SendCommandUtils implements IsendCommand {
 
     @Override
     public void onPreSend() {
+
         RecipeNewUtils.setDevicePreSetModel(cx, iDevice, recipeParamShowView, step, new Callback<Integer>() {
             @Override
             public void onSuccess(Integer n) {
+
             }
 
             @Override
@@ -127,7 +133,11 @@ public class SendCommandUtils implements IsendCommand {
     @Override
     public void onFinish() {
         if (IDeviceType.RZKY.equals(iDevice.getDc())) {
-            status = SteamOvenOnePowerStatus.RecipeOff;
+            if (iDevice.getDt().equals("DB620")||iDevice.getDt().equals("CQ920")){
+                status =0;
+            }else {
+                status = SteamOvenOnePowerStatus.RecipeOff;
+            }
         } else {
             status = RecipeNewUtils.OFF;
         }
@@ -152,7 +162,14 @@ public class SendCommandUtils implements IsendCommand {
     @Override
     public void onRestart() {
         if (IDeviceType.RZKY.equals(iDevice.getDc())) {
-            status = 3;
+
+            if (iDevice.getDt().equals("DB620")||iDevice.getDt().equals("CQ920")){
+                status=4;
+            }else{
+                status = 3;
+            }
+
+
         } else {
             status = RecipeNewUtils.WORKING;
         }

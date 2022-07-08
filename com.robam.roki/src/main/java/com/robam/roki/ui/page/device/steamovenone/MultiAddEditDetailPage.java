@@ -21,6 +21,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 import com.hjq.bar.TitleBar;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
@@ -31,11 +32,11 @@ import com.legent.utils.EventUtils;
 import com.legent.utils.JsonUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.Requests;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.Recipe;
+import com.robam.common.pojos.device.integratedStove.SteamOvenModeEnum;
 import com.robam.roki.R;
 import com.robam.roki.db.model.RecipeBean;
 import com.robam.roki.db.model.RecipeStepBean;
@@ -45,6 +46,7 @@ import com.robam.roki.listener.OnItemSelectedListenerFrone;
 import com.robam.roki.listener.OnItemSelectedListenerPosition;
 import com.robam.roki.listener.OnItemSelectedListenerRear;
 import com.robam.roki.model.bean.OvenExpParamBean;
+import com.robam.roki.model.bean.PengpaiZhengParamBean;
 import com.robam.roki.model.bean.SteamOvenModelFunctionParams;
 import com.robam.roki.model.helper.HelperRikaData;
 import com.robam.roki.ui.PageArgumentKey;
@@ -120,6 +122,10 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
 
     private String mGuid;
     private List<Requests.saveMultiRecipeList> multiStepDtoList = new ArrayList<>();
+    /**
+     * 澎湃蒸参数
+     */
+    private PengpaiZhengParamBean ppzParams;
 
     @Override
     protected int getLayoutId() {
@@ -141,37 +147,31 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
 
         rv610StepAdapter.addChildClickViewIds(R.id.ll_item, R.id.tv_del);
         rv610StepAdapter.addChildLongClickViewIds(R.id.ll_item);
-        rv610StepAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(@NonNull @NotNull BaseQuickAdapter baseQuickAdapter, @NonNull @NotNull View view, int i) {
-                if (view.getId() == R.id.ll_item) {
+        rv610StepAdapter.setOnItemChildClickListener((baseQuickAdapter, view, i) -> {
+            if (view.getId() == R.id.ll_item) {
 //                    rv610StepAdapter.setSelectPosition(i);
-                    selectStep(i);
-                } else if (view.getId() == R.id.tv_del) {
-                    if (recipeId != -1) {
-                        if (rv610StepAdapter.getItem(i).isLocal()) {
-                            rv610StepAdapter.removeAt(i);
-                            setMultiInfo();
-                        } else {
-                            deleteMultiItem(recipeId, rv610StepAdapter.getItem(i).getId());
-                        }
-                    } else {
+                selectStep(i);
+            } else if (view.getId() == R.id.tv_del) {
+                if (recipeId != -1) {
+                    if (rv610StepAdapter.getItem(i).isLocal()) {
                         rv610StepAdapter.removeAt(i);
+                        setMultiInfo();
+                    } else {
+                        deleteMultiItem(recipeId, rv610StepAdapter.getItem(i).getId());
                     }
-                    rv610StepAdapter.setSelectPosition(-1);
+                } else {
+                    rv610StepAdapter.removeAt(i);
                 }
+                rv610StepAdapter.setSelectPosition(-1);
             }
         });
 
-        rv610StepAdapter.setOnItemChildLongClickListener(new OnItemChildLongClickListener() {
-            @Override
-            public boolean onItemChildLongClick(@NonNull @NotNull BaseQuickAdapter baseQuickAdapter, @NonNull @NotNull View view, int i) {
-                if (view.getId() == R.id.ll_item) {
-                    rv610StepAdapter.setSelectPosition(i);
-                }
-
-                return true;
+        rv610StepAdapter.setOnItemChildLongClickListener((baseQuickAdapter, view, i) -> {
+            if (view.getId() == R.id.ll_item) {
+                rv610StepAdapter.setSelectPosition(i);
             }
+
+            return true;
         });
 
         footViewAdd.setOnClickListener(new View.OnClickListener() {
@@ -207,10 +207,12 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
                         recipeStepBean.setFunction_name(Item.multiStepDtoList.get(i).modelName);
                         recipeStepBean.setTemperature(Integer.parseInt(Item.multiStepDtoList.get(i).temperature));
                         recipeStepBean.setTemperature2(StringUtil.isEmpty(Item.multiStepDtoList.get(i).downTemperature) ? 0 : Integer.parseInt(Item.multiStepDtoList.get(i).downTemperature));
-                        recipeStepBean.setTime(Integer.parseInt(Item.multiStepDtoList.get(i).time));
+                        recipeStepBean.setTime(Item.multiStepDtoList.get(i).getTime(mGuid));
                         recipeStepBean.setId(Integer.parseInt(Item.multiStepDtoList.get(i).no));
+                        recipeStepBean.setSteam_flow(Integer.parseInt(Item.multiStepDtoList.get(i).steamQuantity));
+                        recipeStepBean.setWork_mode(Integer.parseInt(Item.multiStepDtoList.get(i).modelCode));
                         rv610StepAdapter.addData(recipeStepBean);
-                        time += Integer.parseInt(Item.multiStepDtoList.get(i).time);
+                        time += Item.multiStepDtoList.get(i).getTime(mGuid);
                     }
                 }
 //                multiInfo.setText("共" + strings[Item.multiStepDtoList.size()] + "段 " + time + "min");
@@ -241,6 +243,10 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
             if (recipeId != -1) {
                 reqBody.id = recipeId;
             }
+            if (rv610StepAdapter.getItemCount()- 1<=1){
+                ToastUtils.show("多段添加不能少于2步");
+                return;
+            }
             for (int i = 0; i < rv610StepAdapter.getItemCount() - 1; i++) {
                 Requests.saveMultiRecipeList item = new Requests.saveMultiRecipeList();
                 item.downTemperature = rv610StepAdapter.getItem(i).getTemperature2() + "";
@@ -250,7 +256,12 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
                 item.no = i + 1 + "";
                 item.steamQuantity = rv610StepAdapter.getItem(i).getSteam_flow() + "";
                 item.temperature = rv610StepAdapter.getItem(i).getTemperature() + "";
-                item.time = rv610StepAdapter.getItem(i).getTime() + "";
+                if (mGuid.contains("DB620") || mGuid.contains("CQ920")){
+                    item.time = rv610StepAdapter.getItem(i).getTime() * 60 + "";
+                }else {
+                    item.time = rv610StepAdapter.getItem(i).getTime() + "";
+                }
+
                 multiStepDtoList.add(item);
             }
             reqBody.multiStepDtoList = multiStepDtoList;
@@ -269,14 +280,20 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
                 DeviceConfigurationFunctions item = dialog.mDeviceModelAdapter.getItem(position);
                 if ("EXP".equals(item.functionName)) {
                     expMode(position);
-                } else {
+                } else  if ("澎湃蒸".equals(item.functionName)){
+                    pengpaiMode(position);
+                }else {
                     modelSelectItemEvent(position);
                 }
                 dialog.mDeviceModelAdapter.setSelectPosition(position);
             }
         });
         dialog.show();
-        modelSelectItemEvent(0);
+        if (SteamOvenModeEnum.catchMessage(mDatas.get(0).functionName) == SteamOvenModeEnum.ZHIKONGZHENG){
+            pengpaiMode(0);
+        }else {
+            modelSelectItemEvent(0);
+        }
         dialog.setCancelBtn(R.string.can_btn, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -291,10 +308,23 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
                 RecipeStepBean recipeStepBean = new RecipeStepBean();
                 recipeStepBean.setFunction_code(functionCode);
                 recipeStepBean.setFunction_name(functionName);
-                recipeStepBean.setFunction_params(functionParams.toString());
-                recipeStepBean.setWork_mode(mode);
-                recipeStepBean.setTemperature(Integer.parseInt(temperature));
-                recipeStepBean.setTemperature2(StringUtil.isEmpty(temp2) ? 0 : Integer.parseInt(temp2));
+                //澎湃蒸 对应 蒸汽量 温度 时间
+                short steam1  = 0;
+                if (SteamOvenModeEnum.catchMessage(functionName) == SteamOvenModeEnum.ZHIKONGZHENG){
+                    recipeStepBean.setFunction_params(functionParams.toString());
+                    recipeStepBean.setWork_mode(mode);
+                    recipeStepBean.setTemperature(Integer.parseInt(temp2));
+                    recipeStepBean.setTime(Integer.parseInt(time));
+                    int selectedItem = dialog.getmLoopViewFront().getSelectedItem();
+                    String s = ppzParams.param.setSteam.value.get(selectedItem);
+                     steam1 = Short.parseShort(s);
+                    recipeStepBean.setSteam_flow( steam1);
+                }else {
+                    recipeStepBean.setFunction_params(functionParams.toString());
+                    recipeStepBean.setWork_mode(mode);
+                    recipeStepBean.setTemperature(Integer.parseInt(temperature));
+                    recipeStepBean.setTemperature2(StringUtil.isEmpty(temp2) ? 0 : Integer.parseInt(temp2));
+                }
                 recipeStepBean.setTime(Integer.parseInt(time));
                 recipeStepBean.setLocal(true);
                 if (recipeId != -1) {
@@ -303,8 +333,15 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
                         rv610StepAdapter.getItem(position).setFunction_name(functionName);
                         rv610StepAdapter.getItem(position).setFunction_params(functionParams.toString());
                         rv610StepAdapter.getItem(position).setWork_mode(mode);
-                        rv610StepAdapter.getItem(position).setTemperature(Integer.parseInt(temperature));
-                        rv610StepAdapter.getItem(position).setTemperature2(StringUtil.isEmpty(temp2) ? 0 : Integer.parseInt(temp2));
+                        rv610StepAdapter.getItem(position).setSteam_flow(steam1);
+                        if (mode==5) {
+                            rv610StepAdapter.getItem(position).setTemperature(Integer.parseInt(temp2));
+                            rv610StepAdapter.getItem(position).setTemperature2(StringUtil.isEmpty(temp2) ? 0 : Integer.parseInt(temp2));
+                        }else{
+                            rv610StepAdapter.getItem(position).setTemperature(Integer.parseInt(temperature));
+                            rv610StepAdapter.getItem(position).setTemperature2(StringUtil.isEmpty(temp2) ? 0 : Integer.parseInt(temp2));
+                        }
+
                         rv610StepAdapter.getItem(position).setTime(Integer.parseInt(time));
                         rv610StepAdapter.notifyDataSetChanged();
                     } else {
@@ -331,7 +368,7 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
         for (int i = 0; i < rv610StepAdapter.getData().size(); i++) {
             time += rv610StepAdapter.getData().get(i).getTime();
         }
-        multiInfo.setText("共" + strings[rv610StepAdapter.getData().size()] + "段 " + time + "min");
+        multiInfo.setText(time + "min");
         if (rv610StepAdapter.getData().size() == 3) {
             footViewAdd.setVisibility(View.GONE);
         } else {
@@ -362,6 +399,8 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
                 setTempList = functionParams.getParam().getSetTemp().getValue();
                 setTimeList = functionParams.getParam().getSetTime().getValue();
                 //拿到时间温度的索引值
+
+
                 int indexTemp = newDefaultTemp - setTempList.get(0);
                 int indexTime = newDefaultTime - setTimeList.get(0);
                 dialog.set2Visible(false);
@@ -458,28 +497,9 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
                         List<String> tempDataEXPCentener = HelperRikaData.getTempDataEXPCentener(tempDown, HelperRikaData.getTempData3(tempUp).get(position));
                         dialog.getmLoopViewCenter().setItems(tempDataEXPCentener);
                         dialog.getmLoopViewCenter().setCurrentPosition(0);
-//                        if (position >= 20){
-//                            dialog.getmLoopViewCenter().setItems(HelperRikaData.getTempData3(tempDown));
-//                            dialog.getmLoopViewCenter().setCurrentPosition(position-20);
-//                        }else {
-//                            dialog.getmLoopViewCenter().setItems(HelperRikaData.getTempData3(tempDown));
-//                            dialog.getmLoopViewCenter().setCurrentPosition(0);
-//                        }
+
                     }
                 });
-//                dialog.getmLoopViewCenter().setListenerPosition(new OnItemSelectedListenerPosition() {
-//                    @Override
-//                    public void onItemSelectedRear(int position) {
-//                        if (position <= HelperRikaData.getTempData3(tempUp).size() - 20){
-//                            dialog.getmLoopViewFront().setItems(HelperRikaData.getTempData3(tempUp));
-//                            dialog.getmLoopViewFront().setCurrentPosition(position + 20);
-//                        }else {
-//                            dialog.getmLoopViewFront().setItems(HelperRikaData.getTempData3(tempUp));
-//                            dialog.getmLoopViewFront().setCurrentPosition(HelperRikaData.getTempData3(tempUp).size()-1);
-//                        }
-//                    }
-//                });
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -487,6 +507,75 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
 
     }
 
+    /**
+     * 澎湃蒸
+     * @param position
+     */
+    private void pengpaiMode(int position){
+        try {
+             ppzParams = JsonUtils.json2Pojo(mDatas.get(position).functionParams, PengpaiZhengParamBean.class);
+            if (ppzParams != null) {
+                functionCode = mDatas.get(position).functionCode;
+                functionName = mDatas.get(position).functionName;
+                functionParams = new JSONObject(mDatas.get(position).functionParams);
+                List<String> steamDown = ppzParams.param.setSteam.title;
+                List<Integer> tempUp = ppzParams.param.setTemp.value;
+                List<Integer> time = ppzParams.param.setTime.value;
+
+                String tempUpDefault = ppzParams.param.defaultSetTemp.value;
+                String timeDefault = ppzParams.param.defaultSetTime.value;
+                String defSteamFlow = ppzParams.param.defaultSetSteam.value;
+
+                mode = Short.parseShort(ppzParams.param.model.value);
+                int deNum1 = Integer.parseInt(tempUpDefault) - tempUp.get(0);
+                int deNum3 = Integer.parseInt(timeDefault) - time.get(0);
+//                int steam = Integer.parseInt(defSteamFlow) - steamDown.get(0);
+                int index=0;
+                for (int i = 0; i < steamDown.size(); i++) {
+                    if (defSteamFlow.equals(steamDown.get(i))){
+                        index=i;
+                    }
+                }
+
+
+                dialog.setVisible(true);
+                dialog.setWheelViewData(
+                        steamDown,
+                        HelperRikaData.getTimeData4(tempUp),
+                        HelperRikaData.getTimeData4(time),
+                        "null",
+                        false,
+                        index,
+                        deNum1,
+                        deNum3,
+                        new OnItemSelectedListenerFrone() {
+                            @Override
+                            public void onItemSelectedFront(String contentFront) {
+
+                            }
+                        }, new OnItemSelectedListenerCenter() {
+                            @Override
+                            public void onItemSelectedCenter(String contentCenter) {
+
+                            }
+                        }, new OnItemSelectedListenerRear() {
+                            @Override
+                            public void onItemSelectedRear(String contentRear) {
+                            }
+                        });
+                dialog.getmLoopViewFront().setListenerPosition(new OnItemSelectedListenerPosition() {
+                    @Override
+                    public void onItemSelectedRear(int position) {
+                        LogUtils.i("position"  , "-----" + position ) ;
+                    }
+                });
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -514,22 +603,6 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
     }
 
     private void deleteMultiItem(int id, int position) {
-//        RokiRestHelper.deleteMultiItem(id, position, new Callback<RCReponse>() {
-//            @Override
-//            public void onSuccess(RCReponse recipes) {
-//                com.hjq.toast.ToastUtils.show("删除成功");
-//                rv610StepAdapter.getData().remove(position - 1);
-//                rv610StepAdapter.notifyDataSetChanged();
-//                setMultiInfo();
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-////                com.hjq.toast.ToastUtils.show("删除失败");
-//                com.hjq.toast.ToastUtils.show(t.getMessage());
-//
-//            }
-//        });
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Plat.serverOpt.getRestfulBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -540,18 +613,18 @@ public class MultiAddEditDetailPage extends MyBasePage<MainActivity> {
             @Override
             public void onResponse(Call<DeleteMultiItemBean> call, retrofit2.Response<DeleteMultiItemBean> response) {
                 if (response.body().rc == 0) {
-                    ToastUtils.show("删除成功");
+                    com.hjq.toast.ToastUtils.show("删除成功");
                     rv610StepAdapter.getData().remove(position - 1);
                     rv610StepAdapter.notifyDataSetChanged();
                     setMultiInfo();
                 } else if (response.body().rc == 1) {
-                    ToastUtils.show(response.body().msg);
+                    com.hjq.toast.ToastUtils.show(response.body().msg);
                 }
             }
 
             @Override
             public void onFailure(Call<DeleteMultiItemBean> call, Throwable throwable) {
-                ToastUtils.show("删除失败");
+                com.hjq.toast.ToastUtils.show("删除失败");
             }
         });
     }

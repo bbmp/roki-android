@@ -122,6 +122,10 @@ abstract public class AbsSender<Msg extends IMsg> extends AbsService implements
     }
 
     protected String getSyncKey(String deviceId, Msg msg) {
+
+        if (msg.getID()==192){
+            Log.e("--","----");
+        }
         if (syncDecider == null) return null;
         LogUtils.i("20170527", "msg::" + msg.getID());
         int k1 = msg.getID();

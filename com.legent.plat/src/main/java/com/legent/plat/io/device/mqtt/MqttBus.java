@@ -12,6 +12,7 @@ import com.legent.VoidCallback;
 import com.legent.io.buses.AbsNioBus;
 import com.legent.io.msgs.IMsg;
 import com.legent.io.msgs.collections.BytesMsg;
+import com.legent.plat.ApiSecurityExample;
 import com.legent.plat.Plat;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.NetworkUtils;
@@ -526,6 +527,7 @@ public class MqttBus extends AbsNioBus implements MqttCallback {
         public int keepAliveInterval;
         public boolean isSSL = false;
         public String dataStorePath;
+        public final static String deviceType = "RKDRD";
 
         public MqttParams() {
             this.host = Plat.serverOpt.acsHost;
@@ -540,9 +542,20 @@ public class MqttBus extends AbsNioBus implements MqttCallback {
 
         }
 
-        public MqttParams(String clientId) {
-            this();
-            this.clientId = clientId;
+        public MqttParams(String guid) {
+            //modify by wang 22/04/19
+            String clientid = deviceType + "." + guid;
+            this.host = Plat.serverOpt.acsHost;
+            this.port = Plat.serverOpt.acsPort;
+            this.user = guid+"&"+deviceType;
+            long random = System.currentTimeMillis();
+            String plainPasswd = "clientid" + clientid + "deviceGuid" + guid + "deviceType" + deviceType + "random" + random;
+            this.password = ApiSecurityExample.hmacSha256("Kp0lxmm1", plainPasswd);
+            this.keepAliveInterval = 30;
+            this.isSSL = false;
+            this.dataStorePath = String.format("%s/%s/",
+                    StorageUtils.getCachPath(Plat.app), "mqtt");
+            this.clientId = clientid + "|securemode=2,signmethod=hmacsha256,random=" + random + "|";
         }
 
         public MqttParams(String clientId, boolean isSSL) {

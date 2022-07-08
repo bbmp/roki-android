@@ -27,15 +27,24 @@
 -keepattributes JavascriptInterface
 -ignorewarnings
 
--keep com.robam.common.**{*;}
--keep com.legent.utils.speech.**{*;}
--keep com.legent.utils.serialport.**{*;}
--keep com.legent.utils.qrcode.**{*;}
--keep com.mxchip.ftc_service.**{*;}
--keep com.legent.ui.**{*;}
--keep com.legent.plat.**{*;}
--keep com.legent.**{*;}
 
+-keep class com.robam.common.**{*;}
+-keep class com.legent.utils.speech.**{*;}
+-keep class com.legent.utils.serialport.**{*;}
+-keep class com.legent.utils.qrcode.**{*;}
+-keep class com.mxchip.ftc_service.**{*;}
+-keep class com.legent.ui.**{*;}
+-keep class  com.legent.plat.**{*;}
+-keep class com.legent.**{*;}
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class * extends android.view.View
 
 
 
@@ -65,6 +74,16 @@
 -keep class * implements android.os.Parcelable { # 保持 Parcelable 不被混淆
     public static final android.os.Parcelable$Creator *;
 }
+
+-keep class com.robam.roki.* {*;}
+-keep class com.cook.config.* {*;}
+-keep class android.support.rastermill.*{*;}
+
+-keep class com.aliyun.vodplayerview.*{*;}
+-keep class com.youku.*{*;}
+
+-keep class org.eclipse.paho.client.mqttc3*{*;}
+
 # UM推送不被混淆
 -dontwarn com.taobao.**
 -dontwarn anet.channel.**

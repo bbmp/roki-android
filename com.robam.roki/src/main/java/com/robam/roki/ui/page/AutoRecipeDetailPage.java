@@ -26,7 +26,6 @@
 //import com.legent.dao.DaoHelper;
 //import com.legent.plat.Plat;
 //import com.legent.plat.events.UserLoginEvent;
-//import com.legent.plat.io.cloud.RetrofitCallback;
 //import com.legent.plat.pojos.device.IDevice;
 //import com.legent.plat.services.DeviceService;
 //import com.legent.ui.UIService;
@@ -43,7 +42,6 @@
 //import com.robam.common.events.ShareRecipePictureEvent;
 //import com.robam.common.events.UMPushRecipeEvent;
 //import com.robam.common.io.cloud.Reponses;
-//import com.robam.common.io.cloud.RokiRestHelper;
 //import com.robam.common.pojos.CookStep;
 //import com.robam.common.pojos.Dc;
 //import com.robam.common.pojos.DeviceType;
@@ -252,7 +250,7 @@
 //
 //    void init(long recipeid, String entranceCode) {
 //        long userId = Plat.accountService.getCurrentUserId();
-//        RokiRestHelper.getIsCollectBook(userId, recipeid, Reponses.IsCollectBookResponse.class, new RetrofitCallback<Reponses.IsCollectBookResponse>() {
+//        ss.getIsCollectBookId(userId, recipeid, new Callback<Reponses.IsCollectBookResponse>() {
 //            @Override
 //            public void onSuccess(Reponses.IsCollectBookResponse isCollectBookResponse) {
 //                if (isCollectBookResponse != null) {
@@ -264,42 +262,40 @@
 //            }
 //
 //            @Override
-//            public void onFaild(String err) {
+//            public void onFailure(Throwable t) {
 //
 //            }
 //
 //        });
-//        RokiRestHelper.getCookbookById(recipeid, entranceCode, "0", Reponses.CookbookResponse.class, new RetrofitCallback<Reponses.CookbookResponse>() {
+//        ss.getCookbookById(recipeid, entranceCode, "0", new Callback<Recipe>() {
 //            @Override
-//            public void onSuccess(Reponses.CookbookResponse cookbookResponse) {
-//                if (null != cookbookResponse) {
-//                    Recipe recipe = cookbookResponse.cookbook;
-//                    if (recipe == null) {
-//                        ToastUtils.show("没有这道菜", Toast.LENGTH_SHORT);
-//                        UIService.getInstance().popBack();
-//                        return;
-//                    }
-//                    book = recipe;
-//                    book.setIsFavority(isCollect);
-//                    if (book.getJs_dcs().size() == 0) {
-//                        isRQZ = true;
-//                    } else {
-//                        for (Dc dc : book.getJs_dcs()) {
-//                            if (DeviceType.RRQZ.equals(dc.getDc())) {
-//                                isRQZ = true;
-//                                break;
-//                            } else if (DeviceType.RZQL.equals(dc.getDc())) {
+//            public void onSuccess(Recipe recipe) {
+//                if (recipe == null) {
+//                    ToastUtils.show("没有这道菜", Toast.LENGTH_SHORT);
+//                    UIService.getInstance().popBack();
+//                    return;
+//                }
+//                book = recipe;
+//                book.setIsFavority(isCollect);
+//                if (book.getJs_dcs().size() == 0) {
+//                    isRQZ = true;
+//                } else {
+//                    for (Dc dc : book.getJs_dcs()) {
+//                        if (DeviceType.RRQZ.equals(dc.getDc())) {
+//                            isRQZ = true;
+//                            break;
+//                        } else if (DeviceType.RZQL.equals(dc.getDc())) {
 //
-//                            }
 //                        }
 //                    }
 //                }
 //            }
 //
 //            @Override
-//            public void onFaild(String err) {
+//            public void onFailure(Throwable t) {
 //                UIService.getInstance().popBack();
 //            }
+//
 //        });
 //
 //        ss.getCookBookSteps(recipeid, "", "", new Callback<List<CookStep>>() {
@@ -538,6 +534,22 @@
 //                }
 //
 //            }
+//        }
+//
+//
+//        //开始烹饪时加载统计
+//        private void startLoadingStatistical() {
+//            ss.getCookbookById(book.id, RecipeRequestIdentification.RECIPE_COOKING, new Callback<Recipe>() {
+//                @Override
+//                public void onSuccess(Recipe recipe) {
+//
+//                }
+//
+//                @Override
+//                public void onFailure(Throwable t) {
+//
+//                }
+//            });
 //        }
 //
 //        /**

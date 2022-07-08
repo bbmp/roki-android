@@ -23,11 +23,11 @@ import com.legent.ui.UIService;
 import com.legent.utils.EventUtils;
 import com.legent.utils.api.PreferenceUtils;
 import com.legent.utils.api.ToastUtils;
+import com.robam.base.BaseDialog;
 import com.robam.common.events.DeviceEasylinkCompletedEvent;
 import com.robam.common.ui.BleRssiDevice;
 import com.robam.roki.R;
 import com.robam.roki.ui.adapter3.RvDeviceBluetoothAdapter;
-import com.robam.roki.ui.widget.base.BaseDialog;
 
 import org.json.JSONObject;
 

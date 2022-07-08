@@ -1,39 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mine_background"
-    android:orientation="vertical">
+    android:background="@drawable/shape_bg_main">
     <View
         android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white" />
-    <com.hjq.bar.TitleBar app:drawableSize="25dp"
-        android:id="@+id/tb_title"
+        android:background="@color/transparent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status_bar_fix"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#ffffff"
-        app:barStyle="transparent"
-        app:leftIcon="@mipmap/icon_back_black"
-        app:rightSize="16sp"
-        app:rightTitle="@string/device_finish"
-        app:rightColor="@color/common_accent_text_color"
-        app:titleColor="@color/mine_text_color" />
+        android:layout_height="@dimen/dp_44">
 
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/user_info"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dp_28"
+        android:layout_height="@dimen/dp_59"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/shape_kitchen_bg_round"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rl_title">
 
         <com.robam.roki.ui.widget.view.ClearEditText
             android:id="@+id/et_user_name"
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_height="60dp"
-            android:background="@color/white"
+            android:layout_height="match_parent"
             android:hint="@string/input_user_name"
-            android:singleLine="true"
-            />
+            android:textColorHint="@color/text_color_search"
+            android:imeOptions="actionDone"
+            android:maxLength="8"
+            android:textColor="@color/text_color_net_err"
+            android:singleLine="true" />
 
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/dp_20" />
+    </FrameLayout>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_finish"
+        android:textColor="@color/text_color_exit_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:textSize="@dimen/sp_20"
+        android:text="@string/device_finish"
+        android:background="@drawable/shape_button_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

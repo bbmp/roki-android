@@ -2,7 +2,6 @@ package com.robam.roki.ui.page.device.steamovenone;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -495,8 +493,8 @@ public class MultiStepC908ModePage extends BasePage {
     private void sendCommand(final short arg, final short totalNumber, final String mode1,
                              final int temp1, final int time1, final String mode2, final int temp2,
                              final int time2, final String mode3, final int temp3, final int time3) {
-        if (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait) {
+        if (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait) {
             steameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
                 public void onSuccess() {

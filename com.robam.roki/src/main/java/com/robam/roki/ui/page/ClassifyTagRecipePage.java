@@ -40,14 +40,14 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.common.eventbus.Subscribe;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.legent.Callback;
 import com.legent.plat.events.PageBackEvent;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
 import com.legent.utils.LogUtils;
-import com.robam.common.io.cloud.Reponses;
 import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.util.NumberUtil;
@@ -87,8 +87,6 @@ public class ClassifyTagRecipePage extends MyBasePage<MainActivity> {
     private int pageNo = 0;
     private int pageSize = 10;
     private Long cookBookTagId;
-    private AppBarLayout tagRecipeAppbar;
-    private TextView tv_title;
     private static RequestOptions options = new RequestOptions()
             .centerCrop()
             .placeholder(R.mipmap.img_default) //预加载图片
@@ -108,12 +106,12 @@ public class ClassifyTagRecipePage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        setStateBarTransparent();
+//        setStateBarTransparent();
+//        barColor = getResources().getColor(R.color.roki_main_color);
+//        StatusBarUtils.setColor(getActivity(), barColor);
         mXRecyclerView = findViewById(R.id.rv_tag_recipe_list);
         tvRecipeTag = findViewById(R.id.tv_recipe_tag_name);
         ivTagRecipeBack = findViewById(R.id.iv_tag_recipe_back);
-        tagRecipeAppbar = findViewById(R.id.tag_recipe_appbar);
-        tv_title = findViewById(R.id.tv_title);
         //空布局
         emptyView = LinearLayout.inflate(cx, R.layout.view_emoji_empty, null);
         tvDesc = (TextView) emptyView.findViewById(R.id.txtDesc);
@@ -121,17 +119,13 @@ public class ClassifyTagRecipePage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initData() {
-        Typeface typeface = Typeface.createFromAsset(cx.getAssets(), "HYRunYuan-GEW.ttf");
-        tv_title.setTypeface(typeface);
         tagRecipeBundle = getArguments();
         recipeInfo = (RecipeTagGroupItem.ItemInfo) tagRecipeBundle.getSerializable(TAG_RECIPE);
         LogUtils.i(TAG, "onActivityCreated: tagRecipe type:" + recipeInfo.getType() + " recipe getId:" + recipeInfo.getId() + " recipe name:" + recipeInfo.getName()+"grpup:" +recipeInfo.getGroup());
         cookBookTagId = recipeInfo.getId() == null ? null : (Long) (recipeInfo.getId());
         tvRecipeTag.setText(recipeInfo.getName());
-        tv_title.setText(recipeInfo.getName());
         loadRecipeData();
         initRecyclerView();
-        setAvatorChange();
         ivTagRecipeBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,40 +140,36 @@ public class ClassifyTagRecipePage extends MyBasePage<MainActivity> {
             ProgressDialogHelper.setRunning(cx, true);
         }
 
-        RokiRestHelper.getCookbookByTag(cookBookTagId,  pageNo, pageSize, Reponses.PersonalizedRecipeResponse.class,
-                new RetrofitCallback<Reponses.PersonalizedRecipeResponse>() {
-                    @Override
-                    public void onSuccess(Reponses.PersonalizedRecipeResponse personalizedRecipeResponse) {
-                        ProgressDialogHelper.setRunning(cx, false);
-                        if (null != personalizedRecipeResponse) {
-                            List<Recipe> recipes = personalizedRecipeResponse.cookbooks;
-
-                            if (recipes.isEmpty() || recipes.size() == 0) {
-                                if (pageNo == 0){
-                                    tvDesc.setText("暂时没有该类型数据");
-                                    mTagRecipeAdapter.setEmptyView(emptyView);
-                                    return;
-                                }
-                                mTagRecipeAdapter.getLoadMoreModule().loadMoreEnd();
-                                return;
-                            }
-                            mTagRecipeAdapter.addData(recipes);
-                            pageNo ++ ;
-                            mTagRecipeAdapter.getLoadMoreModule().loadMoreComplete();
-                        }
+        RokiRestHelper.getCookbookByTag(cookBookTagId,  pageNo, pageSize, new Callback<List<Recipe>>() {
+            @Override
+            public void onSuccess(List<Recipe> recipes) {
+                ProgressDialogHelper.setRunning(cx, false);
+                if (recipes.isEmpty() || recipes.size() == 0) {
+                    if (pageNo == 0){
+                        tvDesc.setText("暂时没有该类型数据");
+                        mTagRecipeAdapter.setEmptyView(emptyView);
+                        return;
                     }
+                    mTagRecipeAdapter.getLoadMoreModule().loadMoreEnd();
+                    return;
+                }
+                mTagRecipeAdapter.addData(recipes);
+                pageNo ++ ;
+                mTagRecipeAdapter.getLoadMoreModule().loadMoreComplete();
+            }
 
-                    @Override
-                    public void onFaild(String err) {
-                        ProgressDialogHelper.setRunning(cx, false);
-                        LogUtils.i(TAG, "getbyTagOtherCooks onFailure recipes:" + err);
-                        if (pageNo == 0){
-                            tvDesc.setText("服务器请求出错");
-                            mTagRecipeAdapter.setEmptyView(emptyView);
-                        }else {
-                            mTagRecipeAdapter.getLoadMoreModule().loadMoreFail();
-                        }
-                    }
+            @Override
+            public void onFailure(Throwable t) {
+                ProgressDialogHelper.setRunning(cx, false);
+                LogUtils.i(TAG, "getbyTagOtherCooks onFailure recipes:" + t.toString());
+                if (pageNo == 0){
+                    tvDesc.setText("服务器请求出错");
+                    mTagRecipeAdapter.setEmptyView(emptyView);
+                }else {
+                    mTagRecipeAdapter.getLoadMoreModule().loadMoreFail();
+                }
+
+            }
         });
     }
 
@@ -219,51 +209,15 @@ public class ClassifyTagRecipePage extends MyBasePage<MainActivity> {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (Build.VERSION.SDK_INT >= 21){
-            View decorView = activity.getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            activity.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
-            StatusBarUtils.setTextDark(getContext() ,true);
-        }
+//        if (Build.VERSION.SDK_INT >= 21){
+//            View decorView = activity.getWindow().getDecorView();
+//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//            activity.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+//            StatusBarUtils.setTextDark(getContext() ,true);
+//        }
 //        StatusBarUtils.setColor(getActivity(), getResources().getColor(R.color.white));
     }
 
-    /**
-     * 渐变toolbar背景
-     */
-    private void setAvatorChange() {
-        tagRecipeAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                //verticalOffset始终为0以下的负数
-                try {
-                    float percent = (Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange());
-                    LogUtils.i(TAG, "percent:" + percent);
-                    tagRecipeAppbar.setBackgroundColor(changeAlpha(Color.WHITE, percent));
-
-                    if (percent > 0.8) {
-                        tvRecipeTag.setVisibility(View.VISIBLE);
-//                    ivTagRecipeBack.setBackground(getContext().getDrawable(R.mipmap.icon_back_black));
-//                    ivTagRecipeBack.setVisibility(View.VISIBLE);
-                        barColor = getResources().getColor(R.color.white);
-                        StatusBarUtils.setColor(getActivity(), barColor);
-//                        ivTagRecipeBack.setImageResource(R.mipmap.icon_back_black);
-                    } else {
-                        tvRecipeTag.setVisibility(View.INVISIBLE);
-//                    ivTagRecipeBack.setBackground(getContext().getDrawable(R.mipmap.icon_back_white));
-//                    ivTagRecipeBack.setVisibility(View.VISIBLE);
-//                        ivTagRecipeBack.setImageResource(R.mipmap.icon_back_white);
-                        barColor = getResources().getColor(R.color.roki_main_color);
-                        StatusBarUtils.setColor(getActivity(), barColor);
-
-                    }
-                }catch (Exception e){
-                    e.getMessage();
-                }
-
-            }
-        });
-    }
 
     /**
      * 根据百分比改变颜色透明度
@@ -284,7 +238,7 @@ public class ClassifyTagRecipePage extends MyBasePage<MainActivity> {
     public void onEvent(PageBackEvent event) {
         if ("RecipeDetailPage".equals(event.getPageName())){
 //            setAvatorChange();
-            StatusBarUtils.setColor(getActivity(), getResources().getColor(R.color.white));
+//            StatusBarUtils.setColor(getActivity(), getResources().getColor(R.color.white));
         }
     }
 }

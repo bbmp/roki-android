@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@mipmap/ic_stove_fire_off" android:state_selected="false"/>
+    <item android:drawable="@mipmap/ic_stove_fire_on" android:state_selected="true"/>
+</selector>

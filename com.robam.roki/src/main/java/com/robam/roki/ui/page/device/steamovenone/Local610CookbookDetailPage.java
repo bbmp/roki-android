@@ -17,7 +17,6 @@ import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
-import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
 import com.legent.ui.UIService;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
@@ -26,7 +25,6 @@ import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
-import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.extension.GlideApp;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.page.device.oven.CookBookTag;
@@ -44,7 +42,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.InjectView;
-import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
@@ -89,7 +86,7 @@ public class Local610CookbookDetailPage extends MyBasePage<MainActivity> {
     protected void initData() {
         Bundle bd = getArguments();
         guid = bd == null ? null : bd.getString(PageArgumentKey.Guid);
-        localCookbookList = bd.getParcelableArrayList("tags");
+        localCookbookList = (List<CookBookTag>) bd.getSerializable("tags");
         needDescalingParams = bd == null ? null : bd.getString(PageArgumentKey.descaling);
         position = bd.getInt(POSITION);
         tab = bd.getString(PageArgumentKey.title);
@@ -159,8 +156,8 @@ public class Local610CookbookDetailPage extends MyBasePage<MainActivity> {
         }
         String itemsContent = wheelViewRear.getItemsContent(wheelViewRear.getSelectedItem());
         int setTime = Integer.parseInt(itemsContent);
-        if (absSteameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                absSteameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait
+        if (absSteameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                absSteameOvenOne.powerState == SteamOvenOnePowerStatus.Wait
         ) {
             absSteameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override

@@ -2,30 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/dp_16"
+    android:layout_marginRight="@dimen/dp_16">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_59"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="20dp">
+        android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/ic_device_detail_fan"
-            android:id="@+id/imgDevice" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
             android:text="@string/device_stove_name"
-            android:textColor="@color/c11"
-            android:textSize="14sp"
+            android:textColor="@color/text_color_net_err"
+            android:textSize="@dimen/dp_20"
             android:id="@+id/txtDevice" />
 
         <RelativeLayout
@@ -41,7 +34,7 @@
                 android:background="@null"
                 android:text="@string/my_device_delete"
                 android:textSize="16sp"
-                android:textColor="@color/c11"/>
+                android:textColor="#ff61acff"/>
 
         </RelativeLayout>
 
@@ -51,7 +44,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/common_edit_height"
+        android:layout_height="@dimen/dp_59"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -61,28 +54,26 @@
             android:layout_weight="1"
             android:scaleType="centerInside"
             android:text="@string/my_device_model_number"
-            android:textColor="@color/c03"
-            android:textSize="15sp" />
+            android:textColor="@color/text_color_net_err"
+            android:textSize="@dimen/sp_18" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="8700"
-            android:textColor="@color/c03"
-            android:textSize="15sp"
+            android:textColor="@color/text_color_net_err"
+            android:textSize="@dimen/sp_16"
             android:id="@+id/txtDeviceType" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/c13" />
-
-
+        android:layout_height="@dimen/dp_1"
+        android:background="@drawable/shape_divider_bg"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/common_edit_height"
+        android:layout_height="@dimen/dp_59"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -92,28 +83,27 @@
             android:layout_weight="1"
             android:scaleType="centerInside"
             android:text="@string/my_device_numbering"
-            android:textColor="@color/c03"
-            android:textSize="15sp" />
+            android:textColor="@color/text_color_net_err"
+            android:textSize="@dimen/sp_18" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="8700"
-            android:textColor="@color/c03"
-            android:textSize="15sp"
+            android:textColor="@color/text_color_net_err"
+            android:textSize="@dimen/sp_16"
             android:id="@+id/txtBid" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/c13" />
-
+        android:layout_height="@dimen/dp_1"
+        android:background="@drawable/shape_divider_bg"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/common_edit_height"
+        android:layout_height="@dimen/dp_59"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -123,21 +113,16 @@
             android:layout_weight="1"
             android:scaleType="centerInside"
             android:text="@string/my_device_firmware_version"
-            android:textColor="@color/c03"
-            android:textSize="15sp" />
+            android:textColor="@color/text_color_net_err"
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="8700"
-            android:textColor="@color/c03"
-            android:textSize="15sp"
+            android:textColor="@color/text_color_net_err"
+            android:textSize="@dimen/sp_16"
             android:id="@+id/txtOtaVer" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/c13" />
 
 </LinearLayout>

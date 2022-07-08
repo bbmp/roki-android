@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -212,6 +213,10 @@ public class DeviceIntegratedStoveLinkagePage extends BasePage {
         super.onResume();
         if (mIntegratedStove==null) {
             return;
+        }
+        if (mIntegratedStove.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), mIntegratedStove.getDt() + ":烟灶联动页", null);
         }
     }
 

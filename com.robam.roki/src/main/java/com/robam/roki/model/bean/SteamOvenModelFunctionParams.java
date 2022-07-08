@@ -47,6 +47,25 @@ public class SteamOvenModelFunctionParams {
         private SetTimeBean setTime;
         private DefaultSetTimeBean defaultSetTime;
 
+        private DefaultSetSteam defaultSetSteam;
+        private setSteamBean setSteam;
+
+        public DefaultSetSteam getDefaultSetSteam() {
+            return defaultSetSteam;
+        }
+
+        public void setDefaultSetSteam(DefaultSetSteam defaultSetSteam) {
+            this.defaultSetSteam = defaultSetSteam;
+        }
+
+        public setSteamBean getSetSteam() {
+            return setSteam;
+        }
+
+        public void setSetSteam(setSteamBean setSteam) {
+            this.setSteam = setSteam;
+        }
+
         public ModelBean getModel() {
             return model;
         }
@@ -188,6 +207,58 @@ public class SteamOvenModelFunctionParams {
 
             public void setValue(List<Integer> value) {
                 this.value = value;
+            }
+        }
+
+        public static class setSteamBean{
+            /**
+             * value : [5,90,1]
+             * paramType : section
+             */
+
+            private List<String> title;
+            private List<Integer> value;
+
+            public List<String> getTitle() {
+                return title;
+            }
+
+            public void setTitle(List<String> title) {
+                this.title = title;
+            }
+
+            public List<Integer> getValue() {
+                return value;
+            }
+
+            public void setValue(List<Integer> value) {
+                this.value = value;
+            }
+        }
+
+        public static class DefaultSetSteam {
+            /**
+             * value : 50
+             * paramType : String
+             */
+
+            private String value;
+            private String paramType;
+
+            public String getValue() {
+                return value;
+            }
+
+            public void setValue(String value) {
+                this.value = value;
+            }
+
+            public String getParamType() {
+                return paramType;
+            }
+
+            public void setParamType(String paramType) {
+                this.paramType = paramType;
             }
         }
 

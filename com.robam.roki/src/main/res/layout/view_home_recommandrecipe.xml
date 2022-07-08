@@ -75,6 +75,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="15dp"/>
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="60dp"
@@ -84,9 +85,20 @@
         android:layout_marginRight="30dp"
         android:scaleType="centerCrop" />
 
+    <ImageView
+        android:id="@+id/iv_play"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:src="@mipmap/tag_video"
+        android:visibility="gone"/>
     <!--文字描述和收藏-->
     <!--菜谱头标标示-->
     <LinearLayout
+        android:id="@+id/home_recipe_ll_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/iv_img"
@@ -201,6 +213,7 @@
 
 
             <TextView
+                android:id="@+id/home_recipe_head_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

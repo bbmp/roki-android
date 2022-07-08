@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_margin="@dimen/dp_8">
+    <RelativeLayout
+        android:layout_width="@dimen/dp_140"
+        android:layout_height="@dimen/dp_140"
+        android:background="@drawable/shape_bg_ebebeb_999dp">
+        <ImageView
+            android:id="@+id/iv_device"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_72"
+            tools:src="@mipmap/device_c906"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_device_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/text_color_net_err"
+        android:textSize="@dimen/sp_16"
+        tools:text="油烟机8235s"/>
+</LinearLayout>

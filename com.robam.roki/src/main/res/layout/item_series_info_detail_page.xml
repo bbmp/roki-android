@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="1dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="1dp"
+                android:paddingTop="3dp">
+
+
+    <LinearLayout
+        android:id="@+id/itemView"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@color/gray_oven"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_episode_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

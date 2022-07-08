@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/roki_device_toolbar"/>
+    <LinearLayout
+        android:id="@+id/search_bar"
+        android:layout_below="@+id/tool_bar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/shape_bg_white_round"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:src="@mipmap/ic_search"
+            android:layout_width="30dp"
+            android:layout_height="30dp">
+        </ImageView>
+        <EditText
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:hint="@string/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginBottom="110dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_below="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/start_work"
+        android:gravity="center"
+        android:text="@string/device_start"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:background="@drawable/shape_button"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

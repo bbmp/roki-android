@@ -215,7 +215,7 @@
 //
 //            void showData(OrderRecipe recipe) {
 //                imgRecipe.setImageDrawable(null);
-//                ImageUtils.displayImage(cx, recipe.imgUrl, imgRecipe);
+//                ImageUtils.displayImage(recipe.imgUrl, imgRecipe);
 //                txtRecipe.setText(recipe.name);
 //                txtNumber.setText(String.format("X %s 份", recipe.number));
 //                txtDesc.setText(Joiner.on(" ").skipNulls().join(recipe.materials).trim());

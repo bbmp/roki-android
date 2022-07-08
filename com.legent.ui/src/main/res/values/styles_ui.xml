@@ -8,6 +8,14 @@
         <item name="android:gravity">left|center_vertical</item>
     </style>
 
+    <style name="text_large" parent="@style/text">
+        <item name="android:textSize">@dimen/common_text_size_large</item>
+    </style>
+
+    <style name="text_medium" parent="@style/text">
+        <item name="android:textSize">@dimen/common_text_size_medium</item>
+    </style>
+
     <style name="text_title" parent="@style/text">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/Black</item>
@@ -51,6 +59,17 @@
         <item name="android:headerDividersEnabled">false</item>
     </style>
 
+    <style name="common_set_listview" parent="@android:style/Widget.Holo.Light.ListView">
+        <item name="android:cacheColorHint">@color/Transparent</item>
+        <item name="android:listSelector">@color/Transparent</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:fastScrollEnabled">false</item>
+        <item name="android:scrollingCache">false</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:smoothScrollbar">true</item>
+        <item name="android:headerDividersEnabled">false</item>
+    </style>
+
     <style name="common_wifi_listview" parent="@android:style/Widget.Holo.Light.ListView">
         <item name="android:cacheColorHint">@color/Transparent</item>
         <item name="android:listSelector">@color/Transparent</item>
@@ -65,6 +84,23 @@
         <item name="android:headerDividersEnabled">false</item>
     </style>
 
+    <style name="common_wifi_listview_pad" parent="@android:style/Widget.Holo.Light.ListView">
+        <item name="android:listSelector">@color/Transparent</item>
+        <item name="android:divider">#c4c4c4</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:fastScrollEnabled">false</item>
+        <item name="android:itemBackground">@color/common_view_background_pressed</item>
+        <item name="android:scrollingCache">false</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:smoothScrollbar">true</item>
+        <item name="android:headerDividersEnabled">false</item>
+    </style>
+
+
+    <style name="common_imageview">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:contentDescription">@null</item>
+    </style>
 
     <style name="common_edittext" parent="@style/text_content">
         <item name="android:gravity">right|center_vertical</item>
@@ -100,6 +136,18 @@
         <item name="selectedTextColor">#4b4848</item>
         <item name="selectedTextSize">18sp</item>
         <item name="unitHight">40dp</item>
+    </style>
+    <style name="wheel_Oven_view_style_pad">
+        <item name="itemNumber">5</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">32dp</item>
+        <item name="noEmpty">true</item>
+        <item name="normalTextColor">#b1b1b1</item>
+        <item name="normalTextSize">18sp</item>
+        <item name="selectedTextColor">#1f1f1f</item>
+        <item name="selectedTextSize">26sp</item>
+        <item name="unitHight">45dp</item>
     </style>
 
     <style name="wheel_steamOven_c906_view_style">
@@ -152,6 +200,19 @@
         <item name="selectedTextColor">#1f1f1f</item>
         <item name="selectedTextSize">16sp</item>
         <item name="unitHight">50dp</item>
+    </style>
+
+    <style name="wheel_Oven_view_c906_style">
+        <item name="itemNumber">7</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">32dp</item>
+        <item name="noEmpty">true</item>
+        <item name="normalTextColor">#b1b1b1</item>
+        <item name="normalTextSize">19sp</item>
+        <item name="selectedTextColor">#1f1f1f</item>
+        <item name="selectedTextSize">21sp</item>
+        <item name="unitHight">45dp</item>
     </style>
 
     <style name="wheel_steam_view_c906_style">
@@ -223,6 +284,60 @@
         <item name="unitHight">45dp</item>
     </style>
 
+    <style name="wheel_Microwave526WeightTime_view_style">
+        <item name="itemNumber">3</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">40dp</item>
+        <item name="noEmpty">true</item>
+        <!-- <item name="heightDiv">10dp</item>-->
+        <item name="normalTextColor">#b1b1b1</item>
+        <item name="normalTextSize">22sp</item>
+        <item name="selectedTextColor">#1f1f1f</item>
+        <item name="selectedTextSize">28sp</item>
+        <item name="unitHight">45dp</item>
+    </style>
+
+    <style name="wheel_WaterPurifier_view_style">
+        <item name="itemNumber">5</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">32dp</item>
+        <item name="noEmpty">true</item>
+        <!--<item name="heightDiv">10dp</item>-->
+        <item name="normalTextColor">#686868</item>
+        <item name="normalTextSize">28sp</item>
+        <item name="selectedTextColor">#4D5f97fa</item>
+        <item name="selectedTextSize">35sp</item>
+        <item name="unitHight">45dp</item>
+    </style>
+
+
+    <style name="wheel_steam226_view_style">
+        <item name="itemNumber">3</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">22dp</item>
+        <item name="noEmpty">true</item>
+        <item name="normalTextColor">#000000</item>
+        <item name="normalTextSize">25sp</item>
+        <item name="selectedTextColor">#000000</item>
+        <item name="selectedTextSize">50sp</item>
+        <item name="unitHight">60dp</item>
+    </style>
+
+    <style name="wheel_Mic_view_style">
+        <item name="itemNumber">5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">32dp</item>
+        <item name="noEmpty">true</item>
+        <!--<item name="heightDiv">10dp</item>-->
+        <item name="normalTextColor">#b1b1b1</item>
+        <item name="normalTextSize">14sp</item>
+        <item name="selectedTextColor">#1f1f1f</item>
+        <item name="selectedTextSize">18sp</item>
+        <item name="unitHight">45dp</item>
+    </style>
 
     <style name="wheel_steam_view_style">
         <item name="itemNumber">7</item>
@@ -238,6 +353,86 @@
         <item name="unitHight">45dp</item>
     </style>
 
+    <style name="stove_wheel_view_style">
+        <item name="itemNumber">5</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">32dp</item>
+        <item name="noEmpty">true</item>
+        <item name="normalTextColor">#b1b1b1</item>
+        <item name="normalTextSize">25sp</item>
+        <item name="selectedTextColor">#4b4848</item>
+        <item name="selectedTextSize">50sp</item>
+        <item name="unitHight">48dp</item>
+    </style>
+
+
+    <style name="micro_wheel_view_style">
+        <item name="itemNumber">5</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">32dp</item>
+        <item name="noEmpty">true</item>
+        <item name="normalTextColor">#b1b1b1</item>
+        <item name="normalTextSize">25sp</item>
+        <item name="selectedTextColor">#4b4848</item>
+        <item name="selectedTextSize">50sp</item>
+        <item name="unitHight">48dp</item>
+    </style>
+
+
+    <style name="steri_wheel_view_style">
+        <item name="itemNumber">5</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">32dp</item>
+        <item name="noEmpty">true</item>
+        <item name="normalTextColor">#b1b1b1</item>
+        <item name="normalTextSize">25sp</item>
+        <item name="selectedTextColor">#4b4848</item>
+        <item name="selectedTextSize">50sp</item>
+        <item name="unitHight">40dp</item>
+    </style>
+
+    <style name="steri_wheel_dry_view_style">
+        <item name="itemNumber">3</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">38dp</item>
+        <item name="noEmpty">true</item>
+        <item name="normalTextColor">#b1b1b1</item>
+        <item name="normalTextSize">25sp</item>
+        <item name="selectedTextColor">#4b4848</item>
+        <item name="selectedTextSize">40sp</item>
+        <item name="unitHight">50dp</item>
+    </style>
+
+    <style name="steam_setting_wheel_view_style">
+        <item name="itemNumber">3</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">22dp</item>
+        <item name="noEmpty">true</item>
+        <item name="normalTextColor">#000000</item>
+        <item name="normalTextSize">18sp</item>
+        <item name="selectedTextColor">#000000</item>
+        <item name="selectedTextSize">40sp</item>
+        <item name="unitHight">60dp</item>
+    </style>
+
+    <style name="steam_setting_wheel_view_style5">
+        <item name="itemNumber">3</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">30dp</item>
+        <item name="noEmpty">true</item>
+        <item name="normalTextColor">#000000</item>
+        <item name="normalTextSize">18sp</item>
+        <item name="selectedTextColor">#000000</item>
+        <item name="selectedTextSize">40sp</item>
+        <item name="unitHight">80dp</item>
+    </style>
+
 
     <style name="steam_setting_wheel_view_style6">
         <item name="itemNumber">5</item>
@@ -249,6 +444,19 @@
         <item name="normalTextSize">20sp</item>
         <item name="selectedTextColor">#ffffff</item>
         <item name="selectedTextSize">24sp</item>
+        <item name="unitHight">60dp</item>
+    </style>
+
+    <style name="micro_setting_wheel_view_style">
+        <item name="itemNumber">3</item>
+        <item name="lineColor">#a5a5a5</item>
+        <item name="lineHeight">1px</item>
+        <item name="maskHight">22dp</item>
+        <item name="noEmpty">true</item>
+        <item name="normalTextColor">#000000</item>
+        <item name="normalTextSize">25sp</item>
+        <item name="selectedTextColor">#000000</item>
+        <item name="selectedTextSize">50sp</item>
         <item name="unitHight">60dp</item>
     </style>
 

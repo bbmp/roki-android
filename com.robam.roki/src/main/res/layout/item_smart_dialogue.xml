@@ -3,28 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="@dimen/dp_12"
+    android:layout_marginHorizontal="@dimen/dp_20"
     android:orientation="horizontal">
-
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="5dp"
-        android:src="@mipmap/ic_smart_toast" />
 
     <TextView
         android:id="@+id/txtMsg"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="-5dp"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/shape_smart_home_message_bg"
-        android:gravity="left"
+        android:layout_height="@dimen/dp_48"
+        android:background="@drawable/device_left_talk_bg"
+        android:paddingHorizontal="@dimen/dp_20"
+        android:gravity="center"
         android:text="您好，请问有什么需要帮助"
         android:textColor="#FFFFFF"
-        android:textIsSelectable="true"
-        android:textSize="15sp" />
+        android:textSize="@dimen/sp_16" />
 
 </LinearLayout>

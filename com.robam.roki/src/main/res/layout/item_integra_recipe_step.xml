@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.robam.roki.ui.widget.layout.SettingBar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/stb_step"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:layout_marginTop="5dp"
+    app:bar_lineColor="#ffffffff"
+    android:background="@drawable/shape_bg_white_8dp_night"
+    />

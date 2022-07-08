@@ -32,6 +32,7 @@ import com.robam.roki.ui.PageKey;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 
 /**
@@ -122,7 +123,7 @@ public class FanBackgroundFuncAdapter extends BaseAdapter {
         // 获取数据显示在各组件
         if ("alert".equals(mDeviceConfigurationFunctions.get(position).functionType)) {
             viewHolder.mTvModelName.setText(mDeviceConfigurationFunctions.get(position).functionName);
-            Glide.with(mContext)
+            Glide.with(cx)
                     .load(mDeviceConfigurationFunctions.get(position).backgroundImg)
 //                    .crossFade()
                     .into(viewHolder.mIvModelImg);
@@ -133,7 +134,7 @@ public class FanBackgroundFuncAdapter extends BaseAdapter {
 
         }else if ("displayOnly".equals(mDeviceConfigurationFunctions.get(position).functionType)) {
             viewHolder.mTvModelName.setText(mDeviceConfigurationFunctions.get(position).functionName);
-            Glide.with(mContext)
+            Glide.with(cx)
                     .load(mDeviceConfigurationFunctions.get(position).backgroundImg)
 //                    .crossFade()
                     .into(viewHolder.mIvModelImg);

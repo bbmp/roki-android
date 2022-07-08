@@ -1,13 +1,12 @@
 package com.robam.roki.utils.suspendedball;
 
 import android.content.Context;
-import android.widget.ImageView;
-
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
 import com.robam.roki.R;
 
+import pl.droidsonroids.gif.GifImageView;
 
 
 /**
@@ -20,12 +19,12 @@ import com.robam.roki.R;
  */
 public class EnFloatingView extends FloatingMagnetView {
 
-    private ImageView mIcon;
+    private GifImageView mIcon;
 
     public EnFloatingView(@NonNull Context context) {
         super(context, null);
         inflate(context, R.layout.floating_view, this);
-        mIcon = (ImageView) findViewById(R.id.icon);
+        mIcon = (GifImageView) findViewById(R.id.icon);
     }
 
     public void setIconImage(@DrawableRes int resId) {

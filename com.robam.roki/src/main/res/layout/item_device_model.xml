@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="营养蒸"
-        android:textColor="@color/c41"
+        android:textColor="@color/text_color_device_category"
         android:textSize="16sp"/>
 
 </LinearLayout>

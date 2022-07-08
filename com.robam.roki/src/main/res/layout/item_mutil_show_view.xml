@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/mine_white_background"
+    android:id="@+id/rl_mutil_status"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:background="@color/mine_white_background"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+
+
+            android:visibility="gone"
+            android:id="@+id/item_mutil_title_1"
+            android:textColor="@color/text_color_device_category"
+            android:gravity="center"
+            android:text="第一段"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <View
+            android:visibility="gone"
+            android:background="#FFFFFFFF"
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="@dimen/dp_22"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/item_mutil_title_2"
+            android:textColor="@color/text_color_device_category"
+
+            android:gravity="center"
+            android:text="第二段"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <View
+            android:visibility="gone"
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="@dimen/dp_22"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/item_mutil_title_3"
+            android:textColor="@color/text_color_device_category"
+            android:gravity="center"
+            android:text="第三段"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/item_mutil_content_1"
+            android:textColor="@color/text_color_device_category"
+            android:paddingTop="@dimen/dp_12"
+            android:gravity="center"
+            android:text="风焙烤"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/item_mutil_content_2"
+            android:paddingTop="@dimen/dp_12"
+            android:textColor="@color/text_color_device_category"
+
+            android:gravity="center"
+            android:text="95℃"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/item_mutil_content_3"
+            android:textColor="@color/text_color_device_category"
+            android:paddingTop="@dimen/dp_12"
+            android:gravity="center"
+            android:text="60min"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

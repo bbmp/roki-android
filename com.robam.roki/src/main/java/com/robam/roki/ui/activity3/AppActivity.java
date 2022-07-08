@@ -8,10 +8,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.app.SkinAppCompatDelegateImpl;
+
 import com.gyf.immersionbar.ImmersionBar;
 import com.hjq.bar.TitleBar;
+import com.legent.ui.ext.utils.StatusBarCompat;
+import com.legent.utils.EventUtils;
+import com.robam.base.BaseActivity;
+import com.robam.base.BaseDialog;
+import com.robam.roki.R;
 import com.robam.roki.ui.page.login.action.TitleBarAction;
-import com.robam.roki.ui.widget.base.BaseActivity;
+
+import skin.support.utils.SkinStatusBarUtils;
+import skin.support.widget.SkinCompatSupportable;
 
 
 /**
@@ -19,13 +29,15 @@ import com.robam.roki.ui.widget.base.BaseActivity;
  *    @author r210190
  */
 public abstract class AppActivity extends BaseActivity
-        implements TitleBarAction {
+        implements ToastAction, TitleBarAction, SkinCompatSupportable {
 
     /** 标题栏对象 */
     private TitleBar mTitleBar;
     /** 状态栏沉浸 */
     private ImmersionBar mImmersionBar;
 
+    /** 加载对话框 */
+    private BaseDialog mDialog;
     /** 对话框数量 */
     private int mDialogTotal;
 
@@ -44,23 +56,39 @@ public abstract class AppActivity extends BaseActivity
 
     }
 
+    protected void setStateBarFixer() {
+
+        View mStateBarFixer = findViewById(R.id.status_bar_fix);
+        if (mStateBarFixer != null) {
+            ViewGroup.LayoutParams layoutParams = mStateBarFixer.getLayoutParams();
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            layoutParams.height = SkinStatusBarUtils.getStatusbarHeight(this);
+            mStateBarFixer.setLayoutParams(layoutParams);
+        }
+    }
+
     @Override
     protected void initLayout() {
         super.initLayout();
+        EventUtils.regist(this);
 
+        //状态栏透明
+        SkinStatusBarUtils.translucent(this);
+        setStateBarFixer();
+        StatusBarCompat.updateStatusTextColor(this);
         if (getTitleBar() != null) {
             getTitleBar().setOnTitleBarListener(this);
         }
 
         // 初始化沉浸式状态栏
-        if (isStatusBarEnabled()) {
-            getStatusBarConfig().init();
-
-            // 设置标题栏沉浸
-            if (getTitleBar() != null) {
-                ImmersionBar.setTitleBar(this, getTitleBar());
-            }
-        }
+//        if (isStatusBarEnabled()) {
+//            getStatusBarConfig().init();
+//
+//            // 设置标题栏沉浸
+//            if (getTitleBar() != null) {
+//                ImmersionBar.setTitleBar(this, getTitleBar());
+//            }
+//        }
     }
 
     /**
@@ -73,7 +101,7 @@ public abstract class AppActivity extends BaseActivity
     /**
      * 状态栏字体深色模式
      */
-    protected boolean isStatusBarDarkFont() {
+    public boolean isStatusBarDarkFont() {
         return true;
     }
 
@@ -138,13 +166,31 @@ public abstract class AppActivity extends BaseActivity
     @Override
     public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
         super.startActivityForResult(intent, requestCode, options);
-//        overridePendingTransition(R.anim.right_in_activity, R.anim.right_out_activity);
     }
 
     @Override
     public void finish() {
         super.finish();
-//        overridePendingTransition(R.anim.left_in_activity, R.anim.left_out_activity);
     }
 
+    @Override
+    public void applySkin() {
+        StatusBarCompat.updateStatusTextColor(this);
+    }
+
+    @Override
+    public AppCompatDelegate getDelegate() {
+        return SkinAppCompatDelegateImpl.get(this, this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            EventUtils.unregist(this);
+        }catch (Exception e){
+            e.getMessage();
+        }
+
+    }
 }

@@ -28,10 +28,11 @@ import com.robam.roki.listener.OnRecyclerViewItemClickListener;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.JsonUtils;
 import com.robam.roki.utils.ToolUtils;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 //import com.google.android.gms.analytics.Tracker;
 
@@ -72,7 +73,7 @@ public class StoveQuicklyAdapter extends RecyclerView.Adapter<StoveQuicklyViewHo
     @Override
     public StoveQuicklyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_stove_quickly_page, parent, false);
-
+        ScreenAdapterTools.getInstance().loadView(view);
         StoveQuicklyViewHolder stoveQuicklyViewHolder = new StoveQuicklyViewHolder(view);
         stoveQuicklyViewHolder.iv_stove_button_right.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,17 +100,17 @@ public class StoveQuicklyAdapter extends RecyclerView.Adapter<StoveQuicklyViewHo
             String functionCode = mDeviceConfigurationFunctions.get(i).functionCode;
             if ("auxiliaryLeftHeadOff".equals(functionCode)) {
                 if (mStove.leftHead.status == StoveStatus.Off || mStove.leftHead.status == StoveStatus.StandyBy) {
-                    Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_stove_button_left);
+                    Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_stove_button_left);
                 } else {
-                    Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_stove_button_left);
+                    Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_stove_button_left);
                 }
 
                 holder.iv_stove_button_left.setTag(R.id.tag_stove_quickly_btn_left, functionCode);
             } else if ("auxiliaryRightHeadOff".equals(functionCode)) {
                 if (mStove.rightHead.status == StoveStatus.Off || mStove.rightHead.status == StoveStatus.StandyBy) {
-                    Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_stove_button_right);
+                    Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_stove_button_right);
                 } else {
-                    Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_stove_button_right);
+                    Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_stove_button_right);
                 }
                 holder.iv_stove_button_right.setTag(R.id.tag_stove_quickly_btn_right, functionCode);
             } else if ("auxiliaryLeftHeadGear".equals(functionCode)) {
@@ -127,10 +128,10 @@ public class StoveQuicklyAdapter extends RecyclerView.Adapter<StoveQuicklyViewHo
                     holder.tv_fire_desc_left.setText(tips);
                     if (mStove.leftHead.status == StoveStatus.Off || mStove.leftHead.status == StoveStatus.StandyBy) {
                         holder.tv_fire_left.setTextColor(mContext.getResources().getColor(R.color.c64));
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_fire_left);
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_fire_left);
                     } else {
                         holder.tv_fire_left.setTextColor(mContext.getResources().getColor(R.color.c31));
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_fire_left);
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_fire_left);
                     }
                     holder.tv_stove_left_name.setText(mDeviceConfigurationFunctions.get(i).functionName);
                 }
@@ -150,10 +151,10 @@ public class StoveQuicklyAdapter extends RecyclerView.Adapter<StoveQuicklyViewHo
                     holder.tv_fire_desc_right.setText(tips);
                     if (mStove.rightHead.status == StoveStatus.Off || mStove.rightHead.status == StoveStatus.StandyBy) {
                         holder.tv_fire_right.setTextColor(mContext.getResources().getColor(R.color.c64));
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_fire_right);
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImg).into(holder.iv_fire_right);
                     } else {
                         holder.tv_fire_right.setTextColor(mContext.getResources().getColor(R.color.c31));
-                        Glide.with(mContext).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_fire_right);
+                        Glide.with(cx).load(mDeviceConfigurationFunctions.get(i).backgroundImgH).into(holder.iv_fire_right);
                     }
                     holder.tv_stove_right_name.setText(mDeviceConfigurationFunctions.get(i).functionName);
                 }
@@ -182,7 +183,7 @@ public class StoveQuicklyAdapter extends RecyclerView.Adapter<StoveQuicklyViewHo
 
             final IRokiDialog leftDialog = RokiDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_10);
             leftDialog.setTitleText(R.string.device_stove_off_heat);
-            leftDialog.setContentText(mContext.getString(R.string.device_stove_off_gear));
+            leftDialog.setContentText(cx.getString(R.string.device_stove_off_gear));
             final Stove.StoveHead finalHead = head;
             leftDialog.setOkBtn(R.string.ok_btn, new View.OnClickListener() {
                 @Override
@@ -220,7 +221,7 @@ public class StoveQuicklyAdapter extends RecyclerView.Adapter<StoveQuicklyViewHo
         } else {
             final IRokiDialog rightDialog = RokiDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_10);
             rightDialog.setTitleText(R.string.device_stove_off_heat);
-            rightDialog.setContentText(mContext.getString(R.string.device_stove_off_gear));
+            rightDialog.setContentText(cx.getString(R.string.device_stove_off_gear));
             final Stove.StoveHead finalHead = head;
             rightDialog.setOkBtn(R.string.ok_btn, new View.OnClickListener() {
                 @Override

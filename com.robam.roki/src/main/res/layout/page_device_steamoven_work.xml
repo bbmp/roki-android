@@ -296,6 +296,7 @@
                 android:layout_weight="3">
 <!--水量文字-->
                 <TextView
+                    android:id="@+id/txtVolumn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"

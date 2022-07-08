@@ -9,21 +9,29 @@ public interface SteamOvenOnePowerStatus {
     /**
      * 待机
      */
-    short Wait = 0;
+   public short Wait = 0;
 
     /**
      * 关机
      */
-    short Off = 1;
+    public short Off = 1;
+    /**
+     * 关机
+     */
+    public short Off_NEW = 0;
+    /**
+     * 待机
+     */
+    public short AWAIT = 1;
 
     /**
      * 开机
      */
-    short On = 2;
+    public  short On = 2;
 
     /**
      * 用于判断菜谱关机的指令
      */
-    short RecipeOff = 15;
+    public short RecipeOff = 15;
 
 }

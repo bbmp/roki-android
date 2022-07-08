@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/itemView"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape_recyclerview_item_bg"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/iv_view"
+            android:layout_width="46dp"
+            android:layout_height="43dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp" />
+
+
+        <RelativeLayout
+            android:id="@+id/rl_default_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textColor="#1c1c1c"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:gravity="left"
+                android:lines="1"
+                android:textColor="#991c1c1c"
+                android:textSize="14sp"
+                android:layout_below="@id/tv_name"/>
+
+            <ImageView
+                android:id="@+id/img_right_head_tip"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_toRightOf="@id/tv_name"
+                android:src="@mipmap/icon_stove_right_tip"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_work_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:visibility="gone"
+                android:textColor="#1c1c1c"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/tv_work_name_tow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:visibility="gone"
+                android:textColor="#1c1c1c"
+                android:textSize="18sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_state_show"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"/>
+</RelativeLayout>

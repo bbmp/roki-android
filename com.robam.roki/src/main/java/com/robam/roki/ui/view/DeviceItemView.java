@@ -43,8 +43,6 @@ public class DeviceItemView extends FrameLayout {
     TextView txtDesc;
     @InjectView(R.id.imgDevice)
     ImageView imgDevice;
-    @InjectView(R.id.txtModel)
-    TextView txtModel;
     AbsDevice device;
 
     public void setImageDevice(int img_deviceId) {
@@ -59,9 +57,6 @@ public class DeviceItemView extends FrameLayout {
         txtDesc.setText(deviceDesc);
     }
 
-    public void setTxtModel(String deviceModel) {
-        txtModel.setText(deviceModel);
-    }
 
     public DeviceItemView(Context context) {
         super(context);
@@ -138,7 +133,6 @@ public class DeviceItemView extends FrameLayout {
         if (dt.tag != null) {
             txtDesc.setText(dt.tag);
         }
-        txtModel.setText(Utils.getDeviceModel(dt));
 
         if (device instanceof AbsFan) {
             imgDevice.setImageResource(R.mipmap.ic_device_header_fan);

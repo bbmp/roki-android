@@ -1,5 +1,7 @@
 package com.robam.roki.ui.adapter3;
 
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.MultiTransformation;
@@ -33,10 +35,22 @@ public class RvThemePicAdapter extends BaseQuickAdapter<Recipe, BaseViewHolder> 
     protected void convert(@NotNull BaseViewHolder holder, Recipe item) {
         if (item != null) {
             ImageView iv_theme_item_img = (ImageView) holder.getView(R.id.iv_theme_recipe_pic);
-            GlideApp.with(getContext())
-                    .load(RecipeUtils.getRecipeImgUrl(item))
-                    .apply(RequestOptions.bitmapTransform(options))
-                    .into(iv_theme_item_img);
+            ImageView iv_theme_item_img2 = holder.getView(R.id.iv_theme_recipe_pic2);
+            if (holder.getLayoutPosition() < 3) {
+                iv_theme_item_img.setVisibility(View.VISIBLE);
+                iv_theme_item_img2.setVisibility(View.GONE);
+                GlideApp.with(getContext())
+                        .load(RecipeUtils.getRecipeImgUrl(item))
+                        .apply(RequestOptions.bitmapTransform(options))
+                        .into(iv_theme_item_img);
+            } else if (holder.getLayoutPosition() == 3) {
+                iv_theme_item_img.setVisibility(View.GONE);
+                iv_theme_item_img2.setVisibility(View.VISIBLE);
+                GlideApp.with(getContext())
+                        .load(RecipeUtils.getRecipeImgUrl(item))
+                        .apply(RequestOptions.bitmapTransform(options))
+                        .into(iv_theme_item_img2);
+            }
         }
     }
 }

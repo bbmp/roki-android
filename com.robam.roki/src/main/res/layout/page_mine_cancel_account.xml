@@ -4,31 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mine_background"
+    android:background="@drawable/shape_bg_main"
     android:orientation="vertical">
     <View
         android:id="@+id/status_bar_fix"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white" />
-    <com.hjq.bar.TitleBar app:drawableSize="25dp"
-        android:id="@+id/tb_title"
+        android:background="@color/transparent" />
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        app:layout_constraintTop_toBottomOf="@id/status_bar_fix"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#ffffff"
-        app:barStyle="transparent"
-        app:leftIcon="@mipmap/icon_back_black"
-        app:rightSize="18sp"
-        app:titleColor="@color/mine_text_color" />
+        android:layout_height="@dimen/dp_44">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/my_cancel_account"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20" />
+
+    </RelativeLayout>
 
 
     <TextView
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/dp_28"
         android:layout_width="match_parent"
         android:text="亲爱的ROKI用户："
-        android:textColor="#333333"
-        android:textSize="14sp"
-        android:layout_marginStart="20dp"
+        android:textColor="#ff61acff"
+        android:textSize="@dimen/sp_16"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
         android:layout_height="wrap_content"/>
 
     <TextView
@@ -37,41 +53,48 @@
         android:layout_height="wrap_content"
         android:gravity="start"
         android:layout_gravity="start"
-        android:layout_marginStart="20dp"
-        android:textSize="14sp"
-        android:textColor="#666666"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/text_color_net_err"
         android:text="感谢您一直以来的陪伴，注销账户后，ROKI将无法继\n续为您提供以下服务："
         />
     <TextView
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_20"
         android:padding="10dp"
-        android:textSize="14sp"
-        android:textColor="#333333"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/text_color_net_err"
         android:text="1、账户中的设备信息等将被全部清空且无法恢复\n2、账户中的菜谱将被全部清空且无法恢复\n3、账户中的使用记录、厨艺分享等内容将被全部清空且无法恢复"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="#666666"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/text_color_net_err"
         android:text="申请注销表示您自愿永久放弃账户内所有虚拟资产，不可恢复，请您谨慎操作。" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_alignParentBottom="true"
+        <Button
             android:id="@+id/btn_logoff"
-            style="@style/ButtonStyle3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="@string/acc_query_logoff" />
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_28"
+            android:background="@drawable/shape_button_bg"
+            android:text="@string/acc_query_logoff"
+            android:textColor="@color/text_color_exit_login"
+            android:textSize="@dimen/sp_20" />
+
     </RelativeLayout>
 </LinearLayout>

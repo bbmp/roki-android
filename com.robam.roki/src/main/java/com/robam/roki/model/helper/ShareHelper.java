@@ -214,6 +214,13 @@ public class ShareHelper {
         share(cx, platKey, sp);
     }
 
+    public static void shareImageMutil(Context cx, String platKey, String imgPath){
+        Platform.ShareParams sp = new Platform.ShareParams();
+        sp.setShareType(Platform.SHARE_IMAGE);
+        sp.setImagePath(imgPath);
+        share(cx, platKey, sp);
+    }
+
     static public void shareImageFromWeb(Context cx, String platKey, String imgUrl) {
         Platform.ShareParams sp = new Platform.ShareParams();
         sp.setShareType(Platform.SHARE_IMAGE);

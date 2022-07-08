@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_20"
+    android:layout_marginEnd="@dimen/dp_20"
+    android:background="@drawable/shape_kitchen_bg_round"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_68">
+
+        <TextView
+            android:id="@+id/tv_linkage_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:textColor="@color/text_color_device_category"
+            android:textSize="@dimen/sp_20"
+            tools:text="烟灶联动" />
+
+        <com.robam.widget.view.SwitchButton
+            android:id="@+id/sb_linkage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            tools:ignore="MissingClass,RelativeOverlap" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_relation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_mode" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:paddingEnd="@dimen/dp_20"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_relation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:text="关联产品"
+                android:textColor="@color/text_color_device_category"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tv_child_device"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="暂无关联产品"
+                android:gravity="end"
+                android:textColor="@color/text_color_device_category"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/iv_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:src="@mipmap/ic_arrow_right"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:background="@color/line_mode" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55">
+
+            <TextView
+                android:id="@+id/tv_linkage_funtion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_20"
+                android:text="关联产品"
+                android:textColor="@color/text_color_device_category"
+                android:textSize="@dimen/sp_12" />
+
+            <com.robam.widget.view.SwitchButton
+                android:id="@+id/sb_linkage_funtion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dp_20"
+                tools:ignore="RelativeOverlap" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

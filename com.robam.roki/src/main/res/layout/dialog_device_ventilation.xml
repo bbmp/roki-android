@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_400"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/shape_dialog_bg">
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_28"
+        android:text="通风换气"
+        android:textColor="@color/text_color_device_category"
+        android:textSize="@dimen/sp_20" />
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_1"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/text_color_gray"
+        android:textSize="@dimen/sp_16"
+        tools:text="开始最小风量3分钟净化" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_44"
+        android:layout_below="@id/tv_1">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_64"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:background="@drawable/shape_select_time" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_device_func"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_botton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="@dimen/dp_166"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color_device_category"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:textSize="@dimen/sp_20"
+            android:text="取消"
+            android:background="@drawable/device_button_bg_cancel"/>
+
+        <Button
+            android:id="@+id/btn_complete"
+            android:layout_width="@dimen/dp_166"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_select_color"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:textSize="@dimen/sp_20"
+            android:text="确认"
+            android:background="@drawable/device_button_bg_confim"/>
+    </LinearLayout>
+</RelativeLayout>
+

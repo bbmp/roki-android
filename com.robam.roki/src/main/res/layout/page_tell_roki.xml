@@ -61,12 +61,12 @@
             android:layout_marginEnd="13dp"
 
             android:padding="5dp"
-            android:background="@drawable/shape_white_round">
+            android:background="@drawable/shape_kitchen_bg_round_night">
             <EditText
                 android:id="@+id/et_say_sth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_white_round"
+                android:background="@drawable/shape_kitchen_bg_round_night"
                 android:gravity="top"
                 android:hint="@string/home_tell_roki_desc"
                 android:textSize="14sp"
@@ -97,7 +97,7 @@
             android:id="@+id/et_cellphone"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/shape_white_round"
+            android:background="@drawable/shape_kitchen_bg_round_night"
             android:hint="@string/home_tell_roki_your_cellphone"
             android:layout_marginStart="14dp"
             android:layout_marginEnd="13dp"

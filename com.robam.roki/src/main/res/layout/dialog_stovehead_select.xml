@@ -2,60 +2,66 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0f0f0"
-    android:orientation="vertical"
-    >
+    android:background="@drawable/common_dialog_bottom_bg_with_top_20corner"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/desc_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="即将开火，请选择您要使用的炉头"
+            android:text="请确认工作炉头"
             android:layout_marginStart="25dp"
             android:textSize="16sp"
             android:textColor="#666666"
-            />
+            android:gravity="center"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@drawable/shape_diglog_bg"
-        android:orientation="horizontal"
+        android:layout_centerInParent="true"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
+        android:background="@drawable/shape_diglog_bg"
         android:gravity="center"
-        >
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
+
             <RelativeLayout
                 android:id="@+id/left_stove"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:background="@drawable/shape__bg_999"
-                        android:text="左灶"
-                        android:textSize="20sp"
-                        android:textColor="#000000"
-                        />
+                <ImageView
+                    android:id="@+id/img_left_header"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/ic_left_off" />
 
+                <TextView
+                    android:id="@+id/tv_intellect_tip"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img_left_header"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_40"
+                    android:gravity="center"
+                    android:text="非智能炉头\n不支持此功能"
+                    android:textColor="#C0C0C0"
+                    android:textSize="@dimen/sp_12"
+                    android:visibility="gone" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -63,23 +69,19 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
 
             <RelativeLayout
                 android:id="@+id/right_stove"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+
+                <ImageView
+                    android:id="@+id/img_right_header"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:background="@drawable/shape__bg_999"
-                    android:text="右灶"
-                    android:textSize="20sp"
-                    android:textColor="#000000"
-                    />
+                    android:src="@mipmap/ic_right_off" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -90,22 +92,23 @@
 
 
     <View
+        android:id="@+id/view_id"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#E0E0E0"
-        />
+        android:visibility="gone"/>
 
     <TextView
-        android:layout_alignParentBottom="true"
         android:id="@+id/cannel"
         android:layout_width="match_parent"
         android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
         android:text="取消"
         android:textColor="#666666"
         android:textSize="14sp"
-        android:gravity="center"
-        />
+        android:visibility="gone"/>
 
 </RelativeLayout>

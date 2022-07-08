@@ -24,6 +24,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnItemLongClickListener;
 import com.google.common.collect.Lists;
 import com.hjq.bar.OnTitleBarListener;
+import com.hjq.toast.ToastUtils;
 import com.legent.plat.Plat;
 import com.legent.plat.events.PageBackEvent;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -32,11 +33,11 @@ import com.legent.utils.EventUtils;
 import com.legent.utils.JsonUtils;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.PreferenceUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.pojos.Recipe;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatus;
 import com.robam.roki.R;
+import com.robam.roki.broadcast.RecipeStep;
 import com.robam.roki.db.model.CookingStepsModel;
 import com.robam.roki.db.model.RecipeBean;
 import com.robam.roki.db.model.RecipeStepBean;
@@ -178,7 +179,7 @@ public class Multi610EditDetailPage extends MyBasePage<MainActivity> {
             @Override
             public void onClick(View v) {
                 if (rv610StepAdapter.getItemCount() >= 4){
-                    ToastUtils.showShort("多段步骤只能添加三步");
+                    ToastUtils.show("多段步骤只能添加三步");
                     return;
                 }
                 selectStep(-1);
@@ -251,7 +252,7 @@ public class Multi610EditDetailPage extends MyBasePage<MainActivity> {
                 rv610StepAdapter.addData(firstRecipe.getRecipeStepList());
                 recipeName.setText(firstRecipe.getRecipe_names());
 //                recipeName.setEnabled(false);
-                multiInfo.setText("共" + strings[firstRecipe.getRecipeStepList().size()]+"段 " + firstRecipe.getRecipeStepTimes() + "min");
+                multiInfo.setText( firstRecipe.getRecipeStepTimes() + "min");
             }
 
         }
@@ -263,14 +264,14 @@ public class Multi610EditDetailPage extends MyBasePage<MainActivity> {
     public void onClick(View view) {
         if (view == btnAutomatic){
             if (StringUtil.isEmpty(recipeName.getText().toString())){
-                ToastUtils.showShort("请输入菜谱名称");
+                ToastUtils.show("请输入菜谱名称");
                 return;
             }
             if (recipeId != -1){
                 ContentValues values = new ContentValues();
                 values.put("recipe_names", recipeName.getText().toString());
                 LitePal.update(RecipeBean.class , values , recipeId) ;
-                ToastUtils.showShort("保存成功");
+                ToastUtils.show("保存成功");
                 UIService.getInstance().popBack();
                 return;
             }
@@ -285,7 +286,7 @@ public class Multi610EditDetailPage extends MyBasePage<MainActivity> {
                 bean.setRecipebean(recipeBean);
                 bean.save();
             }
-            ToastUtils.showShort("保存成功");
+            ToastUtils.show("保存成功");
             UIService.getInstance().popBack();
         }
     }
@@ -340,7 +341,7 @@ public class Multi610EditDetailPage extends MyBasePage<MainActivity> {
                         rv610StepAdapter.addData(recipeStepBean);
                     }
                     firstRecipe = LitePal.where("id = ?", recipeId + "").findFirst(RecipeBean.class);
-                    multiInfo.setText("共" + strings[firstRecipe.getRecipeStepList().size()]+"段 " + firstRecipe.getRecipeStepTimes() + "min");
+                    multiInfo.setText(firstRecipe.getRecipeStepTimes() + "min");
                 }else {
                     if (position != -1){
                         rv610StepAdapter.setData(position , recipeStepBean);

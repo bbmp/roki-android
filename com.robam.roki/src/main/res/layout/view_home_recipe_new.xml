@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/test"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -71,7 +72,7 @@
 
     </LinearLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:id="@+id/view_home_recipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -79,7 +80,8 @@
         android:background="@color/white"
         android:cacheColorHint="#00000000"
         android:listSelector="#00000000"
-        android:overScrollMode="never">
+        android:overScrollMode="never"
+        app:ptrShowIndicator="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,6 +90,7 @@
 
             <!--主题-->
             <com.youth.banner.Banner
+                android:id="@+id/recipethemebanner"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginLeft="16dp"
@@ -447,6 +450,6 @@
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
 </RelativeLayout>

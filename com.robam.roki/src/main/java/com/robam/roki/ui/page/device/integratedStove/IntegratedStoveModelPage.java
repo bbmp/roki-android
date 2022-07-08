@@ -19,6 +19,8 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
+
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -26,7 +28,6 @@ import com.legent.ui.IForm;
 import com.legent.ui.UIService;
 import com.legent.utils.JsonUtils;
 import com.legent.utils.LogUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.IntegStoveStatusChangedEvent;
 import com.robam.common.pojos.device.integratedStove.AbsIntegratedStove;
 import com.robam.common.pojos.device.integratedStove.IntegStoveStatus;
@@ -47,10 +48,10 @@ import com.robam.roki.ui.dialog.type.DialogType_Time;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.page.login.MyBasePage;
 import com.robam.roki.ui.view.wheelview.LoopView;
-import com.robam.roki.ui.widget.layout.SettingBar;
-import com.robam.roki.ui.widget.view.SwitchButton;
 import com.robam.roki.utils.DateUtil;
 import com.robam.roki.utils.ToolUtils;
+import com.robam.widget.layout.SettingBar;
+import com.robam.widget.view.SwitchButton;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -152,8 +153,8 @@ public class IntegratedStoveModelPage extends MyBasePage<MainActivity> {
         if (mIntegratedStove == null) {
             return;
         }
-        mIntegratedStove = event.pojo;
         if (mIntegratedStove.getID().equals(event.pojo.getID())) {
+            mIntegratedStove = event.pojo;
             if (mIntegratedStove.workState != IntegStoveStatus.workState_free && mIntegratedStove.workState != IntegStoveStatus.workState_complete) {
                 UIService.getInstance().popBack();
                 UIService.getInstance().postPage(PageKey.IntegratedStoveWorkPage, getArguments());
@@ -213,7 +214,7 @@ public class IntegratedStoveModelPage extends MyBasePage<MainActivity> {
 
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(cx, 4, RecyclerView.VERTICAL, false));
-        mDeviceModelAdapter = new Rv610ModeAdapter(cx);
+        mDeviceModelAdapter = new Rv610ModeAdapter();
         mRecyclerView.setAdapter(mDeviceModelAdapter);
         mDeviceModelAdapter.addData(mDeviceSelectModelList);
         mDeviceModelAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -455,19 +456,19 @@ public class IntegratedStoveModelPage extends MyBasePage<MainActivity> {
         SteamOvenFaultEnum faultEnum = SteamOvenFaultEnum.match(mIntegratedStove.faultCode);
         if (SteamOvenFaultEnum.NO_FAULT != faultEnum) {
             if (faultEnum != null) {
-                ToastUtils.showShort(SteamOvenFaultEnum.match(mIntegratedStove.faultCode).getValue());
+                ToastUtils.show(SteamOvenFaultEnum.match(mIntegratedStove.faultCode).getValue());
             }else {
-                ToastUtils.showShort("设备端故障未处理，请及时处理");
+                ToastUtils.show("设备端故障未处理，请及时处理");
             }
             return;
         }
         if (SteamOvenHelper.isWork(mIntegratedStove.workState)) {
-            ToastUtils.showShort("设备已占用");
+            ToastUtils.show("设备已占用");
             return;
         }
         //门已打开 而且不能开门工作
         if (!SteamOvenHelper.isDoorState(mIntegratedStove.doorState) && !SteamOvenHelper.isOpenDoorWork(SteamOvenModeEnum.match(mSteamModel)) ){
-            ToastUtils.showShort("门未关好，请检查并确认关好门");
+            ToastUtils.show("门未关好，请检查并确认关好门");
             return;
         }
 
@@ -476,15 +477,15 @@ public class IntegratedStoveModelPage extends MyBasePage<MainActivity> {
          */
         if (SteamOvenHelper.isWater(SteamOvenModeEnum.match(mSteamModel))) {
             if (SteamOvenHelper.isDescale(mIntegratedStove.descaleFlag)) {
-                ToastUtils.showShort("设备需要除垢后才能继续工作，请先除垢");
+                ToastUtils.show("设备需要除垢后才能继续工作，请先除垢");
                 return;
             }
             if (!SteamOvenHelper.isWaterBoxState(mIntegratedStove.waterBoxState)) {
-                ToastUtils.showShort("水箱已弹出，请检查水箱状态");
+                ToastUtils.show("水箱已弹出，请检查水箱状态");
                 return;
             }
             if (!SteamOvenHelper.isWaterLevelState(mIntegratedStove.waterLevelState)) {
-                ToastUtils.showShort("水箱缺水，请加水");
+                ToastUtils.show("水箱缺水，请加水");
                 return;
             }
         }
@@ -510,18 +511,17 @@ public class IntegratedStoveModelPage extends MyBasePage<MainActivity> {
         LogUtils.i("20180731", " temp:" + temp + " time:" + time);
         final short newTemp = Short.parseShort(temp);
         final short newTime = Short.parseShort(time);
-        final int ordertime_min;
-        final int ordertime_hour;
+         int ordertime_min;
+         int ordertime_hour;
+         int ordertime = 0 ;
         //是否预约
-//        if (sbOrderSwitch.isChecked()) {
-//            ordertime_min = HelperRikaData.getMinGap(orderDate);
-//            ordertime_hour = HelperRikaData.getHousGap(orderDate);
-//        } else {
-//            ordertime_min = 255;
-//            ordertime_hour = 255;
-//        }
+        if (sbOrderSwitch.isChecked()) {
+            ordertime_min = HelperRikaData.getMinGap(orderDate);
+            ordertime_hour = HelperRikaData.getHousGap(orderDate);
+            ordertime = ordertime_hour * 3600 + ordertime_min * 60 ;
+        }
         assert mIntegratedStove != null;
-        mIntegratedStove.setSteameOvenOneRunMode((short) mSteamModel, newTime, newTemp, (short) 0, (short) steam, new VoidCallback() {
+        mIntegratedStove.setSteameOvenOneRunMode((short) mSteamModel, newTime, newTemp, ordertime, (short) steam, new VoidCallback() {
             @Override
             public void onSuccess() {
                 LogUtils.i("sendNew", "成功");

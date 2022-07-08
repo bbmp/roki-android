@@ -26,6 +26,7 @@ import com.robam.roki.model.bean.FanMainParams;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by 14807 on 2018/4/8.
@@ -107,36 +108,36 @@ public class FanMainFuncAdapter extends BaseAdapter {
             viewHolder.mTvModelName.setText(mDeviceConfigurationFunctions.get(position).functionName);
             if ("fry".equals(mDeviceConfigurationFunctions.get(position).functionCode)) {
                 if (mLevel > AbsFan.PowerLevel_3 && mLevel <= AbsFan.PowerLevel_6) {
-                    Glide.with(mContext)
+                    Glide.with(cx)
                             .load(mDeviceConfigurationFunctions.get(position).backgroundImgH)
 //                            .crossFade()
                             .into(viewHolder.mIvModelImg);
                 } else {
-                    Glide.with(mContext)
+                    Glide.with(cx)
                             .load(mDeviceConfigurationFunctions.get(position).backgroundImg)
 //                            .crossFade()
                             .into(viewHolder.mIvModelImg);
                 }
             } else if ("decoct".equals(mDeviceConfigurationFunctions.get(position).functionCode)) {
                 if (mLevel == AbsFan.PowerLevel_3) {
-                    Glide.with(mContext)
+                    Glide.with(cx)
                             .load(mDeviceConfigurationFunctions.get(position).backgroundImgH)
 //                            .crossFade()
                             .into(viewHolder.mIvModelImg);
                 } else {
-                    Glide.with(mContext)
+                    Glide.with(cx)
                             .load(mDeviceConfigurationFunctions.get(position).backgroundImg)
 //                            .crossFade()
                             .into(viewHolder.mIvModelImg);
                 }
             } else if ("stew".equals(mDeviceConfigurationFunctions.get(position).functionCode)) {
                 if (mLevel == AbsFan.PowerLevel_1 || mLevel == AbsFan.PowerLevel_2) {
-                    Glide.with(mContext)
+                    Glide.with(cx)
                             .load(mDeviceConfigurationFunctions.get(position).backgroundImgH)
 //                            .crossFade()
                             .into(viewHolder.mIvModelImg);
                 } else {
-                    Glide.with(mContext)
+                    Glide.with(cx)
                             .load(mDeviceConfigurationFunctions.get(position).backgroundImg)
 //                            .crossFade()
                             .into(viewHolder.mIvModelImg);

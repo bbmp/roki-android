@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/waterpurifier_alarm"
+
+    android:baselineAligned="false">
+
+    <ImageView
+        android:id="@+id/water_leak"
+        android:layout_marginTop="68dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/img_waterpurifier_leak"
+        />
+    <LinearLayout
+        android:id="@+id/water_ll"
+        android:layout_below="@id/water_leak"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_marginLeft="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/img_waterpurifier_alarm"
+            />
+        <TextView
+            android:layout_marginLeft="3dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:lines="2"
+            android:textColor="#ffffff"
+            android:text="检测到净水器附近有漏水, 已启动智能漏水保护."
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/water_alarm_tip"
+        android:layout_below="@id/water_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="16dp"
+        android:textColor="#fe0e0e"
+        android:text="请检查漏水情况，并拨打一键售后咨询。"
+        />
+
+
+    <Button
+        android:id="@+id/water_alarm_btn"
+        android:layout_width="171dp"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:text="一键售后"
+        android:textSize="15sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:background="#f55821"
+
+        />
+
+</RelativeLayout>

@@ -76,6 +76,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/relTitle"
@@ -83,6 +84,7 @@
         android:background="@color/c03">
         <!--请开启下方的  -->
         <LinearLayout
+            android:id="@+id/llNoticeStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -99,6 +101,7 @@
                 android:textSize="18sp" />
 
             <ImageView
+                android:id="@+id/imgNoticeStart"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"

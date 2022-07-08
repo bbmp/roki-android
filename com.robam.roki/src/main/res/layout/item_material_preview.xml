@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+
+    android:layout_marginTop="@dimen/dp_3"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/item_material_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="鸡蛋"
+        android:textSize="@dimen/sp_15" />
+
+    <TextView
+        android:id="@+id/item_material_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_16"
+        android:text="鸡蛋"
+        android:textColor="#8020292E"
+        android:textSize="@dimen/sp_15" />
+</RelativeLayout>

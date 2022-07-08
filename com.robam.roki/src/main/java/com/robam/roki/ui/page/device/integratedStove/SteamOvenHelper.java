@@ -18,8 +18,23 @@ public class SteamOvenHelper {
           || modeEnum == SteamOvenModeEnum.ZHIKONGZHENG
           || modeEnum == SteamOvenModeEnum.JIASHIBEIKAO
           || modeEnum == SteamOvenModeEnum.SHAJUN
+                ||modeEnum==SteamOvenModeEnum.JIASHIQIANGSHAOKAO
           || modeEnum == SteamOvenModeEnum.JIEDONG
           || modeEnum == SteamOvenModeEnum.FAJIAO
+           ||modeEnum==SteamOvenModeEnum.JIASHIFENGBEIKAO
+                || modeEnum == SteamOvenModeEnum.SHOUDONGJIASHIKAO
+        ){
+            return true ;
+        }
+        return false ;
+    }
+
+
+    public static boolean isMicro(SteamOvenModeEnum modeEnum){
+        if (modeEnum == SteamOvenModeEnum.WEIBO
+                || modeEnum == SteamOvenModeEnum.WEIBOKAO
+                || modeEnum == SteamOvenModeEnum.WEIBOZHENG
+
         ){
             return true ;
         }
@@ -82,7 +97,7 @@ public class SteamOvenHelper {
      * @return true 可以
      */
     public static boolean isOpenDoorWork(SteamOvenModeEnum modeEnum){
-        if ( modeEnum == SteamOvenModeEnum.GANZAO
+        if ( modeEnum == SteamOvenModeEnum.GANZAO||modeEnum == SteamOvenModeEnum.CHUGOU
         ){
             return true ;
         }
@@ -120,6 +135,20 @@ public class SteamOvenHelper {
     public static boolean isPause(short state){
         if (state ==  IntegStoveStatus.workState_preheat_time_out
                 || state ==  IntegStoveStatus.workState_work_time_out
+        ){
+            return true ;
+        }else{
+            return false ;
+        }
+    }
+
+    /**
+     * 判断是否预约
+     * @param state
+     * @return
+     */
+    public static boolean isOrder(short state){
+        if (state ==  IntegStoveStatus.workState_order
         ){
             return true ;
         }else{
@@ -169,9 +198,9 @@ public class SteamOvenHelper {
      */
     public static boolean isShowSteam(short mode){
         SteamOvenModeEnum match = SteamOvenModeEnum.match(mode);
-        if (match == SteamOvenModeEnum.ZHIKONGZHENG
-
-        ){
+        if (match == SteamOvenModeEnum.ZHIKONGZHENG||match ==SteamOvenModeEnum.JIASHIFENGBEIKAO||match ==SteamOvenModeEnum.JIASHIFENGBEIKAO
+               || match ==SteamOvenModeEnum.JIASHIQIANGSHAOKAO||match ==SteamOvenModeEnum.JIASHIQIANGSHAOKAO||match==SteamOvenModeEnum.JIASHIBEIKAO
+        ||match ==SteamOvenModeEnum.JIASHISHAOKAO){
             return true ;
         }else {
             return false ;

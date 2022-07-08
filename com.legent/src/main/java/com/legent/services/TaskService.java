@@ -117,6 +117,9 @@ public class TaskService extends AbsService {
 		return scheduledService.schedule(runnable, period, unit);
 	}
 
+
+	private ScheduledFuture<?> scheduledFuture;
+
 	/**
 	 * 以固定周期频率执行任务 当执行任务的时间大于我们指定的间隔时间时，它并不会在指定间隔时开辟一个新的线程并发执行这个任务。而是等待该线程执行完毕。
 	 *
@@ -124,7 +127,9 @@ public class TaskService extends AbsService {
 	public ScheduledFuture<?> scheduleAtFixedRate(Runnable runnable,
 			long initialDelay, long period, TimeUnit unit) {
 		return scheduledService.scheduleAtFixedRate(runnable, initialDelay,
-				period, unit);
+					period, unit);
+
+
 	}
 
 	/**

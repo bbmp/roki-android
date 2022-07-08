@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mine_white_background">
+        <View
+            android:id="@+id/status_bar_fix"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#00ffffff" />
+        <include
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            android:layout_below="@id/status_bar_fix"
+            layout="@layout/title_layout_device_function"
+
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_function"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/title" />
+
+
+
+</RelativeLayout>
+

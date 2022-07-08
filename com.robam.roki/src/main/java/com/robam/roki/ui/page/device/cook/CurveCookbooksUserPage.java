@@ -1,19 +1,26 @@
 package com.robam.roki.ui.page.device.cook;
 
+import static com.blankj.utilcode.util.ViewUtils.runOnUiThread;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -28,15 +35,34 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 import com.google.common.collect.Maps;
+import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
+import com.legent.Callback;
+import com.legent.VoidCallback;
+import com.legent.plat.pojos.RCReponse;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.BasePage;
+import com.legent.ui.ext.dialogs.ProgressDialogHelper;
+import com.legent.utils.EventUtils;
+import com.robam.common.events.HomeRecipeViewEvent;
+import com.robam.common.events.SteamOvenOneStatusChangedEvent;
+import com.robam.common.io.cloud.Reponses;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.PayLoadCookBook;
+import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
+import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatus;
+import com.robam.common.pojos.device.steameovenone.SteamOvenOneWorkStatus;
+import com.robam.common.services.CookbookManager;
 import com.robam.roki.R;
+import com.robam.roki.model.bean.LineChartDataBean;
+import com.robam.roki.ui.page.device.steamovenone.CurveCookBooksHView;
+import com.robam.roki.ui.page.device.steamovenone.CurveCookBooksVView;
 import com.robam.roki.ui.view.LineChartMarkView;
 import com.robam.roki.ui.view.recipeclassify.GlideImageLoader;
+import com.robam.roki.utils.chart.ChartDataReviseUtil;
 import com.robam.roki.utils.chart.DynamicLineChartManager;
-//import com.youth.banner.Banner;
+import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,8 +83,8 @@ public class CurveCookbooksUserPage extends BasePage {
     ImageView ivBack;
     @InjectView(R.id.tv_device_model_name)
     TextView tvDeviceModelName;
-//    @InjectView(R.id.recipethemebanner)
-//    Banner banner;
+    @InjectView(R.id.recipethemebanner)
+    Banner banner;
     @InjectView(R.id.tv_voice_long)
     TextView tvVoiceLong;
     @InjectView(R.id.ll_voice_long)
@@ -69,29 +95,48 @@ public class CurveCookbooksUserPage extends BasePage {
     Button btnSuspend;
     @InjectView(R.id.btn_finish)
     Button btnFinish;
+    @InjectView(R.id.img_screen)
+    ImageView img_screen;
+    @InjectView(R.id.contain)
+    FrameLayout contain;
 
     private PayLoadCookBook mPayLoadCookBook;
-    List<Entry> entryList;
-    private List<Integer> list = new ArrayList<>();
-    private LineDataSet lineDataSet;
-    private List<ILineDataSet> lineDataSets = new ArrayList<>();
-    private LineData lineData;
-    private YAxis leftAxis;
-    private YAxis rightAxis;
-    private XAxis xAxis;
-    private YAxis yAxis;
-
-    private boolean isSuspend = false;
-    private List<Integer> xValue = new ArrayList<>();
-    private List<Integer> yValue = new ArrayList<>();
-
     private DynamicLineChartManager dm;
+    private final int GET_LAND_PARAMS = 888;// 横屏
+    private final int GET_PORT_PARAMS = 999; // 竖屏
+
+    private CurveCookBooksHView curveCookBooksHView;
+    private CurveCookBooksVView curveCookBooksVView;
+    Handler mHandler = new MyHandler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case GET_LAND_PARAMS:
+                    ToastUtils.show("我要换横屏");
+//                    ((Activity) cx).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+//                    contain.getChildAt(0).setVisibility(View.INVISIBLE);
+//                    contain.getChildAt(1).setVisibility(View.VISIBLE);
+
+                    break;
+                case GET_PORT_PARAMS:
+                    ToastUtils.show("我要换竖屏");
+//                    ((Activity) cx).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+//                    contain.getChildAt(0).setVisibility(View.VISIBLE);
+//                    contain.getChildAt(1).setVisibility(View.INVISIBLE);
+
+                    break;
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle bd = getArguments();
         mPayLoadCookBook = bd == null ? null : (PayLoadCookBook) bd.getSerializable("Item");
-        View view = inflater.inflate(R.layout.curve_cook_books_user_page, container, false);
+        View view = inflater.inflate(R.layout.curve_cook_books_user_page_contain, container, false);
         ButterKnife.inject(this, view);
         dm = new DynamicLineChartManager(cookChart, cx);
         initData();
@@ -100,114 +145,95 @@ public class CurveCookbooksUserPage extends BasePage {
     }
 
     private void initData() {
-        String temperature = mPayLoadCookBook.curveCookbookDto.temperatureCurveParams;
-        temperature = temperature.substring(1, temperature.indexOf("}"));
-        String str[] = temperature.split(",");
-        Map<String, String> map = Maps.newHashMap();
-        for (int i = 0; i < str.length; i++) {
-            map.put(str[i].split(":")[0].trim(), str[i].split(":")[1].trim());
-        }
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            System.out.println("key = " + entry.getKey() + ", value = " + entry.getValue());
-            xValue.add(Integer.parseInt(entry.getKey().replace("\"", "")));
-            yValue.add(Integer.parseInt(entry.getValue().replace("\"", "")));
-        }
-        Collections.sort(xValue);
-        Collections.sort(yValue);
+//        CookbookManager.getInstance().cookingCurveSave(String deviceCategoryCode, String deviceGuid, String devicePlatformCode, String deviceTypeCode, int id, String mode, String modeName, String setTemp, String setTime,
+//                new VoidCallback() {
+//            @Override
+//            public void onSuccess() {
+//                ProgressDialogHelper.setRunning(cx, false);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                ProgressDialogHelper.setRunning(cx, false);
+//                com.legent.utils.api.ToastUtils.showThrowable(t);
+//            }                UIService.getInstance().postPage(PageKey.AbsSteamOvenWorkingCurve925, bd);
+//        });
+
     }
 
     private void initView() {
-        List<String> imageUrls = new ArrayList<String>();
-        if (mPayLoadCookBook != null) {
-            for (int i = 0; i < mPayLoadCookBook.curveCookbookPrepareStepDtos.size(); i++) {
-                imageUrls.add(mPayLoadCookBook.curveCookbookPrepareStepDtos.get(i).image);
+        curveCookBooksHView=new CurveCookBooksHView(cx,mPayLoadCookBook);
+        contain.addView(curveCookBooksHView);
+        curveCookBooksHView.setOnClickChangePageLister(
+                new CurveCookBooksHView.OnClickChangePage() {
+                    @Override
+                    public void onclickChange(int VIndex) {
+                        ToastUtils.show("1111111111111");
+//                        mHandler.sendEmptyMessage(GET_PORT_PARAMS);
+                        ((Activity) cx).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        contain.getChildAt(0).setVisibility(View.INVISIBLE);
+                        contain.getChildAt(1).setVisibility(View.VISIBLE);
+
+                    }
+                }
+        );
+        curveCookBooksVView=new CurveCookBooksVView(cx,mPayLoadCookBook);
+        contain.addView(curveCookBooksVView);
+        curveCookBooksVView.setOnClickChangePageLister(new CurveCookBooksVView.OnClickChangePage() {
+            @Override
+            public void onclickChange(int VIndex) {
+                ToastUtils.show("2222222");
+//                mHandler.sendEmptyMessage(GET_LAND_PARAMS);
+                ((Activity) cx).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                contain.getChildAt(0).setVisibility(View.VISIBLE);
+                contain.getChildAt(1).setVisibility(View.INVISIBLE);
             }
-//            banner.setImages(imageUrls)
-//                    .setImageLoader(new GlideImageLoader())
-//                    .start();
-//            banner.setDelayTime(3500);
-        }
 
-        entryList = new ArrayList<>(); //数据集合
-//        for (int i = 0; i < 40; i++) {
-//            list.add((int) (Math.random() * 150) + 80);
-//            entryList.add(new Entry(i, list.get(i)));
-//        }
-        for (int i = 0; i < xValue.size(); i++) {
-            entryList.add(new Entry(xValue.get(i), yValue.get(i)));
-        }
-        dm.initLineDataSet("烹饪曲线",getResources().getColor(R.color.line_chart_easy),entryList,false);
+        });
 
-        singleLine.add(new Entry(100, 0));
-        singleLine.add(new Entry(100, 150));
+
+//        dm.initLineDataSet("烹饪曲线", getResources().getColor(R.color.line_chart_easy), entryList, false);
+//        dm.initLineDataSet("烹饪曲线", getResources().getColor(R.color.line_chart_deep), drawList, true);
+//
+//        singleLine.add(new Entry(10, 0));
+//        singleLine.add(new Entry(10, 150));
     }
-    List<Entry> singleLine=new ArrayList<>();
-    @OnClick({R.id.iv_back, R.id.ll_voice_long, R.id.btn_suspend, R.id.btn_finish})
+
+    List<Entry> singleLine = new ArrayList<>();
+
+    @OnClick({R.id.iv_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 UIService.getInstance().popBack();
                 break;
-            case R.id.ll_voice_long:
-                addEntry();
-                break;
-            case R.id.btn_suspend:
-                if (isSuspend) {
-                    isSuspend = false;
-                } else {
-                    isSuspend = true;
-                }
-                break;
-            case R.id.btn_finish:
-                dm.setLowLimitLine(20,"室温");
-                dm.setHightLimitLine(80,"高温",Color.YELLOW);
-                dm.setLeftLimitLine(40,"预热完成");
-                dm.addExtraLine("预热完成+1",getResources().getColor(R.color.line_chart_deep),singleLine);
-
-
-                break;
         }
     }
 
-    //按钮点击添加数据
-    public void addEntry() {
 
-        dm.initLineDataSet("烹饪曲线+1",getResources().getColor(R.color.line_chart_deep),null,true);
-
-        final int[] i = {0};
-        //死循环添加数据
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (i[0] < entryList.size() - 1) {
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    ((Activity) cx).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.d("run:", "run: " + i[0]);
-                            if (!isSuspend) {
-//                                lineDataSet.addEntry(entryList.get(i[0]));
-//                                cookChart.invalidate();
-                                dm.addEntry(entryList.get(i[0]),1);
-                                i[0]++;
-                            }
-
-                        }
-                    });
-                }
-            }
-        }).start();
-
-    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+        ((Activity) cx).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    @Subscribe
+    public void onEvent(SteamOvenOneStatusChangedEvent event) {
+
+        //预热   工作
+        if ((event.pojo.workState == SteamOvenOneWorkStatus.PreHeat &&
+                event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus) || (event.pojo.workState == SteamOvenOneWorkStatus.Working &&
+                event.pojo.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus)) {
+//            steameOven = (AbsSteameOvenOne) event.pojo;
+//            new Entry(dataBeanList.get(i).xValue, dataBeanList.get(i).yValue)
+            curveCookBooksHView.drawPoint((AbsSteameOvenOne) event.pojo);
+            curveCookBooksVView.drawPoint((AbsSteameOvenOne) event.pojo);
+        }
+//        curveCookBooksHView.drawPoint((AbsSteameOvenOne) event.pojo);
+//        curveCookBooksVView.drawPoint((AbsSteameOvenOne) event.pojo);
     }
 
 

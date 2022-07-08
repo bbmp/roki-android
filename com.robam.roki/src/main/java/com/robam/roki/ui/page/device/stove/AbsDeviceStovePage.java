@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,18 +15,23 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.common.base.Objects;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
 import com.legent.plat.constant.IPlatRokiFamily;
 import com.legent.plat.events.DeviceConnectionChangedEvent;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.BackgroundFunc;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -38,6 +44,7 @@ import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.StoveAlarmEvent;
 import com.robam.common.events.StoveStatusChangedEvent;
+import com.robam.common.io.cloud.RokiRestHelper;
 import com.robam.common.pojos.device.IRokiFamily;
 import com.robam.common.pojos.device.Stove.Stove;
 import com.robam.common.services.StoveAlarmManager;
@@ -52,6 +59,8 @@ import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.adapter.DividerItemDecoration;
 import com.robam.roki.ui.adapter.StoveBackgroundFuncAdapter;
 import com.robam.roki.ui.adapter.StoveOtherFuncAdapter;
+import com.robam.roki.ui.dialog.type.DialogType_30;
+import com.robam.roki.ui.form.CookCurveActivity;
 import com.robam.roki.ui.page.device.DeviceCatchFilePage;
 import com.robam.roki.ui.view.SlideLockView;
 import com.robam.roki.utils.DialogUtil;
@@ -97,6 +106,10 @@ public class AbsDeviceStovePage<Device extends Stove> extends DeviceCatchFilePag
     TextView mTvChildLock;
     @InjectView(R.id.rl_lock)
     RelativeLayout mRlLock;
+    @InjectView(R.id.btn_curve_entry)
+    Button btn_curve_entry;
+
+
     private IRokiDialog mStoveLevelAlarm_03;
     Vibrator mVibrator;
     private StoveOtherFuncAdapter mStoveOtherFuncAdapter;
@@ -105,6 +118,16 @@ public class AbsDeviceStovePage<Device extends Stove> extends DeviceCatchFilePag
     private boolean mIsLock;
     private List<DeviceConfigurationFunctions> mBackgroundFuncDeviceConfigurationFunctions;
     private List<DeviceConfigurationFunctions> mMainFunList;
+    private long curveId = 0;
+    DialogType_30 rokiDialog=null;
+
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            mTvDeviceModelName.setText(name);
+        }
+    }
 
 
     Handler mHandler = new Handler() {
@@ -154,6 +177,7 @@ public class AbsDeviceStovePage<Device extends Stove> extends DeviceCatchFilePag
             mRlLock.setVisibility(View.GONE);
         }
         mStoveBackgroundFuncAdapter.onEvent(event);
+        rokiDialog.setStatus(stove);
     }
 
     @Subscribe
@@ -176,6 +200,31 @@ public class AbsDeviceStovePage<Device extends Stove> extends DeviceCatchFilePag
         ButterKnife.inject(this, view);
         initData();
         initWidget();
+        rokiDialog= RokiDialogFactory.createDialogType_30(cx);
+        rokiDialog.setCancelable(true);
+        btn_curve_entry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rokiDialog.setCancelBtn(0, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        ToastUtils.show("左灶开启烹饪曲线", Toast.LENGTH_LONG);
+                        query(0);
+                    }
+                });
+                rokiDialog.setOkBtn(0, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        ToastUtils.show("右灶开启烹饪曲线", Toast.LENGTH_LONG);
+                        rokiDialog.dismiss();
+                        query(1);
+                    }
+                });
+                rokiDialog.show();
+            }
+        });
         return view;
     }
 
@@ -224,7 +273,8 @@ public class AbsDeviceStovePage<Device extends Stove> extends DeviceCatchFilePag
 
         try {
             ModelMap modelMap = deviceResponse.modelMap;
-            mTvDeviceModelName.setText(deviceResponse.title);
+//            mTvDeviceModelName.setText(deviceResponse.title);
+            mTvDeviceModelName.setText(stove.getName() == null ||  stove.getName().equals(stove.getCategoryName()) ? stove.getDispalyType() : stove.getName());
             Glide.with(cx).load(deviceResponse.viewBackgroundImg).into(mIvBg);
             //档位，炉头，模式
             BackgroundFunc backgroundFunc = modelMap.backgroundFunc;
@@ -323,20 +373,110 @@ public class AbsDeviceStovePage<Device extends Stove> extends DeviceCatchFilePag
                     }
                 }
             });
+            mStoveOtherFuncAdapter.setOnClickOpenCurve(new StoveOtherFuncAdapter.OnClickOpenCurve() {
+                @Override
+                public void onClickOpenCurve() {
 
+                    rokiDialog.setCancelBtn(0, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ToastUtils.show("左灶开启烹饪曲线", Toast.LENGTH_LONG);
+//                            cookingCurveSave(0);
+                            query(0);
+                        }
+                    });
+                    rokiDialog.setOkBtn(0, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ToastUtils.show("右灶开启烹饪曲线", Toast.LENGTH_LONG);
+                            rokiDialog.dismiss();
+//                            cookingCurveSave(1);
+                            query(1);
+//                            Bundle bd = new Bundle();
+//                            bd.putString(PageArgumentKey.Guid,stove.getGuid().getGuid());
+//                            bd.putInt(PageArgumentKey.HeadId,1);
+//                            bd.putLong(PageArgumentKey.curveId, curveId);
+//                            UIService.getInstance().postPage(PageKey.DeviceStoveCurve,bd);
+                        }
+                    });
+                    rokiDialog.show();
+
+                }
+            });
             mRecyclerview.setLayoutManager(gridLayoutManager);
             mRecyclerview.setAdapter(mStoveOtherFuncAdapter);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
+    private void query(int headId) {
+        //mGuid 暂时写死241
+        RokiRestHelper.cookingCurvequery(mGuid,
+                new Callback<com.robam.common.io.cloud.Reponses.CookingCurveQueryRes>() {
 
+                    @Override
+                    public void onSuccess(com.robam.common.io.cloud.Reponses.CookingCurveQueryRes rcReponse) {
+                        Log.d("20211129", rcReponse.toString());
+                        if (rcReponse.payload == null) {
+                            cookingCurveSave(headId);
+                        }else{
+                            curveId = rcReponse.payload.curveCookbookId;
+                            Bundle bd = new Bundle();
+                            bd.putString(PageArgumentKey.Guid,stove.getGuid().getGuid());
+                            bd.putInt(PageArgumentKey.HeadId,headId);
+                            bd.putLong(PageArgumentKey.curveId, curveId);
+//                            UIService.getInstance().postPage(PageKey.DeviceStoveCurve,bd);
+                            CookCurveActivity.start(activity,bd);
+//                            SteamOvenCookCurveActivity.start(activity,bd);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                    }
+                });
+    }
+    private void cookingCurveSave(int headId) {
+        String deviceGuid = stove.getGuid().getGuid();
+        int id = 0;
+        String model =  "";
+        String setTemp =  "";
+        String setTime = "";
+        RokiRestHelper.cookingCurveSave(deviceGuid, id, model, setTemp, setTime,headId,
+                new Callback<com.robam.common.io.cloud.Reponses.CookingCurveSaveRes>() {
+
+                    @Override
+                    public void onSuccess(com.robam.common.io.cloud.Reponses.CookingCurveSaveRes rcReponse) {
+                        Log.d("20211129", rcReponse.toString());
+                        if (rcReponse.payload != 0) {
+                            curveId = rcReponse.payload;
+                            Bundle bd = new Bundle();
+                            bd.putString(PageArgumentKey.Guid,deviceGuid);
+                            bd.putInt(PageArgumentKey.HeadId,headId);
+                            bd.putLong(PageArgumentKey.curveId, curveId);
+//                            UIService.getInstance().postPage(PageKey.DeviceStoveCurve,bd);
+                            CookCurveActivity.start(activity,bd);
+//                            SteamOvenCookCurveActivity.start(activity,bd);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        ToastUtils.show(t.getMessage(), Toast.LENGTH_SHORT);
+                    }
+                });
+
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (stove==null) {
+        if (stove == null) {
             return;
+        }
+        if (stove.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), stove.getDt(), null);
         }
 
     }

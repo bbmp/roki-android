@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <!--搜索栏-->
+    <LinearLayout
+        android:id="@+id/home_recipe_ll_search"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shape_recipe_search"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="8dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_recipe_search" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="菜谱 食材"
+                android:textColor="#696b6b"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/view_home_recipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:listSelector="#00000000">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!--主题-->
+            <ImageView
+                android:id="@+id/home_recipe_imgv_theme"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/img_default" />
+            <!--菜谱分类-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp">
+                <!--灶具菜谱-->
+                <LinearLayout
+                    android:id="@+id/home_recipe_ll_stove"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="#E9E9E9"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:paddingTop="5dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_homerecipe_stove" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="2dp"
+                        android:text="灶具菜谱"
+                        android:textColor="#696b6b"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="3.5dp"
+                    android:layout_height="match_parent" />
+                <!--烤箱菜谱-->
+                <LinearLayout
+                    android:id="@+id/home_recipe_ll_oven"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="#E9E9E9"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:paddingTop="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_homerecipe_oven" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="7dp"
+                        android:text="烤箱菜谱"
+                        android:textColor="#696b6b"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="3.5dp"
+                    android:layout_height="match_parent" />
+                <!--蒸汽炉菜谱-->
+                <LinearLayout
+                    android:id="@+id/home_recipe_ll_steam"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="#E9E9E9"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:paddingTop="5dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_homerecipe_steam" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="蒸汽炉菜谱"
+                        android:layout_marginTop="2dp"
+                        android:textColor="#696b6b"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="3.5dp"
+                    android:layout_height="match_parent" />
+                <!--微波炉菜谱-->
+                <LinearLayout
+                    android:id="@+id/home_recipe_ll_micro"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="#E9E9E9"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:paddingTop="5dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_homerecipe_microwave" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="2dp"
+                        android:text="微波炉菜谱"
+                        android:textColor="#696b6b"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--动态、直播-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="horizontal">
+                <!--动态关注-->
+                <FrameLayout
+                    android:id="@+id/home_recipe_frame_dynamicfollow"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/home_recipe_imgv_dynamic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/img_recipe_livebg" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginBottom="5dp"
+                        android:text="关注动态"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent" />
+
+                <!--看视频-->
+                <FrameLayout
+                    android:id="@+id/home_recipe_frame_live"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/home_recipe_imgv_live"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/img_recipe_livebg" />
+
+                    <TextView
+                        android:id="@+id/home_recipe_tv_live_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginBottom="5dp"
+                        android:text="看视频"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_recipe_live" />
+                </FrameLayout>
+
+            </LinearLayout>
+            <!--咨询-->
+            <LinearLayout
+                android:id="@+id/home_recipe_ll_consultation"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="4dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_recipe_consultation" />
+
+                <TextView
+                    android:id="@+id/home_recipe_ll_consultation_firsttv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:text="暂无咨询"
+                    android:textColor="#00000f"
+                    android:textSize="15sp" />
+            </LinearLayout>
+            <!--其他主题--><!--动态添加-->
+            <LinearLayout
+                android:id="@+id/home_recipe_ll_themes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+            <!--推荐菜谱-->
+            <LinearLayout
+                android:id="@+id/home_recipe_ll_recommand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <!--&lt;!&ndash;更多菜谱&ndash;&gt;-->
+            <!--<TextView-->
+                <!--android:id="@+id/home_recipe_tv_morerecipe"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="35dp"-->
+                <!--android:layout_marginTop="1dp"-->
+                <!--android:background="#FD9076"-->
+                <!--android:gravity="center"-->
+                <!--android:text="更多菜谱"-->
+                <!--android:textColor="@color/Black_80"-->
+                <!--android:textSize="16sp" />-->
+            <!--&lt;!&ndash;底部连接&ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_marginTop="3dp">-->
+                <!--&lt;!&ndash;厨源&ndash;&gt;-->
+                <!--<ImageView-->
+                    <!--android:id="@+id/home_recipe_imgv_kitchensource"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:scaleType="fitXY"-->
+                    <!--android:src="@mipmap/img_recipe_chuyuan" />-->
+
+                <!--<View-->
+                    <!--android:layout_width="1dp"-->
+                    <!--android:layout_height="match_parent" />-->
+                <!--&lt;!&ndash;官网&ndash;&gt;-->
+                <!--<ImageView-->
+                    <!--android:id="@+id/home_recipe_imgv_official"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:scaleType="fitXY"-->
+                    <!--android:src="@mipmap/img_recipe_guanwang" />-->
+
+            <!--</LinearLayout>-->
+
+        </LinearLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+
+</LinearLayout>

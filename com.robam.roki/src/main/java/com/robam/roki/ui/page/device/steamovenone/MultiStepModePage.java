@@ -3,7 +3,6 @@ package com.robam.roki.ui.page.device.steamovenone;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ import com.legent.utils.StringUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.SteamOvenOpenDoorSteamEvent;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
-import com.robam.common.pojos.device.steameovenone.SteamOvenModeName;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
 import com.robam.roki.R;
 import com.robam.roki.factory.RokiDialogFactory;
@@ -180,17 +178,16 @@ public class MultiStepModePage extends BasePage {
 
 
     private List<SteamOvenBean> search(List<SteamOvenBean> steamOvenBeans) {
-        Collections.sort(steamOvenBeans, new Comparator<SteamOvenBean>() {
-            @Override
-            public int compare(SteamOvenBean o1, SteamOvenBean o2) {
-                if (o1.getId() > o2.getId()) {
-                    return 1;
-                }
-                if (o1.getId() == o2.getId()) {
-                    return 0;
-                }
-                return -1;
+        if (steamOvenBeans==null)
+            return null;
+        Collections.sort(steamOvenBeans, (o1, o2) -> {
+            if (o1.getId() > o2.getId()) {
+                return 1;
             }
+            if (o1.getId() == o2.getId()) {
+                return 0;
+            }
+            return -1;
         });
         return steamOvenBeans;
     }
@@ -348,8 +345,8 @@ public class MultiStepModePage extends BasePage {
     }
 
     private void sendCommand(final short arg, final short totalNumber, final String mode1, final int temp1, final int time1, final String mode2, final int temp2, final int time2) {
-        if (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait
+        if (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait
                 ) {
             steameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
@@ -369,7 +366,8 @@ public class MultiStepModePage extends BasePage {
 
     }
 
-    private void setMultiStep(short arg, short totalNumbers, String mode1, short temp1, short time1, String mode2, short temp2, short time2) {
+    private void setMultiStep(short arg, short totalNumbers, String mode1, short temp1, short time1,
+                              String mode2, short temp2, short time2) {
         steameOvenOne.setSteamOvenOneMultiStepMode(arg, totalNumbers, Short.parseShort(mode1), temp1,
                 time1, Short.parseShort(mode2), temp2, time2, new VoidCallback() {
                     @Override

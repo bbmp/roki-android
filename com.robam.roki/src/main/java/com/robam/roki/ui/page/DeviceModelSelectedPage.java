@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.VoidCallback;
 import com.legent.plat.constant.IPlatRokiFamily;
 import com.legent.plat.pojos.device.DeviceConfigurationFunctions;
@@ -116,6 +117,10 @@ public class DeviceModelSelectedPage extends BasePage {
         super.onResume();
         if (mRika == null) {
             return;
+        }
+        if (mRika.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), mRika.getDt() + ":蒸模式页", null);
         }
     }
 

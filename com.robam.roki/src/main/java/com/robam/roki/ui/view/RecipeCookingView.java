@@ -139,7 +139,7 @@ public class RecipeCookingView extends FrameLayout {
         }
 
         imgRecipe.setImageDrawable(null);
-        ImageUtils.displayImage(getContext(), currentStep.imageUrl, imgRecipe);
+        ImageUtils.displayImage(currentStep.imageUrl, imgRecipe);
         Stove stove = Utils.getDefaultStove();
         txtStepIndex.setText(String.valueOf(stepIndex + 1));
         txtStepCount.setText(String.format("/%s", cookSteps.size()));

@@ -67,6 +67,7 @@ public class CurveCookbooksPage extends BasePage {
             Bundle bd = new Bundle();
             bd.putSerializable("Item", adapter.getData().get(i));
             UIService.getInstance().postPage(PageKey.CurveCookbooksUser, bd);
+//            UIService.getInstance().postPage(PageKey.AbsSteamOvenWorkingCurve925, bd);
         });
     }
 

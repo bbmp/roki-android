@@ -18,6 +18,7 @@ import com.robam.roki.model.bean.GasParamsTemp;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by Dell on 2018/5/30.
@@ -45,7 +46,6 @@ public class GasSensorAdapter extends RecyclerView.Adapter<GasSensorAdapterViewH
     }
 
     public GasSensorAdapter(Context context,List<GasParamsTemp> date){
-        mContext = context;
         mInflater = LayoutInflater.from(context);
         this.date = date;
     }
@@ -53,7 +53,7 @@ public class GasSensorAdapter extends RecyclerView.Adapter<GasSensorAdapterViewH
     @Override
     public GasSensorAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_otherfunc_page, parent, false);
-        GasSensorAdapterViewHolder gasSensorAdapterViewHolder = new GasSensorAdapterViewHolder(mContext, view);
+        GasSensorAdapterViewHolder gasSensorAdapterViewHolder = new GasSensorAdapterViewHolder(view);
         return gasSensorAdapterViewHolder;
     }
 
@@ -80,12 +80,11 @@ class GasSensorAdapterViewHolder extends RecyclerView.ViewHolder{
     LinearLayout mItemView;
     ImageView mStateShow;
     AlphaAnimation mAlphaAnimation;
-    Context mContext;
 
 
-    public GasSensorAdapterViewHolder(Context context, View itemView) {
+
+    public GasSensorAdapterViewHolder(View itemView) {
         super(itemView);
-        mContext = context;
         mTvName = itemView.findViewById(R.id.tv_name);
         mImageView = itemView.findViewById(R.id.iv_view);
         mTvDesc = itemView.findViewById(R.id.tv_desc);
@@ -97,7 +96,7 @@ class GasSensorAdapterViewHolder extends RecyclerView.ViewHolder{
 
         mAlphaAnimation = null;
         if (mAlphaAnimation == null) {
-            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(mContext, R.anim.device_rika_dot_alpha);
+            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(cx, R.anim.device_rika_dot_alpha);
             LinearInterpolator lin = new LinearInterpolator();
             mAlphaAnimation.setInterpolator(lin);
             mStateShow.startAnimation(mAlphaAnimation);

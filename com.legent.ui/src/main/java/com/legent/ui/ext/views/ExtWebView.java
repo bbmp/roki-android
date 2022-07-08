@@ -133,7 +133,14 @@ public class ExtWebView extends WebView {
             }
 
         });
+        //背景透明
+        webView.setBackgroundColor(0);
 
+        if (webView.getBackground()!=null){
+
+            webView.getBackground().setAlpha(0);
+
+        }
     }
 
     @Override

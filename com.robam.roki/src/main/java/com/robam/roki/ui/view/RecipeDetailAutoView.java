@@ -307,7 +307,7 @@ public class RecipeDetailAutoView extends FrameLayout implements ViewPager.OnPag
     }
 
 
-    public void onfreshView(short status, int step, short currentSec, short timeTotal, boolean flag, int tempu) {
+    public void onfreshView(short status, int step, int currentSec, int timeTotal, boolean flag, int tempu) {
         View view = lmap.get(step);
         if (view == null || view.getTag() == null){
             return;
@@ -321,6 +321,9 @@ public class RecipeDetailAutoView extends FrameLayout implements ViewPager.OnPag
         if (step != myViewHolder.pos) {
             return;
         }
+
+//        2022-02-23 17:31:16.034 30698-30698/com.robam.roki I/20180225: status:9 step:1 currentSec:149 timeTotal:220 flag:false tempu:0
+
         LogUtils.i("20180225", "status:" + status + " step:" + step + " currentSec:"
                 + currentSec + " timeTotal:" + timeTotal + " flag:" + flag + " tempu:" + tempu);
 
@@ -429,7 +432,7 @@ public class RecipeDetailAutoView extends FrameLayout implements ViewPager.OnPag
         }
     }
 
-    public void onfreshViewForNext(short status, int step, short temp) {
+    public void onfreshViewForNext(short status, int step, int temp) {
         LogUtils.i("20180124", "step:" + step + "lmap:" + lmap.get(step));
         View view = lmap.get(step);
         if (view == null) return;
@@ -486,6 +489,7 @@ public class RecipeDetailAutoView extends FrameLayout implements ViewPager.OnPag
         myViewHolder.pause_desc.setVisibility(View.INVISIBLE);
         myViewHolder.card_bg.setCardBackgroundColor(Color.parseColor("#EFCE17"));
         myViewHolder.recipe_cooking_show.setVisibility(GONE);
+        myViewHolder. ivStop.setVisibility(INVISIBLE);
         myViewHolder.recipe_progress.setVisibility(View.INVISIBLE);
         myViewHolder.recipe_desc.setTextColor(Color.parseColor("#000000"));
         myViewHolder.no_device_status.setVisibility(VISIBLE);

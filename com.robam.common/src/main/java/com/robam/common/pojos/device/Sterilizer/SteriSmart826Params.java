@@ -2,6 +2,7 @@ package com.robam.common.pojos.device.Sterilizer;
 
 import com.robam.common.R;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by zhiayuanyi on 2016/3/29.

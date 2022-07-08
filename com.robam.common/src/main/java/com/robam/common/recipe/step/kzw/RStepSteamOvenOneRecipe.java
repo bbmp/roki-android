@@ -14,7 +14,6 @@ import com.legent.utils.StringUtils;
 import com.robam.common.events.SteamOvenOneStatusChangedEvent;
 import com.robam.common.paramCode;
 import com.robam.common.pojos.CookStep;
-import com.robam.common.pojos.Recipe;
 import com.robam.common.pojos.device.steameovenone.AbsSteameOvenOne;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOneModel;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatus;
@@ -123,8 +122,8 @@ public class RStepSteamOvenOneRecipe extends RStepKZWRecipe {
                 }
             }
         };
-        if (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait) {
+        if (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait) {
             steameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
                 public void onSuccess() {
@@ -184,7 +183,7 @@ public class RStepSteamOvenOneRecipe extends RStepKZWRecipe {
         if (steameOvenOne == null)
             return;
         mServiceCallback.onPolling(steameOvenOne);
-        if (mWaitFlag && (IFPREFLAG == 0 || IFPREFLAG == 1) && (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.On
+        if (mWaitFlag && (IFPREFLAG == 0 || IFPREFLAG == 1) && (steameOvenOne.powerState == SteamOvenOnePowerStatus.On
                 && steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus)) {
             if (steameOvenOne.leftTime < (steameOvenOne.setTime * 60)) {
                 startCountdown(steameOvenOne.leftTime);
@@ -195,14 +194,14 @@ public class RStepSteamOvenOneRecipe extends RStepKZWRecipe {
             mWaitFlag = false;
             return;
         }
-        if (mWaitFlag && (IFPREFLAG == 0 || IFPREFLAG == 1) && (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off
-                || steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait || (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.On
+        if (mWaitFlag && (IFPREFLAG == 0 || IFPREFLAG == 1) && (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off
+                || steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait || (steameOvenOne.powerState == SteamOvenOnePowerStatus.On
                 && steameOvenOne.powerOnStatus != SteamOvenOnePowerOnStatus.WorkingStatus))) {
             Log.i("steamovenone_st_cook", "正在等待");
             return;
         }
-        if (IFPREFLAG == 2 && (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off
-                || steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait || (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.On
+        if (IFPREFLAG == 2 && (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off
+                || steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait || (steameOvenOne.powerState == SteamOvenOnePowerStatus.On
                 && steameOvenOne.powerOnStatus != SteamOvenOnePowerOnStatus.WorkingStatus
                 && steameOvenOne.powerOnStatus != SteamOvenOnePowerOnStatus.Pause
                 && steameOvenOne.powerOnStatus != SteamOvenOnePowerOnStatus.TimeDisplay))) {
@@ -211,7 +210,7 @@ public class RStepSteamOvenOneRecipe extends RStepKZWRecipe {
             Log.i("steamovenone_st_cook", "重新初始化");
             return;
         }
-        if (IFPREFLAG == 2 && (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.On
+        if (IFPREFLAG == 2 && (steameOvenOne.powerState == SteamOvenOnePowerStatus.On
                 && steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.Pause)) {
             Log.i("steamovenone_st_cook", "stopCountdown 1");
             stopCountdown();
@@ -219,7 +218,7 @@ public class RStepSteamOvenOneRecipe extends RStepKZWRecipe {
             Log.i("steamovenone_st_cook", "暂停或报警");
             return;
         }
-        if (IFPREFLAG == 2 && (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.On
+        if (IFPREFLAG == 2 && (steameOvenOne.powerState == SteamOvenOnePowerStatus.On
                 && steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus)) {
             LogUtils.i("20180414","lefttime:"+steameOvenOne.leftTime+"settime:"+(steameOvenOne.setTime * 60));
             if (steameOvenOne.leftTime < (steameOvenOne.setTime * 60)) {
@@ -250,11 +249,11 @@ public class RStepSteamOvenOneRecipe extends RStepKZWRecipe {
         AbsSteameOvenOne steameOvenOne = (AbsSteameOvenOne) getDevice();
        /* if (oven == null)
             return;*/
-        LogUtils.i("20180414","powerStatus:"+steameOvenOne.powerStatus+" powerOnStatus:"+
+        LogUtils.i("20180414","powerStatus:"+steameOvenOne.powerState +" powerOnStatus:"+
                 steameOvenOne.powerOnStatus+" miscount:"+mIsCounting);
-        if (!mIsCounting &&!(steameOvenOne.powerStatus == SteamOvenOnePowerStatus.On
+        if (!mIsCounting &&!(steameOvenOne.powerState == SteamOvenOnePowerStatus.On
                 &&steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus
-                &&steameOvenOne.worknStatus == SteamOvenOneWorkStatus.PreHeat))
+                &&steameOvenOne.workState == SteamOvenOneWorkStatus.PreHeat))
             return;
         mFailureNum = 0;
         LogUtils.i("20180414","pause");
@@ -283,7 +282,7 @@ public class RStepSteamOvenOneRecipe extends RStepKZWRecipe {
         AbsSteameOvenOne steameOvenOne = (AbsSteameOvenOne) getDevice();
        /* if (oven == null)
             return;*/
-        if (!mIsCounting && !(steameOvenOne.powerStatus == SteamOvenOnePowerStatus.On &&
+        if (!mIsCounting && !(steameOvenOne.powerState == SteamOvenOnePowerStatus.On &&
                 steameOvenOne.powerOnStatus == SteamOvenOnePowerOnStatus.Pause))
             return;
         LogUtils.i("20180414","pause-restore");

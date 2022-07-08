@@ -89,8 +89,6 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Map;
 
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.Field;
@@ -100,13 +98,11 @@ import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
-import retrofit2.Call;
-import retrofit2.http.Headers;
 
 /**
  * Created by sylar on 15/7/23.
  */
-public interface ICloudService<T extends RCReponse> {
+public interface ICloudService {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
             Locale.getDefault());
@@ -229,12 +225,12 @@ public interface ICloudService<T extends RCReponse> {
     @POST(getReportCode)
     void getReportCode(@Body ReportCodeRequest reqBody, Callback<GetReportResponse> callback);
 
-//    @POST(getAppId)
-//    GetAppIdReponse getAppId(@Body GetAppIdRequest reqBody);
+    @POST(getAppId)
+    GetAppIdReponse getAppId(@Body GetAppIdRequest reqBody);
 
-    @retrofit2.http.POST(getAppId)
-    @Headers("Content-Type: application/json")
-    Call<ResponseBody> getAppId(@retrofit2.http.Body RequestBody reqBody);
+    @POST(getAppId)
+    void getAppId(@Body GetAppIdRequest reqBody,
+                  Callback<GetAppIdReponse> callback);
 
     @POST(bindAppGuidAndUser)
     void bindAppGuidAndUser(@Body AppUserGuidRequest reqBody,
@@ -321,9 +317,9 @@ public interface ICloudService<T extends RCReponse> {
     void updateFigure(@Body UpdateFigureRequest reqBody,
                       Callback<UpdateFigureReponse> callback);
 
-    @retrofit2.http.POST(getVerifyCode)
-    @Headers("Content-Type: application/json")
-    Call<ResponseBody> getVerifyCode(@retrofit2.http.Body RequestBody body);
+    @POST(getVerifyCode)
+    void getVerifyCode(@Body GetVerifyCodeRequest reqBody,
+                       Callback<GetVerifyCodeReponse> callback);
 
     @POST(getDynamicPwd)
     void getDynamicPwd(@Body GetVerifyCodeRequest reqBody,
@@ -379,12 +375,13 @@ public interface ICloudService<T extends RCReponse> {
 
     // ----------------------------------------------------------------
 
-    @retrofit2.http.POST(getDevices)
-    Call<ResponseBody> getDevices(@retrofit2.http.Body RequestBody body);
+    @POST(getDevices)
+    void getDevices(@Body UserRequest reqBody,
+                    Callback<GetDevicesResponse> callback);
 
-    @retrofit2.http.POST(getDeviceById)
-    @Headers("Content-Type: application/json")
-    Call<ResponseBody> getDeviceById(@retrofit2.http.Body RequestBody body);
+    @POST(getDeviceById)
+    void getDeviceById(@Body GuidRequest reqBody,
+                       Callback<GetDevicePesponse> callback);
 
     @POST(getDeviceBySn)
     void getDeviceBySn(@Body GetDeviceBySnRequest reqBody,
@@ -418,13 +415,12 @@ public interface ICloudService<T extends RCReponse> {
     void getDeviceByParams(@Body DeviceByParamsRequest reqBody,
                            Callback<DeviceResponse> callback);
 
-    @retrofit2.http.POST(getAllDeviceType)
-    @Headers("Content-Type: application/json")
-    Call<ResponseBody> getAllDeviceType(@retrofit2.http.Body RequestBody body);
+    @POST(getAllDeviceType)
+    void getAllDeviceType(@Body DeviceTypeRequest reBody,
+                          Callback<DeviceTypeResponse> callback);
 
-    @retrofit2.http.POST(getAllDeviceErrorInfo)
-    @Headers("Content-Type: application/json")
-    Call<ResponseBody> getAllDeviceErrorInfo(@retrofit2.http.Body RequestBody body);
+    @POST(getAllDeviceErrorInfo)
+    void getAllDeviceErrorInfo(Callback<ErrorInfoResponse> callback);
 
     @POST(getConsumablesList)
     void getConsumablesListInfo(@Body DeviceByParamsConsumables deviceByParamsConsumables,
@@ -498,19 +494,19 @@ public interface ICloudService<T extends RCReponse> {
      * @param appType
      * @param callback
      */
-    @retrofit2.http.FormUrlEncoded
-    @retrofit2.http.POST(token)
-    @Headers("Content-Type: application/x-www-form-urlencoded")
-    Call<ResponseBody> getToken(@retrofit2.http.Field("loginType") String loginType
-            ,@retrofit2.http.Field("sjhm") String sjhm
-            ,  @retrofit2.http.Field("smsCode") String smsCode
-            , @retrofit2.http.Field("password") String password
-            , @retrofit2.http.Field("accessToken") String accessToken
-            , @retrofit2.http.Field("refreshToken") String refreshToken
-            , @retrofit2.http.Field("openId") String openId
-            , @retrofit2.http.Field("client_id") String client_id
-            ,@retrofit2.http.Field("client_secret") String client_secret
-            ,@retrofit2.http.Field("appType") String appType);
+    @FormUrlEncoded
+    @POST(token)
+    void getToken(@Field("loginType") String loginType
+            ,@Field("sjhm")String sjhm
+            ,  @Field("smsCode")String smsCode
+            , @Field("password")String password
+            , @Field("accessToken")String accessToken
+            , @Field("refreshToken")String refreshToken
+            , @Field("openId")String openId
+            ,   @Field("client_id")String client_id
+            ,@Field("client_secret")String client_secret
+            ,@Field("appType")String appType,
+                  Callback<Reponses.TokenReponse>callback);
 
     /**
      * 获取第三方登录的token
@@ -544,16 +540,15 @@ public interface ICloudService<T extends RCReponse> {
      * @param authorization
      * @param callback
      */
-    @retrofit2.http.GET(getOauth)
-    Call<ResponseBody> getOauth(@retrofit2.http.Header("authorization") String authorization);
+    @GET(getOauth)
+    void getOauth(@Header("authorization") String authorization, Callback<LoginReponse> callback);
     /**
      * 获取用户信息3.7
      * @param reqBody
      * @param callback
      */
-    @retrofit2.http.POST(getUser2)
-    @Headers("Content-Type: application/json")
-    Call<ResponseBody> getUser2(@retrofit2.http.Body RequestBody body);
+    @POST(getUser2)
+    void getUser2(@Body UserRequest reqBody, Callback<GetUserReponse> callback);
     /**
      * 设置新密码
      * @param authorization

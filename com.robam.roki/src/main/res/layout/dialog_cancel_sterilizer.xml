@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#60000000">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="结束预约"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#f8bf40"
+        android:textSize="38sp" />
+    <TextView
+        android:layout_width="180dp"
+        android:layout_height="80dp"
+        android:text="确定"
+        android:layout_marginTop="32dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:background="#f8bf40"
+        android:textColor="#ffffff"/>
+
+</LinearLayout>

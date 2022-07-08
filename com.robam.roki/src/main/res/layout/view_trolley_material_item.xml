@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:paddingLeft="45dp"
+    android:paddingRight="45dp">
+
+    <ImageView
+        android:id="@+id/imgFlag"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/shape_circle_yellow" />
+
+    <TextView
+        android:id="@+id/txtDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@+id/imgFlag"
+        android:text="芦笋一把（150g）"
+        android:textColor="@color/trolley_material_text_color_selector"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/strickoutView"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignLeft="@+id/txtDesc"
+        android:layout_centerInParent="true"
+        android:background="@color/c17"
+        android:visibility="visible" />
+
+</RelativeLayout>

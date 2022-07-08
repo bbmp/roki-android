@@ -1,10 +1,12 @@
 package com.robam.common.io.cloud;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
+import com.j256.ormlite.stmt.query.In;
 import com.legent.plat.pojos.RCReponse;
 import com.legent.pojos.IJsonPojo;
 import com.robam.common.pojos.Advert;
@@ -15,6 +17,7 @@ import com.robam.common.pojos.CookAlbum;
 import com.robam.common.pojos.CookBookVideo;
 import com.robam.common.pojos.CookStep;
 import com.robam.common.pojos.Cookbooks;
+import com.robam.common.pojos.CookingCurveMarkStepList;
 import com.robam.common.pojos.CookingKnowledge;
 import com.robam.common.pojos.CrmCustomer;
 import com.robam.common.pojos.DataInfo;
@@ -60,17 +63,42 @@ import java.util.Map;
  * Created by sylar on 15/7/31.
  */
 public interface Reponses {
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    class CookingCurveSaveRes extends RCReponse {
+        @JsonProperty("msg")
+        public String msg;
 
+
+        @JsonProperty("payload")
+        public long payload;
+
+        public CookingCurveSaveRes(String msg, long payload) {
+            this.msg = msg;
+            this.payload = payload;
+        }
+
+        public CookingCurveSaveRes() {
+
+        }
+    }
+
+
+
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class StoreVersionResponse extends RCReponse {
         @JsonProperty("version")
         public int version;
     }
 
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class StoreCategoryResponse extends RCReponse {
         @JsonProperty("cookbookTagGroups")
-        public List<Group> cookbookTagGroups;
+        public List<Group> groups;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GetYiGuoUrlResponse extends RCReponse {
         @JsonProperty("images")
         public ArrayList<Images> images;
@@ -79,6 +107,7 @@ public interface Reponses {
     /**
      * 设置家庭人数返回
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GetFamilyResponse extends RCReponse {
         @JsonProperty("memberCount")
         public int memberCount;
@@ -87,18 +116,20 @@ public interface Reponses {
     /**
      * 有赞商城
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class TokenResponses extends RCReponse {
         @JsonProperty("token")
         public Token token;
     }
 
-
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class YouzanOrdersReponses extends RCReponse {
 
         @JsonProperty("statusCount")
         public List<YouzanOrdersCount> statusCount;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class AppStartImgResponses extends RCReponse {
 
         @JsonProperty("images")
@@ -106,6 +137,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class AppAdvertImgResponses extends RCReponse {
 
         @JsonProperty("images")
@@ -116,6 +148,7 @@ public interface Reponses {
     /**
      * 获取厨房知识列表
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CookingKnowledgeResponse extends RCReponse {
 
         @JsonProperty("hasNext")
@@ -129,6 +162,7 @@ public interface Reponses {
     /**
      * 获取今日饮水量
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class TodayDrinkingResponse extends RCReponse {
         @JsonProperty("item")
         public List<TodayDrinking> item;
@@ -143,6 +177,7 @@ public interface Reponses {
         }
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class ChuYuanActivityResponse extends RCReponse {
         @JsonProperty("hasNext")
         public String hasNext;
@@ -158,6 +193,7 @@ public interface Reponses {
     /**
      * 获取历史饮水量
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class HistoryDrinkingResponse extends RCReponse {
         @JsonProperty("data")
         public ArrayList<DataInfo> item;
@@ -166,12 +202,13 @@ public interface Reponses {
     /**
      * 获取菜谱详情及烹饪步骤
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CookbookResponse extends RCReponse {
         @JsonProperty("cookbook")
         public Recipe cookbook;
 
     }
-
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CookBookOrStepResponse extends RCReponse{
         @JsonProperty("cookbook")
         public Recipe cookbook;
@@ -179,21 +216,24 @@ public interface Reponses {
         public List<CookStep> cookSteps;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CookbookStepResponse extends RCReponse {
         @JsonProperty("steps")
         public List<CookStep> cookSteps;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class Cookbook3rdResponse extends RCReponse {
         @JsonProperty("cookbook")
         public Recipe3rd cookbook;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class PersonalizedRecipeResponse extends RCReponse {
         @JsonProperty("cookbooks")
         public List<Recipe> cookbooks;
     }
-
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class MultiRecipeResponse extends RCReponse {
 
         @JsonProperty("totalSize")
@@ -205,6 +245,7 @@ public interface Reponses {
         @JsonProperty("datas")
         public List<multiRecipeList> datas;
     }
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class multiRecipeList implements Serializable {
         @JsonProperty("id")
         public long id;
@@ -215,13 +256,18 @@ public interface Reponses {
         @JsonProperty("deviceGuid")
         public String deviceGuid;
 
+        @JsonProperty("deviceType")
+        public String deviceType;
+
         @JsonProperty("name")
         public String name;
 
         @JsonProperty("multiStepDtoList")
         public List<saveMultiRecipeList> multiStepDtoList;
+
     }
-    class saveMultiRecipeList  {
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    class saveMultiRecipeList implements Serializable  {
         @JsonProperty("downTemperature")
         public String downTemperature;
 
@@ -246,10 +292,21 @@ public interface Reponses {
         @JsonProperty("upTemperature")
         public String upTemperature;
 
+        public int getTime(String deviceGuid) {
+            try {
+                if (deviceGuid.contains("DB620") || deviceGuid.contains("CQ920")){
+                    return (Integer.parseInt(time) / 60);
+                }else {
+                    return Integer.parseInt(time);
+                }
+            }catch (Exception e){
+                    return 0 ;
+            }
+        }
     }
 
 
-
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GatewayDicResponse extends RCReponse {
         @JsonProperty("msg")
         public String msg;
@@ -260,6 +317,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class IsCollectBookResponse extends RCReponse {
         @JsonProperty("msg")
         public String msg;
@@ -268,6 +326,7 @@ public interface Reponses {
         public boolean isCollect;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GetKufaRecipeResponse extends RCReponse {
         @JsonProperty("msg")
         public String msg;
@@ -276,6 +335,7 @@ public interface Reponses {
         public List<PayLoad> payLoads;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GetKuFRecipeDetailResonse extends RCReponse {
         @JsonProperty("msg")
         public String msg;
@@ -283,6 +343,7 @@ public interface Reponses {
         @JsonProperty("payload")
         public PayLoadKuF payLoadKuFs;
     }
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GetCurveCookbooksResonse extends RCReponse {
         @JsonProperty("msg")
         public String msg;
@@ -290,6 +351,7 @@ public interface Reponses {
         @JsonProperty("payload")
         public List<PayLoadCookBook> payload;
     }
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class ThumbCookbookResponse extends RCReponse {
         @JsonProperty("cookbooks")
         public List<Recipe> cookbooks;
@@ -297,30 +359,35 @@ public interface Reponses {
         public List<Recipe3rd> cookbook_3rds;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class RecipeThemeResponse extends RCReponse {
         @JsonProperty("items")
-        public List<RecipeTheme> items;
+        public List<RecipeTheme> recipeThemes;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class ThemeRecipeDetailResponse extends RCReponse {
 
         @JsonProperty("mgs")
         public String mgs;
 
         @JsonProperty("theme")
-        public RecipeTheme theme;
+        public RecipeTheme themeRecipeDetail;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class RecipeThemeResponse2 extends RCReponse {
         @JsonProperty("ThemeLists")
         public List<RecipeTheme> recipeThemes;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class RecipeThemeResponse3 extends RCReponse {
         @JsonProperty("themeLists")
         public List<RecipeTheme> recipeThemes;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class RecipeDynamicCover extends RCReponse {
         @JsonProperty("id")
         public long id;
@@ -328,6 +395,7 @@ public interface Reponses {
         public String imageUrl;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class RecipeLiveListResponse extends RCReponse {
         @JsonProperty("videoCookbooks")
         public List<RecipeLiveList> lives;
@@ -340,21 +408,25 @@ public interface Reponses {
         }
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class RecipeShowListResponse extends RCReponse {
         @JsonProperty("albums")
         public List<RecipeShow> items;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CollectStatusRespone extends RCReponse {
         @JsonProperty("status")
         public String status;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class ThemeFavorite extends RCReponse {
         @JsonProperty("isFavorite")
         public String isFavorite;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CookbooksResponse extends RCReponse {
 
         @JsonProperty("cookbooks")
@@ -373,6 +445,11 @@ public interface Reponses {
             return res;
         }
     }
+
+
+
+
+
 
     class CookbooksClassifyResponse extends RCReponse {
         @JsonProperty("cookbooks")
@@ -393,6 +470,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CategoryRecipeImgRespone extends RCReponse {
         @JsonProperty("dc")
         public String dc;
@@ -404,11 +482,13 @@ public interface Reponses {
         public String desc;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class ConsultationListResponse extends RCReponse {
         @JsonProperty("items")
         public List<RecipeConsultation> items;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class MaterialFrequencyResponse extends RCReponse {
 
         @JsonProperty("accessorys")
@@ -416,6 +496,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class MaterialsResponse extends RCReponse {
 
         @JsonProperty("materials")
@@ -423,6 +504,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CookbookProviderResponse extends RCReponse {
 
         @JsonProperty("sources")
@@ -430,6 +512,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class HotKeysForCookbookResponse extends RCReponse {
 
         @JsonProperty("cookbooks")
@@ -437,6 +520,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class WeekTopsResponse extends RCReponse {
         @JsonProperty("mgs")
         public String mgs;
@@ -445,6 +529,7 @@ public interface Reponses {
         public List<Recipe> payload;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class AlbumResponse extends RCReponse {
 
         @JsonProperty("album")
@@ -452,6 +537,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class AlbumsResponse extends RCReponse {
 
         @JsonProperty("albums")
@@ -459,6 +545,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class HomeAdvertsForMobResponse extends RCReponse {
 
         @JsonProperty("images")
@@ -466,6 +553,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class HomeTitleForMobResponse extends RCReponse {
 
         @JsonProperty("images")
@@ -473,6 +561,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class HomeAdvertsForPadResponse extends RCReponse {
 
         @JsonProperty("left")
@@ -483,6 +572,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CookbookImageReponse extends RCReponse {
 
         @JsonProperty("images")
@@ -490,6 +580,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class SmartParamsReponse extends RCReponse {
 
         @JsonProperty("daily")
@@ -498,6 +589,7 @@ public interface Reponses {
         @JsonProperty("weekly")
         public Weekly weekly;
 
+        @JsonIgnoreProperties(ignoreUnknown = true)
         class Daily implements IJsonPojo {
 
             @JsonProperty("on")
@@ -507,6 +599,7 @@ public interface Reponses {
             public int day;
         }
 
+        @JsonIgnoreProperties(ignoreUnknown = true)
         class Weekly extends Daily {
 
             @JsonProperty("time")
@@ -514,6 +607,7 @@ public interface Reponses {
         }
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GetSmartParams360Reponse extends RCReponse {
 
         @JsonProperty("switch")
@@ -521,6 +615,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GetCustomerInfoReponse extends RCReponse {
 
         @JsonProperty("customer")
@@ -528,6 +623,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class QueryOrderReponse extends RCReponse {
 
         @JsonProperty()
@@ -535,12 +631,14 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class OrderIfOpenReponse extends RCReponse {
 
         @JsonProperty()
         public boolean open;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class EventStatusReponse extends RCReponse {
 
         @JsonProperty()
@@ -549,17 +647,20 @@ public interface Reponses {
         public int status;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class SubmitOrderReponse extends RCReponse {
         @JsonProperty()
         public long orderId;
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GetOrderReponse extends RCReponse {
         @JsonProperty()
         public OrderInfo order;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class DeiverIfAllowReponse extends RCReponse {
 
         @JsonProperty()
@@ -567,22 +668,26 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GetCrmCustomerReponse extends RCReponse {
         @JsonProperty()
         public CrmCustomer customerInfo;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class QueryMaintainReponse extends RCReponse {
         @JsonProperty()
         public MaintainInfo maintainInfo;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CurrentLiveResponse extends RCReponse {
         @JsonProperty()
         public liveshow liveshow;
     }
 
     //获取联网优化设备列表
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class NetworkDeviceInfoResponse extends RCReponse {
         @JsonProperty("rc")
         public int rc;
@@ -590,11 +695,13 @@ public interface Reponses {
         public List<DeviceGroupList> deviceGroupList;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class NetworkDeviceStepResponse extends RCReponse {
         @JsonProperty("networkingSteps")
         public List<NetWorkingSteps> networkingSteps;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class HistoryResponse extends RCReponse {
 
         @JsonProperty("historyList")
@@ -605,12 +712,14 @@ public interface Reponses {
         public String msg;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class DeleteHistoryResponse extends RCReponse {
 
         @JsonProperty("msg")
         public String msg;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class upDataVideoWatchCountResponse extends RCReponse {
 
         @JsonProperty("msg")
@@ -618,6 +727,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CheckChickenResponse extends RCReponse {
         @JsonProperty("msg")
         public String msgs;
@@ -626,12 +736,14 @@ public interface Reponses {
         public CheckPayLoad payLoad;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class UpdateDeviceResponse extends RCReponse {
         @JsonProperty("msg")
         public String mgs;
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CookerStatusResponse extends RCReponse {
         @JsonProperty("mgs")
         public String mgs;
@@ -640,6 +752,7 @@ public interface Reponses {
         public String payload;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class SeriesInfoLisResponse extends RCReponse {
 
         @JsonProperty("totalSize")
@@ -654,6 +767,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class CourseDetailReponse extends RCReponse {
 
         @JsonProperty("success")
@@ -663,11 +777,13 @@ public interface Reponses {
         public SeriesInfoCell seriesInfoCell;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class ScanQRLoginResponse extends RCReponse {
         @JsonProperty("msg")
         public String msg;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class MallManagementResponse extends RCReponse {
 
         @JsonProperty("msg")
@@ -680,6 +796,7 @@ public interface Reponses {
     }
 
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GetRecipeTop4Response extends RCReponse {
         @JsonProperty("msg")
         public String msg;
@@ -690,6 +807,7 @@ public interface Reponses {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class GetRecipeDiyCookbook extends RCReponse {
 
         @JsonProperty("msg")
@@ -699,16 +817,19 @@ public interface Reponses {
         public List<DiyCookbookList> diyCookbookLists;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class Update035Recipe extends RCReponse {
         @JsonProperty("msg")
         public String msg;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class SuggestApplyReponse extends RCReponse {
         @JsonProperty("msg")
         public String msg;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     class UploadRepones extends RCReponse {
         @JsonProperty("msg")
         public String msg;
@@ -718,4 +839,94 @@ public interface Reponses {
         public String path;
     }
 
+    //删除烹饪曲线
+    class CurveStepDelete extends RCReponse{
+
+        @JsonProperty("msg")
+        public String msg;
+
+        @JsonProperty("rc")
+        public String rc;
+    }
+
+
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    class PayloadDTO implements Serializable {
+        @JsonProperty("id")
+        public Long id;
+        @JsonProperty("curveCookbookId")
+        public Integer curveCookbookId;
+        @JsonProperty("curveStageParams")
+        public String curveStageParams;
+        @JsonProperty("userId")
+        public Integer userId;
+        @JsonProperty("name")
+        public String name;
+        @JsonProperty("introduction")
+        public Object introduction;
+        @JsonProperty("imageCover")
+        public Object imageCover;
+        @JsonProperty("deviceCategoryCode")
+        public Object deviceCategoryCode;
+        @JsonProperty("devicePlatformCode")
+        public Object devicePlatformCode;
+        @JsonProperty("deviceTypeCode")
+        public Object deviceTypeCode;
+        @JsonProperty("deviceParams")
+        public String deviceParams;
+        @JsonProperty("temperatureCurveParams")
+        public String temperatureCurveParams;
+        @JsonProperty("time")
+        public Object time;
+        @JsonProperty("difficulty")
+        public Object difficulty;
+        @JsonProperty("needTime")
+        public Object needTime;
+        @JsonProperty("materialList")
+        public Object materialList;
+        @JsonProperty("prepareStepList")
+        public List<?> prepareStepList;
+        @JsonProperty("stepList")
+        public List<CookingCurveMarkStepList> stepList;
+        @JsonProperty("shareFrom")
+        public String shareFrom;
+        @JsonProperty("readFlag")
+        public String readFlag;
+        @JsonProperty("gmtCreate")
+        public String gmtCreate;
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    class CookingCurveMarkStepRequest  extends RCReponse implements Serializable {
+
+        @JsonProperty("id")
+        public String id;
+
+        @JsonProperty("stepDtoList")
+        public List<CookingCurveMarkStepList> stepDtoList;
+
+        public CookingCurveMarkStepRequest(String id, List<CookingCurveMarkStepList> stepDtoList) {
+            this.id = id;
+            this.stepDtoList = stepDtoList;
+        }
+    }
+
+
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class CookingCurveQueryRes extends RCReponse implements Serializable {
+        @JsonProperty("msg")
+        public String msg;
+
+        @JsonProperty("payload")
+        public PayloadDTO payload;
+    }
+
+
+
+
+
 }
+
+

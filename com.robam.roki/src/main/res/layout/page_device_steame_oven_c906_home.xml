@@ -262,7 +262,8 @@
                     android:layout_height="wrap_content"
                     android:src="@mipmap/device_img_steam_gr"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true" />
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/imageView7"/>
 
             </RelativeLayout>
 
@@ -410,7 +411,8 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/device_img_water_tank_off_line"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true" />
+                android:layout_alignParentLeft="true"
+                android:id="@+id/imageView8"/>
 
 
         </RelativeLayout>

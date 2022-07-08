@@ -3,41 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@drawable/chart_show_marker"
+    android:orientation="vertical"
     tools:ignore="Overdraw"
-    android:orientation="vertical">
+    android:layout_marginBottom="@dimen/dp_4">
+    <!--    android:background="@drawable/chart_marker"-->
 
     <TextView
-        android:id="@+id/tv_date"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:text="111"
-        android:textSize="14sp"
-        android:textColor="@android:color/white"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="10dp"
         android:ellipsize="end"
         android:singleLine="true"
+        android:text="开门刷蜂蜜"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:visibility="gone"/>
+        android:textColor="#1F282D"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/tv_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/chart_marker"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:drawableLeft="@mipmap/icon_fire"
+        android:ellipsize="end"
         android:paddingLeft="8dp"
+        android:paddingTop="4dp"
         android:paddingRight="8dp"
         android:paddingBottom="4dp"
-        android:paddingTop="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:text="2222"
-        android:textSize="14sp"
-        android:textColor="@android:color/white"
-        android:ellipsize="end"
         android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:text="2222"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#1F282D"
+        android:textSize="18sp" />
 
 </LinearLayout>

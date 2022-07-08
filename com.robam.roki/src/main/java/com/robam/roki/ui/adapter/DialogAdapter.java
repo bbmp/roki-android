@@ -107,11 +107,11 @@ public class DialogAdapter extends RecyclerView.Adapter {
                         ((OutputViewHolder) holder).content.setText(text);
                     }else {
                         SpannableString spannableString = new SpannableString(text);
-                        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")),
+                        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#ffffff")),
                                 0, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FB7432")),
+                        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#61ACFF")),
                                 8, text.length() - 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")),
+                        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#ffffff")),
                                 text.length() - 11, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                         ((OutputViewHolder) holder).content.setText(spannableString);
                     }

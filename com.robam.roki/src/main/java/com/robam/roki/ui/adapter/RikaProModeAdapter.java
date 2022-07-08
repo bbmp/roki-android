@@ -50,7 +50,7 @@ public class RikaProModeAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.mode_oven_pro_show, null);
+            convertView = mLayoutInflater.inflate(R.layout.mode_oven_pro_clean_show, null);
             holder = new ViewHolder();
             holder.iv = (ImageView) convertView.findViewById(R.id.ivl);
             holder.tv = (TextView) convertView.findViewById(R.id.tvnel);

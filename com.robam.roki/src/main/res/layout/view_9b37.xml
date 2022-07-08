@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/device_board_bg"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/divStoveHead"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/divHeadLeft"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:paddingBottom="20dp"
+                            android:paddingTop="20dp">
+
+
+                            <ImageView
+                                android:id="@+id/stove_fire_left"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_stove_fire_selector"
+                                android:layout_marginTop="10dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true" />
+
+                            <LinearLayout
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:id="@+id/divClockLeft"
+                                android:background="@drawable/ic_stove_counter_selector"
+                                android:layout_marginBottom="50dp"
+                                android:layout_centerHorizontal="true"
+                                android:gravity="center"
+                                android:layout_above="@+id/imageView4"
+                                >
+                                <TextView
+                                    android:id="@+id/txtClockLeft"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="定时"
+                                    android:textColor="@color/device_board_text_color_selector"
+                                    android:textSize="30dp"
+                                    android:layout_gravity="center_vertical"
+                                     />
+                            </LinearLayout>
+
+
+                            <ImageView
+                                android:id="@+id/imageView4"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@mipmap/ic_stove_left"
+                                android:layout_marginBottom="20dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true" />
+
+
+
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="30dp"
+                        android:background="#484848" />
+
+                    <LinearLayout
+                        android:id="@+id/divHeadRight"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:paddingBottom="20dp"
+                            android:paddingTop="20dp">
+
+                            <ImageView
+                                android:id="@+id/stove_fire_right"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_stove_fire_selector"
+                                android:layout_marginTop="10dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true" />
+
+                            <LinearLayout
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:id="@+id/divClockRight"
+                                android:background="@drawable/ic_stove_counter_selector"
+                                android:gravity="center"
+                                android:layout_above="@+id/imageView2"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="50dp">
+                                <TextView
+                                    android:id="@+id/txtClockRight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="定时"
+                                    android:textColor="@color/device_board_text_color_selector"
+                                    android:textSize="30dp"
+                                    android:layout_gravity="center_vertical"/>
+
+                            </LinearLayout>
+
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@mipmap/ic_stove_right"
+                                android:id="@+id/imageView2"
+                                android:layout_marginBottom="20dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true" />
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/txtHint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="为了安全\n请在灶具上开启"
+                android:textColor="#e52f0c"
+                android:textSize="24sp"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/divPower"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <com.robam.roki.ui.view.StoveSwitchView
+                android:id="@+id/powerLeftView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+
+            <com.robam.roki.ui.view.StoveSwitchView
+                android:id="@+id/powerRightView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

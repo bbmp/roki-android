@@ -20,6 +20,7 @@
     <ImageButton
         android:layout_width="21dp"
         android:layout_height="21dp"
+        android:id="@+id/imgNoticeLogo"
         android:src="@mipmap/ic_device_oven_started"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"

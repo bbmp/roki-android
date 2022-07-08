@@ -15,14 +15,14 @@ public class DishWasherMorePage extends AbsDeviceMorePage {
     public void subItemOnClick(View v, int position) {
         switch (position) {
             //留言咨询
-            case 0:
+            case 1:
                 UIService.getInstance().postPage(PageKey.Chat);
                 break;
             //一键售后
-            case 1:
+            case 2:
                 callAfterSale();
                 break;
-            case 2:
+            case 3:
                 Bundle bd = new Bundle();
                 bd.putString(PageArgumentKey.Guid, mGuid);
                 bd.putString(PageArgumentKey.Url, mUrl);
@@ -30,7 +30,7 @@ public class DishWasherMorePage extends AbsDeviceMorePage {
                 UIService.getInstance().postPage(PageKey.QuickGuide, bd);
                 break;
             //产品信息
-            case 3:
+            case 4:
                 Bundle bd2 = new Bundle();
                 bd2.putString(PageArgumentKey.Guid, mGuid);
                 UIService.getInstance().postPage(PageKey.DeviceInformation, bd2);

@@ -6,10 +6,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.DataDescriptBean;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -543,6 +543,7 @@ public class LineChartRenderer extends LineRadarRenderer {
             for (int i = 0; i < dataSets.size(); i++) {
 
                 ILineDataSet dataSet = dataSets.get(i);
+                List<DataDescriptBean> operationList = dataSet.operationList();
 
                 if (!shouldDrawValues(dataSet) || dataSet.getEntryCount() < 1)
                     continue;
@@ -584,6 +585,34 @@ public class LineChartRenderer extends LineRadarRenderer {
                         drawValue(c, dataSet.getValueFormatter(), entry.getY(), entry, i, x,
                                 y - valOffset, dataSet.getValueTextColor(j / 2));
                     }
+//                    if (operationList != null && !operationList.isEmpty()) {
+//                        for (DataDescriptBean bean : operationList) {
+//                            if (bean.x == entry.getX()) {
+//                                drawValueText(c, bean.pointName, x, y - valOffset, dataSet.getValueTextColor(j / 2));
+//                            }
+//                        }
+//
+//                    }
+
+
+                    if (operationList != null && !operationList.isEmpty()) {
+                        for (DataDescriptBean bean : operationList) {
+                            if (bean.x == entry.getX()) {
+                                if(bean.pointName.equals("预热完成")){
+                                    drawValueText(c, bean.pointName, x, y + valOffset*3, dataSet.getValueTextColor(j / 2));
+                                }else{
+                                    if(bean.pointName.equals("烹饪开始")){
+                                        drawValueText(c, bean.pointName, x+50, y - valOffset, dataSet.getValueTextColor(j / 2));
+                                    }else if(bean.pointName.equals("烹饪结束")){
+                                        drawValueText(c, bean.pointName, x-50, y - valOffset, dataSet.getValueTextColor(j / 2));
+                                    }
+                                    else{
+                                        drawValueText(c, bean.pointName, x, y - valOffset, dataSet.getValueTextColor(j / 2));
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     if (entry.getIcon() != null && dataSet.isDrawIconsEnabled()) {
 
@@ -592,8 +621,8 @@ public class LineChartRenderer extends LineRadarRenderer {
                         Utils.drawImage(
                                 c,
                                 icon,
-                                (int)(x + iconsOffset.x),
-                                (int)(y + iconsOffset.y),
+                                (int) (x + iconsOffset.x),
+                                (int) (y + iconsOffset.y),
                                 icon.getIntrinsicWidth(),
                                 icon.getIntrinsicHeight());
                     }
@@ -633,9 +662,9 @@ public class LineChartRenderer extends LineRadarRenderer {
         for (int i = 0; i < dataSets.size(); i++) {
 
             ILineDataSet dataSet = dataSets.get(i);
-
+            List<Entry> appointList = dataSet.appointList();
             if (!dataSet.isVisible() || !dataSet.isDrawCirclesEnabled() ||
-                    dataSet.getEntryCount() == 0)
+                    dataSet.getEntryCount() == 0||appointList.size()<=0)
                 continue;
 
             mCirclePaintInner.setColor(dataSet.getCircleHoleColor());
@@ -687,18 +716,50 @@ public class LineChartRenderer extends LineRadarRenderer {
                 if (!mViewPortHandler.isInBoundsLeft(mCirclesBuffer[0]) ||
                         !mViewPortHandler.isInBoundsY(mCirclesBuffer[1]))
                     continue;
-
-                Bitmap circleBitmap = imageCache.getBitmap(j);
-
-                if(dataSet.isDrawCirclesLast()){
-                    Log.d("TAG", "drawCircles: "+j);
-                    if (j==boundsRangeCount)
-                        c.drawBitmap(circleBitmap, mCirclesBuffer[0] - circleRadius, mCirclesBuffer[1] - circleRadius, null);
-                }else {
+                //指定位置画点
+                if (appointList != null && appointList.size() > 0) {//有指定位置
+                    for (int x = 0; x < appointList.size(); x++) {
+                        if (appointList.get(x).getX() == e.getX()) {
+                            if ((int) appointList.get(x).getY() == 2) {
+                                imageCache.fill(dataSet, false, drawTransparentCircleHole);
+                            } else {
+                                imageCache.fill(dataSet, true, drawTransparentCircleHole);
+                            }
+                            Bitmap circleBitmap = imageCache.getBitmap(j);
+                            if (circleBitmap != null) {
+                                c.drawBitmap(circleBitmap, mCirclesBuffer[0] - circleRadius, mCirclesBuffer[1] - circleRadius, null);
+                                circleBitmap.recycle();
+                            }
+                        }
+                    }
+                } else {//无指定位置
+                    Bitmap circleBitmap = imageCache.getBitmap(j);
                     if (circleBitmap != null) {
                         c.drawBitmap(circleBitmap, mCirclesBuffer[0] - circleRadius, mCirclesBuffer[1] - circleRadius, null);
+
                     }
                 }
+
+
+//                Bitmap circleBitmap = imageCache.getBitmap(j);
+//                if (circleBitmap != null) {
+//                    if (appointList != null && appointList.size() > 0) {//有指定位置
+//                        for (int x = 0; x < appointList.size(); x++) {
+//                            if (appointList.get(x).getX() == e.getX()) {
+//                                if ((int) appointList.get(x).getY() == 2) {
+//                                    mCirclePaintInner.setColor(Color.parseColor("#ffffff"));
+//                                } else {
+//                                    mCirclePaintInner.setColor(Color.parseColor("#FC9D59"));
+//                                }
+//                                if (circleBitmap != null) {
+//                                    c.drawBitmap(circleBitmap, mCirclesBuffer[0] - circleRadius, mCirclesBuffer[1] - circleRadius, null);
+//
+//                                }
+//                            }
+//                        }
+//                    }
+
+
             }
         }
     }
@@ -816,9 +877,7 @@ public class LineChartRenderer extends LineRadarRenderer {
                 Bitmap circleBitmap = Bitmap.createBitmap((int) (circleRadius * 2.1), (int) (circleRadius * 2.1), conf);
 
                 Canvas canvas = new Canvas(circleBitmap);
-
                 circleBitmaps[i] = circleBitmap;
-
                 mRenderPaint.setColor(set.getCircleColor(i));
 
                 if (drawTransparentCircleHole) {

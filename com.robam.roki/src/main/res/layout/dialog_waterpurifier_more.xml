@@ -74,6 +74,7 @@
 
     <!--中间线-->
     <TextView
+        android:id="@+id/tv_sales_service_line"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="25dp"
@@ -155,6 +156,7 @@
 
     <!--中间线-->
     <TextView
+        android:id="@+id/tv_feedback_suggestions_line"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="25dp"

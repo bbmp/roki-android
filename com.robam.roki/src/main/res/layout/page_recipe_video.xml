@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_recipe_video"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <!--图片-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="235dp">
+
+        <ImageView
+            android:id="@+id/iv_recipe_imgv_live"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/shape_recipe_void_img_bg"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:src="@mipmap/img_r" />
+
+        <ImageView
+            android:id="@+id/iv_recipe_tv_live_check"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_home_recipe_liverun" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看菜谱"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:textSize="18sp" />
+
+
+</LinearLayout>

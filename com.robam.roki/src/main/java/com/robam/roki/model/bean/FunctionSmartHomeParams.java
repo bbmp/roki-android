@@ -1,5 +1,6 @@
 package com.robam.roki.model.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class FunctionSmartHomeParams {
         this.deviceInfo = deviceInfo;
     }
 
-    public static class DeviceInfoBean {
+    public static class DeviceInfoBean implements Serializable {
         /**
          * name : 油烟机
          * dt : ["8236S"]

@@ -40,13 +40,23 @@ public class Rv610StepAdapter extends BaseQuickAdapter<RecipeStepBean, BaseViewH
             TextView tv_number = (TextView)holder.getView(R.id.tv_number);
             TextView tv_item_name = (TextView)holder.getView(R.id.tv_item_name);
             tv_number.setText(holder.getLayoutPosition()+1+"");
-            SteamOvenModeEnum match = SteamOvenModeEnum.match(item.getWork_mode());
             if ("EXP".equals(item.getFunction_name())){
                 tv_item_name.setText(item.getFunction_name() + " " + item.getTemperature()  + "℃ " + " " + item.getTemperature2()  + "℃ " + item.getTime() + "min");
             }
-//            else if (SteamOvenModeEnum.ZHIKONGZHENG == match){
-//                tv_item_name.setText(item.getFunction_name() + " " + ( item.getSteam_flow() == 2 ? "中" : "大") + " " + item.getTemperature()  + "℃ " + item.getTime() + "min");
-//            }
+            else if ("澎湃蒸".equals(item.getFunction_name() )){
+                String steam="小";
+                switch (item.getSteam_flow()){
+                    case 2:
+                        steam="中";
+                        break;
+                    case 3:
+                        steam="大";
+                        break;
+                    default:
+                        steam="小";
+                }
+                tv_item_name.setText(item.getFunction_name() + " " +steam + " " + item.getTemperature()  + "℃ " + item.getTime() + "min");
+            }
             else {
                 tv_item_name.setText(item.getFunction_name() + " " + item.getTemperature()  + "℃ " + item.getTime() + "min");
             }

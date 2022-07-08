@@ -10,14 +10,27 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Icon;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.gson.Gson;
 import com.legent.plat.events.DeviceTokenEvent;
 import com.legent.utils.EventUtils;
+import com.robam.common.events.CookBookEvent;
 import com.robam.common.events.Detailevnet;
+import com.robam.common.events.GameEvent;
+import com.robam.common.events.WebUrlEvent;
+import com.robam.common.pojos.Tag;
 import com.robam.roki.R;
 import com.robam.roki.ui.form.MainActivity;
 import com.robam.roki.ui.page.HomePage;
@@ -34,6 +47,15 @@ import com.umeng.message.entity.UMessage;
 import org.android.agoo.huawei.HuaWeiRegister;
 
 import org.android.agoo.xiaomi.MiPushRegistar;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * PushSDK集成帮助类
@@ -123,7 +145,30 @@ public class PushHelper {
 //        //vivo，注意vivo通道的初始化参数在minifest中配置
 //        VivoRegister.register(context);
     }
+    private static Bitmap decodeUriAsBitmapFromNet(String url) {
+        URL fileUrl = null;
+        Bitmap bitmap = null;
 
+        try {
+            fileUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            HttpURLConnection conn = (HttpURLConnection) fileUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+
+    }
 
     private static PendingIntent toMainActivity(String id,String theme) {
         //点击广播监听
@@ -158,23 +203,63 @@ public class PushHelper {
             @SuppressLint("NewApi")
             @Override
             public Notification getNotification(Context context, UMessage msg) {
+                Bitmap mBitmap = null;
+                if (msg!=null&&!TextUtils.isEmpty(msg.img)){
+//                    InputStream image_stream = null;
+//                    try {
+//                        image_stream = context.getContentResolver().openInputStream(new URI(msg.img).u);
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    } catch (URISyntaxException e) {
+//                        e.printStackTrace();
+//                    }
+
+
+
+
+                    for (int i=0;i<5;i++){
+                        if (mBitmap==null){
+                            mBitmap=decodeUriAsBitmapFromNet(msg.img);
+                        }else{
+                            break;
+                        }
+                    }
+
+
+
+//                    Bitmap bitmap= BitmapFactory.decodeStream(image_stream );
+//                    Glide.with(context).asBitmap().load(msg.img).into(new SimpleTarget<Bitmap>() {
+//                        @Override
+//                        public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
+////                            TAG.no();
+//                            mBitmap[0] =bitmap;
+//                        }
+//                    });
+//                    try {
+//                        TAG.wait();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+                }else{
+                    mBitmap=BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+                }
+
+
                if (msg.extra != null && msg.extra.get("type") .equals("theme")) {
                     NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                     @SuppressLint({"NewApi", "LocalSuppress"}) NotificationChannel channel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_HIGH);
                     if (manager != null) {
                         manager.createNotificationChannel(channel);
                     }
-                    PendingIntent pendingIntent = toMainActivity(msg.extra.get("id"),msg.extra.get("theme"));
                     Notification.Builder builder = new Notification.Builder(context, "channel_id");
                     builder.setSmallIcon(R.mipmap.ic_launcher)
                             .setWhen(System.currentTimeMillis())
-                            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
-
+                            .setLargeIcon(mBitmap)
                             .setContentTitle(msg.title)
                             .setContentText(msg.text)
                             .setAutoCancel(true);
                     return builder.build();
-                } else {
+                } else if (msg.extra != null && msg.extra.get("type") .equals("cook")) {
                     NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                     @SuppressLint({"NewApi", "LocalSuppress"}) NotificationChannel channel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_HIGH);
                     if (manager != null) {
@@ -183,7 +268,21 @@ public class PushHelper {
                     Notification.Builder builder = new Notification.Builder(context, "channel_id");
                     builder.setSmallIcon(R.mipmap.ic_launcher)
                             .setWhen(System.currentTimeMillis())
-                            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
+                            .setLargeIcon(mBitmap)
+                            .setContentTitle(msg.title)
+                            .setContentText(msg.text)
+                            .setAutoCancel(true);
+                    return builder.build();
+                }else {
+                    NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                    @SuppressLint({"NewApi", "LocalSuppress"}) NotificationChannel channel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_HIGH);
+                    if (manager != null) {
+                        manager.createNotificationChannel(channel);
+                    }
+                    Notification.Builder builder = new Notification.Builder(context, "channel_id");
+                    builder.setSmallIcon(R.mipmap.ic_launcher)
+                            .setWhen(System.currentTimeMillis())
+                            .setLargeIcon(mBitmap)
                             .setContentTitle(msg.title)
                             .setContentText(msg.text)
                             .setAutoCancel(true);
@@ -209,10 +308,26 @@ public class PushHelper {
                         startRokiAPP(context, APPPACKAGENAME, msg.extra.entrySet());
                     }
                     EventUtils.postEvent(new Detailevnet(Long.parseLong(msg.extra.get("id"))));
-//                    SelectThemeDetailPage.show(Integer.parseInt("id"),TYPE_THEME_BANNER);
+                } else  if (msg.extra != null && msg.extra.get("type") .equals("game")) {
+                    if (isRokiInBackground(context)) {
+                        startRokiAPP(context, APPPACKAGENAME, msg.extra.entrySet());
+                    }
+                    EventUtils.postEvent(new GameEvent());
+                }else  if (msg.extra != null && msg.extra.get("type") .equals("cook")) {
+                    if (isRokiInBackground(context)) {
+                        startRokiAPP(context, APPPACKAGENAME, msg.extra.entrySet());
+                    }
+                    EventUtils.postEvent(new CookBookEvent(Long.parseLong(msg.extra.get("id"))));
+                }else  if (msg.extra != null && msg.extra.get("type") .equals("h5")) {
+                    if (isRokiInBackground(context)) {
+                        startRokiAPP(context, APPPACKAGENAME, msg.extra.entrySet());
+                    }
+//                    EventUtils.postEvent(new WebUrlEvent(msg.extra.get("url")));
+                    EventUtils.postEvent(new WebUrlEvent(msg.extra.get("url"),msg.extra.get("secondTitle"),msg.img, msg.title));
                 }else{
-                    super.launchApp(context, msg);
+
                 }
+                super.launchApp(context, msg);
 //                Log.i(TAG, "click launchApp: " + msg.getRaw().toString());
 
 

@@ -8,7 +8,7 @@ import com.legent.plat.pojos.device.IDevice;
 public class DeviceConnectionChangedEvent extends AbsDeviceEvent {
 
     public boolean isConnected;
-
+    public int offLineTotal;
     public DeviceConnectionChangedEvent(IDevice device, boolean isConnected) {
         super(device);
         this.isConnected = isConnected;

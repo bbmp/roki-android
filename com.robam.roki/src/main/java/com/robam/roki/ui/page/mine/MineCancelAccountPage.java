@@ -30,9 +30,7 @@ public class MineCancelAccountPage extends MyBasePage<MainActivity> {
 
     @Override
     protected void initView() {
-        setTitle(R.string.my_cancel_account);
-        getTitleBar().setOnTitleBarListener(this);
-        setOnClickListener(R.id.btn_logoff);
+        setOnClickListener(R.id.btn_logoff, R.id.img_back);
     }
 
     @Override
@@ -43,6 +41,8 @@ public class MineCancelAccountPage extends MyBasePage<MainActivity> {
     public void onClick(View view) {
         if (view.getId() == R.id.btn_logoff){
             accout_logout_setting();
+        } else if (view.getId() == R.id.img_back) {
+            UIService.getInstance().popBack();
         }
     }
 

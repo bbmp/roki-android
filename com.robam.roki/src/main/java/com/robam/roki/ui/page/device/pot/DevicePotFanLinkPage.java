@@ -79,6 +79,7 @@ public class DevicePotFanLinkPage extends BasePage {
         if (pot == null) {
             return;
         }
+        MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), pot.getDt() + ":烟锅联动页", null);
     }
 
     private void getFanPotLinkValue(final String value) {

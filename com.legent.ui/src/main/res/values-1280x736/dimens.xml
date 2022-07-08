@@ -3,6 +3,7 @@
     <!-- popWindown -->
     <dimen name="common_popWindown_height">600px</dimen>
     <dimen name="common_popWindown_width">1285px</dimen>
+    <dimen name="common_divMain_margintop">10dp</dimen>
     <!-- 微波炉 -->
     <dimen name="common_microwava_popWindown_height">400px</dimen>
     <dimen name="common_stove_popWindown_height">600px</dimen>

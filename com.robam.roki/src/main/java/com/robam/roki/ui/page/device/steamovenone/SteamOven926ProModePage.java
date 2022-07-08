@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -593,8 +592,8 @@ public class SteamOven926ProModePage extends BasePage {
 
     //蒸、烤、辅助模式
     private void sendSteamOvenFZModel() {
-        if (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait) {
+        if (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait) {
             steameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override
                 public void onSuccess() {
@@ -642,8 +641,8 @@ public class SteamOven926ProModePage extends BasePage {
     //CQ908专业模式
     private void sendExpCommand(final String model, final int time, final int tempUp, final int tempDown) {
 
-        if (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait
+        if (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait
         ) {
 
             steameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
@@ -698,8 +697,8 @@ public class SteamOven926ProModePage extends BasePage {
      * 干燥模式
      */
     private void dryMode(final String mode, final String defaultTime, final String defaultTemp) {
-        if (steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Off ||
-                steameOvenOne.powerStatus == SteamOvenOnePowerStatus.Wait
+        if (steameOvenOne.powerState == SteamOvenOnePowerStatus.Off ||
+                steameOvenOne.powerState == SteamOvenOnePowerStatus.Wait
         ) {
             steameOvenOne.setSteameOvenStatus_on(new VoidCallback() {
                 @Override

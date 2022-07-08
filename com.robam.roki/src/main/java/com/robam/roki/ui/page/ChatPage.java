@@ -21,6 +21,8 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.bar.OnTitleBarListener;
+import com.hjq.bar.TitleBar;
 import com.legent.Callback;
 import com.legent.Helper;
 import com.legent.VoidCallback;
@@ -61,14 +63,12 @@ public class ChatPage extends BasePage {
 
     Adapter adapter;
     ChatService cs = ChatService.getInstance();
-    @InjectView(R.id.img_back)
-    ImageView mImgBack;
+
     @InjectView(R.id.main)
     LinearLayout mMain;
     @InjectView(R.id.ll_bottom)
     LinearLayout mLlBottom;
-    @InjectView(R.id.ll_title)
-    LinearLayout mLlTitle;
+
 
     ListView listview;
 
@@ -96,6 +96,7 @@ public class ChatPage extends BasePage {
             }
         });
 //        addLayoutListener(mMain, mLlBottom, mLlTitle);
+
         return view;
     }
 
@@ -209,11 +210,7 @@ public class ChatPage extends BasePage {
 
     }
 
-    @OnClick(R.id.img_back)
-    public void onViewClicked() {
 
-        UIService.getInstance().popBack();
-    }
 
     class Adapter extends ExtBaseAdapter<ChatMsg> {
 
@@ -302,8 +299,8 @@ public class ChatPage extends BasePage {
                 txtMsg.setText(msg.msg);
                 if (!msg.isIncoming()) {
                     User user = Plat.accountService.getCurrentUser();
-                    txtUserName.setText(user.nickname);
-                    ImageUtils.displayImage(getActivity(), user.figureUrl, imgFigure,
+                    txtUserName.setText(user.name);
+                    ImageUtils.displayImage(user.figureUrl, imgFigure,
                             com.robam.roki.ui.Helper.DisplayImageOptions_UserFace);
                 }
 

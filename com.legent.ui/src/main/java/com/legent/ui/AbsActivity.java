@@ -3,8 +3,6 @@ package com.legent.ui;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -178,7 +176,7 @@ public abstract class AbsActivity extends AppCompatActivity implements IForm {
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //        EventUtils.postEvent(new ActivityResultOnPageEvent(requestCode, resultCode, data));
         LogUtils.i("20190107", "requestCode::" + requestCode + " resultCode  " + resultCode);
@@ -225,19 +223,6 @@ public abstract class AbsActivity extends AppCompatActivity implements IForm {
 
     protected void setContentView() {
         // setContentView(R.layout.activity_layout);
-        setContentView(R.layout.abs_activity);
-    }
-
-    @Override
-    public Resources getResources() {
-        Resources res = super.getResources();
-        //非默认值
-        if (res.getConfiguration().fontScale != 1) {
-            Configuration newConfig = new Configuration();
-            newConfig.setToDefaults();//设置默认
-            res.updateConfiguration(newConfig, res.getDisplayMetrics());
-        }
-        return res;
     }
 
     protected void attachActivity(String pageKey) {
@@ -293,7 +278,7 @@ public abstract class AbsActivity extends AppCompatActivity implements IForm {
 
     }
 
-    protected void onKeyDown_Back() {
+    protected void  onKeyDown_Back() {
 
         FormManager fm = UIService.getInstance().getTop();
         if (fm == null) {

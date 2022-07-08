@@ -37,6 +37,7 @@ import com.robam.common.pojos.device.microwave.MicroWaveStatus;
 import com.robam.roki.R;
 import com.robam.roki.utils.DensityUtil;
 import com.robam.roki.utils.DeviceSelectUtils;
+import com.robam.roki.utils.IjkPlayerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;

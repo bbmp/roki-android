@@ -2,6 +2,7 @@ package com.robam.roki.ui.adapter3;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +50,8 @@ public class RvClassTagRecipeAdapter extends BaseQuickAdapter<Recipe , BaseViewH
             .placeholder(R.mipmap.icon_recipe_default) //预加载图片
             .error(R.mipmap.icon_recipe_default) //加载失败图片
             .priority(Priority.HIGH) //优先级
-            .diskCacheStrategy(DiskCacheStrategy.ALL) //缓存
-            .transform(new CenterCrop(),new MaskTransformation(R.mipmap.icon_roki_recipe_bg)); //圆角
+            .diskCacheStrategy(DiskCacheStrategy.NONE); //缓存
+//            .transform(new CenterCrop(),new MaskTransformation(R.mipmap.icon_roki_recipe_bg)); //圆角
 
     public RvClassTagRecipeAdapter() {
 
@@ -66,7 +67,7 @@ public class RvClassTagRecipeAdapter extends BaseQuickAdapter<Recipe , BaseViewH
     protected void convert(@NotNull BaseViewHolder holder, Recipe item) {
         if (item != null){
             holder.setText(R.id.tv_recipe_name , item.name)
-                    .setText(R.id.tv_collection_number , "收藏" + NumberUtil.converString(item.collectCount))
+//                    .setText(R.id.tv_collection_number , "收藏" + NumberUtil.converString(item.collectCount))
                     .setText(R.id.tv_recipe_read_number , NumberUtil.converString(item.viewCount));
             ImageView ivTagRecipe = (ImageView) holder.getView(R.id.iv_tag_recipe);
             String recipeUrl = RecipeUtils.getRecipeImgUrl(item);
@@ -74,26 +75,30 @@ public class RvClassTagRecipeAdapter extends BaseQuickAdapter<Recipe , BaseViewH
                     .load(recipeUrl)
                     .apply(options)
                     .into(ivTagRecipe);
+            if (!TextUtils.isEmpty(item.video))
+                holder.getView(R.id.iv_play).setVisibility(View.VISIBLE);
+            else
+                holder.getView(R.id.iv_play).setVisibility(View.GONE);
             if (!isShowDevice){
 
 
 
                 holder.setText(R.id.tv_recipe_name , item.name)
-                        .setText(R.id.tv_recipe_read_number , "收藏 " + NumberUtil.converString(item.collectCount))
-                        .setText(R.id.tv_collection_number , "阅读 " + NumberUtil.converString(item.viewCount));
-                holder.getView(R.id.img_recipe_read_number).setVisibility(View.INVISIBLE);
+                        .setText(R.id.tv_recipe_read_number , "收藏 " + NumberUtil.converString(item.collectCount));
+//                        .setText(R.id.tv_collection_number , "阅读 " + NumberUtil.converString(item.viewCount));
+//                holder.getView(R.id.img_recipe_read_number).setVisibility(View.INVISIBLE);
 //                holder.setVisible(R.id.img_collection_number,false);
 //                holder.getView(R.id.img_collection_number).getLayoutParams();
 
-                holder.getView(R.id.img_collection_number).setVisibility(View.GONE);
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.getView(R.id.tv_collection_number).getLayoutParams();
+//                holder.getView(R.id.img_collection_number).setVisibility(View.GONE);
+//                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.getView(R.id.tv_collection_number).getLayoutParams();
 //                lp.setMargins(Dp2Px(getContext(),8)
 //                        ,holder.getView(R.id.tv_collection_number).getTop(),holder.getView(R.id.tv_collection_number).getRight(),
 //                        holder.getView(R.id.tv_collection_number).getBottom());
 
-                lp.leftMargin=Dp2Px(getContext(),8);
+//                lp.leftMargin=Dp2Px(getContext(),8);
 
-                holder.getView(R.id.tv_collection_number).setLayoutParams(lp);
+//                holder.getView(R.id.tv_collection_number).setLayoutParams(lp);
 
 
                 return;
@@ -104,60 +109,15 @@ public class RvClassTagRecipeAdapter extends BaseQuickAdapter<Recipe , BaseViewH
 //            drawable1.setBounds(0, 0, 35, 35);
 //            tv_recipe_read_number.setCompoundDrawables(drawable1, null, null, null);
 
-            TextView tvCollection = (TextView) holder.getView(R.id.tv_collection_number);
-            ImageView imageView=holder.getView(R.id.img_collection_number);
+//            TextView tvCollection = (TextView) holder.getView(R.id.tv_collection_number);
+//            ImageView imageView=holder.getView(R.id.img_collection_number);
             List<Dc> dcs = item.getJs_dcs();
             if (dcs != null && dcs.size() != 0) {
-//                Drawable drawable = UiUtils.getResources().getDrawable(DeviceNameHelper.getIcon(dcs), null);
-//                drawable.setBounds(0, 0, 35, 35);
-//                tvCollection.setCompoundDrawables(drawable, null, null, null);
-                imageView.setImageDrawable(UiUtils.getResources().getDrawable(DeviceNameHelper.getIcon(dcs), null));
-                tvCollection.setText(DeviceNameHelper.getDeviceName2(dcs));
-//                switch (dcs.get(0).dc) {
-//                    case IDeviceType.RRQZ:
-//                        drawable = UiUtils.getResources().getDrawable(R.drawable.ic_rqz, null);
-//                        drawable.setBounds(0, 0, 35, 35);
-//                        tvCollection.setCompoundDrawables(drawable, null, null, null);
-//                        tvCollection.setText(DeviceNameHelper.getDeviceName2(dcs));
-//                        break;
-//                    case IDeviceType.RDCZ:
-//                        drawable = UiUtils.getResources().getDrawable(R.drawable.ic_rqz, null);
-//                        drawable.setBounds(0, 0, 35, 35);
-//                        tvCollection.setCompoundDrawables(drawable, null, null, null);
-//                        tvCollection.setCompoundDrawables(UiUtils.getResources().getDrawable(R.drawable.ic_rqz, null), null, null, null);
-//                        tvCollection.setText(DeviceNameHelper.getDeviceName2(dcs));
-//                        break;
-//                    case IDeviceType.RDKX:
-//                        drawable = UiUtils.getResources().getDrawable(R.drawable.ic_dkx, null);
-//                        drawable.setBounds(0, 0, 35 , 35);
-//                        tvCollection.setCompoundDrawables(drawable, null, null, null);
-////                            tvCollection.setCompoundDrawables(UiUtils.getResources().getDrawable(R.drawable.ic_dkx, null), null, null, null);
-//                        tvCollection.setText(DeviceNameHelper.getDeviceName2(dcs));
-//                        break;
-//                    case IDeviceType.RZQL:
-//                        drawable = UiUtils.getResources().getDrawable(R.drawable.ic_dzx, null);
-//                        drawable.setBounds(0, 0, 35, 35);
-//                        tvCollection.setCompoundDrawables(drawable, null, null, null);
-//                        tvCollection.setText(DeviceNameHelper.getDeviceName2(dcs));
-//                        break;
-//                    case IDeviceType.RZKY:
-//                        drawable = UiUtils.getResources().getDrawable(R.drawable.ic_ytj, null);
-//                        drawable.setBounds(0, 0, 35, 35);
-//                        tvCollection.setCompoundDrawables(drawable, null, null, null);
-//                        tvCollection.setText(DeviceNameHelper.getDeviceName2(dcs));
-//                        break;
-//                    case IDeviceType.RWBL:
-//                        drawable = UiUtils.getResources().getDrawable(R.drawable.ic_wbl, null);
-//                        drawable.setBounds(0, 0, 35, 35);
-//                        tvCollection.setCompoundDrawables(drawable, null, null, null);
-//                        tvCollection.setText(DeviceNameHelper.getDeviceName2(dcs));
-//                        break;
-//                    default:
-//                        break;
-//
-//                }
+                holder.setVisible(R.id.tv_device_name, true);
+                holder.setText(R.id.tv_device_name, DeviceNameHelper.getDeviceName2(dcs));
+
             } else {
-                imageView.setImageDrawable(null);
+                holder.setVisible(R.id.tv_device_name, false);
             }
 
         }

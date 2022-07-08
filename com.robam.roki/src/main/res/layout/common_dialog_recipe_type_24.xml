@@ -7,8 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
         android:background="@drawable/shape_diglog_bg_splash"
         android:orientation="vertical">
 
@@ -21,7 +21,8 @@
             android:text="@string/agree_privacy_policy_note"
             android:layout_margin="20dp"
             android:scrollbars="vertical"
-            android:textSize="18sp" />
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_color_net_err"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -31,26 +32,30 @@
             <Button
                 android:id="@+id/common_dialog_cancel_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_45"
                 android:layout_marginStart="30dp"
                 android:layout_gravity="center"
                 android:padding="16dp"
                 android:layout_alignParentStart="true"
-                android:background="@drawable/countdown_selector"
+                android:background="@drawable/countdown_selector_3"
+                android:textSize="@dimen/sp_20"
+                android:textColor="@color/text_color_online"
                 android:gravity="center"
                 android:text="退出应用" />
 
             <Button
                 android:id="@+id/common_dialog_ok_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_45"
                 android:layout_marginEnd="30dp"
                 android:padding="16dp"
                 android:background="@drawable/button_round_selector"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="同意并继续" />
+                android:text="同意并继续"
+                android:textColor="@color/text_color_exit_login"
+                android:textSize="@dimen/sp_20"/>
         </RelativeLayout>
     </LinearLayout>
 </FrameLayout>

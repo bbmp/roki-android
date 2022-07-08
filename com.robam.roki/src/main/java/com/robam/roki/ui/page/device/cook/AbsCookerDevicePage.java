@@ -12,9 +12,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.common.eventbus.Subscribe;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
+import com.legent.plat.events.DeviceNameChangeEvent;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.io.cloud.Reponses;
 import com.legent.plat.pojos.device.BackgroundFunc;
@@ -106,7 +108,13 @@ public abstract class AbsCookerDevicePage extends BasePage {
     List<FunctionMore> mores;
     String version = null;
 
-
+    @Subscribe
+    public void onEvent(DeviceNameChangeEvent event){
+        if (mGuid.equals(event.device.getGuid().getGuid())){
+            String name = event.device.getName();
+            tvDeviceModelName.setText(name);
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle bd = getArguments();
@@ -126,6 +134,10 @@ public abstract class AbsCookerDevicePage extends BasePage {
         super.onResume();
         if (absCooker == null) {
             return;
+        }
+        if (absCooker.getDt() != null) {
+            FirebaseAnalytics firebaseAnalytics = MobApp.getmFirebaseAnalytics();
+            firebaseAnalytics.setCurrentScreen(getActivity(), absCooker.getDt(), null);
         }
 
     }
@@ -160,7 +172,7 @@ public abstract class AbsCookerDevicePage extends BasePage {
         });
 
 
-        CloudHelper.getDeviceByParams(userId, dt, dc, new Callback<com.legent.plat.io.cloud.Reponses.DeviceResponse>() {
+        Plat.deviceService.getDeviceByParams(userId, dt, dc, new Callback<com.legent.plat.io.cloud.Reponses.DeviceResponse>() {
             @Override
             public void onSuccess(com.legent.plat.io.cloud.Reponses.DeviceResponse deviceResponse) {
                 if (deviceResponse == null) return;
@@ -209,7 +221,7 @@ public abstract class AbsCookerDevicePage extends BasePage {
 
     private void getDataMethod() {
         LogUtils.i("20190215", "here is run");
-        CloudHelper.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
+        Plat.deviceService.getDeviceByParams(userId, dt, dc, new Callback<Reponses.DeviceResponse>() {
             @Override
             public void onSuccess(Reponses.DeviceResponse deviceResponse) {
                 if (deviceResponse == null) return;
@@ -250,7 +262,9 @@ public abstract class AbsCookerDevicePage extends BasePage {
                     .asBitmap()
                     .load(backgroundImg)
                     .fitCenter().into(ivBg);
-            tvDeviceModelName.setText(deviceResponse.title);
+//            tvDeviceModelName.setText(deviceResponse.title);
+
+            tvDeviceModelName.setText((absCooker.getName() == null || absCooker.getName().equals(absCooker.getCategoryName())) ? absCooker.getDispalyType() : absCooker.getName());
             MainFunc mainFunc = deviceResponse.modelMap.mainFunc;
             tempList = mainFunc.deviceConfigurationFunctions;
             if (tempList.size() > 1) {

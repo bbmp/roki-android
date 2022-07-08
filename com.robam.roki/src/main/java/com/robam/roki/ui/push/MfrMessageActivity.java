@@ -7,8 +7,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.legent.utils.EventUtils;
+import com.robam.common.events.WebUrlEvent;
 import com.robam.roki.MobApp;
 import com.robam.roki.R;
 import com.robam.roki.ui.form.MainActivity;
@@ -35,6 +38,7 @@ public class MfrMessageActivity extends UmengNotifyClickActivity {
         }
         String body = intent.getStringExtra(AgooConstants.MESSAGE_BODY);
         Log.d(TAG, "body: " + body);
+
         if (!TextUtils.isEmpty(body)) {
             Extra extra = new Gson().fromJson(body, Extra.class);
 //            JSONObject jsonObject = JSONObject.parseObject(body);
@@ -52,6 +56,32 @@ public class MfrMessageActivity extends UmengNotifyClickActivity {
                     Log.d(TAG, "body: 1111");
                     finish();
                     return;
+                }else if (extra.extra.type != null && extra.extra.type.equals("game")){
+                    MobApp.Game="game";
+                }else if (extra.extra.type != null && extra.extra.type.equals("cook")){
+                    if (TextUtils.isEmpty(extra.extra.id)){
+                        MobApp.cookId=null;
+                    }else {
+                        MobApp.cookId = extra.extra.id;
+                    }
+                    WelcomeActivity.start(this);
+                    Log.d(TAG, "body: 1111");
+                    finish();
+                    return;
+                }else if (extra.extra.type != null && extra.extra.type.equals("h5")){
+                    if (TextUtils.isEmpty(extra.extra.url)){
+                        MobApp.h5Url=null;
+                    }else {
+                        MobApp.h5Url = extra.extra.url;
+                        MobApp.secondTitle = extra.extra.secondTitle;
+                        MobApp.img = extra.body.img;
+                        MobApp.title = extra.body.title;
+                    }
+                    WelcomeActivity.start(this);
+//                    EventUtils.postEvent(new WebUrlEvent(extra.extra.url,extra.extra.secondTitle,extra.extra.img, extra.extra.title));
+                    Log.d(TAG, "body: 1111");
+                    finish();
+                    return;
                 }
             }
         }
@@ -61,15 +91,4 @@ public class MfrMessageActivity extends UmengNotifyClickActivity {
     }
 
 
-    private Intent toIntent(String id, String theme, Class<?> cls) {
-        //点击广播监听
-        Intent intentClick = null;
-        intentClick = new Intent(this, cls);
-        intentClick.putExtra("id", id);
-        intentClick.putExtra("theme", theme);
-        intentClick.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intentClick.addCategory("android.intent.category.LAUNCHER");
-        intentClick.setAction("android.intent.action.MAIN");
-        return intentClick;
-    }
 }

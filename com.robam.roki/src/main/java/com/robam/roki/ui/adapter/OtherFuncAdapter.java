@@ -51,12 +51,13 @@ import com.robam.roki.model.helper.HelperRikaData;
 import com.robam.roki.ui.dialog.RikaFanTimeRemindDialog;
 import com.robam.roki.utils.DialogUtil;
 import com.robam.roki.utils.TestDatas;
-
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by 14807 on 2018/1/24.
@@ -145,8 +146,8 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
     public OtherFuncViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
         View view = mInflater.inflate(R.layout.item_otherfunc_page, parent, false);
-
-        OtherFuncViewHolder otherFuncViewHolder = new OtherFuncViewHolder(mContext, view);
+        ScreenAdapterTools.getInstance().loadView(view);
+        OtherFuncViewHolder otherFuncViewHolder = new OtherFuncViewHolder(view);
         otherFuncViewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,7 +169,7 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
     public void onBindViewHolder(OtherFuncViewHolder holder, int position) {
         String count_remind_time = TimeUtils.secToHourMinSec(count_remind);
         String sterilWorkTimeLeft = TimeUtils.secToHourMinSec(mSterilWorkTimeLeft);
-        Glide.with(mContext).load(mDatas.get(position).backgroundImg)
+        Glide.with(cx).load(mDatas.get(position).backgroundImg)
                 .transition(DrawableTransitionOptions.with(new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()))
                 .into(holder.mImageView);
         holder.mTvWorkName.setVisibility(View.GONE);
@@ -185,7 +186,7 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
                     holder.mTvWorkName.setText(R.string.fan_run_open);
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     holder.startAnimation();
                 } else {
                     holder.mTvName.setText(mDatas.get(position).functionName);
@@ -202,10 +203,11 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
                     if (mRika.steamOvenRunModel == 19) {
                         holder.mTvName.setText("保温中");
                     }else {
-                        holder.mTvName.setText(TimeUtils.secToHourMinSec(mSteamOvenWorkRemainingTime) + " 后完成工作");
+                        holder.mTvName.setText( "工作中剩余 "+TimeUtils.secToHourMinSec(mSteamOvenWorkRemainingTime));
                     }
                     holder.mTvDesc.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+//                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_green_dot));
                 } else if (mSteamOvenRunModel != RikaModel.SteamOven.NO_MOEL && mSteamOvenWorkStatus == RikaStatus.STEAMOVEN_STOP) {
                     holder.startAnimation();
                     if (mRika.steamOvenRunModel == 19) {
@@ -214,12 +216,14 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
                         holder.mTvName.setText("暂停中剩余"+TimeUtils.secToHourMinSec(mSteamOvenWorkRemainingTime));
                     }
                     holder.mTvDesc.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_red_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_red_dot));
                 } else if (mSteamOvenRunModel != RikaModel.SteamOven.NO_MOEL && mSteamOvenWorkStatus == RikaStatus.STEAMOVEN_PREHEAT) {
                     holder.startAnimation();
                     holder.mTvName.setText("预热中"+mRika.steamOvenWorkTemp + "℃");
                     holder.mTvDesc.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_green_dot));
+//                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_green_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+
                 } else {
                     holder.stopAnimation();
                     holder.mTvName.setText(mDatas.get(position).functionName);
@@ -246,27 +250,27 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
                 if (mSteamRunModel != RikaModel.Steame.NO_MOEL && mSteamWorkStatus == RikaStatus.STEAM_RUN) {
 //                    holder.mTvName.setText(time + cx.getString(R.string.rika_finish_work));
 //                    holder.mTvDesc.setText(R.string.rika_work_dec);
-                    holder.mTvWorkName.setText(time + mContext.getString(R.string.rika_finish_work));
+                    holder.mTvWorkName.setText(time + cx.getString(R.string.rika_finish_work));
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     holder.startAnimation();
                 } else if (mSteamRunModel != RikaModel.Steame.NO_MOEL && mSteamWorkStatus == RikaStatus.STEAM_STOP) {
 //                    holder.mTvName.setText(time + cx.getString(R.string.rika_steam_work_stop));
 //                    holder.mTvDesc.setText(R.string.rika_steam_work_stop_dec);
-                    holder.mTvWorkName.setText(mContext.getString(R.string.rika_steam_work_stop_center) + time);
+                    holder.mTvWorkName.setText(cx.getString(R.string.rika_steam_work_stop_center) + time);
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_red_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_red_dot));
                     holder.startAnimation();
                 } else if (mSteamWorkStatus == RikaStatus.STEAM_PREHEAT) {
                     holder.startAnimation();
 //                    holder.mTvName.setText(mRika.steamWorkTemp + "℃" + cx.getString(R.string.device_preheating));
 //                    holder.mTvDesc.setText(R.string.rika_steam_work_preheating_dec);
-                    holder.mTvWorkName.setText(mContext.getString(R.string.device_preheating) + mRika.steamWorkTemp + "℃");
+                    holder.mTvWorkName.setText(cx.getString(R.string.device_preheating) + mRika.steamWorkTemp + "℃");
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_green_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_green_dot));
                 } else {
                     holder.stopAnimation();
                     holder.mTvWorkName.setVisibility(View.GONE);
@@ -280,10 +284,10 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
                     holder.startAnimation();
 //                    holder.mTvName.setText("0" + count_remind_time + cx.getString(R.string.fan_complete_timing));
 //                    holder.mTvDesc.setText(cx.getString(R.string.fan_complete_timing_desc));
-                    holder.mTvWorkName.setText(count_remind_time + mContext.getString(R.string.fan_complete_timing));
+                    holder.mTvWorkName.setText(count_remind_time + cx.getString(R.string.fan_complete_timing));
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                 } else {
                     holder.stopAnimation();
                     holder.mTvWorkName.setVisibility(View.GONE);
@@ -318,8 +322,8 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
                     sterilizerStatus = RikaStatus.STERIL_DISIDFECT;
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mTvWorkName.setText(sterilWorkTimeLeft + mContext.getString(R.string.sterilizer_complete_disinfect));
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mTvWorkName.setText(sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_disinfect));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     holder.startAnimation();
                 } else if (mSterilWorkStatus == RikaStatus.STERIL_CLEAN) {
 //                    holder.mTvName.setText("0" + sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_clean));
@@ -327,8 +331,8 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
                     sterilizerStatus = RikaStatus.STERIL_CLEAN;
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mTvWorkName.setText(sterilWorkTimeLeft + mContext.getString(R.string.sterilizer_complete_clean));
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mTvWorkName.setText(sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_clean));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     holder.startAnimation();
                 } else if (mSterilWorkStatus == RikaStatus.STERIL_DRYING) {
 //                    holder.mTvName.setText("0" + sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_drying));
@@ -336,8 +340,8 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
                     sterilizerStatus = RikaStatus.STERIL_DRYING;
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mTvWorkName.setText(sterilWorkTimeLeft + mContext.getString(R.string.sterilizer_complete_drying));
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mTvWorkName.setText(sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_drying));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     holder.startAnimation();
                 } else if (mSterilWorkStatus == RikaStatus.STERIL_PRE) {
 //                    holder.mTvName.setText("0" + sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_pre));
@@ -345,8 +349,8 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
                     sterilizerStatus = RikaStatus.STERIL_PRE;
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mTvWorkName.setText(sterilWorkTimeLeft + mContext.getString(R.string.sterilizer_complete_pre));
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mTvWorkName.setText(sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_pre));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     holder.startAnimation();
                 } else if (mSterilWorkStatus == RikaStatus.STERIL_DEGERMING) {
 //                    holder.mTvName.setText("0" + sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_degerming));
@@ -354,43 +358,43 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
                     sterilizerStatus = RikaStatus.STERIL_DEGERMING;
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mTvWorkName.setText(sterilWorkTimeLeft + mContext.getString(R.string.sterilizer_complete_degerming));
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mTvWorkName.setText(sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_degerming));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     holder.startAnimation();
                 } else if (mSterilWorkStatus == RikaStatus.STERIL_APPOINATION) {
                     sterilizerStatus = RikaStatus.STERIL_APPOINATION;
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mTvWorkName.setText(sterilWorkTimeLeft + mContext.getString(R.string.sterilizer_complete_pre_dis));
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mTvWorkName.setText(sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_pre_dis));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     holder.startAnimation();
                 } else if (mSterilWorkStatus == RikaStatus.STERIL_APPOINATION_DRYING) {
                     sterilizerStatus = RikaStatus.STERIL_APPOINATION_DRYING;
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mTvWorkName.setText(sterilWorkTimeLeft + mContext.getString(R.string.sterilizer_complete_pre_dry));
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mTvWorkName.setText(sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_pre_dry));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     holder.startAnimation();
                 } else if (mSterilWorkStatus == RikaStatus.STERIL_APPOINATION_CLEAN) {
                     sterilizerStatus = RikaStatus.STERIL_APPOINATION_CLEAN;
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mTvWorkName.setText(sterilWorkTimeLeft + mContext.getString(R.string.sterilizer_complete_pre_clean));
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mTvWorkName.setText(sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_pre_clean));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     holder.startAnimation();
                 } else if (mSterilWorkStatus == RikaStatus.STERIL_COER_DISIDFECT) {
                     sterilizerStatus = RikaStatus.STERIL_COER_DISIDFECT;
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
-                    holder.mTvWorkName.setText(sterilWorkTimeLeft + mContext.getString(R.string.sterilizer_complete_coer_disidfect));
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
+                    holder.mTvWorkName.setText(sterilWorkTimeLeft + cx.getString(R.string.sterilizer_complete_coer_disidfect));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_yellow_dot));
                     holder.startAnimation();
                 } else if (mSterilWorkStatus == RikaStatus.STERIL_ALARM) {
-                    holder.mStateShow.setBackground(mContext.getResources().getDrawable(R.drawable.shape_rika_round_red_dot));
+                    holder.mStateShow.setBackground(cx.getResources().getDrawable(R.drawable.shape_rika_round_red_dot));
                     holder.mTvWorkName.setVisibility(View.VISIBLE);
                     holder.mLlDefaultText.setVisibility(View.GONE);
 
-                    String content = HelperRikaData.getAlarmContent(mContext, sterilizerStatus);
+                    String content = HelperRikaData.getAlarmContent(cx, sterilizerStatus);
                     holder.mTvWorkName.setText(sterilWorkTimeLeft + content);
                     holder.startAnimation();
                 }
@@ -502,11 +506,11 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
      * 关闭煲汤提醒广播
      */
     private void stopBroadcastReceiver() {
-        AlarmManager alarmManager = AlarmManagerUtil.getInstance(mContext);
-        Intent intent = new Intent(mContext, DeviceTimeToRemindReceiver.class);
+        AlarmManager alarmManager = AlarmManagerUtil.getInstance(cx);
+        Intent intent = new Intent(cx, DeviceTimeToRemindReceiver.class);
         intent.setAction("DeviceTimeToRemindReceiver");
         intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(cx, 0, intent, 0);
         alarmManager.cancel(pendingIntent);
     }
 
@@ -517,11 +521,11 @@ public class OtherFuncAdapter extends RecyclerView.Adapter<OtherFuncViewHolder> 
      * @param timestr
      */
     private void startBroadcastReceiver(long time, String timestr) {
-        AlarmManager alarmManager = AlarmManagerUtil.getInstance(mContext);
-        Intent intent = new Intent(mContext, DeviceTimeToRemindReceiver.class);
+        AlarmManager alarmManager = AlarmManagerUtil.getInstance(cx);
+        Intent intent = new Intent(cx, DeviceTimeToRemindReceiver.class);
         intent.setAction("DeviceTimeToRemindReceiver");
         intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(cx, 0, intent, 0);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
     }
 
@@ -613,12 +617,10 @@ class OtherFuncViewHolder extends RecyclerView.ViewHolder {
     LinearLayout mLlDefaultText;
     ImageView mStateShow;
     AlphaAnimation mAlphaAnimation;
-    Context mContext;
 
-    public OtherFuncViewHolder(Context context, View itemView) {
+    public OtherFuncViewHolder(View itemView) {
         super(itemView);
         this.setIsRecyclable(false);
-        mContext = context;
         mTvName = itemView.findViewById(R.id.tv_name);
         mTvWorkName = itemView.findViewById(R.id.tv_work_name);
         mLlDefaultText = itemView.findViewById(R.id.ll_default_text);
@@ -632,7 +634,7 @@ class OtherFuncViewHolder extends RecyclerView.ViewHolder {
 
         mAlphaAnimation = null;
         if (mAlphaAnimation == null) {
-            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(mContext, R.anim.device_rika_dot_alpha);
+            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(cx, R.anim.device_rika_dot_alpha);
             LinearInterpolator lin = new LinearInterpolator();
             mAlphaAnimation.setInterpolator(lin);
             mStateShow.startAnimation(mAlphaAnimation);

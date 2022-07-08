@@ -8,8 +8,7 @@ import android.widget.Toast;
 
 import com.google.common.eventbus.Subscribe;
 import com.legent.plat.Plat;
-import com.legent.ui.AbsActivity;
-//import com.legent.ui.ext.BaseActivity;
+import com.legent.ui.ext.BaseActivity;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.DishWasherAlarmEvent;
@@ -42,7 +41,7 @@ import com.robam.roki.utils.StringConstantsUtil;
  * Created by Dell on 2018/1/16.
  */
 
-public abstract  class BaseRokiActivity extends AbsActivity {
+public abstract  class BaseRokiActivity extends BaseActivity {
 
     public IRokiDialog iRokiDialogAlarmType_01 = null;//一级报警
     public IRokiDialog iRokiDialogAlarmType_02 = null;//二级级报警
@@ -58,7 +57,7 @@ public abstract  class BaseRokiActivity extends AbsActivity {
     public void init(){
         iRokiDialogAlarmType_01 = RokiDialogFactory.createDialogByType(BaseRokiActivity.this, DialogUtil.DIALOG_TYPE_01);
         iRokiDialogAlarmType_02 = RokiDialogFactory.createDialogByType(BaseRokiActivity.this, DialogUtil.DIALOG_TYPE_02);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Subscribe

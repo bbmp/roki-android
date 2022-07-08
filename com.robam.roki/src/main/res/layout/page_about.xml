@@ -108,6 +108,7 @@
                 android:textSize="15sp" />
 
             <ImageView
+                android:id="@+id/txtNewestVer"
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 android:layout_gravity="right"

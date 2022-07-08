@@ -151,6 +151,7 @@
             />
 <!--旋转轴-->
         <RelativeLayout
+            android:id="@+id/relRotate"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_alignParentBottom="true"
@@ -196,7 +197,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:layout_below="@+id/linTem">
+            android:layout_below="@+id/linTem"
+            android:id="@+id/llCurrentInfo">
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -239,6 +241,7 @@
                     />
 
                 <View
+                    android:id="@+id/view"
                     android:layout_width="1px"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
@@ -264,6 +267,7 @@
                     android:textColor="#ffffff"
                     android:textSize="45sp" />
                 <TextView
+                    android:id="@+id/txtTimeUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/txtCurrentTime"

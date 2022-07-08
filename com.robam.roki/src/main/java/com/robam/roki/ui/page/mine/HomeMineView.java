@@ -2,70 +2,71 @@ package com.robam.roki.ui.page.mine;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.common.base.Strings;
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
 import com.legent.Callback;
 import com.legent.plat.Plat;
 import com.legent.plat.events.ChatNewMsgEvent;
+import com.legent.plat.events.MessageEventNumber;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.events.UserLogoutEvent;
 import com.legent.plat.events.UserUpdatedEvent;
 import com.legent.plat.io.cloud.CloudHelper;
 import com.legent.plat.pojos.User;
-import com.legent.plat.pojos.device.IDevice;
-import com.legent.plat.services.DeviceService;
 import com.legent.ui.UIService;
 import com.legent.ui.ext.dialogs.ProgressDialogHelper;
-import com.legent.utils.LogUtils;
-import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.CmccBackEvent;
 import com.robam.common.events.CookMomentsRefreshEvent;
 import com.robam.common.events.FavorityBookRefreshEvent;
 import com.robam.common.events.HomeRecipeViewEvent;
 import com.robam.common.events.WxCode2Event;
-import com.robam.common.util.StatusBar2Utils;
-import com.robam.common.util.StatusBarUtils;
 import com.robam.roki.R;
-import com.robam.roki.ui.PageArgumentKey;
+import com.robam.roki.net.OnRequestListener;
+import com.robam.roki.net.request.api.UserInfoApi;
+import com.robam.roki.net.request.bean.GetCollectCountBean;
 import com.robam.roki.ui.PageKey;
-import com.robam.roki.ui.activity3.RWebActivity;
-import com.robam.roki.ui.adapter3.RvDeviceAdapter;
-import com.robam.roki.ui.adapter3.RvDeviceBluetoothAdapter;
-import com.robam.roki.ui.page.login.helper.LoginHelper;
+import com.robam.roki.ui.activity3.MessageActivity;
+import com.robam.roki.ui.activity3.main.HomeActivity;
+import com.robam.roki.ui.page.curve.CookingCurveListActivity;
 import com.robam.roki.ui.page.login.helper.CmccLoginHelper;
-import com.robam.roki.ui.view.networkoptimization.BleConnectActivity;
+import com.robam.roki.ui.page.login.helper.LoginHelper;
 import com.robam.roki.ui.widget.layout.SettingBar;
 import com.robam.roki.ui.widget.layout.SettingBar2;
-import com.robam.roki.utils.ApiSecurityExample;
 import com.robam.roki.utils.GlideCircleTransform;
 import com.robam.roki.utils.OnMultiClickListener;
 import com.robam.roki.utils.StringUtil;
+import com.robam.roki.utils.ToolUtils;
+import com.robam.roki.utils.suspendedball.SystemUtils;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.util.List;
+import org.w3c.dom.Text;
+
+import skin.support.SkinCompatManager;
+import skin.support.utils.SkinPreference;
 
 /**
  * 我的界面
  *
  * @author hxw
  */
-public class HomeMineView extends MyBaseView {
+public class HomeMineView extends MyBaseView implements OnRequestListener {
     private static final String TAG = "HomeMineView";
     /**
      * 头像
@@ -82,38 +83,46 @@ public class HomeMineView extends MyBaseView {
     /**
      * 编辑资料
      */
-    private AppCompatButton btnEditInfo;
+//    private AppCompatButton btnEditInfo;
     /**
      * 我的收藏
      */
-    private SettingBar2 stbCollection;
+    private LinearLayout llCollection;
     /**
      * 我的作品
      */
-    private SettingBar2 stbWork;
+    private LinearLayout llWork;
     /**
      * 烹饪曲线
      */
-    private SettingBar2 stbCookLine;
+    private LinearLayout stbCookLine;
 
     /**
      * 厨电管理
      */
-    private SettingBar2 stbDevice;
+    private TextView stbDevice;
     /**
      * 售后服务
      */
-    private SettingBar2 stbSaleService;
+    private TextView stbSaleService;
     /**
      * 关于
      */
-    private SettingBar2 stbAbout;
+    private TextView stbAbout;
     /**
      * 设置
      */
-    private SettingBar2 stbSetting;
+    private TextView stbSetting;
     private CmccLoginHelper instance;
-    private View rlLogin;
+    //产品手册
+    private TextView stbCpsc;
+    //服务预约
+    private TextView stbFwyy;
+    //服务商城
+    private TextView stbFwsc;
+    private UserInfoApi userInfoApi;
+    private TextView tvCollectionNum;
+    private TextView tvWorkNum;
 
     public HomeMineView(Context context, FragmentActivity activity) {
         super(context, activity);
@@ -158,7 +167,7 @@ public class HomeMineView extends MyBaseView {
 
     @Subscribe
     public void onEvent(CmccBackEvent event) {
-        setLoginView();
+
     }
 
     @Override
@@ -168,49 +177,76 @@ public class HomeMineView extends MyBaseView {
 
     @Override
     protected void initView() {
-        rlLogin = findViewBy(R.id.rl_login);
+        setStateBarFixer(cx);
         ivPhoto = (ImageView) findViewBy(R.id.iv_photo);
         tvUserName = (TextView) findViewBy(R.id.tv_user_name);
         tvUserPhone = (TextView) findViewBy(R.id.tv_user_phone);
-        btnEditInfo = (AppCompatButton) findViewBy(R.id.btn_edit_info);
-        stbCollection = (SettingBar2) findViewBy(R.id.stb_collection);
-        stbWork = (SettingBar2) findViewBy(R.id.stb_work);
-        stbCookLine = (SettingBar2) findViewBy(R.id.stb_cook_line);
-        stbDevice = (SettingBar2) findViewBy(R.id.stb_device);
-        stbSaleService = (SettingBar2) findViewBy(R.id.stb_sale_service);
-        stbAbout = (SettingBar2) findViewBy(R.id.stb_about);
-        stbSetting = (SettingBar2) findViewBy(R.id.stb_setting);
-//        setOnClickListener(ivPhoto, tvUserName, tvUserPhone, btnEditInfo,
-//                stbCollection, stbCollection, stbWork, stbDevice, stbSaleService, stbAbout, stbSetting);
-        setOnClickListener(btnEditInfo,
-                stbCollection, stbCollection, stbWork,stbCookLine, stbDevice, stbSaleService, stbAbout, stbSetting
-                , ivPhoto, tvUserName, tvUserPhone);
+//        btnEditInfo = (AppCompatButton) findViewBy(R.id.btn_edit_info);
+        llCollection = findViewBy(R.id.ll_collection);
+        llWork = findViewBy(R.id.ll_work);
+        stbCookLine = findViewBy(R.id.ll_curve);
+        stbDevice = findViewBy(R.id.tv_device_manage);
+        stbSaleService = findViewBy(R.id.tv_sale_service);
+        stbAbout =  findViewBy(R.id.tv_about);
+        stbSetting =  findViewBy(R.id.tv_set);
+        stbCpsc = findViewById(R.id.tv_product);
+        stbFwyy = findViewById(R.id.tv_service);
+        stbFwsc = findViewById(R.id.tv_sercie_shop);
+        tvCollectionNum = findViewById(R.id.tv_collection_num);
+        tvWorkNum = findViewById(R.id.tv_work_num);
+        setOnClickListener(
+                llCollection, llWork, stbCookLine, stbDevice, stbSaleService, stbAbout, stbSetting
+                , ivPhoto, tvUserName, tvUserPhone, stbCpsc, stbFwsc, stbFwyy);
 
-        setLoginView();
-    }
 
-    private void setLoginView() {
-        rlLogin.setOnClickListener(new OnMultiClickListener() {
-            @Override
-            protected void onMoreClick(View view) {
-                boolean isLogin = Plat.accountService.isLogon();
-                if (isLogin) {
-                    UIService.getInstance().postPage(PageKey.MineEditInfoPage);
-                } else {
-//                    startLogin();
-                }
-            }
+
+        findViewBy(R.id.tv_curve_list).setOnClickListener(new View.OnClickListener(){
 
             @Override
-            protected void onMoreErrorClick() {
-//                ToastUtils.show("请勿重复点击");
+            public void onClick(View v) {
+
+                getContext().startActivity(new Intent(getContext(),CookingCurveListActivity.class));
+
             }
         });
+        findViewBy(R.id.rl_mine_message).setOnClickListener(view -> {
+            if (Plat.accountService.isLogon()) {
+                getContext().startActivity(new Intent(getContext(), MessageActivity.class));
+            } else {
+                CmccLoginHelper.getInstance().toLogin();
+            }
+        });
+
+
     }
+
+    @Subscribe
+    public void event(MessageEventNumber event) {
+
+        if (!Plat.accountService.isLogon() || event.getNumber() == 0) {
+            findViewById(R.id.textview_home_device_number).setVisibility(View.GONE);
+        } else {
+            if (event.getNumber() <= 99) {
+//                ((TextView) findViewById(R.id.textview_home_device_number)).setTextSize(getResources().getDimension(R.dimen.sp_12));
+                ((TextView) findViewById(R.id.textview_home_device_number)).setText(event.getNumber() + "");
+            } else {
+//                ((TextView) findViewById(R.id.textview_home_device_number)).setTextSize(getResources().getDimension(R.dimen.sp_8));
+                ((TextView) findViewById(R.id.textview_home_device_number)).setText("99+");
+            }
+
+            findViewById(R.id.textview_home_device_number).setVisibility(View.VISIBLE);
+        }
+        if (event.getNumber() == 0) {
+            findViewById(R.id.textview_home_device_number).setVisibility(View.GONE);
+        }
+    }
+
+
 
 
     @Override
     protected void initData() {
+        userInfoApi = new UserInfoApi(this);
         instance = CmccLoginHelper.getInstance();
         instance.initSdk(activity);
         instance.getPhnoeInfo();
@@ -223,26 +259,19 @@ public class HomeMineView extends MyBaseView {
 //        if (view.equals(ivPhoto) || view.equals(tvUserName) || view.equals(tvUserPhone)) {
 //            onLogin();
 //        } else
-        if (view.equals(btnEditInfo)) {
-            if (isLogin) {
-//                cx.startActivity(new Intent(cx , BleConnectActivity.class));
-                UIService.getInstance().postPage(PageKey.MineEditInfoPage);
-            } else {
-                onLogin();
-            }
-        } else if (view.equals(ivPhoto) || view.equals(tvUserPhone) || view.equals(tvUserName)) {
+        if (view.equals(ivPhoto) || view.equals(tvUserPhone) || view.equals(tvUserName)) {
             if (isLogin) {
                 UIService.getInstance().postPage(PageKey.MineEditInfoPage);
             } else {
                 startLogin();
             }
-        } else if (view.equals(stbCollection)) {
+        } else if (view.equals(llCollection)) {
             if (isLogin) {
                 UIService.getInstance().postPage(PageKey.AbsThemeRecipeListGrid);
             } else {
                 onLogin();
             }
-        } else if (view.equals(stbWork)) {
+        } else if (view.equals(llWork)) {
             if (isLogin) {
                 UIService.getInstance().postPage(PageKey.RecipeCookMoments);
             } else {
@@ -260,18 +289,43 @@ public class HomeMineView extends MyBaseView {
             UIService.getInstance().postPage(PageKey.MineAboutPage);
         } else if (view.equals(stbSetting)) {
             UIService.getInstance().postPage(PageKey.MineSettingPage);
-        }else if (view.equals(stbCookLine)) {
+            String name = SkinPreference.getInstance().getSkinName();
+            if ("night".equals(name))
+                SkinCompatManager.getInstance().restoreDefaultTheme();
+            else
+                SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
+//            HomeActivity.start(getContext());
+        } else if (view.equals(stbCookLine)) {
             if (isLogin) {
                 UIService.getInstance().postPage(PageKey.CurveCookbooks);
             } else {
                 onLogin();
             }
-        }
-        else {
-
+        } else if (view.equals(stbCpsc)) {
+            toWx("gh_6f90c5303966");
+        } else if (view.equals(stbFwyy)) {
+            toWx("gh_271333adff20");
+        } else if (view.equals(stbFwsc)) {
+            toWx("gh_06d2df2c161a");
         }
     }
 
+    /**
+     * 跳转微信小程序
+     * @param userName
+     */
+    public void toWx(String userName){
+        if (Plat.accountService.isLogon()) {
+            IWXAPI api = WXAPIFactory.createWXAPI(cx, "wx77973859a88a8921");
+            WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
+            req.userName = userName ;
+            req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;// 可选打开 开发版，体验版和正式版
+            api.sendReq(req);
+        } else {
+            onLogin();
+        }
+
+    }
 
     /**
      * 登录？用户信息
@@ -308,25 +362,26 @@ public class HomeMineView extends MyBaseView {
     /**
      * 获取用户信息3.7
      */
-//    public void getUser() {
-//        if (Plat.accountService.isLogon()) {
-//            ProgressDialogHelper.setRunning(cx, true);
-//            CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), new Callback<User>() {
-//
-//                @Override
-//                public void onSuccess(User user) {
-//                    ProgressDialogHelper.setRunning(cx, false);
-//                    Plat.accountService.onLogin(user);
-//                }
-//
-//                @Override
-//                public void onFailure(Throwable t) {
-//                    ProgressDialogHelper.setRunning(cx, false);
-//                    ToastUtils.showThrowable(t);
-//                }
-//            });
-//        }
-//    }
+    public void getUser() {
+        if (Plat.accountService.isLogon()) {
+            ProgressDialogHelper.setRunning(cx, true);
+            CloudHelper.getUser2(Plat.accountService.getCurrentUserId(), new Callback<User>() {
+
+                @Override
+                public void onSuccess(User user) {
+                    ProgressDialogHelper.setRunning(cx, false);
+                    Plat.accountService.onLogin(user);
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    ProgressDialogHelper.setRunning(cx, false);
+                    ToastUtils.show(t.getMessage());
+                }
+            });
+
+        }
+    }
 
     /**
      * 设置用户信息
@@ -336,14 +391,15 @@ public class HomeMineView extends MyBaseView {
         boolean isLogin = Plat.accountService.isLogon();
         if (isLogin) {
             User user = Plat.accountService.getCurrentUser();
-            tvUserName.setText(Strings.isNullOrEmpty(user.nickname) ? user.phone : user.nickname);
-            tvUserPhone.setText(user.getPhone());
+            tvUserName.setText(Strings.isNullOrEmpty(user.name) ? user.phone : user.name);
+//            tvUserPhone.setText(user.getPhone());
+            tvUserPhone.setText("点击编辑个人资料");
             if (!Strings.isNullOrEmpty(user.figureUrl)) {
                 Glide.with(cx).load(user.figureUrl).placeholder(R.mipmap.ic_user_default_figure)
                         .transform(new GlideCircleTransform(cx, 1, cx.getResources().getColor(R.color.White)))
                         .diskCacheStrategy(DiskCacheStrategy.ALL).into(ivPhoto);
             }
-            btnEditInfo.setVisibility(VISIBLE);
+            userInfoApi.getCollectAlbumCount(Plat.accountService.getCurrentUserId());
         } else {
             tvUserName.setText(getString(R.string.not_login));
             tvUserPhone.setText(getString(R.string.login_or_register));
@@ -351,7 +407,8 @@ public class HomeMineView extends MyBaseView {
             Glide.with(cx).load(R.drawable.headportrait_wdl)
                     .transform(new GlideCircleTransform(cx, 1, cx.getResources().getColor(R.color.White)))
                     .diskCacheStrategy(DiskCacheStrategy.ALL).into(ivPhoto);
-            btnEditInfo.setVisibility(GONE);
+            tvCollectionNum.setText("0");
+            tvWorkNum.setText("0");
         }
 
     }
@@ -362,4 +419,40 @@ public class HomeMineView extends MyBaseView {
     }
 
 
+    @Override
+    public void onFailure(int requestId, int requestCode, @Nullable String msg, @Nullable Object data) {
+        if (requestId == UserInfoApi.getCollectCountCode) {
+            tvCollectionNum.setText("0");
+            tvWorkNum.setText("0");
+        }
+    }
+
+    @Override
+    public void onSaveCache(int requestId, int requestCode, @Nullable Object paramObject) {
+
+    }
+
+    @Override
+    public void onSuccess(int requestId, int requestCode, @Nullable Object paramObject) {
+        if (requestId == UserInfoApi.getCollectCountCode) {
+            if (paramObject instanceof GetCollectCountBean) {
+                GetCollectCountBean getCollectCountBean = (GetCollectCountBean) paramObject;
+                tvCollectionNum.setText(StringUtil.processNull(getCollectCountBean.payload.collect));
+                tvWorkNum.setText(StringUtil.processNull(getCollectCountBean.payload.album));
+
+            }
+        }
+    }
+    /**
+     * 设置状态栏占位
+     */
+    private void setStateBarFixer(Context context){
+        View mStateBarFixer = findViewBy(R.id.status_bar_fix);
+        if (mStateBarFixer != null){
+            ViewGroup.LayoutParams layoutParams = mStateBarFixer.getLayoutParams();
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            layoutParams.height = SystemUtils.getStatusBarHeight(context);
+            mStateBarFixer.setLayoutParams(layoutParams);
+        }
+    }
 }

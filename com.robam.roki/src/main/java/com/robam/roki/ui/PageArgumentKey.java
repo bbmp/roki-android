@@ -12,6 +12,7 @@ public class PageArgumentKey {
     public final static String DeviceDp = "DeviceDp";
     public final static String Guid = "guid";
     public final static String From= "From";
+    public final static String WIFITYPE= "WIFITYPE";
 
     public final static String DeviceVersion= "DeviceVersion";
 
@@ -49,6 +50,7 @@ public class PageArgumentKey {
     public final static String stove = "stove";
     public final static String pot = "pot";
     public final static String isNewProtocol = "isNewProtocol";
+    public final static String curveId = "curveId";
     /**
      *集成灶
      */
@@ -112,7 +114,7 @@ public class PageArgumentKey {
     static public final String functionParams = "functionParams";
     static public final String combination = "combination";
     static public final String code = "code";
-    static public final String descaling = "descaling";
+    static public final String descaling = "";
     static public final String imgType = "imgType";
     static public final String dt = "dt";
 
@@ -128,4 +130,8 @@ public class PageArgumentKey {
     public static final String come_from = "COME_FROM";
 
     public final static String H5Key = "H5Key";
+    /**
+     * 设备名称
+     */
+    public final static String Device_Name = "device_name";
 }

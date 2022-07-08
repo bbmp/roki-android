@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="316dp"
+    android:layout_marginTop="151dp"
+    android:alpha="0.9"
+    android:background="#ececec"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtAdjust"
+        android:layout_width="wrap_content"
+        android:text=" 调整"
+        android:textColor="#a5a5a5"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:layout_height="wrap_content" />
+
+
+    <FrameLayout
+        android:id="@+id/divMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/txtConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="33dp"
+        android:text="确定"
+        android:textColor="#e9a60f"
+        android:textSize="18sp" />
+
+</RelativeLayout>

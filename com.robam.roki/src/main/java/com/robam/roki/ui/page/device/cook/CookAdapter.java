@@ -20,6 +20,7 @@ import com.robam.roki.ui.adapter.GasSensorAdapter;
 
 import java.util.List;
 
+import static com.legent.ContextIniter.cx;
 
 /**
  * Created by Dell on 2018/6/19.
@@ -47,7 +48,6 @@ public class CookAdapter extends RecyclerView.Adapter<GasSensorAdapterViewHolder
     }
 
     public CookAdapter(Context context,List<DeviceConfigurationFunctions> date){
-        mContext = context;
         mInflater = LayoutInflater.from(context);
         this.date = date;
     }
@@ -55,13 +55,13 @@ public class CookAdapter extends RecyclerView.Adapter<GasSensorAdapterViewHolder
     @Override
     public GasSensorAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_otherfunc_page, parent, false);
-        GasSensorAdapterViewHolder gasSensorAdapterViewHolder = new GasSensorAdapterViewHolder(mContext, view);
+        GasSensorAdapterViewHolder gasSensorAdapterViewHolder = new GasSensorAdapterViewHolder(view);
         return gasSensorAdapterViewHolder;
     }
 
     @Override
     public void onBindViewHolder(GasSensorAdapterViewHolder holder, int position) {
-        Glide.with(mContext).load(date.get(position).backgroundImg).into(holder.mImageView);
+        Glide.with(cx).load(date.get(position).backgroundImg).into(holder.mImageView);
         holder.mTvName.setText(date.get(position).functionName);
         holder.mTvDesc.setText(date.get(position).msg);
         holder.itemView.setTag(position);
@@ -82,12 +82,11 @@ class GasSensorAdapterViewHolder extends RecyclerView.ViewHolder{
     LinearLayout mItemView;
     ImageView mStateShow;
     AlphaAnimation mAlphaAnimation;
-    Context mContext;
 
 
-    public GasSensorAdapterViewHolder(Context context, View itemView) {
+
+    public GasSensorAdapterViewHolder(View itemView) {
         super(itemView);
-        mContext = context;
         mTvName = itemView.findViewById(R.id.tv_name);
         mImageView = itemView.findViewById(R.id.iv_view);
         mTvDesc = itemView.findViewById(R.id.tv_desc);
@@ -99,7 +98,7 @@ class GasSensorAdapterViewHolder extends RecyclerView.ViewHolder{
 
         mAlphaAnimation = null;
         if (mAlphaAnimation == null) {
-            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(mContext, R.anim.device_rika_dot_alpha);
+            mAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(cx, R.anim.device_rika_dot_alpha);
             LinearInterpolator lin = new LinearInterpolator();
             mAlphaAnimation.setInterpolator(lin);
             mStateShow.startAnimation(mAlphaAnimation);

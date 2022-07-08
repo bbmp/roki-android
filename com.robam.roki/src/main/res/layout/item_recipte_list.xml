@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:textColor="@color/text_color_device_category"
+    android:layout_margin="@dimen/dp_22"
+
+    android:background="@drawable/shape_kitchen_bg_round"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content">
+
+    <ImageView
+
+        android:id="@+id/item_recipe_check_box_title"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_16"
+        android:src="@mipmap/ic_order_recipe_normal"
+        android:textColor="#FF000000"
+        android:textSize="@dimen/sp_18" />
+
+    <TextView
+        android:id="@+id/item_recipe_txt_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_6"
+        android:layout_marginTop="@dimen/dp_13"
+        android:layout_toRightOf="@+id/item_recipe_check_box_title"
+        android:background="@drawable/shape_kitchen_bg_round"
+        android:text="2021/12/08"
+        android:textColor="@color/text_color_device_category"
+        android:textSize="@dimen/sp_18"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/item_recipe_txt_date_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_13"
+        android:layout_toRightOf="@+id/item_recipe_txt_date"
+        android:background="@drawable/shape_kitchen_bg_round"
+        android:text="10.11"
+        android:textColor="@color/text_color_device_category"
+        android:textSize="@dimen/sp_18"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_below="@+id/item_recipe_check_box_title"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="#1AA5A5A5" />
+
+<!--    <TextView-->
+<!--   -->
+<!--        android:id="@+id/item_recipe_my_mu_txt"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="#FF000000"-->
+<!--        android:layout_marginLeft="@dimen/dp_45"-->
+<!--        android:layout_marginTop="@dimen/dp_19"-->
+<!--        android:layout_below="@+id/item_recipe_check_box_title"-->
+<!--        android:text="我的多段（默认）"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/item_recipe_list_item_show_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/item_recipe_check_box_title"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_26" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_50"
+        android:layout_alignBottom="@+id/item_recipe_list_item_show_rv"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+
+            android:id="@+id/item_recipe_list_txt_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:background="@drawable/shape_recipe_share"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_4"
+            android:paddingTop="@dimen/dp_4"
+            android:paddingLeft="@dimen/dp_20"
+            android:paddingRight="@dimen/dp_20"
+            android:text="保存至菜谱"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

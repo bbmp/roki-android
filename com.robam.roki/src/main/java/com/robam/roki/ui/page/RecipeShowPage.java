@@ -3,6 +3,7 @@ package com.robam.roki.ui.page;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,6 +107,11 @@ public class RecipeShowPage extends HeadPage {
                 bd.putLong(PageArgumentKey.BookId, bookId);
                 bd.putParcelable(PageArgumentKey.Bitmap, bmp);
                 UIService.getInstance().postPage(PageKey.RecipeShow, bd);
+            }
+
+            @Override
+            public void onPickComplete(String bmp) {
+
             }
         };
         PickImageHelperTwo helper = new PickImageHelperTwo(atv, callback);

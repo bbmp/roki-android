@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DevInfor>
-<SinaWeibo Id="1" SortId="1" AppKey="dingdn3cxe6jzmtsfgof" AppSecret="958ffee109dff96a167db4a6290ead72" ShareByAppClient="true" Enable="true" RedirectUrl="http://www.sharesdk.cn" />
+<SinaWeibo Id="1" SortId="1" AppKey="3845830927" AppSecret="958ffee109dff96a167db4a6290ead72" ShareByAppClient="true" Enable="true" RedirectUrl="http://www.sharesdk.cn" />
 <TencentWeibo Enable="false" />
 <Douban Enable="false" />
 <QZone Enable="false" />

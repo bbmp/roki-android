@@ -9,11 +9,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.robam.base.BaseDialog;
 import com.legent.Callback;
 import com.legent.VoidCallback;
 import com.legent.plat.Plat;
@@ -33,7 +35,8 @@ import com.robam.common.pojos.NetWorkingSteps;
 import com.robam.roki.R;
 import com.robam.roki.service.IanSend;
 import com.robam.roki.ui.PageKey;
-import com.robam.roki.ui.widget.base.BaseDialog;
+import com.robam.roki.ui.form.MainActivity;
+import com.robam.roki.ui.page.login.MyBasePage;
 import com.zzhoujay.richtext.ImageHolder;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.callback.ImageFixCallback;
@@ -47,14 +50,14 @@ import butterknife.OnClick;
  * Created by zhoudingjun on 2016/12/14.
  */
 
-public class DeviceWifiConnectPage extends HeadPage {
+public class DeviceWifiConnectPage extends MyBasePage<MainActivity> {
     String NetImgUrls;
     String displayType;
     String NetTips;
     ImageView img_device;
     TextView tip1;
     TextView cannotfinishperform;
-    TextView button;
+    Button button;
     TextView tip2;
     TextView tip3;
     String[] text;
@@ -69,32 +72,113 @@ public class DeviceWifiConnectPage extends HeadPage {
     /**
      * 发现这杯提示
      */
-    private View tv_add_device_message;
+    private TextView tv_add_device_name;
+    private ImageView ivBack;
 
     IanSend send;
     BaseDialog baseDialog;
     private boolean isDismiss = false;
 
+    @OnClick(R.id.next)
+    public void onClickNext() {
+        LogUtils.i("20170227", "txt:" + txt);
+        if (steps == null) {
+            return;
+        }
+        if (steps.size() > 1) {
+            if ((step + 1) == steps.size()) {
+                UIService.getInstance().postPage(PageKey.WifiConnect);
+                return;
+            }
+            step++;
+            Glide.with(getContext()).load(steps.get(step).netImgUrl).into(img_device);
+            button.setText(steps.get(step).buttonDesc);
+            txt = steps.get(step).buttonDesc;
+            RichText.from(steps.get(step).netRichText).fix(new ImageFixCallback() {
+                @Override
+                public void onInit(ImageHolder holder) {
+                    holder.setHeight(Dp2PxUtils.dp2px(getActivity(), 16));
+                    holder.setWidth(Dp2PxUtils.dp2px(getActivity(), 16));
+                }
+
+                @Override
+                public void onLoading(ImageHolder holder) {
+
+                }
+
+                @Override
+                public void onSizeReady(ImageHolder holder, int imageWidth, int imageHeight, ImageHolder.SizeHolder sizeHolder) {
+
+                }
+
+                @Override
+                public void onImageReady(ImageHolder holder, int width, int height) {
+
+                }
+
+                @Override
+                public void onFailure(ImageHolder holder, Exception e) {
+
+                }
+            }).into(tip1);
+            return;
+        }
+        if ("确定".equals(txt)) {
+            UIService.getInstance().popBack();
+        } else {
+            if ("5915ST".equals(displayType)  ) {
+                Bundle bundle = new Bundle();
+                bundle.putString("displayType", displayType);
+                UIService.getInstance().postPage(PageKey.WifiSoftapConnect, bundle);
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putString("displayType", displayType);
+                UIService.getInstance().postPage(PageKey.WifiConnect, bundle);
+            }
+//            Bundle bundle = new Bundle();
+//            bundle.putString("displayType", displayType);
+//            UIService.getInstance().postPage(PageKey.WifiConnect, bundle);
+//            LogUtils.i("获取网关信息", "ip=========="+NetworkUtils.getLocalIp());
+//            LogUtils.i("获取网关信息", "Macip=========="+NetworkUtils.getMacByIp(NetworkUtils.getLocalIp()));
+
+        }
+
+    }
+
+    @OnClick(R.id.cannotfinishperform)
+    public void onClickCantfinishPerform() {
+        LogUtils.i("20170804", "str::" + displayType);
+        Bundle bundle = new Bundle();
+        bundle.putString("strDeviceName", strDeviceName);
+        UIService.getInstance().postPage(PageKey.CantFinish, bundle);
+    }
+
     @Override
-    protected View onCreateContentView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
+    protected int getLayoutId() {
+        return R.layout.view_device_connect_desc;
+    }
+
+    @Override
+    protected void initView() {
         NetImgUrls = getArguments().getString("NetImgUrl");
         NetTips = getArguments().getString("NetTips");
         strDeviceName = getArguments().getString("strDeviceName");
         displayType = getArguments().getString("displayType");
         chnName = getArguments().getString("chnName");
-        View view = layoutInflater.inflate(R.layout.view_device_connect_desc, viewGroup, false);
-        img_device = view.findViewById(R.id.img_device);
-        tv_add_device_message = view.findViewById(R.id.tv_add_device_message);
-        button = view.findViewById(R.id.next);
-        tip1 = view.findViewById(R.id.tip1);
-        tip2 = view.findViewById(R.id.tip2);
-        tip3 = view.findViewById(R.id.tip3);
-        imgTip = view.findViewById(R.id.img_tip);
+
+        img_device = findViewById(R.id.img_device);
+        ivBack = findViewById(R.id.img_back);
+        tv_add_device_name = findViewById(R.id.tv_add_device_name);
+        button = findViewById(R.id.next);
+        tip1 = findViewById(R.id.tip1);
+        tip2 = findViewById(R.id.tip2);
+        tip3 = findViewById(R.id.tip3);
+        imgTip = findViewById(R.id.img_tip);
         if (!TextUtils.isEmpty(strDeviceName) && (strDeviceName.contains("J312") || strDeviceName.contains("J321") || strDeviceName.contains("J320"))) {
             imgTip.setImageResource(R.mipmap.img_312_network);
         }
+        tv_add_device_name.setText(strDeviceName);
         if ("DB610".equals(strDeviceName)) {
-            tv_add_device_message.setVisibility(View.VISIBLE);
 //            if ("DB610".equals(strDeviceName)) {
             button.setVisibility(View.INVISIBLE);
 //            }
@@ -146,22 +230,37 @@ public class DeviceWifiConnectPage extends HeadPage {
             e.printStackTrace();
         }
 
-        cannotfinishperform = view.findViewById(R.id.cannotfinishperform);
+        cannotfinishperform = findViewById(R.id.cannotfinishperform);
         cannotfinishperform.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         cannotfinishperform.getPaint().setAntiAlias(true);//抗锯齿
         if (NetImgUrls != null) {
             Glide.with(getContext()).load(NetImgUrls).into(img_device);
         }
-        ButterKnife.inject(this, view);
+
         if (TextUtils.equals(chnName, getActivity().getString(R.string.device_stove_name)) || TextUtils.equals(chnName, getActivity().getString(R.string.stove_weishi))) {
             cannotfinishperform.setVisibility(View.VISIBLE);
         } else {
             cannotfinishperform.setVisibility(View.GONE);
         }
+
+        setOnClickListener(R.id.img_back);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.img_back)
+            UIService.getInstance().popBack();
+    }
+
+    @Override
+    protected void initData() {
         RokiRestHelper.getNetworkDeviceStepsRequest(displayType, new Callback<List<NetWorkingSteps>>() {
 
             @Override
             public void onSuccess(List<NetWorkingSteps> netWorkingSteps) {
+                if(netWorkingSteps == null || netWorkingSteps.size() == 0){
+                    return;
+                }
                 steps = netWorkingSteps;
                 String imgUrl = netWorkingSteps.get(0).netImgUrl;
                 if (imgUrl.endsWith("gif")) {
@@ -212,83 +311,6 @@ public class DeviceWifiConnectPage extends HeadPage {
 
             }
         });
-
-
-        return view;
-    }
-
-    @OnClick(R.id.next)
-    public void onClickNext() {
-        LogUtils.i("20170227", "txt:" + txt);
-        if (steps == null) {
-            return;
-        }
-        if (steps.size() > 1) {
-            if ((step + 1) == steps.size()) {
-                UIService.getInstance().postPage(PageKey.WifiConnect);
-                return;
-            }
-            step++;
-            Glide.with(getContext()).load(steps.get(step).netImgUrl).into(img_device);
-            button.setText(steps.get(step).buttonDesc);
-            txt = steps.get(step).buttonDesc;
-            RichText.from(steps.get(step).netRichText).fix(new ImageFixCallback() {
-                @Override
-                public void onInit(ImageHolder holder) {
-                    holder.setHeight(Dp2PxUtils.dp2px(getActivity(), 16));
-                    holder.setWidth(Dp2PxUtils.dp2px(getActivity(), 16));
-                }
-
-                @Override
-                public void onLoading(ImageHolder holder) {
-
-                }
-
-                @Override
-                public void onSizeReady(ImageHolder holder, int imageWidth, int imageHeight, ImageHolder.SizeHolder sizeHolder) {
-
-                }
-
-                @Override
-                public void onImageReady(ImageHolder holder, int width, int height) {
-
-                }
-
-                @Override
-                public void onFailure(ImageHolder holder, Exception e) {
-
-                }
-            }).into(tip1);
-            return;
-        }
-        if ("确定".equals(txt)) {
-            UIService.getInstance().popBack();
-        } else {
-            if ("5915ST".equals(displayType)) {
-                Bundle bundle = new Bundle();
-                bundle.putString("displayType", displayType);
-                UIService.getInstance().postPage(PageKey.WifiSoftapConnect, bundle);
-            } else {
-                Bundle bundle = new Bundle();
-                bundle.putString("displayType", displayType);
-                UIService.getInstance().postPage(PageKey.WifiConnect, bundle);
-            }
-//            Bundle bundle = new Bundle();
-//            bundle.putString("displayType", displayType);
-//            UIService.getInstance().postPage(PageKey.WifiConnect, bundle);
-//            LogUtils.i("获取网关信息", "ip=========="+NetworkUtils.getLocalIp());
-//            LogUtils.i("获取网关信息", "Macip=========="+NetworkUtils.getMacByIp(NetworkUtils.getLocalIp()));
-
-        }
-
-    }
-
-    @OnClick(R.id.cannotfinishperform)
-    public void onClickCantfinishPerform() {
-        LogUtils.i("20170804", "str::" + displayType);
-        Bundle bundle = new Bundle();
-        bundle.putString("strDeviceName", strDeviceName);
-        UIService.getInstance().postPage(PageKey.CantFinish, bundle);
     }
 
     @Override
@@ -297,7 +319,6 @@ public class DeviceWifiConnectPage extends HeadPage {
         if (send != null) {
             send.close();
         }
-        ButterKnife.reset(this);
     }
 
     private void showDialog(String guid) {

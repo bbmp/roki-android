@@ -1,89 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="15dp"
     android:orientation="vertical">
     <TextView
         android:id="@+id/tv_recipe_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textColor="@color/roki_main_text_color"
+        android:textSize="@dimen/sp_28"
+        android:textColor="@color/text_color_net_err"
         android:textStyle="bold"
-        tools:text="爆炒虾仁"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="爆炒虾仁" />
     <TextView
-        android:id="@+id/tv_recipe_desc"
+        android:id="@+id/tv_collect_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="15sp"
-        android:lineSpacingExtra="4dp"
-        android:textColor="@color/roki_important_text_color"
-        tools:text="简单美味快手菜，晚餐必备佳肴"/>
-
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/text_color_touch_retry"
+        app:layout_constraintTop_toTopOf="@id/tv_recipe_name"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="收藏 23.8k"/>
     <TextView
         android:id="@+id/tv_read_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="12sp"
-        android:textColor="#999999"
-        tools:text="阅读 23.8k     收藏 28k"/>
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/text_color_touch_retry"
+        tools:text="热度 28k"
+        app:layout_constraintLeft_toLeftOf="@id/tv_collect_number"
+        app:layout_constraintTop_toBottomOf="@id/tv_collect_number"
+        app:layout_constraintBottom_toBottomOf="@id/tv_recipe_name"/>
+    <TextView
+        android:id="@+id/tv_recipe_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:textSize="@dimen/sp_16"
+        android:lineSpacingExtra="4dp"
+        android:textColor="@color/text_color_online"
+        tools:text="简单美味快手菜，晚餐必备佳肴"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_recipe_name"/>
+
+
     <TextView
         android:id="@+id/tv_device"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="14sp"
-        android:drawableLeft="@drawable/ic__device"
-        android:drawablePadding="10dp"
-        android:textColor="@color/roki_important_text_color"
-        tools:text="设备：无人锅/蒸烤一体机"/>
+        android:layout_marginTop="@dimen/dp_28"
+        android:textSize="@dimen/sp_16"
+        android:drawableLeft="@mipmap/ic_device"
+        android:drawablePadding="@dimen/dp_8"
+        android:textColor="@color/text_color_net_err"
+        tools:text="设备：无人锅/蒸烤一体机"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_recipe_desc"/>
+    <androidx.constraintlayout.widget.Placeholder
+        android:id="@+id/ph_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_device"/>
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="14sp"
-        android:drawableLeft="@drawable/ic_time"
-        android:drawablePadding="10dp"
-        android:textColor="@color/roki_important_text_color"
-        tools:text="时间：10分钟"/>
+        android:textSize="@dimen/sp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:drawableLeft="@mipmap/ic_time"
+        android:drawablePadding="@dimen/dp_8"
+        android:textColor="@color/text_color_net_err"
+        tools:text="时间：10分钟"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ph_1"/>
     <TextView
         android:id="@+id/tv_difficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="14sp"
-        android:drawableLeft="@drawable/ic_diff"
-        android:drawablePadding="10dp"
-        android:textColor="@color/roki_important_text_color"
-        tools:text="难度：入门"/>
-    <LinearLayout
-        android:id="@+id/ll_materials"
+        android:layout_marginLeft="@dimen/dp_60"
+        android:textSize="@dimen/sp_16"
+        android:drawableLeft="@mipmap/ic_diff"
+        android:drawablePadding="@dimen/dp_8"
+        android:textColor="@color/text_color_net_err"
+        tools:text="难度：入门"
+        app:layout_constraintLeft_toRightOf="@id/tv_time"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_time"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_materials"
+        android:layout_marginTop="@dimen/dp_40"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
-        android:minHeight="100dp"
-        android:background="@drawable/bg_materials"
-        android:orientation="vertical">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_materials"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_time"/>
+
     <TextView
+        android:id="@+id/tv_step_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="18sp"
-        android:textColor="@color/roki_main_text_color"
+        android:layout_marginTop="@dimen/dp_40"
+        android:textSize="@dimen/sp_20"
+        android:textColor="@color/text_color_net_err"
         android:textStyle="bold"
-        android:text="备菜"/>
-</LinearLayout>
+        android:text="备菜"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_materials"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

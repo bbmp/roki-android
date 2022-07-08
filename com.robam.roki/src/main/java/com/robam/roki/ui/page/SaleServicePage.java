@@ -1,8 +1,12 @@
 package com.robam.roki.ui.page;
 
+import static android.content.Context.TELEPHONY_SERVICE;
+
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.common.eventbus.Subscribe;
+import com.hjq.toast.ToastUtils;
 import com.legent.plat.Plat;
 import com.legent.plat.events.ChatNewMsgEvent;
 import com.legent.ui.UIService;
@@ -56,6 +61,7 @@ public class SaleServicePage extends MyBasePage<MainActivity> {
     @Override
     protected void initView() {
         EventUtils.regist(this);
+        tvCallPhone.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
     @Override
@@ -67,6 +73,7 @@ public class SaleServicePage extends MyBasePage<MainActivity> {
     @Override
     public void onResume() {
         super.onResume();
+        MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), "售后服务页", null);
     }
 
     @Override
@@ -106,13 +113,24 @@ public class SaleServicePage extends MyBasePage<MainActivity> {
             CmccLoginHelper.getInstance().login();
         }
     }
+
+    private boolean isTelephonyEnabled(){
+        TelephonyManager tm = (TelephonyManager)MobApp.getInstance().getSystemService(TELEPHONY_SERVICE);
+
+        return tm != null && tm.getSimState()==TelephonyManager.SIM_STATE_READY;
+
+    }
     //一键售后
     @OnClick(R.id.ll_key_after_sales)
     public void onClick() {
-        ToolUtils.logEvent("售后服务", "一键售后", "roki_个人");
-        Uri uri = Uri.parse(String.format("tel:%s", KEY_AFTER_SALES_TEXT));
-        Intent it = new Intent(Intent.ACTION_DIAL, uri);
-        startActivity(it);
+        if (isTelephonyEnabled()) {
+            ToolUtils.logEvent("售后服务", "一键售后", "roki_个人");
+            Uri uri = Uri.parse(String.format("tel:%s", KEY_AFTER_SALES_TEXT));
+            Intent it = new Intent(Intent.ACTION_DIAL, uri);
+            startActivity(it);
+        }else{
+            ToastUtils.show("设备不支持通话功能");
+        }
     }
 
     @Subscribe

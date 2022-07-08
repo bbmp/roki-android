@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/item_name_show_cook_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_32"
+        android:text="23"
+        android:textColor="@color/text_color_net_err"
+        android:textSize="@dimen/sp_14" />
+
+    <ImageView
+
+
+        android:id="@+id/img_thumbs_up_publish"
+        android:layout_width="@dimen/dp_18"
+        android:layout_height="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginRight="@dimen/dp_4"
+        android:layout_toLeftOf="@+id/item_name_show_cook_num"
+        android:src="@drawable/select_thumbs_up_publish" />
+
+    <com.robam.roki.ui.view.CircleImageView
+        android:id="@+id/item_head_image"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_24"/>
+
+    <TextView
+
+        android:id="@+id/item_name_show_cook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_toRightOf="@+id/item_head_image"
+        android:layout_alignTop="@id/item_head_image"
+        android:text="球球"
+        android:textColor="@color/text_color_net_err"
+        android:textSize="@dimen/sp_16" />
+
+
+    <TextView
+        android:id="@+id/item_time_show_cook"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_name_show_cook"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_toRightOf="@+id/item_head_image"
+        android:text="2021-10-25"
+        android:textColor="@color/text_color_touch_retry"
+        android:textSize="@dimen/sp_12" />
+
+    <com.example.textviewtext.ShowAllTextView
+        android:id="@+id/item_show_cooked_txt_context"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_head_image"
+
+        android:layout_marginTop="@dimen/dp_12"
+
+
+        android:textColor="@color/text_color_net_err"
+        android:textSize="@dimen/sp_16" />
+
+    <com.robam.roki.ui.view.nineview.NineCookedView
+        android:id="@+id/item_nine_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_show_cooked_txt_context"
+
+        android:layout_marginTop="@dimen/dp_16"
+
+        android:layout_marginRight="@dimen/dp_16"
+
+        app:oneImageHeight="@dimen/dp_300"
+        app:oneImageWidth="@dimen/dp_200" />
+
+    <TextView
+
+        android:id="@+id/item_nine_image_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_nine_image"
+
+        android:layout_marginTop="@dimen/dp_6"
+        android:text="删除"
+
+        android:textColor="#ff61acff"
+        android:textSize="@dimen/sp_12" />
+
+    <View
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_below="@+id/item_nine_image_delete"
+        android:layout_marginTop="@dimen/dp_24"
+        android:background="@drawable/shape_divider_bg" />
+
+</RelativeLayout>

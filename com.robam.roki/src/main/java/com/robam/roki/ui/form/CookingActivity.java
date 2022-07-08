@@ -6,13 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.PowerManager;
 
-import com.legent.ui.AbsActivity;
-//import com.legent.ui.ext.BaseActivity;
+import com.legent.ui.ext.BaseActivity;
 import com.legent.ui.ext.dialogs.DialogHelper;
 import com.robam.roki.service.MobileStoveCookTaskService;
 import com.robam.roki.ui.FormKey;
 
-public class CookingActivity extends AbsActivity {
+public class CookingActivity extends BaseActivity{
 
 	static public void start(Activity atv) {
 		atv.startActivity(new Intent(atv, CookingActivity.class));

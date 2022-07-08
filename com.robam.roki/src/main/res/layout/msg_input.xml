@@ -15,6 +15,6 @@
         android:text="..."
         android:gravity="center|left"
         android:background="@drawable/bg_msg_input"
-        android:textColor="@color/roki_general_text_color" />
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

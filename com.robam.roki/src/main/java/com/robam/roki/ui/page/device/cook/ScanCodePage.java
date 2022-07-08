@@ -62,6 +62,11 @@ public class ScanCodePage extends BasePage {
     @Override
     public void onResume() {
         super.onResume();
+        if (iDevice != null) {
+            if (iDevice.getDt() != null) {
+                MobApp.getmFirebaseAnalytics().setCurrentScreen(getActivity(), iDevice.getDt() + ":分享控制权页", null);
+            }
+        }
     }
 
     private void initView() {

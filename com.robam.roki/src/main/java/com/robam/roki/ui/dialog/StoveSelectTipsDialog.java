@@ -1,17 +1,21 @@
 package com.robam.roki.ui.dialog;
 
+import static com.legent.plat.constant.IPlatRokiFamily.R0004;
+
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.common.eventbus.Subscribe;
 import com.legent.plat.constant.IPlatRokiFamily;
 import com.legent.ui.ext.dialogs.AbsDialog;
 import com.legent.utils.EventUtils;
 import com.legent.utils.LogUtils;
+import com.legent.utils.api.ToastUtils;
 import com.robam.common.events.StoveStatusChangedEvent;
 import com.robam.common.pojos.device.IRokiFamily;
 import com.robam.common.pojos.device.Stove.Stove;
@@ -106,6 +110,10 @@ public class StoveSelectTipsDialog extends AbsDialog{
         if (IPlatRokiFamily.RQZ02.equals(event.pojo.getDp())){
             if(stoveHeadId==event.pojo.leftHead){
                 if (stoveHeadId.getStatus()!=0&&stoveHeadId.level>=1){
+                    if(event.pojo.getDt().equals(IPlatRokiFamily.R0004)){
+                        ToastUtils.show("非智能炉头不支持此功能", Toast.LENGTH_SHORT);
+                        return;
+                    }
                     if (lister!=null){
                         lister.onConfirm(0);
                         if (dlg != null && dlg.isShowing()) {

@@ -97,6 +97,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_album_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/iv_img"

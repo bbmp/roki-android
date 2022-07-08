@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@drawable/shape_dialog_bg"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+
+            android:layout_width="42dp"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_25"
+            android:src="@mipmap/icon_audio_input" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_14"
+        android:textSize="@dimen/sp_18"
+        android:textColor="#333333"
+        android:gravity="center"
+        android:text="当前烹饪已完成"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+
+        android:textSize="@dimen/sp_24"
+        android:layout_marginTop="@dimen/dp_43"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/dp_60"
+        android:layout_marginRight="@dimen/dp_60"
+        android:background="@drawable/shape_icon_save_bg"
+        android:id="@+id/dialog_cooked_finish_ok"
+        android:text="知道了"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_20"/>
+    <Button
+        android:visibility="gone"
+        android:textSize="@dimen/sp_24"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginLeft="@dimen/dp_60"
+        android:layout_marginRight="@dimen/dp_60"
+        android:background="@drawable/shape_icon_bg_radius_23"
+        android:gravity="center"
+        android:id="@+id/dialog_cooked_finish_extra_time"
+        android:text="加时"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

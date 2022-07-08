@@ -21,4 +21,5 @@ public class RCReponse extends AbsPostResponse {
         return ResultCodeManager.isSuccessRC(rc);
     }
 
+
 }

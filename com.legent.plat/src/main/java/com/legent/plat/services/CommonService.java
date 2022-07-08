@@ -12,13 +12,8 @@ import com.legent.plat.events.AppGuidGettedEvent;
 import com.legent.plat.events.DeviceTokenEvent;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.events.UserLogoutEvent;
-import com.legent.plat.io.cloud.CloudHelper;
-import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.AppVersionInfo;
-import com.legent.plat.pojos.RCReponse;
 import com.legent.plat.pojos.device.DeviceGuid;
-import com.legent.services.AbsService;
 import com.legent.services.CrashLogService;
 import com.legent.utils.LogUtils;
 import com.legent.utils.api.ApiUtils;
@@ -29,10 +24,7 @@ import static com.legent.ContextIniter.context;
 import static com.legent.plat.Plat.appGuid;
 import static com.legent.plat.Plat.appType;
 
-import retrofit2.Call;
-import retrofit2.Response;
-
-public class CommonService extends AbsService {
+public class CommonService extends AbsCommonCloudService {
 
     final static String APP_GUID = "AppGuid";
     final static int LOG_CRASH = 0;
@@ -55,12 +47,12 @@ public class CommonService extends AbsService {
 
     @Subscribe
     public void onEvent(UserLoginEvent event) {
-        CloudHelper.bindAppGuidAndUser(appGuid, event.pojo.id, null);
+        bindAppGuidAndUser(appGuid, event.pojo.id, null);
     }
 
     @Subscribe
     public void onEvent(UserLogoutEvent event) {
-        CloudHelper.unbindAppGuidAndUser(appGuid, event.pojo.id, null);
+        unbindAppGuidAndUser(appGuid, event.pojo.id, null);
     }
 
 
@@ -75,7 +67,7 @@ public class CommonService extends AbsService {
                     postEvent(new AppGuidGettedEvent(appGuid));
                     if (Plat.accountService.isLogon()) {
                         LogUtils.i("2020032009","appGuid:::"+appGuid);
-                        CloudHelper.bindAppGuidAndUser(appGuid, Plat.accountService.getCurrentUserId(), null);
+                        bindAppGuidAndUser(appGuid, Plat.accountService.getCurrentUserId(), null);
                     }
                 }
             }
@@ -102,19 +94,16 @@ public class CommonService extends AbsService {
             String packageName = context.getPackageName();
             String versionName = context.getPackageManager().getPackageInfo(packageName, 0).versionName;
             String token = ApiUtils.getNewClientId(Plat.app);
-            CloudHelper.getAppGuid(Plat.appType, token, phone, versionName, Reponses.GetAppIdReponse.class, new RetrofitCallback<Reponses.GetAppIdReponse>() {
+            getAppGuid(Plat.appType, token, phone, versionName, new Callback<String>() {
                 @Override
-                public void onSuccess(Reponses.GetAppIdReponse getAppIdReponse) {
-                    if (null != getAppIdReponse) {
-                        String guid = getAppIdReponse.appGuid;
-                        LogUtils.i("20171219", "success:" + guid);
-                        setAppId(guid);
-                        callback.onCompleted(guid);
-                    }
+                public void onSuccess(String guid) {
+                    LogUtils.i("20171219", "success:" + guid);
+                    setAppId(guid);
+                    callback.onCompleted(guid);
                 }
 
                 @Override
-                public void onFaild(String err) {
+                public void onFailure(Throwable t) {
                     callback.onCompleted(DeviceGuid.ZeroGuid);
                 }
             });
@@ -139,23 +128,21 @@ public class CommonService extends AbsService {
            // String token = ApiUtils.getClientId(Plat.app);
             String token = ApiUtils.getNewClientId(Plat.app);
             LogUtils.i("20181119","appTYtpe::"+appType+"token::"+token+"phone::"+phone+"versonName:"+versionName);
-            CloudHelper.getAppGuid(appType, token, phone, versionName, Reponses.GetAppIdReponse.class, new RetrofitCallback<Reponses.GetAppIdReponse>() {
+            getAppGuid(appType, token, phone, versionName, new Callback<String>() {
                 @Override
-                public void onSuccess(Reponses.GetAppIdReponse getAppIdReponse) {
-                    if (null != getAppIdReponse) {
-                        String guid = getAppIdReponse.appGuid;
-                        LogUtils.i("20170926", "success:" + guid);
-                        setAppId(guid);
-                        callback.onCompleted(guid);
-                    }
+                public void onSuccess(String guid) {
+                    LogUtils.i("20170926", "success:" + guid);
+                    setAppId(guid);
+                    callback.onCompleted(guid);
                 }
 
                 @Override
-                public void onFaild(String err) {
-                    LogUtils.i("20170926", "onFailure:" + err);
+                public void onFailure(Throwable t) {
+                    LogUtils.i("20170926", "onFailure:" + t);
                     callback.onCompleted(DeviceGuid.ZeroGuid);
                 }
             });
+
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -163,7 +150,7 @@ public class CommonService extends AbsService {
     }
 
     public void checkAppVersion(Callback<AppVersionInfo> callback) {
-        CloudHelper.checkAppVersion(appType, callback);
+        super.checkAppVersion(appType, callback);
     }
 
     // -------------------------------------------------------------------------------
@@ -185,7 +172,7 @@ public class CommonService extends AbsService {
                     if (Plat.isValidAppGuid()) {
                         postEvent(new AppGuidGettedEvent(appGuid));
                         if (Plat.accountService.isLogon()) {
-                            CloudHelper.bindAppGuidAndUser(appGuid, Plat.accountService.getCurrentUserId(), null);
+                            bindAppGuidAndUser(appGuid, Plat.accountService.getCurrentUserId(), null);
                         }
                     }
                 }
@@ -202,7 +189,7 @@ public class CommonService extends AbsService {
         @Override
         public void onCrashed(String log) {
             if (!AppUtils.isDebug(cx)) {
-                CloudHelper.reportLog(appGuid, LOG_CRASH, log, null);
+                reportLog(appGuid, LOG_CRASH, log, null);
             }
             if (commonCrashListener != null)
                 commonCrashListener.onCrashed();

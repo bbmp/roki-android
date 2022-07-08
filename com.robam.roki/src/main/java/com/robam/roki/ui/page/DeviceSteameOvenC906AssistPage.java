@@ -29,7 +29,6 @@ import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerOnStatus;
 import com.robam.common.pojos.device.steameovenone.SteamOvenOnePowerStatus;
 import com.robam.roki.R;
 import com.robam.roki.ui.PageArgumentKey;
-import com.robam.roki.ui.PageKey;
 import com.robam.roki.ui.view.DeviceAssistC906ModeWheel;
 import com.robam.roki.ui.view.TemlWheelView;
 
@@ -95,7 +94,7 @@ public class DeviceSteameOvenC906AssistPage extends BasePage {
             return;
         if (steameOvenC906.powerOnStatus == SteamOvenOnePowerOnStatus.WorkingStatus ||
                 steameOvenC906.powerOnStatus == SteamOvenOnePowerOnStatus.Pause || steameOvenC906.powerOnStatus
-                == SteamOvenOnePowerOnStatus.Order || steameOvenC906.powerStatus == SteamOvenOnePowerStatus.Off){
+                == SteamOvenOnePowerOnStatus.Order || steameOvenC906.powerState == SteamOvenOnePowerStatus.Off){
             UIService.getInstance().popBack();
         }
     }

@@ -104,4 +104,20 @@ public class PotOilTempParams {
             this.tips = tips;
         }
     }
+
+    /**
+     * {\"tips\":[{\"min\":130,\"max\":180,\"tips\":\"当前油温适合快炒、炝锅、干炸、酥炸\"},{\"min\":181,\"max\":240,\"tips\":\"当前油温适爆炒、清炸、复炸、煎肉、泼油\"},{\"min\":241,\"max\":280,\"tips\":\"当前油温适合淋油、泼油\"},{\"min\":281,\"max\":1000,\"tips\":\"锅温过热，同时灶具关火\"}],\"lowerTempLine\":50,\"tipTempLine\":130,\"highTempLine\":281}"
+     */
+    public static class FunctionParamsBean {
+        public List<TipsBean> tips;
+        public int lowerTempLine;
+        public int tipTempLine;
+        public int highTempLine;
+    }
+
+    public static  class TipsBean {
+        public int min;
+        public int max;
+        public String tips;
+    }
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_400"
+    android:orientation="vertical"
+    android:background="@drawable/shape_dialog_bg"
+   >
+
+    <TextView
+        android:id="@+id/tv_param_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/text_color_device_category"
+        android:text="温度"
+        android:gravity="center"
+        android:textSize="@dimen/sp_20" />
+    <TextView
+        android:id="@+id/tv_param_unit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/text_color_device_category"
+        android:text="℃"
+        android:gravity="center"
+        android:textSize="@dimen/sp_20" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+      >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_64"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_select_time" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_mode_param"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</LinearLayout>
+

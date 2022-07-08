@@ -2,6 +2,7 @@ package com.legent.plat.services;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
@@ -24,14 +25,10 @@ import com.legent.plat.events.DeviceUpdatedEvent;
 import com.legent.plat.events.UserLoginEvent;
 import com.legent.plat.events.UserLogoutEvent;
 import com.legent.plat.events.ViewChangedEvent;
-import com.legent.plat.io.cloud.CloudHelper;
-import com.legent.plat.io.cloud.Reponses;
-import com.legent.plat.io.cloud.RetrofitCallback;
 import com.legent.plat.pojos.device.DeviceGroupInfo;
 import com.legent.plat.pojos.device.DeviceInfo;
 import com.legent.plat.pojos.device.IDevice;
 import com.legent.plat.pojos.device.IDeviceHub;
-import com.legent.services.AbsService;
 import com.legent.services.ScreenPowerService;
 import com.legent.services.TaskService;
 import com.legent.utils.LogUtils;
@@ -43,8 +40,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class DeviceService extends AbsService {
+public class DeviceService extends AbsDeviceCloudService {
 
     private static DeviceService instance = new DeviceService();
 
@@ -64,28 +63,36 @@ public class DeviceService extends AbsService {
     protected Map<Long, DeviceGroupInfo> mapGroups = Maps.newConcurrentMap(); // 改成 线程安全的Map,  liyuebiao
     protected Map<String, IDevice> mapDevice = Maps.newConcurrentMap();  // 改成 线程安全的Map, liyuebiao
     protected Map<Long, List<IDevice>> mapTree = Maps.newConcurrentMap(); // 改成 线程安全的Map, liyuebiao
-    protected ScheduledFuture<?> future;
+    protected ScheduledFuture<?> future=null;
 
     @Override
     public void init(Context cx, Object... params) {
         super.init(cx, params);
+        Log.e(TAG,"ScreenPowerChangedEvent"+"init");
         startPolling(false);
     }
+
+
 
     /**
      * 当手机 App 处于前端的时候，采用该定时的轮询方法  liyuebiao
      */
     private void startPollingSchedule(long pollingPeriod) {
-        future = TaskService.getInstance().scheduleAtFixedRate(
-                new DevicePollingReceiver().AppPollingTask,
-                1000 * 2, pollingPeriod, TimeUnit.MILLISECONDS);
-    }
+//        future.()
 
+            if (future==null) {
+                future = TaskService.getInstance().scheduleAtFixedRate(
+                        new DevicePollingReceiver().AppPollingTask,
+                        1000 * 2, pollingPeriod, TimeUnit.MILLISECONDS);
+            }
+
+    }
     /**
      * 当手机 App 处于前端的时候，采用该定时的轮询方法  liyuebiao
      */
     private void stopPollingSchedule() {
         if (future != null) {
+
             future.cancel(true);
             future = null;
         }
@@ -112,8 +119,10 @@ public class DeviceService extends AbsService {
         userId = 0;
     }
 
+    private static final String TAG = "DeviceService";
     @Subscribe
     public void onEvent(ScreenPowerChangedEvent event) {
+        Log.e(TAG,"ScreenPowerChangedEvent");
         boolean isInBack = event.powerStatus == ScreenPowerService.OFF;
         LogUtils.logFIleWithTime("\n\n");
         LogUtils.logFIleWithTime("---------------------------------------------");
@@ -209,34 +218,31 @@ public class DeviceService extends AbsService {
     public void addWithBind(final String guid, String name, boolean isOwner,
                             final VoidCallback callback) {
 
-        CloudHelper.bindDevice(userId, guid, name, isOwner, new VoidCallback() {
+        bindDevice(userId, guid, name, isOwner, new VoidCallback() {
             @Override
             public void onSuccess() {
-                CloudHelper.getDeviceById(guid, Reponses.GetDevicePesponse.class, new RetrofitCallback<Reponses.GetDevicePesponse>() {
+                getDeviceById(userId, guid, new Callback<DeviceInfo>() {
 
                     @Override
-                    public void onSuccess(Reponses.GetDevicePesponse getDevicePesponse) {
-                        if (null != getDevicePesponse) {
-                            DeviceInfo deviceInfo = getDevicePesponse.device;
-                            if (deviceInfo == null || Strings.isNullOrEmpty(deviceInfo.guid)) {
-                                Helper.onFailure(callback, new Throwable("deviceInfo'guid is invalid"));
-                                return;
-                            }
+                    public void onSuccess(DeviceInfo deviceInfo) {
 
-                            if (Plat.deviceFactory != null) {
-                                IDevice device = Plat.deviceFactory.generate(deviceInfo);
-                                add(device);
-                            }
-                            //这里不需要切到主线程
-                            Helper.onSuccess(callback);
+                        if (deviceInfo == null || Strings.isNullOrEmpty(deviceInfo.guid)) {
+                            Helper.onFailure(callback, new Throwable("deviceInfo'guid is invalid"));
+                            return;
                         }
+
+                        if (Plat.deviceFactory != null) {
+                            IDevice device = Plat.deviceFactory.generate(deviceInfo);
+                            add(device);
+                        }
+
+                        Helper.onSuccess(callback);
                     }
 
                     @Override
-                    public void onFaild(String err) {
-                        Helper.onFailure(callback, new Throwable(err));
+                    public void onFailure(Throwable t) {
+                        Helper.onFailure(callback, t);
                     }
-
                 });
             }
 
@@ -249,7 +255,7 @@ public class DeviceService extends AbsService {
 
     public void deleteWithUnbind(final String guid, final VoidCallback callback) {
 
-        CloudHelper.unbindDevice(userId, guid, new VoidCallback() {
+        unbindDevice(userId, guid, new VoidCallback() {
 
             @Override
             public void onSuccess() {
@@ -467,27 +473,41 @@ public class DeviceService extends AbsService {
         this.pollingPeriodInBack = periodInBack < 1000 ? 1000 : periodInBack;
     }
 
-    private void startPolling(boolean isInBack) {
-        pollingPeriod = getPollingInterval(isInBack);
-        //如果是手机APP，并且手机Andorid 版本 23 以上，则执行startPollingSchedule 轮询方法 liyuebiao
-        if ("RKDRD".equals(Plat.appType) && Build.VERSION.SDK_INT >= 23) {
 
-            if (isInBack) {
-                stopPollingSchedule();
+    private  void startPolling(boolean isInBack) {
+
+
+
+            pollingPeriod = getPollingInterval(isInBack);
+            if ("RKDRD".equals(Plat.appType) && Build.VERSION.SDK_INT >= 23) {
+
+                if (isInBack) {
+                    Log.e(TAG, "-----熄灭");
+                    stopPollingSchedule();
+                    AlarmUtils.startPollingWithBroadcast(cx,
+                            DevicePollingReceiver.getIntent(cx),
+                            pollingPeriod,
+                            getPollingTaskId());
+
+                } else {
+                    Log.e(TAG, "-----电量1");
+                    stopPolling();
+
+                    if (future == null) {
+                        Log.e(TAG, "-----电量" + "执行2");
+                        startPollingSchedule(pollingPeriod);
+                    } else {
+                        return;
+                    }
+                }
+            } else {
                 AlarmUtils.startPollingWithBroadcast(cx,
                         DevicePollingReceiver.getIntent(cx),
                         pollingPeriod,
                         getPollingTaskId());
-            } else {
-                stopPolling();
-                startPollingSchedule(pollingPeriod);
             }
-        } else {
-            AlarmUtils.startPollingWithBroadcast(cx,
-                    DevicePollingReceiver.getIntent(cx),
-                    pollingPeriod,
-                    getPollingTaskId());
-        }
+
+
     }
 
     private void stopPolling() {
